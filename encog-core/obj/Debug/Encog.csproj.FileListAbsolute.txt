@@ -1,0 +1,5 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\bin\Debug\Encog.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\bin\Debug\Encog.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\obj\Debug\Encog.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\obj\Debug\Encog.pdb
