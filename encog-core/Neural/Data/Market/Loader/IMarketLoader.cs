@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Market.Loader
 {
-    interface IMarketLoader
+    public interface IMarketLoader
     {
         /// <summary>
         /// Load the specified ticker symbol for the specified date.

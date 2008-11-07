@@ -7,7 +7,7 @@ using Encog.Neural.Activation;
 
 namespace Encog.Neural.Data.Market
 {
-    class MarketDataDescription : TemporalDataDescription
+    public class MarketDataDescription : TemporalDataDescription
     {
 
 

@@ -7,9 +7,9 @@ using Encog.Neural.Data.Basic;
 
 namespace Encog.Neural.Data.CSV
 {
-    class CSVNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
+    public class CSVNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {
-        class CSVNeuralEnumerator : IEnumerator<INeuralDataPair>
+        public class CSVNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private CSVNeuralDataSet owner;
 

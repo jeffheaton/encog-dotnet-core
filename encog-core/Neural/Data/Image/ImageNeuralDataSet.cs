@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Encog.Neural.Data.Image
 {
-    class ImageNeuralDataSet : BasicNeuralDataSet
+    public class ImageNeuralDataSet : BasicNeuralDataSet
     {
    
         /// <summary>

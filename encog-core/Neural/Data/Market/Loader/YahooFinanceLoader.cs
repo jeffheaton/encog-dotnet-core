@@ -9,7 +9,7 @@ using Encog.Util;
 
 namespace Encog.Neural.Data.Market.Loader
 {
-    class YahooFinanceLoader:IMarketLoader
+    public class YahooFinanceLoader:IMarketLoader
     {
         	/**
 	 * This method builds a URL to load data from Yahoo Finance for a neural

@@ -7,7 +7,7 @@ using Encog.Util.Time;
 
 namespace Encog.Neural.Data.Temporal
 {
-    class TemporalNeuralDataSet : BasicNeuralDataSet
+    public class TemporalNeuralDataSet : BasicNeuralDataSet
     {
 
         /// <summary>

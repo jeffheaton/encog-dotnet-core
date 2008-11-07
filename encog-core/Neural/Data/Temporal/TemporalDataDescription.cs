@@ -6,7 +6,7 @@ using Encog.Neural.Activation;
 
 namespace Encog.Neural.Data.Temporal
 {
-    class TemporalDataDescription
+    public class TemporalDataDescription
     {
 
         /// <summary>

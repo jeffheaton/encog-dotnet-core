@@ -6,7 +6,7 @@ using Encog.Matrix;
 
 namespace Encog.Neural.Data.Bipolar
 {
-    class BiPolarNeuralData : INeuralData
+    public class BiPolarNeuralData : INeuralData
     {
         /// <summary>
         /// The data held by this object.

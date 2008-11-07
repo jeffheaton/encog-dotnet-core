@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Temporal
 {
-    class TemporalPoint : IComparable<TemporalPoint>
+    public class TemporalPoint : IComparable<TemporalPoint>
     {
 
         /// <summary>

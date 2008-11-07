@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Market
 {
-    class MarketError: EncogError
+    public class MarketError: EncogError
     {
         /// <summary>
         /// Construct a message exception.

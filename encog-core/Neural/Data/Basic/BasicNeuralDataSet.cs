@@ -6,7 +6,7 @@ using Encog.Neural.Persist;
 
 namespace Encog.Neural.Data.Basic
 {
-    class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
+    public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
         public String Description
         {

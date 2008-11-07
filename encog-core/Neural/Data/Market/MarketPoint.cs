@@ -6,7 +6,7 @@ using Encog.Neural.Data.Temporal;
 
 namespace Encog.Neural.Data.Market
 {
-    class MarketPoint : TemporalPoint
+    public class MarketPoint : TemporalPoint
     {
         /// <summary>
         /// When to hold the data from.

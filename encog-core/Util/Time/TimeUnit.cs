@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Util.Time
 {
-    enum TimeUnit
+    public enum TimeUnit
     {
         SECONDS,
 	MINUTES,

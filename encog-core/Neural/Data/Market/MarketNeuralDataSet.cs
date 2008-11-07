@@ -8,7 +8,7 @@ using Encog.Util.Time;
 
 namespace Encog.Neural.Data.Market
 {
-    class MarketNeuralDataSet : TemporalNeuralDataSet
+    public class MarketNeuralDataSet : TemporalNeuralDataSet
     {
         /// <summary>
         /// The loader to use to obtain the data.

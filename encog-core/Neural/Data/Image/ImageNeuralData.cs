@@ -8,7 +8,7 @@ using Encog.Util.DownSample;
 
 namespace Encog.Neural.Data.Image
 {
-    class ImageNeuralData : BasicNeuralData
+    public class ImageNeuralData : BasicNeuralData
     {
 
         public Bitmap Image

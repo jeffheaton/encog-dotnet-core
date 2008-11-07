@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Encog.Util.DownSample
 {
-    interface IDownSample
+    public interface IDownSample
     {
         Bitmap DownsampleImage
         {

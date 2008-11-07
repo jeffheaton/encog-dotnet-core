@@ -6,7 +6,7 @@ using Encog.Neural.Persist;
 
 namespace Encog.Neural.Data.Basic
 {
-    class BasicNeuralData : INeuralData
+    public class BasicNeuralData : INeuralData
     {
         private double[] data;
 

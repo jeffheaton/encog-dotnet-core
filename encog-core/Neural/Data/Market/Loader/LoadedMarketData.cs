@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Market.Loader
 {
-    class LoadedMarketData
+    public class LoadedMarketData
     {
         /// <summary>
         /// When was this data sample taken.

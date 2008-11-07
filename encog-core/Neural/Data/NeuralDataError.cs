@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data
 {
-    class NeuralDataError: EncogError
+    public class NeuralDataError: EncogError
     {
         /// <summary>
         /// Construct a message exception.

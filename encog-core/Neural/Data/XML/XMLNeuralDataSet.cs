@@ -9,7 +9,7 @@ using Encog.Neural.Persist.Persistors;
 
 namespace Encog.Neural.Data.XML
 {
-    class XMLNeuralDataSet : BasicNeuralDataSet
+    public class XMLNeuralDataSet : BasicNeuralDataSet
     {
         /**
 	 * Error Message: adds are not supported.

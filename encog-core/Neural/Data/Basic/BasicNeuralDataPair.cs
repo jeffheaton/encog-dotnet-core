@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Basic
 {
-    class BasicNeuralDataPair : INeuralDataPair
+    public class BasicNeuralDataPair : INeuralDataPair
     {
         /// <summary>
         /// The the expected output from the neural network, or null

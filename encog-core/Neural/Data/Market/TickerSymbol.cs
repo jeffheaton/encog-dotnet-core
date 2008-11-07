@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Market
 {
-    class TickerSymbol
+    public class TickerSymbol
     {
         /// <summary>
         /// The ticker symbol.

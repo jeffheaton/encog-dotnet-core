@@ -7,9 +7,9 @@ using Encog.Neural.Data.Basic;
 
 namespace Encog.Neural.Data.SQL
 {
-    class SQLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
+    public class SQLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {
-        class SQLNeuralEnumerator : IEnumerator<INeuralDataPair>
+        public class SQLNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private SQLNeuralDataSet owner;
 

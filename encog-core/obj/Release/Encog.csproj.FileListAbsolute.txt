@@ -3,3 +3,8 @@ C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\bin\Release\Encog.pdb
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\obj\Release\Encog.dll
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\encog-core\encog-core\obj\Release\Encog.pdb
+C:\encog-cs\encog-core\encog-core\encog-core\bin\Release\Encog.dll
+C:\encog-cs\encog-core\encog-core\encog-core\bin\Release\Encog.pdb
+C:\encog-cs\encog-core\encog-core\encog-core\obj\Release\ResolveAssemblyReference.cache
+C:\encog-cs\encog-core\encog-core\encog-core\obj\Release\Encog.dll
+C:\encog-cs\encog-core\encog-core\encog-core\obj\Release\Encog.pdb

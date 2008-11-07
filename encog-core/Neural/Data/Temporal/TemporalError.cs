@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Data.Temporal
 {
-    class TemporalError : EncogError
+    public class TemporalError : EncogError
     {
         /// <summary>
         /// Construct a message exception.
