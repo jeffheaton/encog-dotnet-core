@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Temporal;
-using Encog.Neural.Data.Market.Loader;
+using Encog.Neural.NeuralData.Temporal;
+using Encog.Neural.NeuralData.Market.Loader;
 using Encog.Util.Time;
 
-namespace Encog.Neural.Data.Market
+namespace Encog.Neural.NeuralData.Market
 {
     public class MarketNeuralDataSet : TemporalNeuralDataSet
     {

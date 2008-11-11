@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.Data.Temporal
+namespace Encog.Neural.NeuralData.Temporal
 {
     public class TemporalPoint : IComparable<TemporalPoint>
     {

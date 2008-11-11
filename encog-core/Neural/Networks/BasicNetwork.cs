@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Persist;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 using Encog.Util;
 using Encog.Matrix;
 using Encog.Neural.Networks.Layers;

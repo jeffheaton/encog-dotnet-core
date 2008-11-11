@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace Encog.Neural.Data
+namespace Encog.Neural.NeuralData
 {
     public interface INeuralDataSet
     {

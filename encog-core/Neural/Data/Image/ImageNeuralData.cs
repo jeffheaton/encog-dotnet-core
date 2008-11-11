@@ -6,7 +6,7 @@ using Encog.Neural.Data.Basic;
 using System.Drawing;
 using Encog.Util.DownSample;
 
-namespace Encog.Neural.Data.Image
+namespace Encog.Neural.NeuralData.Image
 {
     public class ImageNeuralData : BasicNeuralData
     {

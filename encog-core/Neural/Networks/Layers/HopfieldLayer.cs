@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data;
-using Encog.Neural.Data.Bipolar;
+using Encog.Neural.NeuralData;
+using Encog.Neural.NeuralData.Bipolar;
 using Encog.Matrix;
 
 namespace Encog.Neural.Networks.Layers

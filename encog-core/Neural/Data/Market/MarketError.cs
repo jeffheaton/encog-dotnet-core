@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.Data.Market
+namespace Encog.Neural.NeuralData.Market
 {
     public class MarketError: EncogError
     {

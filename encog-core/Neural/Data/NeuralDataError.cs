@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.Data
+namespace Encog.Neural.NeuralData
 {
     public class NeuralDataError: EncogError
     {

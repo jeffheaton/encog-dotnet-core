@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using Encog.Solve.Anneal;
 using Encog.Matrix;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Anneal
 {

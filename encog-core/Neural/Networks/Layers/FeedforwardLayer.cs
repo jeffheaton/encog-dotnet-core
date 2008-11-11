@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Activation;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 using Encog.Matrix;
 using Encog.Neural.Data.Basic;
 
@@ -45,7 +45,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The input pattern.</param>
         /// <returns>The output from this layer.</returns>
-        public new INeuralData Compute(INeuralData pattern)
+        public override INeuralData Compute(INeuralData pattern)
         {
             int i;
             if (pattern != null)
@@ -132,7 +132,7 @@ namespace Encog.Neural.Networks.Layers
         }
 
 
-        public new Matrix.Matrix WeightMatrix
+        public override Matrix.Matrix WeightMatrix
         {
             get
             {
@@ -152,7 +152,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public new ILayer Next
+        public override ILayer Next
         {
             set
             {
@@ -174,7 +174,7 @@ namespace Encog.Neural.Networks.Layers
         /// The string form of the layer.
         /// </summary>
         /// <returns>The string form of the layer.</returns>
-        public new String ToString()
+        public override String ToString()
         {
             StringBuilder result = new StringBuilder();
             result.Append("[FeedforwardLayer: Neuron Count=");

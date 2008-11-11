@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Basic;
 using Encog.Util.Time;
+using Encog.Neural.Data.Basic;
 
-namespace Encog.Neural.Data.Temporal
+namespace Encog.Neural.NeuralData.Temporal
 {
     public class TemporalNeuralDataSet : BasicNeuralDataSet
     {

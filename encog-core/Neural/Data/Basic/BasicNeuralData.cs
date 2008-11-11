@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Persist;
+using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Data.Basic
 {

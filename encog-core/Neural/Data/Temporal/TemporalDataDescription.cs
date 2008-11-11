@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Activation;
 
-namespace Encog.Neural.Data.Temporal
+namespace Encog.Neural.NeuralData.Temporal
 {
     public class TemporalDataDescription
     {

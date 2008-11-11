@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Persist;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
 
 namespace Encog.Neural.Networks.Layers
@@ -44,12 +44,12 @@ namespace Encog.Neural.Networks.Layers
             this.Fire = new BasicNeuralData(neuronCount);
         }
 
-        public INeuralData Compute(INeuralData pattern)
+        public virtual INeuralData Compute(INeuralData pattern)
         {
             throw new NotImplementedException();
         }
 
-        public ILayer Next
+        public virtual ILayer Next
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public ILayer Previous
+        public virtual ILayer Previous
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public INeuralData Fire
+        public virtual INeuralData Fire
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public int NeuronCount
+        public virtual int NeuronCount
         {
             get 
             {
@@ -93,7 +93,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public Encog.Matrix.Matrix WeightMatrix
+        public virtual Encog.Matrix.Matrix WeightMatrix
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public int MatrixSize
+        public virtual int MatrixSize
         {
             get 
             {
@@ -116,17 +116,17 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public bool IsInput()
+        public virtual bool IsInput()
         {
             return this.Previous == null;
         }
 
-        public bool IsHidden()
+        public virtual bool IsHidden()
         {
             return this.Next != null && this.Previous != null;
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             if (this.WeightMatrix != null)
             {
@@ -135,17 +135,17 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public bool IsOutput()
+        public virtual bool IsOutput()
         {
             return this.Next == null;
         }
 
-        public bool HasMatrix()
+        public virtual bool HasMatrix()
         {
             return this.matrix != null;
         }
 
-        public string Description
+        public virtual string Description
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        public string Name
+        public virtual string Name
         {
             get
             {

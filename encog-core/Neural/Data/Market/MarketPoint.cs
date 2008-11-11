@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Temporal;
+using Encog.Neural.NeuralData.Temporal;
 
-namespace Encog.Neural.Data.Market
+namespace Encog.Neural.NeuralData.Market
 {
     public class MarketPoint : TemporalPoint
     {

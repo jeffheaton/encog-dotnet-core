@@ -29,7 +29,7 @@ using System.Text;
 using Encog.Matrix;
 using Encog.Util;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Backpropagation
 {

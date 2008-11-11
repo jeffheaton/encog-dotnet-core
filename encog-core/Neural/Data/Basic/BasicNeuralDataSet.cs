@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Persist;
+using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Data.Basic
 {
@@ -32,7 +33,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        class BasicNeuralIterator : IEnumerator<INeuralDataPair>
+        public class BasicNeuralIterator : IEnumerator<INeuralDataPair>
         {
             private int current;
             private BasicNeuralDataSet owner;
@@ -44,7 +45,7 @@ namespace Encog.Neural.Data.Basic
 
             public INeuralDataPair Current
             {
-                get 
+                get
                 {
                     return owner.data[this.current];
                 }
@@ -57,7 +58,7 @@ namespace Encog.Neural.Data.Basic
 
             object System.Collections.IEnumerator.Current
             {
-                get 
+                get
                 {
                     return this.owner.data[this.current];
                 }
@@ -65,9 +66,9 @@ namespace Encog.Neural.Data.Basic
 
             public bool MoveNext()
             {
+                this.current++;
                 if (current >= this.owner.data.Count)
                     return false;
-                this.current++;
                 return true;
             }
 
@@ -104,9 +105,42 @@ namespace Encog.Neural.Data.Basic
         private String description;
         private String name;
 
+
+        /// <summary>
+        /// Construct a data set from an input and idea array.
+        /// </summary>
+        /// <param name="input">The input into the neural network for training.</param>
+        /// <param name="ideal">The idea into the neural network for training.</param>
+        public BasicNeuralDataSet(double[][] input, double[][] ideal)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                double[] tempInput = new double[input[0].Length];
+                double[] tempIdeal = new double[ideal[0].Length];
+
+                for (int j = 0; j < tempInput.Length; j++)
+                {
+                    tempInput[j] = input[i][j];
+                }
+
+                for (int j = 0; j < tempIdeal.Length; j++)
+                {
+                    tempIdeal[j] = ideal[i][j];
+                }
+
+                BasicNeuralData inputData = new BasicNeuralData(tempInput);
+                BasicNeuralData idealData = new BasicNeuralData(tempIdeal);
+                this.Add(inputData, idealData);
+            }
+        }
+
+        public BasicNeuralDataSet()
+        {
+        }
+
         public int IdealSize
         {
-            get 
+            get
             {
                 INeuralDataPair pair = this.data[0];
                 return pair.Ideal.Count;
@@ -115,7 +149,7 @@ namespace Encog.Neural.Data.Basic
 
         public int InputSize
         {
-            get 
+            get
             {
                 INeuralDataPair pair = this.data[0];
                 return pair.Input.Count;

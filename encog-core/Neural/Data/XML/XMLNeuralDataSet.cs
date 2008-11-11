@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml;
 using Encog.Neural.Persist.Persistors;
 
-namespace Encog.Neural.Data.XML
+namespace Encog.Neural.NeuralData.XML
 {
     public class XMLNeuralDataSet : BasicNeuralDataSet
     {

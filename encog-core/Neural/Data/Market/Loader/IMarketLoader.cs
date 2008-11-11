@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.Data.Market.Loader
+namespace Encog.Neural.NeuralData.Market.Loader
 {
     public interface IMarketLoader
     {

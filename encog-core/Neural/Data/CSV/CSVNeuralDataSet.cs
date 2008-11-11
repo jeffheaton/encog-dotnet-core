@@ -5,7 +5,7 @@ using System.Text;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
 
-namespace Encog.Neural.Data.CSV
+namespace Encog.Neural.NeuralData.CSV
 {
     public class CSVNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {

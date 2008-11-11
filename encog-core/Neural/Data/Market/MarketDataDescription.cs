@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Temporal;
+using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.Activation;
 
-namespace Encog.Neural.Data.Market
+namespace Encog.Neural.NeuralData.Market
 {
     public class MarketDataDescription : TemporalDataDescription
     {

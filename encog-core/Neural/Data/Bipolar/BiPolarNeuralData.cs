@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Matrix;
 
-namespace Encog.Neural.Data.Bipolar
+namespace Encog.Neural.NeuralData.Bipolar
 {
     public class BiPolarNeuralData : INeuralData
     {

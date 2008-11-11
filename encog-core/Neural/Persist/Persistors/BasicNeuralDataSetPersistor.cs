@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 using System.Xml;
 using Encog.Neural.Data.Basic;
 using Encog.Util;

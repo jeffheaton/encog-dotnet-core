@@ -5,7 +5,7 @@ using System.Text;
 using Encog.Util.DB;
 using Encog.Neural.Data.Basic;
 
-namespace Encog.Neural.Data.SQL
+namespace Encog.Neural.NeuralData.SQL
 {
     public class SQLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {

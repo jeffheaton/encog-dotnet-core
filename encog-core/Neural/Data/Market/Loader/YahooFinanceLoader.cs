@@ -7,7 +7,7 @@ using Encog.Bot.HTML;
 using System.Net;
 using Encog.Util;
 
-namespace Encog.Neural.Data.Market.Loader
+namespace Encog.Neural.NeuralData.Market.Loader
 {
     public class YahooFinanceLoader:IMarketLoader
     {
