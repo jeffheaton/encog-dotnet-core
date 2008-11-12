@@ -9,7 +9,7 @@ using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.SOM
 {
-    class TrainSelfOrganizingMap : ITrain
+    public class TrainSelfOrganizingMap : ITrain
     {
         /// <summary>
         /// Default amount to reduce y

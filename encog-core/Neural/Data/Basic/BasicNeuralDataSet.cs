@@ -9,7 +9,7 @@ namespace Encog.Neural.Data.Basic
 {
     public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
-        public String Description
+        public virtual String Description
         {
             get
             {
@@ -21,7 +21,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public String Name
+        public virtual String Name
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public IList<INeuralDataPair> Data
+        public virtual IList<INeuralDataPair> Data
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Encog.Neural.Data.Basic
         {
         }
 
-        public int IdealSize
+        public virtual int IdealSize
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public int InputSize
+        public virtual int InputSize
         {
             get
             {
@@ -156,24 +156,24 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public void Add(INeuralData data1)
+        public virtual void Add(INeuralData data1)
         {
             INeuralDataPair pair = new BasicNeuralDataPair(data1, null);
             this.data.Add(pair);
         }
 
-        public void Add(INeuralData inputData, INeuralData idealData)
+        public virtual void Add(INeuralData inputData, INeuralData idealData)
         {
             INeuralDataPair pair = new BasicNeuralDataPair(inputData, idealData);
             this.data.Add(pair);
         }
 
-        public void Add(INeuralDataPair inputData)
+        public virtual void Add(INeuralDataPair inputData)
         {
             this.data.Add(inputData);
         }
 
-        public void Close()
+        public virtual void Close()
         {
             // not needed
         }

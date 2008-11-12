@@ -34,7 +34,7 @@ namespace Encog.Neural.Data.Basic
             this.data = new double[size];
         }
 
-        public double this[int x]
+        public virtual double this[int x]
         {
             get
             {
@@ -46,7 +46,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public double[] Data
+        public virtual double[] Data
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public int Count
+        public virtual int Count
         {
             get
             {

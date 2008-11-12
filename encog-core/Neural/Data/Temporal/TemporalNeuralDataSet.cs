@@ -68,7 +68,7 @@ namespace Encog.Neural.NeuralData.Temporal
         private TimeUnit sequenceGrandularity;
 
 
-        public IList<TemporalDataDescription> Descriptions
+        public virtual IList<TemporalDataDescription> Descriptions
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public IList<TemporalPoint> Points
+        public virtual IList<TemporalPoint> Points
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int InputWindowSize
+        public virtual int InputWindowSize
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int PredictWindowSize
+        public virtual int PredictWindowSize
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int LowSequence
+        public virtual int LowSequence
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int HighSequence
+        public virtual int HighSequence
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int DesiredSetSize
+        public virtual int DesiredSetSize
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int InputNeuronCount
+        public virtual int InputNeuronCount
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public int OutputNeuronCount
+        public virtual int OutputNeuronCount
         {
             get
             {
@@ -160,7 +160,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public DateTime StartingPoint
+        public virtual DateTime StartingPoint
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
-        public TimeUnit SequenceGrandularity
+        public virtual TimeUnit SequenceGrandularity
         {
             get
             {
@@ -213,7 +213,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// Add a data description.
         /// </summary>
         /// <param name="desc">The data description to add.</param>
-        public void AddDescription(TemporalDataDescription desc)
+        public virtual void AddDescription(TemporalDataDescription desc)
         {
             if (this.points.Count > 0)
             {
@@ -232,7 +232,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// Clear the entire dataset.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             descriptions.Clear();
             points.Clear();
@@ -245,7 +245,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="inputData">Not used</param>
         /// <param name="idealData">Not used</param>
-        public new void Add(INeuralData inputData, INeuralData idealData)
+        public override void Add(INeuralData inputData, INeuralData idealData)
         {
             throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
         }
@@ -255,7 +255,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="inputData">Not used.</param>
-        public new void Add(INeuralDataPair inputData)
+        public override void Add(INeuralDataPair inputData)
         {
             throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
         }
@@ -265,7 +265,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="data">Not used.</param>
-        public new void Add(INeuralData data)
+        public override void Add(INeuralData data)
         {
             throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
         }
@@ -276,7 +276,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="sequence">The sequence number.</param>
         /// <returns>A new TemporalPoint object.</returns>
-        public TemporalPoint CreatePoint(int sequence)
+        public virtual TemporalPoint CreatePoint(int sequence)
         {
             TemporalPoint point = new TemporalPoint(this.descriptions.Count);
             point.Sequence = sequence;
@@ -291,7 +291,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="when">The date to generate the sequence number for.</param>
         /// <returns>A sequence number.</returns>
-        public int GetSequenceFromDate(DateTime when)
+        public virtual int GetSequenceFromDate(DateTime when)
         {
             int sequence;
 
@@ -317,7 +317,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="when">The time that this point should be created at.</param>
         /// <returns>The point TemporalPoint created.</returns>
-        public TemporalPoint CreatePoint(DateTime when)
+        public virtual TemporalPoint CreatePoint(DateTime when)
         {
             int sequence = GetSequenceFromDate(when);
             TemporalPoint point = new TemporalPoint(this.descriptions.Count);
@@ -331,7 +331,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// points that the training set will be generated on.
         /// </summary>
         /// <returns>The number of points.</returns>
-        public int CalculatePointsInRange()
+        public virtual int CalculatePointsInRange()
         {
             int result = 0;
 
@@ -351,7 +351,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// that will be generated.
         /// </summary>
         /// <returns>The size of the training set.</returns>
-        public int CalculateActualSetSize()
+        public virtual int CalculateActualSetSize()
         {
             int result = CalculatePointsInRange();
             result = Math.Min(this.desiredSetSize, result);
@@ -362,7 +362,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// Calculate how many input and output neurons will be needed for the
         /// current data.
         /// </summary>
-        public void CalculateNeuronCounts()
+        public virtual void CalculateNeuronCounts()
         {
             this.inputNeuronCount = 0;
             this.outputNeuronCount = 0;
@@ -386,7 +386,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="point">The point to consider.</param>
         /// <returns>True if the point is within the range.</returns>
-        public bool IsPointInRange(TemporalPoint point)
+        public virtual bool IsPointInRange(TemporalPoint point)
         {
             return ((point.Sequence >= this.LowSequence) && (point.Sequence <= this.HighSequence));
 
@@ -397,7 +397,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="index">The index to generate neural data for.</param>
         /// <returns>The input neural data generated.</returns>
-        public BasicNeuralData GenerateInputNeuralData(int index)
+        public virtual BasicNeuralData GenerateInputNeuralData(int index)
         {
             if (index + this.inputWindowSize > this.points.Count)
             {
@@ -517,7 +517,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="index">The index to generate for.</param>
         /// <returns>The neural data generated.</returns>
-        public BasicNeuralData GenerateOutputNeuralData(int index)
+        public virtual BasicNeuralData GenerateOutputNeuralData(int index)
         {
             if (index + this.predictWindowSize > this.points.Count)
             {
@@ -550,7 +550,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// Calculate the index to start at.
         /// </summary>
         /// <returns>The starting point.</returns>
-        public int CalculateStartIndex()
+        public virtual int CalculateStartIndex()
         {
             for (int i = 0; i < this.points.Count; i++)
             {
@@ -567,7 +567,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// Sort the points.
         /// </summary>
-        public void SortPoints()
+        public virtual void SortPoints()
         {
             this.points.Sort();
         }
@@ -575,7 +575,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// Generate the training sets.
         /// </summary>
-        public void Generate()
+        public virtual void Generate()
         {
             SortPoints();
             int start = CalculateStartIndex() + 1;

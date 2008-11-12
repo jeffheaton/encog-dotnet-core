@@ -9,7 +9,7 @@ using Encog.Matrix;
 
 namespace Encog.Neural.Networks.Layers
 {
-    class SOMLayer : BasicLayer
+    public class SOMLayer : BasicLayer
     {
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The pattern to compute for.</param>
         /// <returns>The output from the layer.</returns>
-        public new INeuralData Compute(INeuralData pattern)
+        public override INeuralData Compute(INeuralData pattern)
         {
             NormalizeInput input = new NormalizeInput(pattern.Data,
                    this.normalizationType);
@@ -93,7 +93,7 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// Set the next layer.
         /// </summary>
-        public new ILayer Next
+        public override ILayer Next
         {
             set
             {

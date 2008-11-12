@@ -9,7 +9,7 @@ using Encog.Matrix;
 namespace Encog.Neural.Networks.Layers
 {
     [Serializable]
-    class HopfieldLayer : BasicLayer
+    public class HopfieldLayer : BasicLayer
     {
         /// <summary>
         /// Construct a hopfield layer of the specified size.
@@ -27,7 +27,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The pattern to be presented to the neural network.</param>
         /// <returns>The output from the neural network.</returns>
-        public new INeuralData Compute(INeuralData pattern)
+        public override INeuralData Compute(INeuralData pattern)
         {
             // convert the input pattern into a matrix with a single row.
             // also convert the boolean values to bipolar(-1=false, 1=true)

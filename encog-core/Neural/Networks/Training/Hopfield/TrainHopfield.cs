@@ -9,7 +9,7 @@ using Encog.Matrix;
 
 namespace Encog.Neural.Networks.Training.Hopfield
 {
-    class TrainHopfield : ITrain
+    public class TrainHopfield : ITrain
     {
         /// <summary>
         /// The training set to use.

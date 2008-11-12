@@ -41,7 +41,7 @@ namespace Encog.Neural.NeuralData.Market
         /// each datapoint.
         /// </summary>
         /// <param name="desc"></param>
-        public new void AddDescription(TemporalDataDescription desc)
+        public override void AddDescription(TemporalDataDescription desc)
         {
             if (!(desc is MarketDataDescription))
             {
@@ -58,7 +58,7 @@ namespace Encog.Neural.NeuralData.Market
         /// </summary>
         /// <param name="when">The date to create the point at.</param>
         /// <returns>Returns the TemporalPoint created for the specified date.</returns>
-        public new TemporalPoint CreatePoint(DateTime when)
+        public override TemporalPoint CreatePoint(DateTime when)
         {
             int sequence = GetSequenceFromDate(when);
             TemporalPoint result = this.pointIndex[sequence];

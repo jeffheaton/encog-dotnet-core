@@ -75,7 +75,7 @@ namespace Encog.Neural.NeuralData.Image
         /// Add the specified data, must be an ImageNeuralData class.
         /// </summary>
         /// <param name="data">The data The object to add.</param>
-        public new void Add(INeuralData data)
+        public override void Add(INeuralData data)
         {
             if (!(data is ImageNeuralData))
             {
@@ -90,7 +90,7 @@ namespace Encog.Neural.NeuralData.Image
         /// </summary>
         /// <param name="inputData">The image to train with.</param>
         /// <param name="idealData">The expected otuput form this image.</param>
-        public new void Add(INeuralData inputData, INeuralData idealData)
+        public override void Add(INeuralData inputData, INeuralData idealData)
         {
             if (!(inputData is ImageNeuralData))
             {
@@ -104,7 +104,7 @@ namespace Encog.Neural.NeuralData.Image
         /// Add input and expected output.  This is used for supervised training.
         /// </summary>
         /// <param name="inputData">The input data to train on.</param>
-        public new void Add(INeuralDataPair inputData)
+        public override void Add(INeuralDataPair inputData)
         {
             if (!(inputData.Input is ImageNeuralData))
             {

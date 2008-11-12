@@ -39,7 +39,7 @@ namespace Encog.Neural.Data.Basic
             this.ideal = null;
         }
 
-        public INeuralData Input
+        public virtual INeuralData Input
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public INeuralData Ideal
+        public virtual INeuralData Ideal
         {
             get
             {
