@@ -31,7 +31,7 @@ namespace Encog.Matrix
     /// <summary>
     /// Thrown when a matrix error occured.
     /// </summary>
-    class MatrixError: System.Exception
+    public class MatrixError: System.Exception
     {
         /// <summary>
         /// Constructor for a simple message exception.

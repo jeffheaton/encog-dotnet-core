@@ -293,7 +293,7 @@ namespace Encog.Neural.Networks
 
             int win = 0;
 
-            double biggest = Double.MaxValue;
+            double biggest = Double.MinValue;
             for (int i = 0; i < output.Count; i++)
             {
 

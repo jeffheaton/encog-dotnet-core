@@ -42,7 +42,7 @@ namespace Encog.Bot.Spider
         /// <summary>
         /// The workload manager for the spider.
         /// </summary>
-        public WorkloadManager Workload
+        public IWorkloadManager Workload
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Encog.Bot.Spider
         /// <summary>
         /// A list of URL filters to use.
         /// </summary>
-        public List<SpiderFilter> Filters
+        public List<ISpiderFilter> Filters
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Encog.Bot.Spider
         /// The SpiderReportable object for the spider.  The spider
         /// will report all information to this class.
         /// </summary>
-        public SpiderReportable Report
+        public ISpiderReportable Report
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Encog.Bot.Spider
         /// <summary>
         /// The object that the spider reports its findings to.
         /// </summary>
-        private SpiderReportable report;
+        private ISpiderReportable report;
 
         /**
          * A flag that indicates if this process should be
@@ -112,7 +112,7 @@ namespace Encog.Bot.Spider
         /// different workload managers. The workload manager
         /// tracks all URL's found.
         /// </summary>
-        private WorkloadManager workloadManager;
+        private IWorkloadManager workloadManager;
 
         /// <summary>
         /// The options for the spider.
@@ -122,7 +122,7 @@ namespace Encog.Bot.Spider
         /// <summary>
         /// Filters used to block specific URL's.
         /// </summary>
-        private List<SpiderFilter> filters = new List<SpiderFilter>();
+        private List<ISpiderFilter> filters = new List<ISpiderFilter>();
 
         /// <summary>
         /// The time that the spider began.
@@ -170,12 +170,12 @@ namespace Encog.Bot.Spider
         /// </summary>
         /// <param name="options">The configuration options for this spider.</param>
         /// <param name="report">A SpiderReportable class to report progress to</param>
-        public Spider(SpiderOptions options, SpiderReportable report)
+        public Spider(SpiderOptions options, ISpiderReportable report)
         {
             this.options = options;
             this.report = report;
 
-            this.workloadManager = (WorkloadManager)Assembly.GetExecutingAssembly().CreateInstance(this.options.WorkloadManager);
+            this.workloadManager = (IWorkloadManager)Assembly.GetExecutingAssembly().CreateInstance(this.options.WorkloadManager);
 
             this.workloadManager.Init(this);
             report.Init(this);
@@ -185,7 +185,7 @@ namespace Encog.Bot.Spider
             {
                 foreach (String name in options.Filter)
                 {
-                    SpiderFilter filter = (SpiderFilter)Assembly.GetExecutingAssembly().CreateInstance(name);
+                    ISpiderFilter filter = (ISpiderFilter)Assembly.GetExecutingAssembly().CreateInstance(name);
                     if (filter == null)
                         throw new SpiderException("Invalid filter specified: " + name);
                     this.filters.Add(filter);
@@ -218,7 +218,7 @@ namespace Encog.Bot.Spider
             }
 
             // Check to see if it does not pass any of the filters.
-            foreach (SpiderFilter filter in this.filters)
+            foreach (ISpiderFilter filter in this.filters)
             {
                 if (filter.IsExcluded(url))
                 {
@@ -303,7 +303,7 @@ namespace Encog.Bot.Spider
             }
 
             // Second, notify any filters of a new host/
-            foreach (SpiderFilter filter in this.filters)
+            foreach (ISpiderFilter filter in this.filters)
             {
                 try
                 {
@@ -325,6 +325,7 @@ namespace Encog.Bot.Spider
 
                     WaitCallback w = new WaitCallback(SpiderWorkerProc);
                     ThreadPool.QueueUserWorkItem(w, url);
+
                 }
                 else
                 {
@@ -364,7 +365,8 @@ namespace Encog.Bot.Spider
                 istream = response.GetResponseStream();
 
                 // Parse the URL.
-                if (String.Compare(response.ContentType, "text/html") == 0)
+                String type = response.ContentType.ToLower();
+                if ( type.StartsWith("text/html") )
                 {
                     SpiderParseHTML parse = new SpiderParseHTML(response.ResponseUri,
                         new SpiderInputStream(istream, null), this);

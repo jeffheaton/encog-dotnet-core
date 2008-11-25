@@ -330,7 +330,7 @@ namespace Encog.Matrix
         /// Determine if this matrix is a vector.  A vector matrix only has a single row or column.
         /// </summary>
         /// <returns>True if this matrix is a vector.</returns>
-        public bool isVector()
+        public bool IsVector()
         {
             if (this.Rows == 1)
             {

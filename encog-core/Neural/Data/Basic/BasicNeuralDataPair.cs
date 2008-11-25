@@ -54,5 +54,17 @@ namespace Encog.Neural.Data.Basic
                 return this.ideal;
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append('[');
+            result.Append("Input:");
+            result.Append(this.Input);
+            result.Append(",Ideal:");
+            result.Append(this.Ideal);
+            result.Append(']');
+            return result.ToString();
+        }
     }
 }

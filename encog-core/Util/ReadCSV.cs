@@ -64,6 +64,17 @@ namespace Encog.Util
             return date.ToString(dateFormat);
         }
 
+        public int ColumnCount
+        {
+            get
+            {
+                if (this.data == null)
+                    return 0;
+                else
+                    return this.data.Length;
+            }
+        }
+
         /// <summary>
         /// Parse a date using the specified format.
         /// </summary>
@@ -168,7 +179,7 @@ namespace Encog.Util
         public DateTime GetDate(String column)
         {
             String str = Get(column);
-            return DateTime.Parse(ReadCSV.dateFormat);
+            return DateTime.Parse(str);
         }
 
         /// <summary>

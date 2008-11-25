@@ -92,7 +92,7 @@ namespace Encog.Neural.NeuralData.Temporal
          * Convert this point to string form.
          * @return This point as a string.
          */
-        public new String ToString()
+        public override String ToString()
         {
             StringBuilder builder = new StringBuilder("[TemporalPoint:");
             builder.Append("Seq:");

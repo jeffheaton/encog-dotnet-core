@@ -71,11 +71,11 @@ namespace Encog.Matrix
         /// <returns>A bipolar array.</returns>
         public static double[,] Bipolar2double(bool[,] b)
         {
-            double[,] result = new double[b.GetUpperBound(0), b.GetUpperBound(1)];
+            double[,] result = new double[b.GetUpperBound(0)+1, b.GetUpperBound(1)+1];
 
-            for (int row = 0; row < b.GetUpperBound(0); row++)
+            for (int row = 0; row <= b.GetUpperBound(0); row++)
             {
-                for (int col = 0; col < b.GetUpperBound(1); col++)
+                for (int col = 0; col <= b.GetUpperBound(1); col++)
                 {
                     result[row, col] = Bipolar2double(b[row, col]);
                 }
@@ -125,11 +125,11 @@ namespace Encog.Matrix
         /// <returns>A 2D boolean array.</returns>
         public static bool[,] Double2bipolar(double[,] d)
         {
-            bool[,] result = new bool[d.GetUpperBound(0), d.GetUpperBound(1)];
+            bool[,] result = new bool[d.GetUpperBound(0)+1, d.GetUpperBound(1)+1];
 
-            for (int row = 0; row < d.GetUpperBound(0); row++)
+            for (int row = 0; row <= d.GetUpperBound(0); row++)
             {
-                for (int col = 0; col < d.GetUpperBound(0); col++)
+                for (int col = 0; col <= d.GetUpperBound(1); col++)
                 {
                     result[row, col] = Double2bipolar(d[row, col]);
                 }

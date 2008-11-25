@@ -158,7 +158,7 @@ namespace Encog.Bot.Spider
 
             try
             {
-                Uri url = URLUtility.constructURL(this.baseURL, u, true);
+                Uri url = URLUtility.ConstructURL(this.baseURL, u, true);
                 url = this.spider.Workload.ConvertURL(url.ToString());
 
                 if ((String.Compare(url.Scheme, "http", true) == 0)
@@ -203,7 +203,7 @@ namespace Encog.Bot.Spider
             }
 
 
-            if ((cmp != null) && !URLUtility.containsInvalidURLCharacters(href))
+            if ((cmp != null) && !URLUtility.ContainsInvalidURLCharacters(href))
             {
                 if (!cmp.StartsWith("javascript:")
                     && !cmp.StartsWith("rstp:")

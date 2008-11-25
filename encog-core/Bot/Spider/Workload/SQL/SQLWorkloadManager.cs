@@ -62,7 +62,7 @@ namespace Encog.Bot.Spider.Workload.SQL
     /// KEY 'host' ('host')
     /// )</pre>
     /// </summary>
-    public class SQLWorkloadManager : WorkloadManager
+    public class SQLWorkloadManager : IWorkloadManager
     {
         /// <summary>
         /// The database connection being used.
@@ -438,29 +438,41 @@ namespace Encog.Bot.Spider.Workload.SQL
             this.connection = new RepeatableConnection(spider.Options.DbConnectionString);
             this.connectionString = spider.Options.DbConnectionString;
 
-            this.statements.Add(this.stmtClear = new RepeatableStatement(this.holder.getSQLClear()));
-            this.statements.Add(this.stmtClear2 = new RepeatableStatement(this.holder.getSQLClear2()));
-            this.statements.Add(this.stmtAdd = new RepeatableStatement(this.holder.getSQLAdd()));
-            this.statements.Add(this.stmtAdd2 = new RepeatableStatement(this.holder.getSQLAdd2()));
-            this.statements.Add(this.stmtGetWork = new RepeatableStatement(this.holder.getSQLGetWork()));
-            this.statements.Add(this.stmtGetWork2 = new RepeatableStatement(this.holder.getSQLGetWork2()));
-            this.statements
-                .Add(this.stmtWorkloadEmpty = new RepeatableStatement(this.holder.getSQLWorkloadEmpty()));
-            this.statements.Add(this.stmtSetWorkloadStatus = new RepeatableStatement(
-                this.holder.getSQLSetWorkloadStatus()));
-            this.statements.Add(this.stmtSetWorkloadStatus2 = new RepeatableStatement(
-                this.holder.getSQLSetWorkloadStatus2()));
-            this.statements.Add(this.stmtGetDepth = new RepeatableStatement(this.holder.getSQLGetDepth()));
-            this.statements.Add(this.stmtGetSource = new RepeatableStatement(this.holder.getSQLGetSource()));
-            this.statements.Add(this.stmtResume = new RepeatableStatement(this.holder.getSQLResume()));
-            this.statements.Add(this.stmtResume2 = new RepeatableStatement(this.holder.getSQLResume2()));
-            this.statements
-                .Add(this.stmtGetWorkloadID = new RepeatableStatement(this.holder.getSQLGetWorkloadID()));
-            this.statements.Add(this.stmtGetHostID = new RepeatableStatement(this.holder.getSQLGetHostID()));
-            this.statements.Add(this.stmtGetNextHost = new RepeatableStatement(this.holder.getSQLGetNextHost()));
-            this.statements
-                .Add(this.stmtSetHostStatus = new RepeatableStatement(this.holder.getSQLSetHostStatus()));
-            this.statements.Add(this.stmtGetHost = new RepeatableStatement(this.holder.getSQLGetHost()));
+            this.stmtClear = this.connection.CreateStatement(this.holder
+                .getSQLClear());
+            this.stmtClear2 = this.connection.CreateStatement(this.holder
+                    .getSQLClear2());
+            this.stmtAdd = this.connection.CreateStatement(this.holder.getSQLAdd());
+            this.stmtAdd2 = this.connection.CreateStatement(this.holder
+                    .getSQLAdd2());
+            this.stmtGetWork = this.connection.CreateStatement(this.holder
+                    .getSQLGetWork());
+            this.stmtGetWork2 = this.connection.CreateStatement(this.holder
+                    .getSQLGetWork2());
+            this.stmtWorkloadEmpty = this.connection.CreateStatement(this.holder
+                    .getSQLWorkloadEmpty());
+            this.stmtSetWorkloadStatus = this.connection
+                    .CreateStatement(this.holder.getSQLSetWorkloadStatus());
+            this.stmtSetWorkloadStatus2 = this.connection
+                    .CreateStatement(this.holder.getSQLSetWorkloadStatus2());
+            this.stmtGetDepth = this.connection.CreateStatement(this.holder
+                    .getSQLGetDepth());
+            this.stmtGetSource = this.connection.CreateStatement(this.holder
+                    .getSQLGetSource());
+            this.stmtResume = this.connection.CreateStatement(this.holder
+                    .getSQLResume());
+            this.stmtResume2 = this.connection.CreateStatement(this.holder
+                    .getSQLResume2());
+            this.stmtGetWorkloadID = this.connection.CreateStatement(this.holder
+                    .getSQLGetWorkloadID());
+            this.stmtGetHostID = this.connection.CreateStatement(this.holder
+                    .getSQLGetHostID());
+            this.stmtGetNextHost = this.connection.CreateStatement(this.holder
+                    .getSQLGetNextHost());
+            this.stmtSetHostStatus = this.connection.CreateStatement(this.holder
+                    .getSQLSetHostStatus());
+            this.stmtGetHost = this.connection.CreateStatement(this.holder
+                    .getSQLGetHost());
 
             try
             {

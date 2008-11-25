@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.Neural.Activation
 {
-    class ActivationLinear: IActivationFunction
+    public class ActivationLinear: IActivationFunction
     {
         public String Description
         {

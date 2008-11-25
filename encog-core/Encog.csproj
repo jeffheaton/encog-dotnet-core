@@ -55,14 +55,14 @@
     <Compile Include="Bot\RSS\RSS.cs" />
     <Compile Include="Bot\RSS\RSSItem.cs" />
     <Compile Include="Bot\Spider\Filter\RobotsFilter.cs" />
-    <Compile Include="Bot\Spider\Filter\SpiderFilter.cs" />
+    <Compile Include="Bot\Spider\Filter\ISpiderFilter.cs" />
     <Compile Include="Bot\Spider\Logging\Logger.cs" />
     <Compile Include="Bot\Spider\Spider.cs" />
     <Compile Include="Bot\Spider\SpiderException.cs" />
     <Compile Include="Bot\Spider\SpiderInputStream.cs" />
     <Compile Include="Bot\Spider\SpiderOptions.cs" />
     <Compile Include="Bot\Spider\SpiderParseHTML.cs" />
-    <Compile Include="Bot\Spider\SpiderReportable.cs" />
+    <Compile Include="Bot\Spider\ISpiderReportable.cs" />
     <Compile Include="Bot\Spider\Workload\Memory\MemoryWorkloadManager.cs" />
     <Compile Include="Bot\Spider\Workload\Memory\URLStatus.cs" />
     <Compile Include="Bot\Spider\Workload\SQL\Oracle\OracleHolder.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="Bot\Spider\Workload\SQL\SQLWorkloadManager.cs" />
     <Compile Include="Bot\Spider\Workload\SQL\Status.cs" />
     <Compile Include="Bot\Spider\Workload\WorkloadException.cs" />
-    <Compile Include="Bot\Spider\Workload\WorkloadManager.cs" />
+    <Compile Include="Bot\Spider\Workload\IWorkloadManager.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="Matrix\BiPolarUtil.cs" />
     <Compile Include="Matrix\Matrix.cs" />

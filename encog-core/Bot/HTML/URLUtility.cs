@@ -45,7 +45,7 @@ namespace Encog.Bot.HTML
         /// <param name="url">The URL found.</param>
         /// <param name="stripFragment">Should fragments be stripped.  Fragments are the part of a URL after the # sign.  They do not specify actual pages, but rather part of a page.  As a result, they are usually not needed by a spider or bot.</param>
         /// <returns>The constructed URL.</returns>
-        public static Uri constructURL(Uri baseURL, String url, bool stripFragment)
+        public static Uri ConstructURL(Uri baseURL, String url, bool stripFragment)
         {
             Uri result = new Uri(baseURL, url);
             String file = result.PathAndQuery;
@@ -71,7 +71,7 @@ namespace Encog.Bot.HTML
                 sb.Append("443");
             }
 
-            if( !file.StartsWith("/") )
+            if (!file.StartsWith("/"))
                 sb.Append('/');
             sb.Append(file);
 
@@ -91,7 +91,7 @@ namespace Encog.Bot.HTML
         /// </summary>
         /// <param name="url">The URL</param>
         /// <returns>True if the URL contains invalid characters.</returns>
-        public static bool containsInvalidURLCharacters(String url)
+        public static bool ContainsInvalidURLCharacters(String url)
         {
             for (int i = 0; i < url.Length; i++)
             {
@@ -104,22 +104,18 @@ namespace Encog.Bot.HTML
             return false;
         }
 
-        /**
-      * Convert a filename for local storage. Also create the
-      * directory tree.
-      * 
-      * @param base
-      *          The local path that forms the base of the
-      *          downloaded web tree.
-      * @param url
-      *          The URL path.
-      * @param mkdir
-      *          True if a directory structure should be created
-      *          to support this file.  Directories will only be
-      *          created, if needed.
-      * @return The resulting local path to store to.
-      */
-        public static String convertFilename(String basePath, Uri url, bool mkdir)
+        /// <summary>
+        /// Convert a filename for local storage. Also create the
+        /// directory tree.
+        /// </summary>
+        /// <param name="basePath">The local path that forms the base of the
+        /// downloaded web tree.</param>
+        /// <param name="url">The URL path.</param>
+        /// <param name="mkdir">True if a directory structure should be created
+        /// to support this file.  Directories will only be
+        /// created, if needed.</param>
+        /// <returns></returns>
+        public static String ConvertFilename(String basePath, Uri url, bool mkdir)
         {
             String result = basePath;
 
@@ -135,7 +131,7 @@ namespace Encog.Bot.HTML
             String filename = url.Segments[lastSegment];
             if (filename.Equals('/'))
                 filename = indexFile;
-            
+
             for (int i = 0; i < lastSegment; i++)
             {
                 String segment = url.Segments[i];
@@ -156,14 +152,14 @@ namespace Encog.Bot.HTML
                     Directory.CreateDirectory(result);
                 filename = indexFile;
             }
-            else if (filename.IndexOf('.')==-1)
+            else if (filename.IndexOf('.') == -1)
             {
                 filename = "/" + indexFile;
             }
-           
+
 
             result = Path.Combine(result, filename);
-            
+
             result = result.Replace('?', '_');
             return result;
         }

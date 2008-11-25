@@ -44,8 +44,8 @@ namespace Encog.Neural.NeuralData.CSV
                         ideal = new BasicNeuralData(this.owner.IdealSize);
                         for (int i = 0; i < this.owner.IdealSize; i++)
                         {
-                            ideal[i] = double.Parse(this.reader.Get(i))
-                                    + this.owner.InputSize;
+                            ideal[i] = double.Parse(this.reader.Get(i
+                                    + this.owner.InputSize));
                         }
                     }
 

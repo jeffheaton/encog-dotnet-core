@@ -31,7 +31,7 @@ namespace Encog.Bot.Spider.Filter
     /// <summary>
     /// This filter causes the spider so skip URL's from a robots.txt file.
     /// </summary>
-    class RobotsFilter : SpiderFilter
+    public class RobotsFilter : ISpiderFilter
     {
         /// <summary>
         /// Returns a list of URL's to be excluded.

@@ -59,7 +59,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// What is the date for the first temporal point.
         /// </summary>
-        private DateTime startingPoint;
+        private DateTime startingPoint = DateTime.MinValue;
 
         /// <summary>
         /// What is the granularity of the temporal points? Days, months, years,
@@ -114,6 +114,10 @@ namespace Encog.Neural.NeuralData.Temporal
             {
                 return this.lowSequence;
             }
+            set
+            {
+                this.lowSequence = value;
+            }
         }
 
         public virtual int HighSequence
@@ -121,6 +125,10 @@ namespace Encog.Neural.NeuralData.Temporal
             get
             {
                 return this.highSequence;
+            }
+            set
+            {
+                this.highSequence = value;
             }
         }
 
@@ -295,7 +303,7 @@ namespace Encog.Neural.NeuralData.Temporal
         {
             int sequence;
 
-            if (startingPoint != null)
+            if (startingPoint != DateTime.MinValue )
             {
                 TimeSpanUtil span = new TimeSpanUtil(this.startingPoint, when);
                 sequence = (int)span.GetSpan(this.sequenceGrandularity);

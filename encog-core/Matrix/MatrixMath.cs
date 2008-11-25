@@ -185,7 +185,7 @@ namespace Encog.Matrix
         /// <returns>The dot product of the two matrixes.</returns>
         public static double DotProduct(Matrix a, Matrix b)
         {
-            if (!a.isVector() || !b.isVector())
+            if (!a.IsVector() || !b.IsVector())
             {
                 throw new MatrixError(
                         "To take the dot product, both matrixes must be vectors.");
@@ -354,7 +354,7 @@ namespace Encog.Matrix
         /// <returns>The vector length.</returns>
         public static double VectorLength(Matrix input)
         {
-            if (!input.isVector())
+            if (!input.IsVector())
             {
                 throw new MatrixError(
                         "Can only take the vector length of a vector.");

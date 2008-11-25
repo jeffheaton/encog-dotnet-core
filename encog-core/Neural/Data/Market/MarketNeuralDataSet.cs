@@ -61,9 +61,13 @@ namespace Encog.Neural.NeuralData.Market
         public override TemporalPoint CreatePoint(DateTime when)
         {
             int sequence = GetSequenceFromDate(when);
-            TemporalPoint result = this.pointIndex[sequence];
+            TemporalPoint result = null;
 
-            if (result == null)
+            if (pointIndex.ContainsKey(sequence))
+            {
+                result = this.pointIndex[sequence];
+            }
+            else
             {
                 result = base.CreatePoint(when);
                 this.pointIndex[result.Sequence] = result;
@@ -93,7 +97,7 @@ namespace Encog.Neural.NeuralData.Market
         public void Load(DateTime begin, DateTime end)
         {
             // define the starting point if it is not already defined
-            if (this.StartingPoint == null)
+            if (this.StartingPoint == DateTime.MinValue)
             {
                 this.StartingPoint = begin;
             }

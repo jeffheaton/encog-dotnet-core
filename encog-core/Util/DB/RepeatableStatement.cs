@@ -200,7 +200,6 @@ namespace Encog.Util.DB
                     }
                     catch (Exception)
                     {
-
                         this.manager.TryOpen();
                     }
                 }
@@ -225,18 +224,20 @@ namespace Encog.Util.DB
             try
             {
                 Monitor.Enter(this);
-                if (this.statementCache.Count == 0)
+                //if (this.statementCache.Count == 0)
                 {
                     result = this.manager.Connection.CreateCommand();
                     result.CommandText = this.sql;
                     result.Prepare();
+                    result.Connection = this.manager.Connection;
                 }
-                else
+                /*else
                 {
                     result = this.statementCache[0];
                     this.statementCache.Remove(result);
                     result.Parameters.Clear();
-                }
+                    result.Connection = this.manager.Connection;
+                }*/
 
             }
             finally
@@ -259,7 +260,7 @@ namespace Encog.Util.DB
         private void ReleaseStatement(DbCommand stmt)
         {
             stmt.Dispose();
-            this.statementCache.Add(stmt);
+            //this.statementCache.Add(stmt);
         }
 
     }

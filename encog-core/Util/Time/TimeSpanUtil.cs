@@ -56,7 +56,7 @@ namespace Encog.Util.Time
         private long GetSpanSeconds()
         {
             TimeSpan span = this.to.Subtract(this.from);
-            return span.Seconds;
+            return span.Ticks/TimeSpan.TicksPerSecond;
         }
 
         private long GetSpanMinutes()

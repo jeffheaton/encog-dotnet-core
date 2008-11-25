@@ -65,5 +65,19 @@ namespace Encog.Neural.Data.Basic
                 return this.data.Length;
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append('[');
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (i > 0)
+                    result.Append(',');
+                result.Append(this.Data[i]);
+            }
+            result.Append(']');
+            return result.ToString();
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Encog.Bot.Spider.Workload.Memory
     /// workload manager only supports spidering against a single
     /// host.
     /// </summary>
-    public class MemoryWorkloadManager : WorkloadManager
+    public class MemoryWorkloadManager : IWorkloadManager
     {
         /// <summary>
         /// The current workload, a map between URL and URLStatus
