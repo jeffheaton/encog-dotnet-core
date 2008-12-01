@@ -40,6 +40,7 @@ namespace Encog.Neural.Data.Basic
 
             public BasicNeuralIterator(BasicNeuralDataSet owner)
             {
+                this.current = -1;
                 this.owner = owner;
             }
 
@@ -60,6 +61,10 @@ namespace Encog.Neural.Data.Basic
             {
                 get
                 {
+                    if (this.current < 0)
+                    {
+                        throw new InvalidOperationException("Must call MoveNext before reading Current.");
+                    }
                     return this.owner.data[this.current];
                 }
             }
@@ -74,7 +79,7 @@ namespace Encog.Neural.Data.Basic
 
             public void Reset()
             {
-                this.current = 0;
+                this.current = -1;
             }
         }
 

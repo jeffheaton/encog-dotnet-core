@@ -50,10 +50,9 @@ namespace Encog.Neural.Persist.Persistors
 			 XmlTextWriter hd) {
 			BasicLayer layer = (BasicLayer) obj;
 
-			EncogPersistedCollection.CreateAttributes(hd, obj);
-			EncogPersistedCollection.AddAttribute(hd, "neuronCount",""+layer.NeuronCount);
-
             hd.WriteStartElement(layer.GetType().Name);
+            EncogPersistedCollection.CreateAttributes(hd, obj);
+            EncogPersistedCollection.AddAttribute(hd, "neuronCount", "" + layer.NeuronCount);
 
 			if (layer.HasMatrix()) {
 

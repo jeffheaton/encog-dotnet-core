@@ -154,7 +154,7 @@ namespace Encog.Neural.Persist.Persistors
 
                 if (child.Name.Equals(this.valueXML))
                 {
-                    String str = child.Value;
+                    String str = child.InnerXml;
                     double d = Double.Parse(str);
                     list.Add(d);
                 }

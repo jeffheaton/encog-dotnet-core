@@ -52,10 +52,9 @@ namespace Encog.Neural.Persist.Persistors
 	public void Save( IEncogPersistedObject obj,
 			 XmlTextWriter hd) {
 		
-			 EncogPersistedCollection.CreateAttributes(hd,obj);
-			
 			 BasicNetwork network = (BasicNetwork) obj;
              hd.WriteStartElement(network.GetType().Name);
+             EncogPersistedCollection.CreateAttributes(hd, obj);
              hd.WriteStartElement("layers");
 
 			foreach ( ILayer layer in network.Layers) {
@@ -66,7 +65,7 @@ namespace Encog.Neural.Persist.Persistors
 					persistor.Save(epo, hd);
 				}
 			}
-            hd.WriteEndElement();
+            //hd.WriteEndElement();
             hd.WriteEndElement();
 
 	}

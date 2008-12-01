@@ -54,15 +54,13 @@ namespace Encog.Neural.Persist.Persistors
         {
             FeedforwardLayer layer = (FeedforwardLayer)obj;
 
+            hd.WriteStartElement(layer.GetType().Name);
             EncogPersistedCollection.CreateAttributes(hd, layer);
             EncogPersistedCollection.AddAttribute(hd, "neuronCount", "" + layer.NeuronCount);
 
-            hd.WriteStartElement(layer.GetType().Name);
-
-            EncogPersistedCollection.AddAttribute(hd, "native", layer.ActivationFunction.GetType().ToString());
+            hd.WriteStartElement("activation");
             EncogPersistedCollection.AddAttribute(hd, "name", layer.ActivationFunction.GetType().Name);
-
-            hd.WriteEndElement();
+            EncogPersistedCollection.AddAttribute(hd, "native", layer.ActivationFunction.GetType().FullName);
             hd.WriteEndElement();
 
             if (layer.HasMatrix())

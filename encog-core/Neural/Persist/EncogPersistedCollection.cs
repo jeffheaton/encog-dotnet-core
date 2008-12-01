@@ -14,7 +14,7 @@ namespace Encog.Neural.Persist
     /// This allows the various neural networks and some data sets to be peristed.
     /// They are persisted to an XML form.
     /// </summary>
-    class EncogPersistedCollection
+    public class EncogPersistedCollection
     {
         /// <summary>
         /// Create a persistor object.  These objects know how to persist
@@ -24,7 +24,7 @@ namespace Encog.Neural.Persist
         /// <returns>The persistor for the specified class.</returns>
         public static IPersistor CreatePersistor(String className)
         {
-            String name = className + "Persistor";
+            String name = "Encog.Neural.Persist.Persistors." + className + "Persistor";
             IPersistor persistor = (IPersistor)Assembly.GetExecutingAssembly().CreateInstance(name);
             return persistor;
         }
@@ -188,11 +188,15 @@ namespace Encog.Neural.Persist
             XmlTextWriter hd = new XmlTextWriter(os, Encoding.ASCII);
 
             hd.WriteStartDocument();
+            hd.WriteStartElement("Document");
 
             SaveHeader(hd);
             SaveObjects(hd);
 
+            hd.WriteEndElement();
             hd.WriteEndDocument();
+
+            hd.Close();
         }
 
         /// <summary>

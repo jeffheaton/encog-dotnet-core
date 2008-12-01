@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Encog.Neural.Persist
 {
-    interface IPersistor
+    public interface IPersistor
     {
         /// <summary>
         /// Load from the specified node. 
