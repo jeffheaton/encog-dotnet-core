@@ -1,4 +1,4 @@
-﻿// Encog Neural Network and Bot Library for DotNet v0.5
+﻿// Encog Neural Network and Bot Library v1.x (DotNet)
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-cs/
 // 

@@ -1,4 +1,4 @@
-﻿// Encog Neural Network and Bot Library for DotNet v0.5
+﻿// Encog Neural Network and Bot Library v1.x (DotNet)
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-cs/
 // 
@@ -20,7 +20,6 @@
 // License along with this software; if not, write to the Free
 // Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-//
 using System;
 using System.Collections.Generic;
 using System.Text;
