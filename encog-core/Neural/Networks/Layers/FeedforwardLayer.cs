@@ -28,9 +28,19 @@ using Encog.Neural.Activation;
 using Encog.Neural.NeuralData;
 using Encog.Matrix;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Layers
 {
+    /// <summary>
+    /// FeedforwardLayer: This class represents one layer in a feed forward neural
+    /// network. This layer could be input, output, or hidden, depending on its
+    /// placement inside of the FeedforwardNetwork class.
+    /// 
+    /// An activation function can also be specified. Usually all layers in a neural
+    /// network will use the same activation function. By default this class uses the
+    /// sigmoid activation function.
+    /// </summary>
     [Serializable]
     public class FeedforwardLayer : BasicLayer
     {
@@ -115,6 +125,9 @@ namespace Encog.Neural.Networks.Layers
             return result;
         }
 
+        /// <summary>
+        /// The activation function for this layer.
+        /// </summary>
         public IActivationFunction ActivationFunction
         {
             get
@@ -154,6 +167,9 @@ namespace Encog.Neural.Networks.Layers
         }
 
 
+        /// <summary>
+        /// The weight matrix for this layer.
+        /// </summary>
         public override Matrix.Matrix WeightMatrix
         {
             get
@@ -174,6 +190,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// Get the next layer.
+        /// </summary>
         public override ILayer Next
         {
             set

@@ -29,6 +29,11 @@ using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Data.Basic
 {
+    /// <summary>
+    /// Basic implementation of the NeuralData interface that stores the
+    /// data in an array.  
+    /// </summary>
+    [Serializable]
     public class BasicNeuralData : INeuralData
     {
         private double[] data;
@@ -56,6 +61,11 @@ namespace Encog.Neural.Data.Basic
             this.data = new double[size];
         }
 
+        /// <summary>
+        /// Access the data by index.
+        /// </summary>
+        /// <param name="x">The index to access.</param>
+        /// <returns></returns>
         public virtual double this[int x]
         {
             get
@@ -68,6 +78,9 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Get the data as an array.
+        /// </summary>
         public virtual double[] Data
         {
             get
@@ -80,6 +93,9 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Get the count of data items.
+        /// </summary>
         public virtual int Count
         {
             get
@@ -88,6 +104,10 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Convert the object to a string.
+        /// </summary>
+        /// <returns>The object as a string.</returns>
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();

@@ -29,13 +29,26 @@ using Encog.Neural.NeuralData;
 using Encog.Util;
 using Encog.Matrix;
 using Encog.Neural.Networks.Layers;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks
 {
+    /// <summary>
+    /// BasicNetwork: This class implements a neural
+    /// network. This class works in conjunction the Layer classes. Layers
+    /// are added to the BasicNetwork to specify the structure of the
+    /// neural network.
+    /// 
+    /// The first layer added is the input layer, the final layer added is the output
+    /// layer. Any layers added between these two layers are the hidden layers.
+    /// </summary>
     [Serializable]
     public class BasicNetwork : INetwork, IEncogPersistedObject, ICloneable
     {
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public String Name
         {
             get
@@ -48,6 +61,9 @@ namespace Encog.Neural.Networks
             }
         }
 
+        /// <summary>
+        /// The description for this object.
+        /// </summary>
         public String Description
         {
             get
@@ -229,6 +245,9 @@ namespace Encog.Neural.Networks
             return true;
         }
 
+        /// <summary>
+        /// The number of hidden layers.
+        /// </summary>
         public int HiddenLayerCount
         {
             get
@@ -237,6 +256,9 @@ namespace Encog.Neural.Networks
             }
         }
 
+        /// <summary>
+        /// Get the hidden layers.
+        /// </summary>
         public ICollection<ILayer> HiddenLayers
         {
             get
@@ -253,6 +275,9 @@ namespace Encog.Neural.Networks
             }
         }
 
+        /// <summary>
+        /// Get the input layer.
+        /// </summary>
         public ILayer InputLayer
         {
             get
@@ -261,6 +286,9 @@ namespace Encog.Neural.Networks
             }
         }
 
+        /// <summary>
+        /// Get all of the layers.
+        /// </summary>
         public IList<ILayer> Layers
         {
             get
@@ -269,7 +297,9 @@ namespace Encog.Neural.Networks
             }
         }
 
-
+        /// <summary>
+        /// Get the output layer.
+        /// </summary>
         public ILayer OutputLayer
         {
             get
@@ -278,6 +308,9 @@ namespace Encog.Neural.Networks
             }
         }
 
+        /// <summary>
+        /// Get the size of the weight matrix.
+        /// </summary>
         public int WeightMatrixSize
         {
             get

@@ -27,14 +27,23 @@ using System.Text;
 
 namespace Encog.Neural.Persist
 {
+    /// <summary>
+    /// An object that can be stored to an Encog XML file.
+    /// </summary>
     public interface IEncogPersistedObject
     {
+        /// <summary>
+        /// The description of this object.  This is displayed in the Encog Workbench.
+        /// </summary>
         String Description
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The name used to identify this object.
+        /// </summary>
         String Name
         {
             get;

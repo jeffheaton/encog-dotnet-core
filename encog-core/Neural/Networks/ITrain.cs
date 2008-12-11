@@ -28,6 +28,9 @@ using System.Text;
 
 namespace Encog.Neural.Networks.Training
 {
+    /// <summary>
+    /// A class that can train a neural network.
+    /// </summary>
     public interface ITrain
     {
         /// <summary>

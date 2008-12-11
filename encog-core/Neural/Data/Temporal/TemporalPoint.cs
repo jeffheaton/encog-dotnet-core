@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Temporal
 {
+    /// <summary>
+    /// A point in tme for a temporal data set.
+    /// </summary>
     public class TemporalPoint : IComparable<TemporalPoint>
     {
 
@@ -49,6 +52,9 @@ namespace Encog.Neural.NeuralData.Temporal
             this.data = new double[size];
         }
 
+        /// <summary>
+        /// Allowes indexed access to the data.
+        /// </summary>
         public double[] Data
         {
             get
@@ -61,6 +67,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The sequence number, used to sort.
+        /// </summary>
         public int Sequence
         {
             get
@@ -95,6 +104,11 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// Allowes indexed access to the data.
+        /// </summary>
+        /// <param name="x">The index.</param>
+        /// <returns>The data at the specified index.</returns>
         public double this[int x]
         {
             get

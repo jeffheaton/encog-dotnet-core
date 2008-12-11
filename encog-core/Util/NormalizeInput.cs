@@ -35,9 +35,19 @@ namespace Encog.Util
     /// </summary>
     public enum NormalizationType
     {
-        Z_AXIS, MULTIPLICATIVE
+        /// <summary>
+        /// Z-Axis normalization.
+        /// </summary>
+        Z_AXIS, 
+        /// <summary>
+        /// Multiplicative normalization.
+        /// </summary>
+        MULTIPLICATIVE
     }
 
+    /// <summary>
+    /// NormalizeInput: Input into a Self Organizing Map must be normalized.
+    /// </summary>
     public class NormalizeInput
     {
         /// <summary>

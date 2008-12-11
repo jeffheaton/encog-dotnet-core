@@ -28,6 +28,9 @@ using System.Xml;
 
 namespace Encog.Neural.Persist
 {
+    /// <summary>
+    /// An helper to persist classes that implement IEncogPersistedObject.
+    /// </summary>
     public interface IPersistor
     {
         /// <summary>

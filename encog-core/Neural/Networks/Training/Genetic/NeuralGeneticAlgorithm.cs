@@ -31,6 +31,19 @@ using Encog.Solve.Genetic;
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
+    /// <summary>
+    /// NeuralGeneticAlgorithm: Implements a genetic algorithm that 
+    /// allows a feedforward neural network to be trained using a 
+    /// genetic algorithm.  This algorithm is for a feed forward neural 
+    /// network.  
+    /// 
+    /// This class is abstract.  If you wish to train the neural
+    /// network using training sets, you should use the 
+    /// TrainingSetNeuralGeneticAlgorithm class.  If you wish to use 
+    /// a cost function to train the neural network, then
+    /// implement a subclass of this one that properly calculates
+    /// the cost.
+    /// </summary>
     public class NeuralGeneticAlgorithm : GeneticAlgorithm<double>, ITrain
     {
         /// <summary>

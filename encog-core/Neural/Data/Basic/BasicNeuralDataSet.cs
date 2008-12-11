@@ -29,8 +29,17 @@ using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Data.Basic
 {
+    /// <summary>
+    /// Basic implementation of the NeuralDataSet class.  This class simply
+    /// stores the neural data in an ArrayList.  This class is memory based, 
+    /// so large enough datasets could cause memory issues.  Many other dataset
+    /// types extend this class.
+    /// </summary>
     public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
+        /// <summary>
+        /// The description of this object.
+        /// </summary>
         public virtual String Description
         {
             get
@@ -43,6 +52,9 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public virtual String Name
         {
             get
@@ -55,17 +67,27 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
-        public class BasicNeuralIterator : IEnumerator<INeuralDataPair>
+        /// <summary>
+        /// The enumerator for the basic neural data set.
+        /// </summary>
+        public class BasicNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private int current;
             private BasicNeuralDataSet owner;
 
-            public BasicNeuralIterator(BasicNeuralDataSet owner)
+            /// <summary>
+            /// Construct an enumerator.
+            /// </summary>
+            /// <param name="owner">The owner of the enumerator.</param>
+            public BasicNeuralEnumerator(BasicNeuralDataSet owner)
             {
                 this.current = -1;
                 this.owner = owner;
             }
 
+            /// <summary>
+            /// The current data item.
+            /// </summary>
             public INeuralDataPair Current
             {
                 get
@@ -74,11 +96,17 @@ namespace Encog.Neural.Data.Basic
                 }
             }
 
+            /// <summary>
+            /// Dispose of this object.
+            /// </summary>
             public void Dispose()
             {
                 // nothing needed
             }
 
+            /// <summary>
+            /// The current item.
+            /// </summary>
             object System.Collections.IEnumerator.Current
             {
                 get
@@ -91,6 +119,10 @@ namespace Encog.Neural.Data.Basic
                 }
             }
 
+            /// <summary>
+            /// Move to the next item.
+            /// </summary>
+            /// <returns>True if there is a next item.</returns>
             public bool MoveNext()
             {
                 this.current++;
@@ -99,12 +131,18 @@ namespace Encog.Neural.Data.Basic
                 return true;
             }
 
+            /// <summary>
+            /// Reset to the beginning.
+            /// </summary>
             public void Reset()
             {
                 this.current = -1;
             }
         }
 
+        /// <summary>
+        /// Access to the list of data items.
+        /// </summary>
         public virtual IList<INeuralDataPair> Data
         {
             get
@@ -126,8 +164,8 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The enumerators created for this list.
         /// </summary>
-        private IList<BasicNeuralIterator> enumerators =
-            new List<BasicNeuralIterator>();
+        private IList<BasicNeuralEnumerator> enumerators =
+            new List<BasicNeuralEnumerator>();
 
         private String description;
         private String name;
@@ -161,10 +199,16 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Construct a basic neural data set.
+        /// </summary>
         public BasicNeuralDataSet()
         {
         }
 
+        /// <summary>
+        /// Get the ideal size, or zero for unsupervised.
+        /// </summary>
         public virtual int IdealSize
         {
             get
@@ -174,6 +218,9 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Get the input size.
+        /// </summary>
         public virtual int InputSize
         {
             get
@@ -183,36 +230,60 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Add the specified data to the set.  Add unsupervised data.
+        /// </summary>
+        /// <param name="data1">The data to add to the set.</param>
         public virtual void Add(INeuralData data1)
         {
             INeuralDataPair pair = new BasicNeuralDataPair(data1, null);
             this.data.Add(pair);
         }
 
+        /// <summary>
+        /// Add supervised data to the set.
+        /// </summary>
+        /// <param name="inputData">The input data.</param>
+        /// <param name="idealData">The ideal data.</param>
         public virtual void Add(INeuralData inputData, INeuralData idealData)
         {
             INeuralDataPair pair = new BasicNeuralDataPair(inputData, idealData);
             this.data.Add(pair);
         }
 
+        /// <summary>
+        /// Add a pair to the set.
+        /// </summary>
+        /// <param name="inputData">The pair to add to the set.</param>
         public virtual void Add(INeuralDataPair inputData)
         {
             this.data.Add(inputData);
         }
 
+        /// <summary>
+        /// Close the neural data set.
+        /// </summary>
         public virtual void Close()
         {
             // not needed
         }
 
+        /// <summary>
+        /// Get an enumerator to access the data with.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         public IEnumerator<INeuralDataPair> GetEnumerator()
         {
-            return new BasicNeuralIterator(this);
+            return new BasicNeuralEnumerator(this);
         }
 
+        /// <summary>
+        /// Get an enumerator to access the data with.
+        /// </summary>
+        /// <returns>An enumerator.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new BasicNeuralIterator(this);
+            return new BasicNeuralEnumerator(this);
         }
     }
 }

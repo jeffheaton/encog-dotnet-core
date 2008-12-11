@@ -28,9 +28,14 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.Matrix;
 using Encog.Util;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.SOM
 {
+    /// <summary>
+    /// TrainSelfOrganizingMap: Implements an unsupervised training algorithm for use
+    /// with a Self Organizing Map.
+    /// </summary>
     public class TrainSelfOrganizingMap : ITrain
     {
         /// <summary>
@@ -479,11 +484,17 @@ namespace Encog.Neural.Networks.Training.SOM
             matrix[row, this.inputNeuronCount] = 0;
         }
 
+        /// <summary>
+        /// The trained neural network.
+        /// </summary>
         public BasicNetwork TrainedNetwork
         {
             get { return this.network; }
         }
 
+        /// <summary>
+        /// The error.
+        /// </summary>
         public double Error
         {
             get { return this.bestError; }

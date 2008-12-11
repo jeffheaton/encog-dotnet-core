@@ -31,6 +31,9 @@ using Encog.Matrix;
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
+    /// <summary>
+    /// This class loads financial data from Yahoo.
+    /// </summary>
     abstract public class NeuralChromosome : Chromosome<double>
     {
         /// <summary>

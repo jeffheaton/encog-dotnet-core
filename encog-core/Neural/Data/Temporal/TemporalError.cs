@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Temporal
 {
+    /// <summary>
+    /// An error occured related to the temporal data set.
+    /// </summary>
     public class TemporalError : EncogError
     {
         /// <summary>

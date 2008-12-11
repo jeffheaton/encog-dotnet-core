@@ -176,8 +176,7 @@ namespace Encog.Neural.Prune
         /// </summary>
         /// <param name="rate">The desired learning rate.</param>
         /// <param name="momentum">The desired momentum.</param>
-        /// <param name="train">The training data.</param>
-        /// <param name="ideal">The ideal results for the training data.</param>
+        /// <param name="training">The training data.</param>
         /// <param name="maxError">The minimum error that is acceptable.</param>
         public Prune(double rate, double momentum,
                  INeuralDataSet training,
@@ -194,8 +193,7 @@ namespace Encog.Neural.Prune
         /// Constructor that is designed to setup for a selective prune.
         /// </summary>
         /// <param name="network">The neural network that we wish to prune.</param>
-        /// <param name="train">The training set input data.</param>
-        /// <param name="ideal">The ideal outputs for the training set input data.</param>
+        /// <param name="training">The training set data.</param>
         /// <param name="maxError">The maximum allowed error rate.</param>
         public Prune(BasicNetwork network, INeuralDataSet training, double maxError)
         {

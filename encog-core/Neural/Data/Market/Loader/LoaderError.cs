@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
+    /// <summary>
+    /// The base error for when market data is loaded.
+    /// </summary>
     public class LoaderError : MarketError
     {
         /// <summary>

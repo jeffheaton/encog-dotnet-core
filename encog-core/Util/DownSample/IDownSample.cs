@@ -28,55 +28,102 @@ using System.Drawing;
 
 namespace Encog.Util.DownSample
 {
+    /// <summary>
+    /// A class that is able to downsample an image.
+    /// </summary>
     public interface IDownSample
     {
+        /// <summary>
+        /// The bitmap to downsample.
+        /// </summary>
         Bitmap DownsampleImage
         {
             get;
         }
 
+        /// <summary>
+        /// The x-ratio for the downsample.
+        /// </summary>
         double RatioX
         {
             get;
         }
 
+        /// <summary>
+        /// The y-ratio for the downsample.
+        /// </summary>
         double RatioY
         {
             get;
         }
-
+        
+        /// <summary>
+        /// The height of the image.
+        /// </summary>
         int ImageHeight
         {
             get;
         }
 
+        /// <summary>
+        /// The width of the image.
+        /// </summary>
         int ImageWidth
         {
             get;
         }
 
+        /// <summary>
+        /// The left boundary of the downsample.
+        /// </summary>
         int DownSampleLeft
         {
             get;
         }
 
+        /// <summary>
+        /// The right boundary of the downsample.
+        /// </summary>
         int DownSampleRight
         {
             get;
         }
 
+        /// <summary>
+        /// The top boundary of the downsample.
+        /// </summary>
         int DownSampleTop
         {
             get;
         }
 
+        /// <summary>
+        /// The bottom boundary of the downsample.
+        /// </summary>
         int DownSampleBottom
         {
             get;
         }
 
+        /// <summary>
+        /// Downsample the image.  This can be called multiple times.
+        /// </summary>
+        /// <param name="height">The height to downsample to.</param>
+        /// <param name="width">The width to downsample to.</param>
+        /// <returns>The downsampled array from the image.</returns>
         double[] DownSample(int height, int width);
+
+        /// <summary>
+        /// Process the specified image.  It will not be downsampled until the
+        /// DownSample method is called.
+        /// </summary>
+        /// <param name="image">The image to downsample.</param>
         void ProcessImage(Bitmap image);
+
+        /// <summary>
+        /// If you would like to trim off whitespace, this method will find the
+        /// boundaries.
+        /// </summary>
         void FindBounds();
     }
 }

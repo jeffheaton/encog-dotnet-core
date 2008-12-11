@@ -28,6 +28,10 @@ using System.Text;
 
 namespace Encog.Solve.Anneal
 {
+    /// <summary>
+    /// The basis for the simulated annealing method.
+    /// </summary>
+    /// <typeparam name="UNIT_TYPE"></typeparam>
     abstract public class SimulatedAnnealing<UNIT_TYPE>
     {
         /// <summary>
@@ -176,10 +180,21 @@ namespace Encog.Solve.Anneal
             }
         }
 
+        /// <summary>
+        /// Get a copy of the array.
+        /// </summary>
+        /// <returns>The new array copy.</returns>
         public abstract UNIT_TYPE[] GetArrayCopy();
 
+        /// <summary>
+        /// Use the specified array.
+        /// </summary>
+        /// <param name="array">The array to use.</param>
         public abstract void PutArray(UNIT_TYPE[] array);
 
+        /// <summary>
+        /// Randomize the values.
+        /// </summary>
         public abstract void Randomize();
     }
 }

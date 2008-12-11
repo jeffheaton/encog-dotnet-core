@@ -25,11 +25,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks
 {
+    /// <summary>
+    /// Interface that defines a neural network.
+    /// </summary>
     public interface INetwork
     {
+        /// <summary>
+        /// Present a pattern to the neural network.
+        /// </summary>
+        /// <param name="pattern">The input pattern to the network.</param>
+        /// <returns>The output pattern from the network.</returns>
         INeuralData Compute(INeuralData pattern);
     }
 }

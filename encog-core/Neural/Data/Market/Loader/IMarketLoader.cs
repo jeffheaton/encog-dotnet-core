@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
+    /// <summary>
+    /// A market loader for financial information.
+    /// </summary>
     public interface IMarketLoader
     {
         /// <summary>

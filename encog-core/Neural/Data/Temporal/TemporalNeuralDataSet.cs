@@ -26,9 +26,33 @@ using System.Linq;
 using System.Text;
 using Encog.Util.Time;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.Temporal
 {
+    /// <summary>
+    /// This class implements a temporal neural data set. A temporal neural dataset
+    /// is designed to use a neural network to predict.
+    /// 
+    /// A temporal dataset is a stream of data over a time range. This time range is
+    /// broken up into "points". Each point can contain one or more values. These
+    /// values are either the values that you would like to predict, or use to
+    /// predict. It is possible for a value to be both predicted and used to predict.
+    /// For example, if you were trying to predict a trend in a stock's price
+    /// fluctuations you might very well use the security price for both.
+    /// 
+    /// Each point that we have data for is stored in the TemporalPoint class. Each
+    /// TemporalPoint will contain one more data values. These data values are
+    /// described by the TemporalDataDescription class. For example, if you had five
+    /// TemporalDataDescription objects added to this class, each Temporal point
+    /// object would contain five values.
+    /// 
+    /// Points are arranged by sequence number.  No two points can have the same 
+    /// sequence numbers.  Methods are provided to allow you to add points using the
+    /// Date class.  These dates are resolved to sequence number using the level
+    /// of granularity specified for this class.  No two points can occupy the same
+    /// granularity increment.
+    /// </summary>
     public class TemporalNeuralDataSet : BasicNeuralDataSet
     {
 
@@ -90,6 +114,9 @@ namespace Encog.Neural.NeuralData.Temporal
         private TimeUnit sequenceGrandularity;
 
 
+        /// <summary>
+        /// The data descriptions.
+        /// </summary>
         public virtual IList<TemporalDataDescription> Descriptions
         {
             get
@@ -98,6 +125,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The points, or time slices to take data from.
+        /// </summary>
         public virtual IList<TemporalPoint> Points
         {
             get
@@ -106,6 +136,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// Get the size of the input window.
+        /// </summary>
         public virtual int InputWindowSize
         {
             get
@@ -118,6 +151,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The prediction window size.
+        /// </summary>
         public virtual int PredictWindowSize
         {
             get
@@ -130,6 +166,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The low value for the sequence.
+        /// </summary>
         public virtual int LowSequence
         {
             get
@@ -142,6 +181,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The high value for the sequence.
+        /// </summary>
         public virtual int HighSequence
         {
             get
@@ -154,6 +196,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The desired dataset size.
+        /// </summary>
         public virtual int DesiredSetSize
         {
             get
@@ -166,6 +211,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The number of input neurons.
+        /// </summary>
         public virtual int InputNeuronCount
         {
             get
@@ -178,6 +226,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The number of output neurons.
+        /// </summary>
         public virtual int OutputNeuronCount
         {
             get
@@ -190,6 +241,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The starting point.
+        /// </summary>
         public virtual DateTime StartingPoint
         {
             get
@@ -202,6 +256,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The size of the timeslices.
+        /// </summary>
         public virtual TimeUnit SequenceGrandularity
         {
             get
@@ -279,7 +336,7 @@ namespace Encog.Neural.NeuralData.Temporal
         {
             throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
         }
-        
+
         /// <summary>
         /// Adding directly is not supported. Rather, add temporal points and
         /// generate the training data.
@@ -325,7 +382,7 @@ namespace Encog.Neural.NeuralData.Temporal
         {
             int sequence;
 
-            if (startingPoint != DateTime.MinValue )
+            if (startingPoint != DateTime.MinValue)
             {
                 TimeSpanUtil span = new TimeSpanUtil(this.startingPoint, when);
                 sequence = (int)span.GetSpan(this.sequenceGrandularity);

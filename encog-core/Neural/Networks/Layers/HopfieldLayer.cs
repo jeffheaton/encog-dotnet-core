@@ -27,9 +27,15 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.NeuralData.Bipolar;
 using Encog.Matrix;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Layers
 {
+    /// <summary>
+    /// HopfieldLayer: This class implements a Hopfield neural network. A Hopfield
+    /// neural network is fully connected and consists of a single layer. Hopfield
+    /// neural networks are usually used for pattern recognition.
+    /// </summary>
     [Serializable]
     public class HopfieldLayer : BasicLayer
     {
@@ -80,6 +86,9 @@ namespace Encog.Neural.Networks.Layers
             return this.Fire;
         }
 
+        /// <summary>
+        /// The output pattern from this layer.
+        /// </summary>
         public new BiPolarNeuralData Fire
         {
             get

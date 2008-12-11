@@ -29,6 +29,13 @@ using Encog.Neural.Activation;
 
 namespace Encog.Neural.NeuralData.Market
 {
+    /// <summary>
+    /// This class is used to describe the type of financial data that is needed.
+    /// Each piece of data can be used for input, prediction or both. If used for
+    /// input, it will be used as data to help predict. If used for prediction, it
+    /// will be one of the values predicted. It is possible, and quite common, to use
+    /// data from both input and prediction.
+    /// </summary>
     public class MarketDataDescription : TemporalDataDescription
     {
 
@@ -77,6 +84,9 @@ namespace Encog.Neural.NeuralData.Market
 
         }
 
+        /// <summary>
+        /// The ticker symbol.
+        /// </summary>
         public TickerSymbol Ticker
         {
             get
@@ -85,6 +95,9 @@ namespace Encog.Neural.NeuralData.Market
             }
         }
 
+        /// <summary>
+        /// The data type that this is.
+        /// </summary>
         public MarketDataType DataType
         {
             get

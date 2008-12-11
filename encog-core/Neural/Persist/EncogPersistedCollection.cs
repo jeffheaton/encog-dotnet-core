@@ -89,6 +89,9 @@ namespace Encog.Neural.Persist
             this.list.Clear();
         }
 
+        /// <summary>
+        /// The version of Encog this was created with.
+        /// </summary>
         public String EncogVersion
         {
             get
@@ -97,6 +100,9 @@ namespace Encog.Neural.Persist
             }
         }
 
+        /// <summary>
+        /// The version of the encog file.
+        /// </summary>
         public int FileVersion
         {
             get
@@ -105,6 +111,9 @@ namespace Encog.Neural.Persist
             }
         }
 
+        /// <summary>
+        /// The list of objects in the file.
+        /// </summary>
         public IList<IEncogPersistedObject> List
         {
             get
@@ -113,6 +122,9 @@ namespace Encog.Neural.Persist
             }
         }
 
+        /// <summary>
+        /// The platform that this collection was created on.
+        /// </summary>
         public String Platform
         {
             get
@@ -276,6 +288,12 @@ namespace Encog.Neural.Persist
 
         }
 
+        /// <summary>
+        /// Add the specified XML attribute.
+        /// </summary>
+        /// <param name="hd">The XML writer.</param>
+        /// <param name="name">The name of the attribute.</param>
+        /// <param name="value">The value of the attribute.</param>
         public static void AddAttribute(XmlTextWriter hd, String name, String value)
         {
             String v = value;
@@ -284,6 +302,11 @@ namespace Encog.Neural.Persist
             hd.WriteAttributeString(name, value);
         }
 
+        /// <summary>
+        /// Create the standard attributes. (native, name, description)
+        /// </summary>
+        /// <param name="hd">The XML writer.</param>
+        /// <param name="obj">The object to use to generate.</param>
         public static void CreateAttributes(XmlTextWriter hd, IEncogPersistedObject obj)
         {
             EncogPersistedCollection.AddAttribute(hd, "native", "" + obj.GetType().Name);

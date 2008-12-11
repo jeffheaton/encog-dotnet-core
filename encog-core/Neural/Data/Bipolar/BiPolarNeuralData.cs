@@ -25,9 +25,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Matrix;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.Bipolar
 {
+    /// <summary>
+    /// A NeuralData implementation designed to work with bipolar data.
+    /// Bipolar data contains two values.  True is stored as 1, and false
+    /// is stored as -1.
+    /// </summary>
+    [Serializable]
     public class BiPolarNeuralData : INeuralData
     {
         /// <summary>
@@ -57,6 +64,11 @@ namespace Encog.Neural.NeuralData.Bipolar
             this.data = new bool[size];
         }
 
+        /// <summary>
+        /// Allowes indexed access to the data.
+        /// </summary>
+        /// <param name="x">The index.</param>
+        /// <returns>The value at the specified index.</returns>
         public double this[int x]
         {
             get
@@ -69,6 +81,9 @@ namespace Encog.Neural.NeuralData.Bipolar
             }
         }
 
+        /// <summary>
+        /// Get the data as an array.
+        /// </summary>
         public double[] Data
         {
             get
@@ -81,6 +96,9 @@ namespace Encog.Neural.NeuralData.Bipolar
             }
         }
 
+        /// <summary>
+        /// The size of the array.
+        /// </summary>
         public int Count
         {
             get

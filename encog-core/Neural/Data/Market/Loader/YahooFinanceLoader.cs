@@ -31,6 +31,9 @@ using Encog.Util;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
+    /// <summary>
+    /// This class loads financial data from Yahoo.
+    /// </summary>
     public class YahooFinanceLoader : IMarketLoader
     {
 

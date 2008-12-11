@@ -27,9 +27,13 @@ using System.Text;
 using Encog.Neural.Persist;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Layers
 {
+    /// <summary>
+    /// Basic functionality that most of the neural layers require.
+    /// </summary>
     [Serializable]
     public class BasicLayer : ILayer, IEncogPersistedObject
     {
@@ -66,11 +70,19 @@ namespace Encog.Neural.Networks.Layers
             this.Fire = new BasicNeuralData(neuronCount);
         }
 
+        /// <summary>
+        /// Compute the values for this layer.  It is up to subclasses to implement this.
+        /// </summary>
+        /// <param name="pattern">Not used.</param>
+        /// <returns>Not used.</returns>
         public virtual INeuralData Compute(INeuralData pattern)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The next layer.
+        /// </summary>
         public virtual ILayer Next
         {
             get
@@ -83,6 +95,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The previous layer.
+        /// </summary>
         public virtual ILayer Previous
         {
             get
@@ -95,6 +110,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The output pattern.
+        /// </summary>
         public virtual INeuralData Fire
         {
             get
@@ -107,6 +125,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The number of neurons in this layer.
+        /// </summary>
         public virtual int NeuronCount
         {
             get 
@@ -115,6 +136,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The weight matrix for this layer.
+        /// </summary>
         public virtual Encog.Matrix.Matrix WeightMatrix
         {
             get
@@ -127,6 +151,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The size of this matrix, the rows times the columns.
+        /// </summary>
         public virtual int MatrixSize
         {
             get 
@@ -138,16 +165,27 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// Determine if this is an input layer.
+        /// </summary>
+        /// <returns>True if this is an input layer.</returns>
         public virtual bool IsInput()
         {
             return this.Previous == null;
         }
 
+        /// <summary>
+        /// Determine if this is a hidden layer.
+        /// </summary>
+        /// <returns>True if this is a hidden layer.</returns>
         public virtual bool IsHidden()
         {
             return this.Next != null && this.Previous != null;
         }
 
+        /// <summary>
+        /// Reset the weight matrix to random values.
+        /// </summary>
         public virtual void Reset()
         {
             if (this.WeightMatrix != null)
@@ -157,16 +195,27 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// Determine if this is an output layer.
+        /// </summary>
+        /// <returns>True if this is an output layer.</returns>
         public virtual bool IsOutput()
         {
             return this.Next == null;
         }
 
+        /// <summary>
+        /// Determine if this layer has a matrix.
+        /// </summary>
+        /// <returns>True if this layer has a matrix.</returns>
         public virtual bool HasMatrix()
         {
             return this.matrix != null;
         }
 
+        /// <summary>
+        /// The description of this layer.
+        /// </summary>
         public virtual string Description
         {
             get
@@ -179,6 +228,9 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// The name of this layer.
+        /// </summary>
         public virtual string Name
         {
             get

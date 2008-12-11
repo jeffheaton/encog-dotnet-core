@@ -28,6 +28,7 @@ using Encog.Neural.NeuralData;
 using System.Xml;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Persist.Persistors
 {

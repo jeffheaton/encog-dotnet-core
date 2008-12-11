@@ -29,9 +29,28 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Backpropagation
 {
+    /// <summary>
+    /// Backpropagation: This class implements a backpropagation training algorithm
+    /// for feed forward neural networks. It is used in the same manner as any other
+    /// training class that implements the Train interface.
+    /// 
+    /// Backpropagation is a common neural network training algorithm. It works by
+    /// analyzing the error of the output of the neural network. Each neuron in the
+    /// output layer's contribution, according to weight, to this error is
+    /// determined. These weights are then adjusted to minimize this error. This
+    /// process continues working its way backwards through the layers of the neural
+    /// network.
+    /// 
+    /// This implementation of the backpropagation algorithm uses both momentum and a
+    /// learning rate. The learning rate specifies the degree to which the weight
+    /// matrixes will be modified through each iteration. The momentum specifies how
+    /// much the previous learning iteration affects the current. To use no momentum
+    /// at all specify zero.
+    /// </summary>
     public class Backpropagation : ITrain
     {
         /// <summary>
@@ -97,8 +116,7 @@ namespace Encog.Neural.Networks.Training.Backpropagation
         /// learning.
         /// </summary>
         /// <param name="network">The neural network to be trained.</param>
-        /// <param name="input">The input values to the neural network.</param>
-        /// <param name="ideal">The ideal values expected from the neural network.</param>
+        /// <param name="training">The training set.</param>
         /// <param name="learnRate">The learning rate, how fast to modify neural network values.</param>
         /// <param name="momentum">The momentum, how much to use the previous training iteration for the current.</param>
         public Backpropagation(BasicNetwork network,

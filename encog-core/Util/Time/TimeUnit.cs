@@ -27,19 +27,58 @@ using System.Text;
 
 namespace Encog.Util.Time
 {
+    /// <summary>
+    /// Time units.
+    /// </summary>
     public enum TimeUnit
     {
+        /// <summary>
+        /// Seconds
+        /// </summary>
         SECONDS,
-	MINUTES,
-	HOURS,
-	DAYS,
-	WEEKS,
-	FORTNIGHTS,
-	MONTHS,
-	YEARS,
-	DECADES,
-	SCORES,
-	CENTURIES,
-	MILLENNIA
+        /// <summary>
+        /// Minutes
+        /// </summary>
+        MINUTES,
+        /// <summary>
+        /// Hours
+        /// </summary>
+        HOURS,
+        /// <summary>
+        /// Days
+        /// </summary>
+        DAYS,
+        /// <summary>
+        /// Weeks
+        /// </summary>
+        WEEKS,
+        /// <summary>
+        /// Fortnights
+        /// </summary>
+        FORTNIGHTS,
+        /// <summary>
+        /// Months
+        /// </summary>
+        MONTHS,
+        /// <summary>
+        /// Years
+        /// </summary>
+        YEARS,
+        /// <summary>
+        /// Decades
+        /// </summary>
+        DECADES,
+        /// <summary>
+        /// Scores
+        /// </summary>
+        SCORES,
+        /// <summary>
+        /// Centuries
+        /// </summary>
+        CENTURIES,
+        /// <summary>
+        /// Millennia
+        /// </summary>
+        MILLENNIA
     }
 }

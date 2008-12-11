@@ -30,6 +30,9 @@ using System.Threading;
 
 namespace Encog.Util.DB
 {
+    /// <summary>
+    /// RepeatableConnection is used to create RepeatableStatement objects.
+    /// </summary>
     public class RepeatableConnection
     {
         /// <summary>
@@ -81,6 +84,9 @@ namespace Encog.Util.DB
         private IList<RepeatableStatement> statements = new List<RepeatableStatement>();
 
 
+        /// <summary>
+        /// The database connection.
+        /// </summary>
         public DbConnection DBConnection
         {
             get
@@ -90,12 +96,18 @@ namespace Encog.Util.DB
         }
 
 
-
+        /// <summary>
+        /// Construct a connection.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
         public RepeatableConnection(String connectionString)
         {
             this.connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Close the connection.
+        /// </summary>
         public void Close()
         {
             foreach (RepeatableStatement statement in this.statements)
@@ -110,6 +122,11 @@ namespace Encog.Util.DB
 
         }
 
+        /// <summary>
+        /// Create the specified statement.
+        /// </summary>
+        /// <param name="sql">The SQL to create the statement from.</param>
+        /// <returns>The statement that was created.</returns>
         public RepeatableStatement CreateStatement(String sql)
         {
             RepeatableStatement result;

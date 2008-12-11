@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog
 {
+    /// <summary>
+    /// The base Encog error from which all other errors are build.
+    /// </summary>
     public class EncogError: Exception
     {
         /// <summary>

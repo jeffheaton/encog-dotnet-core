@@ -30,6 +30,15 @@ using Encog.Neural.Genetic;
 
 namespace Encog.Solve.Genetic
 {
+    /// <summary>
+    /// GeneticAlgorithm: Implements a genetic algorithm. This is an abstract class.
+    /// Other classes are provided in this book that use this base class to train
+    /// neural networks or provide an answer to the traveling salesman problem.
+    /// 
+    /// The genetic algorithm is also capable of using a thread pool to speed
+    /// execution.
+    /// </summary>
+    /// <typeparam name="GENE_TYPE"></typeparam>
     public abstract class GeneticAlgorithm<GENE_TYPE>
     {
         /// <summary>
@@ -148,6 +157,9 @@ namespace Encog.Solve.Genetic
             }
         }
 
+        /// <summary>
+        /// The chromosomes as an array.
+        /// </summary>
         public Chromosome<GENE_TYPE>[] Chromosomes
         {
             get
@@ -284,7 +296,7 @@ namespace Encog.Solve.Genetic
             this.chromosomes[i] = value;
         }
 
-  
+
         /// <summary>
         /// Sort the chromosomes.
         /// </summary>

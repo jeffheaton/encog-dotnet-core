@@ -29,6 +29,12 @@ using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
+    /// <summary>
+    /// TrainingSetNeuralGeneticAlgorithm: Implements a genetic algorithm 
+    /// that allows a feedforward neural network to be trained using a 
+    /// genetic algorithm.  This algorithm is for a feed forward neural 
+    /// network.  The neural network is trained using training sets.
+    /// </summary>
     public class TrainingSetNeuralGeneticAlgorithm : NeuralGeneticAlgorithm
     {
         /// <summary>
@@ -54,6 +60,9 @@ namespace Encog.Neural.Networks.Training.Genetic
             }
         }
 
+        /// <summary>
+        /// The training set to use.
+        /// </summary>
         protected INeuralDataSet training;
 
         /// <summary>
@@ -61,8 +70,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         /// <param name="network">The neural network.</param>
         /// <param name="reset">Should each neural network be reset to random values.</param>
-        /// <param name="input">The input training set.</param>
-        /// <param name="ideal">The ideal values for the input training set.</param>
+        /// <param name="training">The training set.</param>
         /// <param name="populationSize">The initial population size.</param>
         /// <param name="mutationPercent">The mutation percentage.</param>
         /// <param name="percentToMate">The percentage of the population allowed to mate.</param>

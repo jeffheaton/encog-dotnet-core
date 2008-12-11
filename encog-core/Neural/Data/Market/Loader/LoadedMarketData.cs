@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
+    /// <summary>
+    /// Market data loaded from a source.
+    /// </summary>
     public class LoadedMarketData
     {
         /// <summary>
@@ -44,16 +47,29 @@ namespace Encog.Neural.NeuralData.Market.Loader
         /// </summary>
         private IDictionary<MarketDataType, Double> data;
 
+        /// <summary>
+        /// Set the specified type of data.
+        /// </summary>
+        /// <param name="t">The type of data to set.</param>
+        /// <param name="d">The value to set.</param>
         public void SetData(MarketDataType t, double d)
         {
             this.data[t] = d;
         }
 
+        /// <summary>
+        /// Get the specified data type.
+        /// </summary>
+        /// <param name="t">The type of data to get.</param>
+        /// <returns>The value.</returns>
         public double GetData(MarketDataType t)
         {
             return this.data[t];
         }
 
+        /// <summary>
+        /// When is this data from.
+        /// </summary>
         public DateTime When
         {
             get
@@ -66,6 +82,9 @@ namespace Encog.Neural.NeuralData.Market.Loader
             }
         }
 
+        /// <summary>
+        /// The ticker symbol that this data was from.
+        /// </summary>
         public TickerSymbol Ticker
         {
             get
@@ -74,6 +93,9 @@ namespace Encog.Neural.NeuralData.Market.Loader
             }
         }
 
+        /// <summary>
+        /// The data that was downloaded.
+        /// </summary>
         public IDictionary<MarketDataType, Double> Data
         {
             get

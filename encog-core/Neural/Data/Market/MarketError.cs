@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Market
 {
+    /// <summary>
+    /// The base error for the market data set.
+    /// </summary>
     public class MarketError: EncogError
     {
         /// <summary>

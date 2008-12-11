@@ -27,9 +27,15 @@ using System.Text;
 using Encog.Neural.Data.Basic;
 using Encog.Util.DownSample;
 using System.Reflection;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.Image
 {
+    /// <summary>
+    /// Store a collection of images for training with a neural network. This class
+    /// collects and then downsamples images for use with a neural network. This is a
+    /// memory based class, so large datasets can run out of memory.
+    /// </summary>
     public class ImageNeuralDataSet : BasicNeuralDataSet
     {
    
@@ -40,7 +46,9 @@ namespace Encog.Neural.NeuralData.Image
         public const String MUST_USE_IMAGE =
             "This data set only supports ImageNeuralData or Image objects.";
 
-
+        /// <summary>
+        /// The width of this image.
+        /// </summary>
         public int Width
         {
             get
@@ -49,6 +57,9 @@ namespace Encog.Neural.NeuralData.Image
             }
         }
 
+        /// <summary>
+        /// The height of this image.
+        /// </summary>
         public int Height
         {
             get

@@ -28,6 +28,10 @@ using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Data.Basic
 {
+    /// <summary>
+    /// Basic implementation of a data pair.  Holds both input and ideal data.
+    /// If this is unsupervised training then ideal should be null.
+    /// </summary>
     public class BasicNeuralDataPair : INeuralDataPair
     {
         /// <summary>
@@ -55,12 +59,19 @@ namespace Encog.Neural.Data.Basic
             this.ideal = ideal;
         }
 
+        /// <summary>
+        /// Construct a data pair that only includes input. (unsupervised)
+        /// </summary>
+        /// <param name="input">The input data.</param>
         public BasicNeuralDataPair(INeuralData input)
         {
             this.input = input;
             this.ideal = null;
         }
 
+        /// <summary>
+        /// The input data.
+        /// </summary>
         public virtual INeuralData Input
         {
             get
@@ -69,6 +80,9 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// The ideal data.
+        /// </summary>
         public virtual INeuralData Ideal
         {
             get
@@ -77,6 +91,10 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Convert object to a string.
+        /// </summary>
+        /// <returns>The object as a string.</returns>
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();

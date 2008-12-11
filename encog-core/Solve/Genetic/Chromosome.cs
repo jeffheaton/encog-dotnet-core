@@ -29,6 +29,20 @@ using Encog.Solve.Genetic;
 
 namespace Encog.Neural.Genetic
 {
+    /// <summary>
+    /// Chromosome: Implements a chromosome to genetic algorithm. This is an abstract
+    /// class. Other classes are provided in this book that use this base class to
+    /// train neural networks or provide an answer to the traveling salesman problem.
+    /// 
+    /// Lifeforms in this genetic algorithm consist of one single chromosome each.
+    /// Therefore, this class represents a virtual lifeform. The chromosome is a
+    /// string of objects that represent one solution. For a neural network, this
+    /// string of objects usually represents the weight and threshold matrix.
+    /// 
+    /// Chromosomes are made up of genes. These are of the generic type GENE_TYPE.
+    /// For a neural network this type would most likely be double values.
+    /// </summary>
+    /// <typeparam name="GENE_TYPE">The datatype for the genes.</typeparam>
     abstract public class Chromosome<GENE_TYPE> : IComparable<Chromosome<GENE_TYPE>>
     {
         /// <summary>

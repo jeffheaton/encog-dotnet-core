@@ -449,6 +449,9 @@ namespace Encog.Matrix
             }
         }
 
+        /// <summary>
+        /// The description of this object.
+        /// </summary>
         public string Description
         {
             get
@@ -461,6 +464,9 @@ namespace Encog.Matrix
             }
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public string Name
         {
             get

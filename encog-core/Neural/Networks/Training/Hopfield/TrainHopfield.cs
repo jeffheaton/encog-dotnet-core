@@ -28,9 +28,13 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data.Basic;
 using Encog.Matrix;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Hopfield
 {
+    /// <summary>
+    /// Train the hopfield layer.
+    /// </summary>
     public class TrainHopfield : ITrain
     {
         /// <summary>
@@ -78,6 +82,9 @@ namespace Encog.Neural.Networks.Training.Hopfield
             }
         }
 
+        /// <summary>
+        /// The trained neural network.
+        /// </summary>
         public BasicNetwork TrainedNetwork
         {
             get

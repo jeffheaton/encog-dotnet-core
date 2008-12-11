@@ -30,9 +30,16 @@ using Encog.Matrix;
 using Encog.Util;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Backpropagation
 {
+    /// <summary>
+    /// BackpropagationLayer: The back propagation training algorithm requires
+    /// training data to be stored for each of the layers. The Backpropagation class
+    /// creates a BackpropagationLayer object for each of the layers in the neural
+    /// network that it is training.
+    /// </summary>
     public class BackpropagationLayer
     {
         /// <summary>

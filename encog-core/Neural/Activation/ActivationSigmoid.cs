@@ -27,8 +27,15 @@ using System.Text;
 
 namespace Encog.Neural.Activation
 {
+    /// <summary>
+    /// A sigmoid activation function.
+    /// </summary>
+    [Serializable]
     public class ActivationSigmoid : IActivationFunction
     {
+        /// <summary>
+        /// The description for this object.
+        /// </summary>
         public String Description
         {
             get
@@ -41,6 +48,9 @@ namespace Encog.Neural.Activation
             }
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public String Name
         {
             get

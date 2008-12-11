@@ -28,6 +28,9 @@ using System.Text;
 
 namespace Encog.Matrix
 {
+    /// <summary>
+    /// Utility class for converting between bipolar and regular numbers.
+    /// </summary>
     public class BiPolarUtil
     {
         /// <summary>

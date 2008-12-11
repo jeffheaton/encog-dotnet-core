@@ -28,6 +28,10 @@ using Encog.Neural.NeuralData.Temporal;
 
 namespace Encog.Neural.NeuralData.Market
 {
+    /// <summary>
+    /// Hold one market datapoint.  This class is based on the TemporalPoint,
+    /// however it is designed to take its sequence number from a date.
+    /// </summary>
     public class MarketPoint : TemporalPoint
     {
         /// <summary>
@@ -41,11 +45,15 @@ namespace Encog.Neural.NeuralData.Market
         /// </summary>
         /// <param name="when">When is this data from.</param>
         /// <param name="size">What is the size of the data.</param>
-        public MarketPoint(DateTime when, int size) : base(size)
+        public MarketPoint(DateTime when, int size)
+            : base(size)
         {
             this.when = when;
         }
 
+        /// <summary>
+        /// When is this point from.
+        /// </summary>
         public DateTime When
         {
             get

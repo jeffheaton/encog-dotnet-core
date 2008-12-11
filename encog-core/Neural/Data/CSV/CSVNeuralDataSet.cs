@@ -26,11 +26,25 @@ using System.Linq;
 using System.Text;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.CSV
 {
+    /// <summary>
+    /// An implementation of the NeuralDataSet interface designed to provide a CSV
+    /// file to the neural network. This implementation uses the BasicNeuralData to
+    /// hold the data being read. This class has no ability to write CSV files.
+    /// The columns of the CSV file will specify both the input and ideal 
+    /// columns.  
+    /// 
+    /// This class is not memory based, so very long files can be used, 
+    /// without running out of memory.
+    /// </summary>
     public class CSVNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {
+        /// <summary>
+        /// The enumerator for the CSVNeuralDataSet.
+        /// </summary>
         public class CSVNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private CSVNeuralDataSet owner;
@@ -40,6 +54,10 @@ namespace Encog.Neural.NeuralData.CSV
             /// </summary>
             private ReadCSV reader;
 
+            /// <summary>
+            /// The enumerator for the CSV set.
+            /// </summary>
+            /// <param name="owner">The owner of this enumerator.</param>
             public CSVNeuralEnumerator(CSVNeuralDataSet owner)
             {
                 this.owner = owner;
@@ -49,6 +67,9 @@ namespace Encog.Neural.NeuralData.CSV
                         this.owner.Delimiter);
             }
 
+            /// <summary>
+            /// The current item.
+            /// </summary>
             public INeuralDataPair Current
             {
                 get
@@ -75,24 +96,37 @@ namespace Encog.Neural.NeuralData.CSV
                 }
             }
 
+            /// <summary>
+            /// Dispose of this object.
+            /// </summary>
             public void Dispose()
             {
                 this.reader.Close();
             }
 
+            /// <summary>
+            /// Get the current item.
+            /// </summary>
             object System.Collections.IEnumerator.Current
             {
-                get 
+                get
                 {
                     return this.Current;
                 }
             }
 
+            /// <summary>
+            /// Move to the next item.
+            /// </summary>
+            /// <returns>True if there is a next item.</returns>
             public bool MoveNext()
             {
                 return this.reader.Next();
             }
 
+            /// <summary>
+            /// Not supported.
+            /// </summary>
             public void Reset()
             {
                 throw new NotImplementedException();
@@ -124,6 +158,9 @@ namespace Encog.Neural.NeuralData.CSV
         /// </summary>
         private bool headers;
 
+        /// <summary>
+        /// Get the filename for the CSV file.
+        /// </summary>
         public String Filename
         {
             get
@@ -132,6 +169,9 @@ namespace Encog.Neural.NeuralData.CSV
             }
         }
 
+        /// <summary>
+        /// The delimiter.
+        /// </summary>
         public char Delimiter
         {
             get
@@ -140,6 +180,9 @@ namespace Encog.Neural.NeuralData.CSV
             }
         }
 
+        /// <summary>
+        /// True if the first row specifies field names.
+        /// </summary>
         public bool Headers
         {
             get
@@ -148,6 +191,9 @@ namespace Encog.Neural.NeuralData.CSV
             }
         }
 
+        /// <summary>
+        /// The amount of ideal data.
+        /// </summary>
         public int IdealSize
         {
             get
@@ -156,6 +202,9 @@ namespace Encog.Neural.NeuralData.CSV
             }
         }
 
+        /// <summary>
+        /// The amount of input data.
+        /// </summary>
         public int InputSize
         {
             get
@@ -195,31 +244,55 @@ namespace Encog.Neural.NeuralData.CSV
             this.headers = headers;
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="data1">Not used.</param>
         public void Add(INeuralData data1)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
+        /// <param name="idealData">Not used.</param>
         public void Add(INeuralData inputData, INeuralData idealData)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
         public void Add(INeuralDataPair inputData)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
         public void Close()
         {
             // not needed
         }
 
+        /// <summary>
+        /// Get an enumerator.
+        /// </summary>
+        /// <returns>The enumerator to use.</returns>
         public IEnumerator<INeuralDataPair> GetEnumerator()
         {
             return new CSVNeuralEnumerator(this);
         }
 
+        /// <summary>
+        /// Get an enumerator.
+        /// </summary>
+        /// <returns>The enumerator to use.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();

@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData
 {
+    /// <summary>
+    /// The base Encog neural data error.
+    /// </summary>
     public class NeuralDataError: EncogError
     {
         /// <summary>

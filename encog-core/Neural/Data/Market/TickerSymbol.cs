@@ -27,6 +27,9 @@ using System.Text;
 
 namespace Encog.Neural.NeuralData.Market
 {
+    /// <summary>
+    /// A ticker symbol.  Holds the exchange and the symbol.
+    /// </summary>
     public class TickerSymbol
     {
         /// <summary>
@@ -39,6 +42,9 @@ namespace Encog.Neural.NeuralData.Market
         /// </summary>
         private String exchange;
 
+        /// <summary>
+        /// The stock symbol.
+        /// </summary>
         public String Symbol
         {
             get
@@ -47,6 +53,9 @@ namespace Encog.Neural.NeuralData.Market
             }
         }
 
+        /// <summary>
+        /// The exchange that this stock is on.
+        /// </summary>
         public String Exchange
         {
             get
@@ -59,7 +68,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <summary>
         /// Construct a ticker symbol with no exchange.
         /// </summary>
-        /// <param name="String">The ticker symbol</param>
+        /// <param name="symbol">The ticker symbol</param>
         public TickerSymbol(String symbol)
         {
             this.symbol = symbol;

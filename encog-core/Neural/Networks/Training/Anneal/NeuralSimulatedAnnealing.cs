@@ -31,7 +31,13 @@ using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Anneal
 {
-    public class NeuralSimulatedAnnealing : SimulatedAnnealing<double>,ITrain
+    /// <summary>
+    /// NeuralSimulatedAnnealing: This class implements a simulated annealing
+    /// training algorithm for feed forward neural networks. It is based on the
+    /// generic SimulatedAnnealing class. It is used in the same manner as any other
+    /// training class that implements the Train interface.
+    /// </summary>
+    public class NeuralSimulatedAnnealing : SimulatedAnnealing<double>, ITrain
     {
         /// <summary>
         /// Get the best network from the training.
@@ -49,14 +55,16 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         protected BasicNetwork network;
 
+        /// <summary>
+        /// The training set to use.
+        /// </summary>
         protected INeuralDataSet training;
 
         /// <summary>
         /// Construct a simulated annleaing trainer for a feedforward neural network.
         /// </summary>
         /// <param name="network">The neural network to be trained.</param>
-        /// <param name="input">The input values for training.</param>
-        /// <param name="ideal">The ideal values for training.</param>
+        /// <param name="training">The training set.</param>
         /// <param name="startTemp">The starting temperature.</param>
         /// <param name="stopTemp">The ending temperature.</param>
         /// <param name="cycles">The number of cycles in a training iteration.</param>

@@ -25,16 +25,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData
 {
+    /// <summary>
+    /// An interface designed to abstract classes that store neural data. This
+    /// interface is designed to provide NeuralDataPair objects. This can be used to
+    /// train neural networks using both supervised and unsupervised training.
+    /// 
+    /// Some implementations of this interface are memory based. That is they store
+    /// the entire contents of the dataset in memory.
+    /// 
+    /// Other implementations of this interface are not memory based. These
+    /// implementations read in data as it is needed. This allows very large datasets
+    /// to be used. Typically the add methods are not supported on non-memory based
+    /// datasets.
+    /// </summary>
     public interface INeuralDataSet
     {
+        /// <summary>
+        /// The size of the ideal data.  Zero if unsupervised.
+        /// </summary>
         int IdealSize
         {
             get;
         }
 
+        /// <summary>
+        /// The size of the input data.
+        /// </summary>
         int InputSize
         {
             get;
@@ -74,7 +94,11 @@ namespace Encog.Neural.NeuralData
         /// </summary>
         void Close();
 
+        /// <summary>
+        /// Get an enumerator to access the data.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator<INeuralDataPair> GetEnumerator();
-        
+
     }
 }

@@ -31,6 +31,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// SerializeObject: Load or save an object using DotNet serialization.
+    /// </summary>
     public class SerializeObject
     {
         /// <summary>

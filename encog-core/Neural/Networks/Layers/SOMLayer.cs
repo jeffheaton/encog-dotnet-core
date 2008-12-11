@@ -28,9 +28,16 @@ using Encog.Util;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
 using Encog.Matrix;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Layers
 {
+    /// <summary>
+    /// SelfOrganizingMap: The Self Organizing Map, or Kohonen Neural Network, is a
+    /// special type of neural network that is used to classify input into groups.
+    /// The SOM makes use of unsupervised training.
+    /// </summary>
+    [Serializable]
     public class SOMLayer : BasicLayer
     {
 
@@ -97,7 +104,7 @@ namespace Encog.Neural.Networks.Layers
         /// Get the normalization type. 
         /// </summary>
         /// <returns>The normalization type.</returns>
-        public NormalizationType NormalizationTypeUsed 
+        public NormalizationType NormalizationTypeUsed
         {
             get
             {
@@ -107,7 +114,7 @@ namespace Encog.Neural.Networks.Layers
             {
                 this.normalizationType = value;
             }
-    
+
         }
 
 

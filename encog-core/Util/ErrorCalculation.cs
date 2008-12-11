@@ -28,6 +28,11 @@ using System.Text;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// ErrorCalculation: An implementation of root mean square (RMS) error
+    /// calculation. This class is used by nearly every neural network in this book
+    /// to calculate error.
+    /// </summary>
     public class ErrorCalculation
     {
         /// <summary>

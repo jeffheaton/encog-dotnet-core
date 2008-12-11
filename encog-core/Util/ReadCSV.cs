@@ -29,6 +29,9 @@ using System.IO;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// ReadCSV: Read and parse CSV format files.
+    /// </summary>
     public class ReadCSV
     {
         /// <summary>
@@ -64,6 +67,9 @@ namespace Encog.Util
             return date.ToString(dateFormat);
         }
 
+        /// <summary>
+        /// The number of columns.
+        /// </summary>
         public int ColumnCount
         {
             get
@@ -101,6 +107,12 @@ namespace Encog.Util
         {
         }
 
+        /// <summary>
+        /// Construct the CSV reader.
+        /// </summary>
+        /// <param name="filename">The filename to read from.</param>
+        /// <param name="headers">True if the first row specifies field names.</param>
+        /// <param name="delim">The delimiter between each item.</param>
         public ReadCSV(String filename, bool headers, char delim)
         {
             this.reader = new StreamReader(filename);
@@ -108,12 +120,23 @@ namespace Encog.Util
         }
 
 
+        /// <summary>
+        /// Construct the CSV reader.
+        /// </summary>
+        /// <param name="istream">The input stream to read from.</param>
+        /// <param name="headers">True if the first row specifies field names.</param>
+        /// <param name="delim">The delimiter between the fields.</param>
         public ReadCSV(Stream istream, bool headers, char delim)
         {
             this.reader = new StreamReader(istream);
             Begin(headers, delim);
         }
 
+        /// <summary>
+        /// Begin the process of reading the CSV file.
+        /// </summary>
+        /// <param name="headers">The headers to read.</param>
+        /// <param name="delim">The delimiter between the headers.</param>
         public void Begin(bool headers, char delim)
         {
             

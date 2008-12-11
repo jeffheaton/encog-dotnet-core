@@ -30,9 +30,21 @@ using Encog.Util.DownSample;
 
 namespace Encog.Neural.NeuralData.Image
 {
+    /// <summary>
+    /// An extension of the BasicNeuralData class that is designed to hold images for
+    /// input into a neural network. This class should only be used with the
+    /// ImageNeuralDataSet collection.
+    /// 
+    /// This class provides the ability to associate images with the elements of a
+    /// dataset. These images will be downsampled to the resolution specified in the
+    /// ImageNeuralData set class that they are added to.
+    /// </summary>
     public class ImageNeuralData : BasicNeuralData
     {
 
+        /// <summary>
+        /// The image that will be downsampled.
+        /// </summary>
         public Bitmap Image
         {
             get
@@ -54,7 +66,7 @@ namespace Encog.Neural.NeuralData.Image
         /// <summary>
         /// Construct an object based on an image.
         /// </summary>
-        /// <param name="Image">The image to use.</param>
+        /// <param name="image">The image to use.</param>
         public ImageNeuralData(Bitmap image)
             : base(1)
         {

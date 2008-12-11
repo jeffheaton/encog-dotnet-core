@@ -28,77 +28,89 @@ using Encog.Neural.Data.Basic;
 using System.IO;
 using System.Xml;
 using Encog.Neural.Persist.Persistors;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.XML
 {
+    /// <summary>
+    /// A data source that reads XML files.  This class is memory based, 
+    /// so large enough datasets could cause memory issues.
+    /// </summary>
     public class XMLNeuralDataSet : BasicNeuralDataSet
     {
-        /**
-	 * Error Message: adds are not supported.
-	 */
-	public const String ADD_NOT_SUPPORTED = 
-		"Adds are not supported with this dataset, it is read only.";
+        /// <summary>
+        /// Error Message: adds are not supported.
+        /// </summary>
+        public const String ADD_NOT_SUPPORTED =
+            "Adds are not supported with this dataset, it is read only.";
 
-	/**
-	 * Construct an XML neural data set.
-	 * @param filename The filename to load.
-	 * @param pairXML The tag name for pairs.
-	 * @param inputXML The tag name for input.
-	 * @param idealXML The tag name for ideal.
-	 * @param valueXML The tag name for actual values.
-	 */
-	public XMLNeuralDataSet(
-			 String filename, 
-			 String pairXML, 
-			 String inputXML,
-			 String idealXML, 
-			 String valueXML) {
 
-			Stream istream = File.OpenRead(filename);
+        /// <summary>
+        /// Construct an XML neural data set.
+        /// </summary>
+        /// <param name="filename">The filename to load.</param>
+        /// <param name="pairXML">The tag name for pairs.</param>
+        /// <param name="inputXML">The tag name for input.</param>
+        /// <param name="idealXML">The tag name for ideal.</param>
+        /// <param name="valueXML">The tag name for actual values.</param>
+        public XMLNeuralDataSet(
+                 String filename,
+                 String pairXML,
+                 String inputXML,
+                 String idealXML,
+                 String valueXML)
+        {
+
+            Stream istream = File.OpenRead(filename);
 
             XmlDocument doc = new XmlDocument();
             doc.Load(istream);
 
-			// read in the data
+            // read in the data
 
-			BasicNeuralDataSetPersistor persistor = 
-				new BasicNeuralDataSetPersistor();
+            BasicNeuralDataSetPersistor persistor =
+                new BasicNeuralDataSetPersistor();
 
-			persistor.IdealXML = idealXML;
-			persistor.InputXML = inputXML;
-			persistor.PairXML = pairXML;
-			persistor.ValueXML = valueXML;
+            persistor.IdealXML = idealXML;
+            persistor.InputXML = inputXML;
+            persistor.PairXML = pairXML;
+            persistor.ValueXML = valueXML;
 
-			BasicNeuralDataSet set = (BasicNeuralDataSet) persistor.Load(doc.DocumentElement);
-			this.Data = set.Data;
+            BasicNeuralDataSet set = (BasicNeuralDataSet)persistor.Load(doc.DocumentElement);
+            this.Data = set.Data;
 
-			istream.Close();
+            istream.Close();
 
-	}
+        }
 
-	/**
-	 * Adds are not supported, this is a read only data set.
-	 * @param inputData Not used.
-	 * @param idealData Not used.
-	 */
-	public new void Add( INeuralData inputData,  INeuralData idealData) {
-		throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
-	}
 
-	/**
-	 * Adds are not supported, this is a read only data set.
-	 * @param inputData Not used.
-	 */
-	public new void Add( INeuralDataPair inputData) {
-		throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
-	}
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
+        /// <param name="idealData">Not used.</param>
+        public new void Add(INeuralData inputData, INeuralData idealData)
+        {
+            throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
+        }
 
-	/**
-	 * Adds are not supported, this is a read only data set.
-	 * @param data1 Not used.
-	 */
-	public new void Add( INeuralData data1) {
-		throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
-	}
+
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="inputData">Not used</param>
+        public new void Add(INeuralDataPair inputData)
+        {
+            throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
+        }
+
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="data1">Not used</param>
+        public new void Add(INeuralData data1)
+        {
+            throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
+        }
     }
 }

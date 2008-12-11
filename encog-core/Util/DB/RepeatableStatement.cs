@@ -29,6 +29,21 @@ using System.Threading;
 
 namespace Encog.Util.DB
 {
+    /// <summary>
+    /// RepeatableStatement: This class implements a repeatable
+    /// statement. A repeatable statement is a regular
+    /// PreparedStatement that can be repeated if the connection
+    /// fails.
+    /// 
+    /// Additionally, the repeatable statement maintains a cache
+    /// of PreparedStatement objects for the threads. This
+    /// prevents two threads from using the same
+    /// PreparedStatement at the same time. To obtain a
+    /// PreparedStatement a thread should call the
+    /// obtainStatement function. Once the thread no longer needs
+    /// the statement, the releaseStatement method should be
+    /// called.
+    /// </summary>
     public class RepeatableStatement
     {
         /// <summary>
@@ -37,6 +52,9 @@ namespace Encog.Util.DB
         /// </summary>
         public class Results
         {
+            /// <summary>
+            /// The DbDataReadder for the query.
+            /// </summary>
             public DbDataReader DataReader
             {
                 get

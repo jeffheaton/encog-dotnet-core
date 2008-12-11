@@ -28,6 +28,11 @@ using Encog.Neural.Activation;
 
 namespace Encog.Neural.NeuralData.Temporal
 {
+    /// <summary>
+    /// This class describes one unit of input, or output, to a temporal neural
+    /// network. Data can be both an input and output. Inputs are used to attempt
+    /// predict the output.
+    /// </summary>
     public class TemporalDataDescription
     {
 
@@ -80,6 +85,9 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         private int index;
 
+        /// <summary>
+        /// The lowest allowed data.
+        /// </summary>
         public double Low
         {
             get
@@ -92,6 +100,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The highest allowed value.
+        /// </summary>
         public double High
         {
             get
@@ -104,6 +115,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// Is this data input?  Or is it to be predicted.
+        /// </summary>
         public bool IsInput
         {
             get
@@ -116,6 +130,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// Determine if this is a predicted value.
+        /// </summary>
         public bool IsPredict
         {
             get
@@ -128,6 +145,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// Get the index.
+        /// </summary>
         public int Index
         {
             get
@@ -140,6 +160,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The type of data this is.
+        /// </summary>
         public Type DescriptionType
         {
             get
@@ -148,6 +171,9 @@ namespace Encog.Neural.NeuralData.Temporal
             }
         }
 
+        /// <summary>
+        /// The activation function for this layer.
+        /// </summary>
         public IActivationFunction ActivationFunction
         {
             get

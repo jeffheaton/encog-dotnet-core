@@ -28,6 +28,9 @@ using Encog.Neural.Persist;
 
 namespace Encog.Neural.Activation
 {
+    /// <summary>
+    /// An activation function filters the input or output from a neuron.
+    /// </summary>
     public interface IActivationFunction : IEncogPersistedObject
     {
         /// <summary>

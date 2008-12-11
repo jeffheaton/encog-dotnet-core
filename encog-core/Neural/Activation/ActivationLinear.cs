@@ -27,8 +27,16 @@ using System.Text;
 
 namespace Encog.Neural.Activation
 {
+    /// <summary>
+    /// A linear activation function.  Not really an activation function
+    /// at all, simply passes through.
+    /// </summary>
+    [Serializable]
     public class ActivationLinear: IActivationFunction
     {
+        /// <summary>
+        /// The description of this object.
+        /// </summary>
         public String Description
         {
             get
@@ -41,6 +49,9 @@ namespace Encog.Neural.Activation
             }
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public String Name
         {
             get

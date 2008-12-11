@@ -25,9 +25,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks
 {
+    /// <summary>
+    /// This interface defines all necessary methods for a neural network layer.
+    /// </summary>
     public interface ILayer
     {
         /// <summary>
@@ -37,35 +41,53 @@ namespace Encog.Neural.Networks
         /// <returns>The output from this layer.</returns>
         INeuralData Compute(INeuralData pattern);
 
+        /// <summary>
+        /// The next layer.
+        /// </summary>
         ILayer Next
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The previous layer.
+        /// </summary>
         ILayer Previous
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The output pattern.
+        /// </summary>
         INeuralData Fire
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// How many neurons in this layer.
+        /// </summary>
         int NeuronCount
         {
             get;
         }
 
+        /// <summary>
+        /// The weight matrix for this layer.
+        /// </summary>
         Matrix.Matrix WeightMatrix
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The size of the matrix.  Rows times columns.
+        /// </summary>
         int MatrixSize
         {
             get;
@@ -97,6 +119,10 @@ namespace Encog.Neural.Networks
         /// <returns>True if this is an output layer.</returns>
         bool IsOutput();
 
+        /// <summary>
+        /// Determine if this layer has a matrix.
+        /// </summary>
+        /// <returns>True if this layer has a matrix.</returns>
         bool HasMatrix();
     }
 }

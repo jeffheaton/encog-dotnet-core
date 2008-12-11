@@ -26,11 +26,20 @@ using System.Linq;
 using System.Text;
 using Encog.Util.DB;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.SQL
 {
+    /// <summary>
+    /// A dataset based on a SQL query. This is not a memory based dataset, so it can
+    /// handle very large datasets without a memory issue. and can handle very large
+    /// datasets.
+    /// </summary>
     public class SQLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
     {
+        /// <summary>
+        /// Enumerator for the SQLNeuralDataSet.
+        /// </summary>
         public class SQLNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private SQLNeuralDataSet owner;
@@ -44,12 +53,19 @@ namespace Encog.Neural.NeuralData.SQL
             private RepeatableStatement.Results results;
 
 
+            /// <summary>
+            /// Construct the SQLNeuralEnumerator.
+            /// </summary>
+            /// <param name="owner">The owner of the enumerator.</param>
             public SQLNeuralEnumerator(SQLNeuralDataSet owner)
             {
                 this.owner = owner;
                 this.results = owner.statement.ExecuteQuery();
             }
 
+            /// <summary>
+            /// The current data item.
+            /// </summary>
             public INeuralDataPair Current
             {
                 get
@@ -62,11 +78,17 @@ namespace Encog.Neural.NeuralData.SQL
                 }
             }
 
+            /// <summary>
+            /// Dispose of this object.
+            /// </summary>
             public void Dispose()
             {
                 this.results.Close();
             }
 
+            /// <summary>
+            /// Obtain the current item.
+            /// </summary>
             object System.Collections.IEnumerator.Current
             {
                 get
@@ -79,6 +101,10 @@ namespace Encog.Neural.NeuralData.SQL
                 }
             }
 
+            /// <summary>
+            /// Move to the next object.
+            /// </summary>
+            /// <returns>True if there is a next object.</returns>
             public bool MoveNext()
             {
                 if (!this.results.DataReader.NextResult())
@@ -107,6 +133,9 @@ namespace Encog.Neural.NeuralData.SQL
                 return true;
             }
 
+            /// <summary>
+            /// Not supported.
+            /// </summary>
             public void Reset()
             {
                 throw new NotImplementedException();
@@ -153,7 +182,9 @@ namespace Encog.Neural.NeuralData.SQL
         }
 
 
-
+        /// <summary>
+        /// The size of the ideal data, zero if unsupervised.
+        /// </summary>
         public int IdealSize
         {
             get
@@ -162,6 +193,9 @@ namespace Encog.Neural.NeuralData.SQL
             }
         }
 
+        /// <summary>
+        /// The size of the input data.
+        /// </summary>
         public int InputSize
         {
             get
@@ -170,30 +204,54 @@ namespace Encog.Neural.NeuralData.SQL
             }
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="data1">Not used.</param>
         public void Add(INeuralData data1)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
+        /// <param name="idealData">Not used.</param>
         public void Add(INeuralData inputData, INeuralData idealData)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
         public void Add(INeuralDataPair inputData)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used.
+        /// </summary>
         public void Close()
         {
         }
 
+        /// <summary>
+        /// Get an enumerator.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
         public IEnumerator<INeuralDataPair> GetEnumerator()
         {
             return new SQLNeuralEnumerator(this);
         }
 
+        /// <summary>
+        /// Get an enumerator.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return new SQLNeuralEnumerator(this);

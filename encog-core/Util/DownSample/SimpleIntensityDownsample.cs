@@ -28,8 +28,14 @@ using System.Drawing;
 
 namespace Encog.Util.DownSample
 {
+    /// <summary>
+    /// Downsample based on how bright a color is.
+    /// </summary>
     public class SimpleIntensityDownsample : IDownSample
     {
+        /// <summary>
+        /// The image to downsample.
+        /// </summary>
         public Bitmap DownsampleImage
         {
             get
@@ -38,6 +44,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The x-ratio for the downsample.
+        /// </summary>
         public double RatioX
         {
             get
@@ -46,6 +55,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The y-ratio for the downsample.
+        /// </summary>
         public double RatioY
         {
             get
@@ -54,6 +66,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The height of the image.
+        /// </summary>
         public int ImageHeight
         {
             get
@@ -62,6 +77,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The width of the image.
+        /// </summary>
         public int ImageWidth
         {
             get
@@ -70,6 +88,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The left border of the downsample.
+        /// </summary>
         public int DownSampleLeft
         {
             get
@@ -78,6 +99,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The right border of the downsample.
+        /// </summary>
         public int DownSampleRight
         {
             get
@@ -86,6 +110,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The top border of the downsample.
+        /// </summary>
         public int DownSampleTop
         {
             get
@@ -94,6 +121,9 @@ namespace Encog.Util.DownSample
             }
         }
 
+        /// <summary>
+        /// The bottom border of the downsample.
+        /// </summary>
         public int DownSampleBottom
         {
             get
@@ -114,11 +144,19 @@ namespace Encog.Util.DownSample
         private int downSampleTop;
         private int downSampleBottom;
 
+        /// <summary>
+        /// Construc the intensity downsampler.
+        /// </summary>
+        /// <param name="image">The image to downsample.</param>
         public SimpleIntensityDownsample(Bitmap image)
         {
             ProcessImage(image);
         }
 
+        /// <summary>
+        /// Setup the image for downsampling.
+        /// </summary>
+        /// <param name="image">The image to downsample.</param>
         public void ProcessImage(Bitmap image)
         {
             this.image = image;
