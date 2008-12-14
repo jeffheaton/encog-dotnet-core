@@ -50,5 +50,14 @@ namespace Encog.Neural.NeuralData
         {
             get;
         }
+
+        /// <summary>
+        /// True if this training pair is supervised.  That is, it has 
+	    /// both input and ideal data.
+        /// </summary>
+        bool IsSupervised
+        {
+            get;
+        }
     }
 }

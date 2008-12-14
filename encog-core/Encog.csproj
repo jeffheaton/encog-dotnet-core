@@ -75,6 +75,7 @@
     <Compile Include="Bot\Spider\Workload\WorkloadException.cs" />
     <Compile Include="Bot\Spider\Workload\IWorkloadManager.cs" />
     <Compile Include="EncogError.cs" />
+    <Compile Include="EncogVersion.cs" />
     <Compile Include="Matrix\BiPolarUtil.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Matrix\MatrixCODEC.cs" />

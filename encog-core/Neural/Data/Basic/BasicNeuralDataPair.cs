@@ -106,5 +106,17 @@ namespace Encog.Neural.Data.Basic
             result.Append(']');
             return result.ToString();
         }
+
+        /// <summary>
+        /// Deterimine if this pair is supervised or unsupervised.
+        /// </summary>
+        /// <returns>True if this is a supervised pair.</returns>
+        public bool IsSupervised
+        {
+            get
+            {
+                return this.ideal != null;
+            }
+        }
     }
 }

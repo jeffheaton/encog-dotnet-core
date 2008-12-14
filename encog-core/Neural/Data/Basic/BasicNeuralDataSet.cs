@@ -285,5 +285,21 @@ namespace Encog.Neural.Data.Basic
         {
             return new BasicNeuralEnumerator(this);
         }
+
+        /// <summary>
+        /// Determine if the dataset is supervised.  It is assumed that all pairs
+        /// are either supervised or not.  So we can determine the entire set by
+        /// looking at the first item.  If the set is empty then return false, or
+        /// unsupervised.
+        /// </summary>
+        public bool IsSupervised
+        {
+            get
+            {
+                if (this.data.Count == 0)
+                    return false;
+                return (this.data[0].IsSupervised);
+            }
+        }
     }
 }
