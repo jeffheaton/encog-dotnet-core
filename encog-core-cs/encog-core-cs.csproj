@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encog</RootNamespace>
+    <AssemblyName>encog-core-cs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Encog.cs" />
+    <Compile Include="EncogError.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solve\Anneal\SimulatedAnnealing.cs" />
+    <Compile Include="Util\Concurrency\EncogTask.cs" />
+    <Compile Include="Util\DownSample\IDownSample.cs" />
+    <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
+    <Compile Include="Util\ErrorCalculation.cs" />
+    <Compile Include="Util\Logging\Logging.cs" />
+    <Compile Include="Util\ORM\ORMSession.cs" />
+    <Compile Include="Util\ReadCSV.cs" />
+    <Compile Include="Util\SerializeObject.cs" />
+    <Compile Include="Util\Time\DateUtil.cs" />
+    <Compile Include="Util\Time\EnglishTimeUnitNames.cs" />
+    <Compile Include="Util\Time\ITimeUnitNames.cs" />
+    <Compile Include="Util\Time\TimeSpanUtil.cs" />
+    <Compile Include="Util\Time\TimeUnit.cs" />
+    <Compile Include="Util\XMLUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bot\" />
+    <Folder Include="Matrix\" />
+    <Folder Include="Neural\" />
+    <Folder Include="NLP\" />
+    <Folder Include="Parse\" />
+    <Folder Include="Persist\" />
+    <Folder Include="Solve\Genetic\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
