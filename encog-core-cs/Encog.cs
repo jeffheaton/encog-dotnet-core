@@ -38,6 +38,16 @@ namespace Encog
     /// </summary>
     public class Encog
     {
+		/// <summary>
+        /// The current engog version, this should be read from the properties.
+		/// </summary>
+	    public static String VERSION = "2.0.0";
+	
+	    /// <summary>
+        /// The current engog file version, this should be read from the properties.
+	    /// </summary>
+	    private static String FILE_VERSION = "1";
+		
         /// <summary>
         /// The logging object.
         /// </summary>
@@ -97,8 +107,8 @@ namespace Encog
         /// </summary>
         private Encog()
         {
-            this.properties[Encog.ENCOG_VERSION] = "2.0.0";
-            this.properties[Encog.ENCOG_FILE_VERSION] = "1";
+            this.properties[Encog.ENCOG_VERSION] = VERSION;
+            this.properties[Encog.ENCOG_FILE_VERSION] = FILE_VERSION;
         }
 
         /// <summary>
