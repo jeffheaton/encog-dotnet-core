@@ -71,7 +71,7 @@ namespace Encog.Neural.Networks.Layers
         /// Get a list of all of the outbound synapse connections from this
         /// layer.
         /// </summary>
-        List<ISynapse> Next
+        IList<ISynapse> Next
         {
             get;
         }

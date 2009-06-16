@@ -32,8 +32,6 @@ namespace Encog.Neural.Networks
     /// </summary>
     public class BasicNetwork : ISerializable, INetwork
     {
-
-
         /// <summary>
         /// The input layer.
         /// </summary>
@@ -341,7 +339,7 @@ namespace Encog.Neural.Networks
         /// Create a persistor for this object.
         /// </summary>
         /// <returns>The newly created persistor.</returns>
-        public IPersistor CreatePersistor()
+        public virtual IPersistor CreatePersistor()
         {
             return new BasicNetworkPersistor();
         }

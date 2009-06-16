@@ -105,6 +105,10 @@ namespace Encog.Solve.Anneal
             {
                 return temperature;
             }
+            set
+            {
+                this.temperature = value;
+            }
         }
 
 

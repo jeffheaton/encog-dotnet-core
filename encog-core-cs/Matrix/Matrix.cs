@@ -8,11 +8,6 @@ using log4net;
 
 namespace Encog.Matrix
 {
-/**
- * This class implements a mathematical matrix. Matrix math is very important to
- * neural network processing. Many of the neural network classes make use of the
- * matrix classes in this package.
- */
     /// <summary>
     /// Matrix: This class implements a mathematical matrix.  Matrix
     /// math is very important to neural network processing.  Many
@@ -473,6 +468,37 @@ namespace Encog.Matrix
             return null;
         }
 
+        /// <summary>
+        /// Add the specified matrix to this matrix.  This will modify the matrix
+        /// to hold the result of the addition.
+        /// </summary>
+        /// <param name="matrix">The matrix to add.</param>
+        public void Add(Matrix matrix)
+        {
+            for (int row = 0; row < this.Rows; row++)
+            {
+                for (int col = 0; col < this.Cols; col++)
+                {
+                    this.Add(row, col, matrix[row, col]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set every value in the matrix to the specified value.
+        /// </summary>
+        /// <param name="value">The value to set the matrix to.</param>
+        public void Set(double value)
+        {
+            for (int row = 0; row < this.Rows; row++)
+            {
+                for (int col = 0; col < this.Cols; col++)
+                {
+                    this.matrix[row, col] = value;
+                }
+            }
+
+        }
 
     }
 

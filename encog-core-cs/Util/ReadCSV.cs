@@ -32,12 +32,13 @@ using Encog.Persist;
 
 namespace Encog.Util
 {
-/**
- * Read and parse CSV format files.
- */
-public class ReadCSV {
+    /// <summary>
+    /// Read and parse CSV format files.
+    /// </summary>
+    public class ReadCSV
+    {
 
-	        /// <summary>
+        /// <summary>
         /// The format that dates are expected to be in.
         /// </summary>
         public const String dateFormat = "yyyy-MM-dd";
@@ -52,37 +53,39 @@ public class ReadCSV {
             return date.ToString(dateFormat);
         }
 
-	/**
-	 * Get an array of double's from a string of comma separated text.
-	 * 
-	 * @param str
-	 *            The string that contains a list of numbers.
-	 * @return An array of doubles parsed from the string.
-	 */
-	public static double[] FromCommas( String str) {
-		// first count the numbers
-		
-		 String[] tok = str.Split();
-         int count = tok.Length;
-
-		// now allocate an object to hold that many numbers
-		 double[] result = new double[count];
-
-		// and finally parse the numbers
-		for( int index = 0;index<tok.Length;index++)
+        /// <summary>
+        /// Get an array of double's from a string of comma separated text.
+        /// </summary>
+        /// <param name="str">The string that contains a list of numbers.</param>
+        /// <returns>An array of doubles parsed from the string.</returns>
+        public static double[] FromCommas(String str)
         {
-			try {
-                String num = tok[index];
-				 double value = double.Parse(num);
-				result[index] = value;
-			} catch ( Exception e) {
-				throw new PersistError(e);
-			}
+            // first count the numbers
 
-		}
+            String[] tok = str.Split();
+            int count = tok.Length;
 
-		return result;
-	}
+            // now allocate an object to hold that many numbers
+            double[] result = new double[count];
+
+            // and finally parse the numbers
+            for (int index = 0; index < tok.Length; index++)
+            {
+                try
+                {
+                    String num = tok[index];
+                    double value = double.Parse(num);
+                    result[index] = value;
+                }
+                catch (Exception e)
+                {
+                    throw new PersistError(e);
+                }
+
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Parse a date using the specified format.
@@ -101,26 +104,26 @@ public class ReadCSV {
             }
         }
 
-	/**
-	 * Convert an array of doubles to a comma separated list.
-	 * 
-	 * @param result
-	 *            This string will have the values appended to it.
-	 * @param data
-	 *            The array of doubles to use.
-	 */
-	public static void ToCommas( StringBuilder result, 
-			 double[] data) {
-		result.Length = 0;
-		for (int i = 0; i < data.Length; i++) {
-			if (i != 0) {
-				result.Append(',');
-			}
-			result.Append(data[i]);
-		}
-	}
+        /// <summary>
+        /// Convert an array of doubles to a comma separated list.
+        /// </summary>
+        /// <param name="result">This string will have the values appended to it.</param>
+        /// <param name="data">The array of doubles to use.</param>
+        public static void ToCommas(StringBuilder result,
+                 double[] data)
+        {
+            result.Length = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (i != 0)
+                {
+                    result.Append(',');
+                }
+                result.Append(data[i]);
+            }
+        }
 
-	        /// <summary>
+        /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ReadCSV));
@@ -130,260 +133,283 @@ public class ReadCSV {
         /// </summary>
         private TextReader reader;
 
-	/**
-	 * The names of the columns.
-	 */
-	private  IDictionary<String, int> columns = new Dictionary<String, int>();
+        /// <summary>
+        /// The names of the columns.
+        /// </summary>
+        private IDictionary<String, int> columns = new Dictionary<String, int>();
 
-	/**
-	 * The data.
-	 */
-	private String[] data;
+        /// <summary>
+        /// The data.
+        /// </summary>
+        private String[] data;
 
-	/**
-	 * The delimiter.
-	 */
-	private  char delim;
+        /// <summary>
+        /// The delimiter.
+        /// </summary>
+        private char delim;
 
-	/**
-	 * Construct a CSV reader from an input stream.
-	 * 
-	 * @param is
-	 *            The InputStream to read from.
-	 * @param headers
-	 *            Are headers present?
-	 * @param delim
-	 *            What is the delimiter.
-	 */
-	public ReadCSV( Stream istream,  bool headers, 
-				 char delim) {
-                     this.reader = new StreamReader(istream);
-		this.delim = delim;
-		begin(headers);
-	}
-
-	/**
-	 * Construct a CSV reader from a filename.
-	 * 
-	 * @param filename
-	 *            The filename.
-	 * @param headers
-	 *            The headers.
-	 * @param delim
-	 *            The delimiter.
-	 */
-	public ReadCSV( String filename,  bool headers,
-			 char delim) {
-	        this.reader = new StreamReader(filename);
-			this.delim = delim;
-			begin(headers);
-
-	}
-
-	/**
-	 * Reader the headers.
-	 * 
-	 * @param headers
-	 *            Are headers present.
-	 */
-	private void begin( bool headers) {
-		try {
-			// read the column heads
-			if (headers) {
-				 String line = this.reader.ReadLine();
-				 IList<String> tok = parse(line);
-
-				int i = 0;
-				foreach ( String header in tok) {
-					this.columns.Add(header.ToLower(), i++);
-				}
-			}
-
-			this.data = null;
-		} catch ( IOException e) {
-			if (this.logger.IsErrorEnabled) {
-				this.logger.Error("Exception", e);
-			}
-
-			throw new EncogError(e);
-		}
-	}
-
-	/**
-	 * Close the file.
-	 * 
-	 */
-	public void close() {
-		try {
-			this.reader.Close();
-		} catch ( IOException e) {
-			if (this.logger.IsErrorEnabled) {
-				this.logger.Error("Exception", e);
-			}
-
-			throw new EncogError(e);
-		}
-	}
-
-	/**
-	 * Get the specified column as a string.
-	 * 
-	 * @param i
-	 *            The column index, starting at zero.
-	 * @return The column as a string.
-	 */
-	public String get( int i) {
-		return this.data[i];
-	}
-
-	/**
-	 * Get the column by its string name, as a string. This will only work if
-	 * column headers were defined that have string names.
-	 * 
-	 * @param column
-	 *            The column name.
-	 * @return The column data as a string.
-	 */
-	public String Get( String column) {
-        if(!this.columns.ContainsKey(column.ToLower()))
-            return null;
-		 int i = this.columns[column.ToLower()];
-	
-		return this.data[i];
-	}
-
-	/**
-	 * Get the column count.
-	 * 
-	 * @return The column count.
-	 */
-	public int getColumnCount() {
-		if (this.data == null) {
-			return 0;
-		}
-
-		return this.data.Length;
-	}
-
-    /// <summary>
-    /// Read the specified column as a date.
-    /// </summary>
-    /// <param name="column">The specified column.</param>
-    /// <returns>The specified column as a DateTime.</returns>
-    public DateTime GetDate(String column)
-    {
-        String str = Get(column);
-        return DateTime.Parse(str);
-    }
-
-    /// <summary>
-    /// Get the specified column as a double.
-    /// </summary>
-    /// <param name="column">The column to read.</param>
-    /// <returns>The specified column as a double.</returns>
-    public double GetDouble(String column)
-    {
-        String str = Get(column);
-        return double.Parse(str);
-    }
-
-    /// <summary>
-    /// Get an integer that has the specified name.
-    /// </summary>
-    /// <param name="col">The column name to read.</param>
-    /// <returns>The specified column as an int.</returns>
-    public int GetInt(String col)
-    {
-        String str = Get(col);
-        try
+        /// <summary>
+        /// Construct a CSV reader from an input stream.
+        /// </summary>
+        /// <param name="istream">The InputStream to read from.</param>
+        /// <param name="headers">Are headers present?</param>
+        /// <param name="delim">What is the delimiter.</param>
+        public ReadCSV(Stream istream, bool headers,
+                     char delim)
         {
-            return int.Parse(str);
+            this.reader = new StreamReader(istream);
+            this.delim = delim;
+            Begin(headers);
         }
-        catch (FormatException)
+
+        /// <summary>
+        /// Construct a CSV reader from a filename.
+        /// </summary>
+        /// <param name="filename">The filename.</param>
+        /// <param name="headers">The headers.</param>
+        /// <param name="delim">The delimiter.</param>
+        public ReadCSV(String filename, bool headers,
+                 char delim)
         {
-            return 0;
+            this.reader = new StreamReader(filename);
+            this.delim = delim;
+            Begin(headers);
+
         }
+
+
+        /// <summary>
+        /// Read the headers.
+        /// </summary>
+        /// <param name="headers">Are headers present.</param>
+        private void Begin(bool headers)
+        {
+            try
+            {
+                // read the column heads
+                if (headers)
+                {
+                    String line = this.reader.ReadLine();
+                    IList<String> tok = Parse(line);
+
+                    int i = 0;
+                    foreach (String header in tok)
+                    {
+                        this.columns.Add(header.ToLower(), i++);
+                    }
+                }
+
+                this.data = null;
+            }
+            catch (IOException e)
+            {
+                if (this.logger.IsErrorEnabled)
+                {
+                    this.logger.Error("Exception", e);
+                }
+
+                throw new EncogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Close the file.
+        /// </summary>
+        public void Close()
+        {
+            try
+            {
+                this.reader.Close();
+            }
+            catch (IOException e)
+            {
+                if (this.logger.IsErrorEnabled)
+                {
+                    this.logger.Error("Exception", e);
+                }
+
+                throw new EncogError(e);
+            }
+        }
+
+        /// <summary>
+        /// Get the specified column as a string.
+        /// </summary>
+        /// <param name="i">The column index, starting at zero.</param>
+        /// <returns>The column as a string.</returns>
+        public String Get(int i)
+        {
+            return this.data[i];
+        }
+
+        /// <summary>
+        /// Get the column by its string name, as a string. This will only work if
+        /// column headers were defined that have string names.
+        /// </summary>
+        /// <param name="column">The column name.</param>
+        /// <returns>The column data as a string.</returns>
+        public String Get(String column)
+        {
+            if (!this.columns.ContainsKey(column.ToLower()))
+                return null;
+            int i = this.columns[column.ToLower()];
+
+            return this.data[i];
+        }
+
+        /// <summary>
+        /// Get the column count.
+        /// </summary>
+        /// <returns>The column count.</returns>
+        public int GetColumnCount()
+        {
+            if (this.data == null)
+            {
+                return 0;
+            }
+
+            return this.data.Length;
+        }
+
+        /// <summary>
+        /// Read the specified column as a date.
+        /// </summary>
+        /// <param name="column">The specified column.</param>
+        /// <returns>The specified column as a DateTime.</returns>
+        public DateTime GetDate(String column)
+        {
+            String str = Get(column);
+            return DateTime.Parse(str);
+        }
+
+        /// <summary>
+        /// Get the specified column as a double.
+        /// </summary>
+        /// <param name="column">The column to read.</param>
+        /// <returns>The specified column as a double.</returns>
+        public double GetDouble(String column)
+        {
+            String str = Get(column);
+            return double.Parse(str);
+        }
+
+        /// <summary>
+        /// Get an integer that has the specified name.
+        /// </summary>
+        /// <param name="col">The column name to read.</param>
+        /// <returns>The specified column as an int.</returns>
+        public int GetInt(String col)
+        {
+            String str = Get(col);
+            try
+            {
+                return int.Parse(str);
+            }
+            catch (FormatException)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Count the columns and create a an array to hold them.
+        /// </summary>
+        /// <param name="line">One line from the file</param>
+        private void InitData(String line)
+        {
+            IList<String> tok = Parse(line);
+            this.data = new String[tok.Count];
+
+        }
+
+
+        /// <summary>
+        /// Read the next line.
+        /// </summary>
+        /// <returns>True if there are more lines to read.</returns>
+        public bool Next()
+        {
+
+            try
+            {
+                String line = this.reader.ReadLine();
+                if (line == null)
+                {
+                    return false;
+                }
+
+                if (this.data == null)
+                {
+                    InitData(line);
+                }
+
+                IList<String> tok = Parse(line);
+
+                int i = 0;
+                foreach (String str in tok)
+                {
+                    if (i < this.data.Length)
+                    {
+                        this.data[i++] = str;
+                    }
+                }
+
+                return true;
+            }
+            catch (IOException e)
+            {
+                if (this.logger.IsErrorEnabled)
+                {
+                    this.logger.Error("Exception", e);
+                }
+
+                throw new EncogError(e);
+            }
+
+        }
+
+
+        /// <summary>
+        /// Parse the line into a list of values.
+        /// </summary>
+        /// <param name="line">The line to parse.</param>
+        /// <returns>The elements on this line.</returns>
+        private IList<String> Parse(String line)
+        {
+            StringBuilder item = new StringBuilder();
+            IList<String> result = new List<String>();
+            bool quoted = false;
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                char ch = line[i];
+                if ((ch == this.delim) && !quoted)
+                {
+                    result.Add(item.ToString());
+                    item.Length = 0;
+                    quoted = false;
+                }
+                else if ((ch == '\"') && (item.Length == 0))
+                {
+                    quoted = true;
+                }
+                else if ((ch == '\"') && quoted)
+                {
+                    quoted = false;
+                }
+                else
+                {
+                    item.Append(ch);
+                }
+            }
+
+            if (item.Length > 0)
+            {
+                result.Add(item.ToString());
+            }
+
+            return result;
+        }
+
     }
-	/**
-	 * Count the columns and create a an array to hold them.
-	 * 
-	 * @param line
-	 *            One line from the file
-	 */
-	private void initData( String line) {
-		 IList<String> tok = parse(line);
-		this.data = new String[tok.Count];
-
-	}
-
-	/**
-	 * Read the next line.
-	 * 
-	 * @return True if there are more lines to read.
-	 */
-	public bool next() {
-
-		try {
-			 String line = this.reader.ReadLine();
-			if (line == null) {
-				return false;
-			}
-
-			if (this.data == null) {
-				initData(line);
-			}
-
-			 IList<String> tok = parse(line);
-
-			int i = 0;
-			foreach ( String str in tok) {
-				if (i < this.data.Length) {
-					this.data[i++] = str;
-				}
-			}
-
-			return true;
-		} catch ( IOException e) {
-			if (this.logger.IsErrorEnabled) {
-				this.logger.Error("Exception", e);
-			}
-
-			throw new EncogError(e);
-		}
-
-	}
-
-	/**
-	 * Parse the line into a list of values.
-	 * @param line The line to parse.
-	 * @return The elements on this line.
-	 */
-	private IList<String> parse( String line) {
-		 StringBuilder item = new StringBuilder();
-		 IList<String> result = new List<String>();
-		bool quoted = false;
-
-		for (int i = 0; i < line.Length; i++) {
-			 char ch = line[i];
-			if ((ch == this.delim) && !quoted) {
-				result.Add(item.ToString());
-				item.Length = 0;
-				quoted = false;
-			} else if ((ch == '\"') && (item.Length == 0)) {
-				quoted = true;
-			} else if ((ch == '\"') && quoted) {
-				quoted = false;
-			} else {
-				item.Append(ch);
-			}
-		}
-
-		if (item.Length > 0) {
-			result.Add(item.ToString());
-		}
-
-		return result;
-	}
-
-}
 }
