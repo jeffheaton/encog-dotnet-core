@@ -44,13 +44,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ManhattanPropagation));
 
-        /**
-        * 
-        * @param network 
-        * @param training 
-        * @param learnRate 
-        */
-
         /// <summary>
         /// Construct a class to train with Manhattan propagation.  Use default zero 
         /// tolerance.

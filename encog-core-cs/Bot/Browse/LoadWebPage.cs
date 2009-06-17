@@ -13,7 +13,7 @@ namespace Encog.Bot.Browse
 {
     /// <summary>
     /// Called to actually load a web page. This will read the HTML on a web page and
- /// generate the DocumentRange classes.
+    /// generate the DocumentRange classes.
     /// </summary>
     public class LoadWebPage
     {
@@ -400,7 +400,7 @@ namespace Encog.Bot.Browse
                 this.page.AddContent(input);
             }
         }
-        
+
         /// <summary>
         /// Called by loadContents to load a link on the page.
         /// </summary>
@@ -419,7 +419,7 @@ namespace Encog.Bot.Browse
                 this.page.AddContent(link);
             }
         }
-        
+
         /// <summary>
         /// Called by loadContents to load a span.
         /// </summary>

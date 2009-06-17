@@ -30,14 +30,14 @@ namespace Encog.Parse.Tags.Read
         public int MAX_LENGTH = 10000;
 
         /// <summary>
-        /// A mapping of certain HTML encoded values(i.e. &nbsp;) to their actual
+        /// A mapping of certain HTML encoded values to their actual
         /// character values.
         /// </summary>
         private static IDictionary<String, char> charMap;
 
-        /**
-         * The stream that we are parsing from.
-         */
+        /// <summary>
+        /// The stream that we are parsing from.
+        /// </summary>
         private PeekableInputStream source;
 
         /// <summary>

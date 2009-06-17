@@ -5,14 +5,23 @@ using System.Text;
 
 namespace Encog.Persist
 {
+    /// <summary>
+    /// An Encog persisted object, that can be written to XML.
+    /// </summary>
     public interface IEncogPersistedObject : ICloneable
     {
+        /// <summary>
+        /// The description for this object.
+        /// </summary>
         String Description
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         String Name
         {
             get;

@@ -31,11 +31,18 @@ namespace Encog.Parse.Recognize
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Recognize));
 
+        /// <summary>
+        /// Construct a recognize object.
+        /// </summary>
         public Recognize()
         {
             this.type = "Untitled";
         }
 
+        /// <summary>
+        /// Construct a recognize object of the specified type.
+        /// </summary>
+        /// <param name="type"></param>
         public Recognize(String type)
         {
             this.type = type;

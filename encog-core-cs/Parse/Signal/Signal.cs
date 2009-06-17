@@ -24,15 +24,26 @@ namespace Encog.Parse.Signal
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Signal));
 
+        /// <summary>
+        /// Construct an empty signal.
+        /// </summary>
         public Signal()
         {
         }
 
+        /// <summary>
+        /// Construct a signal with the specified value.
+        /// </summary>
+        /// <param name="value">The value to construct the signal for.</param>
         public Signal(char value)
         {
             this.value = value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public Signal(String value)
         {
             for (int i = 0; i < value.Length; i++)

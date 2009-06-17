@@ -12,9 +12,19 @@ namespace Encog.Parse.Recognize
     /// </summary>
     public class RecognizeElement
     {
+        /// <summary>
+        /// Allow one of the element to be recognized.
+        /// </summary>
         public const int ALLOW_ONE = 1;
+
+        /// <summary>
+        /// Allow multiple of the element to be recognized.
+        /// </summary>
         public const int ALLOW_MULTIPLE = 2;
 
+        /// <summary>
+        /// The characters known by this recognizer.
+        /// </summary>
         private String charsKnown = "";
         private int allow = ALLOW_ONE;
         private String name = null;
@@ -25,10 +35,18 @@ namespace Encog.Parse.Recognize
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(RecognizeElement));
 
+        /// <summary>
+        /// Construct a recognize element.
+        /// </summary>
         public RecognizeElement()
         {
         }
 
+        /// <summary>
+        /// Add a signal of the specified type and value.
+        /// </summary>
+        /// <param name="type">The type for this signal.</param>
+        /// <param name="value">The value for this signal.</param>
         public void AddAcceptedSignal(String type, String value)
         {
             AcceptedSignal accepted = new AcceptedSignal(type, value);

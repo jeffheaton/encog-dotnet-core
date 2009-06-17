@@ -5,13 +5,29 @@ using System.Text;
 
 namespace Encog.Util.Concurrency.Job
 {
+    /// <summary>
+    /// Holds basic configuration information for an Encog job.
+    /// </summary>
     public class JobUnitContext
     {
-
+        /// <summary>
+        /// The job unit that this job will execute.
+        /// </summary>
         private Object jobUnit;
+
+        /// <summary>
+        /// The owner of this job.
+        /// </summary>
         private ConcurrentJob owner;
+
+        /// <summary>
+        /// The task number.
+        /// </summary>
         private int taskNumber;
 
+        /// <summary>
+        /// The JobUnit that this context will execute.
+        /// </summary>
         public Object JobUnit
         {
             get
@@ -24,6 +40,9 @@ namespace Encog.Util.Concurrency.Job
             }
         }
 
+        /// <summary>
+        /// The owner of this job.
+        /// </summary>
         public ConcurrentJob Owner
         {
             get

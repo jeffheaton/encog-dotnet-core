@@ -24,8 +24,14 @@
 
 namespace Encog.Util.Concurrency
 {
+    /// <summary>
+    /// A task for Encog concurrency.
+    /// </summary>
     public interface IEncogTask
     {
+        /// <summary>
+        /// Run the specified task.
+        /// </summary>
         void Run();
     }
 }

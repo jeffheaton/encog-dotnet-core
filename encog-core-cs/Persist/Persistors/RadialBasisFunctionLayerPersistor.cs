@@ -118,7 +118,7 @@ namespace Encog.Persist.Persistors
         /// <returns>the RBF loaded.</returns>
         private IRadialBasisFunction LoadRadialFunction(ReadXML xmlIn)
         {
-            IDictionary<String, String> properties = xmlIn.readPropertyBlock();
+            IDictionary<String, String> properties = xmlIn.ReadPropertyBlock();
             double center = double.Parse(properties
                    [RadialBasisFunctionLayerPersistor.PROPERTY_CENTER]);
             double width = double.Parse(properties

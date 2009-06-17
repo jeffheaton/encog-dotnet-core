@@ -12,7 +12,7 @@ namespace Encog.Neural.Networks.Training.Anneal
     /// This class implements a simulated annealing training algorithm for feed
     /// forward neural networks. It is based on the generic SimulatedAnnealing class.
     /// It is used in the same manner as any other training class that implements the
-    // Train interface.
+    /// Train interface.
     /// </summary>
     public class NeuralSimulatedAnnealing : BasicTraining
     {

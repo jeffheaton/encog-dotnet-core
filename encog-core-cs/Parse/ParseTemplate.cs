@@ -24,11 +24,20 @@ namespace Encog.Parse.Recognize
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(FilePersistence));
 
+        /// <summary>
+        /// Add a recognizer.
+        /// </summary>
+        /// <param name="recognize">The recognizer to add.</param>
         public void AddRecognizer(Recognize recognize)
         {
             recognizers.Add(recognize);
         }
 
+        /// <summary>
+        /// Create a recognizer.
+        /// </summary>
+        /// <param name="name">The name of the recognizer.</param>
+        /// <returns>The recognizer that was created.</returns>
         public Recognize CreateRecognizer(String name)
         {
             Recognize result = new Recognize(name);
@@ -47,6 +56,10 @@ namespace Encog.Parse.Recognize
             }
         }
 
+        /// <summary>
+        /// Create a persistor to load or save this object.
+        /// </summary>
+        /// <returns>The Encog persistor.</returns>
         public IPersistor CreatePersistor()
         {
             return new ParseTemplatePersistor();
@@ -84,6 +97,10 @@ namespace Encog.Parse.Recognize
         }
 
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             ParseTemplate result = new ParseTemplate();

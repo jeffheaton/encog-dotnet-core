@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\encog-cs-doc.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\encog-cs-doc.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
@@ -55,6 +57,7 @@
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />
     <Compile Include="Bot\Browse\BrowseError.cs" />
+    <Compile Include="Bot\Browse\Browser.cs" />
     <Compile Include="Bot\Browse\LoadWebPage.cs" />
     <Compile Include="Bot\Browse\Range\Div.cs" />
     <Compile Include="Bot\Browse\Range\DocumentRange.cs" />

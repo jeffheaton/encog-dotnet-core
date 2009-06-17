@@ -7,6 +7,9 @@ using System.IO;
 
 namespace Encog.Parse.Tags.Read
 {
+    /// <summary>
+    /// Parse XML data.
+    /// </summary>
     public class ReadXML : ReadTags
     {
         /// <summary>
@@ -82,7 +85,7 @@ namespace Encog.Parse.Tags.Read
         /// tag, is found. The properties found will be returned in a map.
         /// </summary>
         /// <returns>The properties found.</returns>
-        public IDictionary<String, String> readPropertyBlock()
+        public IDictionary<String, String> ReadPropertyBlock()
         {
             IDictionary<String, String> result = new Dictionary<String, String>();
 

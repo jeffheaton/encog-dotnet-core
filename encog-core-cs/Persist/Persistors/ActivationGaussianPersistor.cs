@@ -35,7 +35,7 @@ namespace Encog.Persist.Persistors
         /// <returns>The loaded object.</returns>
         public IEncogPersistedObject Load(ReadXML xmlIn)
         {
-            IDictionary<String, String> map = xmlIn.readPropertyBlock();
+            IDictionary<String, String> map = xmlIn.ReadPropertyBlock();
             double center = double.Parse(map
                    [ActivationGaussianPersistor.ATTRIBUTE_CENTER]);
             double peak = Double.Parse(map

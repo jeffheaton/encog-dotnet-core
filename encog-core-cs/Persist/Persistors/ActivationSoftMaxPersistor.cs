@@ -19,7 +19,7 @@ namespace Encog.Persist.Persistors
         /// <summary>
         /// Load the specified Encog object from an XML reader.
         /// </summary>
-        /// <param name="ReadXML">The XML reader to use.</param>
+        /// <param name="xmlIn">The XML reader to use.</param>
         /// <returns>The loaded object.</returns>
         public IEncogPersistedObject Load(ReadXML xmlIn)
         {

@@ -16,9 +16,24 @@ namespace Encog.Parse
     /// </summary>
     public class Parse
     {
+        /// <summary>
+        /// The unit manager.
+        /// </summary>
         private static UnitManager unitManager;
+
+        /// <summary>
+        /// The template to use.
+        /// </summary>
         private ParseTemplate template;
+
+        /// <summary>
+        /// The name of the resource that holds the default template.
+        /// </summary>
         public const String RESOURCE_NAME = "org/encog/data/template.eg";
+
+        /// <summary>
+        /// The item name for the default template.
+        /// </summary>
         public const String RESOURCE_ITEM_NAME = "parse-native";
 
         /// <summary>
@@ -26,11 +41,16 @@ namespace Encog.Parse
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(FilePersistence));
 
+        /// <summary>
+        /// Parse a signal file.  Used for testing.
+        /// </summary>
+        /// <param name="name">The name of the file.</param>
+        /// <returns>The signals returned from the file.</returns>
         public Signal.Signal ParseFile(String name)
         {
             try
             {
-                TextReader file = new StreamReader("date.txt");
+                TextReader file = new StreamReader(name);
 
                 String contents = "";
                 String line = "";
