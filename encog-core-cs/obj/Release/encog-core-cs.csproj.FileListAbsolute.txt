@@ -1,6 +1,0 @@
-C:\encog-cs\encog-core\encog-core-cs\bin\Release\encog-core-cs.dll
-C:\encog-cs\encog-core\encog-core-cs\bin\Release\encog-core-cs.pdb
-C:\encog-cs\encog-core\encog-core-cs\bin\Release\log4net.dll
-C:\encog-cs\encog-core\encog-core-cs\obj\Release\ResolveAssemblyReference.cache
-C:\encog-cs\encog-core\encog-core-cs\obj\Release\encog-core-cs.dll
-C:\encog-cs\encog-core\encog-core-cs\obj\Release\encog-core-cs.pdb
