@@ -121,6 +121,10 @@ namespace Encog.Neural.Data.Basic
             return result.ToString();
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             BasicNeuralData result = new BasicNeuralData(this.data);

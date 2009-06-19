@@ -117,6 +117,10 @@ namespace Encog.Neural.NeuralData.Bipolar
             return this.data[i];
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             return new BiPolarNeuralData(this.data);

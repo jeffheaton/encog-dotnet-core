@@ -71,6 +71,9 @@ namespace Encog.Parse
             }
         }
 
+        /// <summary>
+        /// The unit manager to use with this parser.
+        /// </summary>
         public static UnitManager UnitManager
         {
             get
@@ -100,6 +103,11 @@ namespace Encog.Parse
             return changed;
         }
 
+        /// <summary>
+        /// Parse the specified string into a signal.
+        /// </summary>
+        /// <param name="input">The string to parse.</param>
+        /// <returns>The signal the string was parsed into.</returns>
         public Signal.Signal ParseString(String input)
         {
             Signal.Signal result = new Signal.Signal(input + " ");
@@ -125,6 +133,9 @@ namespace Encog.Parse
             }
         }
 
+        /// <summary>
+        /// Load the default template from a resource.
+        /// </summary>
         public void Load()
         {
 

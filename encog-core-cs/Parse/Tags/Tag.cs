@@ -173,7 +173,7 @@ namespace Encog.Parse.Tags
 
         /// <summary>
         /// Convert this tag back into string form, with the 
-        /// beginning < and ending >.
+        /// beginning &lt; and ending &gt;.
         /// </summary>
         /// <returns>The Attribute object that was found.</returns>
         public override String ToString()

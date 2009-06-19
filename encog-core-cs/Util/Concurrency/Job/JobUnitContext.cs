@@ -56,7 +56,9 @@ namespace Encog.Util.Concurrency.Job
         }
 
 
-
+        /// <summary>
+        /// The task number.
+        /// </summary>
         public int TaskNumber
         {
             get

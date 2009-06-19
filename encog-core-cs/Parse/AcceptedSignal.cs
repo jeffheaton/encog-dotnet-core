@@ -51,6 +51,11 @@ namespace Encog.Parse
         /// </summary>
         private static readonly ILog logger = LogManager.GetLogger(typeof(AcceptedSignal));
 
+        /// <summary>
+        /// Construct an accepted signal.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
         public AcceptedSignal(String type, String value)
         {
             this.type = type;

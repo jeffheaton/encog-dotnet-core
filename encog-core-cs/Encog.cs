@@ -27,7 +27,6 @@ using System.Linq;
 using System.Text;
 using log4net;
 using log4net.Config;
-using Encog.Util.ORM;
 
 namespace Encog
 {
@@ -91,11 +90,6 @@ namespace Encog
             }
         }
 
-        /**
-         * The current ORM session.
-         */
-        private ORMSession session;
-
         /// <summary>
         /// Get the properties as a Map.
         /// </summary>
@@ -119,21 +113,6 @@ namespace Encog
             get
             {
                 return this.properties;
-            }
-        }
-
-        /// <summary>
-        /// The ORM session that Encog is using.
-        /// </summary>
-        public ORMSession Session
-        {
-            get
-            {
-                return this.session;
-            }
-            set
-            {
-                this.session = value;
             }
         }
 

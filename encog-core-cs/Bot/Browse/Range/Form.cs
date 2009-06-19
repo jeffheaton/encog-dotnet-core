@@ -89,6 +89,9 @@ namespace Encog.Bot.Browse.Range
             }
         }
 
+        /// <summary>
+        /// The method, GET or POST.
+        /// </summary>
         public FormMethod Method
         {
             get

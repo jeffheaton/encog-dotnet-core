@@ -53,6 +53,9 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// The name of this signal.
+        /// </summary>
         public String Name
         {
             get
@@ -65,6 +68,9 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// The elements of this signal.
+        /// </summary>
         public IList<Signal> Data
         {
             get
@@ -73,6 +79,9 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// The size of the signal.
+        /// </summary>
         public int Size
         {
             get
@@ -81,11 +90,17 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// Clear the signal.
+        /// </summary>
         public void Clear()
         {
             data.Clear();
         }
 
+        /// <summary>
+        /// The value of this signal.
+        /// </summary>
         public char Value
         {
             get
@@ -94,6 +109,9 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// Is this a character?
+        /// </summary>
         public bool IsChar
         {
             get
@@ -102,11 +120,26 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// Pack the signal into a new signal.
+        /// </summary>
+        /// <param name="begin">The beginning of where to pack.</param>
+        /// <param name="end">The end of where to pack</param>
+        /// <param name="type">The type.</param>
+        /// <returns>The packed signal.</returns>
         public Signal Pack(int begin, int end, String type)
         {
             return Pack(begin, end, type, typeof(Signal));
         }
 
+        /// <summary>
+        /// Pack the signal into a new signal.
+        /// </summary>
+        /// <param name="begin">The beginning of where to pack.</param>
+        /// <param name="end">The end of where to pack.</param>
+        /// <param name="type">The type to use.</param>
+        /// <param name="signalClass">The signal class to use.</param>
+        /// <returns>The packed signal.</returns>
         public Signal Pack(int begin, int end, String type, Type signalClass)
         {
             delta = true;
@@ -158,12 +191,22 @@ namespace Encog.Parse.Signal
             return temp;
         }
 
+        /// <summary>
+        /// Insert one signal into another.
+        /// </summary>
+        /// <param name="begin">Where to begin the insert.</param>
+        /// <param name="signal">The signal to insert.</param>
         public void Insert(int begin, Signal signal)
         {
             delta = true;
             data.Insert(begin, signal);
         }
 
+        /// <summary>
+        /// Cut an area from the signal.
+        /// </summary>
+        /// <param name="begin">The beginning of where to cut.</param>
+        /// <param name="end">The end of where to cut.</param>
         public void Cut(int begin, int end)
         {
             Object[] array = data.ToArray();
@@ -178,6 +221,10 @@ namespace Encog.Parse.Signal
         }
 
 
+        /// <summary>
+        /// Dump this signal to a string.
+        /// </summary>
+        /// <returns>A string that is a dump of the signal.</returns>
         public String Dump()
         {
             String result = "";
@@ -216,18 +263,31 @@ namespace Encog.Parse.Signal
             return result;
         }
 
+        /// <summary>
+        /// Add one signal to another.
+        /// </summary>
+        /// <param name="signal">The signal to add.</param>
         public void Add(Signal signal)
         {
             data.Add(signal);
             delta = true;
         }
 
+        /// <summary>
+        /// Add a type to the list of types that this signal is.
+        /// </summary>
+        /// <param name="type">The new type.</param>
         public void AddType(String type)
         {
             types.Add(type);
             delta = true;
         }
 
+        /// <summary>
+        /// Does this signal have the specified type.
+        /// </summary>
+        /// <param name="str">The type to search for.</param>
+        /// <returns>True if the signal has the specified type.</returns>
         public bool HasType(String str)
         {
             foreach (String type in types)
@@ -238,6 +298,11 @@ namespace Encog.Parse.Signal
             return false;
         }
 
+        /// <summary>
+        /// Find all parts of this signal by type.
+        /// </summary>
+        /// <param name="type">The type we are searching for.</param>
+        /// <returns>A collection of the types that were found.</returns>
         public ICollection<Signal> FindByType(String type)
         {
             ICollection<Signal> result = new List<Signal>();
@@ -250,6 +315,12 @@ namespace Encog.Parse.Signal
             return result;
         }
 
+        /// <summary>
+        /// Find by the specific type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public Signal FindByType(String type, int count)
         {
             foreach (Signal signal in data)
@@ -269,6 +340,10 @@ namespace Encog.Parse.Signal
             return null;
         }
 
+        /// <summary>
+        /// Convert this object to a string.
+        /// </summary>
+        /// <returns>This object as a string.</returns>
         public override String ToString()
         {
             String result = "";
@@ -288,6 +363,9 @@ namespace Encog.Parse.Signal
             return result;
         }
 
+        /// <summary>
+        /// Should this signal be ignored?
+        /// </summary>
         public bool Ignore
         {
             get
@@ -300,15 +378,24 @@ namespace Encog.Parse.Signal
             }
         }
 
+        /// <summary>
+        /// Called to parse a specific sort of signal.
+        /// </summary>
         public void Parse()
         {
         }
 
+        /// <summary>
+        /// Reset the delta.
+        /// </summary>
         public void ResetDelta()
         {
             delta = false;
         }
 
+        /// <summary>
+        /// The current delta value, was there a change?
+        /// </summary>
         public bool Delta
         {
             get

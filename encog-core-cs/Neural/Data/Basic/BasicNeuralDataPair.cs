@@ -119,6 +119,10 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             Object result;

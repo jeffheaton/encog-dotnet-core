@@ -313,19 +313,12 @@ namespace Encog.Persist
             }
         }
 
-        /**
-         * Read the value in a period delimited string. For example
-         * property.name.value.
-         * @param name The property to read.
-         * @return The value found at the specified property.
-         */
-
         /// <summary>
         /// Read the value in a period delimited string. For example
         /// property.name.value.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The property to read.</param>
+        /// <returns>The value found at the specified property.</returns>
         public String ReadValue(String name)
         {
 

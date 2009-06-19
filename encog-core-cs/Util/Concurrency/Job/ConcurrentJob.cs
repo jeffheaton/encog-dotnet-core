@@ -51,7 +51,7 @@ namespace Encog.Util.Concurrency.Job
         /// <summary>
         /// Start the job, block until its done.
         /// </summary>
-        public void Start()
+        public virtual void Process()
         {
             Object task;
 

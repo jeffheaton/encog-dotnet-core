@@ -158,7 +158,7 @@ namespace Encog.Parse.Tags.Read
         }
 
         /// <summary>
-        /// Parse any special characters(i.e. &nbsp);
+        /// Parse any special characters
         /// </summary>
         /// <returns>The character that was parsed.</returns>
         private char ParseSpecialCharacter()

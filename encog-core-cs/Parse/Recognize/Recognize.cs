@@ -48,11 +48,20 @@ namespace Encog.Parse.Recognize
             this.type = type;
         }
 
+        /// <summary>
+        /// Add a recognize element.
+        /// </summary>
+        /// <param name="re">The element to add.</param>
         public void Add(RecognizeElement re)
         {
             this.pattern.Add(re);
         }
 
+        /// <summary>
+        /// Create an element.
+        /// </summary>
+        /// <param name="allow">How many to allow, one or many.</param>
+        /// <returns>The new element.</returns>
         public RecognizeElement CreateElement(int allow)
         {
             RecognizeElement result = new RecognizeElement(allow);
@@ -60,6 +69,9 @@ namespace Encog.Parse.Recognize
             return result;
         }
 
+        /// <summary>
+        /// Should this element be ignored.
+        /// </summary>
         public bool Ignore
         {
             get
@@ -72,6 +84,9 @@ namespace Encog.Parse.Recognize
             }
         }
 
+        /// <summary>
+        /// The pattern that this recognizer should recognize.
+        /// </summary>
         public IList<RecognizeElement> Pattern
         {
             get
@@ -81,6 +96,9 @@ namespace Encog.Parse.Recognize
 
         }
 
+        /// <summary>
+        /// The type of signal this is.
+        /// </summary>
         public Type SignalClass
         {
             get
@@ -93,6 +111,11 @@ namespace Encog.Parse.Recognize
             }
         }
 
+        /// <summary>
+        /// Attempt to recognize this signal.
+        /// </summary>
+        /// <param name="signal">The signal to recognize.</param>
+        /// <returns>True if recognized.</returns>
         public bool PerformRecognize(Signal.Signal signal)
         {
 
@@ -132,7 +155,7 @@ namespace Encog.Parse.Recognize
                 // System.out.println("Recognize Element:" + signalElement.dump() );
                 bool success = re.Recognize(signalElement);
 
-                switch (re.GetAllow())
+                switch (re.Allow)
                 {
                     case RecognizeElement.ALLOW_ONE:
                         if (success)

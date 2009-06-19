@@ -303,6 +303,10 @@ namespace Encog.Neural.Data.Basic
             }
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             BasicNeuralDataSet result = new BasicNeuralDataSet();
@@ -313,6 +317,10 @@ namespace Encog.Neural.Data.Basic
             return result;
         }
 
+        /// <summary>
+        /// Create a persistor to load/save this object to XML.
+        /// </summary>
+        /// <returns>The persistor.</returns>
         public IPersistor CreatePersistor()
         {
             return new BasicNeuralDataSetPersistor();

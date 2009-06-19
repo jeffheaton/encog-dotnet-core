@@ -53,6 +53,9 @@ namespace Encog.Parse.Recognize
             recognizedSignals.Add(accepted);
         }
 
+        /// <summary>
+        /// The name of this element.
+        /// </summary>
         public String Name
         {
             get
@@ -65,29 +68,49 @@ namespace Encog.Parse.Recognize
             }
         }
 
+        /// <summary>
+        /// Create a recognize element.
+        /// </summary>
+        /// <param name="allow">Allow one, or allow many.</param>
         public RecognizeElement(int allow)
         {
             this.allow = allow;
         }
 
-        public int GetAllow()
+        /// <summary>
+        /// Allow one, or allow many?
+        /// </summary>
+        public int Allow
         {
-            return allow;
+            get
+            {
+                return allow;
+            }
         }
 
-
+        /// <summary>
+        /// Add a character range.
+        /// </summary>
+        /// <param name="low">The low character.</param>
+        /// <param name="high">The high character.</param>
         public void AddRange(char low, char high)
         {
             for (char ch = low; ch <= high; ch++)
                 charsKnown += ch;
         }
 
+        /// <summary>
+        /// Add a single character.
+        /// </summary>
+        /// <param name="ch">The character to add.</param>
         public void Add(char ch)
         {
             charsKnown += ch;
         }
 
-
+        /// <summary>
+        /// The type of recognizer this is.
+        /// </summary>
         public String Type
         {
             get
@@ -99,6 +122,11 @@ namespace Encog.Parse.Recognize
             }
         }
 
+        /// <summary>
+        /// Attempt to recognize the specified signal.
+        /// </summary>
+        /// <param name="signal">The signal to recognize.</param>
+        /// <returns>True if it was recognized.</returns>
         public bool Recognize(Signal.Signal signal)
         {
             if (!signal.IsChar)
@@ -119,6 +147,10 @@ namespace Encog.Parse.Recognize
                 return (charsKnown.IndexOf(signal.Value) != -1);
         }
 
+        /// <summary>
+        /// Convert this object to a string.
+        /// </summary>
+        /// <returns>The string form of this object.</returns>
         public override String ToString()
         {
             StringBuilder result = new StringBuilder();

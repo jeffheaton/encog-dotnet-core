@@ -126,6 +126,20 @@
     <Compile Include="Neural\Networks\NetworkCODEC.cs" />
     <Compile Include="Neural\Networks\NeuralOutputHolder.cs" />
     <Compile Include="Neural\Networks\NeuralStructure.cs" />
+    <Compile Include="Neural\Networks\Pattern\ElmanPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\FeedFowardPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\HopfieldPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\INeuralNetworkPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\JordanPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\PatternConst.cs" />
+    <Compile Include="Neural\Networks\Pattern\PatternError.cs" />
+    <Compile Include="Neural\Networks\Pattern\RadialBasisPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\RSOMPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\SOMPattern.cs" />
+    <Compile Include="Neural\Networks\Prune\HiddenLayerParams.cs" />
+    <Compile Include="Neural\Networks\Prune\NetworkPattern.cs" />
+    <Compile Include="Neural\Networks\Prune\PruneIncremental.cs" />
+    <Compile Include="Neural\Networks\Prune\PruneSelective.cs" />
     <Compile Include="Neural\Networks\Synapse\BasicSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\DirectSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\ISynapse.cs" />
@@ -243,7 +257,6 @@
     <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
     <Compile Include="Util\MathUtil\RBF\RadialBasisFunction.cs" />
     <Compile Include="Util\NormalizeInput.cs" />
-    <Compile Include="Util\ORM\ORMSession.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />
     <Compile Include="Util\Randomize\ConstRandomizer.cs" />
     <Compile Include="Util\Randomize\Distort.cs" />
@@ -261,7 +274,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bot\Browse\Extract\" />
-    <Folder Include="NLP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

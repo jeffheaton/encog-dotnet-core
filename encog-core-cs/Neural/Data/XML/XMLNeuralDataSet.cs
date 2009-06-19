@@ -77,10 +77,10 @@ namespace Encog.Neural.Data.XML
                 Reset();
             }
 
-            /**
-             * Is there any more data to read?
-             * @return True if there is more data to read.
-             */
+            /// <summary>
+            /// Is there any more data to read?
+            /// </summary>
+            /// <returns>True if there is more data to read.</returns>
             public bool HasNext()
             {
                 if (this.nextPair != null)
@@ -91,10 +91,10 @@ namespace Encog.Neural.Data.XML
                 return ObtainNext();
             }
 
-            /**
-             * Internal function called by several functions to display an error
-             * that indicates that the XML is not valid.
-             */
+            /// <summary>
+            /// Internal function called by several functions to display an error
+            /// that indicates that the XML is not valid.
+            /// </summary>
             private void InvalidError()
             {
                 String str = "Could not parse XML, "
@@ -106,11 +106,10 @@ namespace Encog.Neural.Data.XML
                 throw new NeuralNetworkError(str);
             }
 
-
-            /**
-             * Internal function to obtain the next training set item.
-             * @return True if one was found.
-             */
+            /// <summary>
+            /// Internal function to obtain the next training set item.
+            /// </summary>
+            /// <returns>True if one was found.</returns>
             private bool ObtainNext()
             {
                 if (!this.reader.FindTag(this.owner.PairXML, true))
@@ -168,11 +167,18 @@ namespace Encog.Neural.Data.XML
                 return true;
             }
 
+            /// <summary>
+            /// Internal function to get the current pair.
+            /// </summary>
+            /// <returns>The current pair.</returns>
             private INeuralDataPair InternalCurrent()
             {
                 return this.nextPair;
             }
 
+            /// <summary>
+            /// The current data pair.
+            /// </summary>
             public INeuralDataPair Current
             {
                 get 
@@ -181,12 +187,15 @@ namespace Encog.Neural.Data.XML
                 }
             }
 
+            /// <summary>
+            /// Dispose of this object.
+            /// </summary>
             public void Dispose()
             {
                 try
                 {
                     this.file.Close();
-                    owner.Iterators.Remove(this);
+                    owner.Enumerators.Remove(this);
                 }
                 catch (IOException e)
                 {
@@ -223,6 +232,9 @@ namespace Encog.Neural.Data.XML
                 return true;
             }
 
+            /// <summary>
+            /// Reset back to tbe beginning of the file.
+            /// </summary>
             public void Reset()
             {
                 try
@@ -242,9 +254,9 @@ namespace Encog.Neural.Data.XML
 
         }
 
-        /**
-         * Error Message: adds are not supported.
-         */
+        /// <summary>
+        /// Error Message: adds are not supported.
+        /// </summary>
         public const String ADD_NOT_SUPPORTED =
             "Adds are not supported with this dataset, it is read only.";
 
@@ -253,60 +265,67 @@ namespace Encog.Neural.Data.XML
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(XMLNeuralDataSet));
 
-        /**
-         * The file name to read.
-         */
+        /// <summary>
+        /// The file name to read.
+        /// </summary>
         private String filename;
 
-        /**
-         * The XML that indicates that a pair is about to start.
-         */
+        /// <summary>
+        /// The XML that indicates that a pair is about to start.
+        /// </summary>
         private String pairXML;
 
-        /**
-         * The XML that indicates that input data is about to start.
-         */
+        /// <summary>
+        /// The XML that indicates that input data is about to start.
+        /// </summary>
         private String inputXML;
 
-        /**
-         * XMl that indicates that ideal data is about to start.
-         */
+        /// <summary>
+        ///  XMl that indicates that ideal data is about to start.
+        /// </summary>
         private String idealXML;
 
-        /**
-         * XML that indicates that a numeric value is about to start.
-         */
+        /// <summary>
+        /// XML that indicates that a numeric value is about to start.
+        /// </summary>
         private String valueXML;
 
-        /**
-         * The input data size.
-         */
+        /// <summary>
+        /// The input data size.
+        /// </summary>
         private int inputSize;
 
-        /**
-         * The ideal data size.
-         */
+        /// <summary>
+        /// The ideal data size.
+        /// </summary>
         private int idealSize;
 
+        /// <summary>
+        /// The description.
+        /// </summary>
         private String description;
+
+        /// <summary>
+        /// The name.
+        /// </summary>
         private String name;
 
-        /**
-         * A collection of iterators that have been created.
-         */
+        /// <summary>
+        /// A collection of iterators that have been created.
+        /// </summary>
         private IList<XMLNeuralEnumerator> iterators =
             new List<XMLNeuralEnumerator>();
 
-        /**
-         * Construct an XML neural data set.
-         * @param filename The filename to read.
-         * @param inputSize The input size.
-         * @param idealSize The ideal size. Zero for unsupervised.
-         * @param pairXML The XML that starts a pair.
-         * @param inputXML The XML that starts input.
-         * @param idealXML The XML that starts ideal.
-         * @param valueXML The XML that starts values.
-         */
+        /// <summary>
+        /// Construct an XML neural data set.
+        /// </summary>
+        /// <param name="filename">The filename to read.</param>
+        /// <param name="inputSize">The input size.</param>
+        /// <param name="idealSize">The ideal size. Zero for unsupervised.</param>
+        /// <param name="pairXML">The XML that starts a pair.</param>
+        /// <param name="inputXML">The XML that starts input.</param>
+        /// <param name="idealXML">The XML that starts ideal.</param>
+        /// <param name="valueXML">The XML that starts values.</param>
         public XMLNeuralDataSet(String filename, int inputSize,
                  int idealSize, String pairXML, String inputXML,
                  String idealXML, String valueXML)
@@ -320,56 +339,49 @@ namespace Encog.Neural.Data.XML
             this.inputSize = inputSize;
         }
 
-        /**
-         * Adds are not supported, this is a read only data set.
-         * 
-         * @param data1
-         *            Not used.
-         */
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="data1">Not used.</param>
         public void Add(INeuralData data1)
         {
             throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
         }
 
-        /**
-         * Adds are not supported, this is a read only data set.
-         * 
-         * @param inputData
-         *            Not used.
-         * @param idealData
-         *            Not used.
-         */
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
+        /// <param name="idealData">Not used.</param>
         public void Add(INeuralData inputData, INeuralData idealData)
         {
             throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
         }
 
-        /**
-         * Adds are not supported, this is a read only data set.
-         * 
-         * @param inputData
-         *            Not used.
-         */
+        /// <summary>
+        /// Adds are not supported, this is a read only data set.
+        /// </summary>
+        /// <param name="inputData">Not used.</param>
         public void Add(INeuralDataPair inputData)
         {
             throw new NeuralDataError(XMLNeuralDataSet.ADD_NOT_SUPPORTED);
         }
 
-        /**
-         * Close the XML data source.
-         */
+        /// <summary>
+        /// Close the XML data source.
+        /// </summary>
         public void Close()
         {
             for (int i = 0; i < this.iterators.Count; i++)
             {
-                XMLNeuralEnumerator iterator = this.Iterators[i];
+                XMLNeuralEnumerator iterator = this.Enumerators[i];
                 iterator.Dispose();
             }
         }
 
-        /**
-         * @return The XML filename.
-         */
+        /// <summary>
+        /// The XML filename.
+        /// </summary>
         public String Filename
         {
             get
@@ -378,9 +390,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The ideal size.
-         */
+        /// <summary>
+        /// The ideal size.
+        /// </summary>
         public int IdealSize
         {
             get
@@ -389,9 +401,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The XML tag for ideal.
-         */
+        /// <summary>
+        /// The XML tag for ideal.
+        /// </summary>
         public String IdealXML
         {
             get
@@ -400,9 +412,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The input size.
-         */
+        /// <summary>
+        /// The input size.
+        /// </summary>
         public int InputSize
         {
             get
@@ -411,9 +423,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The XML tag for input.
-         */
+        /// <summary>
+        /// The XML tag for input.
+        /// </summary>
         public String InputXML
         {
             get
@@ -422,9 +434,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The XML tag for pairs.
-         */
+        /// <summary>
+        /// XML tag for pairs.
+        /// </summary>
         public String PairXML
         {
             get
@@ -433,9 +445,9 @@ namespace Encog.Neural.Data.XML
             }
         }
 
-        /**
-         * @return The XML tag for values.
-         */
+        /// <summary>
+        /// The XML tag for values.
+        /// </summary>
         public String ValueXML
         {
             get
@@ -444,11 +456,19 @@ namespace Encog.Neural.Data.XML
             }
         }
 
+        /// <summary>
+        /// Create a persistor to load/save Encog objects.
+        /// </summary>
+        /// <returns>The persistor.</returns>
         public IPersistor CreatePersistor()
         {
             return null;
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         public Object Clone()
         {
             return null;
@@ -513,11 +533,19 @@ namespace Encog.Neural.Data.XML
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Clone the object.
+        /// </summary>
+        /// <returns>The clone of this object.</returns>
         object IEncogPersistedObject.Clone()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A clone of this object.</returns>
         object ICloneable.Clone()
         {
             throw new NotImplementedException();
@@ -541,7 +569,10 @@ namespace Encog.Neural.Data.XML
             return new XMLNeuralEnumerator(this);
         }
 
-        public IList<XMLNeuralEnumerator> Iterators
+        /// <summary>
+        /// Get a list of enumerators in use.
+        /// </summary>
+        public IList<XMLNeuralEnumerator> Enumerators
         {
             get
             {
