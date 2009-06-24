@@ -181,9 +181,9 @@ namespace Encog.Neural.Data.XML
             /// </summary>
             public INeuralDataPair Current
             {
-                get 
-                { 
-                    return InternalCurrent(); 
+                get
+                {
+                    return InternalCurrent();
                 }
             }
 
@@ -210,26 +210,22 @@ namespace Encog.Neural.Data.XML
             object System.Collections.IEnumerator.Current
             {
                 get
-                { 
-                    return InternalCurrent(); 
+                {
+                    return InternalCurrent();
                 }
             }
 
             bool System.Collections.IEnumerator.MoveNext()
             {
-                INeuralDataPair result = this.nextPair;
 
-                if (result == null)
+                if (!ObtainNext())
                 {
-                    if (!ObtainNext())
-                    {
-                        return false;
-                    }
-                    result = this.nextPair;
+                    return false;
                 }
-
-                this.nextPair = null;
-                return true;
+                else
+                {
+                    return true;
+                }
             }
 
             /// <summary>
