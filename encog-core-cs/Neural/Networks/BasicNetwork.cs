@@ -174,6 +174,7 @@ namespace Encog.Neural.Networks
             ILayer input = CloneLayer(this.inputLayer, result);
             result.InputLayer = input;
             result.Structure.FinalizeStructure();
+            result.InferOutputLayer();
             return result;
         }
 

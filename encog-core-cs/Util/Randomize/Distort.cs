@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using log4net;
+using Encog.Util.MathUtil;
 
 namespace Encog.Util.Randomize
 {
@@ -39,8 +40,7 @@ namespace Encog.Util.Randomize
         /// <returns>The result.</returns>
         public override double Randomize(double d)
         {
-            Random rand = new Random();
-            return d + (this.factor - (rand.NextDouble() * this.factor * 2));
+            return d + (this.factor - (ThreadSafeRandom.NextDouble() * this.factor * 2));
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using log4net;
+using Encog.Util.MathUtil;
 
 namespace Encog.Util.Randomize
 {
@@ -21,8 +22,7 @@ namespace Encog.Util.Randomize
         public static double Randomize(double min, double max)
         {
             double range = max - min;
-            Random rand = new Random();
-            return (range * rand.NextDouble()) + min;
+            return (range * ThreadSafeRandom.NextDouble()) + min;
         }
 
         /// <summary>

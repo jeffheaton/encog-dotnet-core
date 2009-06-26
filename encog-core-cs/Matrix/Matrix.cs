@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Persist;
 using System.Runtime.Serialization;
 using log4net;
+using Encog.Util.MathUtil;
 
 namespace Encog.Matrix
 {
@@ -347,14 +348,11 @@ namespace Encog.Matrix
         /// <param name="max">The maximum value for the random numbers.</param>
         public void Ramdomize(double min, double max)
         {
-
-            Random rand = new Random();
-
             for (int r = 0; r < this.Rows; r++)
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this.matrix[r, c] = (rand.NextDouble() * (max - min)) + min;
+                    this.matrix[r, c] = (ThreadSafeRandom.NextDouble() * (max - min)) + min;
                 }
             }
         }

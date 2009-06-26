@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Web;
+using Encog.Util.MathUtil;
 
 namespace Encog.Util.HTTP
 {
@@ -13,11 +14,6 @@ namespace Encog.Util.HTTP
     /// </summary>
     public class FormUtility
     {
-        /// <summary>
-        /// A random number generator.
-        /// </summary>
-        private static Random random = new Random();
-
         /// <summary>
         /// Used to convert strings into bytes.
         /// </summary>
@@ -68,7 +64,7 @@ namespace Encog.Util.HTTP
         /// <returns>A random string.</returns>
         protected static String RandomString()
         {
-            return "" + random.NextDouble();
+            return "" + ThreadSafeRandom.NextDouble();
         }
 
         /// <summary>

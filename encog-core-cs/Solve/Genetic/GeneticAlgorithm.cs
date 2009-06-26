@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util.Concurrency;
+using Encog.Util.MathUtil;
+using System.Threading;
 
 namespace Encog.Solve.Genetic
 {
@@ -17,11 +19,6 @@ namespace Encog.Solve.Genetic
     /// <typeparam name="GENE_TYPE">The datatype of the gene.</typeparam>
     public abstract class GeneticAlgorithm<GENE_TYPE>
     {
-        /// <summary>
-        /// Random numbers.
-        /// </summary>
-        private Random rand = new Random();
-
         /// <summary>
         /// Threadpool timeout.
         /// </summary>
@@ -189,7 +186,7 @@ namespace Encog.Solve.Genetic
             for (int i = 0; i < countToMate; i++)
             {
                 Chromosome<GENE_TYPE> mother = this.chromosomes[i];
-                int fatherInt = (int)(this.rand.NextDouble() * matingPopulationSize);
+                int fatherInt = (int)(ThreadSafeRandom.NextDouble() * matingPopulationSize);
                 Chromosome<GENE_TYPE> father = this.chromosomes[fatherInt];
                 Chromosome<GENE_TYPE> child1 =
                    this.chromosomes[offspringIndex];
@@ -201,7 +198,7 @@ namespace Encog.Solve.Genetic
                        mother, father, child1, child2);
 
                 EncogConcurrency.Instance.ProcessTask(worker);
-
+                
                 offspringIndex += 2;
             }
 

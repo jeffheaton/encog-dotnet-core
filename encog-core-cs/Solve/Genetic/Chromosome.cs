@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Util.MathUtil;
 
 namespace Encog.Solve.Genetic
 {
@@ -23,8 +24,6 @@ namespace Encog.Solve.Genetic
     public abstract class Chromosome<GENE_TYPE> :
             IComparable<Chromosome<GENE_TYPE>>
     {
-        private Random rand = new Random();
-
         /// <summary>
         /// The cost for this chromosome. The lower the better.
         /// </summary>
@@ -56,7 +55,11 @@ namespace Encog.Solve.Genetic
         /// than this chromosome.</returns>
         public int CompareTo(Chromosome<GENE_TYPE> other)
         {
-            if (this.Cost > other.Cost)
+            if (this == other)
+            {
+                return 0;
+            }
+            else if (this.Cost > other.Cost)
             {
                 return 1;
             }
@@ -150,9 +153,9 @@ namespace Encog.Solve.Genetic
             int geneLength = this.Genes.Length;
 
             // the chromosome must be cut at two positions, determine them
-            int cutpoint1 = (int)(rand.NextDouble() * (geneLength
-                   - this.GeneticAlgorithm.CutLength));
+            int cutpoint1 = (int)(ThreadSafeRandom.NextDouble() * (geneLength - this.GeneticAlgorithm.CutLength));
             int cutpoint2 = cutpoint1 + this.GeneticAlgorithm.CutLength;
+
 
             // keep track of which cities have been taken in each of the two
             // offspring, defaults to false.
@@ -162,10 +165,13 @@ namespace Encog.Solve.Genetic
             // handle cut section
             for (int i = 0; i < geneLength; i++)
             {
-                if (!((i < cutpoint1) || (i > cutpoint2)))
+                if ((i < cutpoint1) || (i > cutpoint2))
+                {
+                }
+                else
                 {
                     offspring1.Genes[i] = father.Genes[i];
-                    offspring2.Genes[i] = this.Genes[i];
+                    offspring2.Genes[i] = this.genes[i];
                     taken1.Add(offspring1.Genes[i]);
                     taken2.Add(offspring2.Genes[i]);
                 }
@@ -193,11 +199,11 @@ namespace Encog.Solve.Genetic
             offspring1.CalculateCost();
             offspring2.CalculateCost();
 
-            if (rand.NextDouble() < this.geneticAlgorithm.MutationPercent)
+            if (ThreadSafeRandom.NextDouble() < this.geneticAlgorithm.MutationPercent)
             {
                 offspring1.Mutate();
             }
-            if (rand.NextDouble() < this.geneticAlgorithm.MutationPercent)
+            if (ThreadSafeRandom.NextDouble() < this.geneticAlgorithm.MutationPercent)
             {
                 offspring2.Mutate();
             }

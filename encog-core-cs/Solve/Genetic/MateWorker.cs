@@ -54,13 +54,16 @@ namespace Encog.Solve.Genetic
             this.child2 = child2;
         }
 
+        static int count = 0;
 
         /// <summary>
         /// Mate the two chromosomes.
         /// </summary>
         public void Run()
         {
+            count++;
             this.mother.Mate(this.father, this.child1, this.child2);
+            
         }
 
     }

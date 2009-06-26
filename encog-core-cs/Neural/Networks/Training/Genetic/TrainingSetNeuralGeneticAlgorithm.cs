@@ -35,7 +35,7 @@ namespace Encog.Neural.Networks.Training.Genetic
             this.Genetic.MatingPopulation = percentToMate * 2;
             this.Genetic.PopulationSize = populationSize;
             this.Genetic.PercentToMate = percentToMate;
-
+            
             this.Training = training;
 
             this.Genetic.Chromosomes =
@@ -53,6 +53,9 @@ namespace Encog.Neural.Networks.Training.Genetic
                 this.Genetic.Chromosomes[i] = c;
             }
             this.Genetic.SortChromosomes();
+
+            // set a default cut length
+            //this.Genetic.CutLength = (int)(this.Genetic.Chromosomes[0].Genes.Length * .3);
         }
 
     }

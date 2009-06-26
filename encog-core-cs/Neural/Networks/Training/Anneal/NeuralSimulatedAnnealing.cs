@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Solve.Anneal;
 using log4net;
 using Encog.Neural.NeuralData;
+using Encog.Util.MathUtil;
 
 namespace Encog.Neural.Networks.Training.Anneal
 {
@@ -28,7 +29,6 @@ namespace Encog.Neural.Networks.Training.Anneal
         class SimulatedAnnealingHelper : SimulatedAnnealing<Double>
         {
             private NeuralSimulatedAnnealing owner;
-            private Random rand = new Random();
 
             public SimulatedAnnealingHelper(NeuralSimulatedAnnealing owner)
             {
@@ -86,7 +86,7 @@ namespace Encog.Neural.Networks.Training.Anneal
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    double add = NeuralSimulatedAnnealing.CUT - this.rand.NextDouble();
+                    double add = NeuralSimulatedAnnealing.CUT - ThreadSafeRandom.NextDouble();
                     add /= this.StartTemperature;
                     add *= this.StopTemperature;
                     array[i] = array[i] + add;

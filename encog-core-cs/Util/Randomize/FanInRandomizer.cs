@@ -6,6 +6,7 @@ using log4net;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
+using Encog.Util.MathUtil;
 
 namespace Encog.Util.Randomize
 {
@@ -107,9 +108,7 @@ namespace Encog.Util.Randomize
                 rowValue = rows;
             }
 
-            Random rand = new Random();
-
-            return (this.lowerBound / rowValue) + rand.NextDouble()
+            return (this.lowerBound / rowValue) + ThreadSafeRandom.NextDouble()
                     * ((this.upperBound - this.lowerBound) / rowValue);
         }
 

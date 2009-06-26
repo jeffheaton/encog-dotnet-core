@@ -21,6 +21,11 @@ namespace Encog.Util.Concurrency
         private static EncogConcurrency instance;
 
         /// <summary>
+        /// The number of active tasks.
+        /// </summary>
+        private int activeTasks;
+
+        /// <summary>
         /// The instance to the singleton.
         /// </summary>
         public static EncogConcurrency Instance
@@ -55,8 +60,12 @@ namespace Encog.Util.Concurrency
         /// <param name="task">The task to process.</param>
         public void ProcessTask(IEncogTask task)
         {
+            lock (this)
+            {
+                this.activeTasks++;
+            }
 
-            PoolItem item = new PoolItem(task);
+            PoolItem item = new PoolItem(this, task);
             ThreadPool.QueueUserWorkItem(item.ThreadPoolCallback);
         }
 
@@ -91,27 +100,30 @@ namespace Encog.Util.Concurrency
         /// <param name="timeOutSeconds">How long to wait for all threads to complete.</param>
         public void Shutdown(long timeOutSeconds)
         {
-            int maxThreads = 0;
-            int placeHolder = 0;
-            int availThreads = 0;
+            long start = DateTime.Now.Ticks;
+            long current;
+            long elapsed;
 
-            //Now wait until all threads from the Threadpool have returned
-
-            while (timeOutSeconds > 0)
+            do
             {
-                //figure out what the max worker thread count it
+                lock (this)
+                {
+                    if (this.activeTasks < 1)
+                        return;
+                }
+                current = DateTime.Now.Ticks;
+                elapsed = current - start;
+                elapsed /= 10000; // to miliseconds
+                elapsed /= 1000; // to seconds
+                Thread.Sleep(100);
+            } while (elapsed < timeOutSeconds);
+        }
 
-                System.Threading.ThreadPool.GetMaxThreads(out 
-                             maxThreads, out placeHolder);
-                System.Threading.ThreadPool.GetAvailableThreads(out availThreads,
-                                                               out placeHolder);
-
-                if (availThreads == maxThreads)
-                    break;
-
-                // Sleep
-                System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(1000));
-                --timeOutSeconds;
+        internal void TaskFinished(PoolItem poolItem)
+        {
+            lock (this)
+            {
+                this.activeTasks--;
             }
         }
     }
