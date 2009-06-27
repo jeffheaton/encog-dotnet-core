@@ -1,8 +1,9 @@
-﻿// Encog Neural Network and Bot Library v1.x (DotNet)
+﻿// Encog Artificial Intelligence Framework v2.x
+// DotNet Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-cs/
 // 
-// Copyright 2008, Heaton Research Inc., and individual contributors.
+// Copyright 2009, Heaton Research Inc., and individual contributors.
 // See the copyright.txt in the distribution for a full listing of 
 // individual contributors.
 //
@@ -20,6 +21,7 @@
 // License along with this software; if not, write to the Free
 // Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Persist;
 using Encog.Persist.Persistors;
+using System.Runtime.Serialization;
 
 namespace Encog.Neural.Data.Basic
 {
@@ -36,6 +39,7 @@ namespace Encog.Neural.Data.Basic
     /// so large enough datasets could cause memory issues.  Many other dataset
     /// types extend this class.
     /// </summary>
+    [Serializable]
     public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
         /// <summary>
@@ -71,6 +75,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The enumerator for the basic neural data set.
         /// </summary>
+        [Serializable]
         public class BasicNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private int current;
@@ -182,20 +187,27 @@ namespace Encog.Neural.Data.Basic
             for (int i = 0; i < input.Length; i++)
             {
                 double[] tempInput = new double[input[0].Length];
-                double[] tempIdeal = new double[ideal[0].Length];
+                double[] tempIdeal = null;  
 
                 for (int j = 0; j < tempInput.Length; j++)
                 {
                     tempInput[j] = input[i][j];
                 }
 
-                for (int j = 0; j < tempIdeal.Length; j++)
+                BasicNeuralData idealData = null;
+
+                if (ideal != null)
                 {
-                    tempIdeal[j] = ideal[i][j];
+                    tempIdeal = new double[ideal[0].Length];
+                    for (int j = 0; j < tempIdeal.Length; j++)
+                    {
+                        tempIdeal[j] = ideal[i][j];
+                    }
+                    idealData = new BasicNeuralData(tempIdeal);
                 }
 
                 BasicNeuralData inputData = new BasicNeuralData(tempInput);
-                BasicNeuralData idealData = new BasicNeuralData(tempIdeal);
+                
                 this.Add(inputData, idealData);
             }
         }

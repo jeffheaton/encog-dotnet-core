@@ -62,7 +62,7 @@ namespace Encog.Util
         {
             // first count the numbers
 
-            String[] tok = str.Split();
+            String[] tok = str.Split(',');
             int count = tok.Length;
 
             // now allocate an object to hold that many numbers

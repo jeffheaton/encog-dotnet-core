@@ -1,4 +1,28 @@
-﻿using System;
+﻿// Encog Artificial Intelligence Framework v2.x
+// DotNet Version
+// http://www.heatonresearch.com/encog/
+// http://code.google.com/p/encog-cs/
+// 
+// Copyright 2009, Heaton Research Inc., and individual contributors.
+// See the copyright.txt in the distribution for a full listing of 
+// individual contributors.
+//
+// This is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This software is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this software; if not, write to the Free
+// Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+// 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -128,23 +152,23 @@ namespace Encog.Persist
         /// <summary>
         /// The platform this collection was created on.
         /// </summary>
-        private String platform;
+        private String platform = "DotNet";
 
         /// <summary>
         /// The version of the persisted file.
         /// </summary>
-        private int fileVersion;
+        private int fileVersion = 1;
 
         /// <summary>
         /// Directory entries for all of the objects in the current file.
         /// </summary>
-        private IDictionary<DirectoryEntry, Object> directory =
-                new Dictionary<DirectoryEntry, Object>();
+        private IList<DirectoryEntry> directory =
+                new List<DirectoryEntry>();
 
         /// <summary>
         /// The version of Encog.
         /// </summary>
-        private String encogVersion;
+        private String encogVersion = Encog.Instance.Properties[Encog.ENCOG_VERSION];
 
         /// <summary>
         /// Create a persistance collection for the specified file.
@@ -220,13 +244,16 @@ namespace Encog.Persist
         public void BuildDirectory()
         {
             PersistReader reader = new PersistReader(this.filePrimary);
-            IDictionary<DirectoryEntry, Object> d = reader.BuildDirectory();
-            this.directory.Clear();
-            foreach (DirectoryEntry de in d.Keys)
+
+            IDictionary<String, String> header = reader.ReadHeader();
+            if (header != null)
             {
-                this.directory.Add(de, null);
+                this.fileVersion = int.Parse(header["fileVersion"]);
+                this.encogVersion = header["encogVersion"];
+                this.platform = header["platform"];
             }
 
+            this.directory = reader.BuildDirectory();
 
             reader.Close();
         }
@@ -289,7 +316,7 @@ namespace Encog.Persist
             writer.End();
             writer.Close();
             MergeTemp();
-            foreach (DirectoryEntry d in this.directory.Keys)
+            foreach (DirectoryEntry d in this.directory )
             {
                 if (d.Name.Equals(name))
                 {
@@ -327,7 +354,7 @@ namespace Encog.Persist
         /// <summary>
         /// The directory entries for the objects in this file.
         /// </summary>
-        public IDictionary<DirectoryEntry, Object> Directory
+        public IList<DirectoryEntry> Directory
         {
             get
             {
@@ -400,6 +427,8 @@ namespace Encog.Persist
             BuildDirectory();
 
         }
+
+
 
     }
 }

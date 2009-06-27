@@ -116,6 +116,8 @@
     <Compile Include="Neural\Data\Temporal\TemporalError.cs" />
     <Compile Include="Neural\Data\Temporal\TemporalNeuralDataSet.cs" />
     <Compile Include="Neural\Data\Temporal\TemporalPoint.cs" />
+    <Compile Include="Neural\Data\TextData.cs" />
+    <Compile Include="Neural\Data\XML\PropertyData.cs" />
     <Compile Include="Neural\Data\XML\XMLNeuralDataSet.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />

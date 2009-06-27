@@ -1,4 +1,28 @@
-﻿using System;
+﻿// Encog Artificial Intelligence Framework v2.x
+// DotNet Version
+// http://www.heatonresearch.com/encog/
+// http://code.google.com/p/encog-cs/
+// 
+// Copyright 2009, Heaton Research Inc., and individual contributors.
+// See the copyright.txt in the distribution for a full listing of 
+// individual contributors.
+//
+// This is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This software is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this software; if not, write to the Free
+// Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+// 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +89,31 @@ namespace Encog.Persist
         }
 
         /// <summary>
+        /// Advance to the specified tag.
+        /// </summary>
+        /// <param name="tag">The tag to advance to.</param>
+        /// <returns>True if the tag was found.</returns>
+        private bool AdvanceToTag(String tag)
+        {
+            while (this.xmlIn.ReadToTag())
+            {
+                Tag.Type type = this.xmlIn.LastTag.TagType;
+                if (type == Tag.Type.BEGIN)
+                {
+                    if (this.xmlIn.LastTag.Name.Equals(tag))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        SkipObject(this.xmlIn.LastTag.Name);
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Once you are in the objects collection, advance to a specific object.
         /// </summary>
         /// <param name="name"></param>
@@ -121,9 +170,9 @@ namespace Encog.Persist
         /// Build a directory entry list for the file.
         /// </summary>
         /// <returns>A list of objects in the file.</returns>
-        public IDictionary<DirectoryEntry, Object> BuildDirectory()
+        public IList<DirectoryEntry> BuildDirectory()
         {
-            IDictionary<DirectoryEntry, Object> result = new Dictionary<DirectoryEntry, Object>();
+            IList<DirectoryEntry> result = new List<DirectoryEntry>();
             AdvanceObjectsCollection();
 
             while (this.xmlIn.ReadToTag())
@@ -140,7 +189,10 @@ namespace Encog.Persist
 
                 DirectoryEntry entry = new DirectoryEntry(type, name,
                        description);
-                result.Add(entry, null);
+                if (!result.Contains(entry))
+                {
+                    result.Add(entry);
+                }
 
                 SkipObject(this.xmlIn.LastTag.Name);
             }
@@ -418,6 +470,22 @@ namespace Encog.Persist
             }
         }
 
+        /// <summary>
+        /// Read an Encog header.
+        /// </summary>
+        /// <returns>The Encog header.</returns>
+        public IDictionary<string, string> ReadHeader()
+        {
+            IDictionary<String, String> headers = null;
+            if (AdvanceToTag("Document"))
+            {
+                if (AdvanceToTag("Header"))
+                {
+                    headers = this.xmlIn.ReadPropertyBlock();
+                }
+            }
+            return headers;
+        }
     }
 
 }
