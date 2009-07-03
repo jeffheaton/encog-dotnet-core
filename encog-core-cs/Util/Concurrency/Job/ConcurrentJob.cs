@@ -38,7 +38,7 @@ namespace Encog.Util.Concurrency.Job
         /// <summary>
         /// Where to report progress to.
         /// </summary>
-        private StatusReportable report;
+        private IStatusReportable report;
 
         /// <summary>
         /// Total number of tasks.
@@ -67,7 +67,7 @@ namespace Encog.Util.Concurrency.Job
         /// 
         /// </summary>
         /// <param name="report"></param>
-        public ConcurrentJob(StatusReportable report)
+        public ConcurrentJob(IStatusReportable report)
         {
             this.report = report;
         }

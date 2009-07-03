@@ -485,7 +485,7 @@ namespace Encog.Neural.Networks
             }
             set
             {
-                this.inputLayer = value;
+                this.outputLayer = value;
             }
         }
 

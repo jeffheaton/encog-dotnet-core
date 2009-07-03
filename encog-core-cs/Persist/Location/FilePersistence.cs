@@ -48,30 +48,23 @@ namespace Encog.Persist.Location
         private String file;
 
         /// <summary>
-        /// The mode this streamed is opened
-        /// </summary>
-        private FileMode mode;
-
-        /// <summary>
         /// Construct a persistance location based on a file.
         /// </summary>
         /// <param name="file">The file to use.</param>
-        /// <param name="mode">The mode to open this file in.</param>
-        public FilePersistence(String file, FileMode mode)
+        public FilePersistence(String file)
         {
             this.file = file;
-            this.mode = mode;
         }
 
         /// <summary>
         /// Create a stream to a access the file.
         /// </summary>
         /// <returns>A new InputStream for this file.</returns>
-        public Stream CreateStream()
+        public Stream CreateStream(FileMode mode)
         {
             try
             {
-                return new FileStream(this.file, this.mode);
+                return new FileStream(this.file, mode);
             }
             catch (IOException e)
             {

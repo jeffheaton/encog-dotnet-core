@@ -216,7 +216,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The input pattern.</param>
         /// <returns>The output from this layer.</returns>
-        public INeuralData Compute(INeuralData pattern)
+        public virtual INeuralData Compute(INeuralData pattern)
         {
 
             INeuralData result = (INeuralData)pattern.Clone();

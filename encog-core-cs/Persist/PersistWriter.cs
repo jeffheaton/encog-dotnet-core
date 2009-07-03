@@ -60,7 +60,7 @@ namespace Encog.Persist
         /// <param name="location">The location.</param>
         public PersistWriter(PersistenceLocation location)
         {
-            this.fileOutput = location.CreateStream();
+            this.fileOutput = location.CreateStream(FileMode.OpenOrCreate);
             this.xmlOut = new WriteXML(this.fileOutput);
         }
 

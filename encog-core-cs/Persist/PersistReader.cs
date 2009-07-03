@@ -73,7 +73,7 @@ namespace Encog.Persist
         /// <param name="location">The location to use.</param>
         public PersistReader(PersistenceLocation location)
         {
-            this.fileInput = location.CreateStream();
+            this.fileInput = location.CreateStream(FileMode.Open);
             this.xmlIn = new ReadXML(this.fileInput);
         }
 

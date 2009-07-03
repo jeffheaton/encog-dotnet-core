@@ -176,7 +176,7 @@ namespace Encog.Persist
         /// <param name="file">The file to load/save.</param>
         /// <param name="mode">The file mode</param>
         public EncogPersistedCollection(String file, FileMode mode)
-            : this(new FilePersistence(file, mode), mode)
+            : this(new FilePersistence(file), mode)
         {
 
         }
@@ -200,7 +200,7 @@ namespace Encog.Persist
                     file = file.Substring(0, index);
                 }
                 file += ".tmp";
-                this.fileTemp = new FilePersistence(file, mode);
+                this.fileTemp = new FilePersistence(file);
 
                 if (this.filePrimary.Exists())
                 {
@@ -271,6 +271,7 @@ namespace Encog.Persist
         /// </summary>
         public void Create()
         {
+            this.filePrimary.Delete();
             PersistWriter writer = new PersistWriter(this.filePrimary);
             writer.Begin();
             writer.WriteHeader();

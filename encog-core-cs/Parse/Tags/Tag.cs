@@ -151,6 +151,9 @@ namespace Encog.Parse.Tags
         /// <returns>The value of the specified attribute.</returns>
         public String GetAttributeValue(String name)
         {
+            if (!this.attributes.ContainsKey(name.ToLower()))
+                return null;
+
             return this.attributes[name.ToLower()];
         }
 

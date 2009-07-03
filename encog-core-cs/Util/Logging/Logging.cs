@@ -42,7 +42,7 @@ namespace Encog.Util.Logging
         /// Get the assembly's repository.  From here we will perform much of the configuration.
         /// </summary>
         /// <returns>The assembly repository.</returns>
-        public static ILoggerRepository getRootRepository()
+        public static ILoggerRepository GetRootRepository()
         {
             ILoggerRepository result = LogManager.GetRepository(Assembly.GetCallingAssembly());
             return result;
@@ -51,9 +51,9 @@ namespace Encog.Util.Logging
         /// <summary>
         /// Start logging to the console.
         /// </summary>
-        public static void startConsoleLogging()
+        public static void StartConsoleLogging()
         {
-            ILoggerRepository repository = getRootRepository();
+            ILoggerRepository repository = GetRootRepository();
 
             // Create the layout
             PatternLayout layout = new PatternLayout();
@@ -76,9 +76,9 @@ namespace Encog.Util.Logging
         /// <summary>
         /// Stop logging to the console.
         /// </summary>
-        public static void stopConsoleLogging()
+        public static void StopConsoleLogging()
         {
-            getRootRepository().ResetConfiguration();
+            GetRootRepository().ResetConfiguration();
         }
     }
 }

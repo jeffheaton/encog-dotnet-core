@@ -40,7 +40,7 @@ namespace Encog.Persist.Location
         /// Create a new stream to read data from.
         /// </summary>
         /// <returns>A new stream to read data from.</returns>
-        Stream CreateStream();
+        Stream CreateStream(FileMode mode);
 
         /// <summary>
         /// Determine if this location exists.

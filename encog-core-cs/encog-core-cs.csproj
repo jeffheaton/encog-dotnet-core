@@ -237,7 +237,10 @@
     <Compile Include="Solve\Genetic\Chromosome.cs" />
     <Compile Include="Solve\Genetic\GeneticAlgorithm.cs" />
     <Compile Include="Solve\Genetic\MateWorker.cs" />
-    <Compile Include="StatusReportable.cs" />
+    <Compile Include="IStatusReportable.cs" />
+    <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
+    <Compile Include="Util\Banchmark\Evaluate.cs" />
+    <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEncogTask.cs" />
     <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />

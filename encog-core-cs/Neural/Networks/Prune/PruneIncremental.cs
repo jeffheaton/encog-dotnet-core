@@ -139,7 +139,7 @@ namespace Encog.Neural.Networks.Prune
          */
         public PruneIncremental(INeuralDataSet training,
                  INeuralNetworkPattern pattern, int iterations,
-                 StatusReportable report)
+                 IStatusReportable report)
             : base(report)
         {
             this.training = training;

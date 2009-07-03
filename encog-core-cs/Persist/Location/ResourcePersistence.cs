@@ -63,7 +63,7 @@ namespace Encog.Persist.Location
         /// Create a stream to read the resource.
         /// </summary>
         /// <returns>A stream.</returns>
-        public Stream CreateStream()
+        public Stream CreateStream(FileMode mode)
         {
             String filePath = System.IO.Path.GetDirectoryName(
                 System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
