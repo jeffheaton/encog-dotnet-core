@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks
         /// The logging object.
         /// </summary>
         [NonSerialized]
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 
         /// <summary>
         /// Construct an empty neural network.
@@ -180,9 +180,9 @@ namespace Encog.Neural.Networks
                        + " for input layer size="
                        + this.inputLayer.NeuronCount;
 
-                if (this.logger.IsErrorEnabled)
+                if (BasicNetwork.logger.IsErrorEnabled)
                 {
-                    this.logger.Error(str);
+                    BasicNetwork.logger.Error(str);
                 }
 
                 throw new NeuralNetworkError(str);
@@ -300,9 +300,9 @@ namespace Encog.Neural.Networks
         {
             NeuralOutputHolder holder;
 
-            if (this.logger.IsDebugEnabled)
+            if (BasicNetwork.logger.IsDebugEnabled)
             {
-                this.logger.Debug("Pattern {} presented to neural network" + input);
+                BasicNetwork.logger.Debug("Pattern {} presented to neural network" + input);
             }
 
             if (useHolder == null)
@@ -332,9 +332,9 @@ namespace Encog.Neural.Networks
                  INeuralData input, ISynapse source)
         {
 
-            if (this.logger.IsDebugEnabled)
+            if (BasicNetwork.logger.IsDebugEnabled)
             {
-                this.logger.Debug("Processing layer: " + layer + ", input= " + input);
+                BasicNetwork.logger.Debug("Processing layer: " + layer + ", input= " + input);
             }
 
             HandleRecurrentInput(layer, input, source);
@@ -343,9 +343,9 @@ namespace Encog.Neural.Networks
             {
                 if (!holder.Result.ContainsKey(synapse))
                 {
-                    if (this.logger.IsDebugEnabled)
+                    if (BasicNetwork.logger.IsDebugEnabled)
                     {
-                        this.logger.Debug("Processing synapse: " + synapse);
+                        BasicNetwork.logger.Debug("Processing synapse: " + synapse);
                     }
                     INeuralData pattern = synapse.Compute(input);
                     pattern = synapse.ToLayer.Compute(pattern);
@@ -535,9 +535,9 @@ namespace Encog.Neural.Networks
             {
                 if (synapse != source)
                 {
-                    if (this.logger.IsDebugEnabled)
+                    if (BasicNetwork.logger.IsDebugEnabled)
                     {
-                        this.logger.Debug("Recurrent layer from: " + input);
+                        BasicNetwork.logger.Debug("Recurrent layer from: " + input);
                     }
                     INeuralData recurrentInput = synapse.FromLayer
                            .Recur();
@@ -553,9 +553,9 @@ namespace Encog.Neural.Networks
                                     + recurrentOutput[i];
                         }
 
-                        if (this.logger.IsDebugEnabled)
+                        if (BasicNetwork.logger.IsDebugEnabled)
                         {
-                            this.logger.Debug("Recurrent layer to: " + input);
+                            BasicNetwork.logger.Debug("Recurrent layer to: " + input);
                         }
                     }
                 }

@@ -84,7 +84,7 @@ namespace Encog.Neural.Networks.Training.Hopfield
             {
                 for (int col = 0; col < delta.Rows; col++)
                 {
-                    target.WeightMatrix[row, col] = delta[row, col];
+                    target.WeightMatrix.Add( row, col, delta[row, col]);
                 }
             }
         }

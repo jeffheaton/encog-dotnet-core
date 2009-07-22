@@ -55,7 +55,7 @@ namespace Encog.Neural.Networks.Layers
         /// The logging object.
         /// </summary>
         [NonSerialized]
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 
         /// <summary>
         /// Default constructor, mainly so the workbench can easily create a default
@@ -125,9 +125,9 @@ namespace Encog.Neural.Networks.Layers
                 this.context[i] = pattern[i];
             }
 
-            if (this.logger.IsDebugEnabled)
+            if (ContextLayer.logger.IsDebugEnabled)
             {
-                this.logger.Debug("Updated ContextLayer to " + pattern);
+                ContextLayer.logger.Debug("Updated ContextLayer to " + pattern);
             }
         }
 

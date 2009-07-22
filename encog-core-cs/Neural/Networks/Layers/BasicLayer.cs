@@ -70,7 +70,7 @@ namespace Encog.Neural.Networks.Layers
         /// The logging object.
         /// </summary>
         [NonSerialized]
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicLayer));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(BasicLayer));
 
         /// <summary>
         /// Which activation function to use for this layer.
@@ -174,9 +174,9 @@ namespace Encog.Neural.Networks.Layers
             if (synapse == null)
             {
                 String str = "Unknown synapse type.";
-                if (this.logger.IsErrorEnabled)
+                if (BasicLayer.logger.IsErrorEnabled)
                 {
-                    this.logger.Error(str);
+                    BasicLayer.logger.Error(str);
                 }
                 throw new NeuralNetworkError(str);
             }

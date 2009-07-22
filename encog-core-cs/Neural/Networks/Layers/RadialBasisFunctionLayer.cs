@@ -62,7 +62,7 @@ namespace Encog.Neural.Networks.Layers
         /// The logging object.
         /// </summary>
         [NonSerialized]
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 
         /// <summary>
         /// The radial basis functions to use, there should be one for each neuron.
@@ -107,9 +107,9 @@ namespace Encog.Neural.Networks.Layers
                 {
                     String str =
                "Error, must define radial functions for each neuron";
-                    if (this.logger.IsErrorEnabled)
+                    if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
                     {
-                        this.logger.Error(str);
+                        RadialBasisFunctionLayer.logger.Error(str);
                     }
                     throw new NeuralNetworkError(str);
                 }
@@ -151,9 +151,9 @@ namespace Encog.Neural.Networks.Layers
                    "Should never call getActivationFunction on "
                    + "RadialBasisFunctionLayer, this layer has a compound "
                    + "activation function setup.";
-                if (this.logger.IsErrorEnabled)
+                if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
                 {
-                    this.logger.Error(str);
+                    RadialBasisFunctionLayer.logger.Error(str);
                 }
                 throw new NeuralNetworkError(str);
             }
