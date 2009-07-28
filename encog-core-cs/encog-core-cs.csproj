@@ -58,6 +58,11 @@
     <Compile Include="Bot\Browse\Address.cs" />
     <Compile Include="Bot\Browse\BrowseError.cs" />
     <Compile Include="Bot\Browse\Browser.cs" />
+    <Compile Include="Bot\Browse\Extract\BasicExtract.cs" />
+    <Compile Include="Bot\Browse\Extract\IExtractListener.cs" />
+    <Compile Include="Bot\Browse\Extract\ExtractWords.cs" />
+    <Compile Include="Bot\Browse\Extract\IExtract.cs" />
+    <Compile Include="Bot\Browse\Extract\ListExtractListener.cs" />
     <Compile Include="Bot\Browse\LoadWebPage.cs" />
     <Compile Include="Bot\Browse\Range\Div.cs" />
     <Compile Include="Bot\Browse\Range\DocumentRange.cs" />
@@ -185,7 +190,7 @@
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
     <Compile Include="Parse\AcceptedSignal.cs" />
-    <Compile Include="Parse\Parse.cs" />
+    <Compile Include="Parse\ParseText.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
     <Compile Include="Parse\ParseTemplate.cs" />
@@ -277,9 +282,6 @@
     <Compile Include="Util\Time\TimeSpanUtil.cs" />
     <Compile Include="Util\Time\TimeUnit.cs" />
     <Compile Include="Util\YahooSearch.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bot\Browse\Extract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

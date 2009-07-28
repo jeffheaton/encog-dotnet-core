@@ -88,7 +88,7 @@ namespace Encog.Parse.Units
         /// Create recongizers for the specified parse object.
         /// </summary>
         /// <param name="parse">The parse object to create recognizers for.</param>
-        public void CreateRecognizers(Parse parse)
+        public void CreateRecognizers(ParseText parse)
         {
             IDictionary<Object, Object> map = new Dictionary<Object, Object>();
 

@@ -58,7 +58,7 @@ namespace Encog.Bot
         /// <param name="index">Index in the string to start searching from.</param>
         /// <param name="occurence">What occurence.</param>
         /// <returns>The contents of the URL that was downloaded.</returns>
-        public static String extractFromIndex(String str, String token1,
+        public static String ExtractFromIndex(String str, String token1,
                  String token2, int index, int occurence)
         {
             int location1, location2;
@@ -94,7 +94,7 @@ namespace Encog.Bot
                 return null;
             }
 
-            return str.Substring(location1 + token1Lower.Length, location2);
+            return str.Substring(location1 + token1Lower.Length, location2 - (location1 + token1.Length) );
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Encog.Bot
         /// <param name="token2">The text, or tag, that comes after the desired text.</param>
         /// <param name="index">Which occurrence of token1 to use, 1 for the first.</param>
         /// <returns>The contents of the URL that was downloaded.</returns>
-        public static String extract(String str, String token1,
+        public static String Extract(String str, String token1,
                  String token2, int index)
         {
             int location1, location2;
@@ -139,7 +139,7 @@ namespace Encog.Bot
                 return null;
             }
 
-            return str.Substring(location1 + token1Lower.Length, location2);
+            return str.Substring(location1 + token1Lower.Length, location2-(location1+token1.Length));
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Encog.Bot
         /// </summary>
         /// <param name="url">The url to load.</param>
         /// <returns>The web page as a string.</returns>
-        public static String loadPage(Uri url)
+        public static String LoadPage(Uri url)
         {
             try
             {
@@ -163,12 +163,12 @@ namespace Encog.Bot
                 do
                 {
                     length = istream.Read(buffer, 0, buffer.Length);
-                    if (length >= 0)
+                    if (length > 0)
                     {
                         String str = System.Text.Encoding.UTF8.GetString(buffer, 0, length);
                         result.Append(str);
                     }
-                } while (length >= 0);
+                } while (length > 0);
 
                 return result.ToString();
             }
