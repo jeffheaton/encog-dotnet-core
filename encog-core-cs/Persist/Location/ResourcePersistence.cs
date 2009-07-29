@@ -29,6 +29,7 @@ using System.Text;
 using log4net;
 using System.IO;
 using System.Resources;
+using System.Reflection;
 
 namespace Encog.Persist.Location
 {
@@ -65,13 +66,9 @@ namespace Encog.Persist.Location
         /// <returns>A stream.</returns>
         public Stream CreateStream(FileMode mode)
         {
-            String filePath = System.IO.Path.GetDirectoryName(
-                System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-            ResourceReader reader = new ResourceReader(filePath);
-            string type;
-            byte[] data;
-            reader.GetResourceData(this.resource,out type,out data);
-            return new MemoryStream(data);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(this.resource);            
+            return stream;
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Encog.Parse
         /// <summary>
         /// The name of the resource that holds the default template.
         /// </summary>
-        public const String RESOURCE_NAME = "org/encog/data/template.eg";
+        public const String RESOURCE_NAME = "Encog.Data.template.eg";
 
         /// <summary>
         /// The item name for the default template.

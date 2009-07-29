@@ -63,7 +63,10 @@ namespace Encog.Bot.Browse
         public Address(Uri b, String original)
         {
             this.original = original;
-            this.url = new Uri(b, original);
+            if (b == null)
+                this.url = new Uri(new Uri("http://localhost/"),original);
+            else 
+                this.url = new Uri(b, original);
 
         }
 
