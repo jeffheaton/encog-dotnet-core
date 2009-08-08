@@ -85,6 +85,7 @@
     <Compile Include="Matrix\MatrixError.cs" />
     <Compile Include="Matrix\MatrixMath.cs" />
     <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
+    <Compile Include="Neural\Activation\ActivationCompetitive.cs" />
     <Compile Include="Neural\Activation\ActivationGaussian.cs" />
     <Compile Include="Neural\Activation\ActivationLinear.cs" />
     <Compile Include="Neural\Activation\ActivationLOG.cs" />
@@ -130,9 +131,23 @@
     <Compile Include="Neural\Networks\Layers\ILayer.cs" />
     <Compile Include="Neural\Networks\INetwork.cs" />
     <Compile Include="Neural\Networks\Layers\RadialBasisFunctionLayer.cs" />
+    <Compile Include="Neural\Networks\Logic\ART1Logic.cs" />
+    <Compile Include="Neural\Networks\Logic\ARTLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\BAMLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\BoltzmannLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\FeedforwardLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\HopfieldLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\INeuralLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\SimpleRecurrentLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\ThermalLogic.cs" />
     <Compile Include="Neural\Networks\NetworkCODEC.cs" />
+    <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
     <Compile Include="Neural\Networks\NeuralOutputHolder.cs" />
     <Compile Include="Neural\Networks\NeuralStructure.cs" />
+    <Compile Include="Neural\Networks\Pattern\ADALINEPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\ART1Pattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\BAMPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\CPNPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\ElmanPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\FeedFowardPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\HopfieldPattern.cs" />
@@ -215,6 +230,7 @@
     <Compile Include="Persist\PersistError.cs" />
     <Compile Include="Persist\IPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationBiPolarPersistor.cs" />
+    <Compile Include="Persist\Persistors\ActivationCompetitivePersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationGaussianPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationLinearPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationLOGPersistor.cs" />
@@ -268,6 +284,7 @@
     <Compile Include="Util\MathUtil\RBF\RadialBasisFunction.cs" />
     <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\NormalizeInput.cs" />
+    <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />
     <Compile Include="Util\Randomize\ConstRandomizer.cs" />
     <Compile Include="Util\Randomize\Distort.cs" />

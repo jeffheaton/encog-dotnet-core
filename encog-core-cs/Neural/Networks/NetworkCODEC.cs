@@ -133,7 +133,7 @@ namespace Encog.Neural.Networks
         /// <summary>
         /// The logging object.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(NetworkCODEC));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(NetworkCODEC));
 
         /// <summary>
         /// Private constructor.
@@ -142,6 +142,45 @@ namespace Encog.Neural.Networks
         {
 
         }
+
+        /// <summary>
+        /// Check to see if the two networks have the same thresholds and weights.
+        /// </summary>
+        /// <param name="network1">The first network.</param>
+        /// <param name="network2">The second network.</param>
+        /// <param name="precision">The precision.</param>
+        /// <returns>True if the networks are the same within the specified precision.</returns>
+        public static bool Equals(BasicNetwork network1, BasicNetwork network2, int precision)
+        {
+            Double[] array1 = NetworkToArray(network1);
+            Double[] array2 = NetworkToArray(network2);
+
+            if (array1.Length != array2.Length)
+                return false;
+
+            double test = Math.Pow(10.0, precision);
+            if (double.IsInfinity(test) || (test > long.MaxValue))
+            {
+                String str = "Precision of " + precision
+                        + " decimal places is not supported.";
+                if (NetworkCODEC.logger.IsErrorEnabled)
+                {
+                    NetworkCODEC.logger.Error(str);
+                }
+                throw new NeuralNetworkError(str);
+            }
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                long l1 = (long)(array1[i] * test);
+                long l2 = (long)(array1[i] * test);
+                if (l1 != l2)
+                    return false;
+            }
+
+            return true;
+        }
+
 
     }
 

@@ -79,16 +79,6 @@ namespace Encog.Neural.Networks
         void CheckInputSize(INeuralData input);
 
         /// <summary>
-        /// Used to compare one neural network to another, compare two layers.
-        /// </summary>
-        /// <param name="layerThis">The layer being compared.</param>
-        /// <param name="layerOther">The other layer.</param>
-        /// <param name="precision">The precision to use, how many decimal places.</param>
-        /// <returns>Returns true if the two layers are the same.</returns>
-        bool CompareLayer(ILayer layerThis, ILayer layerOther,
-                 int precision);
-
-        /// <summary>
         /// Compute the output for a given input to the neural network.
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
@@ -126,41 +116,6 @@ namespace Encog.Neural.Networks
         /// <returns>True if the two neural networks are equal.</returns>
         bool Equals(BasicNetwork other, int precision);
 
-
-        /// <summary>
-        /// Get the count for how many hidden layers are present.
-        /// </summary>
-        int HiddenLayerCount
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Get a collection of the hidden layers in the network.
-        /// </summary>
-        ICollection<ILayer> HiddenLayers
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Get the input layer.
-        /// </summary>
-        ILayer InputLayer
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Get the output layer.
-        /// </summary>
-        ILayer OutputLayer
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Get the structure of the neural network. The structure allows you
         /// to quickly obtain synapses and layers without traversing the
@@ -184,33 +139,6 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <returns></returns>
         int GetHashCode();
-
-        /// <summary>
-        /// Called to cause the network to attempt to infer which layer should be the
-        /// output layer.
-        /// </summary>
-        void InferOutputLayer();
-
-        /// <summary>
-        /// Determine if this layer is hidden.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is a hidden layer.</returns>
-        bool IsHidden(ILayer layer);
-
-        /// <summary>
-        /// Determine if this layer is the input layer.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is the input layer.</returns>
-        bool IsInput(ILayer layer);
-
-        /// <summary>
-        /// Determine if this layer is the output layer.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is the output layer.</returns>
-        bool IsOutput(ILayer layer);
 
         /// <summary>
         /// Reset the weight matrix and the thresholds.

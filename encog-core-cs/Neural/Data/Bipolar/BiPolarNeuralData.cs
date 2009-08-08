@@ -127,5 +127,15 @@ namespace Encog.Neural.NeuralData.Bipolar
         {
             return new BiPolarNeuralData(this.data);
         }
+
+        /// <summary>
+        /// Set the value as a boolean.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="b">The boolean value.</param>
+        public void SetBoolean(int index, bool b)
+        {
+            this.data[index] = b;
+        }
     }
 }

@@ -36,6 +36,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Util.Randomize;
+using Encog.Neural.Networks.Logic;
 
 namespace Encog.Neural.Networks
 {
@@ -57,15 +58,16 @@ namespace Encog.Neural.Networks
     [Serializable]
     public class BasicNetwork : INetwork
     {
+
         /// <summary>
         /// The input layer.
         /// </summary>
-        private ILayer inputLayer;
+        public const String TAG_INPUT = "INPUT";
 
         /// <summary>
         /// The output layer.
         /// </summary>
-        private ILayer outputLayer;
+	    public const String TAG_OUTPUT = "OUTPUT";
 
         /// <summary>
         /// The description of this object.
@@ -84,6 +86,23 @@ namespace Encog.Neural.Networks
         private NeuralStructure structure;
 
         /// <summary>
+        /// This class tells the network how to calculate the output for each of the layers.
+        /// </summary>
+        private INeuralLogic logic;
+
+        /// <summary>
+        /// Properties about the neural network.  Some NeuralLogic classes require certain properties 
+        /// to be set.
+        /// </summary>
+        private IDictionary<String, String> properties = new Dictionary<String, String>();
+
+        /// <summary>
+        /// A set of tags to identify special layers.
+        /// </summary>
+        private IDictionary<String, ILayer> layerTags = new Dictionary<String, ILayer>();
+
+
+        /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
@@ -95,6 +114,17 @@ namespace Encog.Neural.Networks
         public BasicNetwork()
         {
             this.structure = new NeuralStructure(this);
+            this.logic = new SimpleRecurrentLogic();
+        }
+
+        /// <summary>
+        /// Construct a basic network with the specified logic.
+        /// </summary>
+        /// <param name="logic">The logic to use with this network.</param>
+        public BasicNetwork(INeuralLogic logic)
+        {
+            this.structure = new NeuralStructure(this);
+            this.logic = logic;
         }
 
         /// <summary>
@@ -117,19 +147,20 @@ namespace Encog.Neural.Networks
         /// <param name="type">What sort of synapse should connect this layer to the last.</param>
         public void AddLayer(ILayer layer, SynapseType type)
         {
-
             // is this the first layer? If so, mark as the input layer.
-            if (this.inputLayer == null)
+            if (this.layerTags.Count == 0)
             {
-                this.outputLayer = layer;
-                this.inputLayer = layer;
+                this.TagLayer(BasicNetwork.TAG_INPUT, layer);
+                this.TagLayer(BasicNetwork.TAG_OUTPUT, layer);
             }
             else
             {
                 // add the layer to any previous layers
-                this.outputLayer.AddNext(layer, type);
-                this.outputLayer = layer;
+                ILayer outputLayer = this.GetLayer(BasicNetwork.TAG_OUTPUT);
+                outputLayer.AddNext(layer, type);
+                this.TagLayer(BasicNetwork.TAG_OUTPUT, layer);
             }
+
         }
 
         /// <summary>
@@ -171,14 +202,16 @@ namespace Encog.Neural.Networks
         /// <param name="input">The input data.</param>
         public void CheckInputSize(INeuralData input)
         {
-            if (input.Count != this.inputLayer.NeuronCount)
+            ILayer inputLayer = this.GetLayer(BasicNetwork.TAG_INPUT);
+
+            if (input.Count != inputLayer.NeuronCount)
             {
 
                 String str =
                    "Size mismatch: Can't compute outputs for input size="
                        + input.Count
                        + " for input layer size="
-                       + this.inputLayer.NeuronCount;
+                       + inputLayer.NeuronCount;
 
                 if (BasicNetwork.logger.IsErrorEnabled)
                 {
@@ -196,83 +229,9 @@ namespace Encog.Neural.Networks
         /// <returns>A cloned copy of the neural network.</returns>
         public Object Clone()
         {
-            BasicNetwork result = new BasicNetwork();
-            ILayer input = CloneLayer(this.inputLayer, result);
-            result.InputLayer = input;
-            result.Structure.FinalizeStructure();
-            result.InferOutputLayer();
-            return result;
+            return ObjectCloner.DeepCopy(this);
         }
 
-        /// <summary>
-        /// Clone an individual layer, called internally by clone.
-        /// </summary>
-        /// <param name="layer">The layer to be cloned.</param>
-        /// <param name="network">The new network being created.</param>
-        /// <returns>The cloned layer.</returns>
-        private ILayer CloneLayer(ILayer layer, BasicNetwork network)
-        {
-            ILayer newLayer = (ILayer)layer.Clone();
-
-            if (layer == OutputLayer)
-            {
-                network.OutputLayer = newLayer;
-            }
-
-            foreach (ISynapse synapse in layer.Next )
-            {
-                ISynapse newSynapse = (ISynapse)synapse.Clone();
-                newSynapse.FromLayer = layer;
-                if (synapse.ToLayer != null)
-                {
-                    ILayer to = CloneLayer(synapse.ToLayer, network);
-                    newSynapse.ToLayer = to;
-                }
-                newLayer.Next.Add(newSynapse);
-
-            }
-            return newLayer;
-        }
-
-        /// <summary>
-        /// Used to compare one neural network to another, compare two layers.
-        /// </summary>
-        /// <param name="layerThis">The layer being compared.</param>
-        /// <param name="layerOther">The other layer.</param>
-        /// <param name="precision">The precision to use, how many decimal places.</param>
-        /// <returns>Returns true if the two layers are the same.</returns>
-        public bool CompareLayer(ILayer layerThis, ILayer layerOther,
-                 int precision)
-        {
-            IEnumerator<ISynapse> iteratorOther = layerOther.Next.GetEnumerator();
-
-            foreach (ISynapse synapseThis in layerThis.Next)
-            {
-                if (!iteratorOther.MoveNext())
-                {
-                    return false;
-                }
-                ISynapse synapseOther = iteratorOther.Current;
-                if (!synapseThis.WeightMatrix.equals(synapseOther.WeightMatrix,
-                        precision))
-                {
-                    return false;
-                }
-                if (synapseThis.ToLayer != null)
-                {
-                    if (synapseOther.ToLayer == null)
-                    {
-                        return false;
-                    }
-                    if (!CompareLayer(synapseThis.ToLayer, synapseOther
-                            .ToLayer, precision))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
 
         /// <summary>
         /// Compute the output for a given input to the neural network.
@@ -298,69 +257,9 @@ namespace Encog.Neural.Networks
         public INeuralData Compute(INeuralData input,
                  NeuralOutputHolder useHolder)
         {
-            NeuralOutputHolder holder;
-
-            if (BasicNetwork.logger.IsDebugEnabled)
-            {
-                BasicNetwork.logger.Debug("Pattern {} presented to neural network" + input);
-            }
-
-            if (useHolder == null)
-            {
-                holder = new NeuralOutputHolder();
-            }
-            else
-            {
-                holder = useHolder;
-            }
-
-            CheckInputSize(input);
-            Compute(holder, this.inputLayer, input, null);
-            return holder.Output;
-
+            return logic.Compute(input, useHolder);
         }
 
-        /// <summary>
-        /// Internal computation method for a single layer.  This is called, 
-        /// as the neural network processes.
-        /// </summary>
-        /// <param name="holder">The output holder.</param>
-        /// <param name="layer">The layer to process.</param>
-        /// <param name="input">The input to this layer.</param>
-        /// <param name="source">The source synapse.</param>
-        private void Compute(NeuralOutputHolder holder, ILayer layer,
-                 INeuralData input, ISynapse source)
-        {
-
-            if (BasicNetwork.logger.IsDebugEnabled)
-            {
-                BasicNetwork.logger.Debug("Processing layer: " + layer + ", input= " + input);
-            }
-
-            HandleRecurrentInput(layer, input, source);
-
-            foreach (ISynapse synapse in layer.Next)
-            {
-                if (!holder.Result.ContainsKey(synapse))
-                {
-                    if (BasicNetwork.logger.IsDebugEnabled)
-                    {
-                        BasicNetwork.logger.Debug("Processing synapse: " + synapse);
-                    }
-                    INeuralData pattern = synapse.Compute(input);
-                    pattern = synapse.ToLayer.Compute(pattern);
-                    synapse.ToLayer.Process(pattern);
-                    holder.Result.Add(synapse, input);
-                    Compute(holder, synapse.ToLayer, pattern, synapse);
-
-                    // Is this the output from the entire network?
-                    if (synapse.ToLayer == this.outputLayer)
-                    {
-                        holder.Output = pattern;
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Create a persistor for this object.
@@ -371,30 +270,29 @@ namespace Encog.Neural.Networks
             return new BasicNetworkPersistor();
         }
 
-        /// <summary>
-        /// Compare the two neural networks. For them to be equal they must be of the
-        /// same structure, and have the same matrix values.
-        /// </summary>
+	/// <summary>
+	/// Compare the two neural networks. For them to be equal they must be of the
+	/// same structure, and have the same matrix values.
+	/// </summary>
         /// <param name="other">The other neural network.</param>
         /// <returns>True if the two networks are equal.</returns>
-        public bool Equals(BasicNetwork other)
-        {
-            return CompareLayer(this.inputLayer, other.InputLayer,
-                    Encog.DEFAULT_PRECISION);
-        }
+	public bool Equals(BasicNetwork other) {
+		return Equals(other,
+				Encog.DEFAULT_PRECISION);
+	}
 
-        /// <summary>
-        /// Determine if this neural network is equal to another.  Equal neural
-        /// networks have the same weight matrix and threshold values, within
-        /// a specified precision.
-        /// </summary>
-        /// <param name="other">The other neural network.</param>
-        /// <param name="precision">The number of decimal places to compare to.</param>
-        /// <returns>True if the two neural networks are equal.</returns>
-        public bool Equals(BasicNetwork other, int precision)
-        {
-            return CompareLayer(this.inputLayer, other.InputLayer, precision);
-        }
+
+	/// <summary>
+	/// Determine if this neural network is equal to another.  Equal neural
+    /// networks have the same weight matrix and threshold values, within
+    /// a specified precision.
+	/// </summary>
+    /// <param name="other">The other neural network.</param>
+    /// <param name="precision">The number of decimal places to compare to.</param>
+    /// <returns>True if the two neural networks are equal.</returns>
+	public bool Equals( BasicNetwork other,  int precision) {
+		return NetworkCODEC.Equals(this, other, precision);
+	}
 
         /// <summary>
         /// The description for this object.
@@ -408,54 +306,6 @@ namespace Encog.Neural.Networks
             set
             {
                 this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// Get the count for how many hidden layers are present.
-        /// </summary>
-        public int HiddenLayerCount
-        {
-            get
-            {
-                return HiddenLayers.Count;
-            }
-        }
-
-        /// <summary>
-        /// Get a collection of the hidden layers in the network.
-        /// </summary>
-        public ICollection<ILayer> HiddenLayers
-        {
-            get
-            {
-                ICollection<ILayer> result = new List<ILayer>();
-
-                foreach (ILayer layer in this.structure.Layers)
-                {
-                    if (IsHidden(layer))
-                    {
-                        if (!result.Contains(layer))
-                            result.Add(layer);
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Get the input layer.
-        /// </summary>
-        public ILayer InputLayer
-        {
-            get
-            {
-                return this.inputLayer;
-            }
-            set
-            {
-                this.inputLayer = value;
             }
         }
 
@@ -474,20 +324,6 @@ namespace Encog.Neural.Networks
             }
         }
 
-        /// <summary>
-        /// Get the output layer.
-        /// </summary>
-        public ILayer OutputLayer
-        {
-            get
-            {
-                return this.outputLayer;
-            }
-            set
-            {
-                this.outputLayer = value;
-            }
-        }
 
         /// <summary>
         /// Get the structure of the neural network.  The structure 
@@ -572,26 +408,6 @@ namespace Encog.Neural.Networks
         }
 
         /// <summary>
-        /// Called to cause the network to attempt to infer which layer should be
-        /// the output layer.
-        /// </summary>
-        public void InferOutputLayer()
-        {
-            // set the output layer to null, if we can figure it out it will be set
-            // to something else
-            this.outputLayer = null;
-
-            // if we do not know the input layer, then there is no way to infer the
-            // output layer
-            if (this.InputLayer == null)
-            {
-                return;
-            }
-
-            this.outputLayer = InferOutputLayer(this.inputLayer);
-        }
-
-        /// <summary>
         /// Internal method that allows the use of recurrsion to determine
         /// the output layer.
         /// </summary>
@@ -608,36 +424,6 @@ namespace Encog.Neural.Networks
             }
 
             return layer;
-        }
-
-        /// <summary>
-        /// Determine if this layer is hidden.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is a hidden layer.</returns>
-        public bool IsHidden(ILayer layer)
-        {
-            return !IsInput(layer) && !IsOutput(layer);
-        }
-
-        /// <summary>
-        /// Determine if this layer is the input layer.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is the input layer.</returns>
-        public bool IsInput(ILayer layer)
-        {
-            return this.inputLayer == layer;
-        }
-
-        /// <summary>
-        /// Determine if this layer is the output layer.
-        /// </summary>
-        /// <param name="layer">The layer to evaluate.</param>
-        /// <returns>True if this layer is the output layer.</returns>
-        public bool IsOutput(ILayer layer)
-        {
-            return this.outputLayer == layer;
         }
 
         /// <summary>
@@ -699,6 +485,151 @@ namespace Encog.Neural.Networks
 
             return win;
         }
-    }
 
+        /// <summary>
+        /// The neural logic to use.
+        /// </summary>
+        public INeuralLogic Logic
+        {
+            get
+            {
+                return logic;
+            }
+            set
+            {
+                this.logic = value;
+            }
+        }
+
+        /// <summary>
+        /// Set a network property as a string.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The string value.</param>
+        public void SetProperty(String name, String value)
+        {
+            this.properties[name] = value;
+        }
+
+        /// <summary>
+        /// Set a network property as long string.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="l">The long value.</param>
+        public void SetProperty(String name, long l)
+        {
+            this.properties[name] = "" + l;
+        }
+
+        /// <summary>
+        /// Set a network property as a double.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="d">The double value.</param>
+        public void SetProperty(String name, double d)
+        {
+            this.properties[name] = "" + d;
+        }
+
+        /// <summary>
+        /// The network properties, a collection of name-value pairs.
+        /// </summary>
+        public IDictionary<String, String> Properties
+        {
+            get
+            {
+                return properties;
+            }
+        }
+
+        /// <summary>
+        /// Get the property as a string.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The property as a string.</returns>
+        public String GetPropertyString(String name)
+        {
+            return (String)this.properties[name];
+        }
+
+        /// <summary>
+        /// Get a network property as a long.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The property as a long.</returns>
+        public long GetPropertyLong(String name)
+        {
+            return long.Parse(this.properties[name]);
+        }
+
+        /// <summary>
+        /// Get a network property as a double.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The property as a double.</returns>
+        public double GetPropertyDouble(String name)
+        {
+            return double.Parse(this.properties[name]);
+        }
+
+        /// <summary>
+        /// Get the layer tags.
+        /// </summary>
+        public IDictionary<String, ILayer> LayerTags
+        {
+            get
+            {
+                return layerTags;
+            }
+        }
+
+        /// <summary>
+        /// Tag a layer.
+        /// </summary>
+        /// <param name="tag">The name of the tag.</param>
+        /// <param name="layer">The layer to be tagged.</param>
+        public void TagLayer(String tag, ILayer layer)
+        {
+            this.layerTags[tag] = layer;
+        }
+
+        /// <summary>
+        /// Clear all network tags.
+        /// </summary>
+        public void ClearLayerTags()
+        {
+            this.layerTags.Clear();
+        }
+
+        /// <summary>
+        /// Get a layer using a tag name.
+        /// </summary>
+        /// <param name="tag">The tag name.</param>
+        /// <returns>The layer.</returns>
+        public ILayer GetLayer(String tag)
+        {
+            return this.layerTags[tag];
+        }
+
+        /// <summary>
+        /// Get a list of all of the tags on a specific layer.
+        /// </summary>
+        /// <param name="layer">The layer to check.</param>
+        /// <returns>A collection of the layer tags.</returns>
+        public ICollection<String> GetTags(ILayer layer)
+        {
+            ICollection<String> result = new List<String>();
+
+            foreach (String key in this.layerTags.Keys)
+            {
+                ILayer l = this.layerTags[key];
+                if (l == layer)
+                {
+                    result.Add(key);
+                }
+            }
+
+            return result;
+        }
+    }
 }

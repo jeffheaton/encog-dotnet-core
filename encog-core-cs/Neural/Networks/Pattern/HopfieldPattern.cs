@@ -29,6 +29,7 @@ using System.Text;
 using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
+using Encog.Neural.Networks.Logic;
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -76,9 +77,9 @@ namespace Encog.Neural.Networks.Pattern
         public BasicNetwork Generate()
         {
             ILayer layer = new BasicLayer(new ActivationBiPolar(), false,
-                   this.neuronCount);
+                    this.neuronCount);
 
-            BasicNetwork result = new BasicNetwork();
+            BasicNetwork result = new BasicNetwork(new HopfieldLogic());
             result.AddLayer(layer);
             layer.AddNext(layer);
             layer.X = PatternConst.START_X;

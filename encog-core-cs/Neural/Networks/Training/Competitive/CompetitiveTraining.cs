@@ -138,12 +138,13 @@ namespace Encog.Neural.Networks.Training.Competitive
                  double learningRate, INeuralDataSet training,
                  INeighborhoodFunction neighborhood)
         {
+            ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
             this.neighborhood = neighborhood;
             this.Training = training;
             this.learningRate = learningRate;
             this.network = network;
-            this.inputLayer = network.InputLayer;
-            this.outputLayer = network.OutputLayer;
+            this.inputLayer = inputLayer;
+            this.outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
             this.synapses = network.Structure.GetPreviousSynapses(
                     this.outputLayer);
             this.inputNeuronCount = this.inputLayer.NeuronCount;

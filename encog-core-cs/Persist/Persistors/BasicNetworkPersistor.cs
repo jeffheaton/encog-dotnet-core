@@ -31,6 +31,8 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
 using Encog.Neural.Networks;
+using Encog.Neural.Networks.Logic;
+using System.Reflection;
 
 namespace Encog.Persist.Persistors
 {
@@ -56,14 +58,39 @@ namespace Encog.Persist.Persistors
         public const String TAG_SYNAPSE = "synapse";
 
         /// <summary>
+        /// The properties tag.
+        /// </summary>
+        public const String TAG_PROPERTIES = "properties";
+
+        /// <summary>
+        /// Logic tag.
+        /// </summary>
+        public const String TAG_LOGIC = "logic";
+
+        /// <summary>
         /// The layer synapse.
         /// </summary>
         public const String TAG_LAYER = "layer";
 
         /// <summary>
+        /// Property tag.
+        /// </summary>
+        public const String TAG_PROPERTY = "Property";
+
+        /// <summary>
         /// The id attribute.
         /// </summary>
         public const String ATTRIBUTE_ID = "id";
+
+        /// <summary>
+        /// Name attribute.
+        /// </summary>
+        public const String ATTRIBUTE_NAME = "name";
+
+        /// <summary>
+        /// Value tag.
+        /// </summary>
+        public const String ATTRIBUTE_VALUE = "value";
 
         /// <summary>
         /// The type attribute.
@@ -113,14 +140,12 @@ namespace Encog.Persist.Persistors
         /// <summary>
         /// A mapping from layers to index numbers.
         /// </summary>
-        private IDictionary<ILayer, int> layer2index
-            = new Dictionary<ILayer, int>();
+        private IDictionary<ILayer, int> layer2index = new Dictionary<ILayer, int>();
 
         /// <summary>
         /// A mapping from index numbers to layers.
         /// </summary>
-        private IDictionary<int, ILayer> index2layer
-            = new Dictionary<int, ILayer>();
+        private IDictionary<int, ILayer> index2layer = new Dictionary<int, ILayer>();
 
         /// <summary>
         /// Handle any layers that should be loaded.
@@ -142,21 +167,32 @@ namespace Encog.Persist.Persistors
                            .LastTag.Name);
                     ILayer layer = (ILayer)persistor.Load(xmlIn);
                     this.index2layer[num] = layer;
-                    if (type.Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_INPUT))
+
+                    // the type attribute is actually "legacy", but if its there
+                    // then use it!
+                    if (type != null)
                     {
-                        this.currentNetwork.InputLayer = layer;
+                        if (type.Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_INPUT))
+                        {
+                            this.currentNetwork.TagLayer(BasicNetwork.TAG_INPUT,
+                                    layer);
+                        }
+                        else if (type
+                                .Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_OUTPUT))
+                        {
+                            this.currentNetwork.TagLayer(BasicNetwork.TAG_OUTPUT,
+                                    layer);
+                        }
+                        else if (type
+                              .Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_BOTH))
+                        {
+                            this.currentNetwork.TagLayer(BasicNetwork.TAG_INPUT,
+                                    layer);
+                            this.currentNetwork.TagLayer(BasicNetwork.TAG_OUTPUT,
+                                    layer);
+                        }
                     }
-                    else if (type
-                            .Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_OUTPUT))
-                    {
-                        this.currentNetwork.OutputLayer = layer;
-                    }
-                    else if (type
-                          .Equals(BasicNetworkPersistor.ATTRIBUTE_TYPE_BOTH))
-                    {
-                        this.currentNetwork.InputLayer = layer;
-                        this.currentNetwork.OutputLayer = layer;
-                    }
+                    // end of legacy processing
                 }
                 if (xmlIn.IsIt(end, false))
                 {
@@ -203,10 +239,9 @@ namespace Encog.Persist.Persistors
         public IEncogPersistedObject Load(ReadXML xmlIn)
         {
 
-            String name = xmlIn.LastTag.Attributes[
-                   EncogPersistedCollection.ATTRIBUTE_NAME];
-            String description = xmlIn.LastTag.GetAttributeValue(
-                   EncogPersistedCollection.ATTRIBUTE_DESCRIPTION);
+            String name = xmlIn.LastTag.Attributes[EncogPersistedCollection.ATTRIBUTE_NAME];
+            String description = xmlIn.LastTag.Attributes[
+                   EncogPersistedCollection.ATTRIBUTE_DESCRIPTION];
 
             this.currentNetwork = new BasicNetwork();
             this.currentNetwork.Name = name;
@@ -222,10 +257,81 @@ namespace Encog.Persist.Persistors
                 {
                     HandleSynapses(xmlIn);
                 }
+                else if (xmlIn.IsIt(BasicNetworkPersistor.TAG_PROPERTIES, true))
+                {
+                    HandleProperties(xmlIn);
+                }
+                else if (xmlIn.IsIt(BasicNetworkPersistor.TAG_LOGIC, true))
+                {
+                    HandleLogic(xmlIn);
+                }
 
             }
             this.currentNetwork.Structure.FinalizeStructure();
             return this.currentNetwork;
+        }
+
+        /// <summary>
+        /// Load the neural logic object.
+        /// </summary>
+        /// <param name="xmlIn">The XML object.</param>
+        private void HandleLogic(ReadXML xmlIn)
+        {
+            String value = xmlIn.ReadTextToTag();
+            if (value.Equals("ART1Logic"))
+            {
+                this.currentNetwork.Logic = new ART1Logic();
+            }
+            else if (value.Equals("BAMLogic"))
+            {
+                this.currentNetwork.Logic = new BAMLogic();
+            }
+            else if (value.Equals("BoltzmannLogic"))
+            {
+                this.currentNetwork.Logic = new BoltzmannLogic();
+            }
+            else if (value.Equals("FeedforwardLogic"))
+            {
+                this.currentNetwork.Logic = new FeedforwardLogic();
+            }
+            else if (value.Equals("HopfieldLogic"))
+            {
+                this.currentNetwork.Logic = new HopfieldLogic();
+            }
+            else if (value.Equals("SimpleRecurrentLogic"))
+            {
+                this.currentNetwork.Logic = new SimpleRecurrentLogic();
+            }
+            else
+            {
+                INeuralLogic logic = (INeuralLogic)Assembly.GetExecutingAssembly().CreateInstance(value);
+                this.currentNetwork.Logic = logic;
+            }
+        }
+
+        /// <summary>
+        /// Load the properties.
+        /// </summary>
+        /// <param name="xmlIn">The XML object.</param>
+        private void HandleProperties(ReadXML xmlIn)
+        {
+            String end = xmlIn.LastTag.Name;
+            while (xmlIn.ReadToTag())
+            {
+                if (xmlIn.IsIt(BasicNetworkPersistor.TAG_PROPERTY, true))
+                {
+                    String name = xmlIn.LastTag.GetAttributeValue(
+                            BasicNetworkPersistor.ATTRIBUTE_NAME);
+
+                    String value = xmlIn.ReadTextToTag();
+                    this.currentNetwork.SetProperty(name, value);
+                }
+                if (xmlIn.IsIt(end, false))
+                {
+                    break;
+                }
+            }
+
         }
 
         /// <summary>
@@ -250,6 +356,50 @@ namespace Encog.Persist.Persistors
             xmlOut.BeginTag(BasicNetworkPersistor.TAG_SYNAPSES);
             SaveSynapses(xmlOut);
             xmlOut.EndTag();
+
+            SaveProperties(xmlOut);
+            SaveLogic(xmlOut);
+
+            xmlOut.EndTag();
+        }
+
+        /// <summary>
+        /// Save the neural logic object.
+        /// </summary>
+        /// <param name="xmlOut">The XML object.</param>
+        private void SaveLogic(WriteXML xmlOut)
+        {
+            xmlOut.BeginTag(BasicNetworkPersistor.TAG_LOGIC);
+            INeuralLogic logic = this.currentNetwork.Logic;
+            if (logic is FeedforwardLogic
+                    || logic is SimpleRecurrentLogic
+                    || logic is BoltzmannLogic
+                    || logic is ART1Logic || logic is BAMLogic
+                    || logic is HopfieldLogic)
+            {
+                xmlOut.AddText(logic.GetType().Name);
+            }
+            else
+                xmlOut.AddText(logic.GetType().Name);
+            xmlOut.EndTag();
+        }
+
+        /// <summary>
+        /// Save the neural properties.
+        /// </summary>
+        /// <param name="xmlOut">The xml object.</param>
+        private void SaveProperties(WriteXML xmlOut)
+        {
+            // save any properties
+            xmlOut.BeginTag(BasicNetworkPersistor.TAG_PROPERTIES);
+            foreach (String key in this.currentNetwork.Properties.Keys)
+            {
+                String value = this.currentNetwork.Properties[key];
+                xmlOut.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_NAME, key);
+                xmlOut.BeginTag(BasicNetworkPersistor.TAG_PROPERTY);
+                xmlOut.AddText(value.ToString());
+                xmlOut.EndTag();
+            }
             xmlOut.EndTag();
         }
 
@@ -260,35 +410,10 @@ namespace Encog.Persist.Persistors
         private void SaveLayers(WriteXML xmlOut)
         {
             int current = 1;
-            foreach (ILayer layer
-                    in this.currentNetwork.Structure.Layers)
+            foreach (ILayer layer in this.currentNetwork.Structure.Layers)
             {
-                String type;
-
-                if (this.currentNetwork.IsInput(layer)
-                        && this.currentNetwork.IsOutput(layer))
-                {
-                    type = BasicNetworkPersistor.ATTRIBUTE_TYPE_BOTH;
-                }
-                else if (this.currentNetwork.IsInput(layer))
-                {
-                    type = BasicNetworkPersistor.ATTRIBUTE_TYPE_INPUT;
-                }
-                else if (this.currentNetwork.IsOutput(layer))
-                {
-                    type = BasicNetworkPersistor.ATTRIBUTE_TYPE_OUTPUT;
-                }
-                else if (this.currentNetwork.IsHidden(layer))
-                {
-                    type = BasicNetworkPersistor.ATTRIBUTE_TYPE_HIDDEN;
-                }
-                else
-                {
-                    type = BasicNetworkPersistor.ATTRIBUTE_TYPE_UNKNOWN;
-                }
 
                 xmlOut.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_ID, "" + current);
-                xmlOut.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_TYPE, type);
                 xmlOut.BeginTag(BasicNetworkPersistor.TAG_LAYER);
                 IPersistor persistor = layer.CreatePersistor();
                 persistor.Save(layer, xmlOut);
@@ -304,8 +429,7 @@ namespace Encog.Persist.Persistors
         /// <param name="xmlOut">The XML writer.</param>
         private void SaveSynapses(WriteXML xmlOut)
         {
-            foreach (ISynapse synapse in this.currentNetwork.Structure
-                    .Synapses)
+            foreach (ISynapse synapse in this.currentNetwork.Structure.Synapses)
             {
                 xmlOut.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_FROM, ""
                         + this.layer2index[synapse.FromLayer]);
@@ -318,5 +442,4 @@ namespace Encog.Persist.Persistors
             }
         }
     }
-
 }

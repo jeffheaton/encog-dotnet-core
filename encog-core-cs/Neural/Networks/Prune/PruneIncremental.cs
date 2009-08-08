@@ -56,18 +56,25 @@ namespace Encog.Neural.Networks.Prune
 
         private bool done = false;
 
-        /**
-         * Format the network as a human readable string that lists the 
-         * hidden layers.
-         * @param network The network to format.
-         * @return A human readable string.
-         */
+
+        /// <summary>
+        /// Format the network as a human readable string that lists the 
+        /// hidden layers.
+        /// </summary>
+        /// <param name="network">The network to format.</param>
+        /// <returns>A human readable string.</returns>
         public static String NetworkToString(BasicNetwork network)
         {
             StringBuilder result = new StringBuilder();
             int num = 1;
-            foreach (ILayer layer in network.HiddenLayers)
+
+            ILayer layer = network.GetLayer(BasicNetwork.TAG_INPUT);
+
+            // display only hidden layers
+            while (layer.Next.Count > 0)
             {
+                layer = layer.Next[0].ToLayer;
+
                 if (result.Length > 0)
                 {
                     result.Append(",");
@@ -79,6 +86,7 @@ namespace Encog.Neural.Networks.Prune
             }
 
             return result.ToString();
+
         }
 
         /**

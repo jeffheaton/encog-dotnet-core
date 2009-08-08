@@ -97,16 +97,17 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <param name="ideal">What the output neurons should have yielded.</param>
         public void BackwardPass(INeuralData ideal)
         {
+            ILayer output = this.network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
             // make sure that the input is of the correct size
-            if (ideal.Count != this.network.OutputLayer.NeuronCount)
+            if (ideal.Count != output.NeuronCount)
             {
 
                 String str = "Size mismatch: Can't calcError for "
                        + "ideal input size="
                        + ideal.Count
                        + " for output layer size="
-                       + this.network.OutputLayer.NeuronCount;
+                       + output.NeuronCount;
 
                 if (this.logger.IsErrorEnabled)
                 {
@@ -146,7 +147,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
 
             // get the output layer
-            ILayer outputLayer = this.network.OutputLayer;
+            ILayer outputLayer = this.network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
             // construct the level
             PropagationLevel level = this.levels[0];
@@ -183,7 +184,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         private void Construct()
         {
             // get the output layer
-            ILayer outputLayer = this.network.OutputLayer;
+            ILayer outputLayer = this.network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
             // construct the level
             PropagationLevel level = new PropagationLevel(this, outputLayer);

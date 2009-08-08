@@ -75,11 +75,15 @@ namespace Encog.Neural.Networks
         /// </summary>
         private void FinalizeLayers()
         {
+            IList<ILayer> result = new List<ILayer>();
+
             this.layers.Clear();
-            if (this.network.InputLayer != null)
+
+            foreach (ILayer layer in this.network.LayerTags.Values)
             {
-                GetLayers(this.layers, this.network.InputLayer);
+                GetLayers(this.layers, layer);
             }
+
         }
 
         /// <summary>
@@ -213,6 +217,63 @@ namespace Encog.Neural.Networks
                 return this.synapses;
             }
         }
+
+        /// <summary>
+        /// Get all of the names for a layer.
+        /// </summary>
+        /// <param name="layer">The layer to name.</param>
+        /// <returns>A collection of the layer's names.</returns>
+        public ICollection<String> NameLayer(ILayer layer)
+        {
+            ICollection<String> result = new List<String>();
+
+            foreach (String key in this.network.LayerTags.Keys)
+            {
+                ILayer value = this.network.LayerTags[key];
+                if (value == layer)
+                {
+                    result.Add(key);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Find the specified synapse.
+        /// </summary>
+        /// <param name="fromLayer">From layer.</param>
+        /// <param name="toLayer">To layer.</param>
+        /// <param name="required">Throw an error if this synapse is not there.</param>
+        /// <returns>The synapse, if found.</returns>
+        public ISynapse FindSynapse(ILayer fromLayer, ILayer toLayer, bool required)
+        {
+            ISynapse result = null;
+            foreach (ISynapse synapse in this.Synapses)
+            {
+                if ((synapse.FromLayer == fromLayer)
+                    && (synapse.ToLayer == toLayer))
+                {
+                    result = synapse;
+                    break;
+                }
+            }
+
+            if (required && result == null)
+            {
+                String str = "This operation requires a network with a synapse between the "
+                    + NameLayer(fromLayer) + " layer to the "
+                    + NameLayer(toLayer) + " layer.";
+                if (logger.IsErrorEnabled)
+                {
+                    logger.Error(str);
+                }
+                throw new NeuralNetworkError(str);
+            }
+
+            return result;
+        }
+
     }
 
 }
