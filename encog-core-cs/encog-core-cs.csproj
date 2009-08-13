@@ -177,6 +177,9 @@
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodBubble.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussian.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodSingle.cs" />
+    <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
+    <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
+    <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralChromosome.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\TrainingSetNeuralChromosome.cs" />
@@ -197,12 +200,14 @@
     <Compile Include="Neural\Networks\Training\Propagation\PropagationSynapse.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagationMethod.cs" />
+    <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\Greedy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\HybridStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\ResetStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
     <Compile Include="Parse\AcceptedSignal.cs" />
     <Compile Include="Parse\ParseText.cs" />
