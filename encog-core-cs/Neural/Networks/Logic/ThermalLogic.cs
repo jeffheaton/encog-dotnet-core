@@ -14,6 +14,7 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for thermal networks.  Functions as a base 
     /// class for BoltzmannLogic and HopfieldLogic.
     /// </summary>
+    [Serializable]
     public class ThermalLogic : SimpleRecurrentLogic
     {
         /// <summary>
@@ -113,24 +114,6 @@ namespace Encog.Neural.Networks.Logic
                     this.currentState[i] = value[i];
                 }
             }
-        }
-
-        /// <summary>
-        /// Setup the network logic, read parameters from the network.
-        /// NOT USED, call the run method.
-        /// </summary>
-        /// <param name="input">Not used</param>
-        /// <param name="useHolder">Not used</param>
-        /// <returns>Not used</returns>
-        public override INeuralData Compute(INeuralData input, NeuralOutputHolder useHolder)
-        {
-            String str = "Compute on BasicNetwork cannot be used, rather call" +
-                    " the run method on the logic class.";
-            if (logger.IsErrorEnabled)
-            {
-                logger.Error(str);
-            }
-            throw new NeuralNetworkError(str);
         }
 
         /// <summary>

@@ -5,6 +5,8 @@ using System.Text;
 using Encog.Util.MathUtil;
 using Encog.Util.Randomize;
 using Encog.Neural.Networks.Layers;
+using Encog.Neural.Data;
+using log4net;
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -12,6 +14,7 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an Boltzmann type network.  See BoltzmannPattern
     /// for more information on this type of network.
     /// </summary>
+    [Serializable]
     public class BoltzmannLogic : ThermalLogic
     {
         /// <summary>
@@ -56,6 +59,12 @@ namespace Encog.Neural.Networks.Logic
         private int runCycles;
 
         /// <summary>
+        /// The logging object.
+        /// </summary>
+        [NonSerialized]
+        private static readonly ILog logger = LogManager.GetLogger(typeof(BoltzmannLogic));
+
+        /// <summary>
         /// Run the network for the specified neuron.
         /// </summary>
         /// <param name="i">The neuron to run for.</param>
@@ -90,6 +99,24 @@ namespace Encog.Neural.Networks.Logic
             {
                 Run(i);
             }
+        }
+
+        /// <summary>
+        /// Setup the network logic, read parameters from the network.
+        /// NOT USED, call the run method.
+        /// </summary>
+        /// <param name="input">Not used</param>
+        /// <param name="useHolder">Not used</param>
+        /// <returns>Not used</returns>
+        public override INeuralData Compute(INeuralData input, NeuralOutputHolder useHolder)
+        {
+            String str = "Compute on BasicNetwork cannot be used, rather call" +
+                    " the run method on the logic class.";
+            if (logger.IsErrorEnabled)
+            {
+                logger.Error(str);
+            }
+            throw new NeuralNetworkError(str);
         }
 
         /// <summary>

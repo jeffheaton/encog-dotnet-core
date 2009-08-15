@@ -9,6 +9,7 @@ namespace Encog.Neural.Networks.Logic
     /// <summary>
     /// Neural logic for all ART type networks.
     /// </summary>
+    [Serializable]
     public abstract class ARTLogic : INeuralLogic
     {
         /// <summary>

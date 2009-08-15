@@ -80,9 +80,9 @@ namespace Encog.Neural.Networks.Pattern
             int y = PatternConst.START_Y;
 
             BasicNetwork network = new BasicNetwork();
-            network.AddLayer(input = new BasicLayer(this.inputCount));
-            network.AddLayer(instar = new BasicLayer(new ActivationCompetitive(), true, this.instarCount));
-            network.AddLayer(outstar = new BasicLayer(this.outstarCount));
+            network.AddLayer(input = new BasicLayer(new ActivationLinear(), false, this.inputCount));
+            network.AddLayer(instar = new BasicLayer(new ActivationCompetitive(), false, this.instarCount));
+            network.AddLayer(outstar = new BasicLayer(new ActivationLinear(), false, this.outstarCount));
             network.Structure.FinalizeStructure();
             network.Reset();
 

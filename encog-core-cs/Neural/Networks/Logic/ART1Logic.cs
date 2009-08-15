@@ -15,6 +15,7 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an ART1 type network.  See ART1Pattern
     /// for more information on this type of network.
     /// </summary>
+    [Serializable]
     public class ART1Logic : ARTLogic
     {
 

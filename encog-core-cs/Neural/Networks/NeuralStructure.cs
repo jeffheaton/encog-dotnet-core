@@ -94,6 +94,7 @@ namespace Encog.Neural.Networks
         {
             FinalizeLayers();
             FinalizeSynapses();
+            this.network.Logic.Init(this.network);
         }
 
         /// <summary>

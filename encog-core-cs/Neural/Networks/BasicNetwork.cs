@@ -608,7 +608,10 @@ namespace Encog.Neural.Networks
         /// <returns>The layer.</returns>
         public ILayer GetLayer(String tag)
         {
-            return this.layerTags[tag];
+            if (!this.layerTags.ContainsKey(tag))
+                return null;
+            else 
+                return this.layerTags[tag];
         }
 
         /// <summary>

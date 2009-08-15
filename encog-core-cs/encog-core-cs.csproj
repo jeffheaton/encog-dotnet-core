@@ -147,6 +147,7 @@
     <Compile Include="Neural\Networks\Pattern\ADALINEPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\ART1Pattern.cs" />
     <Compile Include="Neural\Networks\Pattern\BAMPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\BoltzmannPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\CPNPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\ElmanPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\FeedFowardPattern.cs" />

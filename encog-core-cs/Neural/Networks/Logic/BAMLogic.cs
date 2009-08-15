@@ -14,6 +14,7 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an BAM type network.  See BAMPattern
     /// for more information on this type of network.
     /// </summary>
+    [Serializable]
     public class BAMLogic : INeuralLogic
     {
         /// <summary>
