@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.CPN
 {
@@ -131,6 +132,8 @@ namespace Encog.Neural.Networks.Training.CPN
             if (this.mustInit)
                 InitWeight();
 
+            ErrorCalculation error = new ErrorCalculation();
+
             foreach (INeuralDataPair pair in this.training)
             {
                 INeuralData output = this.parts.InstarSynapse.Compute(
@@ -143,7 +146,11 @@ namespace Encog.Neural.Networks.Training.CPN
                                     .OutstarSynapse.WeightMatrix[j, i]);
                     this.parts.OutstarSynapse.WeightMatrix.Add(j, i, delta);
                 }
+
+                error.UpdateError(output.Data, pair.Ideal.Data);
             }
+
+            this.Error = error.CalculateRMS();
         }
     }
 }

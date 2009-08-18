@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.Util.MathUtil;
 
 namespace Encog.Neural.Networks.Training.CPN
 {
@@ -114,24 +115,43 @@ namespace Encog.Neural.Networks.Training.CPN
         /// </summary>
         public override void Iteration()
         {
-
             if (this.mustInit)
             {
                 InitWeights();
             }
 
+            double worstDistance = Double.NegativeInfinity;
+
             foreach (INeuralDataPair pair in this.training)
             {
                 INeuralData output = this.parts.InstarSynapse.Compute(
                         pair.Input);
-                int i = this.parts.Winner(output);
+
+                // determine winner
+                int winner = this.parts.Winner(output);
+
+                // calculate the distance
+                double distance = 0;
+                for (int i = 0; i < pair.Input.Count; i++)
+                {
+                    double diff = pair.Input[i]
+                    - this.parts.InstarSynapse.WeightMatrix[i, winner];
+                    distance += diff * diff;
+                }
+                distance = BoundMath.Sqrt(distance);
+
+                if (distance > worstDistance)
+                    worstDistance = distance;
+
+                // train
+
                 for (int j = 0; j < this.parts.InstarSynapse
                         .FromNeuronCount; j++)
                 {
                     double delta = this.learningRate
                             * (pair.Input[j] - this.parts
-                                    .InstarSynapse.WeightMatrix[j, i]);
-                    this.parts.InstarSynapse.WeightMatrix.Add(j, i, delta);
+                                    .InstarSynapse.WeightMatrix[j, winner]);
+                    this.parts.InstarSynapse.WeightMatrix.Add(j, winner, delta);
                 }
             }
         }

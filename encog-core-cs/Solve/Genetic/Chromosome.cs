@@ -219,10 +219,7 @@ namespace Encog.Solve.Genetic
                 }
             }
 
-            // copy results
-            offspring1.CalculateCost();
-            offspring2.CalculateCost();
-
+            // mutate if needed
             if (ThreadSafeRandom.NextDouble() < this.geneticAlgorithm.MutationPercent)
             {
                 offspring1.Mutate();
@@ -231,6 +228,10 @@ namespace Encog.Solve.Genetic
             {
                 offspring2.Mutate();
             }
+
+            // copy results
+            offspring1.CalculateCost();
+            offspring2.CalculateCost();
 
         }
 
