@@ -522,6 +522,17 @@ namespace Encog.Matrix
 
         }
 
+        /// <summary>
+        /// Get the matrix array for this matrix.
+        /// </summary>
+        public double[,] Data
+        {
+            get
+            {
+                return this.matrix;
+            }
+        }
+
     }
 
 }

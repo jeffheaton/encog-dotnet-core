@@ -93,16 +93,22 @@ namespace Encog.Neural.Networks.Synapse
         /// <returns>The output from this synapse.</returns>
         public override INeuralData Compute(INeuralData input)
         {
-            INeuralData result = new BasicNeuralData(this.ToNeuronCount);
-            Matrix.Matrix inputMatrix = MatrixMath.CreateInputMatrix(input);
+            	INeuralData result = new BasicNeuralData(this.ToNeuronCount);
+		
+		double[] inputArray = input.Data;
+		double[,] matrixArray = this.WeightMatrix.Data;
+		double[] resultArray = result.Data;
 
-            for (int i = 0; i < this.ToNeuronCount; i++)
-            {
-                Matrix.Matrix col = this.WeightMatrix.GetCol(i);
-                double sum = MatrixMath.DotProduct(col, inputMatrix);
-                result[i] = sum;
-            }
-            return result;
+		for (int i = 0; i < this.ToNeuronCount; i++) {
+			
+			double sum = 0;
+			for(int j = 0;j<inputArray.Length;j++ )
+			{
+				sum+=inputArray[j]*matrixArray[j,i];
+			}
+			resultArray[i] = sum;
+		}
+		return result;
         }
 
         /// <summary>
