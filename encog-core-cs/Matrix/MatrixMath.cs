@@ -69,14 +69,16 @@ namespace Encog.Matrix
             }
 
             double[][] result = new double[a.Rows][];
+            double[][] aData = a.Data;
+            double[][] bData = b.Data;
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
                 result[resultRow] = new double[a.Cols];
                 for (int resultCol = 0; resultCol < a.Cols; resultCol++)
                 {
-                    result[resultRow][resultCol] = a[resultRow, resultCol]
-                            + b[resultRow, resultCol];
+                    result[resultRow][resultCol] = aData[resultRow][resultCol]
+                            + bData[resultRow][resultCol];
                 }
             }
 
@@ -90,11 +92,14 @@ namespace Encog.Matrix
         /// <param name="target">The target matrix.</param>
         public static void Copy(Matrix source, Matrix target)
         {
+            double[][] sourceData = source.Data;
+            double[][] targetData = target.Data;
+
             for (int row = 0; row < source.Rows; row++)
             {
                 for (int col = 0; col < source.Cols; col++)
                 {
-                    target[row, col] = source[row, col];
+                    targetData[row][col] = sourceData[row][col];
                 }
             }
 
@@ -115,6 +120,7 @@ namespace Encog.Matrix
                         + " columns.");
             }
             double[][] newMatrix = new double[matrix.Rows][];
+            double[][] matrixData = matrix.Data;
 
             for (int row = 0; row < matrix.Rows; row++)
             {
@@ -126,7 +132,7 @@ namespace Encog.Matrix
                 {
                     if (col != deleted)
                     {
-                        newMatrix[row][targetCol] = matrix[row, col];
+                        newMatrix[row][targetCol] = matrixData[row][col];
                         targetCol++;
                     }
 
@@ -150,7 +156,9 @@ namespace Encog.Matrix
                         + " from matrix, it only has " + matrix.Rows
                         + " rows.");
             }
-            double[][] newMatrix = new double[matrix.Rows - 1][]; 
+            double[][] newMatrix = new double[matrix.Rows - 1][];
+            double[][] matrixData = matrix.Data;
+
             int targetRow = 0;
             for (int row = 0; row < matrix.Rows; row++)
             {
@@ -159,7 +167,7 @@ namespace Encog.Matrix
                     newMatrix[row] = new double[matrix.Cols];
                     for (int col = 0; col < matrix.Cols; col++)
                     {
-                        newMatrix[targetRow][col] = matrix[row, col];
+                        newMatrix[targetRow][col] = matrixData[row][col];
                     }
                     targetRow++;
                 }
@@ -176,12 +184,13 @@ namespace Encog.Matrix
         public static Matrix Divide(Matrix a, double b)
         {
             double[][] result = new double[a.Rows][];
+            double[][] aData = a.Data;
             for (int row = 0; row < a.Rows; row++)
             {
                 result[row] = new double[a.Cols];
                 for (int col = 0; col < a.Cols; col++)
                 {
-                    result[row][col] = a[row, col] / b;
+                    result[row][col] = aData[row][col] / b;
                 }
             }
             return new Matrix(result);
@@ -234,10 +243,11 @@ namespace Encog.Matrix
             }
 
             Matrix result = new Matrix(size, size);
+            double[][] resultData = result.Data;
 
             for (int i = 0; i < size; i++)
             {
-                result[i, i] = 1;
+                resultData[i][i] = 1;
             }
 
             return result;
@@ -252,12 +262,14 @@ namespace Encog.Matrix
         public static Matrix Multiply(Matrix a, double b)
         {
             double[][] result = new double[a.Rows][];
+            double[][] aData = a.Data;
+
             for (int row = 0; row < a.Rows; row++)
             {
                 result[row] = new double[a.Cols];
                 for (int col = 0; col < a.Cols; col++)
                 {
-                    result[row][col] = a[row, col] * b;
+                    result[row][col] = aData[row][col] * b;
                 }
             }
             return new Matrix(result);
@@ -278,6 +290,8 @@ namespace Encog.Matrix
             }
 
             double[][] result = new double[a.Rows][];
+            double[][] aData = a.Data;
+            double[][] bData = b.Data;
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
@@ -289,7 +303,7 @@ namespace Encog.Matrix
                     for (int i = 0; i < a.Cols; i++)
                     {
 
-                        value += a[resultRow, i] * b[i, resultCol];
+                        value += aData[resultRow][i] * bData[i][resultCol];
                     }
                     result[resultRow][resultCol] = value;
                 }
@@ -325,14 +339,16 @@ namespace Encog.Matrix
             }
 
             double[][] result = new double[a.Rows][];
+            double[][] aData = a.Data;
+            double[][] bData = b.Data;
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
                 result[resultRow] = new double[a.Cols];
                 for (int resultCol = 0; resultCol < a.Cols; resultCol++)
                 {
-                    result[resultRow][resultCol] = a[resultRow, resultCol]
-                            - b[resultRow, resultCol];
+                    result[resultRow][resultCol] = aData[resultRow][resultCol]
+                            - bData[resultRow][resultCol];
                 }
             }
 
@@ -347,13 +363,14 @@ namespace Encog.Matrix
         public static Matrix Transpose(Matrix input)
         {
             double[][] inverseMatrix = new double[input.Cols][];
+            double[][] inputData = input.Data;
 
             for (int r = 0; r < input.Rows; r++)
             {
                 inverseMatrix[r] = new double[input.Rows];
                 for (int c = 0; c < input.Cols; c++)
                 {
-                    inverseMatrix[c][r] = input[r,c];
+                    inverseMatrix[c][r] = inputData[r][c];
                 }
             }
 
@@ -381,21 +398,6 @@ namespace Encog.Matrix
             return Math.Sqrt(rtn);
         }
 
-        /// <summary>
-        /// Create an input matrix for a neural network.
-        /// </summary>
-        /// <param name="pattern">The pattern to create the matrix for.</param>
-        /// <returns>The newly created matrix.</returns>
-        public static Matrix CreateInputMatrix(INeuralData pattern)
-        {
-            Matrix result = new Matrix(1, pattern.Count);
-            for (int i = 0; i < pattern.Count; i++)
-            {
-                result[0, i] = pattern[i];
-            }
-
-            return result;
-        }
 
         /// <summary>
         /// Private constructor.  All methods are static.

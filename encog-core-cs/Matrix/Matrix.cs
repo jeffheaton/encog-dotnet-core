@@ -42,11 +42,21 @@ namespace Encog.Matrix
     [Serializable]
     public class Matrix : IEncogPersistedObject
     {
-        private String name;
-        private String description;
+        /// <summary>
+        /// The description of this object.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Allows index access to the elements of the matrix.
+        /// Warning: This can be a somewhat slow way to access the matrix.  
+        /// Do not put this in performance critical loops.  Make sure to use
+        /// the Data property and access the matrix array directly.
         /// </summary>
         /// <param name="row">The row to access.</param>
         /// <param name="col">The column to access.</param>
@@ -125,11 +135,11 @@ namespace Encog.Matrix
                 {
                     if (sourceMatrix[r][c])
                     {
-                        this[r, c] = 1;
+                        this.matrix[r][c] = 1;
                     }
                     else
                     {
-                        this[r, c] = -1;
+                        this.matrix[r][c] = -1;
                     }
                 }
             }
@@ -147,7 +157,7 @@ namespace Encog.Matrix
                 this.matrix[r] = new double[sourceMatrix.GetUpperBound(1) + 1];
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this[r, c] = sourceMatrix[r][c];
+                    this.matrix[r][c] = sourceMatrix[r][c];
                 }
             }
         }
@@ -176,8 +186,8 @@ namespace Encog.Matrix
         public void Add(int row, int col, double value)
         {
             Validate(row, col);
-            double newValue = this[row, col] + value;
-            this[row, col] = newValue;
+            double newValue = this.matrix[row][col] + value;
+            this.matrix[row][col] = newValue;
         }
 
         /// <summary>
@@ -189,7 +199,7 @@ namespace Encog.Matrix
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this[r, c] = 0;
+                    this.matrix[r][c] = 0;
                 }
             }
         }
@@ -236,11 +246,12 @@ namespace Encog.Matrix
 
             precision = (int)Math.Pow(10, precision);
 
+            double[][] otherMatrix = matrix.Data;
             for (int r = 0; r < this.Rows; r++)
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    if ((long)(this[r, c] * precision) != (long)(matrix[r, c] * precision))
+                    if ((long)(this.matrix[r][c] * precision) != (long)(otherMatrix[r][c] * precision))
                     {
                         return false;
                     }
@@ -462,35 +473,6 @@ namespace Encog.Matrix
             }
         }
 
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
-        }
 
         /// <summary>
         /// Create a persistor for this object.
