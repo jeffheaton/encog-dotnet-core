@@ -140,7 +140,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
                     for (int i = 0; i < layer.NeuronCount; i++)
                     {
                         double change = DetermineChange(level
-                               .ThresholdGradients[i]
+                               .ThresholdGradents[i]
                                * this.propagation.LearningRate);
                         layer.Threshold[i] += change;
                     }

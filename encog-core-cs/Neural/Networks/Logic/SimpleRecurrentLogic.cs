@@ -63,10 +63,10 @@ namespace Encog.Neural.Networks.Logic
             {
                 if (synapse != source)
                 {
-                    if (SimpleRecurrentLogic.logger.IsDebugEnabled)
+                    /*if (SimpleRecurrentLogic.logger.IsDebugEnabled)
                     {
                         SimpleRecurrentLogic.logger.Debug("Recurrent layer from: " + input.ToString());
-                    }
+                    }*/
                     INeuralData recurrentInput = synapse.FromLayer.Recur();
 
                     if (recurrentInput != null)
@@ -80,10 +80,10 @@ namespace Encog.Neural.Networks.Logic
                                     + recurrentOutput[i];
                         }
 
-                        if (SimpleRecurrentLogic.logger.IsDebugEnabled)
+                        /*if (SimpleRecurrentLogic.logger.IsDebugEnabled)
                         {
                             SimpleRecurrentLogic.logger.Debug("Recurrent layer to: " + input.ToString());
-                        }
+                        }*/
                     }
                 }
             }

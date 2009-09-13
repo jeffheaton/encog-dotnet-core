@@ -116,13 +116,13 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                 {
                     for (int i = 0; i < layer.NeuronCount; i++)
                     {
-                        double delta = level.ThresholdGradients[i]
+                        double delta = level.ThresholdGradents[i]
                                 * this.propagation.LearningRate;
-                        delta += level.LastThresholdGradent[i]
+                        delta += level.LastThresholdGradents[i]
                                 * this.propagation.Momentum;
                         layer.Threshold[i] += delta;
-                        level.LastThresholdGradent[i] = delta;
-                        level.ThresholdGradients[i] = 0.0;
+                        level.LastThresholdGradents[i] = delta;
+                        level.ThresholdGradents[i] = 0.0;
                     }
                 }
             }

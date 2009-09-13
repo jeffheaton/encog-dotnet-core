@@ -75,7 +75,7 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                     }
 
-                    toLevel.ThresholdGradients[toNeuronGlobal] +=
+                    toLevel.ThresholdGradents[toNeuronGlobal] +=
                         toLevel.Deltas[toNeuronGlobal];
                     toNeuronGlobal++;
                 }
@@ -119,9 +119,8 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             INeuralData output = outputHolder.Result[
                    fromSynapse.Synapse];
-            fromSynapse.AccumulateMatrixDelta(fromNeuron, toNeuronLocal, toLevel
-                    .Deltas[toNeuronGlobal]
-                    * output[fromNeuron]);
+            fromSynapse.Deltas.Data[fromNeuron][toNeuronLocal]+=toLevel.Deltas[toNeuronGlobal]
+                    * output.Data[fromNeuron];
             return (fromSynapse.Synapse.WeightMatrix.Data[fromNeuron]
                     [toNeuronLocal] * toLevel.Deltas[toNeuronGlobal]);
         }

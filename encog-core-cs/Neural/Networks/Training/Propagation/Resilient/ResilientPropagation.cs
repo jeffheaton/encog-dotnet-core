@@ -160,7 +160,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
             {
                 for (int i = 0; i < level.NeuronCount; i++)
                 {
-                    level.ThresholdDelta[i] = this.initialUpdate;
+                    level.ThresholdDeltas[i] = this.initialUpdate;
                 }
 
                 foreach (PropagationSynapse synapse in level.Outgoing)

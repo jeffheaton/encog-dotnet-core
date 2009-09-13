@@ -120,15 +120,20 @@ namespace Encog.Neural.Networks.Layers
         /// <param name="pattern">The pattern to store in the context.</param>
         public override void Process(INeuralData pattern)
         {
+            double[] target = this.context.Data;
+            double[] source = pattern.Data;
+
+            //Array.Copy(source, target, source.Length);
+
             for (int i = 0; i < pattern.Count; i++)
             {
-                this.context[i] = pattern[i];
+                target[i] = source[i];
             }
 
-            if (ContextLayer.logger.IsDebugEnabled)
+            /*if (ContextLayer.logger.IsDebugEnabled)
             {
                 ContextLayer.logger.Debug("Updated ContextLayer to " + pattern);
-            }
+            }*/
         }
 
         /// <summary>

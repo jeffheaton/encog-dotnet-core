@@ -69,11 +69,11 @@ namespace Encog.Neural.Networks.Logic
 
             ILayer inputLayer = this.network.GetLayer(BasicNetwork.TAG_INPUT);
 
-            if (FeedforwardLogic.logger.IsDebugEnabled)
+            /*if (FeedforwardLogic.logger.IsDebugEnabled)
             {
                 FeedforwardLogic.logger.Debug("Pattern " + input.ToString()
                     + " presented to neural network");
-            }
+            }*/
 
             if (useHolder == null)
             {
@@ -101,13 +101,13 @@ namespace Encog.Neural.Networks.Logic
                  INeuralData input, ISynapse source)
         {
 
-            if (FeedforwardLogic.logger.IsDebugEnabled)
+            /*if (FeedforwardLogic.logger.IsDebugEnabled)
             {
                 FeedforwardLogic.logger.Debug("Processing layer: "
                     + layer.ToString()
                     + ", input= "
                     + input.ToString());
-            }
+            }*/
 
             // typically used to process any recurrent layers that feed into this
             // layer.
@@ -117,10 +117,10 @@ namespace Encog.Neural.Networks.Logic
             {
                 if (!holder.Result.ContainsKey(synapse))
                 {
-                    if (FeedforwardLogic.logger.IsDebugEnabled)
+                    /*if (FeedforwardLogic.logger.IsDebugEnabled)
                     {
                         FeedforwardLogic.logger.Debug("Processing synapse: " + synapse.ToString());
-                    }
+                    }*/
                     INeuralData pattern = synapse.Compute(input);
                     pattern = synapse.ToLayer.Compute(pattern);
                     synapse.ToLayer.Process(pattern);

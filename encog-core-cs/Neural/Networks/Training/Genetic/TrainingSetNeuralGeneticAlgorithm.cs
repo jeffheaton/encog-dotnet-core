@@ -73,15 +73,9 @@ namespace Encog.Neural.Networks.Training.Genetic
                 TrainingSetNeuralChromosome c =
                    new TrainingSetNeuralChromosome(
                        this, chromosomeNetwork);
-                c.UpdateGenes();
                 this.Genetic.Chromosomes[i] = c;
             }
             this.Genetic.SortChromosomes();
-
-            // set a default cut length
-            //this.Genetic.CutLength = (int)(this.Genetic.Chromosomes[0].Genes.Length * .3);
         }
-
     }
-
 }

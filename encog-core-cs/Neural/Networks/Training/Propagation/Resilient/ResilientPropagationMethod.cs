@@ -118,49 +118,49 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         // multiply the current and previous gradient, and take the
                         // sign. We want to see if the gradient has changed its
                         // sign.
-                        int change = Sign(level.ThresholdGradients[i]
-                               * level.LastThresholdGradent[i]);
+                        int change = Sign(level.ThresholdGradents[i]
+                               * level.LastThresholdGradents[i]);
                         double weightChange = 0;
 
                         // if the gradient has retained its sign, then we increase
                         // the delta so that it will converge faster
                         if (change > 0)
                         {
-                            double delta = level.ThresholdDelta[i]
+                            double delta = level.ThresholdDeltas[i]
                                     * ResilientPropagation.POSITIVE_ETA;
                             delta = Math.Min(delta, this.propagation.MaxStep);
-                            weightChange = Sign(level.ThresholdGradients[i])
+                            weightChange = Sign(level.ThresholdGradents[i])
                                     * delta;
-                            level.ThresholdDelta[i] = delta;
-                            level.LastThresholdGradent[i] = level
-                                    .ThresholdGradients[i];
+                            level.ThresholdDeltas[i] = delta;
+                            level.LastThresholdGradents[i] = level
+                                    .ThresholdGradents[i];
                         }
                         else if (change < 0)
                         {
                             // if change<0, then the sign has changed, and the last
                             // delta was too big
-                            double delta = level.ThresholdDelta[i]
+                            double delta = level.ThresholdDeltas[i]
                                     * ResilientPropagation.NEGATIVE_ETA;
                             delta = Math.Max(delta, ResilientPropagation.DELTA_MIN);
-                            level.ThresholdDelta[i] = delta;
+                            level.ThresholdDeltas[i] = delta;
                             // set the previous gradient to zero so that there will
                             // be no adjustment the next iteration
-                            level.LastThresholdGradent[i] = 0;
+                            level.LastThresholdGradents[i] = 0;
                         }
                         else if (change == 0)
                         {
                             // if change==0 then there is no change to the delta
-                            double delta = level.ThresholdDelta[i];
-                            weightChange = Sign(level.ThresholdGradients[i])
+                            double delta = level.ThresholdDeltas[i];
+                            weightChange = Sign(level.ThresholdGradents[i])
                                     * delta;
-                            level.LastThresholdGradent[i] = level
-                                    .ThresholdGradients[i];
+                            level.LastThresholdGradents[i] = level
+                                    .ThresholdGradents[i];
                         }
 
                         // apply the weight change, if any
                         layer.Threshold[i] = layer.Threshold[i] + weightChange;
 
-                        level.ThresholdGradients[i] = 0.0;
+                        level.ThresholdGradents[i] = 0.0;
                     }
                 }
             }

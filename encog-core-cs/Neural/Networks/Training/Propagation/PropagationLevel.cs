@@ -39,55 +39,49 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// pure feedforward neural network there will be only one layer per level.
     /// However, recurrent neural networks will contain multiple layers per level.
     /// </summary>
-    public class PropagationLevel
+    public struct PropagationLevel
     {
 
         /// <summary>
         /// The number of neurons on this level.
         /// </summary>
-        private int neuronCount;
+        public int NeuronCount;
 
         /// <summary>
         /// The layers that make up this level.
         /// </summary>
-        private IList<ILayer> layers = new List<ILayer>();
+        public IList<ILayer> Layers;
 
         /// <summary>
         /// All outgoing synapses from this level.
         /// </summary>
-        private IList<PropagationSynapse> outgoing =
-            new List<PropagationSynapse>();
+        public IList<PropagationSynapse> Outgoing;
 
         /// <summary>
         /// The differences between the actual and expected output for this
         /// level.
         /// </summary>
-        private double[] deltas;
+        public double[] Deltas;
 
         /// <summary>
         /// The calculated threshold gradients for this level.
         /// </summary>
-        private double[] thresholdGradients;
+        public double[] ThresholdGradents;
 
         /// <summary>
         /// The last iteration's calculated threshold gradients.
         /// </summary>
-        private double[] lastThresholdGradients;
+        public double[] LastThresholdGradents;
 
         /// <summary>
         /// The deltas to be applied to the threshold values.
         /// </summary>
-        private double[] thresholdDeltas;
+        public double[] ThresholdDeltas;
 
         /// <summary>
         /// The propagation class that this level belongs to.
         /// </summary>
-        private Propagation propagation;
-
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+        public Propagation Propagation;
 
         /// <summary>
         /// Construct a propagation level.
@@ -96,13 +90,15 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <param name="layer">The initial layer, others can be added later.</param>
         public PropagationLevel(Propagation propagation, ILayer layer)
         {
-            this.neuronCount = layer.NeuronCount;
-            this.deltas = new double[this.neuronCount];
-            this.thresholdGradients = new double[this.neuronCount];
-            this.lastThresholdGradients = new double[this.neuronCount];
-            this.layers.Add(layer);
-            this.propagation = propagation;
-            this.thresholdDeltas = new double[this.neuronCount];
+            this.NeuronCount = layer.NeuronCount;
+            this.Deltas = new double[this.NeuronCount];
+            this.ThresholdGradents = new double[this.NeuronCount];
+            this.LastThresholdGradents = new double[this.NeuronCount];
+            this.Layers = new List<ILayer>();
+            this.Layers.Add(layer);
+            this.Propagation = propagation;
+            this.ThresholdDeltas = new double[this.NeuronCount];
+            this.Outgoing = new List<PropagationSynapse>();
         }
 
         /// <summary>
@@ -113,29 +109,31 @@ namespace Encog.Neural.Networks.Training.Propagation
         public PropagationLevel(Propagation propagation,
                  IList<ISynapse> outgoing)
         {
+            this.Outgoing = new List<PropagationSynapse>();
+            this.Layers = new List<ILayer>();
             int count = 0;
 
-            this.propagation = propagation;
-            this.outgoing.Clear();
+            this.Propagation = propagation;
+            this.Outgoing.Clear();
 
             foreach (ISynapse synapse in outgoing)
             {
                 count += synapse.FromNeuronCount;
-                if (!this.layers.Contains(synapse.FromLayer))
+                if (!this.Layers.Contains(synapse.FromLayer))
                 {
-                    this.layers.Add(synapse.FromLayer);
+                    this.Layers.Add(synapse.FromLayer);
                 }
                 PropagationSynapse propSynapse = new PropagationSynapse(
                        synapse);
-                this.outgoing.Add(propSynapse);
+                this.Outgoing.Add(propSynapse);
             }
 
-            this.neuronCount = count;
+            this.NeuronCount = count;
 
-            this.deltas = new double[this.neuronCount];
-            this.thresholdGradients = new double[this.neuronCount];
-            this.lastThresholdGradients = new double[this.neuronCount];
-            this.thresholdDeltas = new double[this.neuronCount];
+            this.Deltas = new double[this.NeuronCount];
+            this.ThresholdGradents = new double[this.NeuronCount];
+            this.LastThresholdGradents = new double[this.NeuronCount];
+            this.ThresholdDeltas = new double[this.NeuronCount];
         }
 
         /// <summary>
@@ -147,7 +145,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         public void AccumulateThresholdGradient(int index,
                  double value)
         {
-            this.thresholdGradients[index] += value;
+            this.ThresholdGradents[index] += value;
         }
 
         /// <summary>
@@ -158,9 +156,9 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             List<ISynapse> result = new List<ISynapse>();
 
-            foreach (ILayer layer in this.layers)
+            foreach (ILayer layer in this.Layers)
             {
-                ICollection<ISynapse> synapses = this.propagation.Network
+                ICollection<ISynapse> synapses = this.Propagation.Network
                        .Structure.GetPreviousSynapses(layer);
 
                 // add all teachable synapses
@@ -189,21 +187,21 @@ namespace Encog.Neural.Networks.Training.Propagation
             // is this the output layer, if so then we need to return the output
             // from
             // the entire network.
-            if (this.outgoing.Count == 0)
+            if (this.Outgoing.Count == 0)
             {
-                INeuralData actual = this.propagation.OutputHolder.Output;
+                INeuralData actual = this.Propagation.OutputHolder.Output;
                 return actual[index];
             }
 
             // not the output layer, so we need output from one of the previous
             // layers.
-            foreach (PropagationSynapse synapse in this.outgoing)
+            foreach (PropagationSynapse synapse in this.Outgoing)
             {
                 int count = synapse.Synapse.FromNeuronCount;
 
                 if (currentIndex < count)
                 {
-                    INeuralData actual = this.propagation.OutputHolder
+                    INeuralData actual = this.Propagation.OutputHolder
                             .Result[synapse.Synapse];
                     return actual[currentIndex];
                 }
@@ -216,88 +214,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
 
-        /// <summary>
-        /// The differences between the ideal and actual output.
-        /// </summary>
-        public double[] Deltas
-        {
-            get
-            {
-                return this.deltas;
-            }
-        }
-
-        /// <summary>
-        /// Get the specified threshold gradient, from the last iteration
-        /// of training.
-        /// </summary>
-        public double[] LastThresholdGradent
-        {
-            get
-            {
-                return this.lastThresholdGradients;
-            }
-        }
-
-        /// <summary>
-        /// All layers associated with this level.
-        /// </summary>
-        public IList<ILayer> Layers
-        {
-            get
-            {
-                return this.layers;
-            }
-        }
-
-        /// <summary>
-        /// The neuron count for this level.
-        /// </summary>
-        public int NeuronCount
-        {
-            get
-            {
-                return this.neuronCount;
-            }
-        }
-
-        /// <summary>
-        /// The outgoing synapses for this level.
-        /// </summary>
-        public IList<PropagationSynapse> Outgoing
-        {
-            get
-            {
-                return this.outgoing;
-            }
-        }
-
-        /// <summary>
-        /// The threshold deltas.
-        /// </summary>
-        public double[] ThresholdDelta
-        {
-            get
-            {
-                return this.thresholdDeltas;
-            }
-        }
-
-
-        /// <summary>
-        /// The threshold gradients.
-        /// </summary>
-        public double[] ThresholdGradients
-        {
-            get
-            {
-                return this.thresholdGradients;
-            }
-        }
-
-
-
-
 
         /// <summary>
         /// Convert object to string.
@@ -307,9 +223,9 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             StringBuilder result = new StringBuilder();
             result.Append("[PropagationLevel(");
-            result.Append(this.neuronCount);
+            result.Append(this.NeuronCount);
             result.Append("):");
-            foreach (ILayer layer in this.layers)
+            foreach (ILayer layer in this.Layers)
             {
                 result.Append(layer.ToString());
             }
