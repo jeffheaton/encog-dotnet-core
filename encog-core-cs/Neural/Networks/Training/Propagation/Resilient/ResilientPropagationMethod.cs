@@ -175,6 +175,10 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         {
 
             Matrix.Matrix matrix = synapse.Synapse.WeightMatrix;
+            double[][] accData = synapse.AccMatrixGradients.Data;
+            double[][] lastData = synapse.LastMatrixGradients.Data;
+            double[][] deltas = synapse.Deltas.Data;
+            double[][] matrixData = matrix.Data;
 
             for (int row = 0; row < matrix.Rows; row++)
             {
@@ -182,49 +186,48 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 {
                     // multiply the current and previous gradient, and take the
                     // sign. We want to see if the gradient has changed its sign.
-                    int change = Sign(synapse.AccMatrixGradients[row, col]
-                           * synapse.LastMatrixGradients[row, col]);
+                    int change = Sign(accData[row][col]
+                           * lastData[row][col]);
                     double weightChange = 0;
 
                     // if the gradient has retained its sign, then we increase the
                     // delta so that it will converge faster
                     if (change > 0)
                     {
-                        double delta = synapse.Deltas[row, col]
+                        double delta = deltas[row][col]
                                 * ResilientPropagation.POSITIVE_ETA;
                         delta = Math.Min(delta, this.propagation.MaxStep);
-                        weightChange = Sign(synapse.AccMatrixGradients[
-                                row, col])
+                        weightChange = Sign(accData[
+                                row][col])
                                 * delta;
-                        synapse.Deltas[row, col] = delta;
-                        synapse.LastMatrixGradients[row, col] =
-                                synapse.AccMatrixGradients[row, col];
+                        deltas[row][col] = delta;
+                        lastData[row][col] =
+                                accData[row][col];
                     }
                     else if (change < 0)
                     {
                         // if change<0, then the sign has changed, and the last 
                         // delta was too big
-                        double delta = synapse.Deltas[row, col]
+                        double delta = deltas[row][col]
                                 * ResilientPropagation.NEGATIVE_ETA;
                         delta = Math.Max(delta, ResilientPropagation.DELTA_MIN);
-                        synapse.Deltas[row, col] = delta;
+                        deltas[row][col] = delta;
                         // set the previous gradent to zero so that there will be no
                         // adjustment the next iteration
-                        synapse.LastMatrixGradients[row, col] = 0;
+                        lastData[row][col] = 0;
                     }
                     else if (change == 0)
                     {
                         // if change==0 then there is no change to the delta
-                        double delta = synapse.Deltas[row, col];
-                        weightChange = Sign(synapse.AccMatrixGradients[row, col])
+                        double delta = deltas[row][col];
+                        weightChange = Sign(accData[row][col])
                                 * delta;
-                        synapse.LastMatrixGradients[row, col] =
-                                synapse.AccMatrixGradients[row, col];
+                        lastData[row][col] =
+                                accData[row][col];
                     }
 
                     // apply the weight change, if any
-                    matrix[row, col] = synapse.Synapse.WeightMatrix[row, col]
-                            + weightChange;
+                    matrixData[row][col] += weightChange;
 
                 }
             }

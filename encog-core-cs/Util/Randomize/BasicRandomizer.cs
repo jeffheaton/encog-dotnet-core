@@ -113,11 +113,12 @@ namespace Encog.Util.Randomize
         /// <param name="m">A matrix to randomize.</param>
         public virtual void Randomize(Matrix.Matrix m)
         {
+            double[][] mData = m.Data;
             for (int r = 0; r < m.Rows; r++)
             {
                 for (int c = 0; c < m.Cols; c++)
                 {
-                    m[r, c] = Randomize(m[r, c]);
+                    mData[r][c] = Randomize(mData[r][c]);
                 }
             }
         }

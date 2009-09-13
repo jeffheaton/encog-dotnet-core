@@ -122,8 +122,8 @@ namespace Encog.Neural.Networks.Training.Propagation
             fromSynapse.AccumulateMatrixDelta(fromNeuron, toNeuronLocal, toLevel
                     .Deltas[toNeuronGlobal]
                     * output[fromNeuron]);
-            return (fromSynapse.Synapse.WeightMatrix[fromNeuron,
-                    toNeuronLocal] * toLevel.Deltas[toNeuronGlobal]);
+            return (fromSynapse.Synapse.WeightMatrix.Data[fromNeuron]
+                    [toNeuronLocal] * toLevel.Deltas[toNeuronGlobal]);
         }
     }
 
