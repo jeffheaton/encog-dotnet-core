@@ -68,13 +68,14 @@ namespace Encog.Matrix
                                 + b.Cols + " cols.");
             }
 
-            double[,] result = new double[a.Rows, a.Cols];
+            double[][] result = new double[a.Rows][];
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
+                result[resultRow] = new double[a.Cols];
                 for (int resultCol = 0; resultCol < a.Cols; resultCol++)
                 {
-                    result[resultRow, resultCol] = a[resultRow, resultCol]
+                    result[resultRow][resultCol] = a[resultRow, resultCol]
                             + b[resultRow, resultCol];
                 }
             }
@@ -113,18 +114,19 @@ namespace Encog.Matrix
                         + " from matrix, it only has " + matrix.Cols
                         + " columns.");
             }
-            double[,] newMatrix = new double[matrix.Rows, matrix
-                    .Cols - 1];
+            double[][] newMatrix = new double[matrix.Rows][];
 
             for (int row = 0; row < matrix.Rows; row++)
             {
                 int targetCol = 0;
 
+                newMatrix[row] = new double[matrix.Cols - 1];
+
                 for (int col = 0; col < matrix.Cols; col++)
                 {
                     if (col != deleted)
                     {
-                        newMatrix[row, targetCol] = matrix[row, col];
+                        newMatrix[row][targetCol] = matrix[row, col];
                         targetCol++;
                     }
 
@@ -148,16 +150,16 @@ namespace Encog.Matrix
                         + " from matrix, it only has " + matrix.Rows
                         + " rows.");
             }
-            double[,] newMatrix = new double[matrix.Rows - 1, matrix
-                    .Cols];
+            double[][] newMatrix = new double[matrix.Rows - 1][]; 
             int targetRow = 0;
             for (int row = 0; row < matrix.Rows; row++)
             {
                 if (row != deleted)
                 {
+                    newMatrix[row] = new double[matrix.Cols];
                     for (int col = 0; col < matrix.Cols; col++)
                     {
-                        newMatrix[targetRow, col] = matrix[row, col];
+                        newMatrix[targetRow][col] = matrix[row, col];
                     }
                     targetRow++;
                 }
@@ -173,12 +175,13 @@ namespace Encog.Matrix
         /// <returns>The divided matrix.</returns>
         public static Matrix Divide(Matrix a, double b)
         {
-            double[,] result = new double[a.Rows, a.Cols];
+            double[][] result = new double[a.Rows][];
             for (int row = 0; row < a.Rows; row++)
             {
+                result[row] = new double[a.Cols];
                 for (int col = 0; col < a.Cols; col++)
                 {
-                    result[row, col] = a[row, col] / b;
+                    result[row][col] = a[row, col] / b;
                 }
             }
             return new Matrix(result);
@@ -248,12 +251,13 @@ namespace Encog.Matrix
         /// <returns>The new multiplied matrix.</returns>
         public static Matrix Multiply(Matrix a, double b)
         {
-            double[,] result = new double[a.Rows, a.Cols];
+            double[][] result = new double[a.Rows][];
             for (int row = 0; row < a.Rows; row++)
             {
+                result[row] = new double[a.Cols];
                 for (int col = 0; col < a.Cols; col++)
                 {
-                    result[row, col] = a[row, col] * b;
+                    result[row][col] = a[row, col] * b;
                 }
             }
             return new Matrix(result);
@@ -273,10 +277,11 @@ namespace Encog.Matrix
                         "To use ordinary matrix multiplication the number of columns on the first matrix must mat the number of rows on the second.");
             }
 
-            double[,] result = new double[a.Rows, b.Cols];
+            double[][] result = new double[a.Rows][];
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
+                result[resultRow] = new double[b.Cols];
                 for (int resultCol = 0; resultCol < b.Cols; resultCol++)
                 {
                     double value = 0;
@@ -286,7 +291,7 @@ namespace Encog.Matrix
 
                         value += a[resultRow, i] * b[i, resultCol];
                     }
-                    result[resultRow, resultCol] = value;
+                    result[resultRow][resultCol] = value;
                 }
             }
 
@@ -319,13 +324,14 @@ namespace Encog.Matrix
                                 + b.Cols + " cols.");
             }
 
-            double[,] result = new double[a.Rows, a.Cols];
+            double[][] result = new double[a.Rows][];
 
             for (int resultRow = 0; resultRow < a.Rows; resultRow++)
             {
+                result[resultRow] = new double[a.Cols];
                 for (int resultCol = 0; resultCol < a.Cols; resultCol++)
                 {
-                    result[resultRow, resultCol] = a[resultRow, resultCol]
+                    result[resultRow][resultCol] = a[resultRow, resultCol]
                             - b[resultRow, resultCol];
                 }
             }
@@ -340,14 +346,14 @@ namespace Encog.Matrix
         /// <returns>The transposed matrix.</returns>
         public static Matrix Transpose(Matrix input)
         {
-            double[,] inverseMatrix = new double[input.Cols, input
-                    .Rows];
+            double[][] inverseMatrix = new double[input.Cols][];
 
             for (int r = 0; r < input.Rows; r++)
             {
+                inverseMatrix[r] = new double[input.Rows];
                 for (int c = 0; c < input.Cols; c++)
                 {
-                    inverseMatrix[c, r] = input[r, c];
+                    inverseMatrix[c][r] = input[r,c];
                 }
             }
 

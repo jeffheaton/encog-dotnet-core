@@ -56,7 +56,7 @@ namespace Encog.Matrix
             get
             {
                 Validate(row, col);
-                return this.matrix[row, col];
+                return this.matrix[row][col];
             }
             set
             {
@@ -66,7 +66,7 @@ namespace Encog.Matrix
                     throw new MatrixError("Trying to assign invalud number to matrix: "
                             + value);
                 }
-                this.matrix[row, col] = value;
+                this.matrix[row][col] = value;
             }
         }
 
@@ -77,10 +77,11 @@ namespace Encog.Matrix
         /// <returns>A matrix that contains a single column.</returns>
         public static Matrix CreateColumnMatrix(double[] input)
         {
-            double[,] d = new double[input.Length, 1];
+            double[][] d = new double[input.Length][];
             for (int row = 0; row < d.Length; row++)
             {
-                d[row, 0] = input[row];
+                d[row] = new double[1];
+                d[row][0] = input[row];
             }
             return new Matrix(d);
         }
@@ -92,11 +93,13 @@ namespace Encog.Matrix
         /// <returns>A matrix that contans a single row.</returns>
         public static Matrix CreateRowMatrix(double[] input)
         {
-            double[,] d = new double[1, input.Length];
+            double[][] d = new double[1][];
+
+            d[0] = new double[input.Length];
 
             for (int i = 0; i < input.Length; i++)
             {
-                d[0, i] = input[i];
+                d[0][i] = input[i];
             }
 
             return new Matrix(d);
@@ -105,21 +108,22 @@ namespace Encog.Matrix
         /// <summary>
         /// The matrix data, stored as a 2D array.
         /// </summary>
-        double[,] matrix;
+        double[][] matrix;
 
         /// <summary>
         /// Construct a matrix from a 2D boolean array.  Translate true to 1, false to -1.
         /// </summary>
         /// <param name="sourceMatrix">A 2D array to construcat the matrix from.</param>
-        public Matrix(bool[,] sourceMatrix)
+        public Matrix(bool[][] sourceMatrix)
         {
 
-            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1, sourceMatrix.GetUpperBound(1) + 1];
+            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1][];
             for (int r = 0; r < this.Rows; r++)
             {
+                this.matrix[r] = new double[sourceMatrix.GetUpperBound(1) + 1];
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    if (sourceMatrix[r, c])
+                    if (sourceMatrix[r][c])
                     {
                         this[r, c] = 1;
                     }
@@ -135,14 +139,15 @@ namespace Encog.Matrix
         /// Construct a matrix from a 2D double array.
         /// </summary>
         /// <param name="sourceMatrix">A 2D double array.</param>
-        public Matrix(double[,] sourceMatrix)
+        public Matrix(double[][] sourceMatrix)
         {
-            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1, sourceMatrix.GetUpperBound(1) + 1];
+            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1][];
             for (int r = 0; r < this.Rows; r++)
             {
+                this.matrix[r] = new double[sourceMatrix.GetUpperBound(1) + 1];
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this[r, c] = sourceMatrix[r, c];
+                    this[r, c] = sourceMatrix[r][c];
                 }
             }
         }
@@ -154,7 +159,12 @@ namespace Encog.Matrix
         /// <param name="cols">How many columns.</param>
         public Matrix(int rows, int cols)
         {
-            this.matrix = new double[rows, cols];
+            this.matrix = new double[rows][];
+            for(int i=0;i<rows;i++)
+            {
+                this.matrix[i] = new double[cols];
+            }
+
         }
 
         /// <summary>
@@ -254,7 +264,7 @@ namespace Encog.Matrix
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this.matrix[r, c] = array[index++];
+                    this.matrix[r][c] = array[index++];
                 }
             }
 
@@ -274,11 +284,12 @@ namespace Encog.Matrix
                         + " because it does not exist.");
             }
 
-            double[,] newMatrix = new double[this.Rows, 1];
+            double[][] newMatrix = new double[this.Rows][];
 
             for (int row = 0; row < this.Rows; row++)
             {
-                newMatrix[row, 0] = this.matrix[row, col];
+                newMatrix[row] = new double[1];
+                newMatrix[row][0] = this.matrix[row][col];
             }
 
             return new Matrix(newMatrix);
@@ -291,7 +302,7 @@ namespace Encog.Matrix
         {
             get
             {
-                return this.matrix.GetUpperBound(1) + 1;
+                return this.matrix[0].Length;
             }
         }
 
@@ -308,11 +319,12 @@ namespace Encog.Matrix
                         + " because it does not exist.");
             }
 
-            double[,] newMatrix = new double[1, this.Cols];
+            double[][] newMatrix = new double[1][];
 
             for (int col = 0; col < this.Cols; col++)
             {
-                newMatrix[0, col] = this.matrix[row, col];
+                newMatrix[col] = new double[this.Cols];
+                newMatrix[0][col] = this.matrix[row][col];
             }
 
             return new Matrix(newMatrix);
@@ -356,7 +368,7 @@ namespace Encog.Matrix
             {
                 for (int col = 0; col < this.Cols; col++)
                 {
-                    if (this.matrix[row, col] != 0)
+                    if (this.matrix[row][col] != 0)
                     {
                         return false;
                     }
@@ -376,7 +388,7 @@ namespace Encog.Matrix
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    this.matrix[r, c] = (ThreadSafeRandom.NextDouble() * (max - min)) + min;
+                    this.matrix[r][c] = (ThreadSafeRandom.NextDouble() * (max - min)) + min;
                 }
             }
         }
@@ -404,7 +416,7 @@ namespace Encog.Matrix
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    result += this.matrix[r, c];
+                    result += this.matrix[r][c];
                 }
             }
             return result;
@@ -423,7 +435,7 @@ namespace Encog.Matrix
             {
                 for (int c = 0; c < this.Cols; c++)
                 {
-                    result[index++] = this.matrix[r, c];
+                    result[index++] = this.matrix[r][c];
                 }
             }
 
@@ -516,7 +528,7 @@ namespace Encog.Matrix
             {
                 for (int col = 0; col < this.Cols; col++)
                 {
-                    this.matrix[row, col] = value;
+                    this.matrix[row][col] = value;
                 }
             }
 
@@ -525,7 +537,7 @@ namespace Encog.Matrix
         /// <summary>
         /// Get the matrix array for this matrix.
         /// </summary>
-        public double[,] Data
+        public double[][] Data
         {
             get
             {

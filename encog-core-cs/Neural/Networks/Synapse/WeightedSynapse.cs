@@ -96,7 +96,7 @@ namespace Encog.Neural.Networks.Synapse
             	INeuralData result = new BasicNeuralData(this.ToNeuronCount);
 		
 		double[] inputArray = input.Data;
-		double[,] matrixArray = this.WeightMatrix.Data;
+		double[][] matrixArray = this.WeightMatrix.Data;
 		double[] resultArray = result.Data;
 
 		for (int i = 0; i < this.ToNeuronCount; i++) {
@@ -104,7 +104,7 @@ namespace Encog.Neural.Networks.Synapse
 			double sum = 0;
 			for(int j = 0;j<inputArray.Length;j++ )
 			{
-				sum+=inputArray[j]*matrixArray[j,i];
+				sum+=inputArray[j]*matrixArray[j][i];
 			}
 			resultArray[i] = sum;
 		}
