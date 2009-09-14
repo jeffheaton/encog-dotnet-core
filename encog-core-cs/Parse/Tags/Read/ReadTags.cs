@@ -26,9 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Parse.Tags.Read
 {
     /// <summary>
@@ -70,10 +71,12 @@ namespace Encog.Parse.Tags.Read
         /// </summary>
         private Tag tag = new Tag();
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ReadTags));
+#endif
 
         /// <summary>
         /// Are we locked, looking for an end tag?  Such as the end of a

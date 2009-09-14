@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Parse.Tags
 {
@@ -61,10 +63,12 @@ namespace Encog.Parse.Tags
             CDATA
         };
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Tag));
+#endif
 
         /// <summary>
         /// The tag's attributes.
@@ -123,10 +127,12 @@ namespace Encog.Parse.Tags
             }
             catch (Exception e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
+#endif
                 throw new ParseError(e);
             }
 

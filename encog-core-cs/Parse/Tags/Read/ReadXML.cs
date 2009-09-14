@@ -26,8 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Parse.Tags.Read
 {
@@ -36,11 +38,12 @@ namespace Encog.Parse.Tags.Read
     /// </summary>
     public class ReadXML : ReadTags
     {
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ReadXML));
-
+#endif
         /// <summary>
         /// Construct an XML reader.
         /// </summary>
@@ -96,10 +99,12 @@ namespace Encog.Parse.Tags.Read
             }
             catch (Exception e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
+#endif
                 throw new ParseError(e);
             }
         }

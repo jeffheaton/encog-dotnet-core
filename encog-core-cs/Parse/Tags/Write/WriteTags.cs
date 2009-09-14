@@ -27,8 +27,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+#if logging
 using log4net;
-
+#endif
 namespace Encog.Parse.Tags.Write
 {
     /// <summary>
@@ -57,11 +58,12 @@ namespace Encog.Parse.Tags.Write
         /// </summary>
         private static System.Text.ASCIIEncoding encoder = new System.Text.ASCIIEncoding();
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(WriteTags));
-
+#endif
 
         /// <summary>
         /// Construct an object to write tags.
@@ -266,10 +268,12 @@ namespace Encog.Parse.Tags.Write
                 String str = "End tag mismatch, should be ending: "
                        + this.tagStack.Peek() + ", but trying to end: " + name
                        + ".";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new ParseError(str);
             }
             else
