@@ -205,7 +205,6 @@
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
-    <Compile Include="Parse\AcceptedSignal.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
     <Compile Include="Parse\Tags\Read\ReadHTML.cs" />
