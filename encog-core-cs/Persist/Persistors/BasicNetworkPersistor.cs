@@ -68,6 +68,16 @@ namespace Encog.Persist.Persistors
         public const String TAG_LOGIC = "logic";
 
         /// <summary>
+        /// The tags tag.
+        /// </summary>
+        public const String TAG_TAGS = "tags";
+
+        /// <summary>
+        /// The tag tag.
+        /// </summary>
+        public const String TAG_TAG = "tag";
+
+        /// <summary>
         /// The layer synapse.
         /// </summary>
         public const String TAG_LAYER = "layer";
@@ -131,6 +141,11 @@ namespace Encog.Persist.Persistors
         /// The to attribute.
         /// </summary>
         public const String ATTRIBUTE_TO = "to";
+
+        /// <summary>
+        /// The layer attribute.
+        /// </summary>
+        public const String ATTRIBUTE_LAYER = "layer";
 
         /// <summary>
         /// The network that is being loaded.
@@ -265,6 +280,10 @@ namespace Encog.Persist.Persistors
                 {
                     HandleLogic(xmlIn);
                 }
+                else if (xmlIn.IsIt(BasicNetworkPersistor.TAG_TAGS, true))
+                {
+                    HandleTags(xmlIn);
+                }
 
             }
             this.currentNetwork.Structure.FinalizeStructure();
@@ -358,6 +377,7 @@ namespace Encog.Persist.Persistors
             xmlOut.EndTag();
 
             SaveProperties(xmlOut);
+            SaveTags(xmlOut);
             SaveLogic(xmlOut);
 
             xmlOut.EndTag();
@@ -440,6 +460,49 @@ namespace Encog.Persist.Persistors
                 persistor.Save(synapse, xmlOut);
                 xmlOut.EndTag();
             }
+        }
+
+        private void SaveTags(WriteXML outXML)
+        {
+            // save any properties
+            outXML.BeginTag(BasicNetworkPersistor.TAG_TAGS);
+            foreach (String key in this.currentNetwork.LayerTags.Keys)
+            {
+                ILayer value = this.currentNetwork.LayerTags[key];
+                outXML.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_NAME, key);
+                outXML.AddAttribute(BasicNetworkPersistor.ATTRIBUTE_LAYER, ""
+                        + layer2index[value]);
+                outXML.BeginTag(BasicNetworkPersistor.TAG_TAG);
+                outXML.EndTag();
+            }
+            outXML.EndTag();
+        }
+
+        private void HandleTags(ReadXML inXML)
+        {
+            String end = inXML.LastTag.Name;
+            while (inXML.ReadToTag())
+            {
+                if (inXML.IsIt(BasicNetworkPersistor.TAG_TAG, true))
+                {
+                    String name = inXML.LastTag.GetAttributeValue(
+                            BasicNetworkPersistor.ATTRIBUTE_NAME);
+
+                    String layerStr = inXML.LastTag.GetAttributeValue(
+                           BasicNetworkPersistor.ATTRIBUTE_LAYER);
+
+                    int layerInt = int.Parse(layerStr);
+
+                    ILayer layer = this.index2layer[layerInt];
+                    this.currentNetwork.TagLayer(name, layer);
+                    inXML.ReadToTag();
+                }
+                if (inXML.IsIt(end, false))
+                {
+                    break;
+                }
+            }
+
         }
     }
 }
