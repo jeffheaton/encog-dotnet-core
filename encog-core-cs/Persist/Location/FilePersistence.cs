@@ -26,8 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Persist.Location
 {
@@ -36,12 +39,12 @@ namespace Encog.Persist.Location
     /// </summary>
     public class FilePersistence : PersistenceLocation
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(FilePersistence));
-
+#endif
         /// <summary>
         /// The file to persist to/from.
         /// </summary>
@@ -68,10 +71,12 @@ namespace Encog.Persist.Location
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
+#endif
                 throw new PersistError(e);
             }
         }
@@ -114,10 +119,12 @@ namespace Encog.Persist.Location
             {
                 String str =
                    "Can only rename from one FilePersistence location to another";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PersistError(str);
             }
 

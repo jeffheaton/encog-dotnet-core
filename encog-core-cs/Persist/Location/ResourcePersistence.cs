@@ -26,11 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
 using System.Resources;
 using System.Reflection;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Persist.Location
 {
     /// <summary>
@@ -46,10 +47,12 @@ namespace Encog.Persist.Location
         /// </summary>
         private String resource;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ResourcePersistence));
+#endif
 
         /// <summary>
         /// Construct a location to read from the specified resource. 
@@ -78,10 +81,12 @@ namespace Encog.Persist.Location
         {
             String str =
             "The ResourcePersistence location does not suppor delete operations.";
+#if logging   
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PersistError(str);
 
         }
@@ -94,10 +99,12 @@ namespace Encog.Persist.Location
         {
             String str =
             "The ResourcePersistence location does not suppor exists.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PersistError(str);
         }
 
@@ -109,10 +116,12 @@ namespace Encog.Persist.Location
         {
             String str =
            "The ResourcePersistence location does not suppor rename operations.";
+#if logging            
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PersistError(str);
         }
 

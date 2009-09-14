@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Util.MathUtil
 {
@@ -37,10 +39,12 @@ namespace Encog.Util.MathUtil
     public sealed class BoundNumbers
     {
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(BoundNumbers));
+#endif
 
         /// <summary>
         /// Private constructor.

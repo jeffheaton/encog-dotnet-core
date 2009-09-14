@@ -26,10 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using Encog.Neural.Data;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Synapse
 {
@@ -52,11 +55,13 @@ namespace Encog.Neural.Networks.Synapse
         /// </summary>
         private ILayer toLayer;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Clone this object.

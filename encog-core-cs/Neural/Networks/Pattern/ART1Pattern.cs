@@ -26,11 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -50,10 +52,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         public const String TAG_F2 = "F2";
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ART1Pattern));
+#endif
 
         /// <summary>
         /// The number of input neurons.
@@ -103,10 +107,12 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "A ART1 network has no hidden layers.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
         }
 
@@ -170,19 +176,23 @@ namespace Encog.Neural.Networks.Pattern
             set
             {
                 String str = "Can't set the activation function for an ART1.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get
             {
                 String str = "Can't get the activation function for an ART1.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
         }

@@ -27,10 +27,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Anneal;
-using log4net;
 using Encog.Neural.NeuralData;
 using Encog.Util.MathUtil;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Training.Anneal
 {
     /// <summary>
@@ -127,10 +128,12 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public const double CUT = 0.5;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(NeuralSimulatedAnnealing));
+#endif
 
         /// <summary>
         /// The neural network that is to be trained.
@@ -179,10 +182,12 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public override void Iteration()
         {
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Performing Simulated Annealing iteration.");
             }
+#endif
             PreIteration();
             this.anneal.Iteration();
             this.Error = this.anneal.DetermineError();

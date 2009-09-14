@@ -26,11 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Util.Randomize
 {
     /// <summary>
@@ -38,12 +39,12 @@ namespace Encog.Util.Randomize
     /// </summary>
     public abstract class BasicRandomizer : IRandomizer
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicRandomizer));
-
+#endif
         /// <summary>
         /// Randomize the synapses and thresholds in the basic network based on an
         /// array, modify the array. Previous values may be used, or they may be

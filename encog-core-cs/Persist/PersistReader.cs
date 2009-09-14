@@ -28,12 +28,13 @@ using System.Linq;
 using System.Text;
 using Encog.Parse.Tags.Read;
 using System.IO;
-using log4net;
 using Encog.Persist.Location;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags;
 using Encog.Persist.Persistors;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Persist
 {
     /// <summary>
@@ -62,10 +63,12 @@ namespace Encog.Persist
         /// </summary>
         private Stream fileInput;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(PersistReader));
+#endif
 
         /// <summary>
         /// Construct a persist reader.
@@ -158,10 +161,12 @@ namespace Encog.Persist
             }
 
             String str = "Can't find objects collection, invalid file.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PersistError(str);
 
         }

@@ -27,7 +27,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Strategy
 {
@@ -73,10 +76,12 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         private bool ready;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(SmartLearningRate));
+#endif
 
         /// <summary>
         /// Determine the training size.
@@ -104,11 +109,13 @@ namespace Encog.Neural.Networks.Training.Strategy
             this.setter = (ILearningRate)train;
             this.trainingSize = DetermineTrainingSize();
             this.currentLearningRate = 1.0 / this.trainingSize;
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Starting learning rate: " +
                         this.currentLearningRate);
             }
+#endif
             this.setter.LearningRate = this.currentLearningRate;
         }
 
@@ -123,11 +130,13 @@ namespace Encog.Neural.Networks.Training.Strategy
                 {
                     this.currentLearningRate *= SmartLearningRate.LEARNING_DECAY;
                     this.setter.LearningRate = this.currentLearningRate;
+#if logging
                     if (this.logger.IsInfoEnabled)
                     {
                         this.logger.Info("Adjusting learning rate to " +
                                 this.currentLearningRate);
                     }
+#endif
                 }
             }
             else

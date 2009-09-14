@@ -26,11 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Matrix;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Prune
 {
     /// <summary>
@@ -44,11 +45,12 @@ namespace Encog.Neural.Networks.Prune
         /// </summary>
         private BasicNetwork network;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-
+#endif
 
         /// <summary>
         /// Construct an object prune the neural network.

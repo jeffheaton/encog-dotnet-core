@@ -29,9 +29,11 @@ using System.Text;
 using Encog.Util.MathUtil.RBF;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
-using log4net;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Persist.Persistors
 {
@@ -66,10 +68,12 @@ namespace Encog.Persist.Persistors
         /// </summary>
         public const String PROPERTY_WIDTH = "width";
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Load a RBF layer.

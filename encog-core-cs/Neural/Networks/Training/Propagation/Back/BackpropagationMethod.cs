@@ -26,10 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Layers;
 using Encog.Matrix;
 using Encog.Util.Logging;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Back
 {
@@ -46,10 +49,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         private Backpropagation propagation;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Utility class to calculate the partial derivatives.
@@ -85,10 +90,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         public void Learn()
         {
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation learning pass");
             }
+#endif
 
             foreach (PropagationLevel level in this.propagation.Levels)
             {
@@ -141,18 +148,21 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                    this.propagation.Momentum);
             synapse.LastMatrixGradients = MatrixMath.Add(m1, m2);
 
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation learning: applying delta=\n"
                         + DumpMatrix.DumpMatrixString(synapse.LastMatrixGradients));
             }
+#endif
             synapse.Synapse.WeightMatrix.Add(synapse.LastMatrixGradients);
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation learning: new weight matrix=\n"
                         + DumpMatrix.DumpMatrixString(synapse.Synapse.WeightMatrix));
             }
-
+#endif
             synapse.AccMatrixGradients.Clear();
 
         }

@@ -26,9 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Util
 {
     /// <summary>
@@ -42,10 +43,12 @@ namespace Encog.Util
         /// </summary>
         public const int BUFFER_SIZE = 1024;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(DirectoryUtil));
+#endif
 
         /// <summary>
         /// Copy the specified file.
@@ -126,7 +129,9 @@ namespace Encog.Util
             }
             catch (IOException e)
             {
+#if logging
                 DirectoryUtil.LOGGER.Error("Exception", e);
+#endif
                 throw new EncogError(e);
             }
         }

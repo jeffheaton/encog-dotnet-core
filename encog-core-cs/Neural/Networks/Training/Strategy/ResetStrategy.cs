@@ -26,8 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
-
+#endif
 namespace Encog.Neural.Networks.Training.Strategy
 {
     /// <summary>
@@ -38,12 +39,12 @@ namespace Encog.Neural.Networks.Training.Strategy
     /// </summary>
     public class ResetStrategy : IStrategy
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ResetStrategy));
-
+#endif
         /// <summary>
         /// The required minimum error.
         /// </summary>
@@ -106,10 +107,12 @@ namespace Encog.Neural.Networks.Training.Strategy
                 this.badCycleCount++;
                 if (this.badCycleCount > this.cycles)
                 {
+#if logging
                     if (this.logger.IsDebugEnabled)
                     {
                         this.logger.Debug("Failed to imrove network, resetting.");
                     }
+#endif
                     this.train.Network.Reset();
                     this.badCycleCount = 0;
                 }

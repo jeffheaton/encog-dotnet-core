@@ -30,9 +30,11 @@ using Encog.Util.Concurrency.Job;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
-using log4net;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Prune
 {
@@ -48,12 +50,12 @@ namespace Encog.Neural.Networks.Prune
  */
     public class PruneIncremental : ConcurrentJob
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(PruneIncremental));
-
+#endif
         private bool done = false;
 
 
@@ -277,10 +279,13 @@ namespace Encog.Neural.Networks.Prune
             {
                 String str = "To calculate the optimal hidden size, at least "
                        + "one hidden layer must be defined.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
+                throw new EncogError(str);
             }
 
             this.hiddenCounts = new int[this.hidden.Count];
@@ -301,10 +306,13 @@ namespace Encog.Neural.Networks.Prune
             {
                 String str = "To calculate the optimal hidden size, at least "
                        + "one neuron must be the minimum for the first hidden layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
+                throw new EncogError(str);
 
             }
 
@@ -348,11 +356,13 @@ namespace Encog.Neural.Networks.Prune
 
             if ((error < this.bestResult) || (this.bestNetwork == null))
             {
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug("Prune found new best network: error="
                             + error + ", network=" + network);
                 }
+#endif
                 this.bestNetwork = network;
                 this.bestResult = error;
             }

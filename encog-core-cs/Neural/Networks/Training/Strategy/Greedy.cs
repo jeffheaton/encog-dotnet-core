@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Strategy
 {
@@ -61,10 +63,12 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         private bool ready;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Encog));
+#endif
 
         /// <summary>
         /// Initialize this strategy.
@@ -85,11 +89,13 @@ namespace Encog.Neural.Networks.Training.Strategy
             {
                 if (this.train.Error > this.lastError)
                 {
+#if logging
                     if (this.logger.IsDebugEnabled)
                     {
                         this.logger
                                 .Debug("Greedy strategy dropped last iteration.");
                     }
+#endif
                     this.train.Error = this.lastError;
                     NetworkCODEC.ArrayToNetwork(this.lastNetwork, this.train
                             .Network);

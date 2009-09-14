@@ -28,9 +28,12 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
-using log4net;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Pattern;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.CPN
 {
@@ -65,12 +68,13 @@ namespace Encog.Neural.Networks.Training.CPN
         /// </summary>
         private ISynapse outstarSynapse;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(FindCPN));
-
+#endif
         /// <summary>
         /// Construct the object and find the parts of the network.
         /// </summary>
@@ -80,10 +84,12 @@ namespace Encog.Neural.Networks.Training.CPN
             if (network.Structure.Layers.Count != 3)
             {
                 String str = "A CPN network must have exactly 3 layers";
+#if logging
                 if (logger.IsErrorEnabled)
                 {
                     logger.Error(str);
                 }
+#endif
                 throw new TrainingError(str);
             }
 
@@ -94,20 +100,24 @@ namespace Encog.Neural.Networks.Training.CPN
             if (this.outstarLayer == null)
             {
                 String str = "Can't find an OUTSTAR layer, this is required.";
+#if logging
                 if (logger.IsErrorEnabled)
                 {
                     logger.Error(str);
                 }
+#endif
                 throw new TrainingError(str);
             }
 
             if (this.instarLayer == null)
             {
                 String str = "Can't find an OUTSTAR layer, this is required.";
+#if logging
                 if (logger.IsErrorEnabled)
                 {
                     logger.Error(str);
                 }
+#endif
                 throw new TrainingError(str);
             }
 

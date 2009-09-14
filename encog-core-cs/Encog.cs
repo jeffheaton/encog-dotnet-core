@@ -25,8 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+#if logging
 using log4net;
 using log4net.Config;
+#endif
 
 namespace Encog
 {
@@ -47,10 +50,12 @@ namespace Encog
 	    /// </summary>
 	    private static String FILE_VERSION = "1";
 		
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog logger = LogManager.GetLogger(typeof(Encog));
+#endif
 
         /// <summary>
         /// The default precision to use for compares.

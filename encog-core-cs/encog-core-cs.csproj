@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
@@ -33,10 +33,6 @@
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -60,7 +56,6 @@
     <Compile Include="Bot\Browse\Browser.cs" />
     <Compile Include="Bot\Browse\Extract\BasicExtract.cs" />
     <Compile Include="Bot\Browse\Extract\IExtractListener.cs" />
-    <Compile Include="Bot\Browse\Extract\ExtractWords.cs" />
     <Compile Include="Bot\Browse\Extract\IExtract.cs" />
     <Compile Include="Bot\Browse\Extract\ListExtractListener.cs" />
     <Compile Include="Bot\Browse\LoadWebPage.cs" />
@@ -211,22 +206,15 @@
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
     <Compile Include="Parse\AcceptedSignal.cs" />
-    <Compile Include="Parse\ParseText.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
-    <Compile Include="Parse\ParseTemplate.cs" />
-    <Compile Include="Parse\Recognize\Recognize.cs" />
-    <Compile Include="Parse\Recognize\RecognizeElement.cs" />
-    <Compile Include="Parse\Signal\Signal.cs" />
     <Compile Include="Parse\Tags\Read\ReadHTML.cs" />
     <Compile Include="Parse\Tags\Read\ReadTags.cs" />
     <Compile Include="Parse\Tags\Read\ReadXML.cs" />
-    <Compile Include="Parse\Tags\TagConst.cs" />
     <Compile Include="Parse\Tags\Tag.cs" />
+    <Compile Include="Parse\Tags\TagConst.cs" />
     <Compile Include="Parse\Tags\Write\WriteTags.cs" />
     <Compile Include="Parse\Tags\Write\WriteXML.cs" />
-    <Compile Include="Parse\Units\UnitConversion.cs" />
-    <Compile Include="Parse\Units\UnitManager.cs" />
     <Compile Include="Persist\DirectoryEntry.cs" />
     <Compile Include="Persist\EncogPersistedCollection.cs" />
     <Compile Include="Persist\IEncogPersistedObject.cs" />
@@ -250,7 +238,6 @@
     <Compile Include="Persist\Persistors\ContextLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\DirectSynapsePersistor.cs" />
     <Compile Include="Persist\Persistors\OneToOneSynapsePersistor.cs" />
-    <Compile Include="Persist\Persistors\ParseTemplatePersistor.cs" />
     <Compile Include="Persist\Persistors\PersistorUtil.cs" />
     <Compile Include="Persist\Persistors\PropertyDataPersistor.cs" />
     <Compile Include="Persist\Persistors\RadialBasisFunctionLayerPersistor.cs" />

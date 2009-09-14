@@ -28,7 +28,9 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Data;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks
 {
@@ -50,10 +52,12 @@ namespace Encog.Neural.Networks
         /// </summary>
         private INeuralData output;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(NeuralOutputHolder));
+#endif
 
         /// <summary>
         /// Construct an empty holder.

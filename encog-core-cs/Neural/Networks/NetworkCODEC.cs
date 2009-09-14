@@ -28,7 +28,9 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks
 {
@@ -130,10 +132,12 @@ namespace Encog.Neural.Networks
             return result;
         }
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog logger = LogManager.GetLogger(typeof(NetworkCODEC));
+#endif
 
         /// <summary>
         /// Private constructor.
@@ -163,10 +167,12 @@ namespace Encog.Neural.Networks
             {
                 String str = "Precision of " + precision
                         + " decimal places is not supported.";
+#if logging
                 if (NetworkCODEC.logger.IsErrorEnabled)
                 {
                     NetworkCODEC.logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
 

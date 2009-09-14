@@ -28,7 +28,9 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks
 {
@@ -55,11 +57,13 @@ namespace Encog.Neural.Networks
         /// </summary>
         private BasicNetwork network;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private readonly ILog logger = LogManager.GetLogger(typeof(NeuralStructure));
+#endif
 
         /// <summary>
         /// Construct a structure object for the specified network.
@@ -265,10 +269,12 @@ namespace Encog.Neural.Networks
                 String str = "This operation requires a network with a synapse between the "
                     + NameLayer(fromLayer) + " layer to the "
                     + NameLayer(toLayer) + " layer.";
+#if logging
                 if (logger.IsErrorEnabled)
                 {
                     logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
 

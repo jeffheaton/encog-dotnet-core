@@ -26,11 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData.Bipolar;
 using Encog.Neural.Data;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -67,10 +69,12 @@ namespace Encog.Neural.Networks.Logic
             }
         }
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ThermalLogic));
+#endif
 
         /// <summary>
         /// Calculate the current energy for the network.  The 

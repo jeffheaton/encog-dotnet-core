@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Util.MathUtil.RBF
 {
@@ -52,11 +54,12 @@ namespace Encog.Util.MathUtil.RBF
         /// </summary>
         private double width;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly static ILog LOGGER = LogManager.GetLogger(typeof(GaussianFunction));
-
+#endif
 
         /// <summary>
         /// Construct a Gaussian RBF with the specified center, peak and

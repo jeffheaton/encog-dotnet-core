@@ -29,10 +29,11 @@ using System.Text;
 using Encog.Neural.Data.Basic;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-using log4net;
 using Encog.Neural.Data;
 using Encog.Neural.Activation;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Layers
 {
     /// <summary>
@@ -51,11 +52,13 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         private INeuralData context;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Default constructor, mainly so the workbench can easily create a default
@@ -123,17 +126,14 @@ namespace Encog.Neural.Networks.Layers
             double[] target = this.context.Data;
             double[] source = pattern.Data;
 
-            //Array.Copy(source, target, source.Length);
+            Array.Copy(source, target, source.Length);
 
-            for (int i = 0; i < pattern.Count; i++)
-            {
-                target[i] = source[i];
-            }
-
-            /*if (ContextLayer.logger.IsDebugEnabled)
+#if logging
+            if (ContextLayer.logger.IsDebugEnabled)
             {
                 ContextLayer.logger.Debug("Updated ContextLayer to " + pattern);
-            }*/
+            }
+#endif
         }
 
         /// <summary>

@@ -27,12 +27,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Data;
 using System.Runtime.Serialization;
 using Encog.Persist;
 using Encog.Persist.Persistors;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Layers
 {
@@ -66,11 +69,13 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         private int y;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BasicLayer));
+#endif
 
         /// <summary>
         /// Which activation function to use for this layer.
@@ -174,10 +179,12 @@ namespace Encog.Neural.Networks.Layers
             if (synapse == null)
             {
                 String str = "Unknown synapse type.";
+#if logging
                 if (BasicLayer.logger.IsErrorEnabled)
                 {
                     BasicLayer.logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
             else

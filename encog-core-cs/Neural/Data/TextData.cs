@@ -26,10 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Data
 {
     /// <summary>
@@ -54,12 +55,13 @@ namespace Encog.Neural.Data
         /// </summary>
         private String description;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private readonly ILog logger = LogManager.GetLogger(typeof(TextData));
-
+#endif
         /// <summary>
         /// Clone this object.
         /// </summary>

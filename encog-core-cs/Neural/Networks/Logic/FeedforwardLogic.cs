@@ -27,9 +27,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using log4net;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Layers;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -40,11 +43,14 @@ namespace Encog.Neural.Networks.Logic
     [Serializable]
     public class FeedforwardLogic : INeuralLogic
     {
+
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(FeedforwardLogic));
+#endif
 
         /// <summary>
         /// The network to use.
@@ -69,11 +75,13 @@ namespace Encog.Neural.Networks.Logic
 
             ILayer inputLayer = this.network.GetLayer(BasicNetwork.TAG_INPUT);
 
-            /*if (FeedforwardLogic.logger.IsDebugEnabled)
+#if logging
+            if (FeedforwardLogic.logger.IsDebugEnabled)
             {
                 FeedforwardLogic.logger.Debug("Pattern " + input.ToString()
                     + " presented to neural network");
-            }*/
+            }
+#endif
 
             if (useHolder == null)
             {
@@ -101,13 +109,15 @@ namespace Encog.Neural.Networks.Logic
                  INeuralData input, ISynapse source)
         {
 
-            /*if (FeedforwardLogic.logger.IsDebugEnabled)
+#if logging
+            if (FeedforwardLogic.logger.IsDebugEnabled)
             {
                 FeedforwardLogic.logger.Debug("Processing layer: "
                     + layer.ToString()
                     + ", input= "
                     + input.ToString());
-            }*/
+            }
+#endif
 
             // typically used to process any recurrent layers that feed into this
             // layer.
@@ -117,10 +127,12 @@ namespace Encog.Neural.Networks.Logic
             {
                 if (!holder.Result.ContainsKey(synapse))
                 {
-                    /*if (FeedforwardLogic.logger.IsDebugEnabled)
+#if logging
+                    if (FeedforwardLogic.logger.IsDebugEnabled)
                     {
                         FeedforwardLogic.logger.Debug("Processing synapse: " + synapse.ToString());
-                    }*/
+                    }
+#endif
                     INeuralData pattern = synapse.Compute(input);
                     pattern = synapse.ToLayer.Compute(pattern);
                     synapse.ToLayer.Process(pattern);

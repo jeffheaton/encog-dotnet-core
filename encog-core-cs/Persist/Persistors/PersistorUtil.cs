@@ -28,50 +28,50 @@ using System.Linq;
 using System.Text;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
-using log4net;
 using Encog.Util;
 using System.Reflection;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Persist.Persistors
 {
-    /**
- * This class contains some utilities for persisting objects.
- * 
- * @author jheaton
- */
+    /// <summary>
+    /// This class contains some utilities for persisting objects.
+    /// </summary>
     public class PersistorUtil
     {
 
-        /**
-         * The rows in the matrix.
-         */
+        /// <summary>
+        /// The rows in the matrix.
+        /// </summary>
         public const String ATTRIBUTE_MATRIX_ROWS = "rows";
 
-        /**
-         * The columns in the matrix.
-         */
+        /// <summary>
+        /// The columns in the matrix.
+        /// </summary>
         public const String ATTRIBUTE_MATRIX_COLS = "cols";
 
-        /**
-         * A matrix row.
-         */
+        /// <summary>
+        /// A matrix row.
+        /// </summary>
         public const String ROW = "row";
 
-        /**
-         * Private constructor.
-         */
+        /// <summary>
+        /// Private constructor.
+        /// </summary>
         private PersistorUtil()
         {
         }
-
-        /**
-         * Write the beginning XML for an Encog object.
-         * @param objectType The object type to persist.
-         * @param out The object that is being persisted.
-         * @param obj The XML writer.
-         * @param top Is this a top-level object, that needs a name
-         * and description?
-         */
+        
+        /// <summary>
+        /// Write the beginning XML for an Encog object.
+        /// </summary>
+        /// <param name="objectType">The object type to persist.</param>
+        /// <param name="xmlOut">The object that is being persisted.</param>
+        /// <param name="obj">The XML writer.</param>
+        /// <param name="top">Is this a top-level object, that needs a name
+        /// and description?</param>
         public static void BeginEncogObject(String objectType,
                  WriteXML xmlOut, IEncogPersistedObject obj,
                  bool top)
@@ -117,12 +117,12 @@ namespace Encog.Persist.Persistors
             return persistor;
         }
 
-        /**
-         * Load a matrix from the reader.
-         * @param in The XML reader.
-         * @return The loaded matrix.
-         */
-        public static Matrix.Matrix loadMatrix(ReadXML xmlIn)
+        /// <summary>
+        /// Load a matrix from the reader.
+        /// </summary>
+        /// <param name="xmlIn">The XML reader.</param>
+        /// <returns>The loaded matrix.</returns>
+        public static Matrix.Matrix LoadMatrix(ReadXML xmlIn)
         {
             int rows = xmlIn.LastTag.GetAttributeInt(
                    PersistorUtil.ATTRIBUTE_MATRIX_ROWS);
@@ -154,12 +154,13 @@ namespace Encog.Persist.Persistors
             return matrix;
         }
 
-        /**
-         * Save the specified matrix.
-         * @param matrix The matrix to save.
-         * @param out The XML writer.
-         */
-        public static void saveMatrix(Matrix.Matrix matrix, WriteXML xmlOut)
+
+        /// <summary>
+        /// Save the specified matrix.
+        /// </summary>
+        /// <param name="matrix">The matrix to save.</param>
+        /// <param name="xmlOut">The XML writer.</param>
+        public static void SaveMatrix(Matrix.Matrix matrix, WriteXML xmlOut)
         {
             xmlOut.AddAttribute(PersistorUtil.ATTRIBUTE_MATRIX_ROWS, ""
                     + matrix.Rows);
@@ -186,11 +187,11 @@ namespace Encog.Persist.Persistors
 
             xmlOut.EndTag();
         }
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(PersistorUtil));
-
+#endif
     }
 }

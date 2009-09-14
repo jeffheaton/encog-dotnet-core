@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Util.Randomize
 {
@@ -41,10 +43,12 @@ namespace Encog.Util.Randomize
         /// </summary>
         private double value;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ConstRandomizer));
+#endif
 
         /// <summary>
         /// Construct a range randomizer.

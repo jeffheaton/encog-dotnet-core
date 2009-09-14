@@ -27,11 +27,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
 using Encog.Util.HTTP;
 using Encog.Bot.Browse.Range;
 using System.Net;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Bot.Browse
 {
@@ -48,10 +51,12 @@ namespace Encog.Bot.Browse
         /// </summary>
         private WebPage currentPage;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Browser));
+#endif
 
         /// <summary>
         /// The page currently being browsed.
@@ -87,12 +92,12 @@ namespace Encog.Bot.Browse
 
             try
             {
-
+#if logging
                 if (this.logger.IsInfoEnabled)
                 {
                     this.logger.Info("Posting a form");
                 }
-
+#endif
                 Stream istream;
                 Stream ostream;
                 Uri targetURL;
@@ -202,10 +207,12 @@ namespace Encog.Bot.Browse
         {
             try
             {
+#if logging
                 if (this.logger.IsInfoEnabled)
                 {
                     this.logger.Info("Navigating to page:" + url);
                 }
+#endif
                 WebRequest http = HttpWebRequest.Create(url);
                 HttpWebResponse response = (HttpWebResponse)http.GetResponse();
                 Stream istream = response.GetResponseStream();
@@ -215,12 +222,15 @@ namespace Encog.Bot.Browse
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug("Exception", e);
                 }
+#endif
                 throw new BrowseError(e);
             }
+
         }
 
         /// <summary>
@@ -230,10 +240,12 @@ namespace Encog.Bot.Browse
         /// <param name="istream">The data to post to the page.</param>
         public void Navigate(Uri url, Stream istream)
         {
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("POSTing to page:" + url);
             }
+#endif
             LoadWebPage load = new LoadWebPage(url);
             this.currentPage = load.Load(istream);
         }

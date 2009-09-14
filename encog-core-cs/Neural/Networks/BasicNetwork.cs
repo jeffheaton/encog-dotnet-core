@@ -26,7 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Synapse;
 using Encog.Util;
 using Encog.Neural.NeuralData;
@@ -37,6 +36,10 @@ using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Util.Randomize;
 using Encog.Neural.Networks.Logic;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks
 {
@@ -101,12 +104,13 @@ namespace Encog.Neural.Networks
         /// </summary>
         private IDictionary<String, ILayer> layerTags = new Dictionary<String, ILayer>();
 
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Construct an empty neural network.
@@ -212,12 +216,12 @@ namespace Encog.Neural.Networks
                        + input.Count
                        + " for input layer size="
                        + inputLayer.NeuronCount;
-
+#if logging
                 if (BasicNetwork.logger.IsErrorEnabled)
                 {
                     BasicNetwork.logger.Error(str);
                 }
-
+#endif
                 throw new NeuralNetworkError(str);
             }
         }
@@ -371,10 +375,12 @@ namespace Encog.Neural.Networks
             {
                 if (synapse != source)
                 {
+#if logging
                     if (BasicNetwork.logger.IsDebugEnabled)
                     {
                         BasicNetwork.logger.Debug("Recurrent layer from: " + input);
                     }
+#endif
                     INeuralData recurrentInput = synapse.FromLayer
                            .Recur();
 
@@ -388,11 +394,12 @@ namespace Encog.Neural.Networks
                             input[i] = input[i]
                                     + recurrentOutput[i];
                         }
-
+#if logging
                         if (BasicNetwork.logger.IsDebugEnabled)
                         {
                             BasicNetwork.logger.Debug("Recurrent layer to: " + input);
                         }
+#endif
                     }
                 }
             }

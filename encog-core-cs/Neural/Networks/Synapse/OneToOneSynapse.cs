@@ -26,12 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Synapse
 {
     /// <summary>
@@ -42,13 +43,13 @@ namespace Encog.Neural.Networks.Synapse
     [Serializable]
     public class OneToOneSynapse : BasicSynapse
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-
+#endif
         /// <summary>
         /// Simple default constructor.
         /// </summary>
@@ -69,11 +70,12 @@ namespace Encog.Neural.Networks.Synapse
                 String str =
                    "From and to layers must have the same number of "
                    + "neurons.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
-
+#endif
                 throw new NeuralNetworkError(str);
             }
             this.FromLayer = fromLayer;

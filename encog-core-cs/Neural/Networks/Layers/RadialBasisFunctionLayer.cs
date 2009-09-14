@@ -28,14 +28,15 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Activation;
 using Encog.Util.MathUtil.RBF;
-using log4net;
 using Encog.Util.MathUtil;
 using Encog.Util.Randomize;
 using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Layers
 {
     /// <summary>
@@ -58,11 +59,13 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         private const long serialVersionUID = 2779781041654829282L;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// The radial basis functions to use, there should be one for each neuron.
@@ -107,10 +110,12 @@ namespace Encog.Neural.Networks.Layers
                 {
                     String str =
                "Error, must define radial functions for each neuron";
+#if logging
                     if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
                     {
                         RadialBasisFunctionLayer.logger.Error(str);
                     }
+#endif
                     throw new NeuralNetworkError(str);
                 }
 
@@ -151,10 +156,12 @@ namespace Encog.Neural.Networks.Layers
                    "Should never call getActivationFunction on "
                    + "RadialBasisFunctionLayer, this layer has a compound "
                    + "activation function setup.";
+#if logging
                 if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
                 {
                     RadialBasisFunctionLayer.logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
         }

@@ -28,12 +28,13 @@ using System.Linq;
 using System.Text;
 using Encog.Util;
 using Encog.Neural.Data;
-using log4net;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Util.Logging;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Training.Propagation
 {
     /// <summary>
@@ -65,11 +66,12 @@ namespace Encog.Neural.Networks.Training.Propagation
         private IList<PropagationLevel> levels =
             new List<PropagationLevel>();
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Propagation));
-
+#endif
         /// <summary>
         /// The output holder to use during training.
         /// </summary>
@@ -108,21 +110,21 @@ namespace Encog.Neural.Networks.Training.Propagation
                        + ideal.Count
                        + " for output layer size="
                        + output.NeuronCount;
-
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
-
+#endif
                 throw new NeuralNetworkError(str);
             }
-
+#if logging
             // log that we are performing a backward pass
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation backward pass");
             }
-
+#endif
             // calculate the initial deltas from the output layer
             CalculateInitialDeltas(this.fire, ideal);
 
@@ -169,12 +171,13 @@ namespace Encog.Neural.Networks.Training.Propagation
                         * (ideal[i] - actual[i]);
             }
 
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Initial deltas: "
                         + DumpMatrix.DumpArray(level.Deltas));
             }
-
+#endif
             return level;
         }
 
@@ -222,10 +225,12 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <returns>The output from the neural network.</returns>
         private INeuralData ForwardPass(INeuralData input)
         {
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation forward pass");
             }
+#endif
             this.outputHolder.Result.Clear();
             this.fire = this.network.Compute(input, this.outputHolder);
             return this.fire;
@@ -273,23 +278,25 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         public override void Iteration()
         {
-
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Beginning propagation iteration");
             }
-
+#endif
             PreIteration();
 
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
             foreach (INeuralDataPair pair in this.Training)
             {
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug(
                             "Backpropagation training on: input=" + pair.Input + ",ideal=" + pair.Ideal);
                 }
+#endif
                 INeuralData actual = ForwardPass(pair.Input);
 
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);

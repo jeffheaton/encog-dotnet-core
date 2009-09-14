@@ -28,8 +28,11 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
-using log4net;
 using Encog.Neural.Networks.Synapse;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -40,12 +43,13 @@ namespace Encog.Neural.Networks.Logic
     [Serializable]
     public class SimpleRecurrentLogic : FeedforwardLogic
     {
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(SimpleRecurrentLogic));
-
+#endif
         /// <summary>
         /// Handle recurrent layers.  See if there are any recurrent layers before
         /// the specified layer that must affect the input.
@@ -63,10 +67,12 @@ namespace Encog.Neural.Networks.Logic
             {
                 if (synapse != source)
                 {
-                    /*if (SimpleRecurrentLogic.logger.IsDebugEnabled)
+#if logging
+                    if (SimpleRecurrentLogic.logger.IsDebugEnabled)
                     {
                         SimpleRecurrentLogic.logger.Debug("Recurrent layer from: " + input.ToString());
-                    }*/
+                    }
+#endif
                     INeuralData recurrentInput = synapse.FromLayer.Recur();
 
                     if (recurrentInput != null)
@@ -79,11 +85,12 @@ namespace Encog.Neural.Networks.Logic
                             input[i] = input[i]
                                     + recurrentOutput[i];
                         }
-
-                        /*if (SimpleRecurrentLogic.logger.IsDebugEnabled)
+#if logging
+                        if (SimpleRecurrentLogic.logger.IsDebugEnabled)
                         {
                             SimpleRecurrentLogic.logger.Debug("Recurrent layer to: " + input.ToString());
-                        }*/
+                        }
+#endif
                     }
                 }
             }

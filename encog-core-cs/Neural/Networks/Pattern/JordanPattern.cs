@@ -26,11 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Activation;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Pattern
 {
     /// <summary>
@@ -67,10 +68,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         private IActivationFunction activation;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Construct an object to create a Jordan type neural network.
@@ -93,10 +96,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                    "A Jordan neural network should have only one hidden "
                        + "layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
 

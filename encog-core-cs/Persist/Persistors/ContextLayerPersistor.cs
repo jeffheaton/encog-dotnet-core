@@ -27,12 +27,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Parse.Tags.Read;
-using log4net;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Parse.Tags.Write;
 using Encog.Util;
 using Encog.Neural.Activation;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Persist.Persistors
 {
@@ -41,12 +44,12 @@ namespace Encog.Persist.Persistors
     /// </summary>
     public class ContextLayerPersistor : IPersistor
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-
+#endif
 
         /// <summary>
         /// Load the specified Encog object from an XML reader.

@@ -26,9 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -63,10 +66,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         int inputCount;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(CPNPattern));
+#endif
 
         /// <summary>
         /// Not used, will throw an error. CPN networks already have a predefined
@@ -78,11 +83,13 @@ namespace Encog.Neural.Networks.Pattern
             String str =
                "A CPN already has a predefined hidden layer.  No additiona" +
                "specification is needed.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
-
+#endif
+            throw new EncogError(str);
         }
 
         /// <summary>
@@ -140,10 +147,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                 "A CPN network will use the BiPolar & competitive activation "
                 + "functions, no activation function needs to be specified.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             set
@@ -151,10 +160,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                 "A CPN network will use the BiPolar & competitive activation "
                 + "functions, no activation function needs to be specified.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
         }

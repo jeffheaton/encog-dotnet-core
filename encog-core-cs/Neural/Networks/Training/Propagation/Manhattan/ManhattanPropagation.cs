@@ -26,8 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.NeuralData;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
 {
@@ -63,10 +65,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// </summary>
         private double learningRate;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ManhattanPropagation));
+#endif
 
         /// <summary>
         /// Construct a class to train with Manhattan propagation.  Use default zero 

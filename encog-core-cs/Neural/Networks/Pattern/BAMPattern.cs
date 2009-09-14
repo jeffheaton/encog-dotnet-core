@@ -26,11 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -64,10 +66,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         private int f2Neurons;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BAMPattern));
+#endif
 
 
        /// <summary>
@@ -77,10 +81,12 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "A BAM network has no hidden layers.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
         }
 
@@ -135,19 +141,23 @@ namespace Encog.Neural.Networks.Pattern
             set
             {
                 String str = "A BAM network can't specify a custom activation function.";
+#if logging   
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get
             {
                 String str = "A BAM network can't specify a custom activation function.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
 
@@ -191,19 +201,23 @@ namespace Encog.Neural.Networks.Pattern
             get
             {
                 String str = "A BAM network has no input layer, consider getting F1 layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             set
             {
                 String str = "A BAM network has no input layer, consider setting F1 layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
         }
@@ -216,19 +230,23 @@ namespace Encog.Neural.Networks.Pattern
             get
             {
                 String str = "A BAM network has no output layer, consider getting F2 layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             set
             {
                 String str = "A BAM network has no output layer, consider setting F2 layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
         }

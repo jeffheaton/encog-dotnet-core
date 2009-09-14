@@ -29,7 +29,9 @@ using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Activation;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -41,11 +43,12 @@ namespace Encog.Neural.Networks.Pattern
     /// </summary>
     public class RadialBasisPattern : INeuralNetworkPattern
     {
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(RadialBasisPattern));
-
+#endif
         /// <summary>
         /// The number of input neurons to use. Must be set, default to invalid
         /// -1 value.
@@ -75,10 +78,12 @@ namespace Encog.Neural.Networks.Pattern
             {
                 String str = "A RBF network usually has a single "
                    + "hidden layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             else
@@ -127,10 +132,12 @@ namespace Encog.Neural.Networks.Pattern
             {
                 String str = "Can't set the activation function for "
                        + "a radial basis function network.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get

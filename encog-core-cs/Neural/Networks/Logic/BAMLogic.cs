@@ -29,8 +29,11 @@ using System.Text;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-using log4net;
 using Encog.Neural.Networks.Pattern;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -66,12 +69,13 @@ namespace Encog.Neural.Networks.Logic
         /// </summary>
         private ISynapse synapseF2ToF1;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BAMLogic));
-
+#endif
 
         /// <summary>
         /// The F1 neuron count.
@@ -226,10 +230,12 @@ namespace Encog.Neural.Networks.Logic
         {
             String str = "Compute on BasicNetwork cannot be used, rather call" +
                     " the compute(NeuralData) method on the BAMLogic.";
+#if logging
             if (logger.IsErrorEnabled)
             {
                 logger.Error(str);
             }
+#endif
             throw new NeuralNetworkError(str);
         }
 

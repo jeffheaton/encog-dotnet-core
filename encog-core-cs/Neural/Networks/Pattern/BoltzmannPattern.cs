@@ -26,10 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Logic;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -38,11 +41,12 @@ namespace Encog.Neural.Networks.Pattern
     /// </summary>
     public class BoltzmannPattern : INeuralNetworkPattern
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ADALINEPattern));
+#endif
 
         /// <summary>
         /// The number of neurons in the Boltzmann network.
@@ -72,10 +76,12 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "A Boltzmann network has no hidden layers.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
         }
 
@@ -120,10 +126,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                     "A Boltzmann network will use the BiPolar activation "
                     + "function, no activation function needs to be specified.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             set
@@ -131,10 +139,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                     "A Boltzmann network will use the BiPolar activation "
                     + "function, no activation function needs to be specified.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
         }

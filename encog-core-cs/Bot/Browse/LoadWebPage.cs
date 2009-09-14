@@ -27,12 +27,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Bot.Browse.Range;
 using Encog.Parse.Tags;
 using System.IO;
 using Encog.Bot.DataUnits;
 using Encog.Parse.Tags.Read;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Bot.Browse
 {
@@ -63,10 +66,12 @@ namespace Encog.Bot.Browse
         /// </summary>
         private DocumentRange lastHierarchyElement;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(LoadWebPage));
+#endif
 
         /// <summary>
         /// Construct a web page loader with the specified base URL.
@@ -213,10 +218,12 @@ namespace Encog.Bot.Browse
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug("Exception", e);
                 }
+#endif
                 throw new BrowseError(e);
             }
         }

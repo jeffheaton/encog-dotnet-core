@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Strategy
 {
@@ -83,10 +85,12 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         private int badCycles;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog logger = LogManager.GetLogger(typeof(StopTrainingStrategy));
+#endif
 
         /// <summary>
         /// Construct the strategy with default options.

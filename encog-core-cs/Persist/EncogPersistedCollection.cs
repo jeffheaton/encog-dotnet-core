@@ -26,9 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Persist.Location;
 using System.IO;
+#if logging
+using log4net;
+#endif
+
 
 namespace Encog.Persist
 {
@@ -119,12 +122,12 @@ namespace Encog.Persist
         /// The description attribute.
         /// </summary>
         public const String ATTRIBUTE_DESCRIPTION = "description";
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly static ILog LOGGER = LogManager.GetLogger(typeof(EncogPersistedCollection));
-
+#endif
         /// <summary>
         /// Throw and log an error.
         /// </summary>
@@ -132,10 +135,12 @@ namespace Encog.Persist
         public static void ThrowError(String tag)
         {
             String str = EncogPersistedCollection.GENERAL_ERROR + tag;
+#if logging
             if (EncogPersistedCollection.LOGGER.IsErrorEnabled)
             {
                 EncogPersistedCollection.LOGGER.Error(str);
             }
+#endif
             throw new PersistError(str);
         }
 

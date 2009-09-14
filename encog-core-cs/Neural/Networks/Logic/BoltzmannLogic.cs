@@ -30,7 +30,9 @@ using Encog.Util.MathUtil;
 using Encog.Util.Randomize;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -81,13 +83,13 @@ namespace Encog.Neural.Networks.Logic
         /// The number of cycles to run the network through before annealing.
         /// </summary>
         private int runCycles;
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(BoltzmannLogic));
-
+#endif
         /// <summary>
         /// Run the network for the specified neuron.
         /// </summary>
@@ -136,10 +138,12 @@ namespace Encog.Neural.Networks.Logic
         {
             String str = "Compute on BasicNetwork cannot be used, rather call" +
                     " the run method on the logic class.";
+#if logging
             if (logger.IsErrorEnabled)
             {
                 logger.Error(str);
             }
+#endif
             throw new NeuralNetworkError(str);
         }
 

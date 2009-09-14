@@ -26,8 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.Threading;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Util.Concurrency
 {
@@ -64,10 +67,12 @@ namespace Encog.Util.Concurrency
             }
         }
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(EncogConcurrency));
+#endif
 
         /// <summary>
         /// Construct a concurrency object.

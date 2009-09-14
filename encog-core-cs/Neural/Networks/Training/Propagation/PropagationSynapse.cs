@@ -27,7 +27,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Propagation
 {

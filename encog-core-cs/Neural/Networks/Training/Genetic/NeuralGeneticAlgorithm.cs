@@ -27,7 +27,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic;
+
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
@@ -73,11 +76,12 @@ namespace Encog.Neural.Networks.Training.Genetic
             }
         }
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(NeuralGeneticAlgorithm));
-
+#endif
         /// <summary>
         /// Simple helper class that implements the required methods to 
         /// implement a genetic algorithm.
@@ -110,11 +114,12 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         public override void Iteration()
         {
-
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Performing Genetic iteration.");
             }
+#endif
             PreIteration();
             this.Genetic.Iteration();
             this.Error = Genetic.Error;

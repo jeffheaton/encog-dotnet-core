@@ -26,8 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Util.MathUtil;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Util.Randomize
 {
@@ -42,11 +45,12 @@ namespace Encog.Util.Randomize
         /// </summary>
         private double factor;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(Distort));
-
+#endif
         /// <summary>
         /// Construct a distort randomizer for the specified factor.
         /// </summary>

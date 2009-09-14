@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Strategy
 {
@@ -97,10 +99,12 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         private double currentMomentum;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(SmartMomentum));
+#endif
 
         /// <summary>
         /// Initialize this strategy.
@@ -126,11 +130,12 @@ namespace Encog.Neural.Networks.Training.Strategy
                 double currentError = this.train.Error;
                 this.lastImprovement = (currentError - this.lastError)
                         / this.lastError;
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug("Last improvement: " + this.lastImprovement);
                 }
-
+#endif
                 if ((this.lastImprovement > 0)
                         || (Math.Abs(this.lastImprovement)
                                 < SmartMomentum.MIN_IMPROVEMENT))
@@ -147,19 +152,23 @@ namespace Encog.Neural.Networks.Training.Strategy
                         this.currentMomentum *=
                             (1.0 + SmartMomentum.MOMENTUM_INCREASE);
                         this.setter.Momentum = this.currentMomentum;
+#if logging
                         if (this.logger.IsDebugEnabled)
                         {
                             this.logger.Debug("Adjusting momentum: " +
                                     this.currentMomentum);
                         }
+#endif
                     }
                 }
                 else
                 {
+#if logging
                     if (this.logger.IsDebugEnabled)
                     {
                         this.logger.Debug("Setting momentum back to zero.");
                     }
+#endif
 
                     this.currentMomentum = 0;
                     this.setter.Momentum = 0;

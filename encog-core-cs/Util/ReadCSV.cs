@@ -27,9 +27,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using log4net;
 using Encog.Persist;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Util
 {
     /// <summary>
@@ -122,12 +123,12 @@ namespace Encog.Util
                 result.Append(data[i]);
             }
         }
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ReadCSV));
-
+#endif
         /// <summary>
         /// The file to read.
         /// </summary>
@@ -203,11 +204,12 @@ namespace Encog.Util
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
-
+#endif
                 throw new EncogError(e);
             }
         }
@@ -223,11 +225,12 @@ namespace Encog.Util
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
-
+#endif
                 throw new EncogError(e);
             }
         }
@@ -358,11 +361,12 @@ namespace Encog.Util
             }
             catch (IOException e)
             {
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error("Exception", e);
                 }
-
+#endif
                 throw new EncogError(e);
             }
 

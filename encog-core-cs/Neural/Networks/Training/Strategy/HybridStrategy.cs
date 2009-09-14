@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Strategy
 {
@@ -104,10 +106,12 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         private int alternateCycles;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(HybridStrategy));
+#endif
 
         /// <summary>
         /// Construct a hybrid strategy with the default minimum improvement
@@ -160,10 +164,12 @@ namespace Encog.Neural.Networks.Training.Strategy
                 double currentError = this.mainTrain.Error;
                 this.lastImprovement = (currentError - this.lastError)
                         / this.lastError;
+#if logging
                 if (this.logger.IsDebugEnabled)
                 {
                     this.logger.Debug("Last improvement: " + this.lastImprovement);
                 }
+#endif
 
                 if ((this.lastImprovement > 0)
                         || (Math.Abs(this.lastImprovement) < this.minImprovement))
@@ -174,11 +180,12 @@ namespace Encog.Neural.Networks.Training.Strategy
                     {
                         this.lastHybrid = 0;
 
+#if logging
                         if (this.logger.IsDebugEnabled)
                         {
                             this.logger.Debug("Performing hybrid cycle");
                         }
-
+#endif
                         for (int i = 0; i < this.alternateCycles; i++)
                         {
                             this.altTrain.Iteration();

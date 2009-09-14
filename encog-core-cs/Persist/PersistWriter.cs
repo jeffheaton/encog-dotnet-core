@@ -28,8 +28,12 @@ using System.Linq;
 using System.Text;
 using Encog.Parse.Tags.Write;
 using System.IO;
-using log4net;
 using Encog.Persist.Location;
+
+#if logging
+using log4net;
+#endif
+
 
 namespace Encog.Persist
 {
@@ -49,10 +53,12 @@ namespace Encog.Persist
         /// </summary>
         private Stream fileOutput;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(PersistWriter));
+#endif
 
         /// <summary>
         /// Create a writer for the specified location.
@@ -162,10 +168,12 @@ namespace Encog.Persist
             {
                 String str = "Can't find a persistor for object of type "
                        + obj.GetType().Name;
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PersistError(str);
             }
             persistor.Save(obj, this.xmlOut);

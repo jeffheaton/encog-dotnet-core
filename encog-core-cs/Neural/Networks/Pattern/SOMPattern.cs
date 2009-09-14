@@ -26,10 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Pattern
 {
     /// <summary>
@@ -50,11 +51,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         private int outputNeurons;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(SOMPattern));
-
+#endif
         /// <summary>
         /// Add a hidden layer. SOM networks do not have hidden layers, so this will
         /// throw an error.
@@ -63,10 +65,12 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "A SOM network does not have hidden layers.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
 
         }
@@ -104,10 +108,12 @@ namespace Encog.Neural.Networks.Pattern
             set
             {
                 String str = "A SOM network can't define an activation function.";
+#if logging     
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get

@@ -26,10 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -67,14 +70,16 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         private IActivationFunction activation;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ElmanPattern));
+#endif
 
-        /**
-         * Create an object to generate Elman neural networks.
-         */
+        /// <summary>
+        /// Create an object to generate Elman neural networks.
+        /// </summary>
         public ElmanPattern()
         {
             this.inputNeurons = -1;
@@ -92,10 +97,12 @@ namespace Encog.Neural.Networks.Pattern
             {
                 String str =
                    "An Elman neural network should have only one hidden layer.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
 

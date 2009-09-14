@@ -27,9 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using System.IO;
 using System.Net;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Bot
 {
@@ -44,10 +47,12 @@ namespace Encog.Bot
         /// </summary>
         public static int BUFFER_SIZE = 8192;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(BotUtil));
+#endif
 
         /// <summary>
         /// This method is very useful for grabbing information from a HTML page.
@@ -174,10 +179,12 @@ namespace Encog.Bot
             }
             catch (IOException e)
             {
+#if logging
                 if (BotUtil.LOGGER.IsErrorEnabled)
                 {
                     BotUtil.LOGGER.Error("Exception", e);
                 }
+#endif
                 throw new BotError(e);
             }
         }

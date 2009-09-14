@@ -30,9 +30,12 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Neural.NeuralData;
 using Encog.Matrix;
 using Encog.Neural.Networks.Layers;
-using log4net.Repository.Hierarchy;
 using Encog.Neural.Data;
+
+#if logging
 using log4net;
+using log4net.Repository.Hierarchy;
+#endif
 
 namespace Encog.Neural.Networks.Training.Hopfield
 {
@@ -53,10 +56,12 @@ namespace Encog.Neural.Networks.Training.Hopfield
         /// </summary>
         private BasicNetwork network;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
+#endif
 
         /// <summary>
         /// Construct a Hopfield training class.
@@ -105,12 +110,12 @@ namespace Encog.Neural.Networks.Training.Hopfield
         /// </summary>
         public override void Iteration()
         {
-
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Performing Hopfield iteration.");
             }
-
+#endif
             PreIteration();
 
             foreach (ILayer layer in this.network.Structure.Layers)

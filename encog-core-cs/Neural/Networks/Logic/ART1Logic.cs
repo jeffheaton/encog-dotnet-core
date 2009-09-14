@@ -31,7 +31,9 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Neural.NeuralData.Bipolar;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Pattern;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Logic
 {
@@ -42,13 +44,13 @@ namespace Encog.Neural.Networks.Logic
     [Serializable]
     public class ART1Logic : ARTLogic
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         [NonSerialized]
         private static readonly ILog logger = LogManager.GetLogger(typeof(ART1Logic));
-
+#endif
 
         /// <summary>
         /// The first layer, basically, the input layer.
@@ -379,10 +381,12 @@ namespace Encog.Neural.Networks.Logic
             if (!(input is BiPolarNeuralData))
             {
                 String str = "Input to ART1 logic network must be BiPolarNeuralData.";
+#if logging  
                 if (logger.IsErrorEnabled)
                 {
                     logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
 

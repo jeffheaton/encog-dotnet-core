@@ -26,11 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Util.Randomize;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Pattern
 {
     /// <summary>
@@ -49,10 +50,12 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         private int outputNeurons;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(ADALINEPattern));
+#endif
 
         /// <summary>
         /// Not used, the ADALINE has no hidden layers, this will throw an error.
@@ -61,10 +64,13 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "An ADALINE network has no hidden layers.";
+#if logging
+
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
 
         }
@@ -115,20 +121,25 @@ namespace Encog.Neural.Networks.Pattern
             set
             {
                 String str = "A BAM network can't specify a custom activation function.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get
             {
                 String str = "A BAM network can't specify a custom activation function.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
+
             }
         }
 

@@ -61,7 +61,7 @@ namespace Encog.Persist.Persistors
                 if (xmlIn.IsIt(WeightedSynapsePersistor.TAG_WEIGHTS, true))
                 {
                     xmlIn.ReadToTag();
-                    synapse.WeightMatrix = PersistorUtil.loadMatrix(xmlIn);
+                    synapse.WeightMatrix = PersistorUtil.LoadMatrix(xmlIn);
                 }
                 if (xmlIn.IsIt(end, false))
                 {
@@ -86,7 +86,7 @@ namespace Encog.Persist.Persistors
             WeightedSynapse synapse = (WeightedSynapse)obj;
 
             xmlOut.BeginTag(WeightedSynapsePersistor.TAG_WEIGHTS);
-            PersistorUtil.saveMatrix(synapse.WeightMatrix, xmlOut);
+            PersistorUtil.SaveMatrix(synapse.WeightMatrix, xmlOut);
             xmlOut.EndTag();
 
             xmlOut.EndTag();

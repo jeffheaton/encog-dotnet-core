@@ -26,10 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Logic;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Pattern
 {
@@ -42,12 +45,12 @@ namespace Encog.Neural.Networks.Pattern
     /// </summary>
     public class HopfieldPattern : INeuralNetworkPattern
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-
+#endif
         /// <summary>
         /// How many neurons in the Hopfield network. Default to -1, which is
         /// invalid. Therefore this value must be set.
@@ -62,10 +65,12 @@ namespace Encog.Neural.Networks.Pattern
         public void AddHiddenLayer(int count)
         {
             String str = "A Hopfield network has no hidden layers.";
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(str);
             }
+#endif
             throw new PatternError(str);
 
         }
@@ -101,10 +106,12 @@ namespace Encog.Neural.Networks.Pattern
                 String str =
                    "A Hopfield network will use the BiPolar activation "
                    + "function, no activation function needs to be specified.";
+#if logging    
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get
@@ -126,10 +133,12 @@ namespace Encog.Neural.Networks.Pattern
             {
                 String str = "A Hopfield network has a single layer, so no need "
                        + "to specify the output count.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new PatternError(str);
             }
             get

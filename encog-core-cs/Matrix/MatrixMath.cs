@@ -26,16 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Data;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Matrix
 {
-    /**
-     * This class can perform many different mathematical operations on matrixes.
-     * The matrixes passed in will not be modified, rather a new matrix, with the
-     * operation performed, will be returned.
-     */
     /// <summary>
     /// MatrixMath: This class can perform many different mathematical
     /// operations on matrixes.

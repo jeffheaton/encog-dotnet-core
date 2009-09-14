@@ -27,12 +27,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using log4net;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Training.Competitive
 {
     /// <summary>
@@ -122,10 +123,12 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// </summary>
         private bool forceWinner;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(CompetitiveTraining));
+#endif
 
         /// <summary>
         /// Create an instance of competitive training.
@@ -341,12 +344,12 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// </summary>
         public override void Iteration()
         {
-
+#if logging
             if (this.logger.IsInfoEnabled)
             {
                 this.logger.Info("Performing Competitive Training iteration.");
             }
-
+#endif
             PreIteration();
 
             // Reset the BMU and begin this iteration.

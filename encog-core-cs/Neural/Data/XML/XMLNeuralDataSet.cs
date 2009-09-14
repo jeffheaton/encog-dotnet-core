@@ -31,7 +31,9 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
 using System.IO;
 using Encog.Parse.Tags.Read;
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Data.XML
 {
@@ -86,11 +88,12 @@ namespace Encog.Neural.Data.XML
             /// </summary>
             private INeuralDataPair nextPair;
 
+#if logging
             /// <summary>
             /// The logging object.
             /// </summary>
             private readonly ILog logger = LogManager.GetLogger(typeof(XMLNeuralEnumerator));
-
+#endif
             /// <summary>
             /// Construct an iterator to read the XML data.
             /// </summary>
@@ -123,10 +126,12 @@ namespace Encog.Neural.Data.XML
             {
                 String str = "Could not parse XML, "
                    + "inconsistant tag structure.";
+#if logging
                 if (this.logger.IsErrorEnabled)
                 {
                     this.logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
 
@@ -223,10 +228,12 @@ namespace Encog.Neural.Data.XML
                 }
                 catch (IOException e)
                 {
+#if logging
                     if (this.logger.IsErrorEnabled)
                     {
                         this.logger.Error("Error", e);
                     }
+#endif
                     throw new NeuralNetworkError(e);
                 }
             }
@@ -264,10 +271,12 @@ namespace Encog.Neural.Data.XML
                 }
                 catch (IOException e)
                 {
+#if logging
                     if (logger.IsErrorEnabled)
                     {
                         logger.Error("Exception", e);
                     }
+#endif
                     throw new NeuralNetworkError(e);
                 }
             }
@@ -279,12 +288,12 @@ namespace Encog.Neural.Data.XML
         /// </summary>
         public const String ADD_NOT_SUPPORTED =
             "Adds are not supported with this dataset, it is read only.";
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(XMLNeuralDataSet));
-
+#endif
         /// <summary>
         /// The file name to read.
         /// </summary>

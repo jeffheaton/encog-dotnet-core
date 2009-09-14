@@ -26,12 +26,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Util.MathUtil;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Util.Randomize
 {
     /// <summary>
@@ -71,10 +72,12 @@ namespace Encog.Util.Randomize
         /// </summary>
         private bool sqrt;
 
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(FanInRandomizer));
+#endif
 
         /// <summary>
         /// Create a fan-in randomizer with default values.
@@ -141,10 +144,12 @@ namespace Encog.Util.Randomize
         /// </summary>
         private void CauseError()
         {
+#if logging
             if (this.logger.IsErrorEnabled)
             {
                 this.logger.Error(FanInRandomizer.ERROR);
             }
+#endif
             throw new EncogError(FanInRandomizer.ERROR);
         }
 

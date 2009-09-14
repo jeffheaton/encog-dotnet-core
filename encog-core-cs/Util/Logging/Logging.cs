@@ -25,11 +25,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+
+#if logging
 using log4net.Repository;
 using log4net;
-using System.Reflection;
 using log4net.Layout;
 using log4net.Appender;
+#endif
 
 namespace Encog.Util.Logging
 {
@@ -38,6 +41,7 @@ namespace Encog.Util.Logging
     /// </summary>
     public class Logging
     {
+#if logging
         /// <summary>
         /// Get the assembly's repository.  From here we will perform much of the configuration.
         /// </summary>
@@ -47,12 +51,14 @@ namespace Encog.Util.Logging
             ILoggerRepository result = LogManager.GetRepository(Assembly.GetCallingAssembly());
             return result;
         }
+#endif
 
         /// <summary>
         /// Start logging to the console.
         /// </summary>
         public static void StartConsoleLogging()
         {
+#if logging
             ILoggerRepository repository = GetRootRepository();
 
             // Create the layout
@@ -71,6 +77,7 @@ namespace Encog.Util.Logging
             {
                 configurableRepository.Configure(appender);
             }
+#endif
         }
 
         /// <summary>
@@ -78,7 +85,9 @@ namespace Encog.Util.Logging
         /// </summary>
         public static void StopConsoleLogging()
         {
+#if logging
             GetRootRepository().ResetConfiguration();
+#endif
         }
     }
 }

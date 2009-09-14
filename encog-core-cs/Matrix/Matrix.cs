@@ -28,9 +28,10 @@ using System.Linq;
 using System.Text;
 using Encog.Persist;
 using System.Runtime.Serialization;
-using log4net;
 using Encog.Util.MathUtil;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Matrix
 {
     /// <summary>

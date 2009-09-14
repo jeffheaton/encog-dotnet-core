@@ -26,9 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Neural.Networks.Layers;
-
+#if logging
+using log4net;
+#endif
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
 {
     /// <summary>
@@ -37,12 +38,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
     /// </summary>
     public class ManhattanPropagationMethod : IPropagationMethod
     {
-
+#if logging
         /// <summary>
         /// The logging object.
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-
+#endif
         /// <summary>
         /// The Manhattan propagation class that this method is used by.
         /// </summary>
@@ -106,11 +107,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// </summary>
         public void Learn()
         {
+#if logging
             if (this.logger.IsDebugEnabled)
             {
                 this.logger.Debug("Backpropagation learning pass");
             }
-
+#endif
             foreach (PropagationLevel level in this.propagation.Levels)
             {
                 LearnLevel(level);
