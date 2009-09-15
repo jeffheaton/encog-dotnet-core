@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -75,6 +75,7 @@
     <Compile Include="Bot\RSS\RSSItem.cs" />
     <Compile Include="Encog.cs" />
     <Compile Include="EncogError.cs" />
+    <Compile Include="ICloneable.cs" />
     <Compile Include="Matrix\BiPolarUtil.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Matrix\MatrixError.cs" />

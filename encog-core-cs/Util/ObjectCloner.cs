@@ -26,8 +26,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+#if SILVERLIGHT
+using Encog.Persist;
+using Encog.Parse.Tags.Write;
+using Encog.Parse.Tags.Read;
+#else
+using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
 namespace Encog.Util
 {
@@ -51,6 +57,7 @@ namespace Encog.Util
         {
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Perform a deep copy.
         /// </summary>
@@ -89,5 +96,27 @@ namespace Encog.Util
                 }
             }
         }
+#else
+        /// <summary>
+        /// Perform a deep copy.
+        /// Silverlight version.
+        /// </summary>
+        /// <param name="oldObj">The old object.</param>
+        /// <returns>The new object.</returns>
+        static public IEncogPersistedObject DeepCopy(IEncogPersistedObject oldObj)
+        {
+            MemoryStream mstream = new MemoryStream();
+            WriteXML xmlOut = new WriteXML(mstream);
+            IPersistor persistor = oldObj.CreatePersistor();
+            persistor.Save(oldObj, xmlOut);
+            // now read it back
+            mstream.Seek(0, SeekOrigin.Begin);
+            ReadXML xmlIn = new ReadXML(mstream);
+            xmlIn.ReadToTag();
+            IEncogPersistedObject result = persistor.Load(xmlIn);
+            mstream.Close();
+            return result;
+        }
+#endif
     }
 }

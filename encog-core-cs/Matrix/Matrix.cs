@@ -128,10 +128,10 @@ namespace Encog.Matrix
         public Matrix(bool[][] sourceMatrix)
         {
 
-            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1][];
+            this.matrix = new double[sourceMatrix.Length][];
             for (int r = 0; r < this.Rows; r++)
             {
-                this.matrix[r] = new double[sourceMatrix.GetUpperBound(1) + 1];
+                this.matrix[r] = new double[sourceMatrix[r].Length];
                 for (int c = 0; c < this.Cols; c++)
                 {
                     if (sourceMatrix[r][c])
@@ -152,10 +152,10 @@ namespace Encog.Matrix
         /// <param name="sourceMatrix">A 2D double array.</param>
         public Matrix(double[][] sourceMatrix)
         {
-            this.matrix = new double[sourceMatrix.GetUpperBound(0) + 1][];
+            this.matrix = new double[sourceMatrix.Length][];
             for (int r = 0; r < this.Rows; r++)
             {
-                this.matrix[r] = new double[sourceMatrix.GetUpperBound(1) + 1];
+                this.matrix[r] = new double[sourceMatrix[r].Length];
                 for (int c = 0; c < this.Cols; c++)
                 {
                     this.matrix[r][c] = sourceMatrix[r][c];
@@ -332,10 +332,10 @@ namespace Encog.Matrix
             }
 
             double[][] newMatrix = new double[1][];
+            newMatrix[0] = new double[this.Cols];
 
             for (int col = 0; col < this.Cols; col++)
-            {
-                newMatrix[col] = new double[this.Cols];
+            {                
                 newMatrix[0][col] = this.matrix[row][col];
             }
 

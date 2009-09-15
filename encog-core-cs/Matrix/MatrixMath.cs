@@ -152,7 +152,7 @@ namespace Encog.Matrix
                         + " from matrix, it only has " + matrix.Rows
                         + " rows.");
             }
-            double[][] newMatrix = new double[matrix.Rows - 1][];
+            double[][] newMatrix = new double[matrix.Rows-1][];
             double[][] matrixData = matrix.Data;
 
             int targetRow = 0;
@@ -160,7 +160,7 @@ namespace Encog.Matrix
             {
                 if (row != deleted)
                 {
-                    newMatrix[row] = new double[matrix.Cols];
+                    newMatrix[targetRow] = new double[matrix.Cols];
                     for (int col = 0; col < matrix.Cols; col++)
                     {
                         newMatrix[targetRow][col] = matrixData[row][col];
@@ -361,12 +361,12 @@ namespace Encog.Matrix
             double[][] inverseMatrix = new double[input.Cols][];
             double[][] inputData = input.Data;
 
-            for (int r = 0; r < input.Rows; r++)
+            for (int r = 0; r < input.Cols; r++)
             {
                 inverseMatrix[r] = new double[input.Rows];
-                for (int c = 0; c < input.Cols; c++)
+                for (int c = 0; c < input.Rows; c++)
                 {
-                    inverseMatrix[c][r] = inputData[r][c];
+                    inverseMatrix[r][c] = inputData[c][r];
                 }
             }
 

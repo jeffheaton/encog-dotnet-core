@@ -83,15 +83,16 @@ namespace Encog.Matrix
         /// </summary>
         /// <param name="b">The 2D array to convert.</param>
         /// <returns>A bipolar array.</returns>
-        public static double[,] Bipolar2double(bool[,] b)
+        public static double[][] Bipolar2double(bool[][] b)
         {
-            double[,] result = new double[b.GetUpperBound(0) + 1, b.GetUpperBound(1) + 1];
+            double[][] result = new double[b.Length][];
 
-            for (int row = 0; row <= b.GetUpperBound(0); row++)
+            for (int row = 0; row < b.Length; row++)
             {
-                for (int col = 0; col <= b.GetUpperBound(1); col++)
+                result[row] = new double[b[row].Length];
+                for (int col = 0; col < b[row].Length; col++)
                 {
-                    result[row, col] = Bipolar2double(b[row, col]);
+                    result[row][col] = Bipolar2double(b[row][col]);
                 }
             }
 
@@ -137,15 +138,16 @@ namespace Encog.Matrix
         /// </summary>
         /// <param name="d">A 2D bipolar array.</param>
         /// <returns>A 2D boolean array.</returns>
-        public static bool[,] Double2bipolar(double[,] d)
+        public static bool[][] Double2bipolar(double[][] d)
         {
-            bool[,] result = new bool[d.GetUpperBound(0) + 1, d.GetUpperBound(1) + 1];
+            bool[][] result = new bool[d.Length] [];
 
-            for (int row = 0; row <= d.GetUpperBound(0); row++)
+            for (int row = 0; row < d.Length; row++)
             {
-                for (int col = 0; col <= d.GetUpperBound(1); col++)
+                result[row] = new bool[d[row].Length];
+                for (int col = 0; col < d[row].Length; col++)
                 {
-                    result[row, col] = Double2bipolar(d[row, col]);
+                    result[row][col] = Double2bipolar(d[row][ col]);
                 }
             }
 
