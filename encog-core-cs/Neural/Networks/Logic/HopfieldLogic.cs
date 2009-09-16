@@ -35,7 +35,9 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an Hopfield type network.  See HopfieldPattern
     /// for more information on this type of network.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class HopfieldLogic : ThermalLogic
     {
         /// <summary>

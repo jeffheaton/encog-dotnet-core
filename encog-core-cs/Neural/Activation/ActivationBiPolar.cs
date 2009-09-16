@@ -36,7 +36,9 @@ namespace Encog.Neural.Activation
     /// BiPolar activation function. This will scale the neural data into the bipolar
     /// range. Greater than zero becomes 1, less than or equal to zero becomes -1.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationBiPolar : BasicActivationFunction
     {
         /// <summary>

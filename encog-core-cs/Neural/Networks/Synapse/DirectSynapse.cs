@@ -38,7 +38,9 @@ namespace Encog.Neural.Networks.Synapse
     /// connected neurons in the next layer. This layer type is useful when building
     /// a radial basis neural network.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class DirectSynapse : BasicSynapse
     {
 

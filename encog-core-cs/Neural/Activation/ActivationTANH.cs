@@ -43,7 +43,9 @@ namespace Encog.Neural.Activation
     /// only minimal change to the output compared to a standard TANH calculation.
     /// 
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationTANH : BasicActivationFunction
     {
         /// <summary>

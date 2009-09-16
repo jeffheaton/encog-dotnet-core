@@ -51,7 +51,9 @@ namespace Encog.Neural.Networks.Layers
     /// neural network is trained, these threshold values (along with the weight
     /// matrix values) will be modified.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicLayer : ILayer
     {
         /// <summary>
@@ -325,17 +327,18 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
-        /**
-         * @return The list of layers that the outbound synapses connect to.
-         */
+        /// <summary>
+        /// The list of layers that the outbound synapses connect to.
+        /// </summary>
         public ICollection<ILayer> NextLayers
         {
             get
             {
-                ICollection<ILayer> result = new HashSet<ILayer>();
+                ICollection<ILayer> result = new List<ILayer>();
                 foreach (ISynapse synapse in this.next)
                 {
-                    result.Add(synapse.ToLayer);
+                    if( !result.Contains(synapse.ToLayer) )
+                        result.Add(synapse.ToLayer);
                 }
                 return result;
             }

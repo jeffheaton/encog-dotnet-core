@@ -50,7 +50,9 @@ namespace Encog.Neural.Networks.Layers
     /// function. Calling any methods that deal with the activation function or
     /// thresholds will result in an error.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class RadialBasisFunctionLayer : BasicLayer
     {
 

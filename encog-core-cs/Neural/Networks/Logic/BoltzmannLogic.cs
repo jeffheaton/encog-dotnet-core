@@ -40,7 +40,9 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an Boltzmann type network.  See BoltzmannPattern
     /// for more information on this type of network.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BoltzmannLogic : ThermalLogic
     {
         /// <summary>

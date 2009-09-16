@@ -40,7 +40,9 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for an Simple Recurrent Network (SRN) type network.  
     /// This class is used for the Elman and Jordan networks.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class SimpleRecurrentLogic : FeedforwardLogic
     {
 #if logging

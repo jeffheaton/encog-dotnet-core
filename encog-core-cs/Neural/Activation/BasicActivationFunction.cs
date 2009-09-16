@@ -35,7 +35,9 @@ namespace Encog.Neural.Activation
     /// of. Specifically it implements a name and description for the
     /// EncogPersistedObject class.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class BasicActivationFunction : IActivationFunction
     {
         /// <summary>

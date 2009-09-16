@@ -37,7 +37,9 @@ namespace Encog.Neural.Activation
     /// numbers are generated. Do not use this activation function if negative number
     /// output is desired.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationSigmoid : BasicActivationFunction
     {
         /// <summary>

@@ -40,7 +40,9 @@ namespace Encog.Neural.Networks.Synapse
     /// same number of neurons. A one-to-one synapse can be useful, when used in
     /// conjunction with a ContextLayer.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class OneToOneSynapse : BasicSynapse
     {
 #if logging

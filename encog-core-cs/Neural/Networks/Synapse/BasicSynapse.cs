@@ -42,7 +42,9 @@ namespace Encog.Neural.Networks.Synapse
     /// from and to layer, as well as providing a name and description for the
     /// EncogPersistedObject.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class BasicSynapse : ISynapse
     {
         /// <summary>

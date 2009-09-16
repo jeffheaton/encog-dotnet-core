@@ -58,7 +58,9 @@ namespace Encog.Neural.Networks
     ///
     /// Once the neural network has been completely constructed.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicNetwork : INetwork
     {
 

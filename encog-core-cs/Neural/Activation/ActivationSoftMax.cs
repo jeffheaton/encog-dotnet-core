@@ -35,7 +35,9 @@ namespace Encog.Neural.Activation
     /// <summary>
     /// The softmax activation function.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationSoftMax : BasicActivationFunction
     {
         /// <summary>

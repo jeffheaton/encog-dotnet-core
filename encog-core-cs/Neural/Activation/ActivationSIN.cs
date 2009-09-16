@@ -35,7 +35,9 @@ namespace Encog.Neural.Activation
     /// <summary>
     /// An activation function based on the sin function.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationSIN : BasicActivationFunction
     {
         /// <summary>

@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Encog.Util;
 #if logging
 using log4net;
 #endif
@@ -515,8 +516,8 @@ namespace Encog.Parse.Tags.Read
                 ParseTag();
 
                 if ((this.tag.TagType == Tag.Type.BEGIN)
-                    && ((string.Compare(this.tag.Name, "script", true) == 0)
-                    || (string.Compare(this.tag.Name, "style", true) == 0)))
+                    && ((StringUtil.EqualsIgnoreCase(this.tag.Name, "script") )
+                    || (StringUtil.EqualsIgnoreCase(this.tag.Name, "style") )))
                 {
                     this.lockedEndTag = this.tag.Name.ToLower();
                 }

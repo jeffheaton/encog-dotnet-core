@@ -40,7 +40,9 @@ namespace Encog.Neural.Networks.Logic
     /// Provides the neural logic for thermal networks.  Functions as a base 
     /// class for BoltzmannLogic and HopfieldLogic.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ThermalLogic : SimpleRecurrentLogic
     {
         /// <summary>

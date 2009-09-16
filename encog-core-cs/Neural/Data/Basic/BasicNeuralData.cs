@@ -34,7 +34,9 @@ namespace Encog.Neural.Data.Basic
     /// Basic implementation of the NeuralData interface that stores the
     /// data in an array.  
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicNeuralData : INeuralData
     {
         private double[] data;

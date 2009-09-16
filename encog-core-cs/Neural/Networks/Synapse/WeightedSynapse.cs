@@ -42,7 +42,9 @@ namespace Encog.Neural.Networks.Synapse
     /// 
     /// This synapse type is teachable.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class WeightedSynapse : BasicSynapse
     {
 

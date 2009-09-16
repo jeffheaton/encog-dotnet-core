@@ -39,7 +39,9 @@ namespace Encog.Neural.Networks
     /// a very good performance boost since the neural network does not need to
     /// traverse itself each time a complete collection of layers or synapses is needed.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class NeuralStructure
     {
         /// <summary>
@@ -198,13 +200,14 @@ namespace Encog.Neural.Networks
         public ICollection<ISynapse> GetPreviousSynapses(ILayer targetLayer)
         {
 
-            ICollection<ISynapse> result = new HashSet<ISynapse>();
+            ICollection<ISynapse> result = new List<ISynapse>();
 
             foreach (ISynapse synapse in this.synapses)
             {
                 if (synapse.ToLayer == targetLayer)
                 {
-                    result.Add(synapse);
+                    if( !result.Contains(synapse) )
+                        result.Add(synapse);
                 }
             }
 

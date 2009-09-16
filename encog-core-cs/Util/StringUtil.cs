@@ -23,49 +23,24 @@
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-#if SILVERLIGHT
-using Encog;
-#endif 
 
-namespace Encog.Persist
+namespace Encog.Util
 {
     /// <summary>
-    /// An Encog persisted object, that can be written to XML.
+    /// Simple class for string utilities.
     /// </summary>
-    public interface IEncogPersistedObject : ICloneable
+    public class StringUtil
     {
         /// <summary>
-        /// The description for this object.
+        /// Compare two strings, ignore case.
         /// </summary>
-        String Description
+        /// <param name="a">The first string.</param>
+        /// <param name="b">The second string.</param>
+        /// <returns></returns>
+        public static Boolean EqualsIgnoreCase(String a, String b)
         {
-            get;
-            set;
+            return a.Equals(b, StringComparison.CurrentCultureIgnoreCase);
         }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        String Name
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Create a persistor for this object.
-        /// </summary>
-        /// <returns>A persistor for this object.</returns>
-        IPersistor CreatePersistor();
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>A cloned version of this object.</returns>
-        new Object Clone();
     }
 }

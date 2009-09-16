@@ -37,7 +37,9 @@ namespace Encog.Neural.Data
     /// An Encog object that can hold text data. This object can be stored in an
     /// Encog persisted file.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class TextData : IEncogPersistedObject
     {
         /// <summary>

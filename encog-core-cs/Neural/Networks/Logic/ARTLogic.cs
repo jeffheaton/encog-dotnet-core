@@ -33,7 +33,9 @@ namespace Encog.Neural.Networks.Logic
     /// <summary>
     /// Neural logic for all ART type networks.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class ARTLogic : INeuralLogic
     {
         /// <summary>

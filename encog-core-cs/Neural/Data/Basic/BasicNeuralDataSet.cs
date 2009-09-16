@@ -39,7 +39,9 @@ namespace Encog.Neural.Data.Basic
     /// so large enough datasets could cause memory issues.  Many other dataset
     /// types extend this class.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
         /// <summary>
@@ -75,7 +77,9 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The enumerator for the basic neural data set.
         /// </summary>
-        [Serializable]
+#if !SILVERLIGHT
+    [Serializable]
+#endif
         public class BasicNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
             private int current;

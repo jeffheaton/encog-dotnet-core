@@ -166,7 +166,7 @@ namespace Encog.Neural.Data.XML
         public DateTime GetDate(String field)
         {
             String str = this[field];
-            IFormatProvider formatProvider = System.Globalization.CultureInfo.CreateSpecificCulture("");
+            IFormatProvider formatProvider = System.Globalization.CultureInfo.CurrentCulture;
             DateTime result = DateTime.ParseExact(str, "MM/dd/yyyy", formatProvider);
             return result;
         }

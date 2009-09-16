@@ -43,7 +43,9 @@ namespace Encog.Neural.Networks.Layers
     /// provide the same data as output on the next cycle. This continues, and the
     /// context layer's output "one step" out of sync with the input.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ContextLayer : BasicLayer
     {
 

@@ -56,7 +56,7 @@ namespace Encog.Parse.Tags.Write
         /// <summary>
         /// Used to encode strings to bytes.
         /// </summary>
-        private static System.Text.ASCIIEncoding encoder = new System.Text.ASCIIEncoding();
+        private StreamWriter encoder;
 
 #if logging
         /// <summary>
@@ -74,6 +74,7 @@ namespace Encog.Parse.Tags.Write
             this.output = output;
             this.tagStack = new Stack<String>();
             this.attributes = new Dictionary<String, String>();
+            this.encoder = new StreamWriter(output);
         }
 
         /// <summary>
@@ -101,8 +102,7 @@ namespace Encog.Parse.Tags.Write
             builder.Append('>');
             try
             {
-                byte[] b = encoder.GetBytes(builder.ToString());
-                this.output.Write(b, 0, b.Length);
+                this.encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
@@ -153,8 +153,7 @@ namespace Encog.Parse.Tags.Write
         {
             try
             {
-                byte[] b = encoder.GetBytes(text);
-                this.output.Write(b, 0, b.Length);
+                this.encoder.Write(text);
             }
             catch (IOException e)
             {
@@ -195,8 +194,7 @@ namespace Encog.Parse.Tags.Write
 
             try
             {
-                byte[] b = encoder.GetBytes(builder.ToString());
-                this.output.Write(b, 0, b.Length);
+                this.encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
@@ -247,8 +245,7 @@ namespace Encog.Parse.Tags.Write
 
             try
             {
-                byte[] b = encoder.GetBytes(builder.ToString());
-                this.output.Write(b, 0, b.Length);
+                this.encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
