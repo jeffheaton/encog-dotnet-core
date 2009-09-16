@@ -115,7 +115,7 @@ namespace Encog.Persist.Persistors
                 {
                     HandleItem(xmlIn);
                 }
-                else if (xmlIn.IsIt(BasicNeuralDataSetPersistor.TAG_ITEM, false))
+                else if (xmlIn.IsIt(EncogPersistedCollection.TYPE_TRAINING, false))
                 {
                     break;
                 }
