@@ -39,7 +39,7 @@ namespace Encog.Persist.Location
     /// location only supports read operations, so the Encog resource is usually
     /// created first as a file and then embedded in the application as a resource.
     /// </summary>
-    public class ResourcePersistence : PersistenceLocation
+    public class ResourcePersistence : IPersistenceLocation
     {
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Encog.Persist.Location
         /// Rename is not supported for resource persistence.
         /// </summary>
         /// <param name="toLocation">Not used.</param>
-        public void RenameTo(PersistenceLocation toLocation)
+        public void RenameTo(IPersistenceLocation toLocation)
         {
             String str =
            "The ResourcePersistence location does not suppor rename operations.";

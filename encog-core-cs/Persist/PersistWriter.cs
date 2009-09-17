@@ -64,7 +64,7 @@ namespace Encog.Persist
         /// Create a writer for the specified location.
         /// </summary>
         /// <param name="location">The location.</param>
-        public PersistWriter(PersistenceLocation location)
+        public PersistWriter(IPersistenceLocation location)
         {
             this.fileOutput = location.CreateStream(FileMode.OpenOrCreate);
             this.xmlOut = new WriteXML(this.fileOutput);
@@ -118,7 +118,7 @@ namespace Encog.Persist
         /// </summary>
         /// <param name="location">The location to merge to.</param>
         /// <param name="skip">The object to skip.</param>
-        public void MergeObjects(PersistenceLocation location,
+        public void MergeObjects(IPersistenceLocation location,
                  String skip)
         {
             PersistReader reader = new PersistReader(location);
@@ -134,7 +134,7 @@ namespace Encog.Persist
         /// <param name="name">The old name of the object being modified.</param>
         /// <param name="newName">The new name of the object being modified.</param>
         /// <param name="newDesc">The new description of the object being modified.</param>
-        public void ModifyObject(PersistenceLocation location,
+        public void ModifyObject(IPersistenceLocation location,
                  String name, String newName, String newDesc)
         {
 

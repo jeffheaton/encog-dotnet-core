@@ -33,7 +33,7 @@ namespace Encog
     /// This class is a "clone" of the .Net ICloneable interface.  This is used
     /// for the Silverlight version of Encog to allow simple cloning.
     /// </summary>
-    public class ICloneable
+    public interface ICloneable
     {
         /// <summary>
         /// Clone the object.

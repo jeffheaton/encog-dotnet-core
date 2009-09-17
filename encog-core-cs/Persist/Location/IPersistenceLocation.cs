@@ -33,7 +33,7 @@ namespace Encog.Persist.Location
     /// <summary>
     /// A persistence location specifies how the persistence collection is stored.
     /// </summary>
-    public interface PersistenceLocation
+    public interface IPersistenceLocation
     {
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Encog.Persist.Location
         /// Attempt to rename this location. Mainly for file locations.
         /// </summary>
         /// <param name="toLocation">The new name.</param>
-        void RenameTo(PersistenceLocation toLocation);
+        void RenameTo(IPersistenceLocation toLocation);
     }
 
 }

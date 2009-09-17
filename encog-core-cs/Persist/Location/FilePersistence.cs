@@ -37,7 +37,7 @@ namespace Encog.Persist.Location
     /// <summary>
     /// A persistence location based on a file.
     /// </summary>
-    public class FilePersistence : PersistenceLocation
+    public class FilePersistence : IPersistenceLocation
     {
 #if logging
         /// <summary>
@@ -113,7 +113,7 @@ namespace Encog.Persist.Location
         /// Rename this file to a different location.
         /// </summary>
         /// <param name="toLocation">What to rename to.</param>
-        public void RenameTo(PersistenceLocation toLocation)
+        public void RenameTo(IPersistenceLocation toLocation)
         {
             if (!(toLocation is FilePersistence))
             {

@@ -9,7 +9,7 @@ namespace Encog.Persist.Location
     /**
      * Create a location based on a Stream.
      */
-    public class StreamPersistence : PersistenceLocation
+    public class StreamPersistence : IPersistenceLocation
     {
 #if logging
         /// <summary>
@@ -61,7 +61,7 @@ namespace Encog.Persist.Location
         /// Rename this file to a different location.
         /// </summary>
         /// <param name="toLocation">What to rename to.</param>
-        public void RenameTo(PersistenceLocation toLocation)
+        public void RenameTo(IPersistenceLocation toLocation)
         {
                 String str =
                    "Rename is not supported on this location type.";

@@ -147,12 +147,12 @@ namespace Encog.Persist
         /// <summary>
         /// The primary file being persisted to.
         /// </summary>
-        private PersistenceLocation filePrimary;
+        private IPersistenceLocation filePrimary;
 
         /// <summary>
         /// The temp file, to be used for merges.
         /// </summary>
-        private PersistenceLocation fileTemp;
+        private IPersistenceLocation fileTemp;
 
         /// <summary>
         /// The platform this collection was created on.
@@ -191,7 +191,7 @@ namespace Encog.Persist
         /// </summary>
         /// <param name="location">The location to load/save from.</param>
         /// <param name="mode">The file mode.</param>
-        public EncogPersistedCollection(PersistenceLocation location, FileMode mode)
+        public EncogPersistedCollection(IPersistenceLocation location, FileMode mode)
         {
             this.filePrimary = location;
 
