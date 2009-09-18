@@ -45,7 +45,7 @@ namespace Encog.Persist
         /// <summary>
         /// The contents of this collection.
         /// </summary>
-        public IDictionary<String, IEncogPersistedObject> contents = new Dictionary<String, IEncogPersistedObject>();
+        public IDictionary<String, IEncogPersistedObject> Contents = new Dictionary<String, IEncogPersistedObject>();
 
         /// <summary>
         /// Populated during a load, the file version.
@@ -82,6 +82,7 @@ namespace Encog.Persist
                 }
                 reader.AdvanceObjectsCollection();
                 ReadXML xmlIn = reader.XMLInput;
+                this.Contents.Clear();
 
                 while (xmlIn.ReadToTag())
                 {
@@ -101,7 +102,7 @@ namespace Encog.Persist
                         throw new PersistError("Do not know how to load: " + type);
                     }
                     IEncogPersistedObject obj = persistor.Load(xmlIn);
-                    this.contents[name] = obj;
+                    this.Contents[name] = obj;
                 }
             }
             finally
@@ -128,7 +129,7 @@ namespace Encog.Persist
                 writer.Begin();
                 writer.WriteHeader();
                 writer.BeginObjects();
-                foreach (IEncogPersistedObject obj in this.contents.Values)
+                foreach (IEncogPersistedObject obj in this.Contents.Values)
                 {
                     writer.WriteObject(obj);
                 }

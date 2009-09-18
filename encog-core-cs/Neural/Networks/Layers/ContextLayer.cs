@@ -46,7 +46,7 @@ namespace Encog.Neural.Networks.Layers
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class ContextLayer : BasicLayer
+    public class ContextLayer : BasicLayer, IContextClearable
     {
 
         /// <summary>
@@ -146,6 +146,18 @@ namespace Encog.Neural.Networks.Layers
         public override INeuralData Recur()
         {
             return this.context;
+        }
+
+        /// <summary>
+        /// Reset the context values back to zero.
+        /// </summary>
+        public void ClearContext()
+        {
+            for (int i = 0; i < this.context.Count; i++)
+            {
+                this.context[i] = 0;
+            }
+
         }
     }
 }

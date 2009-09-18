@@ -35,93 +35,16 @@ using log4net;
 namespace Encog.Neural.Networks.Training.Anneal
 {
     /// <summary>
-    /// This class implements a simulated annealing training algorithm for feed
-    /// forward neural networks. It is based on the generic SimulatedAnnealing class.
+    /// This class implements a simulated annealing training algorithm for 
+    /// neural networks. It is based on the generic SimulatedAnnealing class.
     /// It is used in the same manner as any other training class that implements the
-    /// Train interface.
+    /// Train interface.  This class is abstract, to create your own version
+    /// of simulated annealing, you must provide an implementation of the
+    /// determineError method.  If you want to train with a training set, use
+    /// the NeuralTrainingSetSimulatedAnnealing class.
     /// </summary>
-    public class NeuralSimulatedAnnealing : BasicTraining
+    public abstract class NeuralSimulatedAnnealing : BasicTraining
     {
-        /// <summary>
-        /// Simple inner class used by the neural simulated annealing.  This
-        /// class is a subclass of the basic SimulatedAnnealing class.  The
-        /// It is used by the actual NeuralSimulatedAnnealing class, which
-        /// subclasses BasicTraining.  This class is mostly necessary due
-        /// to the fact that NeuralSimulatedAnnealing can't subclass BOTH
-        /// SimulatedAnnealing and Train, because multiple inheritance is
-        /// not supported.
-        /// </summary>
-        class SimulatedAnnealingHelper : SimulatedAnnealing<Double>
-        {
-            private NeuralSimulatedAnnealing owner;
-
-            public SimulatedAnnealingHelper(NeuralSimulatedAnnealing owner)
-            {
-                this.owner = owner;
-            }
-
-            /// <summary>
-            /// Determine the error of the nueral network.
-            /// </summary>
-            /// <returns>The neural network error.</returns>
-            public override double DetermineError()
-            {
-                return owner.Network.CalculateError(owner.Training);
-            }
-
-            /// <summary>
-            /// Get the network as an array of doubles.
-            /// </summary>
-            /// <returns>The network as an array of doubles.</returns>
-            public override double[] GetArray()
-            {
-                return NetworkCODEC
-                        .NetworkToArray(owner.Network);
-            }
-
-            /// <summary>
-            /// A copy of the annealing array.
-            /// </summary>
-            /// <returns>A copy of the annealing array.</returns>
-            public override double[] GetArrayCopy()
-            {
-                return GetArray();
-            }
-
-            /// <summary>
-            /// Convert an array of doubles to the current best network.
-            /// </summary>
-            /// <param name="array">An array.</param>
-            public override void PutArray(double[] array)
-            {
-                NetworkCODEC.ArrayToNetwork(array,
-                        owner.network);
-            }
-
-            /// <summary>
-            /// Randomize the weights and thresholds. This function does most of the
-            /// work of the class. Each call to this class will randomize the data
-            /// according to the current temperature. The higher the temperature the
-            /// more randomness.
-            /// </summary>
-            public override void Randomize()
-            {
-                Double[] array = NetworkCODEC
-                       .NetworkToArray(owner.Network);
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    double add = NeuralSimulatedAnnealing.CUT - ThreadSafeRandom.NextDouble();
-                    add /= this.StartTemperature;
-                    add *= this.StopTemperature;
-                    array[i] = array[i] + add;
-                }
-
-                NetworkCODEC.ArrayToNetwork(array,
-                        owner.Network);
-            }
-
-        }
 
         /// <summary>
         /// The cutoff for random data.
@@ -132,7 +55,8 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <summary>
         /// The logging object.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(NeuralSimulatedAnnealing));
+        [NonSerialized]
+        private static readonly ILog logger = LogManager.GetLogger(typeof(NeuralSimulatedAnnealing));
 #endif
 
         /// <summary>
@@ -143,23 +67,22 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <summary>
         /// This class actually performs the training.
         /// </summary>
-        private SimulatedAnnealingHelper anneal;
+        private NeuralSimulatedAnnealingHelper anneal;
 
         /// <summary>
-        /// Construct a simulated annleaing trainer for a feedforward neural network.
+        /// Construct a simulated annleaing trainer for a feedforward neural network. 
         /// </summary>
         /// <param name="network">The neural network to be trained.</param>
-        /// <param name="training">The training set.</param>
         /// <param name="startTemp">The starting temperature.</param>
         /// <param name="stopTemp">The ending temperature.</param>
         /// <param name="cycles">The number of cycles in a training iteration.</param>
         public NeuralSimulatedAnnealing(BasicNetwork network,
-                 INeuralDataSet training, double startTemp,
-                 double stopTemp, int cycles)
+                 double startTemp,
+                 double stopTemp,
+                 int cycles)
         {
             this.network = network;
-            this.Training = training;
-            this.anneal = new SimulatedAnnealingHelper(this);
+            this.anneal = new NeuralSimulatedAnnealingHelper(this);
             this.anneal.Temperature = startTemp;
             this.anneal.StartTemperature = startTemp;
             this.anneal.StopTemperature = stopTemp;
@@ -167,7 +90,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         }
 
         /// <summary>
-        /// Get the best network from the training.
+        /// The best network.
         /// </summary>
         public override BasicNetwork Network
         {
@@ -182,11 +105,10 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public override void Iteration()
         {
-#if logging
-            if (this.logger.IsInfoEnabled)
-            {
-                this.logger.Info("Performing Simulated Annealing iteration.");
-            }
+#if LOGGING
+		if (this.logger.isInfoEnabled()) {
+			this.logger.info("Performing Simulated Annealing iteration.");
+		}
 #endif
             PreIteration();
             this.anneal.Iteration();
@@ -194,5 +116,62 @@ namespace Encog.Neural.Networks.Training.Anneal
             PostIteration();
         }
 
+        /// <summary>
+        /// Determine the error of the current weights and thresholds.
+        /// </summary>
+        /// <returns>The error.</returns>
+        public abstract double DetermineError();
+
+        /// <summary>
+        /// Get the network as an array of doubles.
+        /// </summary>
+        /// <returns>The network as an array of doubles.</returns>
+        public Double[] GetArray()
+        {
+            return NetworkCODEC
+                    .NetworkToArray(this.network);
+        }
+
+        /// <summary>
+        /// A copy of the annealing array.
+        /// </summary>
+        /// <returns>A copy of the annealing array.</returns>
+        public Double[] GetArrayCopy()
+        {
+            return GetArray();
+        }
+
+        /// <summary>
+        /// Convert an array of doubles to the current best network.
+        /// </summary>
+        /// <param name="array">An array.</param>
+        public void PutArray(double[] array)
+        {
+            NetworkCODEC.ArrayToNetwork(array,
+                    this.network);
+        }
+
+        /// <summary>
+        /// Randomize the weights and thresholds. This function does most of the
+        /// work of the class. Each call to this class will randomize the data
+        /// according to the current temperature. The higher the temperature the
+        /// more randomness.
+        /// </summary>
+        public void Randomize()
+        {
+            double[] array = NetworkCODEC
+                    .NetworkToArray(this.network);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                double add = NeuralSimulatedAnnealing.CUT - ThreadSafeRandom.NextDouble();
+                add /= this.anneal.StartTemperature;
+                add *= this.anneal.Temperature;
+                array[i] = array[i] + add;
+            }
+
+            NetworkCODEC.ArrayToNetwork(array,
+                    this.network);
+        }
     }
 }

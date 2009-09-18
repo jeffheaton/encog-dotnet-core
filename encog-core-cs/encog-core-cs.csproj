@@ -122,6 +122,7 @@
     <Compile Include="Neural\Data\XML\PropertyData.cs" />
     <Compile Include="Neural\Data\XML\XMLNeuralDataSet.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
+    <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
     <Compile Include="Neural\Networks\Layers\ContextLayer.cs" />
     <Compile Include="Neural\Networks\Layers\ILayer.cs" />
@@ -167,6 +168,8 @@
     <Compile Include="Neural\Networks\Synapse\WeightedSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\WeightlessSynapse.cs" />
     <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealing.cs" />
+    <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealingHelper.cs" />
+    <Compile Include="Neural\Networks\Training\Anneal\NeuralTrainingSetSimulatedAnnealing.cs" />
     <Compile Include="Neural\Networks\Training\BasicTraining.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\BestMatchingUnit.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\CompetitiveTraining.cs" />
@@ -206,6 +209,7 @@
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
+    <Compile Include="NullStatusReportable.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
     <Compile Include="Parse\Tags\Read\ReadHTML.cs" />

@@ -66,6 +66,20 @@ namespace Encog.Neural.Networks.Training.Propagation
         private IList<PropagationLevel> levels =
             new List<PropagationLevel>();
 
+        /// <summary>
+        /// The batch size. Defaults to the max size of an integer, which means
+        /// update once per iteration.
+        /// 
+        /// The batch size is the frequency with which the weights are updated per
+        /// iteration. Setting it to the size of the training set means one update
+        /// per iteration. Setting this to a lower number may improve training
+        /// efficiency at the cost of processing time.
+        /// 
+        /// If you do not want to use batch training, specify a value of 1, then the
+        /// weights will be updated on each iteration, which is online training.
+        /// </summary>
+        private int batchSize = int.MaxValue;
+
 #if logging
         /// <summary>
         /// The logging object.
@@ -287,6 +301,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             PreIteration();
 
             ErrorCalculation errorCalculation = new ErrorCalculation();
+            int processedCount = 0;
 
             foreach (INeuralDataPair pair in this.Training)
             {
@@ -301,9 +316,21 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
                 BackwardPass(pair.Ideal);
+
+                processedCount++;
+                if (processedCount >= this.batchSize)
+                {
+                    processedCount = 0;
+                    this.method.Learn();
+                }
+
             }
 
-            this.method.Learn();
+            if (processedCount != 0)
+            {
+                this.method.Learn();
+            }
+
 
             this.Error = errorCalculation.CalculateRMS();
 
