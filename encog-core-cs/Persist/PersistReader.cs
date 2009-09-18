@@ -491,6 +491,17 @@ namespace Encog.Persist
             }
             return headers;
         }
+
+        /// <summary>
+        /// The ReadXML object used to access XML.
+        /// </summary>
+        public ReadXML XMLInput
+        {
+            get
+            {
+                return this.xmlIn;
+            }
+        }
     }
 
 }
