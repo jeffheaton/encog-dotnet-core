@@ -20,7 +20,7 @@
 // License along with this software; if not, write to the Free
 // Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-#if !SILVERLIGHT
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,8 +64,10 @@ namespace Encog.Neural.NeuralData.Market.Loader
             form.Add("g", "d");
             form.Add("ignore", ".csv");
             mstream.Close();
+            byte[] b = mstream.GetBuffer();
+            
             String str = "http://ichart.finance.yahoo.com/table.csv?"
-                   + System.Text.Encoding.UTF8.GetString(mstream.GetBuffer());
+                   + StringUtil.FromBytes(b);
             return new Uri(str);
         }
 
@@ -125,4 +127,3 @@ namespace Encog.Neural.NeuralData.Market.Loader
 
     }
 }
-#endif

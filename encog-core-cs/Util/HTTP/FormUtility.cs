@@ -21,13 +21,18 @@
 // License along with this software; if not, write to the Free
 // Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-#if !SILVERLIGHT
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Web;
 using Encog.Util.MathUtil;
+
+#if SILVERLIGHT
+using System.Windows.Browser;
+#else
+using System.Web;
+#endif
 
 namespace Encog.Util.HTTP
 {
@@ -38,11 +43,6 @@ namespace Encog.Util.HTTP
     /// </summary>
     public class FormUtility
     {
-        /// <summary>
-        /// Used to convert strings into bytes.
-        /// </summary>
-        System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-
         /// <summary>
         /// Generate a boundary for a multipart form.
         /// </summary>
@@ -64,6 +64,11 @@ namespace Encog.Util.HTTP
         /// The stream to output the encoded form to.
         /// </summary>
         private Stream os;
+
+        /// <summary>
+        /// The text writer to use.
+        /// </summary>
+        private TextWriter writer;
 
         /// <summary>
         /// Keep track of if we're on the first form element.
@@ -100,6 +105,7 @@ namespace Encog.Util.HTTP
         public FormUtility(Stream os, String boundary)
         {
             this.os = os;
+            this.writer = new StreamWriter(os);
             this.boundary = boundary;
             this.first = true;
         }
@@ -139,12 +145,16 @@ namespace Encog.Util.HTTP
                 byte[] buf = new byte[8192];
                 int nread;
 
+                this.writer.Flush();
+                this.os.Flush();
+
                 Stream istream = new FileStream(file, FileMode.Open);
                 while ((nread = istream.Read(buf, 0, buf.Length)) > 0)
                 {
                     this.os.Write(buf, 0, nread);
                 }
 
+                this.os.Flush();
                 Newline();
             }
         }
@@ -216,9 +226,8 @@ namespace Encog.Util.HTTP
         /// <param name="str">The string to write.</param>
         private void Write(String str)
         {
-
-            byte[] buffer = encoding.GetBytes(str);
-            this.os.Write(buffer, 0, buffer.Length);
+            this.writer.Write(str);
+            this.writer.Flush();
         }
 
         /// <summary>
@@ -244,4 +253,3 @@ namespace Encog.Util.HTTP
         }
     }
 }
-#endif
