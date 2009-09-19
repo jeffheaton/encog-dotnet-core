@@ -119,7 +119,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             INeuralData output = outputHolder.Result[
                    fromSynapse.Synapse];
-            fromSynapse.Deltas.Data[fromNeuron][toNeuronLocal]+=toLevel.Deltas[toNeuronGlobal]
+            fromSynapse.AccMatrixGradients.Data[fromNeuron][toNeuronLocal]+=toLevel.Deltas[toNeuronGlobal]
                     * output.Data[fromNeuron];
             return (fromSynapse.Synapse.WeightMatrix.Data[fromNeuron]
                     [toNeuronLocal] * toLevel.Deltas[toNeuronGlobal]);

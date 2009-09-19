@@ -284,6 +284,10 @@ namespace Encog.Persist.Persistors
                 {
                     HandleTags(xmlIn);
                 }
+                else if (xmlIn.IsIt(EncogPersistedCollection.TYPE_BASIC_NET, false))
+                {
+                    break;
+                }
 
             }
             this.currentNetwork.Structure.FinalizeStructure();
