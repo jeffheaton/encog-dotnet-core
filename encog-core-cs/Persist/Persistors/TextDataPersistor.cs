@@ -52,6 +52,7 @@ namespace Encog.Persist.Persistors
             result.Name = name;
             result.Description = description;
             result.Text = text;
+            xmlin.ReadToTag();
             return result;
         }
 
