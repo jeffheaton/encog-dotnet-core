@@ -177,6 +177,10 @@ namespace Encog.Neural.Networks.Layers
             {
                 return this.radialBasisFunction;
             }
+            set
+            {
+                this.radialBasisFunction = value;
+            }
         }
 
         /// <summary>

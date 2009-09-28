@@ -31,6 +31,8 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Matrix;
 #if logging
 using log4net;
+using Encog.Util.MathUtil.RBF;
+using Encog.Util.MathUtil;
 #endif
 namespace Encog.Neural.Networks.Prune
 {
@@ -62,10 +64,10 @@ namespace Encog.Neural.Networks.Prune
         }
 
         /// <summary>
-        /// Change the neuron count for the network.  If the count is increased
-        /// then a zero-weighted neuron is added, which will not affect the 
-        /// output of the neural network.  If the neuron count is decreased, then
-        /// the weakest neuron will be removed.
+        /// Change the neuron count for the network. If the count is increased then a
+        /// zero-weighted neuron is added, which will not affect the output of the
+        /// neural network. If the neuron count is decreased, then the weakest neuron
+        /// will be removed.
         /// </summary>
         /// <param name="layer">The layer to adjust.</param>
         /// <param name="neuronCount">The new neuron count for this layer.</param>
@@ -87,11 +89,11 @@ namespace Encog.Neural.Networks.Prune
             }
         }
 
-        /**
-         * Internal function to decrease the neuron count of a layer.
-         * @param layer The layer to affect.
-         * @param neuronCount The new neuron count.
-         */
+        /// <summary>
+        /// Internal function to decrease the neuron count of a layer.
+        /// </summary>
+        /// <param name="layer">The layer to affect.</param>
+        /// <param name="neuronCount">The new neuron count.</param>
         private void DecreaseNeuronCount(ILayer layer, int neuronCount)
         {
             // create an array to hold the least significant neurons, which will be
@@ -132,13 +134,11 @@ namespace Encog.Neural.Networks.Prune
             {
                 Prune(layer, lostNeuron[i] - i);
             }
-
         }
 
-
         /// <summary>
-        /// Determine the significance of the neuron.  The higher the
-        /// return value, the more significant the neuron is. 
+        /// Determine the significance of the neuron. The higher the return value,
+        /// the more significant the neuron is.
         /// </summary>
         /// <param name="layer">The layer to query.</param>
         /// <param name="neuron">The neuron to query.</param>
@@ -147,7 +147,12 @@ namespace Encog.Neural.Networks.Prune
                  int neuron)
         {
             // calculate the threshold significance
-            double result = layer.Threshold[neuron];
+            double result = 0;
+
+            if (layer.HasThreshold)
+            {
+                result += layer.Threshold[neuron];
+            }
 
             // calculate the outbound significance
             foreach (ISynapse synapse in layer.Next)
@@ -174,19 +179,8 @@ namespace Encog.Neural.Networks.Prune
         }
 
         /// <summary>
-        /// The network that is being processed.
-        /// </summary>
-        public BasicNetwork Network
-        {
-            get
-            {
-                return this.network;
-            }
-        }
-
-        /// <summary>
-        /// Internal function to increase the neuron count. This will
-        /// add a zero-weight neuron to this layer.
+        /// Internal function to increase the neuron count. This will add a
+        /// zero-weight neuron to this layer.
         /// </summary>
         /// <param name="layer">The layer to increase.</param>
         /// <param name="neuronCount">The new neuron count.</param>
@@ -194,12 +188,15 @@ namespace Encog.Neural.Networks.Prune
         {
             // adjust the threshold
             double[] newThreshold = new double[neuronCount];
-            for (int i = 0; i < layer.NeuronCount; i++)
+            if (layer.HasThreshold)
             {
-                newThreshold[i] = layer.Threshold[i];
-            }
+                for (int i = 0; i < layer.NeuronCount; i++)
+                {
+                    newThreshold[i] = layer.Threshold[i];
+                }
 
-            layer.Threshold = newThreshold;
+                layer.Threshold = newThreshold;
+            }
 
             // adjust the outbound weight matrixes
             foreach (ISynapse synapse in layer.Next)
@@ -237,32 +234,56 @@ namespace Encog.Neural.Networks.Prune
             }
 
             // adjust the thresholds
-            double[] newThresholds = new double[neuronCount];
-
-            for (int i = 0; i < layer.NeuronCount; i++)
+            if (layer.HasThreshold)
             {
-                newThresholds[i] = layer.Threshold[i];
+                double[] newThresholds = new double[neuronCount];
+
+                for (int i = 0; i < layer.NeuronCount; i++)
+                {
+                    newThresholds[i] = layer.Threshold[i];
+                }
+                layer.Threshold = newThreshold;
             }
 
-            layer.Threshold = newThreshold;
+            // adjust RBF
+            if (layer is RadialBasisFunctionLayer)
+            {
+                RadialBasisFunctionLayer rbf = (RadialBasisFunctionLayer)layer;
+                IRadialBasisFunction[] newRBF = new IRadialBasisFunction[neuronCount];
+                for (int i = 0; i < rbf.RadialBasisFunction.Length; i++)
+                {
+                    newRBF[i] = rbf.RadialBasisFunction[i];
+                }
+
+                for (int i = rbf.RadialBasisFunction.Length; i < neuronCount; i++)
+                {
+                    newRBF[i] = new GaussianFunction(ThreadSafeRandom.NextDouble() - 0.5,
+                        ThreadSafeRandom.NextDouble(),
+                        ThreadSafeRandom.NextDouble() - 0.5);
+                }
+
+                rbf.RadialBasisFunction = newRBF;
+
+            }
 
             // finally, up the neuron count
             layer.NeuronCount = neuronCount;
         }
 
+
         /// <summary>
         /// Prune one of the neurons from this layer. Remove all entries in this
         /// weight matrix and other layers.
         /// </summary>
-        /// <param name="targetLayer">The neuron to prune. Zero specifies the 
-        /// first neuron.</param>
+        /// <param name="targetLayer">The neuron to prune. Zero specifies the first neuron.</param>
         /// <param name="neuron">The neuron to prune.</param>
         public void Prune(ILayer targetLayer, int neuron)
         {
             // delete a row on this matrix
             foreach (ISynapse synapse in targetLayer.Next)
             {
-                synapse.WeightMatrix = MatrixMath
+                synapse
+                        .WeightMatrix = MatrixMath
                                 .DeleteRow(synapse.WeightMatrix, neuron);
             }
 
@@ -283,22 +304,45 @@ namespace Encog.Neural.Networks.Prune
             }
 
             // remove the threshold
-            double[] newThreshold =
-               new double[targetLayer.NeuronCount - 1];
-
-            int targetIndex = 0;
-            for (int i = 0; i < targetLayer.NeuronCount; i++)
+            if (targetLayer.HasThreshold)
             {
-                if (targetIndex != neuron)
+                double[] newThreshold = new double[targetLayer
+                       .NeuronCount - 1];
+
+                int targetIndex = 0;
+                for (int i = 0; i < targetLayer.NeuronCount; i++)
                 {
-                    newThreshold[targetIndex++] = targetLayer.Threshold[i];
+                    if (i != neuron)
+                    {
+                        newThreshold[targetIndex++] = targetLayer.Threshold[i];
+                    }
                 }
+
+                targetLayer.Threshold = newThreshold;
             }
 
-            targetLayer.Threshold = newThreshold;
+            // adjust RBF
+            if (targetLayer is RadialBasisFunctionLayer)
+            {
+                RadialBasisFunctionLayer rbf = (RadialBasisFunctionLayer)targetLayer;
+                IRadialBasisFunction[] newRBF = new GaussianFunction[targetLayer.NeuronCount - 1];
+
+                int targetIndex = 0;
+                for (int i = 0; i < targetLayer.NeuronCount; i++)
+                {
+                    if (i != neuron)
+                    {
+                        newRBF[targetIndex++] = rbf.RadialBasisFunction[i];
+                    }
+                }
+                rbf.RadialBasisFunction = newRBF;
+
+            }
 
             // update the neuron count
             targetLayer.NeuronCount = targetLayer.NeuronCount - 1;
+
         }
     }
+
 }
