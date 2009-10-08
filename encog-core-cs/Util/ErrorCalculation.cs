@@ -77,8 +77,8 @@ namespace Encog.Util
             {
                 double delta = ideal[i] - actual[i];
                 this.globalError += delta * delta;
-                this.setSize += ideal.Length;
             }
+            this.setSize += ideal.Length;
         }
     }
 }
