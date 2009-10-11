@@ -29,6 +29,7 @@ using System.IO;
 using System.Net;
 using Encog.Util;
 using Encog.Util.HTTP;
+using Encog.Util.CSV;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {

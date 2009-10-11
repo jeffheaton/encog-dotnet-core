@@ -35,6 +35,7 @@ using Encog.Neural.Activation;
 
 #if logging
 using log4net;
+using Encog.Util.CSV;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -107,7 +108,7 @@ namespace Encog.Persist.Persistors
                 }
                 else
                 {
-                    double[] t = ReadCSV.FromCommas(threshold);
+                    double[] t = NumberList.FromList(CSVFormat.EG_FORMAT, threshold);
                     layer = new ContextLayer(activation, true, neuronCount);
                     for (int i = 0; i < t.Length; i++)
                     {
@@ -142,7 +143,7 @@ namespace Encog.Persist.Persistors
             if (layer.HasThreshold)
             {
                 StringBuilder result = new StringBuilder();
-                ReadCSV.ToCommas(result, layer.Threshold);
+                NumberList.ToList(CSVFormat.EG_FORMAT, result, layer.Threshold);
                 xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_THRESHOLD, result
                         .ToString());
             }

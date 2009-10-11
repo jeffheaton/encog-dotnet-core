@@ -32,6 +32,7 @@ using Encog.Util;
 using System.Reflection;
 #if logging
 using log4net;
+using Encog.Util.CSV;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -142,7 +143,7 @@ namespace Encog.Persist.Persistors
                 if (xmlIn.IsIt(PersistorUtil.ROW, true))
                 {
                     String str = xmlIn.ReadTextToTag();
-                    double[] d = ReadCSV.FromCommas(str);
+                    double[] d = NumberList.FromList(CSVFormat.EG_FORMAT, str);
                     for (int col = 0; col < d.Length; col++)
                     {
                         matrix[row, col] = d[col];

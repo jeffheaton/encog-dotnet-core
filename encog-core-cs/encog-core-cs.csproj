@@ -272,6 +272,9 @@
     <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\PoolItem.cs" />
+    <Compile Include="Util\CSV\NumberList.cs" />
+    <Compile Include="Util\CSV\CSVError.cs" />
+    <Compile Include="Util\CSV\CSVFormat.cs" />
     <Compile Include="Util\DirectoryUtil.cs" />
     <Compile Include="Util\DownSample\IDownSample.cs" />
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
@@ -295,7 +298,7 @@
     <Compile Include="Util\Randomize\FanInRandomizer.cs" />
     <Compile Include="Util\Randomize\IRandomizer.cs" />
     <Compile Include="Util\Randomize\RangeRandomizer.cs" />
-    <Compile Include="Util\ReadCSV.cs" />
+    <Compile Include="Util\CSV\ReadCSV.cs" />
     <Compile Include="Util\SerializeObject.cs" />
     <Compile Include="Util\StringUtil.cs" />
     <Compile Include="Util\Time\DateUtil.cs" />

@@ -224,6 +224,7 @@ namespace Encog.Parse.Tags.Write
         /// </summary>
         public void EndDocument()
         {
+            this.encoder.Flush();
         }
 
         /// <summary>

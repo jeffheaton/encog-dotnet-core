@@ -29,6 +29,7 @@ using System.Text;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
+using Encog.Util.CSV;
 
 namespace Encog.Neural.NeuralData.CSV
 {
@@ -66,7 +67,7 @@ namespace Encog.Neural.NeuralData.CSV
                 this.reader = null;
                 this.reader = new ReadCSV(this.owner.Filename,
                         this.owner.Headers,
-                        this.owner.Delimiter);
+                        this.owner.Format);
             }
 
             /// <summary>
@@ -151,9 +152,9 @@ namespace Encog.Neural.NeuralData.CSV
         private int idealSize;
 
         /// <summary>
-        /// The delimiter that separates the columns, defaults to a comma.
+        /// The format that separates the columns, defaults to a comma.
         /// </summary>
-        private char delimiter;
+        private CSVFormat format;
 
         /// <summary>
         /// Specifies if headers are present on the first row.
@@ -174,11 +175,11 @@ namespace Encog.Neural.NeuralData.CSV
         /// <summary>
         /// The delimiter.
         /// </summary>
-        public char Delimiter
+        public CSVFormat Format
         {
             get
             {
-                return this.delimiter;
+                return this.format;
             }
         }
 
@@ -224,7 +225,7 @@ namespace Encog.Neural.NeuralData.CSV
         /// <param name="headers">True if headers are present on the first line.</param>
         public CSVNeuralDataSet(String filename, int inputSize,
                  int idealSize, bool headers)
-            : this(filename, inputSize, idealSize, headers, ',')
+            : this(filename, inputSize, idealSize, headers, CSVFormat.ENGLISH)
         {
         }
 
@@ -235,14 +236,14 @@ namespace Encog.Neural.NeuralData.CSV
         /// <param name="inputSize">The number of columns that make up the input set.</param>
         /// <param name="idealSize">The number of columns that make up the ideal set.</param>
         /// <param name="headers">True if headers are present on the first line.</param>
-        /// <param name="delimiter">The delimiter to use.</param>
+        /// <param name="format">The format to use.</param>
         public CSVNeuralDataSet(String filename, int inputSize,
-                 int idealSize, bool headers, char delimiter)
+                 int idealSize, bool headers, CSVFormat format)
         {
             this.filename = filename;
             this.inputSize = inputSize;
             this.idealSize = idealSize;
-            this.delimiter = delimiter;
+            this.format = format;
             this.headers = headers;
         }
 

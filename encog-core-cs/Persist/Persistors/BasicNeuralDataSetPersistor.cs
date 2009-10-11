@@ -32,6 +32,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
 using Encog.Neural.Data;
+using Encog.Util.CSV;
 
 namespace Encog.Persist.Persistors
 {
@@ -71,15 +72,15 @@ namespace Encog.Persist.Persistors
         {
             IDictionary<String, String> properties = xmlIn.ReadPropertyBlock();
             INeuralDataPair pair = null;
-            INeuralData input = new BasicNeuralData(ReadCSV
-                   .FromCommas(properties
+            INeuralData input = new BasicNeuralData(NumberList
+                   .FromList(CSVFormat.EG_FORMAT, properties
                            [BasicNeuralDataSetPersistor.TAG_INPUT]));
 
             if (properties.ContainsKey(BasicNeuralDataSetPersistor.TAG_IDEAL))
             {
                 // supervised
-                INeuralData ideal = new BasicNeuralData(ReadCSV
-                       .FromCommas(properties
+                INeuralData ideal = new BasicNeuralData(NumberList
+                       .FromList(CSVFormat.EG_FORMAT, properties
                                [BasicNeuralDataSetPersistor.TAG_IDEAL]));
                 pair = new BasicNeuralDataPair(input, ideal);
             }
@@ -141,13 +142,13 @@ namespace Encog.Persist.Persistors
             {
                 xmlOut.BeginTag(BasicNeuralDataSetPersistor.TAG_ITEM);
 
-                ReadCSV.ToCommas(builder, pair.Input.Data);
+                NumberList.ToList(CSVFormat.EG_FORMAT, builder, pair.Input.Data);
                 xmlOut.AddProperty(BasicNeuralDataSetPersistor.TAG_INPUT, builder
                         .ToString());
 
                 if (pair.Ideal != null)
                 {
-                    ReadCSV.ToCommas(builder, pair.Ideal.Data);
+                    NumberList.ToList(CSVFormat.EG_FORMAT, builder, pair.Ideal.Data);
                     xmlOut.AddProperty(BasicNeuralDataSetPersistor.TAG_IDEAL, builder
                             .ToString());
                 }

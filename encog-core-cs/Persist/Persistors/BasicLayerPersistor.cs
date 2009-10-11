@@ -31,6 +31,7 @@ using Encog.Util;
 using Encog.Parse.Tags.Read;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
+using Encog.Util.CSV;
 
 namespace Encog.Persist.Persistors
 {
@@ -119,7 +120,7 @@ namespace Encog.Persist.Persistors
                 }
                 else
                 {
-                    double[] t = ReadCSV.FromCommas(threshold);
+                    double[] t = NumberList.FromList(CSVFormat.EG_FORMAT, threshold);
                     layer = new BasicLayer(activation, true, neuronCount);
                     for (int i = 0; i < t.Length; i++)
                     {
@@ -152,7 +153,7 @@ namespace Encog.Persist.Persistors
             if (layer.HasThreshold)
             {
                 StringBuilder result = new StringBuilder();
-                ReadCSV.ToCommas(result, layer.Threshold);
+                NumberList.ToList(CSVFormat.EG_FORMAT, result, layer.Threshold);
                 xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_THRESHOLD, result
                         .ToString());
             }
