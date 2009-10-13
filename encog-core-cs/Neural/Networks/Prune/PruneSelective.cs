@@ -31,9 +31,10 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Matrix;
 #if logging
 using log4net;
+#endif
 using Encog.Util.MathUtil.RBF;
 using Encog.Util.MathUtil;
-#endif
+
 namespace Encog.Neural.Networks.Prune
 {
     /// <summary>

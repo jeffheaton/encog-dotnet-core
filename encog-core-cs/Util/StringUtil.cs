@@ -58,7 +58,8 @@ namespace Encog.Util
                 b2[i * 2] = b[i];
                 b2[(i * 2) + 1] = 0;
             }
-            return (new UnicodeEncoding()).GetString(b2);
+            
+            return (new UnicodeEncoding()).GetString(b2, 0, b2.Length);
         }
     }
 }

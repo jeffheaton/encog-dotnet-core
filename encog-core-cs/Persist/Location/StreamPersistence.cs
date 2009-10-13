@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Persist.Location
 {

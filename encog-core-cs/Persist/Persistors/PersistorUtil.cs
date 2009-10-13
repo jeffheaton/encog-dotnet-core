@@ -30,9 +30,9 @@ using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
 using Encog.Util;
 using System.Reflection;
+using Encog.Util.CSV;
 #if logging
 using log4net;
-using Encog.Util.CSV;
 #endif
 
 namespace Encog.Persist.Persistors
