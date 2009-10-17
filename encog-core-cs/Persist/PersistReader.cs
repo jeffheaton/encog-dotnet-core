@@ -285,13 +285,13 @@ namespace Encog.Persist
                             text.Length = 0;
                         }
 
-                        if (!this.xmlIn.LastTag.Name.Equals(contain))
-                        {
-                            xmlOut.EndTag(xmlIn.LastTag.Name);
-                        }
-                        else if (depth == 0)
+                        if (depth == 0)
                         {
                             break;
+                        }
+                        else
+                        {
+                            xmlOut.EndTag(xmlIn.LastTag.Name);
                         }
                         depth--;
                     }
