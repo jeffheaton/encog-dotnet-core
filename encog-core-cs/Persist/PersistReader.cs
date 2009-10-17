@@ -109,7 +109,7 @@ namespace Encog.Persist
                     }
                     else
                     {
-                        SkipObject(this.xmlIn.LastTag.Name);
+                        SkipObject();
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace Encog.Persist
                     }
                     else
                     {
-                        SkipObject(this.xmlIn.LastTag.Name);
+                        SkipObject();
                     }
                 }
             }
@@ -199,7 +199,7 @@ namespace Encog.Persist
                     result.Add(entry);
                 }
 
-                SkipObject(this.xmlIn.LastTag.Name);
+                SkipObject();
             }
 
             return result;
@@ -325,7 +325,7 @@ namespace Encog.Persist
                     }
                     else
                     {
-                        SkipObject(this.xmlIn.LastTag.Name);
+                        SkipObject();
                     }
                 }
             }
@@ -446,7 +446,7 @@ namespace Encog.Persist
                            PersistReader.ATTRIBUTE_NAME);
                     if (name.Equals(skip))
                     {
-                        SkipObject(this.xmlIn.LastTag.Name);
+                        SkipObject();
                     }
                     else
                     {
@@ -457,20 +457,25 @@ namespace Encog.Persist
         }
 
         /// <summary>
-        /// Skip the specified object.
+        /// Skip the current object.
         /// </summary>
-        /// <param name="name">The name of the object to skip.</param>
-        private void SkipObject(String name)
+        private void SkipObject()
         {
+            int depth = 0;
             while (this.xmlIn.ReadToTag())
             {
                 Tag.Type type = this.xmlIn.LastTag.TagType;
-                if (type == Tag.Type.END)
+
+                switch (type)
                 {
-                    if (this.xmlIn.LastTag.Name.Equals(name))
-                    {
-                        return;
-                    }
+                    case Tag.Type.END:
+                        if (depth == 0)
+                            return;
+                        depth--;
+                        break;
+                    case Tag.Type.BEGIN:
+                        depth++;
+                        break;
                 }
             }
         }
