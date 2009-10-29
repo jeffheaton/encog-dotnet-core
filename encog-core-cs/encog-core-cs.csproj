@@ -224,6 +224,11 @@
     <Compile Include="Parse\Tags\TagConst.cs" />
     <Compile Include="Parse\Tags\Write\WriteTags.cs" />
     <Compile Include="Parse\Tags\Write\WriteXML.cs" />
+    <Compile Include="Persist\Attributes\EGAttribute.cs" />
+    <Compile Include="Persist\Attributes\EGIgnore.cs" />
+    <Compile Include="Persist\Attributes\EGReference.cs" />
+    <Compile Include="Persist\Attributes\EGReferenceable.cs" />
+    <Compile Include="Persist\Attributes\EGUnsupported.cs" />
     <Compile Include="Persist\DirectoryEntry.cs" />
     <Compile Include="Persist\EncogMemoryCollection.cs" />
     <Compile Include="Persist\EncogPersistedCollection.cs" />
@@ -248,6 +253,12 @@
     <Compile Include="Persist\Persistors\BasicNeuralDataSetPersistor.cs" />
     <Compile Include="Persist\Persistors\ContextLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\DirectSynapsePersistor.cs" />
+    <Compile Include="Persist\Persistors\Generic\FieldMapping.cs" />
+    <Compile Include="Persist\Persistors\Generic\GenericPersistor.cs" />
+    <Compile Include="Persist\Persistors\Generic\Object2XML.cs" />
+    <Compile Include="Persist\Persistors\Generic\ObjectMapper.cs" />
+    <Compile Include="Persist\Persistors\Generic\ObjectTagger.cs" />
+    <Compile Include="Persist\Persistors\Generic\XML2Object.cs" />
     <Compile Include="Persist\Persistors\OneToOneSynapsePersistor.cs" />
     <Compile Include="Persist\Persistors\PersistorUtil.cs" />
     <Compile Include="Persist\Persistors\PropertyDataPersistor.cs" />
@@ -299,6 +310,7 @@
     <Compile Include="Util\Randomize\IRandomizer.cs" />
     <Compile Include="Util\Randomize\RangeRandomizer.cs" />
     <Compile Include="Util\CSV\ReadCSV.cs" />
+    <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\SerializeObject.cs" />
     <Compile Include="Util\StringUtil.cs" />
     <Compile Include="Util\Time\DateUtil.cs" />
@@ -307,6 +319,12 @@
     <Compile Include="Util\Time\TimeSpanUtil.cs" />
     <Compile Include="Util\Time\TimeUnit.cs" />
     <Compile Include="Util\YahooSearch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Normalize\Input\" />
+    <Folder Include="Normalize\Output\" />
+    <Folder Include="Normalize\Segregate\" />
+    <Folder Include="Normalize\Target\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
