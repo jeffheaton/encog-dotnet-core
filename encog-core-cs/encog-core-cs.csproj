@@ -214,6 +214,15 @@
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
+    <Compile Include="Normalize\Input\BasicInputField.cs" />
+    <Compile Include="Normalize\Input\IHasFixedLength.cs" />
+    <Compile Include="Normalize\Input\IInputField.cs" />
+    <Compile Include="Normalize\Input\InputFieldArray1D.cs" />
+    <Compile Include="Normalize\Input\InputFieldArray2D.cs" />
+    <Compile Include="Normalize\Input\InputFieldCSV.cs" />
+    <Compile Include="Normalize\Input\InputFieldNeuralDataSet.cs" />
+    <Compile Include="Normalize\Input\NeuralDataFieldHolder.cs" />
+    <Compile Include="Normalize\NormalizationError.cs" />
     <Compile Include="NullStatusReportable.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
@@ -321,7 +330,6 @@
     <Compile Include="Util\YahooSearch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Normalize\Input\" />
     <Folder Include="Normalize\Output\" />
     <Folder Include="Normalize\Segregate\" />
     <Folder Include="Normalize\Target\" />
