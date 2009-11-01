@@ -288,6 +288,17 @@ namespace Encog.Util.CSV
         }
 
         /// <summary>
+        /// Get the specified column as a double.
+        /// </summary>
+        /// <param name="column">The column to read.</param>
+        /// <returns>The specified column as a double.</returns>
+        public double GetDouble(int column)
+        {
+            String str = Get(column);
+            return this.format.Parse(str);
+        }
+
+        /// <summary>
         /// Get an integer that has the specified name.
         /// </summary>
         /// <param name="col">The column name to read.</param>

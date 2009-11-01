@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -222,7 +222,16 @@
     <Compile Include="Normalize\Input\InputFieldCSV.cs" />
     <Compile Include="Normalize\Input\InputFieldNeuralDataSet.cs" />
     <Compile Include="Normalize\Input\NeuralDataFieldHolder.cs" />
+    <Compile Include="Normalize\DataNormalization.cs" />
     <Compile Include="Normalize\NormalizationError.cs" />
+    <Compile Include="Normalize\Output\BasicOutputField.cs" />
+    <Compile Include="Normalize\Output\IOutputField.cs" />
+    <Compile Include="Normalize\Output\IOutputFieldGroup.cs" />
+    <Compile Include="Normalize\Output\OutputFieldDirect.cs" />
+    <Compile Include="Normalize\Output\OutputFieldGrouped.cs" />
+    <Compile Include="Normalize\Output\OutputFieldRangeMapped.cs" />
+    <Compile Include="Normalize\Segregate\ISegregator.cs" />
+    <Compile Include="Normalize\Target\INormalizationStorage.cs" />
     <Compile Include="NullStatusReportable.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
@@ -328,11 +337,6 @@
     <Compile Include="Util\Time\TimeSpanUtil.cs" />
     <Compile Include="Util\Time\TimeUnit.cs" />
     <Compile Include="Util\YahooSearch.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Normalize\Output\" />
-    <Folder Include="Normalize\Segregate\" />
-    <Folder Include="Normalize\Target\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
