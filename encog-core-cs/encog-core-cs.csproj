@@ -225,8 +225,10 @@
     <Compile Include="Normalize\DataNormalization.cs" />
     <Compile Include="Normalize\NormalizationError.cs" />
     <Compile Include="Normalize\Output\BasicOutputField.cs" />
+    <Compile Include="Normalize\Output\BasicOutputFieldGroup.cs" />
     <Compile Include="Normalize\Output\IOutputField.cs" />
     <Compile Include="Normalize\Output\IOutputFieldGroup.cs" />
+    <Compile Include="Normalize\Output\Mapped\MappedRange.cs" />
     <Compile Include="Normalize\Output\OutputFieldDirect.cs" />
     <Compile Include="Normalize\Output\OutputFieldGrouped.cs" />
     <Compile Include="Normalize\Output\OutputFieldRangeMapped.cs" />
