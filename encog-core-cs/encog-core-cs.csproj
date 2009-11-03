@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -229,11 +229,27 @@
     <Compile Include="Normalize\Output\IOutputField.cs" />
     <Compile Include="Normalize\Output\IOutputFieldGroup.cs" />
     <Compile Include="Normalize\Output\Mapped\MappedRange.cs" />
+    <Compile Include="Normalize\Output\Mapped\OutputFieldEncode.cs" />
+    <Compile Include="Normalize\Output\Multiplicative\MultiplicativeGroup.cs" />
+    <Compile Include="Normalize\Output\Multiplicative\OutputFieldMultiplicative.cs" />
+    <Compile Include="Normalize\Output\Nominal\NominalItem.cs" />
+    <Compile Include="Normalize\Output\Nominal\OutputEquilateral.cs" />
+    <Compile Include="Normalize\Output\Nominal\OutputOneOf.cs" />
     <Compile Include="Normalize\Output\OutputFieldDirect.cs" />
     <Compile Include="Normalize\Output\OutputFieldGrouped.cs" />
     <Compile Include="Normalize\Output\OutputFieldRangeMapped.cs" />
+    <Compile Include="Normalize\Output\ZAxis\OutputFieldZAxis.cs" />
+    <Compile Include="Normalize\Output\ZAxis\OutputFieldZAxisSynthetic.cs" />
+    <Compile Include="Normalize\Output\ZAxis\ZAxisGroup.cs" />
+    <Compile Include="Normalize\Segregate\Index\IndexRangeSegregator.cs" />
+    <Compile Include="Normalize\Segregate\Index\IndexSampleSegregator.cs" />
+    <Compile Include="Normalize\Segregate\Index\IndexSegregator.cs" />
     <Compile Include="Normalize\Segregate\ISegregator.cs" />
+    <Compile Include="Normalize\Segregate\RangeSegregator.cs" />
+    <Compile Include="Normalize\Segregate\SegregationRange.cs" />
     <Compile Include="Normalize\Target\INormalizationStorage.cs" />
+    <Compile Include="Normalize\Target\NormalizationStorageArray1D.cs" />
+    <Compile Include="Normalize\Target\NormalizationStorageArray2D.cs" />
     <Compile Include="NullStatusReportable.cs" />
     <Compile Include="Parse\ParseError.cs" />
     <Compile Include="Parse\PeekableInputStream.cs" />
@@ -317,6 +333,7 @@
     <Compile Include="Util\MathUtil\BoundMath.cs" />
     <Compile Include="Util\MathUtil\BoundNumbers.cs" />
     <Compile Include="Util\MathUtil\Convert.cs" />
+    <Compile Include="Util\MathUtil\Equilateral.cs" />
     <Compile Include="Util\MathUtil\MathConst.cs" />
     <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
     <Compile Include="Util\MathUtil\RBF\RadialBasisFunction.cs" />
