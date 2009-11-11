@@ -97,7 +97,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public Backpropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double momentum)
-            : base(network, new BackpropagationMethod(), training)
+            : base(network, new BackpropagationMethod(learnRate,momentum), training)
         {
 
             this.momentum = momentum;

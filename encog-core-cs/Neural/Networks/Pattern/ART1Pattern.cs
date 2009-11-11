@@ -62,42 +62,55 @@ namespace Encog.Neural.Networks.Pattern
         /// <summary>
         /// The number of input neurons.
         /// </summary>
-        private int inputNeurons;
+        public int InputNeurons { get; set; }
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
-        private int outputNeurons;
+        public int OutputNeurons { get; set; }
 
         /// <summary>
         /// A parameter for F1 layer.
         /// </summary>
-        private double a1 = 1;
+        public double A1 { get; set; }
 
         /// <summary>
         /// B parameter for F1 layer.
         /// </summary>
-        private double b1 = 1.5;
+        public double B1 { get; set; }
 
         /// <summary>
         /// C parameter for F1 layer.
         /// </summary>
-        private double c1 = 5;
+        public double C1 { get; set; }
 
         /// <summary>
         /// D parameter for F1 layer.
         /// </summary>
-        private double d1 = 0.9;
+        public double D1 { get; set; }
 
         /// <summary>
         /// L parameter for net.
         /// </summary>
-        private double l = 3;
+        public double L { get; set; }
 
         /// <summary>
         /// The vigilance parameter.
         /// </summary>
-        private double vigilance = 0.9;
+        public double Vigilance { get; set; }
+
+        /// <summary>
+        /// Construct the pattern and set the default values.
+        /// </summary>
+        public ART1Pattern()
+        {
+            this.A1 = 1;
+            this.B1 = 1.5;
+            this.C1 = 5;
+            this.D1 = 0.9;
+            this.L = 3;
+            this.Vigilance = 0.9;
+        }
 
         /// <summary>
         /// This will fail, hidden layers are not supported for this type of
@@ -121,7 +134,7 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         public void Clear()
         {
-            this.inputNeurons = this.outputNeurons = 0;
+            this.InputNeurons = this.OutputNeurons = 0;
 
         }
 
@@ -135,8 +148,8 @@ namespace Encog.Neural.Networks.Pattern
 
             int y = PatternConst.START_Y;
 
-            ILayer layerF1 = new BasicLayer(new ActivationLinear(), false, this.inputNeurons);
-            ILayer layerF2 = new BasicLayer(new ActivationLinear(), false, this.outputNeurons);
+            ILayer layerF1 = new BasicLayer(new ActivationLinear(), false, this.InputNeurons);
+            ILayer layerF2 = new BasicLayer(new ActivationLinear(), false, this.OutputNeurons);
             ISynapse synapseF1toF2 = new WeightedSynapse(layerF1, layerF2);
             ISynapse synapseF2toF1 = new WeightedSynapse(layerF2, layerF1);
             layerF1.Next.Add(synapseF1toF2);
@@ -155,12 +168,12 @@ namespace Encog.Neural.Networks.Pattern
             layerF2.X = PatternConst.START_X;
             layerF2.Y = y;
 
-            network.SetProperty(ARTLogic.PROPERTY_A1, this.a1);
-            network.SetProperty(ARTLogic.PROPERTY_B1, this.b1);
-            network.SetProperty(ARTLogic.PROPERTY_C1, this.c1);
-            network.SetProperty(ARTLogic.PROPERTY_D1, this.d1);
-            network.SetProperty(ARTLogic.PROPERTY_L, this.l);
-            network.SetProperty(ARTLogic.PROPERTY_VIGILANCE, this.vigilance);
+            network.SetProperty(ARTLogic.PROPERTY_A1, this.A1);
+            network.SetProperty(ARTLogic.PROPERTY_B1, this.B1);
+            network.SetProperty(ARTLogic.PROPERTY_C1, this.C1);
+            network.SetProperty(ARTLogic.PROPERTY_D1, this.D1);
+            network.SetProperty(ARTLogic.PROPERTY_L, this.L);
+            network.SetProperty(ARTLogic.PROPERTY_VIGILANCE, this.Vigilance);
 
             network.Structure.FinalizeStructure();
 
@@ -194,111 +207,6 @@ namespace Encog.Neural.Networks.Pattern
                 }
 #endif
                 throw new PatternError(str);
-            }
-        }
-
-        /// <summary>
-        /// The number of input neurons.
-        /// </summary>
-        public int InputNeurons
-        {
-            get
-            {
-                return this.inputNeurons;
-            }
-            set
-            {
-                this.inputNeurons = value;
-            }
-        }
-
-        /// <summary>
-        /// The number of output neurons.
-        /// </summary>
-        public int OutputNeurons
-        {
-            get
-            {
-                return this.outputNeurons;
-            }
-            set
-            {
-                this.outputNeurons = value;
-            }
-        }
-
-        /// <summary>
-        /// The A1 parameter.
-        /// </summary>
-        public double A1
-        {
-            get
-            {
-                return this.a1;
-            }
-            set
-            {
-                this.a1 = value;
-            }
-        }
-
-        /// <summary>
-        /// The B1 parameter.
-        /// </summary>
-        public double B1
-        {
-            get
-            {
-                return this.b1;
-            }
-            set
-            {
-                this.b1 = value;
-            }
-        }
-
-        /// <summary>
-        /// The C1 parameter.
-        /// </summary>
-        public double C1
-        {
-            get
-            {
-                return this.c1;
-            }
-            set
-            {
-                this.c1 = value;
-            }
-        }
-
-        /// <summary>
-        /// The D1 parameter.
-        /// </summary>
-        public double D1
-        {
-            get
-            {
-                return this.d1;
-            }
-            set
-            {
-                this.d1 = value;
-            }
-        }
-
-        /// <summary>
-        /// The vigilance for the network.
-        /// </summary>
-        public double Vigilance
-        {
-            get
-            {
-                return this.vigilance;
-            }
-            set
-            {
-                this.vigilance = value;
             }
         }
     }

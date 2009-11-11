@@ -59,12 +59,12 @@ namespace Encog.Neural.Networks.Pattern
         /// <summary>
         /// The number of neurons in the first layer.
         /// </summary>
-        private int f1Neurons;
+        public int F1Neurons { get; set; }
 
         /// <summary>
         /// The number of neurons in the second layer.
         /// </summary>
-        private int f2Neurons;
+        public int F2Neurons { get; set; }
 
 #if logging
         /// <summary>
@@ -95,7 +95,7 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         public void Clear()
         {
-            this.f1Neurons = this.f2Neurons = 0;
+            this.F1Neurons = this.F2Neurons = 0;
 
         }
 
@@ -108,9 +108,9 @@ namespace Encog.Neural.Networks.Pattern
             BasicNetwork network = new BasicNetwork(new BAMLogic());
 
             ILayer f1Layer = new BasicLayer(new ActivationBiPolar(), false,
-                    f1Neurons);
+                    F1Neurons);
             ILayer f2Layer = new BasicLayer(new ActivationBiPolar(), false,
-                    f2Neurons);
+                    F2Neurons);
             ISynapse synapseInputToOutput = new WeightedSynapse(f1Layer,
                     f2Layer);
             ISynapse synapseOutputToInput = new WeightedSynapse(f2Layer,
@@ -163,36 +163,7 @@ namespace Encog.Neural.Networks.Pattern
 
         }
 
-        /// <summary>
-        ///  Set the F1 neurons.
-        /// </summary>
-        public int F1Neurons
-        {
-            get
-            {
-                return this.f1Neurons;
-            }
-            set
-            {
-                this.f1Neurons = value;
-            }
-        }
-
-        /// <summary>
-        /// Set the F2 neurons.
-        /// </summary>
-        public int F2Neurons
-        {
-            get
-            {
-                return this.f2Neurons;
-            }
-            set
-            {
-                this.f2Neurons = value;
-            }
-        }
-
+ 
         /// <summary>
         /// The number of input neurons.  This will fail, a BAM has no input neurons.
         /// </summary>

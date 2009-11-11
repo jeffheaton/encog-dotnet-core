@@ -45,16 +45,73 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// </summary>
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 #endif
+
+        	/**
+	 * The zero tolerance.
+	 */
+	private double zeroTolerance;
+	
+	/**
+	 * The maximum step a delta can take.
+	 */
+	private  double maxStep;
+	
+	/** 
+	 * The intial values for the deltas.
+	 */
+	private  double initialUpdate;
+
         /// <summary>
         /// The propagation class that this method is used with.
         /// </summary>
-        private ResilientPropagation propagation;
+        private PropagationUtil propagationUtil;
 
         /// <summary>
         /// Utility class to calculate the partial derivative.
         /// </summary>
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
+
+        	/**
+	 * Construct a resilient propagation method.
+	 * @param zeroTolerance The zero tolerance.
+	 * @param maxStep The max step.
+	 * @param initialUpdate The initial update.
+	 */
+	public ResilientPropagationMethod( double zeroTolerance,
+			 double maxStep,  double initialUpdate) {
+		this.zeroTolerance = zeroTolerance;
+		this.maxStep = maxStep;
+		this.initialUpdate = initialUpdate;
+	}
+
+    /// <summary>
+    /// Init with the specified propagation object.
+    /// </summary>
+    /// <param name="propagation">The propagation object that this method will be used with.</param>
+    public void Init(PropagationUtil propagationUtil)
+    {
+        this.propagationUtil = propagationUtil;
+
+        // set the initialUpdate to all of the threshold and matrix update
+        // values.
+        // This is necessary for the first step. RPROP always builds on the
+        // previous
+        // step, and there is no previous step on the first iteration.
+        foreach (PropagationLevel level in propagationUtil.Levels)
+        {
+            for (int i = 0; i < level.NeuronCount; i++)
+            {
+                level.ThresholdDeltas[i] = this.initialUpdate;
+            }
+
+            foreach (PropagationSynapse synapse in level.Outgoing)
+            {
+                synapse.Deltas.Set(this.initialUpdate);
+            }
+        }
+    }
+
 
         /// <summary>
         /// Calculate the error between these two levels.
@@ -70,15 +127,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
 
         }
 
-        /// <summary>
-        /// Init with the specified propagation object.
-        /// </summary>
-        /// <param name="propagation">The propagation object that this method will be used with.</param>
-        public void Init(Propagation propagation)
-        {
-            this.propagation = (ResilientPropagation)propagation;
-
-        }
 
         /// <summary>
         /// Modify the weight matrix and thresholds based on the last call to
@@ -93,7 +141,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
             }
 #endif
 
-            foreach (PropagationLevel level in this.propagation.Levels)
+            foreach (PropagationLevel level in this.propagationUtil.Levels)
             {
                 LearnLevel(level);
             }
@@ -133,7 +181,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         {
                             double delta = level.ThresholdDeltas[i]
                                     * ResilientPropagation.POSITIVE_ETA;
-                            delta = Math.Min(delta, this.propagation.MaxStep);
+                            delta = Math.Min(delta, this.maxStep);
                             weightChange = Sign(level.ThresholdGradents[i])
                                     * delta;
                             level.ThresholdDeltas[i] = delta;
@@ -201,7 +249,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                     {
                         double delta = deltas[row][col]
                                 * ResilientPropagation.POSITIVE_ETA;
-                        delta = Math.Min(delta, this.propagation.MaxStep);
+                        delta = Math.Min(delta, this.maxStep);
                         weightChange = Sign(accData[
                                 row][col])
                                 * delta;
@@ -248,7 +296,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
         private int Sign(double value)
         {
-            if (Math.Abs(value) < this.propagation.ZeroTolerance)
+            if (Math.Abs(value) < this.zeroTolerance)
             {
                 return 0;
             }

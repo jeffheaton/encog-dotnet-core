@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         /// <param name="propagation">The propagation object that this method will
         /// be used with.</param>
-        void Init(Propagation propagation);
+        void Init(PropagationUtil propagation);
 
         /// <summary>
         /// Apply the accumulated deltas and learn.

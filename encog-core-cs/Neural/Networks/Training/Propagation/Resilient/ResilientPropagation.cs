@@ -143,31 +143,11 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public ResilientPropagation(BasicNetwork network,
                  INeuralDataSet training, double zeroTolerance,
                  double initialUpdate, double maxStep)
-            : base(network, new ResilientPropagationMethod(), training)
+            : base(network, new ResilientPropagationMethod(zeroTolerance,maxStep,initialUpdate), training)
         {
-
-
             this.initialUpdate = initialUpdate;
             this.maxStep = maxStep;
             this.zeroTolerance = zeroTolerance;
-
-            // set the initialUpdate to all of the threshold and matrix update
-            // values.
-            // This is necessary for the first step. RPROP always builds on the
-            // previous
-            // step, and there is no previous step on the first iteration.
-            foreach (PropagationLevel level in this.Levels)
-            {
-                for (int i = 0; i < level.NeuronCount; i++)
-                {
-                    level.ThresholdDeltas[i] = this.initialUpdate;
-                }
-
-                foreach (PropagationSynapse synapse in level.Outgoing)
-                {
-                    synapse.Deltas.Set(this.initialUpdate);
-                }
-            }
         }
 
         /// <summary>
@@ -202,5 +182,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 return this.zeroTolerance;
             }
         }
+
     }
 }

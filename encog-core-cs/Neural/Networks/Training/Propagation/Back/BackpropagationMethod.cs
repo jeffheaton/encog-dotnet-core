@@ -47,7 +47,17 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <summary>
         /// The backpropagation class that owns this method.
         /// </summary>
-        private Backpropagation propagation;
+        private PropagationUtil propagationUtil;
+
+        	/**
+	 * The learning rate.
+	 */
+	private  double learningRate;
+	
+	/**
+	 * The momentum.
+	 */
+	private  double momentum;
 
 #if logging
         /// <summary>
@@ -61,6 +71,17 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
+
+        /**
+	 * Construct a back propagation method.
+	 * @param learningRate The learning rate to use.
+	 * @param momentum The momentum to use.
+	 */
+	public BackpropagationMethod( double learningRate,
+			 double momentum) {
+		this.learningRate = learningRate;
+		this.momentum = momentum;
+	}
 
         /// <summary>
         /// Calculate the error between these two levels.
@@ -79,9 +100,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// Setup this propagation method using the specified propagation class.
         /// </summary>
         /// <param name="propagation">The propagation class creating this method.</param>
-        public void Init(Propagation propagation)
+        public void Init(PropagationUtil propagation)
         {
-            this.propagation = (Backpropagation)propagation;
+            this.propagationUtil = propagationUtil;
         }
 
         /// <summary>
@@ -97,7 +118,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
             }
 #endif
 
-            foreach (PropagationLevel level in this.propagation.Levels)
+            foreach (PropagationLevel level in this.propagationUtil.Levels)
             {
                 LearnLevel(level);
             }
@@ -124,9 +145,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                     for (int i = 0; i < layer.NeuronCount; i++)
                     {
                         double delta = level.ThresholdGradents[i]
-                                * this.propagation.LearningRate;
+                                * this.learningRate;
                         delta += level.LastThresholdGradents[i]
-                                * this.propagation.Momentum;
+                                * this.momentum;
                         layer.Threshold[i] += delta;
                         level.LastThresholdGradents[i] = delta;
                         level.ThresholdGradents[i] = 0.0;
@@ -143,9 +164,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         {
 
             Matrix.Matrix m1 = MatrixMath.Multiply(synapse.AccMatrixGradients,
-                   this.propagation.LearningRate);
+                   this.learningRate);
             Matrix.Matrix m2 = MatrixMath.Multiply(synapse.LastMatrixGradients,
-                   this.propagation.Momentum);
+                   this.momentum);
             synapse.LastMatrixGradients = MatrixMath.Add(m1, m2);
 
 #if logging

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -203,6 +203,7 @@
     <Compile Include="Neural\Networks\Training\Propagation\PropagationLevel.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\IPropagationMethod.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\PropagationSynapse.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\PropagationUtil.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagationMethod.cs" />
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />

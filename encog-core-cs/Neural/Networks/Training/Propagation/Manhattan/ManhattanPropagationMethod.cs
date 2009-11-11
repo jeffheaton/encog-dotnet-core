@@ -38,6 +38,16 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
     /// </summary>
     public class ManhattanPropagationMethod : IPropagationMethod
     {
+        /**
+ * The zero tolerance to use.
+ */
+        private double zeroTolerance;
+
+        /**
+         * The learning rate to use. This is the Manhattan update constant.
+         */
+        private double learningRate;
+
 #if logging
         /// <summary>
         /// The logging object.
@@ -45,15 +55,30 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 #endif
         /// <summary>
-        /// The Manhattan propagation class that this method is used by.
+        /// The propagation util.
         /// </summary>
-        private ManhattanPropagation propagation;
+        private PropagationUtil propagationUtil;
 
         /// <summary>
         /// The partial derivative utility class.
         /// </summary>
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
+
+        /**
+	 * Construct a Manhattan update trainer.
+	 * 
+	 * @param zeroTolerance
+	 *            The zero tolerance to use.
+	 * @param learningRate
+	 *            The learning rate to use, this is the Manhattan update
+	 *            constant.
+	 */
+	public ManhattanPropagationMethod( double zeroTolerance,
+			 double learningRate) {
+		this.zeroTolerance = zeroTolerance;
+		this.learningRate = learningRate;
+	}
 
         /// <summary>
         /// Calculate the error between these two levels.
@@ -77,17 +102,17 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
          */
         private double DetermineChange(double value)
         {
-            if (Math.Abs(value) < this.propagation.ZeroTolerance)
+            if (Math.Abs(value) < this.zeroTolerance)
             {
                 return 0;
             }
             else if (value > 0)
             {
-                return this.propagation.LearningRate;
+                return this.learningRate;
             }
             else
             {
-                return -this.propagation.LearningRate;
+                return -this.learningRate;
             }
         }
 
@@ -95,9 +120,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// Init with the specified propagation object.
         /// </summary>
         /// <param name="propagation">The propagation object that this method will be used with.</param>
-        public void Init(Propagation propagation)
+        public void Init(PropagationUtil propagationUtil)
         {
-            this.propagation = (ManhattanPropagation)propagation;
+            this.propagationUtil = propagationUtil;
 
         }
 
@@ -113,7 +138,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
                 this.logger.Debug("Backpropagation learning pass");
             }
 #endif
-            foreach (PropagationLevel level in this.propagation.Levels)
+            foreach (PropagationLevel level in this.propagationUtil.Levels)
             {
                 LearnLevel(level);
             }
@@ -143,7 +168,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
                     {
                         double change = DetermineChange(level
                                .ThresholdGradents[i]
-                               * this.propagation.LearningRate);
+                               * this.learningRate);
                         layer.Threshold[i] += change;
                     }
                 }

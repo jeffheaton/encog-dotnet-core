@@ -43,12 +43,12 @@ namespace Encog.Neural.Networks.Pattern
         /// <summary>
         /// The number of neurons in the input layer.
         /// </summary>
-        private int inputNeurons;
+        public int InputNeurons { get; set; }
 
         /// <summary>
         /// The number of neurons in the output layer.
         /// </summary>
-        private int outputNeurons;
+        public int OutputNeurons { get; set; }
 
 #if logging
         /// <summary>
@@ -80,7 +80,7 @@ namespace Encog.Neural.Networks.Pattern
         /// </summary>
         public void Clear()
         {
-            this.inputNeurons = this.outputNeurons = 0;
+            this.InputNeurons = this.OutputNeurons = 0;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace Encog.Neural.Networks.Pattern
 
             int y = PatternConst.START_Y;
 
-            ILayer inputLayer = new BasicLayer(new ActivationLinear(), false, inputNeurons);
-            ILayer outputLayer = new BasicLayer(new ActivationLinear(), true, outputNeurons);
+            ILayer inputLayer = new BasicLayer(new ActivationLinear(), false, InputNeurons);
+            ILayer outputLayer = new BasicLayer(new ActivationLinear(), true, OutputNeurons);
 
             network.AddLayer(inputLayer);
             network.AddLayer(outputLayer);
@@ -143,34 +143,5 @@ namespace Encog.Neural.Networks.Pattern
             }
         }
 
-        /// <summary>
-        /// The input neurons.
-        /// </summary>
-        public int InputNeurons
-        {
-            get
-            {
-                return this.inputNeurons;
-            }
-            set
-            {
-                this.inputNeurons = value;
-            }
-        }
-
-        /// <summary>
-        /// The output neurons.
-        /// </summary>
-        public int OutputNeurons
-        {
-            get
-            {
-                return this.outputNeurons;
-            }
-            set
-            {
-                this.outputNeurons = value;
-            }
-        }
     }
 }

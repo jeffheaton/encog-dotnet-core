@@ -98,7 +98,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         public ManhattanPropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double zeroTolerance)
-            : base(network, new ManhattanPropagationMethod(), training)
+            : base(network, new ManhattanPropagationMethod(zeroTolerance,learnRate), training)
         {
             this.zeroTolerance = zeroTolerance;
             this.learningRate = learnRate;

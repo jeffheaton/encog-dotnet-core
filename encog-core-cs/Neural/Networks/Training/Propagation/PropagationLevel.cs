@@ -84,14 +84,14 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <summary>
         /// The propagation class that this level belongs to.
         /// </summary>
-        public Propagation Propagation;
+        public PropagationUtil Propagation;
 
         /// <summary>
         /// Construct a propagation level.
         /// </summary>
         /// <param name="propagation">The propagation object that created this.</param>
         /// <param name="layer">The initial layer, others can be added later.</param>
-        public PropagationLevel(Propagation propagation, ILayer layer)
+        public PropagationLevel(PropagationUtil propagation, ILayer layer)
         {
             this.NeuronCount = layer.NeuronCount;
             this.Deltas = new double[this.NeuronCount];
@@ -109,7 +109,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         /// <param name="propagation">The propagation object that created this.</param>
         /// <param name="outgoing">The outgoing synapses.</param>
-        public PropagationLevel(Propagation propagation,
+        public PropagationLevel(PropagationUtil propagation,
                  IList<ISynapse> outgoing)
         {
             this.Outgoing = new List<PropagationSynapse>();
