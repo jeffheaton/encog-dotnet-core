@@ -46,20 +46,20 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 #endif
 
-        	/**
-	 * The zero tolerance.
-	 */
-	private double zeroTolerance;
-	
-	/**
-	 * The maximum step a delta can take.
-	 */
-	private  double maxStep;
-	
-	/** 
-	 * The intial values for the deltas.
-	 */
-	private  double initialUpdate;
+        /// <summary>
+        /// The zero tolerance.
+        /// </summary>
+        private double zeroTolerance;
+
+        /// <summary>
+        /// The maximum step a delta can take.
+        /// </summary>
+        private double maxStep;
+
+        /// <summary>
+        /// The intial values for the deltas.
+        /// </summary>
+        private double initialUpdate;
 
         /// <summary>
         /// The propagation class that this method is used with.
@@ -72,45 +72,47 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
 
-        	/**
-	 * Construct a resilient propagation method.
-	 * @param zeroTolerance The zero tolerance.
-	 * @param maxStep The max step.
-	 * @param initialUpdate The initial update.
-	 */
-	public ResilientPropagationMethod( double zeroTolerance,
-			 double maxStep,  double initialUpdate) {
-		this.zeroTolerance = zeroTolerance;
-		this.maxStep = maxStep;
-		this.initialUpdate = initialUpdate;
-	}
 
-    /// <summary>
-    /// Init with the specified propagation object.
-    /// </summary>
-    /// <param name="propagation">The propagation object that this method will be used with.</param>
-    public void Init(PropagationUtil propagationUtil)
-    {
-        this.propagationUtil = propagationUtil;
-
-        // set the initialUpdate to all of the threshold and matrix update
-        // values.
-        // This is necessary for the first step. RPROP always builds on the
-        // previous
-        // step, and there is no previous step on the first iteration.
-        foreach (PropagationLevel level in propagationUtil.Levels)
+        /// <summary>
+        /// Construct a resilient propagation method.
+        /// </summary>
+        /// <param name="zeroTolerance">The zero tolerance.</param>
+        /// <param name="maxStep">The max step.</param>
+        /// <param name="initialUpdate">The initial update.</param>
+        public ResilientPropagationMethod(double zeroTolerance,
+                 double maxStep, double initialUpdate)
         {
-            for (int i = 0; i < level.NeuronCount; i++)
-            {
-                level.ThresholdDeltas[i] = this.initialUpdate;
-            }
+            this.zeroTolerance = zeroTolerance;
+            this.maxStep = maxStep;
+            this.initialUpdate = initialUpdate;
+        }
 
-            foreach (PropagationSynapse synapse in level.Outgoing)
+        /// <summary>
+        /// Init with the specified propagation object.
+        /// </summary>
+        /// <param name="propagationUtil">The propagation object that this method will be used with.</param>
+        public void Init(PropagationUtil propagationUtil)
+        {
+            this.propagationUtil = propagationUtil;
+
+            // set the initialUpdate to all of the threshold and matrix update
+            // values.
+            // This is necessary for the first step. RPROP always builds on the
+            // previous
+            // step, and there is no previous step on the first iteration.
+            foreach (PropagationLevel level in propagationUtil.Levels)
             {
-                synapse.Deltas.Set(this.initialUpdate);
+                for (int i = 0; i < level.NeuronCount; i++)
+                {
+                    level.ThresholdDeltas[i] = this.initialUpdate;
+                }
+
+                foreach (PropagationSynapse synapse in level.Outgoing)
+                {
+                    synapse.Deltas.Set(this.initialUpdate);
+                }
             }
         }
-    }
 
 
         /// <summary>

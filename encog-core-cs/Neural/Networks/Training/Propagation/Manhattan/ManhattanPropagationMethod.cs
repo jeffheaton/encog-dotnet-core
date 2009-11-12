@@ -38,14 +38,14 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
     /// </summary>
     public class ManhattanPropagationMethod : IPropagationMethod
     {
-        /**
- * The zero tolerance to use.
- */
+        /// <summary>
+        /// The zero tolerance to use.
+        /// </summary>
         private double zeroTolerance;
 
-        /**
-         * The learning rate to use. This is the Manhattan update constant.
-         */
+        /// <summary>
+        /// The learning rate to use. This is the Manhattan update constant.
+        /// </summary>
         private double learningRate;
 
 #if logging
@@ -65,20 +65,18 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
 
-        /**
-	 * Construct a Manhattan update trainer.
-	 * 
-	 * @param zeroTolerance
-	 *            The zero tolerance to use.
-	 * @param learningRate
-	 *            The learning rate to use, this is the Manhattan update
-	 *            constant.
-	 */
-	public ManhattanPropagationMethod( double zeroTolerance,
-			 double learningRate) {
-		this.zeroTolerance = zeroTolerance;
-		this.learningRate = learningRate;
-	}
+        /// <summary>
+        /// Construct a Manhattan update trainer.
+        /// </summary>
+        /// <param name="zeroTolerance">The zero tolerance to use.</param>
+        /// <param name="learningRate">The learning rate to use, this is the Manhattan update
+        /// constant.</param>
+        public ManhattanPropagationMethod(double zeroTolerance,
+                 double learningRate)
+        {
+            this.zeroTolerance = zeroTolerance;
+            this.learningRate = learningRate;
+        }
 
         /// <summary>
         /// Calculate the error between these two levels.
@@ -92,14 +90,14 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
             this.pderv.CalculateError(output, fromLevel, toLevel);
         }
 
-        /**
-         * Determine the change that should be applied.  If the partial
-         * derivative was zero(or close enough to zero) then do nothing
-         * otherwise apply the learning rate with the same sign as the
-         * partial derivative.
-         * @param value The partial derivative.
-         * @return The change to be applied to the weight matrix.
-         */
+        /// <summary>
+        /// Determine the change that should be applied.  If the partial
+        /// derivative was zero(or close enough to zero) then do nothing
+        /// otherwise apply the learning rate with the same sign as the
+        /// partial derivative.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private double DetermineChange(double value)
         {
             if (Math.Abs(value) < this.zeroTolerance)
@@ -119,7 +117,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <summary>
         /// Init with the specified propagation object.
         /// </summary>
-        /// <param name="propagation">The propagation object that this method will be used with.</param>
+        /// <param name="propagationUtil">The propagation object that this method will be used with.</param>
         public void Init(PropagationUtil propagationUtil)
         {
             this.propagationUtil = propagationUtil;

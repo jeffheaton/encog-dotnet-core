@@ -58,11 +58,10 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
     public class Backpropagation : Propagation, IMomentum,
             ILearningRate
     {
-
-        /**
-         * The momentum, this is the degree to which the previous training cycle
-         * affects the current one.
-         */
+        /// <summary>
+        /// The momentum, this is the degree to which the previous training cycle
+        /// affects the current one.
+        /// </summary>
         private double momentum;
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public Backpropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double momentum)
-            : base(network, new BackpropagationMethod(learnRate,momentum), training)
+            : base(network, new BackpropagationMethod(learnRate, momentum), training)
         {
 
             this.momentum = momentum;

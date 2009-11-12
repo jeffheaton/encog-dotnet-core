@@ -49,15 +49,15 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         private PropagationUtil propagationUtil;
 
-        	/**
-	 * The learning rate.
-	 */
-	private  double learningRate;
-	
-	/**
-	 * The momentum.
-	 */
-	private  double momentum;
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
+        private double learningRate;
+
+        /// <summary>
+        /// The momentum.
+        /// </summary>
+        private double momentum;
 
 #if logging
         /// <summary>
@@ -72,16 +72,17 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         private CalculatePartialDerivative pderv
             = new CalculatePartialDerivative();
 
-        /**
-	 * Construct a back propagation method.
-	 * @param learningRate The learning rate to use.
-	 * @param momentum The momentum to use.
-	 */
-	public BackpropagationMethod( double learningRate,
-			 double momentum) {
-		this.learningRate = learningRate;
-		this.momentum = momentum;
-	}
+        /// <summary>
+        /// Construct a back propagation method.
+        /// </summary>
+        /// <param name="learningRate">The learning rate to use.</param>
+        /// <param name="momentum"> The momentum to use.</param>
+        public BackpropagationMethod(double learningRate,
+                 double momentum)
+        {
+            this.learningRate = learningRate;
+            this.momentum = momentum;
+        }
 
         /// <summary>
         /// Calculate the error between these two levels.
@@ -99,8 +100,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <summary>
         /// Setup this propagation method using the specified propagation class.
         /// </summary>
-        /// <param name="propagation">The propagation class creating this method.</param>
-        public void Init(PropagationUtil propagation)
+        /// <param name="propagationUtil">The propagation class creating this method.</param>
+        public void Init(PropagationUtil propagationUtil)
         {
             this.propagationUtil = propagationUtil;
         }
