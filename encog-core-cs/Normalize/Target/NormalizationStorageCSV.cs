@@ -25,59 +25,78 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Util.CSV;
+using System.IO;
 
 namespace Encog.Normalize.Target
 {
     /// <summary>
-    /// Output the normalized data to a 1D array.
+    /// Store normalized data to a CSV file.
     /// </summary>
-    public class NormalizationStorageArray1D : INormalizationStorage
+    public class NormalizationStorageCSV : INormalizationStorage
     {
         /// <summary>
-        /// The array to store to.
+        /// The output file.
         /// </summary>
-        private double[] array;
+        private String outputFile;
 
         /// <summary>
-        /// The current index.
+        /// The output writer.
         /// </summary>
-        private int currentIndex;
-
+        private StreamWriter output;
 
         /// <summary>
-        /// Construct an object to store to a 2D array.
+        /// The CSV format to use.
         /// </summary>
-        /// <param name="array">The array to store to.</param>
-        public NormalizationStorageArray1D(double[] array)
+        private CSVFormat format;
+
+        /// <summary>
+        /// Construct a CSV storage object from the specified file.
+        /// </summary>
+        /// <param name="format">The format to use.</param>
+        /// <param name="file">The file to write the CSV to.</param>
+        public NormalizationStorageCSV(CSVFormat format, String file)
         {
-            this.array = array;
-            this.currentIndex = 0;
+            this.format = format;
+            this.outputFile = file;
         }
 
         /// <summary>
-        /// Not needed for this storage type.
+        /// Construct a CSV storage object from the specified file.
+        /// </summary>
+        /// <param name="file">The file to write the CSV to.</param>
+        public NormalizationStorageCSV(String file)
+        {
+            this.format = CSVFormat.ENGLISH;
+            this.outputFile = file;
+        }
+
+        /// <summary>
+        /// Close the CSV file.
         /// </summary>
         public void Close()
         {
-
+            this.output.Close();
         }
 
         /// <summary>
-        /// Not needed for this storage type.
+        /// Open the CSV file.
         /// </summary>
         public void Open()
         {
-
+            this.output = new StreamWriter(this.outputFile);
         }
 
         /// <summary>
         /// Write an array.
         /// </summary>
         /// <param name="data">The data to write.</param>
-        /// <param name="inputCount">How much of the data is input.</param>
+        /// <param name="inputCount"> How much of the data is input.</param>
         public void Write(double[] data, int inputCount)
         {
-            this.array[this.currentIndex++] = data[0];
+            StringBuilder result = new StringBuilder();
+            NumberList.ToList(this.format, result, data);
+            this.output.WriteLine(result.ToString());
         }
     }
 }

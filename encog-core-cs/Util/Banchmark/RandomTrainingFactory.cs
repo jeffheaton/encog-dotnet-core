@@ -70,7 +70,7 @@ namespace Encog.Util.Banchmark
                     inputData.Data[j] = RangeRandomizer.Randomize(min, max);
                 }
 
-                INeuralData idealData = new BasicNeuralData(inputCount);
+                INeuralData idealData = new BasicNeuralData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {

@@ -42,7 +42,7 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
+    public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject, IIndexable
     {
         /// <summary>
         /// The description of this object.
@@ -179,7 +179,16 @@ namespace Encog.Neural.Data.Basic
 
         private String description;
         private String name;
-
+        	
+        /// <summary>
+        /// Construct a data set from an already created list. Mostly used to
+	    /// duplicate this class.
+        /// </summary>
+        /// <param name="data">The data to use.</param>
+        public BasicNeuralDataSet(IList<INeuralDataPair> data)
+        {
+            this.data = data;
+        }
 
         /// <summary>
         /// Construct a data set from an input and idea array.
@@ -340,6 +349,41 @@ namespace Encog.Neural.Data.Basic
         public IPersistor CreatePersistor()
         {
             return new BasicNeuralDataSetPersistor();
+        }
+
+        /// <summary>
+        /// The number of records in this data set.
+        /// </summary>
+        public long Count
+        {
+            get 
+            {
+                return this.data.Count;
+            }
+        }
+
+        /// <summary>
+        /// Get one record from the data set.
+        /// </summary>
+        /// <param name="index">The index to read.</param>
+        /// <param name="pair">The pair to read into.</param>
+        public void GetRecord(long index, INeuralDataPair pair)
+        {
+            INeuralDataPair source = this.data[(int)index];
+            pair.Input.Data = source.Input.Data;
+            if (pair.Ideal != null)
+            {
+                pair.Ideal.Data = source.Ideal.Data;
+            }
+        }
+
+        /// <summary>
+        /// Open an additional instance of this dataset.
+        /// </summary>
+        /// <returns>The new instance of this dataset.</returns>
+        public IIndexable OpenAdditional()
+        {
+            return new BasicNeuralDataSet(this.Data);
         }
     }
 }
