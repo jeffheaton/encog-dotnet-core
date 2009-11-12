@@ -30,6 +30,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 #if logging
 using log4net;
+using Encog.Util;
 #endif
 
 namespace Encog.Neural.Networks
@@ -284,6 +285,22 @@ namespace Encog.Neural.Networks
             return result;
         }
 
-    }
+        /// <summary>
+        /// Determine if the network contains a layer of the specified type.
+        /// </summary>
+        /// <param name="type">The layer type we are looking for.</param>
+        /// <returns>True if this layer type is present.</returns>
+        public bool ContainsLayerType(Type type)
+        {
+            foreach (ILayer layer in this.layers)
+            {
+                if (layer.GetType().IsInstanceOfType(type))
+                {
+                    return true;
+                }
+            }
 
+            return false;
+        }
+    }
 }

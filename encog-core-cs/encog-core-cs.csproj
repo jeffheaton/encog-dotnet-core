@@ -101,6 +101,7 @@
     <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
     <Compile Include="Neural\Data\Bipolar\BiPolarNeuralData.cs" />
     <Compile Include="Neural\Data\CSV\CSVNeuralDataSet.cs" />
+    <Compile Include="Neural\Data\IIndexable.cs" />
     <Compile Include="Neural\Data\Image\ImageNeuralData.cs" />
     <Compile Include="Neural\Data\Image\ImageNeuralDataSet.cs" />
     <Compile Include="Neural\Data\INeuralData.cs" />
@@ -199,6 +200,9 @@
     <Compile Include="Neural\Networks\Training\Propagation\CalculatePartialDerivative.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagationMethod.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Multi\GradientMap.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Multi\MPROPWorker.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Multi\MultiPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Propagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\PropagationLevel.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\IPropagationMethod.cs" />
