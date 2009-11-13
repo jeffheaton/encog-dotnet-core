@@ -220,9 +220,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Multi
                 IList<PropagationLevel> workerLevels = new List<PropagationLevel>();
                 foreach (IEnumerator<PropagationLevel> iterator in workerLevelIterator)
                 {
+                    iterator.MoveNext();
                     PropagationLevel workerLevel = iterator.Current;
                     workerLevels.Add(workerLevel);
-                    iterator.MoveNext();
                 }
                 this.levelMap[masterLevel] = workerLevels;
                 LinkSynapses(masterLevel, workerLevels);
@@ -255,9 +255,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Multi
 
                 foreach (IEnumerator<PropagationSynapse> iterator in workerSynapseIteratorList)
                 {
+                    iterator.MoveNext();
                     PropagationSynapse workerSynapse = iterator.Current;
                     workerSynapses.Add(workerSynapse);
-                    iterator.MoveNext();
                 }
 
                 this.synapseMap[masterSynapse] = workerSynapses;
