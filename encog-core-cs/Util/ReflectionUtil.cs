@@ -115,6 +115,8 @@ namespace Encog.Util
         /// <returns>The class requested.</returns>
         public static Type ResolveEncogClass(String name)
         {
+            Assembly.GetExecutingAssembly().GetType;
+
             if (ReflectionUtil.classMap.Count == 0)
             {
                 ReflectionUtil.LoadClassmap();

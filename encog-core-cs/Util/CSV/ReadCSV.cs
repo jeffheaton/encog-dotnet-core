@@ -30,6 +30,7 @@ using System.IO;
 using Encog.Persist;
 #if logging
 using log4net;
+using System.Globalization;
 #endif
 namespace Encog.Util.CSV
 {
@@ -67,7 +68,8 @@ namespace Encog.Util.CSV
         {
             try
             {
-                return DateTime.Parse(dateFormat);
+                return DateTime.ParseExact(when, dateFormat, 
+                    CultureInfo.InvariantCulture);
             }
             catch (FormatException)
             {
