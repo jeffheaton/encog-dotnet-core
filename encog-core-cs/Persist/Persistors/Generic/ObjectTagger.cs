@@ -57,7 +57,7 @@ namespace Encog.Persist.Persistors.Generic
         /// <param name="obj">The object to "tag".</param>
         private void AssignObjectTag(Object obj)
         {
-            if (obj.GetType().GetCustomAttributes(true).Contains(typeof(EGReferenceable)))
+            if ( ReflectionUtil.HasAttribute(obj.GetType(), typeof(EGReferenceable)))
             {
                 this.map[obj] = this.currentID;
                 this.currentID++;
@@ -107,7 +107,7 @@ namespace Encog.Persist.Persistors.Generic
         /// Tag a collection, every object in the collection will be a reference.
         /// </summary>
         /// <param name="value">The collection to tag.</param>
-        private void TagCollection(ICollection<Object> value)
+        private void TagCollection(ICollection value)
         {
 
             foreach (Object obj in value)
@@ -132,7 +132,7 @@ namespace Encog.Persist.Persistors.Generic
             {
                 if (fieldObject is ICollection)
                 {
-                    TagCollection((ICollection<Object>)fieldObject);
+                    TagCollection((ICollection)fieldObject);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Encog.Persist.Persistors.Generic
 
                     Object childValue = childField.GetValue(parentObject);
 
-                    if (!ReflectionUtil.IsSimple(childValue))
+                    if (!ReflectionUtil.IsSimple(childField.FieldType))
                     {
                         if (this.depth > 50)
                         {

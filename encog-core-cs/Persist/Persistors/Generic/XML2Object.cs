@@ -70,6 +70,13 @@ namespace Encog.Persist.Persistors.Generic
 
                 FieldInfo field = ReflectionUtil.FindField(target.GetType(),
                        key);
+
+                if (field == null)
+                {
+                    ReflectionUtil.FindField(target.GetType(),
+                       key);
+                }
+
                 String value = this.xmlIn.LastTag.GetAttributeValue(key);
                 SetFieldValue(field, target, value);
             }
@@ -89,14 +96,14 @@ namespace Encog.Persist.Persistors.Generic
 
                     Object currentValue = field.GetValue(target);
 
-                    if (ReflectionUtil.IsSimple(currentValue))
+                    if (ReflectionUtil.IsSimple(field.FieldType))
                     {
                         String value = this.xmlIn.ReadTextToTag();
                         SetFieldValue(field, target, value);
                     }
                     else if (currentValue is ICollection)
                     {
-                        LoadCollection((ICollection<Object>)currentValue);
+                        LoadCollection((IList)currentValue);
                     }
                     else
                     {
@@ -120,7 +127,7 @@ namespace Encog.Persist.Persistors.Generic
         /// Load a collection.
         /// </summary>
         /// <param name="collection">The collection to load.</param>
-        private void LoadCollection(ICollection<Object> collection)
+        private void LoadCollection(IList collection)
         {
 
             while (this.xmlIn.ReadToTag())
@@ -128,9 +135,9 @@ namespace Encog.Persist.Persistors.Generic
                 if (this.xmlIn.LastTag.TagType == Tag.Type.BEGIN)
                 {
                     String tagName = this.xmlIn.LastTag.Name;
-                    Type c = ReflectionUtil
+                    String c = ReflectionUtil
                            .ResolveEncogClass(tagName);
-                    Object target = Assembly.GetExecutingAssembly().CreateInstance(c.Name);
+                    Object target = Assembly.GetExecutingAssembly().CreateInstance(c);
                     LoadActualObject(null, target);
                     collection.Add(target);
                 }
@@ -164,9 +171,9 @@ namespace Encog.Persist.Persistors.Generic
             }
             else
             {
-                Type c = ReflectionUtil.ResolveEncogClass(this.xmlIn
+                String c = ReflectionUtil.ResolveEncogClass(this.xmlIn
                         .LastTag.Name);
-                Object obj = Assembly.GetExecutingAssembly().CreateInstance(c.Name);
+                Object obj = Assembly.GetExecutingAssembly().CreateInstance(c);
                 LoadActualObject(objectField, obj);
                 return obj;
             }

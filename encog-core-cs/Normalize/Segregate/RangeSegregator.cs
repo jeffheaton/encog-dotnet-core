@@ -149,5 +149,12 @@ namespace Encog.Normalize.Segregate
             return this.include;
         }
 
+        /// <summary>
+        /// Init for pass... nothing to do fo this class.
+        /// </summary>
+        public void PassInit()
+        {
+        }
+
     }
 }

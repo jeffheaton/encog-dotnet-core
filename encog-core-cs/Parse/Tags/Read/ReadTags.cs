@@ -162,7 +162,7 @@ namespace Encog.Parse.Tags.Read
         /// Parse an attribute name, if one is present.
         /// </summary>
         /// <returns>Return the attribute name, or null if none present.</returns>
-        private String ParseAttributeName()
+        protected String ParseAttributeName()
         {
             EatWhitespace();
 

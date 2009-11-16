@@ -51,5 +51,11 @@ namespace Encog.Normalize.Segregate
         /// </summary>
         /// <returns>True if this row should be included.</returns>
         bool ShouldInclude();
+
+        /// <summary>
+        /// Init for a pass.
+        /// </summary>
+        void PassInit();
+
     }
 }

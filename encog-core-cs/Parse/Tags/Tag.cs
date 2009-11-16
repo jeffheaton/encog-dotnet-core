@@ -157,10 +157,10 @@ namespace Encog.Parse.Tags
         /// <returns>The value of the specified attribute.</returns>
         public String GetAttributeValue(String name)
         {
-            if (!this.attributes.ContainsKey(name.ToLower()))
+            if (!this.attributes.ContainsKey(name))
                 return null;
 
-            return this.attributes[name.ToLower()];
+            return this.attributes[name];
         }
 
 
@@ -201,7 +201,7 @@ namespace Encog.Parse.Tags
         /// <param name="value">The value of the attribute.</param>
         public void SetAttribute(String name, String value)
         {
-            this.attributes[name.ToLower()] = value;
+            this.attributes[name] = value;
         }
 
         /// <summary>

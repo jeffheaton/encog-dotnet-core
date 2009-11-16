@@ -62,7 +62,7 @@ namespace Encog.Persist.Persistors.Generic
         /// Save a collection.
         /// </summary>
         /// <param name="value">The collection to save.</param>
-        private void SaveCollection(ICollection<Object> value)
+        private void SaveCollection(ICollection value)
         {
 
             foreach (Object obj in value)
@@ -79,13 +79,15 @@ namespace Encog.Persist.Persistors.Generic
         {
             if (fieldObject != null)
             {
-                if (fieldObject is ICollection)
+                if (fieldObject == null)
                 {
-
-                    SaveCollection((ICollection<Object>)fieldObject);
-
+                    // nothing to save
                 }
-                else if (ReflectionUtil.IsSimple(fieldObject))
+                else if (fieldObject is ICollection)
+                {
+                    SaveCollection((ICollection)fieldObject);
+                }
+                else if (ReflectionUtil.IsSimple(fieldObject.GetType()))
                 {
                     this.xmlOut.AddText(fieldObject.ToString());
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Encog.Persist.Attributes;
 
 namespace Encog.Util.CSV
 {
@@ -65,8 +66,13 @@ namespace Encog.Util.CSV
         private static CSVFormat _NONENGLISH = DECIMAL_COMMA;
         private static CSVFormat _EG_FORMAT = DECIMAL_POINT;
 
+        [EGAttribute]
         private char decimalChar;
+
+        [EGAttribute]
         private char separatorChar;
+
+        [EGIgnore]
         private NumberFormatInfo numberFormat;
 
         /// <summary>
@@ -91,6 +97,13 @@ namespace Encog.Util.CSV
             {
                 this.numberFormat = NumberFormatInfo.CurrentInfo;
             }
+        }
+
+        /// <summary>
+        /// Default constructor for reflection.
+        /// </summary>
+        public CSVFormat()
+        {
         }
 
         /// <summary>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -77,6 +77,11 @@
     <Compile Include="Bot\DataUnits\TextDataUnit.cs" />
     <Compile Include="Bot\RSS\RSS.cs" />
     <Compile Include="Bot\RSS\RSSItem.cs" />
+    <Compile Include="encog-core-cs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>encog-core-cs.resx</DependentUpon>
+    </Compile>
     <Compile Include="Encog.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
@@ -250,6 +255,7 @@
     <Compile Include="Normalize\Segregate\Index\IndexRangeSegregator.cs" />
     <Compile Include="Normalize\Segregate\Index\IndexSampleSegregator.cs" />
     <Compile Include="Normalize\Segregate\Index\IndexSegregator.cs" />
+    <Compile Include="Normalize\Segregate\IntegerBalanceSegregator.cs" />
     <Compile Include="Normalize\Segregate\ISegregator.cs" />
     <Compile Include="Normalize\Segregate\RangeSegregator.cs" />
     <Compile Include="Normalize\Segregate\SegregationRange.cs" />
@@ -364,6 +370,15 @@
     <Compile Include="Util\Time\TimeSpanUtil.cs" />
     <Compile Include="Util\Time\TimeUnit.cs" />
     <Compile Include="Util\YahooSearch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="encog-core-cs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>encog-core-cs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\classes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

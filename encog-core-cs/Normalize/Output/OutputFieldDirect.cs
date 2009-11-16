@@ -41,6 +41,14 @@ namespace Encog.Normalize.Output
         [EGReference]
         private IInputField sourceField;
 
+
+        /// <summary>
+        /// Default constructor for reflection.
+        /// </summary>
+        public OutputFieldDirect()
+        {
+        }
+
         /// <summary>
         /// Construct a direct output field.
         /// </summary>

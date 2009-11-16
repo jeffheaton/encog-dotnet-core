@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
 using System.Reflection;
+using Encog.Util;
 
 namespace Encog.Persist.Persistors.Generic
 {
@@ -42,7 +43,8 @@ namespace Encog.Persist.Persistors.Generic
         {
             IEncogPersistedObject current;
 
-            current = (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(clazz.Name);
+            String c = ReflectionUtil.ResolveEncogClass(clazz.Name);
+            current = (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(c);
             XML2Object conv = new XML2Object();
             conv.Load(xmlIn, current);
             return current;

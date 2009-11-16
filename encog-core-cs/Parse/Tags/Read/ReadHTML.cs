@@ -43,5 +43,15 @@ namespace Encog.Parse.Tags.Read
         public ReadHTML(Stream istream) : base(istream)
         {
         }
+
+        /// <summary>
+        /// Parse the attribute name.
+        /// </summary>
+        /// <returns>The attribute name.</returns>
+        protected String parseAttributeName()
+        {
+            String result = base.ParseAttributeName();
+            return result.ToLower();
+        }
     }
 }

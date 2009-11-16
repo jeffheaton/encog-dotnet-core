@@ -81,7 +81,7 @@ namespace Encog.Neural.Data.Buffer
 
                 this.owner = owner;
                 this.input = new BinaryReader(
-                        new FileStream(owner.BufferFile, FileMode.Open));
+                        new FileStream(owner.BufferFile, FileMode.Open, FileAccess.Read,FileShare.Read));
                 this.input.ReadInt32();
                 this.input.ReadInt32();
 
@@ -161,18 +161,24 @@ namespace Encog.Neural.Data.Buffer
             /// <returns>True if there are more elements to read.</returns>
             public bool MoveNext()
             {
-                if (this.owner.IdealSize > 0)
+                try
                 {
-                    this.owner.ReadDoubleArray(this.input, this.next.Input);
-                    this.owner.ReadDoubleArray(this.input, this.next.Ideal);
+                    if (this.owner.IdealSize > 0)
+                    {
+                        this.owner.ReadDoubleArray(this.input, this.next.Input);
+                        this.owner.ReadDoubleArray(this.input, this.next.Ideal);
+                    }
+                    else
+                    {
+                        this.owner.ReadDoubleArray(this.input, this.next.Input);
+                    }
+                    return true;
                 }
-                else
+                catch (EndOfStreamException)
                 {
-                    this.owner.ReadDoubleArray(this.input, this.next.Input);
+                    this.input.Close();
+                    return false;
                 }
-
-                return true;
-
             }
 
             /// <summary>
@@ -235,12 +241,14 @@ namespace Encog.Neural.Data.Buffer
 
             if (File.Exists(bufferFile))
             {
-                BinaryReader o = new BinaryReader(new FileStream(
-                        this.bufferFile, FileMode.Open));
-                this.inputSize = o.ReadInt32();
-                this.idealSize = o.ReadInt32();
+                FileStream f = new FileStream(
+                        this.bufferFile, FileMode.Open);
+                BinaryReader o = new BinaryReader(f);
+                this.inputSize = o.ReadInt64();
+                this.idealSize = o.ReadInt64();
                 this.recordSize = (this.InputSize * 8) + (this.IdealSize * 8);
                 o.Close();
+                f.Close();
             }
 
         }
@@ -377,7 +385,7 @@ namespace Encog.Neural.Data.Buffer
 
             if (this.input == null)
             {
-                this.input = new BinaryReader(new FileStream(this.bufferFile, FileMode.Open));
+                this.input = new BinaryReader(new FileStream(this.bufferFile, FileMode.Open, FileAccess.Read,FileShare.Read));
             }
 
         }
@@ -418,8 +426,7 @@ namespace Encog.Neural.Data.Buffer
         {
             get
             {
-                OpenInputFile();
-                return this.bufferFile.Length / this.recordSize;
+                return (new FileInfo(this.bufferFile)).Length / this.recordSize;
             }
         }
 

@@ -96,6 +96,7 @@ namespace Encog.Persist.Persistors
 
             }
             xmlOut.AddAttribute("native", obj.GetType().Name);
+            xmlOut.AddAttribute("id", "1");
             xmlOut.BeginTag(objectType);
         }
 

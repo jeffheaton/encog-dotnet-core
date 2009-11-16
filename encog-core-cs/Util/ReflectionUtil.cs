@@ -17,7 +17,7 @@ namespace Encog.Util
         /// <summary>
         /// A map between short class names and the full path names.
         /// </summary>
-        private static IDictionary<String, Type> classMap = new Dictionary<String, Type>();
+        private static IDictionary<String, String> classMap = new Dictionary<String, String>();
 
 
         /// <summary>
@@ -44,43 +44,20 @@ namespace Encog.Util
         /// </summary>
         /// <param name="c">The class to access.</param>
         /// <returns>All of the fields from this class and subclasses.</returns>
-        public static ICollection<FieldInfo> GetAllFields(Type c)
+        public static FieldInfo[] GetAllFields(Type c)
         {
-            IList<FieldInfo> result = new List<FieldInfo>();
-            ReflectionUtil.GetAllFields(c, result);
-            return result;
+            return c.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         }
-
-        /// <summary>
-        /// Get all of the fields in the specified class and super classes.
-        /// </summary>
-        /// <param name="c">The class to check.</param>
-        /// <param name="fields">A collection to hold the classes.</param>
-        public static void GetAllFields(Type c,
-                 ICollection<FieldInfo> fields)
-        {
-            foreach (FieldInfo field in c.GetFields())
-            {
-                fields.Add(field);
-            }
-
-            Type s = c.BaseType;
-            if (s != null)
-            {
-                ReflectionUtil.GetAllFields(s, fields);
-            }
-        }
-
 
         /// <summary>
         /// Determine if an object is "simple", that is it should be persisted just
         /// with a .ToString.
         /// </summary>
-        /// <param name="obj">The object to check.</param>
+        /// <param name="t">The type object to check.</param>
         /// <returns>True if the object is simple.</returns>
-        public static bool IsSimple(Object obj)
+        public static bool IsSimple(Type t)
         {
-            return (obj is File) || (obj is String) || (obj is int) || (obj is double) || (obj is float) || (obj is short);
+            return (t == typeof(File)) || (t == typeof(String) ) || (t == typeof(int)) || (t == typeof(double) ) || (t == typeof(float) ) || (t==typeof(short)) || (t==typeof(char));
         }
 
         /// <summary>
@@ -89,22 +66,24 @@ namespace Encog.Util
         /// </summary>
         public static void LoadClassmap()
         {
-
             {
                 ResourcePersistence resource = new ResourcePersistence(
-                        "org/encog/data/classes.txt");
+                        "Encog.Resources.classes.txt");
                 Stream istream = resource.CreateStream(FileMode.Open);
                 StreamReader sr = new StreamReader(istream);
 
                 String line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Type c = Assembly.GetExecutingAssembly().GetType(line);
-                    ReflectionUtil.classMap[c.Name] = c;
+                    int idx = line.LastIndexOf('.');
+                    if (idx != -1)
+                    {
+                        String simpleName = line.Substring(idx+1);
+                        ReflectionUtil.classMap[simpleName] = line;
+                    }
                 }
                 sr.Close();
                 istream.Close();
-
             }
         }
 
@@ -113,15 +92,17 @@ namespace Encog.Util
         /// </summary>
         /// <param name="name">The simple name of the class.</param>
         /// <returns>The class requested.</returns>
-        public static Type ResolveEncogClass(String name)
+        public static String ResolveEncogClass(String name)
         {
-            //Assembly.GetExecutingAssembly().GetType;
-
             if (ReflectionUtil.classMap.Count == 0)
             {
                 ReflectionUtil.LoadClassmap();
             }
-            return ReflectionUtil.classMap[name];
+
+            if (!ReflectionUtil.classMap.ContainsKey(name))
+                return null;
+            else
+                return ReflectionUtil.classMap[name];
         }
 
 
@@ -167,6 +148,22 @@ namespace Encog.Util
                     }
                 }
                 return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Determine if the specified type contains the specified attribute.
+        /// </summary>
+        /// <param name="t">The type.</param>
+        /// <param name="attribute">The attribute.</param>
+        /// <returns>True if the type contains the attribute.</returns>
+        public static bool HasAttribute(Type t, Type attribute)
+        {
+            foreach (Object obj in t.GetCustomAttributes(true))
+            {
+                if (obj.GetType() == attribute)
+                    return true;
             }
             return false;
         }

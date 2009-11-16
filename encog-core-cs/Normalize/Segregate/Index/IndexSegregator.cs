@@ -96,5 +96,12 @@ namespace Encog.Normalize.Segregate.Index
         /// <returns>True if this row should be included.</returns>
         public abstract bool ShouldInclude();
 
+        /// <summary>
+        /// Init for pass... nothing to do fo this class.
+        /// </summary>
+        public void PassInit()
+        {
+        }
+
     }
 }

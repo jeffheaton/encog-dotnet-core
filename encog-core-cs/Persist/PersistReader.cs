@@ -34,6 +34,8 @@ using Encog.Parse.Tags;
 using Encog.Persist.Persistors;
 #if logging
 using log4net;
+using Encog.Util;
+using System.Reflection;
 #endif
 namespace Encog.Persist
 {
@@ -357,6 +359,14 @@ namespace Encog.Persist
                 String objectType = this.xmlIn.LastTag.Name;
                 IPersistor persistor = PersistorUtil
                        .CreatePersistor(objectType);
+
+                if (persistor == null)
+                {
+                    String clazz = ReflectionUtil.ResolveEncogClass(objectType);
+                    IEncogPersistedObject temp = (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(clazz);
+                    persistor = temp.CreatePersistor();
+                }
+
                 if (persistor == null)
                 {
                     throw new PersistError(

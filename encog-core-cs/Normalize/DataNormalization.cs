@@ -103,7 +103,7 @@ namespace Encog.Normalize
     /// method is called.
     /// </summary>
     [EGReferenceable]
-    public class DataNormalization: IEncogPersistedObject
+    public class DataNormalization : IEncogPersistedObject
     {
         /// <summary>
         /// The input fields.
@@ -461,6 +461,8 @@ namespace Encog.Normalize
             this.lastReport = 0;
             int index = 0;
 
+            InitForPass();
+
             // loop over all of the records
             while (Next())
             {
@@ -480,7 +482,7 @@ namespace Encog.Normalize
         /// <summary>
         /// The CSV format being used.
         /// </summary>
-        public CSVFormat CSVFormatUsed  
+        public CSVFormat CSVFormatUsed
         {
             get
             {
@@ -831,6 +833,7 @@ namespace Encog.Normalize
             // move any CSV and datasets files back to the beginning.
             OpenCSV();
             OpenDataSet();
+            InitForPass();
 
             this.currentIndex = -1;
 
@@ -899,6 +902,19 @@ namespace Encog.Normalize
         public object Clone()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Setup the row for output.
+        /// </summary>
+        public void InitForPass()
+        {
+
+            // init segregators
+            foreach (ISegregator segregator in this.segregators)
+            {
+                segregator.PassInit();
+            }
         }
     }
 }
