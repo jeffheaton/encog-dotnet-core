@@ -1,9 +1,0 @@
-C:\shared\csharp\encog-core\Sandbox\obj\Release\ResolveAssemblyReference.cache
-C:\shared\csharp\encog-core\Sandbox\bin\Release\Sandbox.exe
-C:\shared\csharp\encog-core\Sandbox\bin\Release\Sandbox.pdb
-C:\shared\csharp\encog-core\Sandbox\obj\Release\Sandbox.exe
-C:\shared\csharp\encog-core\Sandbox\obj\Release\Sandbox.pdb
-C:\shared\csharp\encog-core\Sandbox\bin\Release\encog-core-cs.dll
-C:\shared\csharp\encog-core\Sandbox\bin\Release\log4net.dll
-C:\shared\csharp\encog-core\Sandbox\bin\Release\encog-core-cs.pdb
-C:\shared\csharp\encog-core\Sandbox\bin\Release\encog-core-cs.xml
