@@ -32,11 +32,13 @@ using Encog.Persist.Location;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags;
 using Encog.Persist.Persistors;
-#if logging
-using log4net;
 using Encog.Util;
 using System.Reflection;
+
+#if logging
+using log4net;
 #endif
+
 namespace Encog.Persist
 {
     /// <summary>
