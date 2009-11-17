@@ -43,7 +43,12 @@ namespace Encog
 		/// <summary>
         /// The current engog version, this should be read from the properties.
 		/// </summary>
-	    public static String VERSION = "2.0.0";
+	    public static String VERSION = "2.2.0";
+
+        /// <summary>
+        /// The platform.
+        /// </summary>
+        public static String PLATFORM = "DotNet";
 	
 	    /// <summary>
         /// The current engog file version, this should be read from the properties.

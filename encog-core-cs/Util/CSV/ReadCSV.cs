@@ -28,9 +28,10 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Encog.Persist;
+using System.Globalization;
+
 #if logging
 using log4net;
-using System.Globalization;
 #endif
 namespace Encog.Util.CSV
 {

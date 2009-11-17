@@ -157,7 +157,7 @@ namespace Encog.Persist
         /// <summary>
         /// The platform this collection was created on.
         /// </summary>
-        private String platform = "DotNet";
+        private String platform = Encog.PLATFORM;
 
         /// <summary>
         /// The version of the persisted file.
