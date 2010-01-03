@@ -30,6 +30,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Networks.Structure;
 
 namespace Encog.Neural.Networks.Training.Propagation.Multi
 {

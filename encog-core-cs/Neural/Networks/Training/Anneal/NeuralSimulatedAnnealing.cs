@@ -31,6 +31,7 @@ using Encog.Neural.NeuralData;
 using Encog.Util.MathUtil;
 #if logging
 using log4net;
+using Encog.Neural.Networks.Structure;
 #endif
 namespace Encog.Neural.Networks.Training.Anneal
 {

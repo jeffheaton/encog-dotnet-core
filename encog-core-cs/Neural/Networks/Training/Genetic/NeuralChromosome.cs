@@ -28,6 +28,7 @@ using System.Linq;
 using System.Text;
 using Encog.Util.Randomize;
 using Encog.Solve.Genetic;
+using Encog.Neural.Networks.Structure;
 
 namespace Encog.Neural.Networks.Training.Genetic
 {

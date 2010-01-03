@@ -28,6 +28,7 @@ using System.Linq;
 using System.Text;
 #if logging
 using log4net;
+using Encog.Neural.Networks.Structure;
 #endif
 
 namespace Encog.Neural.Networks.Training.Strategy

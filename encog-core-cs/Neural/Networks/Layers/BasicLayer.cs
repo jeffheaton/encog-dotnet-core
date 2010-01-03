@@ -71,6 +71,11 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         private int y;
 
+        /// <summary>
+        /// The id of this layer.
+        /// </summary>
+        private int id;
+
 #if logging
         /// <summary>
         /// The logging object.
@@ -469,6 +474,21 @@ namespace Encog.Neural.Networks.Layers
             result.Append(this.neuronCount);
             result.Append(']');
             return result.ToString();
+        }
+
+        /// <summary>
+        /// The ID for this layer.
+        /// </summary>
+        public int ID
+        {
+            get
+            {
+                return this.id;
+            }
+            set
+            {
+                this.id = value;
+            }
         }
     }
 }

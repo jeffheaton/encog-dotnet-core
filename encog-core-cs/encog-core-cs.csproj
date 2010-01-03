@@ -149,10 +149,8 @@
     <Compile Include="Neural\Networks\Logic\INeuralLogic.cs" />
     <Compile Include="Neural\Networks\Logic\SimpleRecurrentLogic.cs" />
     <Compile Include="Neural\Networks\Logic\ThermalLogic.cs" />
-    <Compile Include="Neural\Networks\NetworkCODEC.cs" />
     <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
     <Compile Include="Neural\Networks\NeuralOutputHolder.cs" />
-    <Compile Include="Neural\Networks\NeuralStructure.cs" />
     <Compile Include="Neural\Networks\Pattern\ADALINEPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\ART1Pattern.cs" />
     <Compile Include="Neural\Networks\Pattern\BAMPattern.cs" />
@@ -172,6 +170,11 @@
     <Compile Include="Neural\Networks\Prune\NetworkPattern.cs" />
     <Compile Include="Neural\Networks\Prune\PruneIncremental.cs" />
     <Compile Include="Neural\Networks\Prune\PruneSelective.cs" />
+    <Compile Include="Neural\Networks\Structure\CalculateDepth.cs" />
+    <Compile Include="Neural\Networks\Structure\LayerComparator.cs" />
+    <Compile Include="Neural\Networks\Structure\NetworkCODEC.cs" />
+    <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
+    <Compile Include="Neural\Networks\Structure\SynapseComparator.cs" />
     <Compile Include="Neural\Networks\Synapse\BasicSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\DirectSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\ISynapse.cs" />

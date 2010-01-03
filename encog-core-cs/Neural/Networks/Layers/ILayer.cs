@@ -140,6 +140,15 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
+        /// The ID for this layer.
+        /// </summary>
+        int ID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// True if this layer has threshold values.
         /// </summary>
         bool HasThreshold
