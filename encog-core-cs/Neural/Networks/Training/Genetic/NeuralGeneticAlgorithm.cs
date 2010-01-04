@@ -30,6 +30,7 @@ using Encog.Solve.Genetic;
 
 #if logging
 using log4net;
+using Encog.Util.Randomize;
 #endif
 
 namespace Encog.Neural.Networks.Training.Genetic
@@ -58,30 +59,11 @@ namespace Encog.Neural.Networks.Training.Genetic
             {
                 get
                 {
-                    return this.Chromosomes[0].Cost;
-                }
-            }
-
-            /// <summary>
-            /// Get the current best neural network.
-            /// </summary>
-            public BasicNetwork Network
-            {
-                get
-                {
-                    NeuralChromosome c = (NeuralChromosome)this.Chromosomes[0];
-                    c.UpdateNetwork();
-                    return c.Network;
+                    return this.Chromosomes[0].Score;
                 }
             }
         }
 
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(NeuralGeneticAlgorithm));
-#endif
         /// <summary>
         /// Simple helper class that implements the required methods to 
         /// implement a genetic algorithm.
@@ -89,45 +71,92 @@ namespace Encog.Neural.Networks.Training.Genetic
         private NeuralGeneticAlgorithmHelper genetic;
 
         /// <summary>
-        /// Construct the training class.
+        /// The score calculation object.
         /// </summary>
-        public NeuralGeneticAlgorithm()
+        private ICalculateScore calculateScore;
+
+        /// <summary>
+        /// Construct a neural genetic algorithm. 
+        /// </summary>
+        /// <param name="network">The network to base this on.</param>
+        /// <param name="randomizer">The randomizer used to create this initial population.</param>
+        /// <param name="calculateScore">The score calculation object.</param>
+        /// <param name="populationSize">The population size.</param>
+        /// <param name="mutationPercent">The percent of offspring to mutate.</param>
+        /// <param name="percentToMate">The percent of the population allowed to mate.</param>
+        public NeuralGeneticAlgorithm(BasicNetwork network,
+                IRandomizer randomizer,
+                ICalculateScore calculateScore,
+                int populationSize, double mutationPercent,
+                double percentToMate)
         {
             this.genetic = new NeuralGeneticAlgorithmHelper();
+            this.genetic.ShouldMinimize = calculateScore.ShouldMinimize;
+            this.calculateScore = calculateScore;
+            this.genetic.MutationPercent = mutationPercent;
+            this.genetic.MatingPopulation = percentToMate * 2;
+            this.genetic.PopulationSize = populationSize;
+            this.genetic.PercentToMate = percentToMate;
+
+            this.genetic.Chromosomes =
+                    new NeuralChromosome[this.genetic.PopulationSize];
+            for (int i = 0; i < this.genetic.Chromosomes.Length; i++)
+            {
+                BasicNetwork chromosomeNetwork = (BasicNetwork)network.Clone();
+                randomizer.Randomize(chromosomeNetwork);
+
+                NeuralChromosome c =
+                    new NeuralChromosome(
+                        this, chromosomeNetwork);
+                this.genetic.Chromosomes[i] = c;
+            }
+            this.genetic.SortChromosomes();
+            this.genetic.DefineCutLength();
         }
+
+#if logging
+        /// <summary>
+        /// The logging object.
+        /// </summary>
+        [NonSerialized]
+        private static readonly ILog logger = LogManager.GetLogger(typeof(NeuralGeneticAlgorithm));
+#endif
 
 
 
         /// <summary>
-        /// The network that is being trained.
+        /// Perform one training iteration.
+        /// </summary>
+       
+        public override void Iteration()
+        {
+
+            if (logger.IsInfoEnabled)
+            {
+                logger.Info("Performing Genetic iteration.");
+            }
+            PreIteration();
+            genetic.Iteration();
+            Error = this.genetic.Error;
+            PostIteration();
+        }
+
+
+        /// <summary>
+        /// The network being trained.
         /// </summary>
         public override BasicNetwork Network
         {
             get
             {
-                return this.genetic.Network;
+                NeuralChromosome c = (NeuralChromosome)this.genetic.Chromosomes[0];
+                c.UpdateNetwork();
+                return c.Network;
             }
         }
 
         /// <summary>
-        /// Perform one training iteration.
-        /// </summary>
-        public override void Iteration()
-        {
-#if logging
-            if (this.logger.IsInfoEnabled)
-            {
-                this.logger.Info("Performing Genetic iteration.");
-            }
-#endif
-            PreIteration();
-            this.Genetic.Iteration();
-            this.Error = Genetic.Error;
-            PostIteration();
-        }
-
-        /// <summary>
-        /// 
+        /// The genetic algorithm.
         /// </summary>
         public NeuralGeneticAlgorithmHelper Genetic
         {
@@ -135,11 +164,17 @@ namespace Encog.Neural.Networks.Training.Genetic
             {
                 return this.genetic;
             }
-            set
+        }
+
+        /// <summary>
+        /// The object used to calculate the score.
+        /// </summary>
+        public ICalculateScore CalculateScore
+        {
+            get
             {
-                this.genetic = value;
+                return this.calculateScore;
             }
         }
     }
-
 }

@@ -45,7 +45,7 @@ namespace Encog.Neural.Networks.Training.Genetic
     /// The generic type GA_TYPE specifies the GeneticAlgorithm derived class that
     /// implements the genetic algorithm that this class is to be used with.
     /// </summary>
-    public abstract class NeuralChromosome
+    public class NeuralChromosome
             : Chromosome<double>
     {
 
@@ -63,23 +63,13 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// <summary>
         /// The network to train.
         /// </summary>
-        private BasicNetwork network;
-
+        public BasicNetwork Network { get; set; }
 
         /// <summary>
-        /// The network.
+        /// The genetic algorithm that uses this chromosome.
         /// </summary>
-        public BasicNetwork Network
-        {
-            get
-            {
-                return this.network;
-            }
-            set
-            {
-                this.network = value;
-            }
-        }
+        private NeuralGeneticAlgorithm genetic;
+
 
         /// <summary>
         /// Init the genes array.
@@ -112,7 +102,7 @@ namespace Encog.Neural.Networks.Training.Genetic
             set
             {
                 base.SetGenesDirect(value);
-                CalculateCost();
+                CalculateScore();
             }
         }
 
@@ -123,7 +113,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         public void UpdateGenes()
         {
-            this.Genes = NetworkCODEC.NetworkToArray(this.network);
+            this.Genes = NetworkCODEC.NetworkToArray(this.Network);
         }
 
         /// <summary>
@@ -131,7 +121,35 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         public void UpdateNetwork()
         {
-            NetworkCODEC.ArrayToNetwork(this.Genes, this.network);
+            NetworkCODEC.ArrayToNetwork(this.Genes, this.Network);
+        }
+
+        /// <summary>
+        /// Construct a neural chromosome.
+        /// </summary>
+        /// <param name="genetic">The genetic algorithm that uses this chromosome.</param>
+        /// <param name="network">The network that this chromosome is based on.</param>
+        public NeuralChromosome(
+                NeuralGeneticAlgorithm genetic,
+                BasicNetwork network)
+        {
+            this.GeneticAlgorithm = genetic.Genetic;
+            this.genetic = genetic;
+            this.Network = network;
+
+            InitGenes(network.WeightMatrixSize);
+            UpdateGenes();
+        }
+
+        /// <summary>
+        /// Calculate the score for this chromosome.
+        /// </summary>
+        public override void CalculateScore()
+        {
+            this.UpdateNetwork();
+            double score = this.genetic.CalculateScore.CalculateScore(
+                    this.Network);
+            Score = score;
         }
     }
 }

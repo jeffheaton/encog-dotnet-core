@@ -43,63 +43,71 @@ namespace Encog.Neural.Networks.Training.Anneal
     /// </summary>
     public class NeuralSimulatedAnnealingHelper : SimulatedAnnealing<Double>
     {
-        /// <summary>
-        /// The class that this class should report to.
-        /// </summary>
+        /**
+ * The class that this class should report to.
+ */
         private NeuralSimulatedAnnealing owner;
 
-        /// <summary>
-        /// Constructs this object.
-        /// </summary>
-        /// <param name="owner">The owner of this class, that recieves all messages.</param>
-        public NeuralSimulatedAnnealingHelper(NeuralSimulatedAnnealing owner)
+        /**
+         * Constructs this object.
+         * 
+         * @param owner
+         *            The owner of this class, that recieves all messages.
+         */
+        public NeuralSimulatedAnnealingHelper(
+                 NeuralSimulatedAnnealing owner)
         {
             this.owner = owner;
+            this.ShouldMinimize = this.owner.CalculateScore.ShouldMinimize;
         }
 
-        /// <summary>
-        /// Used to pass the determineError call on to the parent object.
-        /// </summary>
-        /// <returns>The error returned by the owner.</returns>
-        public override double DetermineError()
+        /**
+         * Used to pass the determineError call on to the parent object.
+         * 
+         * @return The error returned by the owner.
+         */
+        public override double PerformScoreCalculation()
         {
-            return owner.DetermineError();
+            return owner.CalculateScore.CalculateScore(
+                    this.owner.Network);
         }
 
-        /// <summary>
-        /// Used to pass the getArray call on to the parent object.
-        /// </summary>
-        /// <returns>The array returned by the owner.</returns>
+        /**
+         * Used to pass the getArray call on to the parent object.
+         * 
+         * @return The array returned by the owner.
+         */
         public override double[] GetArray()
         {
             return owner.GetArray();
-
         }
 
+     
         /// <summary>
-        /// Used to pass the getArrayCopy call on to the parent object.
+        /// Used to pass the getArrayCopy call on to the parent object. 
         /// </summary>
         /// <returns>The array copy created by the owner.</returns>
-        public override Double[] GetArrayCopy()
+        public override double[] GetArrayCopy()
         {
             return owner.GetArrayCopy();
         }
 
         /// <summary>
-        /// Used to pass the putArray call on to the parent object.
+        /// Used to pass the putArray call on to the parent object. 
         /// </summary>
-        /// <param name="array">The array</param>
-        public override void PutArray(Double[] array)
+        /// <param name="array">The array.</param>
+        public override void PutArray(double[] array)
         {
             owner.PutArray(array);
         }
 
         /// <summary>
-        /// Used to pass the randomize call on to the partent object.
+        /// Call the owner's randomize method.
         /// </summary>
         public override void Randomize()
         {
             owner.Randomize();
         }
+
     }
 }

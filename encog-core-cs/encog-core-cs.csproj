@@ -184,7 +184,6 @@
     <Compile Include="Neural\Networks\Synapse\WeightlessSynapse.cs" />
     <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealing.cs" />
     <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealingHelper.cs" />
-    <Compile Include="Neural\Networks\Training\Anneal\NeuralTrainingSetSimulatedAnnealing.cs" />
     <Compile Include="Neural\Networks\Training\BasicTraining.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\BestMatchingUnit.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\CompetitiveTraining.cs" />
@@ -197,9 +196,8 @@
     <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralChromosome.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\TrainingSetNeuralChromosome.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\TrainingSetNeuralGeneticAlgorithm.cs" />
     <Compile Include="Neural\Networks\Training\Hopfield\TrainHopfield.cs" />
+    <Compile Include="Neural\Networks\Training\ICalculateScore.cs" />
     <Compile Include="Neural\Networks\Training\IMomentum.cs" />
     <Compile Include="Neural\Networks\Training\ITrain.cs" />
     <Compile Include="Neural\Networks\Training\IStrategy.cs" />
@@ -227,6 +225,7 @@
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
+    <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
     <Compile Include="Normalize\Input\BasicInputField.cs" />
     <Compile Include="Normalize\Input\IHasFixedLength.cs" />

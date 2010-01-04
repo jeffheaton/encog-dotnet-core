@@ -49,9 +49,9 @@ namespace Encog.Solve.Genetic
             IComparable<Chromosome<GENE_TYPE>>
     {
         /// <summary>
-        /// The cost for this chromosome. The lower the better.
+        /// The score for this chromosome. The lower the better.
         /// </summary>
-        private double cost;
+        public double Score { get; set; }
 
         /// <summary>
         /// The individual elements of this chromosome.
@@ -64,9 +64,9 @@ namespace Encog.Solve.Genetic
         private GeneticAlgorithm<GENE_TYPE> geneticAlgorithm;
 
         /// <summary>
-        /// Called to calculate the cost for this chromosome.
+        /// Called to calculate the score for this chromosome.
         /// </summary>
-        public abstract void CalculateCost();
+        public abstract void CalculateScore();
 
         /// <summary>
         /// Used to compare two chromosomes. Used to sort by cost.
@@ -83,29 +83,12 @@ namespace Encog.Solve.Genetic
             {
                 return 0;
             }
-            else if (this.Cost > other.Cost)
+            else if (this.Score > other.Score)
             {
                 return 1;
             }
             return -1;
         }
-
-        /// <summary>
-        /// The cost.
-        /// </summary>
-        public double Cost
-        {
-            get
-            {
-                return this.cost;
-            }
-            set
-            {
-                this.cost = value;
-            }
-        }
-
-
 
         /// <summary>
         /// Used the get the entire gene array.
@@ -230,8 +213,8 @@ namespace Encog.Solve.Genetic
             }
 
             // copy results
-            offspring1.CalculateCost();
-            offspring2.CalculateCost();
+            offspring1.CalculateScore();
+            offspring2.CalculateScore();
 
         }
 
@@ -268,7 +251,7 @@ namespace Encog.Solve.Genetic
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("[Chromosome: cost=");
-            builder.Append(Cost);
+            builder.Append(Score);
             return builder.ToString();
         }
 

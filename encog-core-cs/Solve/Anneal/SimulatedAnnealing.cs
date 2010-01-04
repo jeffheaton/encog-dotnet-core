@@ -38,168 +38,115 @@ namespace Encog.Solve.Anneal
         /// <summary>
         /// The starting temperature.
         /// </summary>
-        public double StartTemperature
-        {
-            get
-            {
-                return startTemperature;
-            }
-            set
-            {
-                this.startTemperature = value;
-            }
-        }
-
+        public double StartTemperature { get; set; }
+        
         /// <summary>
         /// The ending temperature.
         /// </summary>
-        public double StopTemperature
-        {
-            get
-            {
-                return stopTemperature;
-            }
-            set
-            {
-                this.stopTemperature = value;
-            }
-        }
+        public double StopTemperature { get; set; }
 
         /// <summary>
-        /// The number of cycles that will be used, per iteration.
+        /// The number of cycles that will be used.
         /// </summary>
-        public int Cycles
-        {
-            get
-            {
-                return cycles;
-            }
-            set
-            {
-                this.cycles = value;
-            }
-        }
-
-
+        public int Cycles { get; set; }
+        
         /// <summary>
-        /// The current error.
+        /// The current score.
         /// </summary>
-        public double Error
-        {
-            get
-            {
-                return error;
-            }
-            set
-            {
-                error = value;
-            }
-        }
+        public double Score { get; set; }
 
         /// <summary>
         /// The current temperature.
         /// </summary>
-        public double Temperature
+        public double Temperature { get; set; }
+
+        /// <summary>
+        /// Should the score be minimized.
+        /// </summary>
+        public bool ShouldMinimize { get; set; }
+
+
+        /// <summary>
+        /// Simple constructor, default to should minimize score.
+        /// </summary>
+        public SimulatedAnnealing()
         {
-            get
-            {
-                return temperature;
-            }
-            set
-            {
-                this.temperature = value;
-            }
+            this.ShouldMinimize = true;
         }
 
+        /// <summary>
+        /// Subclasses should provide a method that evaluates the score for the
+        /// current solution.  
+        /// </summary>
+        /// <returns>Return the score.</returns>
+        public abstract double PerformScoreCalculation();
 
         /// <summary>
-        /// The starting temperature.
+        /// Subclasses must provide access to an array that makes up the solution. 
         /// </summary>
-        private double startTemperature;
-
-        /// <summary>
-        /// The ending temperature.
-        /// </summary>
-        private double stopTemperature;
-
-        /// <summary>
-        /// The number of cycles that will be used, per iteration.
-        /// </summary>
-        private int cycles;
-
-        /// <summary>
-        /// The current error.
-        /// </summary>
-        private double error;
-
-        /// <summary>
-        /// The current temperature.
-        /// </summary>
-        protected double temperature;
-
-        /**
-         * Subclasses should provide a method that evaluates the error for the
-         * current solution. Those solutions with a lower error are better.
-         * 
-         * @return Return the error, as a percent.
-         * @throws NeuralNetworkError
-         *             Should be thrown if any sort of error occurs.
-         */
-        public abstract double DetermineError();
-
-        /**
-         * Subclasses must provide access to an array that makes up the solution.
-         * 
-         * @return An array that makes up the solution.
-         */
+        /// <returns>An array that makes up the solution.</returns>
         public abstract UNIT_TYPE[] GetArray();
-
-        /**
-         * Called to perform one cycle of the annealing process.
-         */
-        public void Iteration()
-        {
-            UNIT_TYPE[] bestArray;
-
-            this.Error = DetermineError();
-            bestArray = this.GetArrayCopy();
-
-            this.temperature = this.StartTemperature;
-
-            for (int i = 0; i < this.cycles; i++)
-            {
-                double curError;
-                Randomize();
-                curError = DetermineError();
-                if (curError < this.Error)
-                {
-                    bestArray = this.GetArrayCopy();
-                    this.Error = curError;
-                }
-
-                this.PutArray(bestArray);
-                double ratio = Math.Exp(Math.Log(this.StopTemperature
-                        / this.StartTemperature)
-                        / (this.Cycles - 1));
-                this.temperature *= ratio;
-            }
-        }
 
         /// <summary>
         /// Get a copy of the array.
         /// </summary>
-        /// <returns>The new array copy.</returns>
+        /// <returns>A copy of the array.</returns>
         public abstract UNIT_TYPE[] GetArrayCopy();
 
+
         /// <summary>
-        /// Use the specified array.
+        /// Called to perform one cycle of the annealing process.
         /// </summary>
-        /// <param name="array">The array to use.</param>
+        public void Iteration()
+        {
+            UNIT_TYPE[] bestArray;
+
+            Score = PerformScoreCalculation();
+            bestArray = this.GetArrayCopy();
+
+            this.Temperature = this.StartTemperature;
+
+            for (int i = 0; i < Cycles; i++)
+            {
+                double curScore;
+                Randomize();
+                curScore = PerformScoreCalculation();
+
+                if (this.ShouldMinimize)
+                {
+                    if (curScore < Score)
+                    {
+                        bestArray = this.GetArrayCopy();
+                        Score = curScore;
+                    }
+                }
+                else
+                {
+                    if (curScore > Score)
+                    {
+                        bestArray = this.GetArrayCopy();
+                        Score = curScore;
+                    }
+                }
+
+                this.PutArray(bestArray);
+                double ratio = Math.Exp(Math.Log(StopTemperature
+                        / StartTemperature)
+                        / (Cycles - 1));
+                Temperature *= ratio;
+            }
+        }
+
+        /// <summary>
+        /// Store the array. 
+        /// </summary>
+        /// <param name="array">The array to be stored.</param>
         public abstract void PutArray(UNIT_TYPE[] array);
 
         /// <summary>
-        /// Randomize the values.
+        /// Randomize the weight matrix.
         /// </summary>
         public abstract void Randomize();
+
     }
 }

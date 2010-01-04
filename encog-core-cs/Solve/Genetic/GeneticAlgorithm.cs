@@ -81,6 +81,11 @@ namespace Encog.Solve.Genetic
         private int cutLength;
 
         /// <summary>
+        /// Should the score be minimized.
+        /// </summary>
+        public bool ShouldMinimize { get; set; }
+
+        /// <summary>
         /// The population.
         /// </summary>
         private Chromosome<GENE_TYPE>[] chromosomes;
@@ -193,6 +198,14 @@ namespace Encog.Solve.Genetic
         }
 
         /// <summary>
+        /// Construct object.
+        /// </summary>
+        public GeneticAlgorithm()
+        {
+            this.ShouldMinimize = true;
+        }
+
+        /// <summary>
         /// Modify the weight matrix and thresholds based on the last call to
         /// calcError.
         /// </summary>
@@ -239,6 +252,18 @@ namespace Encog.Solve.Genetic
         {
             Array.Sort(this.chromosomes);
         }
+
+        /**
+	 * Define the cut length to be 1/3 the length of a chromosome. This is a
+	 * good default value for it. If there are no chromosomes yet this call will
+	 * set the cut length to 0.
+	 */
+        public void DefineCutLength() {
+		if (this.chromosomes.Length > 0) {
+			int size = this.chromosomes[0].Genes.Length;
+			CutLength = (size / 3);
+		}
+	}
 
     }
 

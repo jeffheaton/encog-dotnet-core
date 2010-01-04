@@ -71,18 +71,26 @@ namespace Encog.Neural.Networks.Training.Anneal
         private NeuralSimulatedAnnealingHelper anneal;
 
         /// <summary>
+        /// Used to calculate the score.
+        /// </summary>
+        private ICalculateScore calculateScore;
+
+        /// <summary>
         /// Construct a simulated annleaing trainer for a feedforward neural network. 
         /// </summary>
         /// <param name="network">The neural network to be trained.</param>
+        /// <param name="calculateScore">Used to calculate the score for a neural network.</param>
         /// <param name="startTemp">The starting temperature.</param>
         /// <param name="stopTemp">The ending temperature.</param>
         /// <param name="cycles">The number of cycles in a training iteration.</param>
         public NeuralSimulatedAnnealing(BasicNetwork network,
-                 double startTemp,
-                 double stopTemp,
-                 int cycles)
+                ICalculateScore calculateScore,
+                double startTemp,
+                double stopTemp,
+                int cycles)
         {
             this.network = network;
+            this.calculateScore = calculateScore;
             this.anneal = new NeuralSimulatedAnnealingHelper(this);
             this.anneal.Temperature = startTemp;
             this.anneal.StartTemperature = startTemp;
@@ -91,7 +99,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         }
 
         /// <summary>
-        /// The best network.
+        /// Get the best network from the training.
         /// </summary>
         public override BasicNetwork Network
         {
@@ -106,62 +114,54 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public override void Iteration()
         {
-#if LOGGING
-		if (this.logger.isInfoEnabled()) {
-			this.logger.info("Performing Simulated Annealing iteration.");
-		}
-#endif
+            if (NeuralSimulatedAnnealing.logger.IsInfoEnabled)
+            {
+                NeuralSimulatedAnnealing.logger.Info("Performing Simulated Annealing iteration.");
+            }
             PreIteration();
             this.anneal.Iteration();
-            this.Error = this.anneal.DetermineError();
+            this.Error = this.anneal.PerformScoreCalculation();
             PostIteration();
         }
 
         /// <summary>
-        /// Determine the error of the current weights and thresholds.
-        /// </summary>
-        /// <returns>The error.</returns>
-        public abstract double DetermineError();
-
-        /// <summary>
-        /// Get the network as an array of doubles.
+        /// Get the network as an array of doubles. 
         /// </summary>
         /// <returns>The network as an array of doubles.</returns>
-        public Double[] GetArray()
+        public double[] GetArray()
         {
             return NetworkCODEC
-                    .NetworkToArray(this.network);
+                    .NetworkToArray(network);
         }
 
         /// <summary>
-        /// A copy of the annealing array.
+        /// Returns a copy of the annealing array.
         /// </summary>
         /// <returns>A copy of the annealing array.</returns>
-        public Double[] GetArrayCopy()
+        public double[] GetArrayCopy()
         {
             return GetArray();
         }
 
         /// <summary>
-        /// Convert an array of doubles to the current best network.
+        /// Convert an array of doubles to the current best network. 
         /// </summary>
         /// <param name="array">An array.</param>
         public void PutArray(double[] array)
         {
-            NetworkCODEC.ArrayToNetwork(array,
-                    this.network);
+            NetworkCODEC.ArrayToNetwork(array, network);
         }
 
         /// <summary>
         /// Randomize the weights and thresholds. This function does most of the
         /// work of the class. Each call to this class will randomize the data
         /// according to the current temperature. The higher the temperature the
-        /// more randomness.
+        /// more randomness. 
         /// </summary>
         public void Randomize()
         {
             double[] array = NetworkCODEC
-                    .NetworkToArray(this.network);
+                    .NetworkToArray(network);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -171,8 +171,19 @@ namespace Encog.Neural.Networks.Training.Anneal
                 array[i] = array[i] + add;
             }
 
-            NetworkCODEC.ArrayToNetwork(array,
-                    this.network);
+            NetworkCODEC.ArrayToNetwork(array, network);
         }
+
+        /// <summary>
+        /// The object used to calculate the score.
+        /// </summary>
+        public ICalculateScore CalculateScore
+        {
+            get
+            {
+                return calculateScore;
+            }
+        }
+
     }
 }
