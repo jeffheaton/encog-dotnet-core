@@ -352,7 +352,6 @@
     <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
     <Compile Include="Util\MathUtil\RBF\RadialBasisFunction.cs" />
     <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
-    <Compile Include="Util\NormalizeInput.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />
     <Compile Include="Util\Randomize\ConstRandomizer.cs" />
