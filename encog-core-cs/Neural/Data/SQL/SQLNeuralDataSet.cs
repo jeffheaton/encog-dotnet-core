@@ -1,8 +1,9 @@
-﻿// Encog Neural Network and Bot Library v1.x (DotNet)
+﻿// Encog Artificial Intelligence Framework v2.x
+// DotNet Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-cs/
 // 
-// Copyright 2008, Heaton Research Inc., and individual contributors.
+// Copyright 2009-2010, Heaton Research Inc., and individual contributors.
 // See the copyright.txt in the distribution for a full listing of 
 // individual contributors.
 //
