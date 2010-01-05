@@ -82,19 +82,20 @@ namespace Encog.Neural.Activation
         /// <param name="d">The input array to the activation function.</param>
         public override void DerivativeFunction(double[] d)
         {
-            throw new NeuralNetworkError(
-                    "Can't use the linear activation function "
-                            + "where a derivative is required.");
+            for (int i = 0; i < d.Length; i++)
+            {
+                d[i] = 1.0;
+            }
         }
 
         /// <summary>
-        /// Return false, linear has no derivative.
+        /// Return true, linear has a derivative.
         /// </summary>
         public override bool HasDerivative
         {
             get
             {
-                return false;
+                return true;
             }
         }
     }

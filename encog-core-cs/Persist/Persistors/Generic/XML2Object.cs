@@ -71,12 +71,6 @@ namespace Encog.Persist.Persistors.Generic
                 FieldInfo field = ReflectionUtil.FindField(target.GetType(),
                        key);
 
-                if (field == null)
-                {
-                    ReflectionUtil.FindField(target.GetType(),
-                       key);
-                }
-
                 String value = this.xmlIn.LastTag.GetAttributeValue(key);
                 SetFieldValue(field, target, value);
             }
@@ -188,7 +182,7 @@ namespace Encog.Persist.Persistors.Generic
         private void SetFieldValue(FieldInfo field, Object target,
                  String value)
         {
-            Type type = field.GetType();
+            Type type = field.FieldType;
             if (type == typeof(long))
             {
                 field.SetValue(target, long.Parse(value));
@@ -213,7 +207,7 @@ namespace Encog.Persist.Persistors.Generic
             {
                 field.SetValue(target, value);
             }
-            else if (type == typeof(bool))
+            else if (type == typeof(bool) || type==typeof(Boolean) )
             {
                 field.SetValue(target,
                         value.ToLower().Equals("true"));

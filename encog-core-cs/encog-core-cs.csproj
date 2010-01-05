@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -203,20 +203,14 @@
     <Compile Include="Neural\Networks\Training\IStrategy.cs" />
     <Compile Include="Neural\Networks\Training\ILearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Back\Backpropagation.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Back\BackpropagationMethod.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\CalculatePartialDerivative.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Gradient\CalculateGradient.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientUtil.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientWorker.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagation.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagationMethod.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Multi\GradientMap.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Multi\MPROPWorker.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Multi\MultiPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Propagation.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\PropagationLevel.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\IPropagationMethod.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\PropagationSynapse.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\PropagationUtil.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagationMethod.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\Greedy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\HybridStrategy.cs" />
@@ -316,6 +310,7 @@
     <Compile Include="Persist\Persistors\PropertyDataPersistor.cs" />
     <Compile Include="Persist\Persistors\RadialBasisFunctionLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\TextDataPersistor.cs" />
+    <Compile Include="Persist\Persistors\TrainingContinuationPersistor.cs" />
     <Compile Include="Persist\Persistors\WeightedSynapsePersistor.cs" />
     <Compile Include="Persist\Persistors\WeightlessSynapsePersistor.cs" />
     <Compile Include="Persist\PersistReader.cs" />
@@ -341,6 +336,7 @@
     <Compile Include="Util\DirectoryUtil.cs" />
     <Compile Include="Util\DownSample\IDownSample.cs" />
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
+    <Compile Include="Util\EncogArray.cs" />
     <Compile Include="Util\ErrorCalculation.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />
     <Compile Include="Util\HTTP\URLUtility.cs" />

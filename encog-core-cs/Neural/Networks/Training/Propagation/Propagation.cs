@@ -34,6 +34,8 @@ using Encog.Neural.Networks.Layers;
 using Encog.Util.Logging;
 #if logging
 using log4net;
+using Encog.Neural.Networks.Training.Propagation.Gradient;
+using Encog.Neural.Networks.Structure;
 #endif
 namespace Encog.Neural.Networks.Training.Propagation
 {
@@ -42,111 +44,110 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// methods. The specifics of each of the propagation methods is implemented
     /// inside of the PropagationMethod interface implementors.
     /// </summary>
-    public class Propagation : BasicTraining
+    public abstract class Propagation : BasicTraining
     {
         /// <summary>
-        /// The batch size. Defaults to the max size of an integer, which means
-        /// update once per iteration.
-        /// 
-        /// The batch size is the frequency with which the weights are updated per
-        /// iteration. Setting it to the size of the training set means one update
-        /// per iteration. Setting this to a lower number may improve training
-        /// efficiency at the cost of processing time.
-        /// 
-        /// If you do not want to use batch training, specify a value of 1, then the
-        /// weights will be updated on each iteration, which is online training.
+        /// The number of threads to use.
         /// </summary>
-        private int batchSize = int.MaxValue;
+        public int NumThreads { get; set; }
 
         /// <summary>
-        /// The propagation utility to use.
+        /// The network.
         /// </summary>
-	private PropagationUtil propagationUtil;
-
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(Propagation));
-#endif
+        private BasicNetwork network;
 
         /// <summary>
-        /// Construct a propagation trainer.
+        /// Construct a propagation object.
         /// </summary>
-        /// <param name="network">The network to train.</param>
-        /// <param name="method">The propagation method to use.</param>
-        /// <param name="training">The training data to use.</param>
+        /// <param name="network">The network.</param>
+        /// <param name="training">The training set.</param>
         public Propagation(BasicNetwork network,
-                 IPropagationMethod method, INeuralDataSet training)
+                 INeuralDataSet training)
+            : base()
         {
-            this.propagationUtil = new PropagationUtil(network, method);
+            this.network = network;
             this.Training = training;
         }
 
-        
         /// <summary>
-        /// Perform one iteration of training.
-        /// 
-        /// Note: if you get a StackOverflowError while training, then you have
-        /// endless recurrent loops. Try inserting no trainable synapses on one side
-        /// of the loop.
+        /// True if this training can be continued.
         /// </summary>
-        public override void Iteration()
+        public virtual bool CanContinue
         {
-#if logging
-            if (this.logger.IsInfoEnabled)
+            get
             {
-                this.logger.Info("Beginning propagation iteration");
+                return false;
             }
-#endif
-            PreIteration();
-
-            ErrorCalculation errorCalculation = new ErrorCalculation();
-            int processedCount = 0;
-
-            foreach (INeuralDataPair pair in this.Training)
-            {
-#if logging
-                if (this.logger.IsDebugEnabled)
-                {
-                    this.logger.Debug(
-                            "Backpropagation training on: input=" + pair.Input + ",ideal=" + pair.Ideal);
-                }
-#endif
-                INeuralData actual = this.propagationUtil.ForwardPass(pair.Input);
-
-                errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
-                this.propagationUtil.BackwardPass(pair.Ideal);
-
-                processedCount++;
-                if (processedCount >= this.batchSize)
-                {
-                    processedCount = 0;
-                    this.propagationUtil.Method.Learn();
-                }
-
-            }
-
-            if (processedCount != 0)
-            {
-                this.propagationUtil.Method.Learn();
-            }
-
-
-            this.Error = errorCalculation.CalculateRMS();
-
-            PostIteration();
         }
 
         /// <summary>
-        /// Get the current best neural network.
+        /// The network.
         /// </summary>
         public override BasicNetwork Network
         {
             get
             {
-                return this.propagationUtil.Network;
+                return this.network;
             }
+        }
+
+        /// <summary>
+        /// Determine if this specified training continuation object is valid for
+        /// this training method.
+        /// </summary>
+        /// <param name="state">The training continuation object to check.</param>
+        /// <returns>True if the continuation object is valid.</returns>
+        public virtual bool IsValidResume(TrainingContinuation state)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Perform one training iteration.
+        /// </summary>
+        public override void Iteration()
+        {
+            PreIteration();
+
+            CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
+            double[] weights = NetworkCODEC.NetworkToArray(Network);
+            prop.Calculate(weights);
+
+            PerformIteration(prop, weights);
+
+            NetworkCODEC.ArrayToNetwork(weights, Network);
+            Error = prop.Error;
+
+            PostIteration();
+        }
+
+        /// <summary>
+        /// Pause the training to continue later.
+        /// </summary>
+        /// <returns>A training continuation object.</returns>
+        public virtual TrainingContinuation Pause()
+        {
+            throw new TrainingError("This training type does not support pause.");
+        }
+
+
+
+        /// <summary>
+        /// Perform an iteration. This is implemented for each of the propagation
+        /// method types.
+        /// </summary>
+        /// <param name="prop">The gradients.</param>
+        /// <param name="weights">The weights.</param>
+        public abstract void PerformIteration(CalculateGradient prop,
+                double[] weights);
+
+        /// <summary>
+        /// Resume training.
+        /// </summary>
+        /// <param name="state">The training continuation object to use to continue.</param>
+        public virtual void Resume(TrainingContinuation state)
+        {
+            throw new TrainingError("This training type does not support resume.");
         }
     }
 }

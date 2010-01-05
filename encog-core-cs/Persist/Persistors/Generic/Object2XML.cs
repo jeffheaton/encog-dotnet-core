@@ -87,6 +87,10 @@ namespace Encog.Persist.Persistors.Generic
                 {
                     SaveCollection((ICollection)fieldObject);
                 }
+                else if (fieldObject is Boolean)
+                {
+                    this.xmlOut.AddText(fieldObject.ToString().ToLower());
+                }
                 else if (ReflectionUtil.IsSimple(fieldObject.GetType()))
                 {
                     this.xmlOut.AddText(fieldObject.ToString());
@@ -146,8 +150,16 @@ namespace Encog.Persist.Persistors.Generic
                         && (ReflectionUtil.HasAttribute(childField, typeof(EGAttribute))))
                 {
                     Object childValue = childField.GetValue(obj);
-                    this.xmlOut.AddAttribute(childField.Name, childValue
+                    if (childValue is Boolean)
+                    {
+                        this.xmlOut.AddAttribute(childField.Name, childValue
+                            .ToString().ToLower());
+                    }
+                    else
+                    {
+                        this.xmlOut.AddAttribute(childField.Name, childValue
                             .ToString());
+                    }
                 }
             }
             // handle actual fields

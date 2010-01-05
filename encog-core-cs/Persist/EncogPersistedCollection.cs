@@ -113,6 +113,8 @@ namespace Encog.Persist
         /// </summary>
         public const String TYPE_PARSE_TEMPLATE = "ParseTemplate";
 
+
+
         /// <summary>
         /// The name attribute.
         /// </summary>
@@ -128,6 +130,11 @@ namespace Encog.Persist
         /// </summary>
         private readonly static ILog LOGGER = LogManager.GetLogger(typeof(EncogPersistedCollection));
 #endif
+
+        /// <summary>
+        /// Training continuation.
+        /// </summary>
+        public const String TYPE_TRAINING_CONTINUATION = "TrainingContinuation";
         /// <summary>
         /// Throw and log an error.
         /// </summary>

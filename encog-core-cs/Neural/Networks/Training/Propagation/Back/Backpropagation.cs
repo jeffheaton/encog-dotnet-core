@@ -28,6 +28,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Strategy;
+using Encog.Neural.Networks.Training.Propagation.Gradient;
+using Encog.Neural.Networks.Structure;
 
 namespace Encog.Neural.Networks.Training.Propagation.Back
 {
@@ -59,36 +61,42 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
             ILearningRate
     {
         /// <summary>
-        /// The momentum, this is the degree to which the previous training cycle
-        /// affects the current one.
+        /// Set the momentum for training. This is the degree to which changes from
+        /// which the previous training iteration will affect this training
+        /// iteration. This can be useful to overcome local minima.
         /// </summary>
-        private double momentum;
+        public double Momentum { get; set; }
 
         /// <summary>
         /// The learning rate, this is value is essentially a percent. It is the
         /// degree to which the gradients are applied to the weight matrix to allow
         /// learning.
         /// </summary>
-        private double learningRate;
+        public double LearningRate { get; set; }
 
         /// <summary>
-        /// Create a class to train using backpropagation.
+        /// The last delta values, used for momentum.
+        /// </summary>
+        private double[] lastDelta;
+
+        /// <summary>
+        /// Create a class to train using backpropagation. 
         /// </summary>
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
         public Backpropagation(BasicNetwork network,
                  INeuralDataSet training)
-            : this(network, training, 0, 0)
+            : base(network, training)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
         }
-
+       
         /// <summary>
-        /// The network that is to be trained
+        /// Construct a backpropagation object.
         /// </summary>
-        /// <param name="network">The network to use.</param>
-        /// <param name="training">The training set.</param>
+        /// <param name="network">The network that is to be trained</param>
+        /// <param name="training">The training set</param>
         /// <param name="learnRate">The rate at which the weight matrix will be adjusted based on
         /// learning.</param>
         /// <param name="momentum">The influence that previous iteration's training deltas will
@@ -96,46 +104,37 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public Backpropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double momentum)
-            : base(network, new BackpropagationMethod(learnRate, momentum), training)
+            : base(network, training)
         {
 
-            this.momentum = momentum;
-            this.learningRate = learnRate;
+            this.Momentum = momentum;
+            this.LearningRate = learnRate;
+            this.lastDelta = new double[network.Structure.CalculateSize()];
         }
 
         /// <summary>
-        /// The learning rate, this is value is essentially a percent. It is
-        /// the degree to which the gradients are applied to the weight
-        /// matrix to allow learning.
+        /// Perform a training iteration.  This is where the actual backprop
+        /// specific training takes place.
         /// </summary>
-        public double LearningRate
+        /// <param name="prop">The gradients.</param>
+        /// <param name="weights">The network weights.</param>
+        public override void PerformIteration(CalculateGradient prop,
+                 double[] weights)
         {
-            get
-            {
-                return this.learningRate;
-            }
-            set
-            {
-                this.learningRate = value;
-            }
-        }
 
-        /// <summary>
-        /// The momentum for training.  This is the degree to which changes
-        /// from which the previous training iteration will affect this training
-        /// iteration.  This can be useful to overcome local minima.
-        /// </summary>
-        public double Momentum
-        {
-            get
+            double[] gradients = prop.Gradients;
+
+            for (int i = 0; i < gradients.Length; i++)
             {
-                return this.momentum;
+                double last = this.lastDelta[i];
+                this.lastDelta[i] = (gradients[i] * this.LearningRate)
+                        + (last * this.Momentum);
+                weights[i] += this.lastDelta[i];
             }
-            set
-            {
-                this.momentum = value;
-            }
+            NetworkCODEC.ArrayToNetwork(weights, Network);
+
+            Error = prop.Error;
+
         }
     }
-
 }

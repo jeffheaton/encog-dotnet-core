@@ -433,7 +433,7 @@ namespace Encog.Normalize
             int i = 0;
             foreach (IOutputField field in this.outputFields)
             {
-                if (field.GetType().IsInstanceOfType(clazz))
+                if (field.GetType().IsInstanceOfType(clazz) || field.GetType()==clazz)
                 {
                     if (i == count)
                     {

@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Networks.Training.Propagation.Gradient;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient
 {
@@ -66,18 +67,16 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public const double DEFAULT_ZERO_TOLERANCE = 0.00000000000000001;
 
         /// <summary>
-        /// The POSITIVE ETA value.  This is specified by the resilient 
-        /// propagation algorithm.  This is the percentage by which 
-        /// the deltas are increased by if the partial derivative is
-        /// greater than zero.
+        /// The POSITIVE ETA value. This is specified by the resilient propagation
+        /// algorithm. This is the percentage by which the deltas are increased by if
+        /// the partial derivative is greater than zero.
         /// </summary>
         public const double POSITIVE_ETA = 1.2;
 
         /// <summary>
-        /// The NEGATIVE ETA value.  This is specified by the resilient 
-        /// propagation algorithm.  This is the percentage by which 
-        /// the deltas are increased by if the partial derivative is
-        /// less than zero.
+        /// The NEGATIVE ETA value. This is specified by the resilient propagation
+        /// algorithm. This is the percentage by which the deltas are increased by if
+        /// the partial derivative is less than zero.
         /// </summary>
         public const double NEGATIVE_ETA = 0.5;
 
@@ -97,6 +96,16 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public const double DEFAULT_MAX_STEP = 50;
 
         /// <summary>
+        /// Continuation tag for the last gradients.
+        /// </summary>
+        public const String LAST_GRADIENTS = "LAST_GRADIENTS";
+
+        /// <summary>
+        /// Continuation tag for the last values.
+        /// </summary>
+        public const String UPDATE_VALUES = "UPDATE_VALUES";
+
+        /// <summary>
         /// The zero tolerance.
         /// </summary>
         private double zeroTolerance;
@@ -112,10 +121,25 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         private double maxStep;
 
         /// <summary>
-        /// Construct a resilient training object.  Use the defaults for all
-        /// training parameters.  Usually this is the constructor to use as
-        /// the resilient training algorithm is designed for the default 
-        /// parameters to be acceptable for nearly all problems.
+        /// The update value.
+        /// </summary>
+        private double[] updateValues;
+
+        /// <summary>
+        /// The last gradients.
+        /// </summary>
+        private double[] lastGradient;
+
+        /// <summary>
+        /// The current gradients.
+        /// </summary>
+        private double[] gradients;
+
+        /// <summary>
+        /// Construct a resilient training object. Use the defaults for all training
+        /// parameters. Usually this is the constructor to use as the resilient
+        /// training algorithm is designed for the default parameters to be
+        /// acceptable for nearly all problems.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set to use.</param>
@@ -127,27 +151,49 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         {
 
         }
-
+        
         /// <summary>
-        /// Construct a resilient training object, allow the training parameters
-        /// to be specified.  Usually the default parameters are acceptable for
-        /// the resilient training algorithm.  Therefore you should usually
-        /// use the other constructor, that makes use of the default values.
+        /// Construct a resilient training object, allow the training parameters to
+        /// be specified. Usually the default parameters are acceptable for the
+        /// resilient training algorithm. Therefore you should usually use the other
+        /// constructor, that makes use of the default values.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set to use.</param>
         /// <param name="zeroTolerance">The zero tolerance.</param>
-        /// <param name="initialUpdate">The initial update values, this is the amount 
-        /// that the deltas are all initially set to.</param>
+        /// <param name="initialUpdate">The initial update values, this is the amount that the deltas
+        /// are all initially set to.</param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
         public ResilientPropagation(BasicNetwork network,
                  INeuralDataSet training, double zeroTolerance,
                  double initialUpdate, double maxStep)
-            : base(network, new ResilientPropagationMethod(zeroTolerance,maxStep,initialUpdate), training)
+            : base(network, training)
         {
+
+
             this.initialUpdate = initialUpdate;
             this.maxStep = maxStep;
             this.zeroTolerance = zeroTolerance;
+
+            this.updateValues = new double[network.Structure.CalculateSize()];
+            this.lastGradient = new double[network.Structure.CalculateSize()];
+
+            for (int i = 0; i < this.updateValues.Length; i++)
+            {
+                this.updateValues[i] = this.initialUpdate;
+            }
+
+        }
+
+        /// <summary>
+        /// True, as RPROP can continue.
+        /// </summary>
+        public override bool CanContinue
+        {
+            get
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -183,5 +229,142 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
             }
         }
 
+        /// <summary>
+        /// Determine if the specified continuation object is valid to resume with.
+        /// </summary>
+        /// <param name="state">The continuation object to check.</param>
+        /// <returns>True if the specified continuation object is valid for this
+        /// training method and network.</returns>
+        public override bool IsValidResume(TrainingContinuation state)
+        {
+            if (!state.Contents.ContainsKey(
+                    ResilientPropagation.LAST_GRADIENTS)
+                    || !state.Contents.ContainsKey(
+                            ResilientPropagation.UPDATE_VALUES))
+            {
+                return false;
+            }
+
+            double[] d = (double[])state
+                   [ResilientPropagation.LAST_GRADIENTS];
+            return d.Length == Network.Structure.CalculateSize();
+        }
+
+        /// <summary>
+        /// Pause the training.
+        /// </summary>
+        /// <returns>A training continuation object to continue with.</returns>
+        public override TrainingContinuation Pause()
+        {
+            TrainingContinuation result = new TrainingContinuation();
+            result[ResilientPropagation.LAST_GRADIENTS] = this.lastGradient;
+            result[ResilientPropagation.UPDATE_VALUES] = this.updateValues;
+            return result;
+        }
+
+
+        /// <summary>
+        /// Perform a training iteration. This is where the actual RPROP specific
+        /// training takes place.
+        /// </summary>
+        /// <param name="prop">The gradients.</param>
+        /// <param name="weights">The network weights.</param>
+        public override void PerformIteration(CalculateGradient prop,
+                double[] weights)
+        {
+
+            this.gradients = prop.Gradients;
+
+            for (int i = 0; i < this.gradients.Length; i++)
+            {
+                weights[i] += UpdateWeight(this.gradients, i);
+            }
+        }
+
+        /// <summary>
+        /// Resume training.
+        /// </summary>
+        /// <param name="state">The training state to return to.</param>
+        public override void Resume(TrainingContinuation state)
+        {
+            if (!IsValidResume(state))
+            {
+                throw new TrainingError("Invalid training resume data length");
+            }
+            this.lastGradient = (double[])state
+                    [ResilientPropagation.LAST_GRADIENTS];
+            this.updateValues = (double[])state
+                    [ResilientPropagation.UPDATE_VALUES];
+        }
+
+        /// <summary>
+        /// Determine the sign of the value.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
+        private int Sign(double value)
+        {
+            if (Math.Abs(value) < this.zeroTolerance)
+            {
+                return 0;
+            }
+            else if (value > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Determine the amount to change a weight by.
+        /// </summary>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="index">The weight to adjust.</param>
+        /// <returns>The amount to change this weight by.</returns>
+        private double UpdateWeight(double[] gradients, int index)
+        {
+            // multiply the current and previous gradient, and take the
+            // sign. We want to see if the gradient has changed its sign.
+            int change = Sign(this.gradients[index]
+                   * this.lastGradient[index]);
+            double weightChange = 0;
+
+            // if the gradient has retained its sign, then we increase the
+            // delta so that it will converge faster
+            if (change > 0)
+            {
+                double delta = this.updateValues[index]
+                        * ResilientPropagation.POSITIVE_ETA;
+                delta = Math.Min(delta, this.maxStep);
+                weightChange = Sign(this.gradients[index]) * delta;
+                this.updateValues[index] = delta;
+                this.lastGradient[index] = this.gradients[index];
+            }
+            else if (change < 0)
+            {
+                // if change<0, then the sign has changed, and the last
+                // delta was too big
+                double delta = this.updateValues[index]
+                        * ResilientPropagation.NEGATIVE_ETA;
+                delta = Math.Max(delta, ResilientPropagation.DELTA_MIN);
+                this.updateValues[index] = delta;
+                // set the previous gradent to zero so that there will be no
+                // adjustment the next iteration
+                this.lastGradient[index] = 0;
+            }
+            else if (change == 0)
+            {
+                // if change==0 then there is no change to the delta
+                double delta = this.lastGradient[index];
+                weightChange = Sign(this.gradients[index]) * delta;
+                this.lastGradient[index] = this.gradients[index];
+            }
+
+            // apply the weight change, if any
+            return weightChange;
+        }
     }
 }

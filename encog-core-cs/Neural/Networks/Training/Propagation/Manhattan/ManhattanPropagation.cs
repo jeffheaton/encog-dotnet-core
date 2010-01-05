@@ -29,6 +29,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 #if logging
 using log4net;
+using Encog.Neural.Networks.Training.Propagation.Gradient;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
@@ -49,91 +50,97 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
     /// </summary>
     public class ManhattanPropagation : Propagation, ILearningRate
     {
-
         /// <summary>
         /// The default tolerance to determine of a number is close to zero.
         /// </summary>
-        static double DEFAULT_ZERO_TOLERANCE = 0.001;
+        const double DEFAULT_ZERO_TOLERANCE = 0.001;
 
         /// <summary>
         /// The zero tolearnce to use.
         /// </summary>
-        private double zeroTolerance;
+        public double ZeroTolerance { get; set; }
 
         /// <summary>
-        /// The learning gate to use.
+        /// The learning rate.
         /// </summary>
-        private double learningRate;
+        public double LearningRate { get; set; }
 
-#if logging
         /// <summary>
-        /// The logging object.
+        /// The gradients.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(ManhattanPropagation));
-#endif
+        private double[] gradients;
 
         /// <summary>
-        /// Construct a class to train with Manhattan propagation.  Use default zero 
-        /// tolerance.
+        /// Construct a class to train with Manhattan propagation. Use default zero
+        /// tolerance. 
         /// </summary>
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to use.</param>
-        /// <param name="learnRate">A fixed learning to the weight matrix for each 
-        /// training iteration.</param>
+        /// <param name="learnRate">A fixed learning to the weight matrix for each training
+        /// iteration.</param>
         public ManhattanPropagation(BasicNetwork network,
-                 INeuralDataSet training, double learnRate)
-            : this(network, training, learnRate,
-                ManhattanPropagation.DEFAULT_ZERO_TOLERANCE)
+                 INeuralDataSet training, double learnRate) :
+            this(network, training, learnRate,
+                   ManhattanPropagation.DEFAULT_ZERO_TOLERANCE)
         {
-
         }
 
         /// <summary>
-        /// Construct a Manhattan propagation training object.  
+        /// Construct a Manhattan propagation training object.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
-        /// <param name="learnRate">The learning rate.s</param>
+        /// <param name="learnRate">The learning rate.</param>
         /// <param name="zeroTolerance">The zero tolerance.</param>
         public ManhattanPropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double zeroTolerance)
-            : base(network, new ManhattanPropagationMethod(zeroTolerance,learnRate), training)
+            : base(network, training)
         {
-            this.zeroTolerance = zeroTolerance;
-            this.learningRate = learnRate;
+            this.ZeroTolerance = zeroTolerance;
+            this.LearningRate = learnRate;
+            this.gradients = new double[network.Structure.CalculateSize()];
         }
 
         /// <summary>
-        /// The learning rate that was specified in the
-        /// constructor.
+        /// Perform a training iteration. This is where the actual Manhattan 
+        /// specific training takes place.
         /// </summary>
-        public double LearningRate
+        /// <param name="prop">The gradients.</param>
+        /// <param name="weights">The network weights.</param>
+        public override void PerformIteration(CalculateGradient prop,
+                 double[] weights)
         {
-            get
+
+            this.gradients = prop.Gradients;
+
+            for (int i = 0; i < this.gradients.Length; i++)
             {
-                return this.learningRate;
+                weights[i] += UpdateWeight(i);
             }
-            set
-            {
-                this.learningRate = value;
-            }
+
         }
 
         /// <summary>
-        /// The zero tolerance that was specified in the
-        /// constructor.
+        /// Determine the amount to update a weight by.
         /// </summary>
-        public double ZeroTolerance
+        /// <param name="index">The index of the weight to update.</param>
+        /// <returns>The amount the weight should be updated by.</returns>
+        private double UpdateWeight(int index)
         {
-            get
+            if (Math.Abs(this.gradients[index]) < this.ZeroTolerance)
             {
-                return this.zeroTolerance;
+                return 0;
             }
-            set
+            else if (this.gradients[index] > 0)
             {
-                this.zeroTolerance = value;
+                return this.LearningRate;
+            }
+            else
+            {
+                return -this.LearningRate;
             }
         }
+
     }
 }

@@ -44,9 +44,27 @@ namespace Encog.Util
         /// </summary>
         /// <param name="c">The class to access.</param>
         /// <returns>All of the fields from this class and subclasses.</returns>
-        public static FieldInfo[] GetAllFields(Type c)
+        public static IList<FieldInfo> GetAllFields(Type c)
         {
-            return c.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            IList<FieldInfo> result = new List<FieldInfo>();
+            GetAllFields(c, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Get all of the fields for the specified class and recurse to check the base class.
+        /// </summary>
+        /// <param name="c">The class to scan.</param>
+        /// <param name="result">A list of fields.</param>
+        public static void GetAllFields(Type c, IList<FieldInfo> result)
+        {
+            foreach (FieldInfo field in c.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                result.Add(field);
+            }
+
+            if( c.BaseType!=null )
+                GetAllFields(c.BaseType, result);
         }
 
         /// <summary>
@@ -57,7 +75,7 @@ namespace Encog.Util
         /// <returns>True if the object is simple.</returns>
         public static bool IsSimple(Type t)
         {
-            return (t == typeof(File)) || (t == typeof(String) ) || (t == typeof(int)) || (t == typeof(double) ) || (t == typeof(float) ) || (t==typeof(short)) || (t==typeof(char));
+            return (t == typeof(File)) || (t == typeof(String) ) || (t == typeof(int)) || (t == typeof(double) ) || (t == typeof(float) ) || (t==typeof(short)) || (t==typeof(char) || (t==typeof(bool)));
         }
 
         /// <summary>
