@@ -35,7 +35,7 @@ namespace Encog.Neural.Networks.Training
     /// annealing or genetic algorithms just as you would any other training set
     /// based training method.
     /// </summary>
-    public class TrainingSetScore
+    public class TrainingSetScore: ICalculateScore
     {
         /// <summary>
         /// The training set.

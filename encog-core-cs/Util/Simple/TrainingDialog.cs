@@ -15,11 +15,55 @@ namespace Encog.Util.Simple
     public partial class TrainingDialog : Form
     {
         /// <summary>
+        /// Should training stop.
+        /// </summary>
+        public bool ShouldStop { get; set; }
+
+        /// <summary>
+        /// How many iterations.
+        /// </summary>
+        public int Iterations
+        {
+            set
+            {
+                this.iterations.Text = "" + value;
+            }
+        }
+
+        /// <summary>
+        /// The current error.
+        /// </summary>
+        public double Error
+        {
+            set
+            {
+                this.currentError.Text = "" + value;
+            }
+        }
+
+        /// <summary>
+        /// How much training time has elapsed.
+        /// </summary>
+        public int Time
+        {
+            set
+            {
+                this.trainingTime.Text = "" + value;
+            }
+        }
+
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public TrainingDialog()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.ShouldStop = true;
         }
     }
 }

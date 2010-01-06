@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -191,6 +191,7 @@
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\INeighborhoodFunction.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodBubble.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussian.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussianMulti.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodSingle.cs" />
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
@@ -350,7 +351,9 @@
     <Compile Include="Util\MathUtil\Equilateral.cs" />
     <Compile Include="Util\MathUtil\MathConst.cs" />
     <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
+    <Compile Include="Util\MathUtil\RBF\GaussianFunctionMulti.cs" />
     <Compile Include="Util\MathUtil\RBF\RadialBasisFunction.cs" />
+    <Compile Include="Util\MathUtil\RBF\RadialBasisFunctionMulti.cs" />
     <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />
@@ -381,12 +384,14 @@
     <EmbeddedResource Include="encog-core-cs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>encog-core-cs.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\classes.txt" />
     <EmbeddedResource Include="Util\Simple\TrainingDialog.resx">
       <DependentUpon>TrainingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

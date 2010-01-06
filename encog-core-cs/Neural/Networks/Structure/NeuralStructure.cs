@@ -39,6 +39,9 @@ namespace Encog.Neural.Networks.Structure
     /// traverse itself each time a complete collection of layers or synapses is
     /// needed.
     /// </summary>
+#if !SILVERLIGHT
+    [Serializable]
+#endif
     public class NeuralStructure
     {
 
@@ -184,7 +187,6 @@ namespace Encog.Neural.Networks.Structure
             FinalizeLayers();
             FinalizeSynapses();
 
-            layers.Sort();
             AssignID();
             this.network.Logic.Init(this.network);
         }
@@ -204,7 +206,6 @@ namespace Encog.Neural.Networks.Structure
                     this.synapses.Add(synapse);
                 }
             }
-            this.synapses.Clear();
         }
 
         /// <summary>

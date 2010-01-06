@@ -44,7 +44,7 @@ namespace Encog.Neural.Networks.Training.Anneal
     /// determineError method.  If you want to train with a training set, use
     /// the NeuralTrainingSetSimulatedAnnealing class.
     /// </summary>
-    public abstract class NeuralSimulatedAnnealing : BasicTraining
+    public class NeuralSimulatedAnnealing : BasicTraining
     {
 
         /// <summary>
