@@ -15,7 +15,7 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
         /// <summary>
         /// The radial basis function to use.
         /// </summary>
-        private RadialBasisFunctionMulti rbf;
+        private IRadialBasisFunctionMulti rbf;
 
         /// <summary>
         /// The size of each dimension.
@@ -48,7 +48,7 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
             widthArray[0] = 1;
             widthArray[1] = 1;
 
-            RadialBasisFunctionMulti rbf = new GaussianFunctionMulti(1,
+            IRadialBasisFunctionMulti rbf = new GaussianFunctionMulti(1,
                    centerArray, widthArray);
 
             this.rbf = rbf;
@@ -63,7 +63,7 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
         /// <param name="size">The sizes of each dimension.</param>
         /// <param name="rbf">The multi-dimensional RBF to use.</param>
         NeighborhoodGaussianMulti(int[] size,
-                 RadialBasisFunctionMulti rbf)
+                 IRadialBasisFunctionMulti rbf)
         {
             this.rbf = rbf;
             this.size = size;
@@ -126,26 +126,21 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
             {
                 return this.rbf.GetWidth(0);
             }
+            set
+            {
+                this.rbf.SetWidth(value);
+            }
         }
 
         /// <summary>
         /// The RBF to use.
         /// </summary>
-        public RadialBasisFunctionMulti RBF
+        public IRadialBasisFunctionMulti RBF
         {
             get
             {
                 return this.rbf;
             }
-        }
-
-        /// <summary>
-        /// Set the radius.
-        /// </summary>
-        /// <param name="radius">The radius.</param>
-        public void SetRadius(double radius)
-        {
-            this.rbf.SetWidth(radius);
         }
       
         /// <summary>

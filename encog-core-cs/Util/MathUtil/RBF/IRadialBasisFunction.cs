@@ -71,6 +71,7 @@ namespace Encog.Util.MathUtil.RBF
         double Width
         {
             get;
+            set;
         }
     }
 }

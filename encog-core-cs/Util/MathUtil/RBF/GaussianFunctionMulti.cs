@@ -9,7 +9,7 @@ namespace Encog.Util.MathUtil.RBF
     /// Multi-dimensional gaussian function. Do not use this to implement a 1d
     /// function, simply use GaussianFunction for that.
     /// </summary>
-    public class GaussianFunctionMulti : RadialBasisFunctionMulti
+    public class GaussianFunctionMulti : IRadialBasisFunctionMulti
     {
         /// <summary>
         /// The center of the RBF.

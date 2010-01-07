@@ -63,6 +63,19 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
             return this.radial.Calculate(currentNeuron - bestNeuron);
         }
 
+        /// <summary>
+        /// The radius to use.
+        /// </summary>
+        public double Radius
+        {
+            get
+            {
+                return this.radial.Width;
+            }
+            set
+            {
+                this.radial.Width = value;
+            }
+        }
     }
-
 }

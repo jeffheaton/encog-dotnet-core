@@ -146,29 +146,6 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// The activation function for this layer, in this case
-        /// it produces an error because RBF layers do not have an
-        /// activation function.
-        /// </summary>
-        public override IActivationFunction ActivationFunction
-        {
-            get
-            {
-                String str =
-                   "Should never call getActivationFunction on "
-                   + "RadialBasisFunctionLayer, this layer has a compound "
-                   + "activation function setup.";
-#if logging
-                if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
-                {
-                    RadialBasisFunctionLayer.logger.Error(str);
-                }
-#endif
-                throw new NeuralNetworkError(str);
-            }
-        }
-
-        /// <summary>
         /// An array of radial basis functions.
         /// </summary>
         public IRadialBasisFunction[] RadialBasisFunction

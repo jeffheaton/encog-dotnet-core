@@ -8,7 +8,7 @@ namespace Encog.Util.MathUtil.RBF
     /// <summary>
     /// A multi-dimension RBF.
     /// </summary>
-    public interface RadialBasisFunctionMulti
+    public interface IRadialBasisFunctionMulti
     {
         /// <summary>
         /// Calculate the RBF result for the specified value.

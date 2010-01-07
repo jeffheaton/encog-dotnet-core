@@ -530,6 +530,19 @@ namespace Encog.Matrix
             }
         }
 
+        /// <summary>
+        /// Set the values from the other matrix into this one.
+        /// </summary>
+        /// <param name="other">The source matrix.</param>
+        public void Set(Matrix other)
+        {
+            double[][] source = this.Data;
+            double[][] target = other.Data;
+            for (int r = 0; r < Rows; r++)
+                for (int c = 0; c < Cols; c++)
+                    target[r][c] = source[r][c];
+        }
+
     }
 
 }

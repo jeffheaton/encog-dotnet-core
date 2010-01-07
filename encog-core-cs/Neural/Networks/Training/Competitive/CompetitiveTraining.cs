@@ -33,6 +33,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 #if logging
 using log4net;
+using Encog.Util;
 #endif
 namespace Encog.Neural.Networks.Training.Competitive
 {
@@ -74,7 +75,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <summary>
         /// The learning rate. To what degree should changes be applied.
         /// </summary>
-        private double learningRate;
+        public double LearningRate { get; set; }
 
         /// <summary>
         /// The network being trained.
@@ -114,20 +115,56 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <summary>
         /// Holds the corrections for any matrix being trained.
         /// </summary>
-        private IDictionary<ISynapse, Matrix.Matrix> correctionMatrix
-            = new Dictionary<ISynapse, Matrix.Matrix>();
+        private IDictionary<ISynapse, Matrix.Matrix> correctionMatrix =
+            new Dictionary<ISynapse, Matrix.Matrix>();
 
         /// <summary>
         /// True is a winner is to be forced, see class description, or forceWinners
         /// method. By default, this is true.
         /// </summary>
-        private bool forceWinner;
+        public bool ForceWinner { get; set; }
+
+        /// <summary>
+        /// When used with autodecay, this is the starting learning rate.
+        /// </summary>
+        private double startRate;
+
+        /// <summary>
+        /// When used with autodecay, this is the ending learning rate.
+        /// </summary>
+        private double endRate;
+
+        /// <summary>
+        /// When used with autodecay, this is the starting radius.
+        /// </summary>
+        private double startRadius;
+
+        /// <summary>
+        /// When used with autodecay, this is the ending radius.
+        /// </summary>
+        private double endRadius;
+
+        /// <summary>
+        /// This is the current autodecay learning rate.
+        /// </summary>
+        private double autoDecayRate;
+
+        /// <summary>
+        /// This is the current autodecay radius.
+        /// </summary>
+        private double autoDecayRadius;
+
+        /// <summary>
+        /// The current radius.
+        /// </summary>
+        private double radius;
 
 #if logging
         /// <summary>
         /// The logging object.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(CompetitiveTraining));
+        [NonSerialized]
+        private static readonly ILog logger = LogManager.GetLogger(typeof(CompetitiveTraining));
 #endif
 
         /// <summary>
@@ -141,26 +178,25 @@ namespace Encog.Neural.Networks.Training.Competitive
                  double learningRate, INeuralDataSet training,
                  INeighborhoodFunction neighborhood)
         {
-            ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
             this.neighborhood = neighborhood;
-            this.Training = training;
-            this.learningRate = learningRate;
+            Training = training;
+            this.LearningRate = learningRate;
             this.network = network;
-            this.inputLayer = inputLayer;
+            this.inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
             this.outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
             this.synapses = network.Structure.GetPreviousSynapses(
                     this.outputLayer);
             this.inputNeuronCount = this.inputLayer.NeuronCount;
             this.outputNeuronCount = this.outputLayer.NeuronCount;
-            this.forceWinner = true;
-            this.Error = 0;
+            this.ForceWinner = false;
+            Error = 0;
 
             // setup the correction matrix
             foreach (ISynapse synapse in this.synapses)
             {
                 Matrix.Matrix matrix = new Matrix.Matrix(synapse.WeightMatrix.Rows,
                        synapse.WeightMatrix.Cols);
-                this.correctionMatrix.Add(synapse, matrix);
+                this.correctionMatrix[synapse] = matrix;
             }
 
             // create the BMU class
@@ -175,9 +211,27 @@ namespace Encog.Neural.Networks.Training.Competitive
         {
             foreach (KeyValuePair<ISynapse, Matrix.Matrix> entry in this.correctionMatrix)
             {
-                entry.Key.WeightMatrix.Add(entry.Value);
+                entry.Key.WeightMatrix.Set(entry.Value);
             }
         }
+
+        /// <summary>
+        /// Should be called each iteration if autodecay is desired.
+        /// </summary>
+        public void AutoDecay()
+        {
+            if (this.radius > this.endRadius)
+            {
+                this.radius += this.autoDecayRadius;
+            }
+
+            if (this.LearningRate > this.endRate)
+            {
+                this.LearningRate += this.autoDecayRate;
+            }
+            Neighborhood.Radius = this.radius;
+        }
+
 
         /// <summary>
         /// Copy the specified input pattern to the weight matrix. This causes an
@@ -199,6 +253,28 @@ namespace Encog.Neural.Networks.Training.Competitive
         }
 
         /// <summary>
+        /// Called to decay the learning rate and radius by the specified amount.
+        /// </summary>
+        /// <param name="d">The percent to decay by.</param>
+        public void Decay(double d)
+        {
+            this.radius *= (1.0 - d);
+            this.LearningRate *= (1.0 - d);
+        }
+
+        /// <summary>
+        /// Decay the learning rate and radius by the specified amount.
+        /// </summary>
+        /// <param name="decayRate">The percent to decay the learning rate by.</param>
+        /// <param name="decayRadius">The percent to decay the radius by.</param>
+        public void Decay(double decayRate, double decayRadius)
+        {
+            this.radius *= (1.0 - decayRadius);
+            this.LearningRate *= (1.0 - decayRate);
+            Neighborhood.Radius = this.radius;
+        }
+
+        /// <summary>
         /// Determine the weight adjustment for a single neuron during a training
         /// iteration.
         /// </summary>
@@ -207,23 +283,24 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="currentNeuron">The neuron who's weight is being updated.</param>
         /// <param name="bmu">The neuron that "won", the best matching unit.</param>
         /// <returns>The new weight value.</returns>
-        private double DetermineWeightAdjustment(double weight,
-                 double input, int currentNeuron, int bmu)
+        private double DetermineNewWeight(double weight, double input,
+                 int currentNeuron, int bmu)
         {
-
-            double delta = this.neighborhood.Function(currentNeuron, bmu)
-                   * this.learningRate * (input - weight);
-
-            return delta;
+            double newWeight = weight
+                   + (this.neighborhood.Function(currentNeuron, bmu)
+                           * this.LearningRate * (input - weight));
+            return newWeight;
         }
 
         /// <summary>
         /// Force any neurons that did not win to off-load patterns from overworked
         /// neurons.
         /// </summary>
-        /// <param name="synapse">The synapse.</param>
-        /// <param name="won">An array that specifies how many times each output neuron has "won".</param>
-        /// <param name="leastRepresented">The training pattern that is the least represented by this neural network.</param>
+        /// <param name="synapse">An array that specifies how many times each output neuron has
+        /// "won".</param>
+        /// <param name="won">The training pattern that is the least represented by this
+        /// neural network.</param>
+        /// <param name="leastRepresented">The synapse to modify.</param>
         /// <returns>True if a winner was forced.</returns>
         private bool ForceWinners(ISynapse synapse, int[] won,
                  INeuralData leastRepresented)
@@ -243,9 +320,9 @@ namespace Encog.Neural.Networks.Training.Competitive
                 if (won[outputNeuron] == 0)
                 {
                     if ((maxActivationNeuron == -1)
-                            || (output[outputNeuron] > maxActivation))
+                            || (output.Data[outputNeuron] > maxActivation))
                     {
-                        maxActivation = output[outputNeuron];
+                        maxActivation = output.Data[outputNeuron];
                         maxActivationNeuron = outputNeuron;
                     }
                 }
@@ -275,20 +352,6 @@ namespace Encog.Neural.Networks.Training.Competitive
             }
         }
 
-        /// <summary>
-        /// The learning rate. This was set when the object was created.
-        /// </summary>
-        public double LearningRate
-        {
-            get
-            {
-                return this.learningRate;
-            }
-            set
-            {
-                this.learningRate = value;
-            }
-        }
 
         /// <summary>
         /// The network neighborhood function.
@@ -324,32 +387,16 @@ namespace Encog.Neural.Networks.Training.Competitive
         }
 
         /// <summary>
-        /// Is a winner to be forced of neurons that do not learn. See class
-        /// description for more info.
-        /// </summary>
-        public bool ForceWinner
-        {
-            get
-            {
-                return this.forceWinner;
-            }
-            set
-            {
-                this.forceWinner = value;
-            }
-        }
-
-        /// <summary>
         /// Perform one training iteration.
         /// </summary>
         public override void Iteration()
         {
-#if logging
-            if (this.logger.IsInfoEnabled)
+
+            if (logger.IsInfoEnabled)
             {
-                this.logger.Info("Performing Competitive Training iteration.");
+                logger.Info("Performing Competitive Training iteration.");
             }
-#endif
+
             PreIteration();
 
             // Reset the BMU and begin this iteration.
@@ -367,16 +414,15 @@ namespace Encog.Neural.Networks.Training.Competitive
                 correction.Clear();
 
                 // Determine the BMU for each training element.
-                foreach (INeuralDataPair pair in this.Training)
+                foreach (INeuralDataPair pair in Training)
                 {
-
                     INeuralData input = pair.Input;
 
                     int bmu = this.bmuUtil.CalculateBMU(synapse, input);
 
                     // If we are to force a winner each time, then track how many
                     // times each output neuron becomes the BMU (winner).
-                    if (this.forceWinner)
+                    if (this.ForceWinner)
                     {
                         won[bmu]++;
 
@@ -387,9 +433,9 @@ namespace Encog.Neural.Networks.Training.Competitive
 
                         // Track which training entry produces the least BMU. This
                         // pattern is the least represented by the network.
-                        if (output[bmu] < leastRepresentedActivation)
+                        if (output.Data[bmu] < leastRepresentedActivation)
                         {
-                            leastRepresentedActivation = output[bmu];
+                            leastRepresentedActivation = output.Data[bmu];
                             leastRepresented = pair.Input;
                         }
                     }
@@ -398,7 +444,7 @@ namespace Encog.Neural.Networks.Training.Competitive
 
                 }
 
-                if (this.forceWinner)
+                if (this.ForceWinner)
                 {
                     // force any non-winning neurons to share the burden somewhat\
                     if (!ForceWinners(synapse, won, leastRepresented))
@@ -413,9 +459,58 @@ namespace Encog.Neural.Networks.Training.Competitive
             }
 
             // update the error
-            this.Error = this.bmuUtil.WorstDistance;
+            Error = this.bmuUtil.WorstDistance;
 
             PostIteration();
+        }
+
+        /// <summary>
+        /// Setup autodecay.  This will decrease the radius and learning rate from
+        /// the start values to the end values.
+        /// </summary>
+        /// <param name="plannedIterations">The number of iterations that are planned.
+        /// This allows the decay rate to be determined.</param>
+        /// <param name="startRate">The starting learning rate.</param>
+        /// <param name="endRate">The ending learning rate.</param>
+        /// <param name="startRadius">The starting radius.</param>
+        /// <param name="endRadius">The ending radius.</param>
+        public void SetAutoDecay(int plannedIterations,
+                 double startRate, double endRate,
+                 double startRadius, double endRadius)
+        {
+            this.startRate = startRate;
+            this.endRate = endRate;
+            this.startRadius = startRadius;
+            this.endRadius = endRadius;
+            this.autoDecayRadius = (endRadius - startRadius) / plannedIterations;
+            this.autoDecayRate = (endRate - startRate) / plannedIterations;
+            SetParams(this.startRate, this.startRadius);
+        }
+      
+        /// <summary>
+        /// Set the learning rate and radius. 
+        /// </summary>
+        /// <param name="rate">The new learning rate.</param>
+        /// <param name="radius">The new radius.</param>
+        public void SetParams(double rate, double radius)
+        {
+            this.radius = radius;
+            this.LearningRate = rate;
+            Neighborhood.Radius = radius;
+        }
+
+        /// <summary>
+        /// Returns this object as a string.
+        /// </summary>
+        /// <returns>This object as a string.</returns>
+        public override String ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append("Rate=");
+            result.Append(Format.FormatPercent(this.LearningRate));
+            result.Append(", Radius=");
+            result.Append(Format.FormatDouble(this.radius, 2));
+            return result.ToString();
         }
 
         /// <summary>
@@ -433,6 +528,23 @@ namespace Encog.Neural.Networks.Training.Competitive
             {
                 TrainPattern(synapse, input, outputNeuron, bmu);
             }
+        }
+
+        /// <summary>
+        /// Train the specified pattern.  Find a winning neuron and adjust all
+        /// neurons according to the neighborhood function.
+        /// </summary>
+        /// <param name="pattern">The pattern to train.</param>
+        public void TrainPattern(INeuralData pattern)
+        {
+            foreach (ISynapse synapse in this.synapses)
+            {
+                INeuralData input = pattern;
+                int bmu = this.bmuUtil.CalculateBMU(synapse, input);
+                Train(bmu, synapse, input);
+            }
+            ApplyCorrection();
+
         }
 
         /// <summary>
@@ -454,12 +566,12 @@ namespace Encog.Neural.Networks.Training.Competitive
 
                 double currentWeight = synapse.WeightMatrix[inputNeuron,
                        current];
-                double inputValue = input[inputNeuron];
+                double inputValue = input.Data[inputNeuron];
 
-                double newWeight = DetermineWeightAdjustment(currentWeight,
+                double newWeight = DetermineNewWeight(currentWeight,
                        inputValue, current, bmu);
 
-                correction.Add(inputNeuron, current, newWeight);
+                correction[inputNeuron, current] = newWeight;
             }
         }
 

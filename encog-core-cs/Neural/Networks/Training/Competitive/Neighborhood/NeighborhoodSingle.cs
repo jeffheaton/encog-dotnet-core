@@ -55,6 +55,21 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
             }
         }
 
+
+        /// <summary>
+        /// The radius is always 1.
+        /// </summary>
+        public double Radius
+        {
+            get
+            {
+                return 1;
+            }
+            set
+            {
+                // does nothing, nothing to change
+            }
+        }
     }
 
 }

@@ -75,16 +75,20 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
             }
         }
 
+
         /// <summary>
-        /// The width of the bubble.
+        /// The radius of the bubble.
         /// </summary>
-        public int Width
+        public double Radius
         {
             get
             {
                 return this.width;
             }
+            set
+            {
+                this.width = (int)value;
+            }
         }
-
     }
 }

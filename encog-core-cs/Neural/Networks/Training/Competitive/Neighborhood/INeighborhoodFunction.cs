@@ -46,5 +46,13 @@ namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
         /// <returns>The ratio for this neuron's adjustment.</returns>
         double Function(int currentNeuron, int bestNeuron);
 
+        /// <summary>
+        /// Defines the radius.
+        /// </summary>
+        double Radius
+        {
+            get;
+            set;
+        }
     }
 }

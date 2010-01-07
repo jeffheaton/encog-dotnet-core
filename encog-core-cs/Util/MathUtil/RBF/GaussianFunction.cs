@@ -136,6 +136,10 @@ namespace Encog.Util.MathUtil.RBF
             {
                 return this.width;
             }
+            set
+            {
+                this.width = value;
+            }
         }
 
     }

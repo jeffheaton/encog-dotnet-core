@@ -43,6 +43,11 @@ namespace Encog.Neural.Networks.Pattern
     /// </summary>
     public class RadialBasisPattern : INeuralNetworkPattern
     {
+        /// <summary>
+        /// RBF layer ID.
+        /// </summary>
+        public const String RBF_LAYER = "RBF";
+
 #if logging
         /// <summary>
         /// The logging object.
@@ -100,7 +105,7 @@ namespace Encog.Neural.Networks.Pattern
         {
             ILayer input = new BasicLayer(new ActivationLinear(), false,
                     this.inputNeurons);
-            ILayer output = new BasicLayer(this.outputNeurons);
+            ILayer output = new BasicLayer(new ActivationLinear(), true, this.outputNeurons);
             BasicNetwork network = new BasicNetwork();
             RadialBasisFunctionLayer rbfLayer = new RadialBasisFunctionLayer(
                    this.hiddenNeurons);
@@ -109,6 +114,7 @@ namespace Encog.Neural.Networks.Pattern
             network.AddLayer(output);
             network.Structure.FinalizeStructure();
             network.Reset();
+            network.TagLayer(RBF_LAYER, rbfLayer);
             rbfLayer.RandomizeGaussianCentersAndWidths(0, 1);
             int y = PatternConst.START_Y;
             input.X = PatternConst.START_X;
