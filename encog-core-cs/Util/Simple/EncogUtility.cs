@@ -59,7 +59,7 @@ namespace Encog.Util.Simple
         /// <param name="inputCount">The number of input values.</param>
         /// <param name="outputCount">The number of output values.</param>
         /// <param name="headers">True, if there are headers on the3 CSV.</param>
-        public static void convertCSV2Binary(String csvFile,
+        public static void ConvertCSV2Binary(String csvFile,
                  String binFile, int inputCount, int outputCount,
                  bool headers)
         {
@@ -82,17 +82,17 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="network">The network to evaluate.</param>
         /// <param name="training">The training set to evaluate.</param>
-        public static void evaluate(BasicNetwork network,
+        public static void Evaluate(BasicNetwork network,
                  INeuralDataSet training)
         {
             foreach (INeuralDataPair pair in training)
             {
                 INeuralData output = network.Compute(pair.Input);
                 Console.WriteLine("Input="
-                        + EncogUtility.formatNeuralData(pair.Input)
-                        + ", Actual=" + EncogUtility.formatNeuralData(output)
+                        + EncogUtility.FormatNeuralData(pair.Input)
+                        + ", Actual=" + EncogUtility.FormatNeuralData(output)
                         + ", Ideal="
-                        + EncogUtility.formatNeuralData(pair.Ideal));
+                        + EncogUtility.FormatNeuralData(pair.Ideal));
 
             }
         }
@@ -102,7 +102,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="data">The neural data to format.</param>
         /// <returns>The formatted neural data.</returns>
-        private static String formatNeuralData(INeuralData data)
+        private static String FormatNeuralData(INeuralData data)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < data.Count; i++)
@@ -163,13 +163,13 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
-        public static void trainConsole(BasicNetwork network,
+        public static void TrainConsole(BasicNetwork network,
                  INeuralDataSet trainingSet, int minutes)
         {
             Propagation train = new ScaledConjugateGradient(network,
                    trainingSet);
             train.NumThreads = 0;
-            EncogUtility.trainConsole(train, network, trainingSet, minutes);
+            EncogUtility.TrainConsole(train, network, trainingSet, minutes);
         }
 
 
@@ -181,7 +181,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
-        public static void trainConsole(ITrain train,
+        public static void TrainConsole(ITrain train,
                  BasicNetwork network, INeuralDataSet trainingSet,
                  int minutes)
         {
@@ -214,13 +214,13 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
-        public static void trainDialog(BasicNetwork network,
+        public static void TrainDialog(BasicNetwork network,
                  INeuralDataSet trainingSet)
         {
             Propagation train = new ScaledConjugateGradient(network,
                    trainingSet);
             train.NumThreads = 0;
-            EncogUtility.trainDialog(train, network, trainingSet);
+            EncogUtility.TrainDialog(train, network, trainingSet);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Encog.Util.Simple
         /// <param name="train">The training method to use.</param>
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
-        public static void trainDialog(ITrain train,
+        public static void TrainDialog(ITrain train,
                 BasicNetwork network, INeuralDataSet trainingSet)
         {
 
@@ -263,13 +263,13 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The error level to train to.</param>
-        public static void trainToError(BasicNetwork network,
+        public static void TrainToError(BasicNetwork network,
                  INeuralDataSet trainingSet, double error)
         {
             Propagation train = new ScaledConjugateGradient(network,
                     trainingSet);
             train.NumThreads = 0;
-            EncogUtility.trainToError(train, network, trainingSet, error);
+            EncogUtility.TrainToError(train, network, trainingSet, error);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The desired error level.</param>
-        public static void trainToError(ITrain train,
+        public static void TrainToError(ITrain train,
                 BasicNetwork network, INeuralDataSet trainingSet,
                 double error)
         {
