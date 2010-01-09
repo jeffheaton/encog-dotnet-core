@@ -241,8 +241,8 @@ namespace Encog.Neural.Data.Buffer
 
             if (File.Exists(bufferFile))
             {
-                FileStream f = new FileStream(
-                        this.bufferFile, FileMode.Open);
+                FileStream f =
+                       new FileStream(this.bufferFile, FileMode.Open, FileAccess.Read, FileShare.Read);
                 BinaryReader o = new BinaryReader(f);
                 this.inputSize = o.ReadInt64();
                 this.idealSize = o.ReadInt64();

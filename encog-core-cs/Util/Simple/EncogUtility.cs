@@ -36,6 +36,7 @@ using Encog.Neural.Data.Buffer;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Networks.Training.Propagation.SCG;
+using System.Windows.Forms;
 
 namespace Encog.Util.Simple
 {
@@ -233,28 +234,9 @@ namespace Encog.Util.Simple
         public static void TrainDialog(ITrain train,
                 BasicNetwork network, INeuralDataSet trainingSet)
         {
-
-            int epoch = 1;
             TrainingDialog dialog = new TrainingDialog();
-            dialog.Visible = true;
-
-            long start = Environment.TickCount;
-
-            do
-            {
-                train.Iteration();
-
-                long current = Environment.TickCount;
-                long elapsed = (current - start) / 10000;// mili
-                elapsed /= 1000; // second
-
-                dialog.Iterations = epoch;
-                dialog.Error = train.Error;
-                dialog.Time = (int)elapsed;
-                epoch++;
-            } while (!dialog.ShouldStop);
-
-            dialog.Close();
+            dialog.Train = train;
+            dialog.ShowDialog();
         }
 
         /// <summary>

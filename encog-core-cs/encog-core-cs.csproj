@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -237,6 +237,7 @@
     <Compile Include="Normalize\Output\BasicOutputFieldGroup.cs" />
     <Compile Include="Normalize\Output\IOutputField.cs" />
     <Compile Include="Normalize\Output\IOutputFieldGroup.cs" />
+    <Compile Include="Normalize\Output\IRequireTwoPass.cs" />
     <Compile Include="Normalize\Output\Mapped\MappedRange.cs" />
     <Compile Include="Normalize\Output\Mapped\OutputFieldEncode.cs" />
     <Compile Include="Normalize\Output\Multiplicative\MultiplicativeGroup.cs" />

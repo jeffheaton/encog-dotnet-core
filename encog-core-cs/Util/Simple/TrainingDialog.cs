@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Encog.Neural.Networks.Training;
+using System.Threading;
 
 namespace Encog.Util.Simple
 {
@@ -15,41 +17,55 @@ namespace Encog.Util.Simple
     public partial class TrainingDialog : Form
     {
         /// <summary>
+        /// Delegate to update the stats.
+        /// </summary>
+        /// <param name="iterations">Number of iterations.</param>
+        /// <param name="error">Current error.</param>
+        /// <param name="time">Elapsed time.</param>
+        public delegate void StatsDelegate(String iterations, String error, String time);
+
+        /// <summary>
+        /// Delegate to issue a command, such as close.
+        /// </summary>
+        public delegate void CommandDelegate();
+
+        /// <summary>
         /// Should training stop.
         /// </summary>
         public bool ShouldStop { get; set; }
 
         /// <summary>
-        /// How many iterations.
+        /// The training alog.
         /// </summary>
-        public int Iterations
+        public ITrain Train { get; set; }
+
+        /// <summary>
+        /// Called to update the stats.
+        /// </summary>
+        /// <param name="iterations">The number</param>
+        /// <param name="error">The current error.</param>
+        /// <param name="time"></param>
+        public void UpdateStats(String iterations, String error, String time)
         {
-            set
-            {
-                this.iterations.Text = "" + value;
-            }
+            this.iterations.Text = iterations;
+            this.currentError.Text = error;
+            this.trainingTime.Text = time;
         }
 
         /// <summary>
-        /// The current error.
+        /// Close the window.
         /// </summary>
-        public double Error
+        public void PerformClose()
         {
-            set
-            {
-                this.currentError.Text = "" + value;
-            }
+            Close();
         }
 
         /// <summary>
-        /// How much training time has elapsed.
+        /// Update the update button to "stopping".
         /// </summary>
-        public int Time
+        public void PerformButtonUpdate()
         {
-            set
-            {
-                this.trainingTime.Text = "" + value;
-            }
+            this.button1.Text = "Stopping";
         }
 
 
@@ -59,11 +75,40 @@ namespace Encog.Util.Simple
         public TrainingDialog()
         {
             InitializeComponent();
+            Thread t = new Thread(this.ThreadProcess);
+            t.Start();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            BeginInvoke(new CommandDelegate(PerformButtonUpdate));
             this.ShouldStop = true;
+        }
+
+        private void ThreadProcess()
+        {
+            long start = Environment.TickCount;
+            int epoch = 1;
+
+            do
+            {
+                Train.Iteration();
+
+                long current = Environment.TickCount;
+                long elapsed = (current - start);
+                elapsed /= 1000;
+
+                Object[] obj = new object[3];
+                obj[0] = "" + Format.FormatInteger( epoch );
+                obj[1] = "" + Format.FormatPercent( Train.Error );
+                obj[2] = "" + Format.FormatTimeSpan( (int)elapsed );
+                this.BeginInvoke(new StatsDelegate(UpdateStats), obj);
+
+                epoch++;
+                Application.DoEvents();
+            } while (!this.ShouldStop);
+
+            BeginInvoke(new CommandDelegate(PerformClose));
         }
     }
 }

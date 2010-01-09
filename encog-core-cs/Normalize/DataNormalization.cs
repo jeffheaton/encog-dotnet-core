@@ -803,7 +803,10 @@ namespace Encog.Normalize
         /// </summary>
         public void Process()
         {
-            FirstPass();
+            if (TwoPassesNeeded())
+            {
+                FirstPass();
+            }
             SecondPass();
         }
 
@@ -830,6 +833,8 @@ namespace Encog.Normalize
         /// </summary>
         private void SecondPass()
         {
+            bool twopass = this.TwoPassesNeeded();
+
             // move any CSV and datasets files back to the beginning.
             OpenCSV();
             OpenDataSet();
@@ -868,8 +873,16 @@ namespace Encog.Normalize
                         }
                     }
 
-                    ReportResult("Second pass, normalizing data", this.recordCount,
-                            ++current);
+                    if (twopass)
+                    {
+                        ReportResult("Second pass, normalizing data",
+                                this.recordCount, ++current);
+                    }
+                    else
+                    {
+                        ReportResult("Processing data (single pass)",
+                                this.recordCount, ++current);
+                    }
                     this.storage.Write(output, 0);
                 }
 
@@ -915,6 +928,23 @@ namespace Encog.Normalize
             {
                 segregator.PassInit();
             }
+        }
+
+        /// <summary>
+        /// Determine if two passes will be needed.
+        /// </summary>
+        /// <returns>True if two passes will be needed.</returns>
+        public bool TwoPassesNeeded()
+        {
+            foreach (IOutputField field in this.outputFields)
+            {
+                if (field is IRequireTwoPass)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

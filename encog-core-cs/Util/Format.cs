@@ -45,7 +45,7 @@ namespace Encog.Util
          */
         public static String FormatInteger(int i)
         {
-            return String.Format("{0:n}", i);
+            return String.Format("{0:n0}", i);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Encog.Util
         /// <returns>The formatted percent.</returns>
         public static String FormatPercent(double e)
         {
-            return "%" + e.ToString("N6");
+            return (e*100.0).ToString("N6") + "%";
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Encog.Util
         /// <returns>The formatted percent.</returns>
         public static String FormatPercentWhole(double e)
         {
-            return "%" + e.ToString("N0");
+            return (e*100.0).ToString("N0") + "%";
         }
 
         /// <summary>

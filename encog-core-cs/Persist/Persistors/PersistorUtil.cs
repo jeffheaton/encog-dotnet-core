@@ -170,6 +170,8 @@ namespace Encog.Persist.Persistors
                     + matrix.Cols);
             xmlOut.BeginTag("Matrix");
 
+            CSVFormat format = CSVFormat.EG_FORMAT;
+
             for (int row = 0; row < matrix.Rows; row++)
             {
                 StringBuilder builder = new StringBuilder();
@@ -180,7 +182,9 @@ namespace Encog.Persist.Persistors
                     {
                         builder.Append(',');
                     }
-                    builder.Append(matrix[row, col]);
+
+                    double d = matrix[row, col];
+                    builder.Append(format.Format(d, 20));
                 }
                 xmlOut.BeginTag(PersistorUtil.ROW);
                 xmlOut.AddText(builder.ToString());

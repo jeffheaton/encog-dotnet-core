@@ -34,7 +34,7 @@ namespace Encog.Normalize.Output
     /// A ranged mapped output field.  This will scale the input so that it
     /// is between the high and low value.
     /// </summary>
-    public class OutputFieldRangeMapped : BasicOutputField
+    public class OutputFieldRangeMapped : BasicOutputField, IRequireTwoPass
     {
         /// <summary>
         /// The input field to scale.
