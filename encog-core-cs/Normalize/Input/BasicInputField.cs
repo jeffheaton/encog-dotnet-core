@@ -35,7 +35,7 @@ namespace Encog.Normalize.Input
     /// for other input fields.
     /// </summary>
     [EGReferenceable]
-    public abstract class BasicInputField : IInputField
+    public class BasicInputField : IInputField
     {
         /// <summary>
         /// The maximum value encountered so far for this field.
@@ -60,7 +60,7 @@ namespace Encog.Normalize.Input
         /// the neural network.
         /// </summary>
         [EGAttribute]
-        private bool usedForNetworkInput;
+        private bool usedForNetworkInput = true;
 
         /// <summary>
         /// Given the current value, apply to the min and max values.

@@ -235,7 +235,7 @@ namespace Encog.Solve.Genetic
                        mother, father, child1, child2);
 
                 EncogConcurrency.Instance.ProcessTask(worker);
-                
+
                 offspringIndex += 2;
             }
 
@@ -253,17 +253,19 @@ namespace Encog.Solve.Genetic
             Array.Sort(this.chromosomes);
         }
 
-        /**
-	 * Define the cut length to be 1/3 the length of a chromosome. This is a
-	 * good default value for it. If there are no chromosomes yet this call will
-	 * set the cut length to 0.
-	 */
-        public void DefineCutLength() {
-		if (this.chromosomes.Length > 0) {
-			int size = this.chromosomes[0].Genes.Length;
-			CutLength = (size / 3);
-		}
-	}
+        /// <summary>
+        /// Define the cut length to be 1/3 the length of a chromosome. This is a
+	    /// good default value for it. If there are no chromosomes yet this call will
+	    /// set the cut length to 0.
+        /// </summary>
+        public void DefineCutLength()
+        {
+            if (this.chromosomes.Length > 0)
+            {
+                int size = this.chromosomes[0].Genes.Length;
+                CutLength = (size / 3);
+            }
+        }
 
     }
 

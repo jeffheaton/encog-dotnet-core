@@ -85,9 +85,18 @@ namespace Encog.Solve.Genetic
             }
             else if (this.Score > other.Score)
             {
-                return 1;
+                if (this.GeneticAlgorithm.ShouldMinimize)
+                    return 1;
+                else
+                    return -1;
             }
-            return -1;
+            else
+            {
+                if (this.GeneticAlgorithm.ShouldMinimize)
+                    return -1;
+                else
+                    return 1;
+            }
         }
 
         /// <summary>
