@@ -61,7 +61,8 @@ namespace Encog.Neural.Networks.Structure
         {
             this.network = network;
             this.outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
-            Calculate(0, this.outputLayer);
+            if( this.outputLayer!=null )
+                Calculate(0, this.outputLayer);
         }
 
 
