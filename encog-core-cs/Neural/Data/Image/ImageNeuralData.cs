@@ -29,6 +29,7 @@ using System.Text;
 using Encog.Neural.Data.Basic;
 using System.Drawing;
 using Encog.Util.DownSample;
+using Encog.Normalize.Output;
 
 namespace Encog.Neural.NeuralData.Image
 {
@@ -45,24 +46,9 @@ namespace Encog.Neural.NeuralData.Image
     {
 
         /// <summary>
-        /// The image that will be downsampled.
-        /// </summary>
-        public Bitmap Image
-        {
-            get
-            {
-                return this.image;
-            }
-            set
-            {
-                this.image = value;
-            }
-        }
-
-        /// <summary>
         /// The image associated with this class.
         /// </summary>
-        private Bitmap image;
+        public Bitmap Image { get; set; }
 
 
         /// <summary>
@@ -72,8 +58,9 @@ namespace Encog.Neural.NeuralData.Image
         public ImageNeuralData(Bitmap image)
             : base(1)
         {
-            this.image = image;
+            this.Image = image;
         }
+
 
         /// <summary>
         /// Downsample, and copy, the image contents into the data of this object.
@@ -83,17 +70,50 @@ namespace Encog.Neural.NeuralData.Image
         /// <param name="downsampler">The downsampler object to use.</param>
         /// <param name="findBounds">Should the bounds be located and cropped.</param>
         /// <param name="height">The height to downsample to.</param>
-        /// <param name="width">The width to downsample to</param>
+        /// <param name="width">The width to downsample to.</param>
+        /// <param name="hi">The high value to normalize to.</param>
+        /// <param name="lo">The low value to normalize to.</param>
         public void Downsample(IDownSample downsampler,
-                 bool findBounds, int height, int width)
+                 bool findBounds, int height, int width,
+                 double hi, double lo)
         {
             if (findBounds)
             {
                 downsampler.FindBounds();
             }
-            double[] sample = downsampler.DownSample(height, width);
+            double[] sample = downsampler.DownSample(this.Image, height,
+                   width);
+
+            for (int i = 0; i < sample.Length; i++)
+            {
+                sample[i] = OutputFieldRangeMapped.Calculate(sample[i], 0,
+                        255, hi, lo);
+            }
+
             this.Data = sample;
         }
+
+        /// <summary>
+        /// Return a string representation of this object.
+        /// </summary>
+        /// <returns>The string form of this object.</returns>
+        public override String ToString()
+        {
+            StringBuilder builder = new StringBuilder("[ImageNeuralData:");
+            for (int i = 0; i < this.Data.Length; i++)
+            {
+                if (i != 0)
+                {
+                    builder.Append(',');
+                }
+                builder.Append(this.Data[i]);
+            }
+            builder.Append("]");
+            return builder.ToString();
+        }
+
     }
+
 }
+
 #endif

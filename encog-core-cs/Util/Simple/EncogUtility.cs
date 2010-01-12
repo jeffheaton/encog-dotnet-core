@@ -127,7 +127,7 @@ namespace Encog.Util.Simple
         /// <param name="tanh">True to use hyperbolic tangent activation function, false to
         /// use the sigmoid activation function.</param>
         /// <returns>The neural network.</returns>
-        public static BasicNetwork simpleFeedForward(int input,
+        public static BasicNetwork SimpleFeedForward(int input,
                  int hidden1, int hidden2, int output,
                  bool tanh)
         {

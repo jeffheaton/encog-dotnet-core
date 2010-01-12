@@ -62,6 +62,21 @@ namespace Encog.Normalize.Output
         public abstract double Calculate(int subfield);
 
         /// <summary>
+        /// Calculate a ranged mapped value.
+        /// </summary>
+        /// <param name="value">The to map.</param>
+        /// <param name="min">The minimum that the value param can be.</param>
+        /// <param name="max">The maximum that the value param can be.</param>
+        /// <param name="hi">The high value to map into.</param>
+        /// <param name="lo">The low value to map into.</param>
+        /// <returns>The mapped value.</returns>
+        public static double Calculate(double value, double min,
+                 double max, double hi, double lo)
+        {
+            return ((value - min) / (max - min)) * (hi - lo) + lo;
+        }
+
+        /// <summary>
         /// Is this field part of the ideal data uses to train the
         /// neural network.
         /// </summary>

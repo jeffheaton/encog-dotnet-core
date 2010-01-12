@@ -36,29 +36,52 @@ namespace Encog.Util.DownSample
     public interface IDownSample
     {
         /// <summary>
-        /// The bitmap to downsample.
+        /// Downsample the image to the specified height and width.
         /// </summary>
-        Bitmap DownsampleImage
+        /// <param name="image">The image to downsample.</param>
+        /// <param name="height">The height to downsample to.</param>
+        /// <param name="width">The width to downsample to.</param>
+        /// <returns>The downsampled image.</returns>
+        double[] DownSample(Bitmap image, int height, int width);
+
+        /// <summary>
+        /// Find the bounds around the image to exclude whitespace.
+        /// </summary>
+        void FindBounds();
+
+        /// <summary>
+        /// Get the bottom boundary of the image.
+        /// </summary>
+        int DownSampleBottom
         {
             get;
         }
 
         /// <summary>
-        /// The x-ratio for the downsample.
+        /// The left boundary of the image.
         /// </summary>
-        double RatioX
+        int DownSampleLeft
         {
             get;
         }
 
         /// <summary>
-        /// The y-ratio for the downsample.
+        /// Get the right boundary of the image.
         /// </summary>
-        double RatioY
+        int DownSampleRight
         {
             get;
         }
-        
+
+        /// <summary>
+        /// Get the top boundary of the image.
+        /// </summary>
+        int DownSampleTop
+        {
+            get;
+        }
+
+
         /// <summary>
         /// The height of the image.
         /// </summary>
@@ -76,57 +99,34 @@ namespace Encog.Util.DownSample
         }
 
         /// <summary>
-        /// The left boundary of the downsample.
+        /// The image pixel map.
         /// </summary>
-        int DownSampleLeft
+        int[] PixelMap
         {
             get;
         }
 
         /// <summary>
-        /// The right boundary of the downsample.
+        /// The x-ratio of the downsample.
         /// </summary>
-        int DownSampleRight
+        double RatioX
         {
             get;
         }
 
         /// <summary>
-        /// The top boundary of the downsample.
+        /// The y-ratio of the downsample.
         /// </summary>
-        int DownSampleTop
+        double RatioY
         {
             get;
         }
 
         /// <summary>
-        /// The bottom boundary of the downsample.
+        /// Process the specified image.
         /// </summary>
-        int DownSampleBottom
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Downsample the image.  This can be called multiple times.
-        /// </summary>
-        /// <param name="height">The height to downsample to.</param>
-        /// <param name="width">The width to downsample to.</param>
-        /// <returns>The downsampled array from the image.</returns>
-        double[] DownSample(int height, int width);
-
-        /// <summary>
-        /// Process the specified image.  It will not be downsampled until the
-        /// DownSample method is called.
-        /// </summary>
-        /// <param name="image">The image to downsample.</param>
+        /// <param name="image">The image to process.</param>
         void ProcessImage(Bitmap image);
-
-        /// <summary>
-        /// If you would like to trim off whitespace, this method will find the
-        /// boundaries.
-        /// </summary>
-        void FindBounds();
     }
 }
 #endif
