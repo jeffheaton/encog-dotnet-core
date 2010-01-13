@@ -197,8 +197,7 @@ namespace Encog.Util.Simple
                 train.Iteration();
 
                 long current = Environment.TickCount;
-                long elapsed = (current - start) / 10000;// mili
-                elapsed /= 1000; // second
+                long elapsed = (current - start) / 1000;
                 remaining = minutes - elapsed / 60;
 
                 Console.WriteLine("Iteration #" + Format.FormatInteger(epoch)

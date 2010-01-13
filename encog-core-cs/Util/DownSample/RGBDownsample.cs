@@ -110,7 +110,7 @@ namespace Encog.Util.DownSample
         public virtual double[] DownSample(Bitmap image, int height,
                  int width)
         {
-
+            this.Image = image;
             ProcessImage(image);
 
             double[] result = new double[height * width * 3];
