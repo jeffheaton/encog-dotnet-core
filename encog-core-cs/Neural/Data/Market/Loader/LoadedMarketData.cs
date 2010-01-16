@@ -31,7 +31,7 @@ namespace Encog.Neural.NeuralData.Market.Loader
     /// <summary>
     /// Market data loaded from a source.
     /// </summary>
-    public class LoadedMarketData
+    public class LoadedMarketData: IComparable<LoadedMarketData>
     {
         /// <summary>
         /// When was this data sample taken.
@@ -117,5 +117,16 @@ namespace Encog.Neural.NeuralData.Market.Loader
             this.ticker = ticker;
             this.data = new Dictionary<MarketDataType, Double>();
         }
+
+        /// <summary>
+        /// Compare this object with another of the same type.
+        /// </summary>
+        /// <param name="other">The other object to compare.</param>
+        /// <returns>Zero if equal, greater or less than zero to indicate order.</returns>
+        public int CompareTo(LoadedMarketData other)
+        {
+            return this.When.CompareTo(other.When);
+        }
+
     }
 }
