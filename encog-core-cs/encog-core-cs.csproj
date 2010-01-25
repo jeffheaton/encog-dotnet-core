@@ -341,6 +341,7 @@
     <Compile Include="Util\DownSample\RGBDownsample.cs" />
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
     <Compile Include="Util\EncogArray.cs" />
+    <Compile Include="Util\EncogValidate.cs" />
     <Compile Include="Util\ErrorCalculation.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />

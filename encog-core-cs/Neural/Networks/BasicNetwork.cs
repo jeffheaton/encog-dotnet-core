@@ -202,32 +202,6 @@ namespace Encog.Neural.Networks
             return result;
         }
 
-        /// <summary>
-        /// Check that the input size is acceptable, if it does not match
-        /// the input layer, then throw an error.
-        /// </summary>
-        /// <param name="input">The input data.</param>
-        public void CheckInputSize(INeuralData input)
-        {
-            ILayer inputLayer = this.GetLayer(BasicNetwork.TAG_INPUT);
-
-            if (input.Count != inputLayer.NeuronCount)
-            {
-
-                String str =
-                   "Size mismatch: Can't compute outputs for input size="
-                       + input.Count
-                       + " for input layer size="
-                       + inputLayer.NeuronCount;
-#if logging
-                if (BasicNetwork.logger.IsErrorEnabled)
-                {
-                    BasicNetwork.logger.Error(str);
-                }
-#endif
-                throw new NeuralNetworkError(str);
-            }
-        }
 
         /// <summary>
         /// Return a clone of this neural network. Including structure, weights and
@@ -264,7 +238,16 @@ namespace Encog.Neural.Networks
         public INeuralData Compute(INeuralData input,
                  NeuralOutputHolder useHolder)
         {
-            return logic.Compute(input, useHolder);
+            try
+            {
+                return logic.Compute(input, useHolder);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new NeuralNetworkError(
+                        "Index exception: there was likely a mismatch between layer sizes, or the size of the input presented to the network.",
+                        ex);
+            }
         }
 
 

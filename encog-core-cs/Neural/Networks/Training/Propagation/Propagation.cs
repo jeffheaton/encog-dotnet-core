@@ -107,18 +107,25 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         public override void Iteration()
         {
-            PreIteration();
+            try
+            {
+                PreIteration();
 
-            CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
-            double[] weights = NetworkCODEC.NetworkToArray(Network);
-            prop.Calculate(weights);
+                CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
+                double[] weights = NetworkCODEC.NetworkToArray(Network);
+                prop.Calculate(weights);
 
-            PerformIteration(prop, weights);
+                PerformIteration(prop, weights);
 
-            NetworkCODEC.ArrayToNetwork(weights, Network);
-            Error = prop.Error;
+                NetworkCODEC.ArrayToNetwork(weights, Network);
+                Error = prop.Error;
 
-            PostIteration();
+                PostIteration();
+            }
+            catch (IndexOutOfRangeException )
+            {
+                EncogValidate.ValidateNetworkForTraining(network, Training);
+            }
         }
 
         /// <summary>

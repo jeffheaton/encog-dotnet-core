@@ -50,5 +50,15 @@ namespace Encog
             : base("Nested Exception", e)
         {
         }
+
+        /// <summary>
+        /// Pass on an exception.
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <param name="e">The exception.</param>
+        public EncogError(String msg, Exception e)
+            : base(msg,e)
+        {
+        }
     }
 }

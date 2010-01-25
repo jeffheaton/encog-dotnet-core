@@ -73,13 +73,6 @@ namespace Encog.Neural.Networks
         int CalculateNeuronCount();
 
         /// <summary>
-        /// Check that the input size is acceptable, if it does not match the input
-        /// layer, then throw an error.
-        /// </summary>
-        /// <param name="input">The input data.</param>
-        void CheckInputSize(INeuralData input);
-
-        /// <summary>
         /// Compute the output for a given input to the neural network.
         /// </summary>
         /// <param name="input">The input to the neural network.</param>

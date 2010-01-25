@@ -51,5 +51,15 @@ namespace Encog.Neural
             : base(e)
         {
         }
+
+        /// <summary>
+        /// Pass on an exception.
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <param name="e">The exception.</param>
+        public NeuralNetworkError(String msg, Exception e)
+            : base(msg,e)
+        {
+        }
     }
 }

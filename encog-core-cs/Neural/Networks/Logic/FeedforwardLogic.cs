@@ -94,7 +94,6 @@ namespace Encog.Neural.Networks.Logic
                 holder = useHolder;
             }
 
-            this.Network.CheckInputSize(input);
             Compute(holder, inputLayer, input, null);
             return holder.Output;
         }
@@ -110,45 +109,51 @@ namespace Encog.Neural.Networks.Logic
         private void Compute(NeuralOutputHolder holder, ILayer layer,
                  INeuralData input, ISynapse source)
         {
-
+            try
+            {
 #if logging
-            if (FeedforwardLogic.logger.IsDebugEnabled)
-            {
-                FeedforwardLogic.logger.Debug("Processing layer: "
-                    + layer.ToString()
-                    + ", input= "
-                    + input.ToString());
-            }
-#endif
-
-            // typically used to process any recurrent layers that feed into this
-            // layer.
-            PreprocessLayer(layer, input, source);
-
-            foreach (ISynapse synapse in layer.Next)
-            {
-                if (!holder.Result.ContainsKey(synapse))
+                if (FeedforwardLogic.logger.IsDebugEnabled)
                 {
-#if logging
-                    if (FeedforwardLogic.logger.IsDebugEnabled)
-                    {
-                        FeedforwardLogic.logger.Debug("Processing synapse: " + synapse.ToString());
-                    }
+                    FeedforwardLogic.logger.Debug("Processing layer: "
+                        + layer.ToString()
+                        + ", input= "
+                        + input.ToString());
+                }
 #endif
-                    INeuralData pattern = synapse.Compute(input);
-                    pattern = synapse.ToLayer.Compute(pattern);
-                    synapse.ToLayer.Process(pattern);
-                    holder.Result[synapse] = input;
-                    Compute(holder, synapse.ToLayer, pattern, synapse);
 
-                    ILayer outputLayer = this.network.GetLayer(BasicNetwork.TAG_OUTPUT);
+                // typically used to process any recurrent layers that feed into this
+                // layer.
+                PreprocessLayer(layer, input, source);
 
-                    // Is this the output from the entire network?
-                    if (synapse.ToLayer == outputLayer)
+                foreach (ISynapse synapse in layer.Next)
+                {
+                    if (!holder.Result.ContainsKey(synapse))
                     {
-                        holder.Output = pattern;
+#if logging
+                        if (FeedforwardLogic.logger.IsDebugEnabled)
+                        {
+                            FeedforwardLogic.logger.Debug("Processing synapse: " + synapse.ToString());
+                        }
+#endif
+                        INeuralData pattern = synapse.Compute(input);
+                        pattern = synapse.ToLayer.Compute(pattern);
+                        synapse.ToLayer.Process(pattern);
+                        holder.Result[synapse] = input;
+                        Compute(holder, synapse.ToLayer, pattern, synapse);
+
+                        ILayer outputLayer = this.network.GetLayer(BasicNetwork.TAG_OUTPUT);
+
+                        // Is this the output from the entire network?
+                        if (synapse.ToLayer == outputLayer)
+                        {
+                            holder.Output = pattern;
+                        }
                     }
                 }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new NeuralNetworkError("Size mismatch on input of size " + input.Count + " and layer: ", ex);
             }
         }
 
