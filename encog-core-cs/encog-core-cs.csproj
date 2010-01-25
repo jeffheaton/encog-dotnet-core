@@ -352,6 +352,7 @@
     <Compile Include="Util\MathUtil\BoundNumbers.cs" />
     <Compile Include="Util\MathUtil\Convert.cs" />
     <Compile Include="Util\MathUtil\Equilateral.cs" />
+    <Compile Include="Util\MathUtil\LinearCongruentialGenerator.cs" />
     <Compile Include="Util\MathUtil\MathConst.cs" />
     <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
     <Compile Include="Util\MathUtil\RBF\GaussianFunctionMulti.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />
+    <Compile Include="Util\Randomize\ConsistentRandomizer.cs" />
     <Compile Include="Util\Randomize\ConstRandomizer.cs" />
     <Compile Include="Util\Randomize\Distort.cs" />
     <Compile Include="Util\Randomize\FanInRandomizer.cs" />
