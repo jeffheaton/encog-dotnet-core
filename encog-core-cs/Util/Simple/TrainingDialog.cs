@@ -76,6 +76,7 @@ namespace Encog.Util.Simple
         {
             InitializeComponent();
             Thread t = new Thread(this.ThreadProcess);
+            t.IsBackground = true;
             t.Start();
         }
 
@@ -105,7 +106,6 @@ namespace Encog.Util.Simple
                 this.BeginInvoke(new StatsDelegate(UpdateStats), obj);
 
                 epoch++;
-                Application.DoEvents();
             } while (!this.ShouldStop);
 
             BeginInvoke(new CommandDelegate(PerformClose));

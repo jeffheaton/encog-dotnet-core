@@ -291,6 +291,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
                 IIndexable trainingClone = this.indexed.OpenAdditional();
                 this.workers[i] = new GradientWorker(this, trainingClone, low, high);
                 this.threads[i] = new Thread(new ThreadStart(this.workers[i].Run));
+                this.threads[i].IsBackground = true;
             }
         }
 

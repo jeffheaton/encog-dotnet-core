@@ -79,7 +79,7 @@ namespace Encog.Solve.Genetic
         /// than this chromosome.</returns>
         public int CompareTo(Chromosome<GENE_TYPE> other)
         {
-            if (this == other)
+            if ( Math.Abs( this.Score - other.Score) < Encog.DEFAULT_PRECISION )
             {
                 return 0;
             }

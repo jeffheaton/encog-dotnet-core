@@ -35,8 +35,8 @@ using Encog.Neural.NeuralData.CSV;
 using Encog.Neural.Data.Buffer;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.Propagation;
-using Encog.Neural.Networks.Training.Propagation.SCG;
 using System.Windows.Forms;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
 
 namespace Encog.Util.Simple
 {
@@ -167,7 +167,7 @@ namespace Encog.Util.Simple
         public static void TrainConsole(BasicNetwork network,
                  INeuralDataSet trainingSet, int minutes)
         {
-            Propagation train = new ScaledConjugateGradient(network,
+            Propagation train = new ResilientPropagation(network,
                    trainingSet);
             train.NumThreads = 0;
             EncogUtility.TrainConsole(train, network, trainingSet, minutes);
@@ -217,7 +217,7 @@ namespace Encog.Util.Simple
         public static void TrainDialog(BasicNetwork network,
                  INeuralDataSet trainingSet)
         {
-            Propagation train = new ScaledConjugateGradient(network,
+            Propagation train = new ResilientPropagation(network,
                    trainingSet);
             train.NumThreads = 0;
             EncogUtility.TrainDialog(train, network, trainingSet);
@@ -247,7 +247,7 @@ namespace Encog.Util.Simple
         public static void TrainToError(BasicNetwork network,
                  INeuralDataSet trainingSet, double error)
         {
-            Propagation train = new ScaledConjugateGradient(network,
+            Propagation train = new ResilientPropagation(network,
                     trainingSet);
             train.NumThreads = 0;
             EncogUtility.TrainToError(train, network, trainingSet, error);
