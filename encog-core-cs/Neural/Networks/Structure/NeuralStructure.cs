@@ -29,7 +29,10 @@ using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Util;
+
+#if logging
 using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Structure
 {
@@ -236,10 +239,12 @@ namespace Encog.Neural.Networks.Structure
                        + NameLayer(fromLayer)
                        + " layer to the "
                        + NameLayer(toLayer) + " layer.";
+#if logging
                 if (NeuralStructure.logger.IsErrorEnabled)
                 {
                     NeuralStructure.logger.Error(str);
                 }
+#endif
                 throw new NeuralNetworkError(str);
             }
 

@@ -35,8 +35,11 @@ using Encog.Neural.NeuralData.CSV;
 using Encog.Neural.Data.Buffer;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.Propagation;
-using System.Windows.Forms;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+
+#if !SILVERLIGHT
+using System.Windows.Forms;
+#endif
 
 namespace Encog.Util.Simple
 {
@@ -209,6 +212,7 @@ namespace Encog.Util.Simple
             } while (remaining > 0);
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Train using SCG and display progress to a dialog box.
         /// </summary>
@@ -222,7 +226,9 @@ namespace Encog.Util.Simple
             train.NumThreads = 0;
             EncogUtility.TrainDialog(train, network, trainingSet);
         }
+#endif
 
+#if !SILVERLIGHT
         /// <summary>
         /// Train, using the specified training method, display progress to a dialog
         /// box.
@@ -237,6 +243,7 @@ namespace Encog.Util.Simple
             dialog.Train = train;
             dialog.ShowDialog();
         }
+#endif
 
         /// <summary>
         /// Train the network, to a specific error, send the output to the console.

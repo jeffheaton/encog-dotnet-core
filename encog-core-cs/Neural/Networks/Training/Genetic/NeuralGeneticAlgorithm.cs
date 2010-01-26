@@ -27,10 +27,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic;
+using Encog.Util.Randomize;
 
 #if logging
 using log4net;
-using Encog.Util.Randomize;
 #endif
 
 namespace Encog.Neural.Networks.Training.Genetic
@@ -130,11 +130,12 @@ namespace Encog.Neural.Networks.Training.Genetic
        
         public override void Iteration()
         {
-
+#if logging
             if (logger.IsInfoEnabled)
             {
                 logger.Info("Performing Genetic iteration.");
             }
+#endif
             PreIteration();
             genetic.Iteration();
             Error = this.genetic.Error;

@@ -26,9 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Neural.Networks.Structure;
+
 #if logging
 using log4net;
-using Encog.Neural.Networks.Structure;
 #endif
 
 namespace Encog.Neural.Networks.Training.Strategy

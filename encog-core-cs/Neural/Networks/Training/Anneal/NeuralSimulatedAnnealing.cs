@@ -29,10 +29,12 @@ using System.Text;
 using Encog.Solve.Anneal;
 using Encog.Neural.NeuralData;
 using Encog.Util.MathUtil;
+using Encog.Neural.Networks.Structure;
+
 #if logging
 using log4net;
-using Encog.Neural.Networks.Structure;
 #endif
+
 namespace Encog.Neural.Networks.Training.Anneal
 {
     /// <summary>
@@ -114,10 +116,12 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public override void Iteration()
         {
+#if logging
             if (NeuralSimulatedAnnealing.logger.IsInfoEnabled)
             {
                 NeuralSimulatedAnnealing.logger.Info("Performing Simulated Annealing iteration.");
             }
+#endif
             PreIteration();
             this.anneal.Iteration();
             this.Error = this.anneal.PerformScoreCalculation();

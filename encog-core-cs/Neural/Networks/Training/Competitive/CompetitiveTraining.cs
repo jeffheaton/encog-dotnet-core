@@ -31,9 +31,10 @@ using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
+using Encog.Util;
+
 #if logging
 using log4net;
-using Encog.Util;
 #endif
 namespace Encog.Neural.Networks.Training.Competitive
 {
@@ -391,11 +392,12 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// </summary>
         public override void Iteration()
         {
-
+#if !SILVERLIGHT
             if (logger.IsInfoEnabled)
             {
                 logger.Info("Performing Competitive Training iteration.");
             }
+#endif
 
             PreIteration();
 
@@ -486,7 +488,7 @@ namespace Encog.Neural.Networks.Training.Competitive
             this.autoDecayRate = (endRate - startRate) / plannedIterations;
             SetParams(this.startRate, this.startRadius);
         }
-      
+
         /// <summary>
         /// Set the learning rate and radius. 
         /// </summary>

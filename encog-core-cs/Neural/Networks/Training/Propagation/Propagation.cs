@@ -32,11 +32,13 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Util.Logging;
-#if logging
-using log4net;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
+
+#if logging
+using log4net;
 #endif
+
 namespace Encog.Neural.Networks.Training.Propagation
 {
     /// <summary>

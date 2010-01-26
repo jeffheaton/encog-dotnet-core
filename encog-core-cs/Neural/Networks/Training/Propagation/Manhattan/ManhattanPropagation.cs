@@ -27,9 +27,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Networks.Training.Propagation.Gradient;
+
 #if logging
 using log4net;
-using Encog.Neural.Networks.Training.Propagation.Gradient;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
