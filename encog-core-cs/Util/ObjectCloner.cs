@@ -105,18 +105,36 @@ namespace Encog.Util
         /// <returns>The new object.</returns>
         static public IEncogPersistedObject DeepCopy(IEncogPersistedObject oldObj)
         {
+            bool replacedName = false;
+
+            // encog objects won't save without a name
+            if (oldObj.Name == null)
+            {
+                replacedName = true;
+                oldObj.Name = "temp";
+            }
+
+            // now make the copy
             MemoryStream mstream = new MemoryStream();
             WriteXML xmlOut = new WriteXML(mstream);
             IPersistor persistor = oldObj.CreatePersistor();
+            xmlOut.BeginDocument();
             persistor.Save(oldObj, xmlOut);
+            xmlOut.EndDocument();
             // now read it back
-            mstream.Seek(0, SeekOrigin.Begin);
+            mstream.Position = 0;
             ReadXML xmlIn = new ReadXML(mstream);
             xmlIn.ReadToTag();
             IEncogPersistedObject result = persistor.Load(xmlIn);
             mstream.Close();
-            return result;
-        }
+
+            // put the name back to null if we changed it
+            if (replacedName)
+            {
+                oldObj.Name = null;
+                result.Name = null;
+            }
+            return result;        }
 #endif
     }
 }

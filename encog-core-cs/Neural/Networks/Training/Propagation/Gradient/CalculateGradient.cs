@@ -137,7 +137,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             else
             {
                 this.indexed = (IIndexable)this.training;
+
+#if SILVERLIGHT
+                int num = 1;
+#else
                 int num = System.Environment.ProcessorCount;
+#endif
 
                 // if there is more than one processor, use processor count +1
                 if (num != 1)
