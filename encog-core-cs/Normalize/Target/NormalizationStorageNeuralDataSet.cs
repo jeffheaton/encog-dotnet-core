@@ -75,6 +75,17 @@ namespace Encog.Normalize.Target
         }
 
         /// <summary>
+        /// The data set being used.
+        /// </summary>
+        public INeuralDataSet DataSet
+        {
+            get
+            {
+                return this.dataset;
+            }
+        }
+
+        /// <summary>
         /// Not needed for this storage type.
         /// </summary>
         public void Close()

@@ -219,12 +219,27 @@ namespace Encog.Matrix
         /// <summary>
         /// Determine if this matrix is equal to another.  Use a precision of 10 decimal places.
         /// </summary>
-        /// <param name="matrix">The other matrix to compare.</param>
+        /// <param name="other">The other matrix to compare.</param>
         /// <returns>True if the two matrixes are equal.</returns>
-        public bool Equals(Matrix matrix)
+        public override bool Equals(Object other)
         {
-            return equals(matrix, 10);
+            if (other is Matrix)
+                return equals((Matrix)other, 10);
+            else
+                return false;
         }
+
+        /// <summary>
+        /// Generate a hash code, this is just rows+cols.  Probably a better way to 
+        /// do this, but I really don't see the Matrix class being used as the key to
+        /// a hash table.  
+        /// </summary>
+        /// <returns>A hash code for the matrix.</returns>
+        public override int GetHashCode()
+        {
+            return Rows + Cols; 
+        }
+
 
         /// <summary>
         /// Compare the matrix to another with the specified level of precision.

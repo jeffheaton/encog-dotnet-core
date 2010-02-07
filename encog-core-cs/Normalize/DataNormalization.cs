@@ -178,7 +178,7 @@ namespace Encog.Normalize
         /// The object to report the progress of the normalization to.
         /// </summary>
         [EGIgnore]
-        private IStatusReportable report;
+        private IStatusReportable report = new NullStatusReportable();
 
         /// <summary>
         /// The number of records that were found in the first pass.
