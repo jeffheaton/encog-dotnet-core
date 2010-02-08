@@ -214,7 +214,7 @@ namespace Encog.Util.Simple
 
 #if !SILVERLIGHT
         /// <summary>
-        /// Train using SCG and display progress to a dialog box.
+        /// Train using RPROP and display progress to a dialog box.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
