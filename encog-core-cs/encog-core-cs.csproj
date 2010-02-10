@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -78,6 +78,7 @@
     <Compile Include="Bot\DataUnits\TextDataUnit.cs" />
     <Compile Include="Bot\RSS\RSS.cs" />
     <Compile Include="Bot\RSS\RSSItem.cs" />
+    <Compile Include="ConsoleStatusReportable.cs" />
     <Compile Include="encog-core-cs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
