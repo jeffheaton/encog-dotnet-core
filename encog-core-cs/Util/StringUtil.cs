@@ -1,11 +1,11 @@
-﻿// Encog Artificial Intelligence Framework v2.x
-// DotNet Version
+// Encog(tm) Artificial Intelligence Framework v2.3
+// .Net Version
 // http://www.heatonresearch.com/encog/
-// http://code.google.com/p/encog-cs/
+// http://code.google.com/p/encog-java/
 // 
-// Copyright 2009-2010, Heaton Research Inc., and individual contributors.
-// See the copyright.txt in the distribution for a full listing of 
-// individual contributors.
+// Copyright 2008-2010 by Heaton Research Inc.
+// 
+// Released under the LGPL.
 //
 // This is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as
@@ -21,6 +21,11 @@
 // License along with this software; if not, write to the Free
 // Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 // 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+// 
+// Encog and Heaton Research are Trademarks of Heaton Research, Inc.
+// For information on Heaton Research trademarks, visit:
+// 
+// http://www.heatonresearch.com/copyright.html
 
 using System;
 using System.Text;
