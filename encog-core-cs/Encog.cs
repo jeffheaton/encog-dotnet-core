@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.3
+// Encog(tm) Artificial Intelligence Framework v2.4
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -49,7 +49,7 @@ namespace Encog
 		/// <summary>
         /// The current engog version, this should be read from the properties.
 		/// </summary>
-	    public static String VERSION = "2.3.0";
+	    public static String VERSION = "2.4.0";
 
         /// <summary>
         /// The platform.
