@@ -355,10 +355,10 @@
     <Compile Include="Util\MathUtil\Equilateral.cs" />
     <Compile Include="Util\MathUtil\LinearCongruentialGenerator.cs" />
     <Compile Include="Util\MathUtil\MathConst.cs" />
-    <Compile Include="Util\MathUtil\RBF\GaussianFunction.cs" />
-    <Compile Include="Util\MathUtil\RBF\GaussianFunctionMulti.cs" />
-    <Compile Include="Util\MathUtil\RBF\IRadialBasisFunction.cs" />
-    <Compile Include="Util\MathUtil\RBF\IRadialBasisFunctionMulti.cs" />
+    <Compile Include="MathUtil\RBF\GaussianFunction.cs" />
+    <Compile Include="MathUtil\RBF\GaussianFunctionMulti.cs" />
+    <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
+    <Compile Include="MathUtil\RBF\IRadialBasisFunctionMulti.cs" />
     <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="Util\Randomize\BasicRandomizer.cs" />

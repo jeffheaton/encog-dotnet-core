@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Activation;
-using Encog.MathUtil.MathUtil.RBF;
+using Encog.MathUtil.RBF;
 using Encog.MathUtil.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Data;
