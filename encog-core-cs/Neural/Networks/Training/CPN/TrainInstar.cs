@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 
 namespace Encog.Neural.Networks.Training.CPN
 {

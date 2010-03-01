@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.MathUtil
+namespace Encog.MathUtil
 {
     /// <summary>
     /// Used to produce an array of activations to classify data into groups. This

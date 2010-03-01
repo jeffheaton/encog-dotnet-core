@@ -38,7 +38,7 @@ using Encog.Matrix;
 using log4net;
 #endif
 using Encog.MathUtil.RBF;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 
 namespace Encog.Neural.Networks.Prune
 {

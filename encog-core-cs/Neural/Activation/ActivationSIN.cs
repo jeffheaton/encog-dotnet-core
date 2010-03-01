@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Persist;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 using Encog.Persist.Persistors;
 
 namespace Encog.Neural.Activation

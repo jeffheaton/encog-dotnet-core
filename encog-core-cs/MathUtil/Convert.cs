@@ -32,28 +32,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.MathUtil
+namespace Encog.MathUtil
 {
     /// <summary>
-    /// A thread safe random number generator.
+    /// This class is used to convert strings into numeric values.  If the
+    /// string holds a non-numeric value, a zero is returned.
     /// </summary>
-    public class ThreadSafeRandom
+    public sealed class Convert
     {
-        /// <summary>
-        /// A non-thread-safe random number generator that uses a time-based seed.
-        /// </summary>
-        private static Random random = new Random();
 
         /// <summary>
-        /// Generate a random number between 0 and 1.
+        /// Private constructor.
         /// </summary>
-        /// <returns></returns>
-        public static double NextDouble()
+        private Convert()
         {
-            lock (random)
+        }
+
+        /// <summary>
+        /// Convert a string to a double.  Just make the number a zero
+        /// if the string is invalid.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <returns>The string converted to numeric.</returns>
+        public static double String2double(String str)
+        {
+            double result = 0;
+            try
             {
-                return random.NextDouble();
+                if (str != null)
+                {
+                    result = double.Parse(str);
+                }
             }
+            catch (Exception)
+            {
+                result = 0;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Convert a string to an int.  Just make the number a zero
+        /// if the string is invalid.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <returns>The string converted to numeric.</returns>
+        public static int String2int(String str)
+        {
+            int result = 0;
+            try
+            {
+                if (str != null)
+                {
+                    result = int.Parse(str);
+                }
+            }
+            catch (Exception)
+            {
+                result = 0;
+            }
+            return result;
         }
     }
+
 }

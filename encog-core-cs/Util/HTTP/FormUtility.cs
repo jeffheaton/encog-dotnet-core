@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 
 #if SILVERLIGHT
 using System.Windows.Browser;

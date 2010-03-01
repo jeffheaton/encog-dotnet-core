@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 

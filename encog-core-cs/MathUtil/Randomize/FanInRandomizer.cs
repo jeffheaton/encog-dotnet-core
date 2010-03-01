@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 #if logging
 using log4net;
 #endif

@@ -349,17 +349,17 @@
     <Compile Include="Util\HTTP\URLUtility.cs" />
     <Compile Include="Util\Logging\DumpMatrix.cs" />
     <Compile Include="Util\Logging\Logging.cs" />
-    <Compile Include="Util\MathUtil\BoundMath.cs" />
-    <Compile Include="Util\MathUtil\BoundNumbers.cs" />
-    <Compile Include="Util\MathUtil\Convert.cs" />
-    <Compile Include="Util\MathUtil\Equilateral.cs" />
-    <Compile Include="Util\MathUtil\LinearCongruentialGenerator.cs" />
-    <Compile Include="Util\MathUtil\MathConst.cs" />
+    <Compile Include="MathUtil\BoundMath.cs" />
+    <Compile Include="MathUtil\BoundNumbers.cs" />
+    <Compile Include="MathUtil\Convert.cs" />
+    <Compile Include="MathUtil\Equilateral.cs" />
+    <Compile Include="MathUtil\LinearCongruentialGenerator.cs" />
+    <Compile Include="MathUtil\MathConst.cs" />
     <Compile Include="MathUtil\RBF\GaussianFunction.cs" />
     <Compile Include="MathUtil\RBF\GaussianFunctionMulti.cs" />
     <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
     <Compile Include="MathUtil\RBF\IRadialBasisFunctionMulti.cs" />
-    <Compile Include="Util\MathUtil\ThreadSafeRandom.cs" />
+    <Compile Include="MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="MathUtil\Randomize\BasicRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\ConsistentRandomizer.cs" />
@@ -399,6 +399,9 @@
       <DependentUpon>TrainingDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\MathUtil\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

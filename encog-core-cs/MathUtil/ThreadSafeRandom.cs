@@ -31,64 +31,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if logging
-using log4net;
-#endif
 
-namespace Encog.MathUtil.MathUtil
+namespace Encog.MathUtil
 {
     /// <summary>
-    /// A simple class that prevents numbers from getting either too
-    /// big or too small.
+    /// A thread safe random number generator.
     /// </summary>
-    public sealed class BoundNumbers
+    public class ThreadSafeRandom
     {
-
-#if logging
         /// <summary>
-        /// The logging object.
+        /// A non-thread-safe random number generator that uses a time-based seed.
         /// </summary>
-        private static readonly ILog LOGGER = LogManager.GetLogger(typeof(BoundNumbers));
-#endif
+        private static Random random = new Random();
 
         /// <summary>
-        /// Private constructor.
+        /// Generate a random number between 0 and 1.
         /// </summary>
-        private BoundNumbers()
+        /// <returns></returns>
+        public static double NextDouble()
         {
-
-        }
-
-        /// <summary>
-        /// Too small of a number.
-        /// </summary>
-        public const double TOO_SMALL = -1.0E20;
-
-        /// <summary>
-        /// Too big of a number.
-        /// </summary>
-        public const double TOO_BIG = 1.0E20;
-
-        /// <summary>
-        /// Bound the number so that it does not become too big or too small.
-        /// </summary>
-        /// <param name="d">The number to check.</param>
-        /// <returns>The new number. Only changed if it was too big or too small.</returns>
-        public static double Bound(double d)
-        {
-            if (d < TOO_SMALL)
+            lock (random)
             {
-                return TOO_SMALL;
-            }
-            else if (d > TOO_BIG)
-            {
-                return TOO_BIG;
-            }
-            else
-            {
-                return d;
+                return random.NextDouble();
             }
         }
     }
-
 }

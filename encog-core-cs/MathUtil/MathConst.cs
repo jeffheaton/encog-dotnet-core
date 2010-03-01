@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.MathUtil
+namespace Encog.MathUtil
 {
     /// <summary>
     /// Math constants needed by Encog.

@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;

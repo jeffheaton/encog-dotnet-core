@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.MathUtil.Concurrency;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 using System.Threading;
 
 namespace Encog.Solve.Genetic

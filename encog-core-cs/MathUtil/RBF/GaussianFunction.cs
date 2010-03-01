@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 #if logging
 using log4net;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 #endif
 
 namespace Encog.MathUtil.RBF

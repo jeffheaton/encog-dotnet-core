@@ -31,67 +31,63 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if logging
+using log4net;
+#endif
 
-namespace Encog.MathUtil.MathUtil
+namespace Encog.MathUtil
 {
     /// <summary>
-    /// This class is used to convert strings into numeric values.  If the
-    /// string holds a non-numeric value, a zero is returned.
+    /// A simple class that prevents numbers from getting either too
+    /// big or too small.
     /// </summary>
-    public sealed class Convert
+    public sealed class BoundNumbers
     {
+
+#if logging
+        /// <summary>
+        /// The logging object.
+        /// </summary>
+        private static readonly ILog LOGGER = LogManager.GetLogger(typeof(BoundNumbers));
+#endif
 
         /// <summary>
         /// Private constructor.
         /// </summary>
-        private Convert()
+        private BoundNumbers()
         {
+
         }
 
         /// <summary>
-        /// Convert a string to a double.  Just make the number a zero
-        /// if the string is invalid.
+        /// Too small of a number.
         /// </summary>
-        /// <param name="str">The string.</param>
-        /// <returns>The string converted to numeric.</returns>
-        public static double String2double(String str)
-        {
-            double result = 0;
-            try
-            {
-                if (str != null)
-                {
-                    result = double.Parse(str);
-                }
-            }
-            catch (Exception)
-            {
-                result = 0;
-            }
-            return result;
-        }
+        public const double TOO_SMALL = -1.0E20;
 
         /// <summary>
-        /// Convert a string to an int.  Just make the number a zero
-        /// if the string is invalid.
+        /// Too big of a number.
         /// </summary>
-        /// <param name="str">The string.</param>
-        /// <returns>The string converted to numeric.</returns>
-        public static int String2int(String str)
+        public const double TOO_BIG = 1.0E20;
+
+        /// <summary>
+        /// Bound the number so that it does not become too big or too small.
+        /// </summary>
+        /// <param name="d">The number to check.</param>
+        /// <returns>The new number. Only changed if it was too big or too small.</returns>
+        public static double Bound(double d)
         {
-            int result = 0;
-            try
+            if (d < TOO_SMALL)
             {
-                if (str != null)
-                {
-                    result = int.Parse(str);
-                }
+                return TOO_SMALL;
             }
-            catch (Exception)
+            else if (d > TOO_BIG)
             {
-                result = 0;
+                return TOO_BIG;
             }
-            return result;
+            else
+            {
+                return d;
+            }
         }
     }
 

@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Persist;
 using System.Runtime.Serialization;
-using Encog.MathUtil.MathUtil;
+using Encog.MathUtil;
 #if logging
 using log4net;
 #endif
