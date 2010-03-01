@@ -87,10 +87,10 @@
     <Compile Include="Encog.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
-    <Compile Include="Matrix\BiPolarUtil.cs" />
-    <Compile Include="Matrix\Matrix.cs" />
-    <Compile Include="Matrix\MatrixError.cs" />
-    <Compile Include="Matrix\MatrixMath.cs" />
+    <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
+    <Compile Include="MathUtil\Matrices\Matrix.cs" />
+    <Compile Include="MathUtil\Matrices\MatrixError.cs" />
+    <Compile Include="MathUtil\Matrices\MatrixMath.cs" />
     <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
     <Compile Include="Neural\Activation\ActivationCompetitive.cs" />
     <Compile Include="Neural\Activation\ActivationGaussian.cs" />

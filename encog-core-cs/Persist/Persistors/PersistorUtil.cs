@@ -38,6 +38,7 @@ using System.Reflection;
 using Encog.MathUtil.CSV;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -129,13 +130,13 @@ namespace Encog.Persist.Persistors
         /// </summary>
         /// <param name="xmlIn">The XML reader.</param>
         /// <returns>The loaded matrix.</returns>
-        public static Matrix.Matrix LoadMatrix(ReadXML xmlIn)
+        public static Matrix LoadMatrix(ReadXML xmlIn)
         {
             int rows = xmlIn.LastTag.GetAttributeInt(
                    PersistorUtil.ATTRIBUTE_MATRIX_ROWS);
             int cols = xmlIn.LastTag.GetAttributeInt(
                    PersistorUtil.ATTRIBUTE_MATRIX_COLS);
-            Matrix.Matrix matrix = new Matrix.Matrix(rows, cols);
+            Matrix matrix = new Matrix(rows, cols);
 
             int row = 0;
 
@@ -167,7 +168,7 @@ namespace Encog.Persist.Persistors
         /// </summary>
         /// <param name="matrix">The matrix to save.</param>
         /// <param name="xmlOut">The XML writer.</param>
-        public static void SaveMatrix(Matrix.Matrix matrix, WriteXML xmlOut)
+        public static void SaveMatrix(Matrix matrix, WriteXML xmlOut)
         {
             xmlOut.AddAttribute(PersistorUtil.ATTRIBUTE_MATRIX_ROWS, ""
                     + matrix.Rows);

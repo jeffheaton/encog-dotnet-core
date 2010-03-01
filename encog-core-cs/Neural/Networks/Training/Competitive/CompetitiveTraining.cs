@@ -40,6 +40,7 @@ using Encog.MathUtil;
 
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.Neural.Networks.Training.Competitive
 {
@@ -121,8 +122,8 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <summary>
         /// Holds the corrections for any matrix being trained.
         /// </summary>
-        private IDictionary<ISynapse, Matrix.Matrix> correctionMatrix =
-            new Dictionary<ISynapse, Matrix.Matrix>();
+        private IDictionary<ISynapse, Matrix> correctionMatrix =
+            new Dictionary<ISynapse, Matrix>();
 
         /// <summary>
         /// True is a winner is to be forced, see class description, or forceWinners
@@ -200,7 +201,7 @@ namespace Encog.Neural.Networks.Training.Competitive
             // setup the correction matrix
             foreach (ISynapse synapse in this.synapses)
             {
-                Matrix.Matrix matrix = new Matrix.Matrix(synapse.WeightMatrix.Rows,
+                Matrix matrix = new Matrix(synapse.WeightMatrix.Rows,
                        synapse.WeightMatrix.Cols);
                 this.correctionMatrix[synapse] = matrix;
             }
@@ -215,7 +216,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// </summary>
         private void ApplyCorrection()
         {
-            foreach (KeyValuePair<ISynapse, Matrix.Matrix> entry in this.correctionMatrix)
+            foreach (KeyValuePair<ISynapse, Matrix> entry in this.correctionMatrix)
             {
                 entry.Key.WeightMatrix.Set(entry.Value);
             }
@@ -417,7 +418,7 @@ namespace Encog.Neural.Networks.Training.Competitive
             {
 
                 // Reset the correction matrix for this synapse and iteration.
-                Matrix.Matrix correction = this.correctionMatrix[synapse];
+                Matrix correction = this.correctionMatrix[synapse];
                 correction.Clear();
 
                 // Determine the BMU for each training element.
@@ -564,8 +565,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         private void TrainPattern(ISynapse synapse, INeuralData input,
                  int current, int bmu)
         {
-
-            Matrix.Matrix correction = this.correctionMatrix[synapse];
+            Matrix correction = this.correctionMatrix[synapse];
 
             for (int inputNeuron = 0; inputNeuron < this.inputNeuronCount;
                 inputNeuron++)

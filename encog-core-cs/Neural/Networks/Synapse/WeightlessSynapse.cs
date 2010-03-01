@@ -38,6 +38,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Persist.Persistors;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.Neural.Networks.Synapse
 {
@@ -84,7 +85,7 @@ namespace Encog.Neural.Networks.Synapse
         public override Object Clone()
         {
             WeightlessSynapse result = new WeightlessSynapse();
-            result.WeightMatrix = (Matrix.Matrix)this.WeightMatrix.Clone();
+            result.WeightMatrix = (Matrix)this.WeightMatrix.Clone();
             return result;
         }
 
@@ -125,7 +126,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// null, this synapse type has no matrix.
         /// </summary>
-        public override Matrix.Matrix WeightMatrix
+        public override Matrix WeightMatrix
         {
             get
             {

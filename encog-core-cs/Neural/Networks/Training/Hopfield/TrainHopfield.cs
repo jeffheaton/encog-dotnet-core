@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.NeuralData;
-using Encog.Matrix;
+using Encog.MathUtil.Matrices;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
 
@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks.Training.Hopfield
          * @param delta The amoun to change the weights by.
          */
         private void ConvertHopfieldMatrix(ISynapse target,
-                 Matrix.Matrix delta)
+                 Matrix delta)
         {
             // add the new weight matrix to what is there already
             for (int row = 0; row < delta.Rows; row++)
@@ -162,16 +162,16 @@ namespace Encog.Neural.Networks.Training.Hopfield
         {
 
             // Create a row matrix from the input, convert boolean to bipolar
-            Matrix.Matrix m2 = Matrix.Matrix.CreateRowMatrix(pattern.Data);
+            Matrix m2 = Matrix.CreateRowMatrix(pattern.Data);
             // Transpose the matrix and multiply by the original input matrix
-            Matrix.Matrix m1 = MatrixMath.Transpose(m2);
-            Matrix.Matrix m3 = MatrixMath.Multiply(m1, m2);
+            Matrix m1 = MatrixMath.Transpose(m2);
+            Matrix m3 = MatrixMath.Multiply(m1, m2);
             // matrix 3 should be square by now, so create an identity
             // matrix of the same size.
-            Matrix.Matrix identity = MatrixMath.Identity(m3.Rows);
+            Matrix identity = MatrixMath.Identity(m3.Rows);
 
             // subtract the identity matrix
-            Matrix.Matrix m4 = MatrixMath.Subtract(m3, identity);
+            Matrix m4 = MatrixMath.Subtract(m3, identity);
 
             // now add the calculated matrix, for this pattern, to the
             // existing weight matrix.

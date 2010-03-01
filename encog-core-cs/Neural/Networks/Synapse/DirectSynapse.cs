@@ -35,6 +35,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
 using Encog.Persist;
 using Encog.Persist.Persistors;
+using Encog.MathUtil.Matrices;
 
 namespace Encog.Neural.Networks.Synapse
 {
@@ -102,7 +103,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// null, this synapse type has no matrix.
         /// </summary>
-        public override Matrix.Matrix WeightMatrix
+        public override Matrix WeightMatrix
         {
             get
             {

@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.MathUtil.Matrices;
 
 namespace Encog.MathUtil.Logging
 {
@@ -80,7 +81,7 @@ namespace Encog.MathUtil.Logging
         /// </summary>
         /// <param name="matrix">The matrix.</param>
         /// <returns>The matrix as a string.</returns>
-        public static String DumpMatrixString(Matrix.Matrix matrix)
+        public static String DumpMatrixString(Matrix matrix)
         {
 
             StringBuilder result = new StringBuilder();

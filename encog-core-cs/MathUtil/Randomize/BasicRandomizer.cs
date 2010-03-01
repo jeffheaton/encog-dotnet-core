@@ -36,6 +36,7 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.MathUtil.Randomize
 {
@@ -117,7 +118,7 @@ namespace Encog.MathUtil.Randomize
         /// may be used, or they may be discarded, depending on the randomizer.
         /// </summary>
         /// <param name="m">A matrix to randomize.</param>
-        public virtual void Randomize(Matrix.Matrix m)
+        public virtual void Randomize(Matrix m)
         {
             double[][] mData = m.Data;
             for (int r = 0; r < m.Rows; r++)

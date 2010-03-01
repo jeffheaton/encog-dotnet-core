@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Matrix;
+using Encog.MathUtil.Matrices;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
 using Encog.Persist;
@@ -56,7 +56,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// The weight matrix.
         /// </summary>
-        private Matrix.Matrix matrix;
+        private Matrix matrix;
 
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Encog.Neural.Networks.Synapse
         {
             this.FromLayer = fromLayer;
             this.ToLayer = toLayer;
-            this.matrix = new Matrix.Matrix(this.FromNeuronCount, this.ToNeuronCount);
+            this.matrix = new Matrix(this.FromNeuronCount, this.ToNeuronCount);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Encog.Neural.Networks.Synapse
         public override Object Clone()
         {
             WeightedSynapse result = new WeightedSynapse();
-            result.WeightMatrix = (Matrix.Matrix)this.WeightMatrix.Clone();
+            result.WeightMatrix = (Matrix)this.WeightMatrix.Clone();
             return result;
         }
 
@@ -130,7 +130,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// Get the weight and threshold matrix.
         /// </summary>
-        public override Matrix.Matrix WeightMatrix
+        public override Matrix WeightMatrix
         {
             get
             {

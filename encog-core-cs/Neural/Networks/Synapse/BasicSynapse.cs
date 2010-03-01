@@ -37,6 +37,7 @@ using Encog.Neural.Data;
 
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 
 namespace Encog.Neural.Networks.Synapse
@@ -189,7 +190,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// Get the weight matrix.
         /// </summary>
-        public abstract Matrix.Matrix WeightMatrix { get; set; }
+        public abstract Matrix WeightMatrix { get; set; }
 
 
         /// <summary>

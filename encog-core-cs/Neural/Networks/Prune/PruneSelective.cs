@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
-using Encog.Matrix;
+using Encog.MathUtil.Matrices;
 #if logging
 using log4net;
 #endif
@@ -207,7 +207,7 @@ namespace Encog.Neural.Networks.Prune
             // adjust the outbound weight matrixes
             foreach (ISynapse synapse in layer.Next)
             {
-                Matrix.Matrix newMatrix = new Matrix.Matrix(neuronCount, synapse
+                Matrix newMatrix = new Matrix(neuronCount, synapse
                        .ToNeuronCount);
                 // copy existing matrix to new matrix
                 for (int row = 0; row < layer.NeuronCount; row++)
@@ -226,7 +226,7 @@ namespace Encog.Neural.Networks.Prune
 
             foreach (ISynapse synapse in inboundSynapses)
             {
-                Matrix.Matrix newMatrix = new Matrix.Matrix(synapse.FromNeuronCount,
+                Matrix newMatrix = new Matrix(synapse.FromNeuronCount,
                        neuronCount);
                 // copy existing matrix to new matrix
                 for (int row = 0; row < synapse.FromNeuronCount; row++)

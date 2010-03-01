@@ -37,6 +37,7 @@ using Encog.Persist;
 using Encog.Persist.Persistors;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.Neural.Networks.Synapse
 {
@@ -122,7 +123,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// null, this synapse type has no matrix.
         /// </summary>
-        public override Matrix.Matrix WeightMatrix
+        public override Matrix WeightMatrix
         {
             get
             {

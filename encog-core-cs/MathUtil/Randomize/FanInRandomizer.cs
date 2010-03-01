@@ -37,6 +37,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.MathUtil;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.MathUtil.Randomize
 {
@@ -203,7 +204,7 @@ namespace Encog.MathUtil.Randomize
         /// may be used, or they may be discarded, depending on the randomizer.
         /// </summary>
         /// <param name="m">A matrix to randomize.</param>
-        public override void Randomize(Matrix.Matrix m)
+        public override void Randomize(Matrix m)
         {
             for (int row = 0; row < m.Rows; row++)
             {

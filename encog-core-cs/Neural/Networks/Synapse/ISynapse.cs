@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Persist;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Layers;
+using Encog.MathUtil.Matrices;
 
 namespace Encog.Neural.Networks.Synapse
 {
@@ -73,7 +74,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// Get the weight matrix.
         /// </summary>
-        Matrix.Matrix WeightMatrix
+        Matrix WeightMatrix
         {
             get;
             set;

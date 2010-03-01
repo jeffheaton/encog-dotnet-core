@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
+using Encog.MathUtil.Matrices;
 
 namespace Encog.MathUtil.Randomize
 {
@@ -71,7 +72,7 @@ namespace Encog.MathUtil.Randomize
         /// may be used, or they may be discarded, depending on the randomizer.
         /// </summary>
         /// <param name="m">A matrix to randomize.</param>
-        void Randomize(Matrix.Matrix m);
+        void Randomize(Matrix m);
 
         /// <summary>
         /// Randomize the synapses and thresholds in the basic network based on an
