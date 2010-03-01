@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic;
-using Encog.Util.Randomize;
+using Encog.MathUtil.Randomize;
 
 #if logging
 using log4net;

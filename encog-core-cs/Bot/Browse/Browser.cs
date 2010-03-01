@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Encog.Util.HTTP;
+using Encog.MathUtil.HTTP;
 using Encog.Bot.Browse.Range;
 using System.Net;
 

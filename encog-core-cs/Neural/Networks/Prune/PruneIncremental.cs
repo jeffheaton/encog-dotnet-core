@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.Concurrency.Job;
+using Encog.MathUtil.Concurrency.Job;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;

@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using Encog.Parse.Tags.Read;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Parse.Tags;
 using System.Collections;
 

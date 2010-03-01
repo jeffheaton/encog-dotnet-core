@@ -37,7 +37,7 @@ using Encog.Neural.Networks.Layers;
 #if logging
 using log4net;
 #endif
-namespace Encog.Util.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// Provides basic functionality that most randomizers will need.

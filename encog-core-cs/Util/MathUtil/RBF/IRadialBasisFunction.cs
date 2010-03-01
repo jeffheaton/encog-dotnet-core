@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.MathUtil.RBF
+namespace Encog.MathUtil.MathUtil.RBF
 {
     /// <summary>
     /// Provides a generic interface to a radial basis function (RBF). Encog uses

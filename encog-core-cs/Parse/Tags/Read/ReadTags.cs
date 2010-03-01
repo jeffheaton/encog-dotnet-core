@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Encog.Util;
+using Encog.MathUtil;
 #if logging
 using log4net;
 #endif

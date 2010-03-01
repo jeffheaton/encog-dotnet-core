@@ -35,7 +35,7 @@ using System.Text;
 using log4net;
 #endif
 
-namespace Encog.Util.MathUtil.RBF
+namespace Encog.MathUtil.MathUtil.RBF
 {
     /// <summary>
     /// Implements a radial function based on the gaussian function.

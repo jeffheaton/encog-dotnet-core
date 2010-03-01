@@ -36,7 +36,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 
-namespace Encog.Util.Banchmark
+namespace Encog.MathUtil.Banchmark
 {
     /// <summary>
     /// Used to evaluate the training time for a network.

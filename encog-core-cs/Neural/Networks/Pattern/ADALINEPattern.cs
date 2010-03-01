@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
-using Encog.Util.Randomize;
+using Encog.MathUtil.Randomize;
 #if logging
 using log4net;
 #endif

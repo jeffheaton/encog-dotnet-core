@@ -34,7 +34,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Encog.Util.DownSample
+namespace Encog.MathUtil.DownSample
 {
     /// <summary>
     /// A class that is able to downsample an image.

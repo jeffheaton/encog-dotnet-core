@@ -36,7 +36,7 @@ using Encog.Neural.Data;
 using System.Threading;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data.Basic;
-using Encog.Util;
+using Encog.MathUtil;
 
 namespace Encog.Neural.Networks.Training.Propagation.Gradient
 {

@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Encog.Util.HTTP
+namespace Encog.MathUtil.HTTP
 {
     /// <summary>
     /// URLUtility: THis class contains several useful methods

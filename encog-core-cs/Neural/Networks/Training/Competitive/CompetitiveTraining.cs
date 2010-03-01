@@ -36,7 +36,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
-using Encog.Util;
+using Encog.MathUtil;
 
 #if logging
 using log4net;

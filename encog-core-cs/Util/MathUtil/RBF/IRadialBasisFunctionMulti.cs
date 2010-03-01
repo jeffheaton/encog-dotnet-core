@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.MathUtil.RBF
+namespace Encog.MathUtil.MathUtil.RBF
 {
     /// <summary>
     /// A multi-dimension RBF.

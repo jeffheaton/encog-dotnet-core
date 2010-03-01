@@ -40,7 +40,7 @@ using Encog.Parse.Tags.Read;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
 
-namespace Encog.Util
+namespace Encog.MathUtil
 {
     /// <summary>
     /// A simple Object cloner that uses serialization. Actually works really well

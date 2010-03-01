@@ -32,12 +32,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.Data.Basic;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
 using Encog.Neural.Data;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 
 namespace Encog.Persist.Persistors
 {

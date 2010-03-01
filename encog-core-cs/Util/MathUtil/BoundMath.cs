@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.MathUtil
+namespace Encog.MathUtil.MathUtil
 {
     /// <summary>
     /// C# will sometimes return Math.NaN or Math.Infinity when numbers get to

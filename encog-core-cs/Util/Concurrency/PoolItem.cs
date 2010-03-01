@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.Concurrency
+namespace Encog.MathUtil.Concurrency
 {
     class PoolItem
     {

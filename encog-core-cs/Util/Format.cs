@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util
+namespace Encog.MathUtil
 {
     /// <summary>
     /// Provides the ability for Encog to format numbers and times.

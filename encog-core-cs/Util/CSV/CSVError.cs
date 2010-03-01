@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.CSV
+namespace Encog.MathUtil.CSV
 {
     /// <summary>
     /// Used to report errors for CSV formatting.

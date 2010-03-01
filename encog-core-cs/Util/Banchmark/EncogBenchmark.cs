@@ -36,7 +36,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 
-namespace Encog.Util.Banchmark
+namespace Encog.MathUtil.Banchmark
 {
     /// <summary>
     /// Benchmark Encog with several network types.

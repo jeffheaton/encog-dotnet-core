@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Data;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 
 namespace Encog.Neural.Networks.Training.Competitive
 {

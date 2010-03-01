@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
 using Encog.Neural.Networks.Training.Propagation;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 
 namespace Encog.Persist.Persistors
 {

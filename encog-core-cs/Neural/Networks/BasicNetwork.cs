@@ -32,14 +32,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using System.Runtime.Serialization;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-using Encog.Util.Randomize;
+using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Structure;
 

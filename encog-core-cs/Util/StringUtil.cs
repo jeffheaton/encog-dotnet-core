@@ -31,7 +31,7 @@ using System;
 using System.Text;
 
 
-namespace Encog.Util
+namespace Encog.MathUtil
 {
     /// <summary>
     /// Simple class for string utilities.

@@ -35,7 +35,7 @@ using System.Text;
 using log4net;
 #endif
 
-namespace Encog.Util.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// A randomizer that will create always set the random number to a const

@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 
 namespace Encog.Solve.Genetic
 {

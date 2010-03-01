@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.Logging
+namespace Encog.MathUtil.Logging
 {
     /// <summary>
     /// A utility for writing matrixes to the log.

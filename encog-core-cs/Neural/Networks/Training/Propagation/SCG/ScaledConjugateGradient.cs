@@ -35,8 +35,8 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Networks.Layers;
-using Encog.Util;
-using Encog.Util.MathUtil;
+using Encog.MathUtil;
+using Encog.MathUtil.MathUtil;
 
 namespace Encog.Neural.Networks.Training.Propagation.SCG
 {

@@ -31,8 +31,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.Concurrency;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.Concurrency;
+using Encog.MathUtil.MathUtil;
 using System.Threading;
 
 namespace Encog.Solve.Genetic

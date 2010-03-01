@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 
 #if SILVERLIGHT
 using System.Windows.Browser;
@@ -39,7 +39,7 @@ using System.Windows.Browser;
 using System.Web;
 #endif
 
-namespace Encog.Util.HTTP
+namespace Encog.MathUtil.HTTP
 {
     /// <summary>
     /// FormUtility: This class is used to construct responses to

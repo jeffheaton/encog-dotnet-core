@@ -40,7 +40,7 @@ using log4net.Layout;
 using log4net.Appender;
 #endif
 
-namespace Encog.Util.Logging
+namespace Encog.MathUtil.Logging
 {
     /// <summary>
     /// A simple class used to quickly configure the log4j package that Encog uses.

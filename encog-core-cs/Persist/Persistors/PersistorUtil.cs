@@ -33,9 +33,9 @@ using System.Linq;
 using System.Text;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
-using Encog.Util;
+using Encog.MathUtil;
 using System.Reflection;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 #if logging
 using log4net;
 #endif

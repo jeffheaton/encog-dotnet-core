@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Basic;
-using Encog.Util.DownSample;
+using Encog.MathUtil.DownSample;
 using System.Reflection;
 using Encog.Neural.Data;
 

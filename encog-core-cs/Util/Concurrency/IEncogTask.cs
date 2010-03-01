@@ -27,7 +27,7 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-namespace Encog.Util.Concurrency
+namespace Encog.MathUtil.Concurrency
 {
     /// <summary>
     /// A task for Encog concurrency.

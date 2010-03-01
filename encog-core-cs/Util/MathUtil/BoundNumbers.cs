@@ -35,7 +35,7 @@ using System.Text;
 using log4net;
 #endif
 
-namespace Encog.Util.MathUtil
+namespace Encog.MathUtil.MathUtil
 {
     /// <summary>
     /// A simple class that prevents numbers from getting either too

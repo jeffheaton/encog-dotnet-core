@@ -34,7 +34,7 @@ using System.Text;
 using System.Globalization;
 using Encog.Persist.Attributes;
 
-namespace Encog.Util.CSV
+namespace Encog.MathUtil.CSV
 {
     /// <summary>
     /// Describes how to format number lists, such as CSV.

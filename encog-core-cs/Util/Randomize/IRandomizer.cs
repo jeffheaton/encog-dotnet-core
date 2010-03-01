@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
 
-namespace Encog.Util.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// Defines the interface for a class that is capable of randomizing the weights

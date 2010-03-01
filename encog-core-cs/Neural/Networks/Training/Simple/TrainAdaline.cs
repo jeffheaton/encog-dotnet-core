@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Simple

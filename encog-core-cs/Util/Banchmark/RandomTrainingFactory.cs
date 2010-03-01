@@ -33,10 +33,10 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
-using Encog.Util.Randomize;
+using Encog.MathUtil.Randomize;
 using Encog.Neural.Data;
 
-namespace Encog.Util.Banchmark
+namespace Encog.MathUtil.Banchmark
 {
     /// <summary>
     /// Class used to generate random training sets.

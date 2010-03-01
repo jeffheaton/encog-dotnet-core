@@ -31,12 +31,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.Data;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-using Encog.Util.Logging;
+using Encog.MathUtil.Logging;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
 

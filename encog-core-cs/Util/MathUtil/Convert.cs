@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Util.MathUtil
+namespace Encog.MathUtil.MathUtil
 {
     /// <summary>
     /// This class is used to convert strings into numeric values.  If the

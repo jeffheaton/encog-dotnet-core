@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
 using System.Reflection;
-using Encog.Util;
+using Encog.MathUtil;
 
 namespace Encog.Persist.Persistors.Generic
 {

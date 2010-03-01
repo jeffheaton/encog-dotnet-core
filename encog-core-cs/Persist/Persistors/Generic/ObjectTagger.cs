@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
-using Encog.Util;
+using Encog.MathUtil;
 using System.Reflection;
 using Encog.Persist.Attributes;
 

@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 using System.IO;
 
 namespace Encog.Normalize.Target

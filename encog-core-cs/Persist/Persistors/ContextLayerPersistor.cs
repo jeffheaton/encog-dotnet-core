@@ -35,9 +35,9 @@ using Encog.Parse.Tags.Read;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Parse.Tags.Write;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.Activation;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 #if logging
 using log4net;
 #endif

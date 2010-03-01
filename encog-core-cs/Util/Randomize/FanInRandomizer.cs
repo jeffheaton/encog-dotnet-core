@@ -34,11 +34,11 @@ using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 #if logging
 using log4net;
 #endif
-namespace Encog.Util.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// A randomizer that attempts to create starting weight values that are

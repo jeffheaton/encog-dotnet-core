@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Solve.Anneal;
 using Encog.Neural.NeuralData;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 using Encog.Neural.Networks.Structure;
 
 #if logging

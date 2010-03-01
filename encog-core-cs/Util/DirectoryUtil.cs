@@ -35,7 +35,7 @@ using System.IO;
 #if logging
 using log4net;
 #endif
-namespace Encog.Util
+namespace Encog.MathUtil
 {
     /// <summary>
     /// Directory utilities.

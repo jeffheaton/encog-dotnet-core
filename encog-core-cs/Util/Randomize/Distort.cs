@@ -31,13 +31,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.MathUtil;
+using Encog.MathUtil.MathUtil;
 
 #if logging
 using log4net;
 #endif
 
-namespace Encog.Util.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// A randomizer that distorts what is already present in the neural network.

@@ -37,7 +37,7 @@ using System.Threading;
 using log4net;
 #endif
 
-namespace Encog.Util.Concurrency
+namespace Encog.MathUtil.Concurrency
 {
     /// <summary>
     /// This class abstracts thread pools, and potentially grids and other types of

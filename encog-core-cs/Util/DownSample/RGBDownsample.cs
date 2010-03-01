@@ -34,7 +34,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Encog.Util.DownSample
+namespace Encog.MathUtil.DownSample
 {
     /// <summary>
     /// Downsample an image keeping the RGB colors.

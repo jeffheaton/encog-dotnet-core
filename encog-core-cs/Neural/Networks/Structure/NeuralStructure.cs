@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
-using Encog.Util;
+using Encog.MathUtil;
 
 #if logging
 using log4net;

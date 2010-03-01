@@ -31,10 +31,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util;
+using Encog.MathUtil;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
-using Encog.Util.CSV;
+using Encog.MathUtil.CSV;
 
 namespace Encog.Neural.NeuralData.CSV
 {

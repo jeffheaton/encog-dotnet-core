@@ -38,7 +38,7 @@ using System.Windows.Forms;
 using Encog.Neural.Networks.Training;
 using System.Threading;
 
-namespace Encog.Util.Simple
+namespace Encog.MathUtil.Simple
 {
     /// <summary>
     /// Training dialog.

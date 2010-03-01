@@ -34,9 +34,9 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
-using Encog.Util;
-using Encog.Util.HTTP;
-using Encog.Util.CSV;
+using Encog.MathUtil;
+using Encog.MathUtil.HTTP;
+using Encog.MathUtil.CSV;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {

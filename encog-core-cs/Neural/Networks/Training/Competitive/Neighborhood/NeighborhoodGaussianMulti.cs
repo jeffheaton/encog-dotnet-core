@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.MathUtil.RBF;
+using Encog.MathUtil.MathUtil.RBF;
 
 namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
 {

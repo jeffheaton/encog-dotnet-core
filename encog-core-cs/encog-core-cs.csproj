@@ -343,7 +343,7 @@
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
     <Compile Include="Util\EncogArray.cs" />
     <Compile Include="Util\EncogValidate.cs" />
-    <Compile Include="Math\Error\ErrorCalculation.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />
     <Compile Include="Util\HTTP\URLUtility.cs" />
