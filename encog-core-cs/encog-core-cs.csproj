@@ -87,7 +87,13 @@
     <Compile Include="Encog.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
+    <Compile Include="MathUtil\EncogMath.cs" />
     <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\CholeskyDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\EigenvalueDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\LUDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\QRDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\SingularValueDecomposition.cs" />
     <Compile Include="MathUtil\Matrices\Matrix.cs" />
     <Compile Include="MathUtil\Matrices\MatrixError.cs" />
     <Compile Include="MathUtil\Matrices\MatrixMath.cs" />

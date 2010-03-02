@@ -36,6 +36,7 @@ using System.Runtime.Serialization;
 using Encog.MathUtil;
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices.Decomposition;
 #endif
 namespace Encog.MathUtil.Matrices
 {
@@ -178,7 +179,7 @@ namespace Encog.MathUtil.Matrices
         public Matrix(int rows, int cols)
         {
             this.matrix = new double[rows][];
-            for(int i=0;i<rows;i++)
+            for (int i = 0; i < rows; i++)
             {
                 this.matrix[i] = new double[cols];
             }
@@ -242,7 +243,7 @@ namespace Encog.MathUtil.Matrices
         /// <returns>A hash code for the matrix.</returns>
         public override int GetHashCode()
         {
-            return Rows + Cols; 
+            return Rows + Cols;
         }
 
 
@@ -357,7 +358,7 @@ namespace Encog.MathUtil.Matrices
             newMatrix[0] = new double[this.Cols];
 
             for (int col = 0; col < this.Cols; col++)
-            {                
+            {
                 newMatrix[0][col] = this.matrix[row][col];
             }
 
@@ -563,6 +564,305 @@ namespace Encog.MathUtil.Matrices
                     target[r][c] = source[r][c];
         }
 
-    }
+        /// <summary>
+        /// Make a copy of this matrix as an array.
+        /// </summary>
+        /// <returns>An array copy of this matrix.</returns>
+        public double[][] GetArrayCopy()
+        {
+            double[][] result = new double[Rows][];
+            for (int row = 0; row < this.Rows; row++)
+            {
+                result[row] = new double[Cols];
+                for (int col = 0; col < this.Cols; col++)
+                {
+                    result[row][col] = this.matrix[row][col];
+                }
+            }
+            return result;
+        }
 
+        /// <summary>
+        /// Get a submatrix.
+        /// </summary>
+        /// <param name="i0">Initial row index.</param>
+        /// <param name="i1">Final row index.</param>
+        /// <param name="j0">Initial column index.</param>
+        /// <param name="j1">Final column index.</param>
+        /// <returns>The specified submatrix.</returns>
+        public Matrix GetMatrix(
+            int i0,
+            int i1,
+            int j0,
+            int j1)
+        {
+            Matrix result = new Matrix(i1 - i0 + 1, j1 - j0 + 1);
+            double[][] b = result.Data;
+            try
+            {
+                for (int i = i0; i <= i1; i++)
+                {
+                    for (int j = j0; j <= j1; j++)
+                    {
+                        b[i - i0][j - j0] = matrix[i][j];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get a submatrix.
+        /// </summary>
+        /// <param name="r">Array of row indices.</param>
+        /// <param name="c">Array of column indices.</param>
+        /// <returns>The specified submatrix.</returns>
+        public Matrix GetMatrix(int[] r, int[] c)
+        {
+            Matrix result = new Matrix(r.Length, c.Length);
+            double[][] b = result.Data;
+            try
+            {
+                for (int i = 0; i < r.Length; i++)
+                {
+                    for (int j = 0; j < c.Length; j++)
+                    {
+                        b[i][j] = matrix[r[i]][c[j]];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get a submatrix.
+        /// </summary>
+        /// <param name="i0">Initial row index.</param>
+        /// <param name="i1">Final row index.</param>
+        /// <param name="c">Array of column indices.</param>
+        /// <returns>The specified submatrix.</returns>
+        public Matrix GetMatrix(
+                int i0,
+                int i1,
+                int[] c)
+        {
+            Matrix result = new Matrix(i1 - i0 + 1, c.Length);
+            double[][] b = result.Data;
+            try
+            {
+                for (int i = i0; i <= i1; i++)
+                {
+                    for (int j = 0; j < c.Length; j++)
+                    {
+                        b[i - i0][j] = matrix[i][c[j]];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get a submatrix.
+        /// </summary>
+        /// <param name="r">Array of row indices.</param>
+        /// <param name="j0">Initial column index</param>
+        /// <param name="j1">Final column index</param>
+        /// <returns>The specified submatrix.</returns>
+        public Matrix GetMatrix(
+                int[] r,
+                int j0,
+                int j1)
+        {
+            Matrix result = new Matrix(r.Length, j1 - j0 + 1);
+            double[][] b = result.Data;
+            try
+            {
+                for (int i = 0; i < r.Length; i++)
+                {
+                    for (int j = j0; j <= j1; j++)
+                    {
+                        b[i][j - j0] = matrix[r[i]][j];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Multiply every row by the specified vector.
+        /// </summary>
+        /// <param name="vector">The vector to multiply by.</param>
+        /// <param name="result">The result to hold the values.</param>
+        public void Multiply(double[] vector, double[] result)
+        {
+            for (int i = 0; i < this.Rows; i++)
+            {
+                result[i] = 0;
+                for (int j = 0; j < this.Cols; j++)
+                {
+                    result[i] += matrix[i][j] * vector[j];
+                }
+            }
+        }
+
+        /// <summary>
+        /// The matrix inverted.
+        /// </summary>
+        /// <returns>The inverse of the matrix.</returns>
+        public Matrix Inverse()
+        {
+            return Solve(MatrixMath.Identity(Rows));
+        }
+
+
+        /// <summary>
+        /// Solve A*X = B
+        /// </summary>
+        /// <param name="b">right hand side.</param>
+        /// <returns>Solution if A is square, least squares solution otherwise.</returns>
+        public Matrix Solve(Matrix b)
+        {
+            if (Rows == Cols)
+            {
+                return (new LUDecomposition(this)).Solve(b);
+            }
+            else
+            {
+                return (new QRDecomposition(this)).Solve(b);
+            }
+        }
+
+        /// <summary>
+        /// Set a submatrix.
+        /// </summary>
+        /// <param name="i0">Initial row index</param>
+        /// <param name="i1">Final row index</param>
+        /// <param name="j0">Initial column index</param>
+        /// <param name="j1">Final column index</param>
+        /// <param name="x">A(i0:i1,j0:j1)</param>
+        public void SetMatrix(
+                int i0,
+                int i1,
+                int j0,
+                int j1,
+                Matrix x)
+        {
+            try
+            {
+                for (int i = i0; i <= i1; i++)
+                {
+                    for (int j = j0; j <= j1; j++)
+                    {
+                        matrix[i][j] = x[i - i0, j - j0];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+        }
+
+
+        /// <summary>
+        /// Set a submatrix.
+        /// </summary>
+        /// <param name="r">Array of row indices.</param>
+        /// <param name="c">Array of column indices.</param>
+        /// <param name="x">The matrix to set.</param>
+        public void SetMatrix(
+                int[] r,
+                int[] c,
+                Matrix x)
+        {
+            try
+            {
+                for (int i = 0; i < r.Length; i++)
+                {
+                    for (int j = 0; j < c.Length; j++)
+                    {
+                        matrix[r[i]][c[j]] = x[i, j];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+        }
+
+        /// <summary>
+        /// Set a submatrix.
+        /// </summary>
+        /// <param name="r">Array of row indices.</param>
+        /// <param name="j0">Initial column index</param>
+        /// <param name="j1">Final column index</param>
+        /// <param name="x">A(r(:),j0:j1)</param>
+        public void SetMatrix(
+                int[] r,
+                int j0,
+                int j1,
+                Matrix x)
+        {
+            try
+            {
+                for (int i = 0; i < r.Length; i++)
+                {
+                    for (int j = j0; j <= j1; j++)
+                    {
+                        matrix[r[i]][j] = x[i, j - j0];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+        }
+      
+        /// <summary>
+        /// Set a submatrix. 
+        /// </summary>
+        /// <param name="i0">Initial row index</param>
+        /// <param name="i1">Final row index</param>
+        /// <param name="c">Array of column indices.</param>
+        /// <param name="x">The submatrix.</param>
+        public void SetMatrix(
+                int i0,
+                int i1,
+                int[] c,
+                Matrix x)
+        {
+            try
+            {
+                for (int i = i0; i <= i1; i++)
+                {
+                    for (int j = 0; j < c.Length; j++)
+                    {
+                        matrix[i][c[j]] = x[i - i0, j];
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new MatrixError("Submatrix indices");
+            }
+        }
+    }
 }

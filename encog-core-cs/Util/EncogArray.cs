@@ -65,5 +65,21 @@ namespace Encog.MathUtil
 
             return value;
         }
+
+        /// <summary>
+        /// Allocate a 2D array of doubles.
+        /// </summary>
+        /// <param name="rows">The number of rows.</param>
+        /// <param name="cols">The number of columns.</param>
+        /// <returns>The array.</returns>
+        public static double[][] AllocateDouble2D(int rows, int cols)
+        {
+            double[][] result = new double[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                result[i] = new double[cols];
+            }
+            return result;
+        }
     }
 }
