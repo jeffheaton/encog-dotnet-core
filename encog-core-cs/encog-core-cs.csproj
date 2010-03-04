@@ -340,6 +340,7 @@
     <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\PoolItem.cs" />
+    <Compile Include="Util\Concurrency\TaskGroup.cs" />
     <Compile Include="Util\CSV\NumberList.cs" />
     <Compile Include="Util\CSV\CSVError.cs" />
     <Compile Include="Util\CSV\CSVFormat.cs" />

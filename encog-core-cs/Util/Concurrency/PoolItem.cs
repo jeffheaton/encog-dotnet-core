@@ -32,23 +32,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.Concurrency
+namespace Encog.Util.Concurrency
 {
-    class PoolItem
+    public class PoolItem
     {
         private IEncogTask task;
         private EncogConcurrency owner;
+        private TaskGroup group;
 
-        public PoolItem(EncogConcurrency owner, IEncogTask task)
+        public PoolItem(EncogConcurrency owner, IEncogTask task,  TaskGroup group)
         {
             this.owner = owner;
             this.task = task;
+            this.group = group;
         }
 
         public void ThreadPoolCallback(Object threadContext)
         {
-            this.task.Run();
-            owner.TaskFinished(this);
+            try
+            {
+                if (this.group != null)
+                {
+                    this.group.TaskStarting();
+                }
+
+                this.task.Run();
+                owner.TaskFinished(this);
+            }
+            finally
+            {
+                if (this.group != null)
+                {
+                    this.group.TaskStopping();
+                }
+            }
         }
     }
 }

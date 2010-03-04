@@ -34,6 +34,7 @@ using System.Text;
 using Encog.MathUtil.Concurrency;
 using Encog.MathUtil;
 using System.Threading;
+using Encog.Util.Concurrency;
 
 namespace Encog.Solve.Genetic
 {

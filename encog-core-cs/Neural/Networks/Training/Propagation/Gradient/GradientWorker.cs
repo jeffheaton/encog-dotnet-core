@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.Util.Concurrency;
 
 namespace Encog.Neural.Networks.Training.Propagation.Gradient
 {
@@ -41,7 +42,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
     /// to run multithreaded. Even if running in single threaded mode, a single
     /// worker is created and run by the main thread.
     /// </summary>
-    public class GradientWorker
+    public class GradientWorker: IEncogTask
     {
 
         /// <summary>

@@ -37,7 +37,7 @@ using System.Threading;
 using log4net;
 #endif
 
-namespace Encog.MathUtil.Concurrency
+namespace Encog.Util.Concurrency
 {
     /// <summary>
     /// This class abstracts thread pools, and potentially grids and other types of
@@ -56,6 +56,8 @@ namespace Encog.MathUtil.Concurrency
         /// The number of active tasks.
         /// </summary>
         private int activeTasks;
+
+        private int currentTaskGroup;
 
         /// <summary>
         /// The instance to the singleton.
@@ -85,6 +87,7 @@ namespace Encog.MathUtil.Concurrency
         public EncogConcurrency()
         {
             SetMaxThreadsToCoreCount();
+            this.currentTaskGroup = 0;
         }
 
         /// <summary>
@@ -94,12 +97,17 @@ namespace Encog.MathUtil.Concurrency
         /// <param name="task">The task to process.</param>
         public void ProcessTask(IEncogTask task)
         {
+            ProcessTask(task, null);
+        }
+
+        public void ProcessTask(IEncogTask task, TaskGroup  group)
+        {
             lock (this)
             {
                 this.activeTasks++;
             }
 
-            PoolItem item = new PoolItem(this, task);
+            PoolItem item = new PoolItem(this, task, group);
             ThreadPool.QueueUserWorkItem(item.ThreadPoolCallback);
         }
 
@@ -153,6 +161,18 @@ namespace Encog.MathUtil.Concurrency
                 elapsed /= 1000; // to seconds
                 Thread.Sleep(100);
             } while (elapsed < timeOutSeconds);
+        }
+
+        public TaskGroup CreateTaskGroup()
+        {
+            TaskGroup result = null;
+            lock (this)
+            {
+                this.currentTaskGroup++;
+                result = new TaskGroup(this.currentTaskGroup);
+                
+            }
+            return result;
         }
 
         internal void TaskFinished(PoolItem poolItem)

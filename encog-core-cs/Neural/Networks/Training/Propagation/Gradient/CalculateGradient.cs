@@ -37,6 +37,7 @@ using System.Threading;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data.Basic;
 using Encog.MathUtil;
+using Encog.Util.Concurrency;
 
 namespace Encog.Neural.Networks.Training.Propagation.Gradient
 {
@@ -77,11 +78,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
         /// The workers to be used, one for each thread.
         /// </summary>
         private GradientWorker[] workers;
-
-        /// <summary>
-        /// The threads used.
-        /// </summary>
-        private Thread[] threads;
 
         /// <summary>
         /// The network being trained.
@@ -277,7 +273,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             this.indexed = training;
             // setup the workers
             this.workers = new GradientWorker[this.threadCount];
-            this.threads = new Thread[this.threadCount];
 
             int size = (int)this.indexed.Count;
             int sizePerThread = size / this.threadCount;
@@ -301,8 +296,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
 
                 IIndexable trainingClone = this.indexed.OpenAdditional();
                 this.workers[i] = new GradientWorker(this, trainingClone, low, high);
-                this.threads[i] = new Thread(new ThreadStart(this.workers[i].Run));
-                this.threads[i].IsBackground = true;
             }
         }
 
@@ -445,17 +438,16 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
         /// </summary>
         private void RunWorkersMultiThreaded()
         {
+            TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
+
             // start the workers
             for (int i = 0; i < this.threadCount; i++)
             {
-                this.threads[i].Start();
+                EncogConcurrency.Instance.ProcessTask(this.workers[i], group);
             }
 
             // wait for all workers to finish
-            for (int i = 0; i < this.threadCount; i++)
-            {
-                this.threads[i].Join();
-            }
+            group.WaitForComplete();
         }
 
         /// <summary>
