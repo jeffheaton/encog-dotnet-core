@@ -6,40 +6,19 @@ using System.Threading;
 
 namespace Encog.Util.Concurrency
 {
-    /// <summary>
-    /// Defines a group of tasks that should finish together.
-    /// </summary>
     public class TaskGroup
     {
-        /// <summary>
-        /// The ID for this task.
-        /// </summary>
         private int id;
+        private int totalTasks;
+        private int completedTasks;
+        private ManualResetEvent completeEvent = new ManualResetEvent(false);
 
-        /// <summary>
-        /// The current number of tasks running in this group.
-        /// </summary>
-        private int currentTasks;
-
-        /// <summary>
-        /// Has this task group started.
-        /// </summary>
-        private bool started;
-
-        /// <summary>
-        /// Construct a task group.
-        /// </summary>
-        /// <param name="id">The ID of this task group.</param>
         public TaskGroup(int id)
         {
             this.id = id;
-            this.currentTasks = 0;
-            this.started = false;
+            this.totalTasks = 0;
         }
 
-        /// <summary>
-        /// The ID of this task group.
-        /// </summary>
         public int ID
         {
             get
@@ -48,49 +27,40 @@ namespace Encog.Util.Concurrency
             }
         }
 
-        /// <summary>
-        /// Notify this group that a task is starting up.
-        /// </summary>
         public void TaskStarting()
         {
             lock (this)
             {
-                this.currentTasks++;
-                this.started = true;
+                this.totalTasks++;
             }
         }
 
-        /// <summary>
-        /// Notify this group that a task is shutting down.
-        /// </summary>
         public void TaskStopping()
         {
             lock (this)
             {
-                this.currentTasks--;
+                this.completedTasks++;
+                this.completeEvent.Set();
             }
         }
 
-        /// <summary>
-        /// Wait for this task group to start up.
-        /// </summary>
-        public void WaitForStart()
+        public bool NoTasks
         {
-            while (!started)
+            get
             {
-                Thread.Sleep(100);
+                lock (this)
+                {
+                    return this.totalTasks == this.completedTasks;
+                }
             }
         }
 
-        /// <summary>
-        /// Wait for this task group to complete.
-        /// </summary>
         public void WaitForComplete()
         {
-            WaitForStart();
-            while (this.currentTasks > 0)
+            while (!NoTasks)
             {
-                Thread.Sleep(100);
+                this.completeEvent.WaitOne();
+                this.completeEvent.Reset();
             }
         }
     }
