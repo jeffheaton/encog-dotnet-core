@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.NeuralData.Market.Loader;
-using Encog.MathUtil.Time;
+using Encog.Util.Time;
 
 namespace Encog.Neural.NeuralData.Market
 {

@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.Time
+namespace Encog.Util.Time
 {
     /// <summary>
     /// Time units.

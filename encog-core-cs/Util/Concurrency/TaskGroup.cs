@@ -6,12 +6,30 @@ using System.Threading;
 
 namespace Encog.Util.Concurrency
 {
+    /// <summary>
+    /// Defines a group of tasks that should finish together.
+    /// </summary>
     public class TaskGroup
     {
+        /// <summary>
+        /// The ID for this task.
+        /// </summary>
         private int id;
+
+        /// <summary>
+        /// The current number of tasks running in this group.
+        /// </summary>
         private int currentTasks;
+
+        /// <summary>
+        /// Has this task group started.
+        /// </summary>
         private bool started;
 
+        /// <summary>
+        /// Construct a task group.
+        /// </summary>
+        /// <param name="id">The ID of this task group.</param>
         public TaskGroup(int id)
         {
             this.id = id;
@@ -19,6 +37,9 @@ namespace Encog.Util.Concurrency
             this.started = false;
         }
 
+        /// <summary>
+        /// The ID of this task group.
+        /// </summary>
         public int ID
         {
             get
@@ -27,6 +48,9 @@ namespace Encog.Util.Concurrency
             }
         }
 
+        /// <summary>
+        /// Notify this group that a task is starting up.
+        /// </summary>
         public void TaskStarting()
         {
             lock (this)
@@ -36,6 +60,9 @@ namespace Encog.Util.Concurrency
             }
         }
 
+        /// <summary>
+        /// Notify this group that a task is shutting down.
+        /// </summary>
         public void TaskStopping()
         {
             lock (this)
@@ -44,6 +71,9 @@ namespace Encog.Util.Concurrency
             }
         }
 
+        /// <summary>
+        /// Wait for this task group to start up.
+        /// </summary>
         public void WaitForStart()
         {
             while (!started)
@@ -52,6 +82,9 @@ namespace Encog.Util.Concurrency
             }
         }
 
+        /// <summary>
+        /// Wait for this task group to complete.
+        /// </summary>
         public void WaitForComplete()
         {
             WaitForStart();

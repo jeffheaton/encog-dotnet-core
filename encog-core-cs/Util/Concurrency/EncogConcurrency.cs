@@ -92,7 +92,7 @@ namespace Encog.Util.Concurrency
 
         /// <summary>
         /// Process the specified task.  It will be processed either now,
-        /// or queued to process on the thread pool.
+        /// or queued to process on the thread pool.  No group is assigned.
         /// </summary>
         /// <param name="task">The task to process.</param>
         public void ProcessTask(IEncogTask task)
@@ -100,6 +100,12 @@ namespace Encog.Util.Concurrency
             ProcessTask(task, null);
         }
 
+        /// <summary>
+        /// Process the specified task.  It will be processed either now,
+        /// or queued to process on the thread pool.
+        /// </summary>
+        /// <param name="task">The task to process.</param>
+        /// <param name="group">The group this task belongs to.</param>
         public void ProcessTask(IEncogTask task, TaskGroup  group)
         {
             lock (this)
@@ -163,6 +169,10 @@ namespace Encog.Util.Concurrency
             } while (elapsed < timeOutSeconds);
         }
 
+        /// <summary>
+        /// Create a new task group.
+        /// </summary>
+        /// <returns>The new task group.</returns>
         public TaskGroup CreateTaskGroup()
         {
             TaskGroup result = null;

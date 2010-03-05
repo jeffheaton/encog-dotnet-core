@@ -42,6 +42,7 @@ using System.Reflection;
 
 #if logging
 using log4net;
+using Encog.Util;
 #endif
 
 namespace Encog.Persist

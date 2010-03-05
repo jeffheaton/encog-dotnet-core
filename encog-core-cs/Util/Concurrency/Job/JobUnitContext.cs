@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.MathUtil.Concurrency.Job
+namespace Encog.Util.Concurrency.Job
 {
     /// <summary>
     /// Holds basic configuration information for an Encog job.

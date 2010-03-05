@@ -38,9 +38,9 @@ using System.Threading;
 using System.Web;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags;
-using Encog.MathUtil.HTTP;
+using Encog.Util.HTTP;
 
-namespace Encog.MathUtil
+namespace Encog.Util
 {
     /// <summary>
     /// Perform a search using Yahoo.

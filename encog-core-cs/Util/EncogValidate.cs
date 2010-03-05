@@ -36,7 +36,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural;
 
-namespace Encog.MathUtil
+namespace Encog.Util
 {
     /// <summary>
     /// Designed to perform validations after an array ove

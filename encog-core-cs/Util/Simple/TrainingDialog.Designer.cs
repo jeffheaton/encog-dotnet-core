@@ -28,7 +28,7 @@
 // http://www.heatonresearch.com/copyright.html
 
 #if !SILVERLIGHT
-namespace Encog.MathUtil.Simple
+namespace Encog.Util.Simple
 {
     partial class TrainingDialog
     {

@@ -34,12 +34,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Encog.MathUtil.HTTP;
 using Encog.Bot.Browse.Range;
 using System.Net;
 
 #if logging
 using log4net;
+using Encog.Util.HTTP;
 #endif
 
 namespace Encog.Bot.Browse

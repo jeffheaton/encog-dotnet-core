@@ -34,8 +34,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Basic;
 using System.Drawing;
-using Encog.MathUtil.DownSample;
 using Encog.Normalize.Output;
+using Encog.Util.DownSample;
 
 namespace Encog.Neural.NeuralData.Image
 {

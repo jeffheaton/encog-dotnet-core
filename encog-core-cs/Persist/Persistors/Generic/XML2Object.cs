@@ -36,6 +36,7 @@ using Encog.Parse.Tags.Read;
 using Encog.MathUtil;
 using Encog.Parse.Tags;
 using System.Collections;
+using Encog.Util;
 
 namespace Encog.Persist.Persistors.Generic
 {

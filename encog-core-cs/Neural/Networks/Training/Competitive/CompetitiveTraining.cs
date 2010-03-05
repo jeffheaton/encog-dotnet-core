@@ -41,6 +41,7 @@ using Encog.MathUtil;
 #if logging
 using log4net;
 using Encog.MathUtil.Matrices;
+using Encog.Util;
 #endif
 namespace Encog.Neural.Networks.Training.Competitive
 {

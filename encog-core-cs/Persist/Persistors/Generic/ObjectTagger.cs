@@ -35,6 +35,7 @@ using System.Collections;
 using Encog.MathUtil;
 using System.Reflection;
 using Encog.Persist.Attributes;
+using Encog.Util;
 
 namespace Encog.Persist.Persistors.Generic
 {

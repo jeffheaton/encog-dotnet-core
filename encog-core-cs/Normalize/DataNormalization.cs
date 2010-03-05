@@ -37,12 +37,12 @@ using Encog.Normalize.Output;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
 using Encog.MathUtil;
-using Encog.MathUtil.CSV;
 using Encog.Neural.NeuralData;
 using Encog.Normalize.Segregate;
 using Encog.Normalize.Target;
 using Encog.Persist;
 using Encog.Persist.Persistors.Generic;
+using Encog.Util.CSV;
 
 namespace Encog.Normalize
 {

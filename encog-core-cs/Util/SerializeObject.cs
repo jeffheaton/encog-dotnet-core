@@ -36,7 +36,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Encog.MathUtil
+namespace Encog.Util
 {
     /// <summary>
     /// SerializeObject: Load or save an object using DotNet serialization.

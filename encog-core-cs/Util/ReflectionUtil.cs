@@ -36,7 +36,7 @@ using System.IO;
 using Encog.Persist.Location;
 using Encog.Persist.Attributes;
 
-namespace Encog.MathUtil
+namespace Encog.Util
 {
     /// <summary>
     /// A set of C# reflection utilities.

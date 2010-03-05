@@ -47,7 +47,7 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using System.Windows.Forms;
 #endif
 
-namespace Encog.MathUtil.Simple
+namespace Encog.Util.Simple
 {
     /// <summary>
     /// General utility class for Encog.  Provides for some common Encog procedures.

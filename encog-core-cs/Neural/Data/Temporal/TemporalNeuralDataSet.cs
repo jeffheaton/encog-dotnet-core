@@ -31,10 +31,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.MathUtil.Time;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
 using Encog.Neural.Activation;
+using Encog.Util.Time;
 
 namespace Encog.Neural.NeuralData.Temporal
 {

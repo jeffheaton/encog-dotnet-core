@@ -34,7 +34,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Encog.MathUtil.DownSample
+namespace Encog.Util.DownSample
 {
     /// <summary>
     /// Downsample an image using a simple intensity scale. Color information is

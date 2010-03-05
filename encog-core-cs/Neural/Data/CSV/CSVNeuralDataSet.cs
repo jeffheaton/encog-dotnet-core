@@ -34,7 +34,7 @@ using System.Text;
 using Encog.MathUtil;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
-using Encog.MathUtil.CSV;
+using Encog.Util.CSV;
 
 namespace Encog.Neural.NeuralData.CSV
 {

@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Util.Concurrency;
 
-namespace Encog.MathUtil.Concurrency.Job
+namespace Encog.Util.Concurrency.Job
 {
     /// <summary>
     /// A concurrent JOB, works well for multicore machines.  Provides

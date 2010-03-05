@@ -38,7 +38,7 @@ using System.Globalization;
 #if logging
 using log4net;
 #endif
-namespace Encog.MathUtil.CSV
+namespace Encog.Util.CSV
 {
     /// <summary>
     /// Read and parse CSV format files.

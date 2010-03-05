@@ -36,7 +36,7 @@ using Encog.MathUtil;
 using Encog.Parse.Tags.Read;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
-using Encog.MathUtil.CSV;
+using Encog.Util.CSV;
 
 namespace Encog.Persist.Persistors
 {

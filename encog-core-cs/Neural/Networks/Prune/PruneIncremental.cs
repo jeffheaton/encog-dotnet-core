@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.MathUtil.Concurrency.Job;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
@@ -39,6 +38,7 @@ using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 #if logging
 using log4net;
+using Encog.Util.Concurrency.Job;
 #endif
 
 namespace Encog.Neural.Networks.Prune

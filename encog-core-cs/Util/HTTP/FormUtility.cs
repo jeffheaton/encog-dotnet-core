@@ -39,7 +39,7 @@ using System.Windows.Browser;
 using System.Web;
 #endif
 
-namespace Encog.MathUtil.HTTP
+namespace Encog.Util.HTTP
 {
     /// <summary>
     /// FormUtility: This class is used to construct responses to

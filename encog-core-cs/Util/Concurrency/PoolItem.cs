@@ -34,12 +34,32 @@ using System.Text;
 
 namespace Encog.Util.Concurrency
 {
+    /// <summary>
+    /// An item in the thread pool.
+    /// </summary>
     public class PoolItem
     {
+        /// <summary>
+        /// The task that was executed.
+        /// </summary>
         private IEncogTask task;
+
+        /// <summary>
+        /// The concurrency object that started this.
+        /// </summary>
         private EncogConcurrency owner;
+
+        /// <summary>
+        /// The task group that this item is a part of.
+        /// </summary>
         private TaskGroup group;
 
+        /// <summary>
+        /// Construct a pool item.
+        /// </summary>
+        /// <param name="owner">The owner of this task.</param>
+        /// <param name="task">The task to execute.</param>
+        /// <param name="group">The group that this task belongs to.</param>
         public PoolItem(EncogConcurrency owner, IEncogTask task,  TaskGroup group)
         {
             this.owner = owner;
@@ -47,6 +67,10 @@ namespace Encog.Util.Concurrency
             this.group = group;
         }
 
+        /// <summary>
+        /// The thread callback.  This actually executes the task.
+        /// </summary>
+        /// <param name="threadContext">The thread context, not used.</param>
         public void ThreadPoolCallback(Object threadContext)
         {
             try

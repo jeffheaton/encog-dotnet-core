@@ -45,6 +45,7 @@ using Encog.Neural.Networks.Structure;
 
 #if logging
 using log4net;
+using Encog.Util;
 #endif
 
 namespace Encog.Neural.Networks

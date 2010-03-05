@@ -33,7 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Persist;
 
-namespace Encog.MathUtil.CSV
+namespace Encog.Util.CSV
 {
     /// <summary>
     /// Utility class to take numbers to/from a list.
