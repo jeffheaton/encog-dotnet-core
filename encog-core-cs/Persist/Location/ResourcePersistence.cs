@@ -130,5 +130,23 @@ namespace Encog.Persist.Location
             throw new PersistError(str);
         }
 
+        public String LoadString()
+        {
+            StringBuilder result = new StringBuilder();
+            Stream istream = CreateStream(FileMode.Open);
+            StreamReader sr = new StreamReader(istream);
+
+            String line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                result.Append(line);
+                result.Append("\r\n");
+            }
+            sr.Close();
+            istream.Close();
+
+            return result.ToString();
+        }
+
     }
 }
