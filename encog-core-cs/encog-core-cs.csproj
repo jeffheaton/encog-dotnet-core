@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -33,6 +33,10 @@
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cloo, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Cloo.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\log4net.dll</HintPath>
@@ -334,6 +338,7 @@
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
+    <Compile Include="Util\CL\EncogCL.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEncogTask.cs" />
     <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />

@@ -35,6 +35,7 @@ using System.Text;
 #if logging
 using log4net;
 using log4net.Config;
+using Encog.Util.CL;
 #endif
 
 namespace Encog
@@ -60,6 +61,8 @@ namespace Encog
         /// The current engog file version, this should be read from the properties.
 	    /// </summary>
 	    private static String FILE_VERSION = "1";
+
+        public EncogCL GPU { get; set; }
 		
 #if logging
         /// <summary>
@@ -129,6 +132,20 @@ namespace Encog
             get
             {
                 return this.properties;
+            }
+        }
+
+        public void InitGPU()
+        {
+            EncogCL cl = new EncogCL();
+            try
+            {
+                cl.Init();
+                this.GPU = cl;
+            }
+            catch (Exception e)
+            {
+                throw new EncogError(e);
             }
         }
 
