@@ -112,7 +112,7 @@ namespace Encog.Util.Concurrency
             {
                 this.activeTasks++;
             }
-
+            group.TaskStarting();
             PoolItem item = new PoolItem(this, task, group);
             ThreadPool.QueueUserWorkItem(item.ThreadPoolCallback);
         }
@@ -143,7 +143,7 @@ namespace Encog.Util.Concurrency
             this.MaxThreads = System.Environment.ProcessorCount;
 #endif
         }
-
+/*
         /// <summary>
         /// Wait for all threads in the pool to complete.
         /// </summary>
@@ -168,7 +168,7 @@ namespace Encog.Util.Concurrency
                 Thread.Sleep(100);
             } while (elapsed < timeOutSeconds);
         }
-
+        */
         /// <summary>
         /// Create a new task group.
         /// </summary>

@@ -85,6 +85,8 @@ namespace Encog.Util.Concurrency.Job
         {
             Object task;
 
+            TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
+
             this.totalTasks = LoadWorkload();
             int currentTask = 0;
 
@@ -97,10 +99,10 @@ namespace Encog.Util.Concurrency.Job
                 context.TaskNumber = currentTask;
 
                 JobUnitWorker worker = new JobUnitWorker(context);
-                EncogConcurrency.Instance.ProcessTask(worker);
+                EncogConcurrency.Instance.ProcessTask(worker, group);
             }
 
-            EncogConcurrency.Instance.Shutdown(long.MaxValue);
+            group.WaitForComplete();
         }
 
         /// <summary>

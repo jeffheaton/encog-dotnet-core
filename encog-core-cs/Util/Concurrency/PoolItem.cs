@@ -75,11 +75,6 @@ namespace Encog.Util.Concurrency
         {
             try
             {
-                if (this.group != null)
-                {
-                    this.group.TaskStarting();
-                }
-
                 this.task.Run();
                 owner.TaskFinished(this);
             }

@@ -224,6 +224,8 @@ namespace Encog.Solve.Genetic
             int matingPopulationSize = (int)(this.PopulationSize
                    * this.MatingPopulation);
 
+            TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
+
             // mate and form the next generation
             for (int i = 0; i < countToMate; i++)
             {
@@ -239,12 +241,12 @@ namespace Encog.Solve.Genetic
                  = new MateWorker<GENE_TYPE>(
                        mother, father, child1, child2);
 
-                EncogConcurrency.Instance.ProcessTask(worker);
+                EncogConcurrency.Instance.ProcessTask(worker,group);
 
                 offspringIndex += 2;
             }
 
-            EncogConcurrency.Instance.Shutdown(5);
+            group.WaitForComplete();
 
             // sort the next generation
             SortChromosomes();
