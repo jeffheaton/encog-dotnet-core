@@ -178,6 +178,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             }
             else
             {
+                EncogConcurrency.Instance.MaxThreads = this.threadCount;
                 if (!(training is IIndexable))
                 {
                     throw new TrainingError(

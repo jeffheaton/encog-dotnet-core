@@ -33,7 +33,8 @@ namespace Sandbox
         {
             INeuralDataSet trainingData = RandomTrainingFactory.Generate(100000, 100, 50, -1, 1);
             BasicNetwork network = EncogUtility.SimpleFeedForward(trainingData.InputSize, 50, 50, trainingData.IdealSize, true);
-            EncogUtility.TrainConsole(network, trainingData, 10);
+            EncogUtility.TrainDialog(network, trainingData);
+            //EncogUtility.TrainConsole(network, trainingData, 10);
         }
 
         static void Main(string[] args)

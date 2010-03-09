@@ -130,7 +130,7 @@ namespace Encog.Util.Concurrency
             }
             set
             {
-                ThreadPool.SetMaxThreads(value, value);
+                //ThreadPool.SetMaxThreads(value, value);
             }
         }
 
