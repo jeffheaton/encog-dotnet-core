@@ -146,5 +146,26 @@ namespace Encog.Neural.Data.Basic
 
             return result;
         }
+
+        /**
+	 * Create a new neural data pair object of the correct size for the neural
+	 * network that is being trained. This object will be passed to the getPair
+	 * method to allow the neural data pair objects to be copied to it.
+	 * @param inputSize The size of the input data.
+	 * @param idealSize The size of the ideal data.
+	 * @return A new neural data pair object.
+	 */
+	public static INeuralDataPair CreatePair( int inputSize,  int idealSize) {
+		INeuralDataPair result;
+
+		if (idealSize > 0) {
+			result = new BasicNeuralDataPair(new BasicNeuralData(inputSize),
+					new BasicNeuralData(idealSize));
+		} else {
+			result = new BasicNeuralDataPair(new BasicNeuralData(inputSize));
+		}
+
+		return result;
+	}
     }
 }

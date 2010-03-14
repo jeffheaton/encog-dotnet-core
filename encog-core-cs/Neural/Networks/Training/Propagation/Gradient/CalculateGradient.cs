@@ -96,6 +96,11 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
         private double[] gradients;
 
         /// <summary>
+        /// Determine the thread counts and workloads.
+        /// </summary>
+        private DetermineWorkload determine;
+
+        /// <summary>
         /// The overall error.
         /// </summary>
         private double error;
@@ -140,33 +145,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             else
             {
                 this.indexed = (IIndexable)this.training;
-
-#if SILVERLIGHT
-                int num = 1;
-#else
-                int num = System.Environment.ProcessorCount;
-#endif
-
-                // if there is more than one processor, use processor count +1
-                if (num != 1)
-                {
-                    num++;
-                }
-                // if there is a single processor, just use one thread
-
-                // Now see how big the training sets are going to be.
-                // We want at least 100 training elements in each.
-                // This method will likely be further "tuned" in future versions.
-
-                long recordCount = this.indexed.Count; ;
-                long workPerThread = recordCount / num;
-
-                if (workPerThread < 100)
-                {
-                    num = Math.Max(1, (int)(recordCount / 100));
-                }
-
-                this.threadCount = num;
+                this.determine = new DetermineWorkload(threads, (int)this.indexed.Count);
+                this.threadCount = this.determine.ThreadCount;
             }
 
             // setup workers
@@ -275,29 +255,13 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             this.indexed = training;
             // setup the workers
             this.workers = new GradientWorker[this.threadCount];
+            IList<IntRange> workloadRange = this.determine.CalculateWorkers();
 
-            int size = (int)this.indexed.Count;
-            int sizePerThread = size / this.threadCount;
-
-            // create the workers
-            for (int i = 0; i < this.threadCount; i++)
+            int i = 0;
+            foreach (IntRange range in workloadRange)
             {
-                int low = i * sizePerThread;
-                int high;
-
-                // if this is the last record, then high to be the last item
-                // in the training set.
-                if (i == (this.threadCount - 1))
-                {
-                    high = size - 1;
-                }
-                else
-                {
-                    high = ((i + 1) * sizePerThread) - 1;
-                }
-
                 IIndexable trainingClone = this.indexed.OpenAdditional();
-                this.workers[i] = new GradientWorker(this, trainingClone, low, high);
+                this.workers[i++] = new GradientWorker(this, trainingClone, range.Low, range.High);
             }
         }
 
@@ -369,10 +333,10 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             }
         }
 
-       /// <summary>
-       /// The weights and thresholds from the network that is being
-       ///         trained.
-       /// </summary>
+        /// <summary>
+        /// The weights and thresholds from the network that is being
+        ///         trained.
+        /// </summary>
         public double[] Weights
         {
             get

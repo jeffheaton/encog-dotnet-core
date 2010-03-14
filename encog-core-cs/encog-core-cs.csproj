@@ -92,6 +92,7 @@
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
+    <Compile Include="MathUtil\IntRange.cs" />
     <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\CholeskyDecomposition.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\EigenvalueDecomposition.cs" />
@@ -146,6 +147,11 @@
     <Compile Include="Neural\Data\XML\PropertyData.cs" />
     <Compile Include="Neural\Data\XML\XMLNeuralDataSet.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
+    <Compile Include="Neural\Networks\Flat\FlatNetwork.cs" />
+    <Compile Include="Neural\Networks\Flat\GradientWorker.cs" />
+    <Compile Include="Neural\Networks\Flat\TrainFlatNetwork.cs" />
+    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkMulti.cs" />
+    <Compile Include="Neural\Networks\Flat\ValidateForFlat.cs" />
     <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
     <Compile Include="Neural\Networks\Layers\ContextLayer.cs" />
@@ -343,6 +349,7 @@
     <Compile Include="Util\CL\EncogCLAdapter.cs" />
     <Compile Include="Util\CL\EncogCLVector.cs" />
     <Compile Include="Util\CL\EncogKernel.cs" />
+    <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEncogTask.cs" />
     <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />

@@ -81,5 +81,17 @@ namespace Encog.Util
             }
             return result;
         }
+
+        public static void ArrayCopy(double[] input, int sourceIndex, double[] output, int targetIndex, int size)
+        {
+            Array.Copy(input, sourceIndex, output, targetIndex, size);
+            throw new NotImplementedException();
+        }
+
+        internal static void Fill(double[] p, double value)
+        {
+            for (int i = 0; i < p.Length; i++)
+                p[i] = value;
+        }
     }
 }
