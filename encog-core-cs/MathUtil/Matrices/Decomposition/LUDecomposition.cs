@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {
@@ -372,5 +373,62 @@ namespace Encog.MathUtil.Matrices.Decomposition
             }
             return X;
         }
+
+ 
+        /// <summary>
+        /// Solves a set of equation systems of type <c>A * X = B</c>.
+        /// </summary>
+        /// <returns>Matrix <c>X</c> so that <c>L * U * X = B</c>.</returns>
+        public double[][] Inverse()
+        {
+            if (!this.IsNonsingular)
+            {
+                throw new MatrixError("Matrix is singular");
+            }
+
+            int rows = this.LU.Length;
+            int columns = LU[0].Length;
+            int count = rows;
+            double[][] lu = LU;
+
+            double[][] X = EncogArray.AllocateDouble2D(rows, columns);
+            for (int i = 0; i < rows; i++)
+            {
+                int k = this.piv[i];
+                X[i][k] = 1.0;
+            }
+
+            // Solve L*Y = B(piv,:)
+            for (int k = 0; k < columns; k++)
+            {
+                for (int i = k + 1; i < columns; i++)
+                {
+                    for (int j = 0; j < count; j++)
+                    {
+                        X[i][j] -= X[k][j] * lu[i][k];
+                    }
+                }
+            }
+
+            // Solve U*X = Y;
+            for (int k = columns - 1; k >= 0; k--)
+            {
+                for (int j = 0; j < count; j++)
+                {
+                    X[k][j] /= lu[k][k];
+                }
+
+                for (int i = 0; i < k; i++)
+                {
+                    for (int j = 0; j < count; j++)
+                    {
+                        X[i][j] -= X[k][j] * lu[i][k];
+                    }
+                }
+            }
+
+            return X;
+        }
+
     }
 }

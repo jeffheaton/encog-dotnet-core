@@ -221,6 +221,9 @@
     <Compile Include="Neural\Networks\Training\ITrain.cs" />
     <Compile Include="Neural\Networks\Training\IStrategy.cs" />
     <Compile Include="Neural\Networks\Training\ILearningRate.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\IComputeJacobian.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\JacobianChainRule.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\LevenbergMarquardtTraining.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Back\Backpropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Gradient\CalculateGradient.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientUtil.cs" />
