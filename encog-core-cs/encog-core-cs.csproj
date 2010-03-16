@@ -342,17 +342,30 @@
     <Compile Include="Solve\Genetic\Crossover\ICrossover.cs" />
     <Compile Include="Solve\Genetic\Crossover\Splice.cs" />
     <Compile Include="Solve\Genetic\Crossover\SpliceNoRepeat.cs" />
+    <Compile Include="Solve\Genetic\Genes\BasicGene.cs" />
+    <Compile Include="Solve\Genetic\Genes\DoubleGene.cs" />
     <Compile Include="Solve\Genetic\Genes\IGene.cs" />
+    <Compile Include="Solve\Genetic\Genes\IntegerGene.cs" />
     <Compile Include="Solve\Genetic\GeneticAlgorithm.cs" />
+    <Compile Include="Solve\Genetic\GeneticError.cs" />
+    <Compile Include="Solve\Genetic\Genome\BasicGenome.cs" />
     <Compile Include="Solve\Genetic\Genome\Chromosome.cs" />
     <Compile Include="Solve\Genetic\Genome\ICalculateGenomeScore.cs" />
     <Compile Include="Solve\Genetic\Genome\IGenome.cs" />
     <Compile Include="Solve\Genetic\Genome\GenomeComparator.cs" />
+    <Compile Include="Solve\Genetic\Innovation\BasicInnovation.cs" />
+    <Compile Include="Solve\Genetic\Innovation\BasicInnovationList.cs" />
     <Compile Include="Solve\Genetic\Innovation\IInnovation.cs" />
     <Compile Include="Solve\Genetic\Innovation\IInnovationList.cs" />
     <Compile Include="Solve\Genetic\MateWorker.cs" />
     <Compile Include="Solve\Genetic\Mutate\IMutate.cs" />
+    <Compile Include="Solve\Genetic\Mutate\MutatePerturb.cs" />
+    <Compile Include="Solve\Genetic\Mutate\MutateShuffle.cs" />
+    <Compile Include="Solve\Genetic\Population\BasicPopulation.cs" />
     <Compile Include="Solve\Genetic\Population\IPopulation.cs" />
+    <Compile Include="Solve\Genetic\Selection\ParentSelection.cs" />
+    <Compile Include="Solve\Genetic\Selection\TruncateSelection.cs" />
+    <Compile Include="Solve\Genetic\Species\BasicSpecies.cs" />
     <Compile Include="Solve\Genetic\Species\ISpecies.cs" />
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
@@ -383,6 +396,8 @@
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />
     <Compile Include="Util\HTTP\URLUtility.cs" />
+    <Compile Include="Util\Identity\BasicGenerateID.cs" />
+    <Compile Include="Util\Identity\IGenerateID.cs" />
     <Compile Include="Util\Logging\DumpMatrix.cs" />
     <Compile Include="Util\Logging\Logging.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
@@ -441,7 +456,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Neural\Networks\Training\Genetic\" />
-    <Folder Include="Solve\Genetic\Selection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,105 +5,127 @@ using System.Text;
 
 namespace Encog.Solve.Genetic.Genome
 {
-    public class GenomeComparator: IComparer<IGenome>
+    /// <summary>
+    /// Used to compare two genomes, a score object is used.
+    /// </summary>
+    public class GenomeComparator : IComparer<IGenome>
     {
 
+        /// <summary>
+        /// Calculate score object.
+        /// </summary>
         private ICalculateGenomeScore calculateScore;
 
-	/**
-	 * Construct the genome comparator.
-	 * 
-	 * @param calculateScore
-	 *            The score calculation object to use.
-	 */
-	public GenomeComparator( ICalculateGenomeScore calculateScore) {
-		this.calculateScore = calculateScore;
-	}
+        /// <summary>
+        /// Construct the genome comparator.
+        /// </summary>
+        /// <param name="calculateScore">The score calculation object to use.</param>
+        public GenomeComparator(ICalculateGenomeScore calculateScore)
+        {
+            this.calculateScore = calculateScore;
+        }
 
-	/**
-	 * Apply a bonus, this is a simple percent that is applied in the direction
-	 * specified by the "should minimize" property of the score function.
-	 * 
-	 * @param value
-	 *            The current value.
-	 * @param bonus
-	 *            The bonus.
-	 * @return The resulting value.
-	 */
-	public double applyBonus( double value,  double bonus) {
-		 double amount = value * bonus;
-		if (calculateScore.ShouldMinimize) {
-			return value - amount;
-		} else {
-			return value + amount;
-		}
-	}
+       
+        /// <summary>
+        /// Apply a bonus, this is a simple percent that is applied in the direction
+        /// specified by the "should minimize" property of the score function.
+        /// </summary>
+        /// <param name="value">The current value.</param>
+        /// <param name="bonus">The bonus.</param>
+        /// <returns>The resulting value.</returns>
+        public double ApplyBonus(double value, double bonus)
+        {
+            double amount = value * bonus;
+            if (calculateScore.ShouldMinimize)
+            {
+                return value - amount;
+            }
+            else
+            {
+                return value + amount;
+            }
+        }
 
-	/**
-	 * Apply a penalty, this is a simple percent that is applied in the
-	 * direction specified by the "should minimize" property of the score
-	 * function.
-	 * 
-	 * @param value
-	 *            The current value.
-	 * @param bonus
-	 *            The penalty.
-	 * @return The resulting value.
-	 */
-	public double applyPenalty( double value,  double bonus) {
-		 double amount = value * bonus;
-		if (calculateScore.ShouldMinimize) {
-			return value - amount;
-		} else {
-			return value + amount;
-		}
-	}
+        /// <summary>
+        /// Apply a penalty, this is a simple percent that is applied in the
+        /// direction specified by the "should minimize" property of the score
+        /// function.
+        /// </summary>
+        /// <param name="value">The current value.</param>
+        /// <param name="bonus"> The penalty.</param>
+        /// <returns>The resulting value.</returns>
+        public double ApplyPenalty(double value, double bonus)
+        {
+            double amount = value * bonus;
+            if (calculateScore.ShouldMinimize)
+            {
+                return value - amount;
+            }
+            else
+            {
+                return value + amount;
+            }
+        }
 
-	/**
-	 * Determine the best score from two scores, uses the "should minimize"
-	 * property of the score function.
-	 * 
-	 * @param d1 The first score.
-	 * @param d2 The second score.
-	 * @return The best score.
-	 */
-	public double bestScore( double d1,  double d2) {
-		if (calculateScore.ShouldMinimize) {
-			return Math.Min(d1, d2);
-		} else {
-			return Math.Max(d1, d2);
-		}
-	}
+  
+        /// <summary>
+        /// Determine the best score from two scores, uses the "should minimize"
+        /// property of the score function.
+        /// </summary>
+        /// <param name="d1">The first score.</param>
+        /// <param name="d2">The second score.</param>
+        /// <returns>The best score.</returns>
+        public double BestScore(double d1, double d2)
+        {
+            if (calculateScore.ShouldMinimize)
+            {
+                return Math.Min(d1, d2);
+            }
+            else
+            {
+                return Math.Max(d1, d2);
+            }
+        }
 
-	/**
-	 * Compare two genomes.
-	 * @param genome1 The first genome.
-	 * @param genome2 The second genome.
-	 * @return Zero if equal, or less than or greater than zero to indicate order.
-	 */
-	public int Compare( IGenome genome1,  IGenome genome2) {
-        return genome1.getScore().CompareTo(genome2.getScore());
-	}
+        
+        /// <summary>
+        /// Compare two genomes.
+        /// </summary>
+        /// <param name="genome1">The first genome.</param>
+        /// <param name="genome2">The second genome.</param>
+        /// <returns>Zero if equal, or less than or greater than zero to indicate order.</returns>
+        public int Compare(IGenome genome1, IGenome genome2)
+        {
+            return genome1.Score.CompareTo(genome2.Score);
+        }
 
-	/**
-	 * @return The score calculation object.
-	 */
-	public ICalculateGenomeScore getCalculateScore() {
-		return calculateScore;
-	}
+        /// <summary>
+        /// The score calculation object.
+        /// </summary>
+        public ICalculateGenomeScore CalculateScore
+        {
+            get
+            {
+                return calculateScore;
+            }
+        }
 
-	/**
-	 * Determine if one score is better than the other.
-	 * @param d1 The first score to compare.
-	 * @param d2 The second score to compare.
-	 * @return True if d1 is better than d2.
-	 */
-	public bool isBetterThan( double d1,  double d2) {
-		if (calculateScore.ShouldMinimize) {
-			return d1 < d2;
-		} else {
-			return d2 > d1;
-		}
-	}
+        /// <summary>
+        /// Determine if one score is better than the other.
+        /// </summary>
+        /// <param name="d1">The first score to compare.</param>
+        /// <param name="d2">The second score to compare.</param>
+        /// <returns>True if d1 is better than d2.</returns>
+        public bool IsBetterThan(double d1, double d2)
+        {
+            if (calculateScore.ShouldMinimize)
+            {
+                return d1 < d2;
+            }
+            else
+            {
+                return d2 > d1;
+            }
+        }
     }
 }

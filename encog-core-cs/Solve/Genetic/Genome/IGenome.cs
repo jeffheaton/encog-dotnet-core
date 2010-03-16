@@ -11,53 +11,53 @@ namespace Encog.Solve.Genetic.Genome
     /// </summary>
     public interface IGenome
     {
-        /**
-	 * @return The number of genes in this genome.
-	 */
+        /// <summary>
+        /// Calculate the number of genes in this genome.
+        /// </summary>
+        /// <returns>The number of genes in this genome.</returns>
         int CalculateGeneCount();
 
-        /**
-         * Use the genes to update the organism.
-         */
+        /// <summary>
+        /// Use the genes to update the organism.
+        /// </summary>
         void Decode();
 
-        /**
-         * Use the organism to update the genes.
-         */
+        /// <summary>
+        /// Use the organism to update the genes.
+        /// </summary>
         void Encode();
 
-        /**
-         * Get the adjusted score, this considers old-age penalties and youth
-         * bonuses. If there are no such bonuses or penalties, this is the same as
-         * the score.
-         * @return The adjusted score.
-         */
-        double getAdjustedScore();
+        /// <summary>
+        /// Get the adjusted score, this considers old-age penalties and youth
+        /// bonuses. If there are no such bonuses or penalties, this is the same as
+        /// the score.
+        /// </summary>
+        double AdjustedScore { get; set; }
 
-        /**
-         * @return The amount of offspring this genome will have.
-         */
-        double getAmountToSpawn();
+        /// <summary>
+        /// The amount of offspring this genome will have.
+        /// </summary>
+        double AmountToSpawn { get; set; }
 
-        /**
-         * @return The chromosomes that make up this genome.
-         */
-        IList<Chromosome> getChromosomes();
+        /// <summary>
+        /// The chromosomes that make up this genome.
+        /// </summary>
+        IList<Chromosome> Chromosomes { get; }
 
         /**
          * @return The genome ID.
          */
-        long getGenomeID();
+        long GenomeID { get; set; }
 
         /**
          * @return The organism produced by this genome.
          */
-        Object getOrganism();
+        Object Organism { get; set; }
 
         /**
          * @return The score for this genome.
          */
-        double getScore();
+        double Score { get; set; }
 
         /**
          * Mate with another genome and produce two children.
@@ -65,30 +65,7 @@ namespace Encog.Solve.Genetic.Genome
          * @param child1 The first child.
          * @param child2 The second child.
          */
-        void mate(IGenome father, IGenome child1, IGenome child2);
+        void Mate(IGenome father, IGenome child1, IGenome child2);
 
-        /**
-         * Set the adjusted score.
-         * @param adjustedScore The adjusted score.
-         */
-        void setAdjustedScore(double adjustedScore);
-
-        /**
-         * Set the amount to spawn.
-         * @param amountToSpawn The amount to spawn.
-         */
-        void setAmountToSpawn(double amountToSpawn);
-
-        /**
-         * Set the genome ID.
-         * @param genomeID The genome id.
-         */
-        void setGenomeID(long genomeID);
-
-        /** 
-         * Set the score.
-         * @param score The new score.
-         */
-        void setScore(double score);
     }
 }

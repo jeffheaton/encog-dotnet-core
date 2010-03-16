@@ -13,99 +13,111 @@ namespace Encog.Solve.Genetic
 {
     public class GeneticAlgorithm
     {
-        /**
-	 * Threadpool timeout.
-	 */
-	public const int TIMEOUT = 120;
+        /// <summary>
+        /// Threadpool timeout.
+        /// </summary>
+        public const int TIMEOUT = 120;
 
-	private ICalculateGenomeScore calculateScore;
+        /// <summary>
+        /// The score calculation object.
+        /// </summary>
+        public ICalculateGenomeScore CalculateScore { get; set; }
 
-	public GenomeComparator Comparator { get; set; }
+        /// <summary>
+        /// Compare two genomes.
+        /// </summary>
+        public GenomeComparator Comparator { get; set; }
 
-	public ICrossover Crossover { get; set; }
+        /// <summary>
+        /// Perform crossovers.
+        /// </summary>
+        public ICrossover Crossover { get; set; }
 
-	/**
-	 * Percent of the population that the mating population chooses partners.
-	 * from.
-	 */
-	private double MatingPopulation { get; set; }
+        /// <summary>
+        /// The mating population.
+        /// </summary>
+        public double MatingPopulation { get; set; }
 
-	private IMutate mutate;
+        /// <summary>
+        /// Used to mutate offspring.
+        /// </summary>
+        private IMutate mutate;
 
-	/**
-	 * The percent that should mutate.
-	 */
-	private double MutationPercent { get; set; }
+        /// <summary>
+        /// The percent that should mutate.
+        /// </summary>
+        public double MutationPercent { get; set; }
 
-	/**
-	 * What percent should be chosen to mate. They will choose partners from the
-	 * entire mating population.
-	 */
-    private double percentToMate { get; set; }
+        /// <summary>
+        /// What percent should be chosen to mate. They will choose partners from the
+        /// entire mating population.
+        /// </summary>
+        public double PercentToMate { get; set; }
 
-	private IPopulation Population { get; set; }
+        /// <summary>
+        /// The population.
+        /// </summary>
+        public IPopulation Population { get; set; }
 
-	public void CalculateScore(IGenome g) {
-		double score = calculateScore.CalculateScore(g);
-		g.setScore(score);
-	}
+        /// <summary>
+        /// Perform a score calculation for the specified genome.
+        /// </summary>
+        /// <param name="g">The genome to calculate for.</param>
+        public void PerformScoreCalculation(IGenome g)
+        {
+            double score = CalculateScore.CalculateScore(g);
+            g.Score = score;
+        }
 
-	public IMutate getMutate() {
-		return mutate;
-	}
-
-	/**
-	 * Get the percent to mate.
-	 * 
-	 * @return The percent to mate.
-	 */
-	public double getPercentToMate() {
-		return percentToMate;
-	}
-
-	/**
-	 * Modify the weight matrix and thresholds based on the last call to
-	 * calcError.
-	 * 
-	 * @throws NeuralNetworkException
-	 */
-	public void iteration() {
-
-		int countToMate = (int) (Population.getPopulationSize() * getPercentToMate());
-		int offspringCount = countToMate * 2;
-		int offspringIndex = Population.getPopulationSize() - offspringCount;
-		int matingPopulationSize = (int) (Population.getPopulationSize() * MatingPopulation );
-
-		TaskGroup group = EncogConcurrency.Instance
-				.CreateTaskGroup();
-
-		// mate and form the next generation
-		for (int i = 0; i < countToMate; i++) {
-			IGenome mother = Population.getGenomes()[i];
-			int fatherInt = (int) (ThreadSafeRandom.NextDouble() * matingPopulationSize);
-			IGenome father = Population.getGenomes()[fatherInt];
-			IGenome child1 = Population.getGenomes()[offspringIndex];
-			IGenome child2 = Population.getGenomes()[
-					offspringIndex + 1];
-
-			MateWorker worker = new MateWorker(mother, father, child1,
-					child2);
-
-			EncogConcurrency.Instance.ProcessTask(worker);
-
-			offspringIndex += 2;
-		}
-
-		group.WaitForComplete();
-
-		// sort the next generation
-		Population.sort();
-	}
-
-	public void setCalculateScore( ICalculateGenomeScore calculateScore) {
-		this.calculateScore = calculateScore;
-	}
+        /// <summary>
+        /// The mutation object.
+        /// </summary>
+        public IMutate Mutate
+        {
+            get
+            {
+                return mutate;
+            }
+        }
 
 
+
+        /// <summary>
+        /// Perform one generation.
+        /// </summary>
+        public void Iteration()
+        {
+
+            int countToMate = (int)(Population.Genomes.Count * PercentToMate);
+            int offspringCount = countToMate * 2;
+            int offspringIndex = Population.Genomes.Count - offspringCount;
+            int matingPopulationSize = (int)(Population.Genomes.Count * MatingPopulation);
+
+            TaskGroup group = EncogConcurrency.Instance
+                    .CreateTaskGroup();
+
+            // mate and form the next generation
+            for (int i = 0; i < countToMate; i++)
+            {
+                IGenome mother = Population.Genomes[i];
+                int fatherInt = (int)(ThreadSafeRandom.NextDouble() * matingPopulationSize);
+                IGenome father = Population.Genomes[fatherInt];
+                IGenome child1 = Population.Genomes[offspringIndex];
+                IGenome child2 = Population.Genomes[
+                        offspringIndex + 1];
+
+                MateWorker worker = new MateWorker(mother, father, child1,
+                        child2);
+
+                EncogConcurrency.Instance.ProcessTask(worker);
+
+                offspringIndex += 2;
+            }
+
+            group.WaitForComplete();
+
+            // sort the next generation
+            Population.Sort();
+        }
     }
 }

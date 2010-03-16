@@ -38,7 +38,7 @@ namespace Encog.Solve.Genetic.Crossover
         public void Mate(Chromosome mother, Chromosome father,
                  Chromosome offspring1, Chromosome offspring2)
         {
-            int geneLength = mother.getGenes().Count;
+            int geneLength = mother.Genes.Count;
 
             // the chromosome must be cut at two positions, determine them
             int cutpoint1 = (int)(ThreadSafeRandom.NextDouble() * (geneLength - cutLength));
@@ -49,8 +49,8 @@ namespace Encog.Solve.Genetic.Crossover
             {
                 if (!((i < cutpoint1) || (i > cutpoint2)))
                 {
-                    offspring1.getGene(i).Copy(father.getGene(i));
-                    offspring2.getGene(i).Copy(mother.getGene(i));
+                    offspring1.Genes[i].Copy(father.Genes[i]);
+                    offspring2.Genes[i].Copy(mother.Genes[i]);
                 }
             }
 
@@ -59,8 +59,8 @@ namespace Encog.Solve.Genetic.Crossover
             {
                 if ((i < cutpoint1) || (i > cutpoint2))
                 {
-                    offspring1.getGene(i).Copy(mother.getGene(i));
-                    offspring2.getGene(i).Copy(father.getGene(i));
+                    offspring1.Genes[i].Copy(mother.Genes[i]);
+                    offspring2.Genes[i].Copy(father.Genes[i]);
                 }
             }
         }

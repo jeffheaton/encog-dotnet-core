@@ -8,10 +8,10 @@ namespace Encog.Solve.Genetic.Mutate
 {
     public interface IMutate
     {
-        /**
-	 * Perform a mutation on the specified chromosome.
-	 * @param chromosome The chromosome to mutate.
-	 */
-        void performMutation(Chromosome chromosome);
+        /// <summary>
+        /// Perform a mutation on the specified chromosome.
+        /// </summary>
+        /// <param name="chromosome">The chromosome to mutate.</param>
+        void PerformMutation(Chromosome chromosome);
     }
 }

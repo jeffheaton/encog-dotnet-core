@@ -6,14 +6,13 @@ using System.Text;
 namespace Encog.Solve.Genetic.Innovation
 {
     /// <summary>
-    /// Provides the interface for an innovation. An innovation is a enhancement that
-    /// was tried to the genome.
+    /// Provides basic functionality for an innovation.
     /// </summary>
-    public interface IInnovation
+    public class BasicInnovation: IInnovation
     {
         /// <summary>
         /// The innovation id.
         /// </summary>
-        int InnovationID { get; set; }
+        public int InnovationID { get; set; }
     }
 }

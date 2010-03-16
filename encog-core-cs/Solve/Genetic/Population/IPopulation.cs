@@ -8,154 +8,107 @@ using Encog.Solve.Genetic.Species;
 
 namespace Encog.Solve.Genetic.Population
 {
+    /// <summary>
+    /// A population of genomes.
+    /// </summary>
     public interface IPopulation
     {
-        
-	/**
-	 * Add a genome to the population.
-	 * @param genome The genome to add.
-	 */
-	void add(IGenome genome);
+        /// <summary>
+        /// Add a genome to the population.
+        /// </summary>
+        /// <param name="genome">The genome to add.</param>
+        void Add(IGenome genome);
 
-	/**
-	 * Add all of the specified members to this population.
-	 * @param newPop A list of new genomes to add.
-	 */
-	void addAll(IList<IGenome> newPop);
+        /// <summary>
+        /// Add all of the specified members to this population.
+        /// </summary>
+        /// <param name="newPop">A list of new genomes to add.</param>
+        void AddAll(IList<IGenome> newPop);
 
-	/**
-	 * @return Assign a gene id.
-	 */
-	long assignGeneID();
+        /// <summary>
+        /// Assign a gene id.
+        /// </summary>
+        /// <returns>The gene id.</returns>
+        long AssignGeneID();
 
-	/**
-	 * @return Assign a genome id.
-	 */
-	long assignGenomeID();
+        /// <summary>
+        /// Assign a genome id.
+        /// </summary>
+        /// <returns>The genome id.</returns>
+        long AssignGenomeID();
 
-	/**
-	 * @return Assign an innovation id.
-	 */
-	long assignInnovationID();
+        /// <summary>
+        /// Assign an innovation id.
+        /// </summary>
+        /// <returns>The innovation id.</returns>
+        long AssignInnovationID();
 
-	/**
-	 * @return Assign a species id.
-	 */
-	long assignSpeciesID();
+        /// <summary>
+        /// Assign a species id.
+        /// </summary>
+        /// <returns></returns>
+        long AssignSpeciesID();
 
-	/**
-	 * Clear all genomes from this population.
-	 */
-	void clear();
+        /// <summary>
+        /// Clear all genomes from this population.
+        /// </summary>
+        void Clear();
 
-	
-	/**
-	 * Get a genome by index.  Index 0 is the best genome.
-	 * @param i The genome to get.
-	 */
-	IGenome get(int i);
-		
-	/**
-	 * @return The best genome in the population.
-	 */
-	IGenome getBest();
+        /// <summary>
+        /// The best genome in the population.
+        /// </summary>
+        /// <returns></returns>
+        IGenome GetBest();
 
-	/**
-	 * @return The genomes in the population.
-	 */
-	IList<IGenome> getGenomes();
+        /// <summary>
+        /// The genomes in the population.
+        /// </summary>
+        IList<IGenome> Genomes { get; }
 
-	/**
-	 * @return A list of innovations in this population.
-	 */
-	IInnovationList getInnovations();
+        /// <summary>
+        /// A list of innovations in this population.
+        /// </summary>
+        IInnovationList Innovations { get; set; }
 
-	/**
-	 * @return The percent to decrease "old" genom's score by.
-	 */
-	double getOldAgePenalty();
+        /// <summary>
+        /// The percent to decrease "old" genom's score by.
+        /// </summary>
+        double OldAgePenalty { get; set; }
 
-	/**
-	 * @return The age at which to consider a genome "old".
-	 */
-	int getOldAgeThreshold();
+        /// <summary>
+        /// The age at which to consider a genome "old".
+        /// </summary>
+        int OldAgeThreshold { get; set; }
 
-	/**
-	 * @return The max population size.
-	 */
-	int getPopulationSize();
+        /// <summary>
+        /// The max population size.
+        /// </summary>
+        int PopulationSize { get; set; }
 
-	/**
-	 * @return A list of species.
-	 */
-	IList<ISpecies> getSpecies();
+        /// <summary>
+        /// A list of species.
+        /// </summary>
+        IList<ISpecies> Species { get; }
 
-	/**
-	 * @return The survival rate.
-	 */
-	double getSurvivalRate();
+        /// <summary>
+        /// The survival rate.
+        /// </summary>
+        double SurvivalRate { get; set; }
 
-	/**
-	 * @return The age, below which, a genome is considered "young".
-	 */
-	int getYoungBonusAgeThreshold();
+        /// <summary>
+        /// The age, below which, a genome is considered "young".
+        /// </summary>
+        int YoungBonusAgeThreshold { get; set; }
 
-	/**
-	 * @return The bonus given to "young" genomes.
-	 */
-	double getYoungScoreBonus();
+        /// <summary>
+        /// The bonus given to "young" genomes.
+        /// </summary>
+        double YoungScoreBonus { get; set; }
 
-	/**
-	 * Set the innovations collection.
-	 * @param innovations The innovations collection.
-	 */
-	void setInnovations(IInnovationList innovations);
-
-	/**
-	 * Set the old age penalty.
-	 * @param oldAgePenalty The old age penalty.
-	 */
-	void setOldAgePenalty(double oldAgePenalty);
-
-	/**
-	 * Set the age at which a genome is considered "old".
-	 * @param oldAgeThreshold
-	 */
-	void setOldAgeThreshold(int oldAgeThreshold);
-
-	/**
-	 * Set the max population size.
-	 * @param populationSize The max population size.
-	 */
-	void setPopulationSize( int populationSize);
-
-	/**
-	 * Set the survival rate.
-	 * @param survivalRate The survival rate.
-	 */
-	void setSurvivalRate(double survivalRate);
-
-	/**
-	 * Set the age at which genoms are considered young.
-	 * @param youngBonusAgeThreshhold The age.
-	 */
-	void setYoungBonusAgeThreshhold(int youngBonusAgeThreshhold);
-
-	/**
-	 * Set the youth score bonus.
-	 * @param youngScoreBonus The bonus.
-	 */
-	void setYoungScoreBonus(double youngScoreBonus);
-
-	/**
-	 * @return The size of the population.
-	 */
-	int size();
-
-	/**
-	 * Sort the population by best score.
-	 */
-	void sort();
+        /// <summary>
+        /// Sort the population by best score.
+        /// </summary>
+        void Sort();
 
     }
 }

@@ -30,11 +30,11 @@ namespace Encog.Solve.Genetic.Crossover
         private static IGene GetNotTaken(Chromosome source,
                  IList<IGene> taken)
         {
-            int geneLength = source.getGenes().Count;
+            int geneLength = source.Genes.Count;
 
             for (int i = 0; i < geneLength; i++)
             {
-                IGene trial = source.getGene(i);
+                IGene trial = source.Genes[i];
 
                 bool found = false;
                 foreach (IGene current in taken)
@@ -76,7 +76,7 @@ namespace Encog.Solve.Genetic.Crossover
         public void Mate(Chromosome mother, Chromosome father,
                 Chromosome offspring1, Chromosome offspring2)
         {
-            int geneLength = father.getGenes().Count;
+            int geneLength = father.Genes.Count;
 
             // the chromosome must be cut at two positions, determine them
             int cutpoint1 = (int)(ThreadSafeRandom.NextDouble() * (geneLength - cutLength));
@@ -92,10 +92,10 @@ namespace Encog.Solve.Genetic.Crossover
             {
                 if (!((i < cutpoint1) || (i > cutpoint2)))
                 {
-                    offspring1.getGene(i).Copy(father.getGene(i));
-                    offspring2.getGene(i).Copy(mother.getGene(i));
-                    taken1.Add(offspring1.getGene(i));
-                    taken2.Add(offspring2.getGene(i));
+                    offspring1.Genes[i].Copy(father.Genes[i]);
+                    offspring2.Genes[i].Copy(mother.Genes[i]);
+                    taken1.Add(offspring1.Genes[i]);
+                    taken2.Add(offspring2.Genes[i]);
                 }
             }
 
@@ -105,9 +105,9 @@ namespace Encog.Solve.Genetic.Crossover
                 if ((i < cutpoint1) || (i > cutpoint2))
                 {
 
-                    offspring1.getGene(i).Copy(
+                    offspring1.Genes[i].Copy(
                             SpliceNoRepeat.GetNotTaken(mother, taken1));
-                    offspring2.getGene(i).Copy(
+                    offspring2.Genes[i].Copy(
                             SpliceNoRepeat.GetNotTaken(father, taken2));
 
                 }

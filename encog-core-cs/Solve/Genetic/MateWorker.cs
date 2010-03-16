@@ -53,7 +53,7 @@ namespace Encog.Solve.Genetic
 	 * Mate the two chromosomes.
 	 */
 	public void Run() {
-		mother.mate(father, child1, child2);
+		mother.Mate(father, child1, child2);
 	}
     }
 }

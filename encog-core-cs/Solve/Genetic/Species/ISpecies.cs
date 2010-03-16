@@ -6,110 +6,80 @@ using Encog.Solve.Genetic.Genome;
 
 namespace Encog.Solve.Genetic.Species
 {
+    /// <summary>
+    /// A species is a set of related genomes.  Crossover occurs within a species.
+    /// </summary>
     public interface ISpecies
     {
-        /**
-	 * Add a genome to this species.
-	 * 
-	 * @param genome
-	 *            The genome to add.
-	 */
-        void addMember(IGenome genome);
+        /// <summary>
+        /// Add a genome to this species.
+        /// </summary>
+        /// <param name="genome">The genome to add.</param>
+        void AddMember(IGenome genome);
 
-        /**
-         * Adjust the score of this species. This is where old age and youth
-         * bonus/penalties happen.
-         */
-        void adjustScore();
+        /// <summary>
+        /// Adjust the score of this species. This is where old age and youth
+        /// bonus/penalties happen.
+        /// </summary>
+        void AdjustScore();
 
-        /**
-         * Calculate the amount that a species will spawn.
-         */
-        void calculateSpawnAmount();
+        /// <summary>
+        /// Calculate the amount that a species will spawn.
+        /// </summary>
+        void CalculateSpawnAmount();
 
-        /**
-         * Choose a worthy parent for mating.
-         * 
-         * @return The parent genome.
-         */
-        IGenome chooseParent();
+        /// <summary>
+        /// Choose a worthy parent for mating.
+        /// </summary>
+        /// <returns>The parent genome.</returns>
+        IGenome ChooseParent();
 
-        /**
-         * @return The age of this species.
-         */
-        int getAge();
+        /// <summary>
+        /// The age of this species.
+        /// </summary>
+        int Age { get; }
 
-        /**
-         * @return The best score for this species.
-         */
-        double getBestScore();
+        /// <summary>
+        /// The best score for this species.
+        /// </summary>
+        double BestScore { get; }
 
-        /**
-         * @return How many generations with no improvement.
-         */
-        int getGensNoImprovement();
+        /// <summary>
+        /// How many generations with no improvement.
+        /// </summary>
+        int GensNoImprovement { get; set; }
 
-        /**
-         * @return Get the leader for this species. The leader is the genome with
-         *         the best score.
-         */
-        IGenome getLeader();
+        /// <summary>
+        /// Get the leader for this species. The leader is the genome with
+        /// the best score.
+        /// </summary>
+        IGenome Leader { get; set; }
 
-        /**
-         * @return The numbers of this species.
-         */
-        IList<IGenome> getMembers();
+        /// <summary>
+        /// The numbers of this species.
+        /// </summary>
+        IList<IGenome> Members { get; }
 
-        /**
-         * @return The number of genomes this species will try to spawn into the
-         *         next generation.
-         */
-        double getNumToSpawn();
+        /// <summary>
+        /// The number of genomes this species will try to spawn into the
+        /// next generation.
+        /// </summary>
+        double NumToSpawn { get; set; }
 
-        /**
-         * @return The number of spawns this species requires.
-         */
-        double getSpawnsRequired();
+        /// <summary>
+        /// The number of spawns this species requires.
+        /// </summary>
+        double SpawnsRequired { get; set; }
 
-        /**
-         * @return The species ID.
-         */
-        long getSpeciesID();
+        /// <summary>
+        /// The species ID.
+        /// </summary>
+        long SpeciesID { get; set; }
 
-        /**
-         * Purge old unsuccessful genomes.
-         */
-        void purge();
+        /// <summary>
+        /// Purge old unsuccessful genomes.
+        /// </summary>
+        void Purge();
 
-        /**
-         * Set the age of this species.
-         * @param age The age.
-         */
-        void setAge(int age);
-
-        /**
-         * Set the best score.
-         * @param bestScore The best score.
-         */
-        void setBestScore(double bestScore);
-
-        /**
-         * Set the number of generations with no improvement.
-         * @param gensNoImprovement The number of generations with
-         * no improvement.
-         */
-        void setGensNoImprovement(int gensNoImprovement);
-
-        /**
-         * Set the leader of this species.
-         * @param leader The leader of this species.
-         */
-        void setLeader(IGenome leader);
-
-        /**
-         * Set the number of spawns required.
-         * @param spawnsRequired The number of spawns required.
-         */
-        void setSpawnsRequired(double spawnsRequired);
     }
 }
