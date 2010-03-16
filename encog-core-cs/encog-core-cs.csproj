@@ -213,8 +213,6 @@
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\NeuralChromosome.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
     <Compile Include="Neural\Networks\Training\Hopfield\TrainHopfield.cs" />
     <Compile Include="Neural\Networks\Training\ICalculateScore.cs" />
     <Compile Include="Neural\Networks\Training\IMomentum.cs" />
@@ -340,10 +338,22 @@
     <Compile Include="Persist\PersistWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solve\Anneal\SimulatedAnnealing.cs" />
-    <Compile Include="Solve\Genetic\Chromosome.cs" />
-    <Compile Include="Solve\Genetic\GeneticAlgorithm.cs" />
-    <Compile Include="Solve\Genetic\MateWorker.cs" />
     <Compile Include="IStatusReportable.cs" />
+    <Compile Include="Solve\Genetic\Crossover\ICrossover.cs" />
+    <Compile Include="Solve\Genetic\Crossover\Splice.cs" />
+    <Compile Include="Solve\Genetic\Crossover\SpliceNoRepeat.cs" />
+    <Compile Include="Solve\Genetic\Genes\IGene.cs" />
+    <Compile Include="Solve\Genetic\GeneticAlgorithm.cs" />
+    <Compile Include="Solve\Genetic\Genome\Chromosome.cs" />
+    <Compile Include="Solve\Genetic\Genome\ICalculateGenomeScore.cs" />
+    <Compile Include="Solve\Genetic\Genome\IGenome.cs" />
+    <Compile Include="Solve\Genetic\Genome\GenomeComparator.cs" />
+    <Compile Include="Solve\Genetic\Innovation\IInnovation.cs" />
+    <Compile Include="Solve\Genetic\Innovation\IInnovationList.cs" />
+    <Compile Include="Solve\Genetic\MateWorker.cs" />
+    <Compile Include="Solve\Genetic\Mutate\IMutate.cs" />
+    <Compile Include="Solve\Genetic\Population\IPopulation.cs" />
+    <Compile Include="Solve\Genetic\Species\ISpecies.cs" />
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
@@ -428,6 +438,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelVectorAdd.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Neural\Networks\Training\Genetic\" />
+    <Folder Include="Solve\Genetic\Selection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
