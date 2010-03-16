@@ -217,6 +217,9 @@
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\GeneticScoreAdapter.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\NeuralGenome.cs" />
     <Compile Include="Neural\Networks\Training\Hopfield\TrainHopfield.cs" />
     <Compile Include="Neural\Networks\Training\ICalculateScore.cs" />
     <Compile Include="Neural\Networks\Training\IMomentum.cs" />
@@ -457,9 +460,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelVectorAdd.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural\Networks\Training\Genetic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

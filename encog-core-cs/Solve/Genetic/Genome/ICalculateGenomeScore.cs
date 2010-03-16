@@ -20,6 +20,6 @@ namespace Encog.Solve.Genetic.Genome
         /// <summary>
         /// True if the goal is to minimize the score.
         /// </summary>
-        bool ShouldMinimize { get; set; }
+        bool ShouldMinimize { get; }
     }
 }

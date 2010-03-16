@@ -78,6 +78,10 @@ namespace Encog.Solve.Genetic
             {
                 return mutate;
             }
+            set
+            {
+                this.mutate = value;
+            }
         }
 
 
