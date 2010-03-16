@@ -196,6 +196,10 @@
     <Compile Include="Neural\Networks\Synapse\BasicSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\DirectSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\ISynapse.cs" />
+    <Compile Include="Neural\Networks\Synapse\NEAT\NEATLink.cs" />
+    <Compile Include="Neural\Networks\Synapse\NEAT\NEATNeuron.cs" />
+    <Compile Include="Neural\Networks\Synapse\NEAT\NEATNeuronType.cs" />
+    <Compile Include="Neural\Networks\Synapse\NEAT\NEATSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\OneToOneSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\SynapseType.cs" />
     <Compile Include="Neural\Networks\Synapse\WeightedSynapse.cs" />

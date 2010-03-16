@@ -144,5 +144,16 @@ namespace Encog.Neural.NeuralData.Bipolar
         {
             this.data[index] = b;
         }
+
+        /// <summary>
+        /// Clear to false.
+        /// </summary>
+        public void Clear()
+        {
+            for (int i = 0; i < this.data.Length; i++)
+            {
+                this.data[i] = false;
+            }
+        }
     }
 }

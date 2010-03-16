@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using System.Runtime.Serialization;
+using Encog.Util;
 
 namespace Encog.Neural.Data.Basic
 {
@@ -139,6 +140,14 @@ namespace Encog.Neural.Data.Basic
         {
             BasicNeuralData result = new BasicNeuralData(this.data);
             return result;
+        }
+
+        /// <summary>
+        /// Clear to zero.
+        /// </summary>
+        public void Clear()
+        {
+            EncogArray.Fill(this.data, 0);
         }
     }
 }

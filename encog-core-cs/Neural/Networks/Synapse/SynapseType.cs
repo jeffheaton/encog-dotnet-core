@@ -64,10 +64,9 @@ namespace Encog.Neural.Networks.Synapse
         Direct,
 
         /// <summary>
-        /// Normalize - A synapse that normalizes the data.  Used to implement
-        /// a SOM.
+        /// NEAT - A synapse implements a NEAT neural network.
         /// </summary>
-        Normalize
+        NEAT
     }
 
 }

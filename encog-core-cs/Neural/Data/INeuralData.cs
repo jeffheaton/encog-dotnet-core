@@ -66,5 +66,10 @@ namespace Encog.Neural.Data
         {
             get;
         }
+
+        /// <summary>
+        /// Clear the data to zero values.
+        /// </summary>
+        void Clear();
     }
 }
