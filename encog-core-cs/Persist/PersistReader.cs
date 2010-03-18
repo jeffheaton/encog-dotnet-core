@@ -370,13 +370,6 @@ namespace Encog.Persist
 
                 if (persistor == null)
                 {
-                    String clazz = ReflectionUtil.ResolveEncogClass(objectType);
-                    IEncogPersistedObject temp = (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(clazz);
-                    persistor = temp.CreatePersistor();
-                }
-
-                if (persistor == null)
-                {
                     throw new PersistError(
                             "Do not know how to load: " + objectType);
                 }

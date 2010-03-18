@@ -40,6 +40,7 @@ using System.Reflection;
 using log4net;
 using Encog.MathUtil.Matrices;
 using Encog.Util.CSV;
+using Encog.Util;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -86,12 +87,11 @@ namespace Encog.Persist.Persistors
         {
             if (top)
             {
-                if (obj.Name == null)
+                if (obj.Name != null)
                 {
-                    throw new PersistError(
-                            "Encog object must have a name to be saved.");
+                    xmlOut.AddAttribute("name", obj.Name);
                 }
-                xmlOut.AddAttribute("name", obj.Name);
+                
                 if (obj.Description != null)
                 {
                     xmlOut.AddAttribute("description", obj.Description);
@@ -123,6 +123,17 @@ namespace Encog.Persist.Persistors
 
             String name = "Encog.Persist.Persistors." + className + "Persistor";
             IPersistor persistor = (IPersistor)Assembly.GetExecutingAssembly().CreateInstance(name);
+
+            // try another way
+            if (persistor == null)
+            {
+                String type = ReflectionUtil.ResolveEncogClass(className);
+                IEncogPersistedObject temp =
+                    (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(type);
+
+                persistor = temp.CreatePersistor();
+            }
+
             return persistor;
         }
 

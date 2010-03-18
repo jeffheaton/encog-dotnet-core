@@ -101,8 +101,11 @@ namespace Encog.Persist.Persistors.Generic
                 FieldInfo field = ReflectionUtil.FindField(target.GetType(),
                        key);
 
-                String value = this.xmlIn.LastTag.GetAttributeValue(key);
-                SetFieldValue(field, target, value);
+                if (field != null)
+                {
+                    String value = this.xmlIn.LastTag.GetAttributeValue(key);
+                    SetFieldValue(field, target, value);
+                }
             }
 
             // handle properties
