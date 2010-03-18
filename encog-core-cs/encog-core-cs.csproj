@@ -323,12 +323,6 @@
     <Compile Include="Persist\PersistError.cs" />
     <Compile Include="Persist\IPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationGaussianPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationLinearPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationLOGPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationSigmoidPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationSINPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationSoftMaxPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationTANHPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicNetworkPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicNeuralDataSetPersistor.cs" />
