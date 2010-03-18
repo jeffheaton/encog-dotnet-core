@@ -95,6 +95,16 @@ namespace Encog.MathUtil.Randomize
             return RangeRandomizer.Randomize(this.min, this.max);
         }
 
+        /// <summary>
+        /// Generate a random int in a specific range.
+        /// </summary>
+        /// <param name="min">The low range.</param>
+        /// <param name="max">The high range.</param>
+        /// <returns></returns>
+        public static int RandomInt(int min, int max)
+        {
+            return (int)Randomize(min, max + 1);
+        }
     }
 
 }

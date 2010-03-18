@@ -89,7 +89,7 @@ namespace Encog.Solve.Genetic
         /// <summary>
         /// Perform one generation.
         /// </summary>
-        public void Iteration()
+        public virtual void Iteration()
         {
 
             int countToMate = (int)(Population.Genomes.Count * PercentToMate);

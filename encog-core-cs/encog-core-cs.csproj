@@ -229,6 +229,14 @@
     <Compile Include="Neural\Networks\Training\LMA\IComputeJacobian.cs" />
     <Compile Include="Neural\Networks\Training\LMA\JacobianChainRule.cs" />
     <Compile Include="Neural\Networks\Training\LMA\LevenbergMarquardtTraining.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATGenome.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATInnovation.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATInnovationList.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATInnovationType.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATLinkGene.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATNeuronGene.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\NEATTraining.cs" />
+    <Compile Include="Neural\Networks\Training\NEAT\SplitDepth.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Back\Backpropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Gradient\CalculateGradient.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientUtil.cs" />

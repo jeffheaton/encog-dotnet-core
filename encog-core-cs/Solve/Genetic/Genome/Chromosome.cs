@@ -19,12 +19,12 @@ namespace Encog.Solve.Genetic.Genome
         /// <summary>
         /// The individual elements of this chromosome.
         /// </summary>
-        private IList<IGene> genes = new List<IGene>();
+        private List<IGene> genes = new List<IGene>();
 
         /// <summary>
         /// Used the get the entire gene list
         /// </summary>
-        public IList<IGene> Genes
+        public List<IGene> Genes
         {
             get
             {

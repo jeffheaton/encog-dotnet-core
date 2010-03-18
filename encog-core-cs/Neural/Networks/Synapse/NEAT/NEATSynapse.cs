@@ -80,7 +80,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <param name="activationFunction">The activation function to use.</param>
         /// <param name="networkDepth">The depth of the network.</param>
         public NEATSynapse(BasicLayer fromLayer, BasicLayer toLayer,
-                 List<NEATNeuron> neurons,
+                 IList<NEATNeuron> neurons,
                  IActivationFunction activationFunction, int networkDepth)
         {
             this.fromLayer = fromLayer;
