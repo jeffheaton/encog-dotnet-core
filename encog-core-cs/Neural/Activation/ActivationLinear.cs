@@ -68,15 +68,6 @@ namespace Encog.Neural.Activation
         }
 
         /// <summary>
-        /// Create a Persistor for this activation function.
-        /// </summary>
-        /// <returns>The persistor.</returns>
-        public override IPersistor CreatePersistor()
-        {
-            return new ActivationLinearPersistor();
-        }
-
-        /// <summary>
         /// Implements the activation function derivative.  The array is modified 
         /// according derivative of the activation function being used.  See the 
         /// class description for more specific information on this type of 

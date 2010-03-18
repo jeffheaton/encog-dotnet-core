@@ -68,16 +68,6 @@ namespace Encog.Neural.Activation
         {
         }
 
-
-        /// <summary>
-        /// Create a persistor for this object.
-        /// </summary>
-        /// <returns>The persistor.</returns>
-        private IPersistor ActivationCompetitivePersistor()
-        {
-            return new ActivationCompetitivePersistor();
-        }
-
         /// <summary>
         /// Calculate the activation function.
         /// </summary>

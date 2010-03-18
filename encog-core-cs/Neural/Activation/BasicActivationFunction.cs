@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Persist;
+using Encog.Persist.Persistors.Generic;
 
 namespace Encog.Neural.Activation
 {
@@ -55,12 +56,12 @@ namespace Encog.Neural.Activation
         }
 
         /// <summary>
-        /// Create a persistor.  Not implemented at this level.
+        /// Create a persistor.  At this level we will use a generic persistor.
         /// </summary>
         /// <returns>The persistor.</returns>
         public virtual IPersistor CreatePersistor()
         {
-            return null;
+            return new GenericPersistor(this.GetType());
         }
 
         /// <summary>

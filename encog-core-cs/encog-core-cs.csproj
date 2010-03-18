@@ -110,6 +110,7 @@
     <Compile Include="Neural\Activation\ActivationSigmoid.cs" />
     <Compile Include="Neural\Activation\ActivationSIN.cs" />
     <Compile Include="Neural\Activation\ActivationSoftMax.cs" />
+    <Compile Include="Neural\Activation\ActivationStep.cs" />
     <Compile Include="Neural\Activation\ActivationTANH.cs" />
     <Compile Include="Neural\Activation\ActivationUtil.cs" />
     <Compile Include="Neural\Activation\BasicActivationFunction.cs" />
@@ -321,8 +322,6 @@
     <Compile Include="Persist\Location\StreamPersistence.cs" />
     <Compile Include="Persist\PersistError.cs" />
     <Compile Include="Persist\IPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationBiPolarPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationCompetitivePersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationGaussianPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationLinearPersistor.cs" />
     <Compile Include="Persist\Persistors\ActivationLOGPersistor.cs" />
