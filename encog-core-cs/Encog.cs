@@ -76,6 +76,8 @@ namespace Encog
         /// </summary>
         public const int DEFAULT_PRECISION = 10;
 
+        public const double DEFAULT_DOUBLE_EQUAL = 0.0000001;
+
         /// <summary>
         /// The version of the Encog JAR we are working with. Given in the form
         /// x.x.x.

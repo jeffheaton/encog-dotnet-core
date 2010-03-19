@@ -9,7 +9,7 @@ namespace Encog.Solve.Genetic.Genome
     /// A genome is the basic blueprint for creating an organism in Encog. A genome
     /// is made up of one or more chromosomes, which are in turn made up of genes.
     /// </summary>
-    public interface IGenome
+    public interface IGenome: IComparable<IGenome>
     {
         /// <summary>
         /// Calculate the number of genes in this genome.

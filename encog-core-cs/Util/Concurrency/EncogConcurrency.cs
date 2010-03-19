@@ -112,7 +112,8 @@ namespace Encog.Util.Concurrency
             {
                 this.activeTasks++;
             }
-            group.TaskStarting();
+            if( group!=null )
+                group.TaskStarting();
             PoolItem item = new PoolItem(this, task, group);
             ThreadPool.QueueUserWorkItem(item.ThreadPoolCallback);
         }

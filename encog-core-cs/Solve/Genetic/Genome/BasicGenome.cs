@@ -86,7 +86,11 @@ namespace Encog.Solve.Genetic.Genome
 
             if (GA.CalculateScore.ShouldMinimize)
             {
-                if (Score > other.Score)
+                if( (Score-other.Score) < Encog.DEFAULT_DOUBLE_EQUAL )
+                {
+                    return 0;
+                }
+                else if (Score > other.Score)
                 {
                     return 1;
                 }
@@ -94,7 +98,11 @@ namespace Encog.Solve.Genetic.Genome
             }
             else
             {
-                if (Score > other.Score)
+                if ((Score - other.Score) < Encog.DEFAULT_DOUBLE_EQUAL)
+                {
+                    return 0;
+                }
+                else if (Score > other.Score)
                 {
                     return -1;
                 }

@@ -66,12 +66,6 @@ namespace Encog.Solve.Genetic.Population
         /// </summary>
         private IGenerateID innovationIDGenerate = new BasicGenerateID();
 
-        
-        /// <summary>
-        /// How many genomes should be created.
-        /// </summary>
-        private int populationSize;
-
         /// <summary>
         /// The species in this population.
         /// </summary>
@@ -89,7 +83,7 @@ namespace Encog.Solve.Genetic.Population
         /// <param name="populationSize">The population size.</param>
         public BasicPopulation(int populationSize)
         {
-            this.populationSize = populationSize;
+            this.PopulationSize = populationSize;
         }
 
         /// <summary>

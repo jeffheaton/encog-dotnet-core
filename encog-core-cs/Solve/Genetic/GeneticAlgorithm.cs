@@ -113,7 +113,7 @@ namespace Encog.Solve.Genetic
                 MateWorker worker = new MateWorker(mother, father, child1,
                         child2);
 
-                EncogConcurrency.Instance.ProcessTask(worker);
+                EncogConcurrency.Instance.ProcessTask(worker, group);
 
                 offspringIndex += 2;
             }
