@@ -378,11 +378,9 @@
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
-    <Compile Include="Util\CL\CLPayload.cs" />
     <Compile Include="Util\CL\EncogCL.cs" />
     <Compile Include="Util\CL\EncogCLAdapter.cs" />
-    <Compile Include="Util\CL\EncogCLVector.cs" />
-    <Compile Include="Util\CL\EncogKernel.cs" />
+    <Compile Include="Util\CL\Kernels\KernelSingleNetworkCalculate.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEncogTask.cs" />
