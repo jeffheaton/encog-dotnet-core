@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cloo;
+using Encog.Util.CL.Kernels;
 
 namespace Encog.Util.CL
 {
+    
+
     public class EncogCLAdapter
     {
         public bool Enabled { get; set; }
@@ -13,9 +16,17 @@ namespace Encog.Util.CL
         public String Vender { get; set; }
 
         private ComputePlatform platform;
-        private ComputeContextPropertyList properties;
         private ComputeContext context;
-        private ComputeCommandQueue queue;
+
+        private KernelSingleNetworkCalculate kerSingleNetworkCalculate;
+
+        public KernelSingleNetworkCalculate SingleNetworkCalculate
+        {
+            get
+            {
+                return this.kerSingleNetworkCalculate;
+            }
+        }
 
         public EncogCLAdapter(ComputePlatform platform)
         {
@@ -25,14 +36,6 @@ namespace Encog.Util.CL
             this.Name = platform.Name;
             this.Vender = Vender;
 
-        }
-
-        public ComputeCommandQueue Queue
-        {
-            get
-            {
-                return this.queue;
-            }
         }
 
         public ComputeContext Context
@@ -45,18 +48,12 @@ namespace Encog.Util.CL
 
         public void Init()
         {
-            this.properties = new ComputeContextPropertyList(this.platform);
-            this.context = new ComputeContext(ComputeDeviceTypes.Default, this.properties, null, IntPtr.Zero);
-            this.queue = new ComputeCommandQueue(this.context, this.context.Devices[0], ComputeCommandQueueFlags.None);
+            ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
+            this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
+            this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context, "Encog.Resources.KernelSingleNetCalculate.txt");
+            this.kerSingleNetworkCalculate.compile();
         }
 
-        public void Compile(EncogKernel kernel)
-        {
-            if (context == null)
-                Init();
-            ComputeProgram program = new ComputeProgram(context, new string[] { kernel.Source });
-            program.Build(null, null, null, IntPtr.Zero);
-            kernel.Programs[this] = program;
-        }
+        
     }
 }
