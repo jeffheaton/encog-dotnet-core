@@ -175,6 +175,25 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
+        /// Calculate the output for the given input, using the GPU(if enabled).
+        /// Normally, you would not want to calculate a single neural network
+        /// with the GPU, as it would be faster to use the CPU.  However
+        /// this can be a quick test to verify the GPU is online and working
+        /// with Encog.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="output">Output will be placed here.</param>
+        public void CalculateForceGPU(double[] input, double[] output)
+        {
+            if (Encog.Instance.GPU != null)
+            {
+                Encog.Instance.GPU.ChooseAdapter().SingleNetworkCalculate.Calculate(this, input, output);
+            }
+            else
+                throw new NeuralNetworkError("GPU processing is not enabled.");
+        }
+
+        /// <summary>
         /// Calculate a layer. 
         /// </summary>
         /// <param name="currentLayer">The layer to calculate.</param>
