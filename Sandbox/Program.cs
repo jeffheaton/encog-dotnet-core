@@ -180,7 +180,7 @@ kernel void SingleNetworkCalculate(
                 double[] output = new double[1];
                 for (int i = 0; i < XOR_INPUT.Length; i++)
                 {
-                    flat.Calculate(XOR_INPUT[i], output);
+                    flat.Compute(XOR_INPUT[i], output);
                     //Console.WriteLine(XOR_INPUT[i][0] + ":" + XOR_INPUT[i][1] + ":" + output[0]);
                 }
             }

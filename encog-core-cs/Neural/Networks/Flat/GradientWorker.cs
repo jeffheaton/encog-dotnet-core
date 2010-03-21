@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="ideal">The ideal values.</param>
         private void Process(double[] input, double[] ideal)
         {
-            network.Calculate(input, actual);
+            network.Compute(input, actual);
 
             errorCalculation.UpdateError(actual, ideal);
 

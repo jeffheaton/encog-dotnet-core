@@ -146,7 +146,7 @@ namespace Encog.Neural.Networks.Flat
                 double[] input = pair.Input.Data;
                 double[] ideal = pair.Ideal.Data;
 
-                network.Calculate(input, actual);
+                network.Compute(input, actual);
 
                 errorCalculation.UpdateError(actual, ideal);
 

@@ -381,6 +381,7 @@
     <Compile Include="Util\CL\EncogCL.cs" />
     <Compile Include="Util\CL\EncogCLAdapter.cs" />
     <Compile Include="Util\CL\Kernels\EncogKernel.cs" />
+    <Compile Include="Util\CL\Kernels\KernelNetworkCalculate.cs" />
     <Compile Include="Util\CL\Kernels\KernelSingleNetworkCalculate.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />

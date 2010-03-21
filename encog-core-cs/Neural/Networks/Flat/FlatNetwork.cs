@@ -7,6 +7,8 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Activation;
 using Encog.Util;
+using Encog.Neural.NeuralData;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -160,7 +162,7 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         /// <param name="input">The input.</param>
         /// <param name="output">Output will be placed here.</param>
-        public void Calculate(double[] input, double[] output)
+        public void Compute(double[] input, double[] output)
         {
             int sourceIndex = layerOutput.Length - inputCount;
 
@@ -168,7 +170,7 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = layerIndex.Length - 1; i > 0; i--)
             {
-                CalculateLayer(i);
+                ComputeLayer(i);
             }
 
             EncogArray.ArrayCopy(layerOutput, 0, output, 0, outputCount);
@@ -183,7 +185,7 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         /// <param name="input">The input.</param>
         /// <param name="output">Output will be placed here.</param>
-        public void CalculateForceGPU(double[] input, double[] output)
+        public void ComputeForceGPU(double[] input, double[] output)
         {
             if (Encog.Instance.GPU != null)
             {
@@ -197,7 +199,7 @@ namespace Encog.Neural.Networks.Flat
         /// Calculate a layer. 
         /// </summary>
         /// <param name="currentLayer">The layer to calculate.</param>
-        private void CalculateLayer(int currentLayer)
+        private void ComputeLayer(int currentLayer)
         {
 
             int inputIndex = layerIndex[currentLayer];
@@ -351,6 +353,47 @@ namespace Encog.Neural.Networks.Flat
         {
             BasicNetwork temp = this.Unflatten();
             return new FlatNetwork(temp);
+        }
+
+        /// <summary>
+        /// Calculate the error for this neural network. The error is calculated
+        /// using root-mean-square(RMS).
+        /// </summary>
+        /// <param name="data">The training set.</param>
+        /// <returns>The error percentage.</returns>
+        public double CalculateError(INeuralDataSet data)
+        {
+            ErrorCalculation errorCalculation = new ErrorCalculation();
+
+            double[] actual = new double[OutputCount];
+
+            foreach (INeuralDataPair pair in data)
+            {
+                Compute(pair.Input.Data, actual);
+                errorCalculation.UpdateError(actual, pair.Ideal.Data);
+            }
+            return errorCalculation.CalculateRMS();
+        }
+
+        /// <summary>
+        /// Calculate the error for this neural network. The error is calculated
+        /// using root-mean-square(RMS).
+        /// </summary>
+        /// <param name="data">The training set.</param>
+        /// <returns>The error percentage.</returns>
+        public double CalculateErrorGPU(INeuralDataSet data)
+        {
+            Encog.Instance.GPU.ChooseAdapter().NetworkCalculate.Calculate(this,data);
+            ErrorCalculation errorCalculation = new ErrorCalculation();
+
+            double[] actual = new double[OutputCount];
+
+            foreach (INeuralDataPair pair in data)
+            {
+                Compute(pair.Input.Data, actual);
+                errorCalculation.UpdateError(actual, pair.Ideal.Data);
+            }
+            return errorCalculation.CalculateRMS();
         }
 
     }
