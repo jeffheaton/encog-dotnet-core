@@ -380,6 +380,7 @@
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
     <Compile Include="Util\CL\EncogCL.cs" />
     <Compile Include="Util\CL\EncogCLAdapter.cs" />
+    <Compile Include="Util\CL\Kernels\EncogKernel.cs" />
     <Compile Include="Util\CL\Kernels\KernelSingleNetworkCalculate.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
@@ -462,6 +463,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelSingleNetCalculate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\KernelNetCalculate.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

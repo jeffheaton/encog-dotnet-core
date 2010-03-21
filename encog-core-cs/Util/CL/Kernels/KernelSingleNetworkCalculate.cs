@@ -8,23 +8,11 @@ using Encog.Neural.Networks.Flat;
 
 namespace Encog.Util.CL.Kernels
 {
-    public class KernelSingleNetworkCalculate
+    public class KernelSingleNetworkCalculate: EncogKernel
     {
-        private String cl;
-        private ComputeContext context;
-        private ComputeProgram program;
-
-        public KernelSingleNetworkCalculate(ComputeContext context, String sourceName)
+        public KernelSingleNetworkCalculate(ComputeContext context)
+            : base(context, "Encog.Resources.KernelSingleNetCalculate.txt")
         {
-            ResourcePersistence resource = new ResourcePersistence(sourceName);
-            this.context = context;
-            this.cl = resource.LoadString();
-        }
-
-        public void compile()
-        {
-            this.program = new ComputeProgram(this.context, new string[] { this.cl });
-            program.Build(null, null, null, IntPtr.Zero);
         }
 
         public void Calculate(FlatNetwork flat, double[] input, double[] output)
@@ -40,15 +28,15 @@ namespace Encog.Util.CL.Kernels
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
-            ComputeBuffer<float> a = new ComputeBuffer<float>(context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, inputArray);
-            ComputeBuffer<float> b = new ComputeBuffer<float>(context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
-            ComputeBuffer<float> c = new ComputeBuffer<float>(context, ComputeMemoryFlags.WriteOnly, flat.LayerOutput.Length);
+            ComputeBuffer<float> a = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, inputArray);
+            ComputeBuffer<float> b = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
+            ComputeBuffer<float> c = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.LayerOutput.Length);
 
-            ComputeBuffer<int> d = new ComputeBuffer<int>(context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
-            ComputeBuffer<int> e = new ComputeBuffer<int>(context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
-            ComputeBuffer<int> f = new ComputeBuffer<int>(context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
+            ComputeBuffer<int> d = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
+            ComputeBuffer<int> e = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
+            ComputeBuffer<int> f = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
 
-            ComputeKernel kernel = program.CreateKernel("SingleNetworkCalculate");
+            ComputeKernel kernel = Program.CreateKernel("SingleNetworkCalculate");
 
             kernel.SetValueArgument<int>(0, flat.InputCount);
             kernel.SetValueArgument<int>(1, flat.OutputCount);
@@ -63,7 +51,7 @@ namespace Encog.Util.CL.Kernels
             kernel.SetMemoryArgument(8, b);
             kernel.SetMemoryArgument(9, c);
 
-            ComputeCommandQueue commands = new ComputeCommandQueue(context, context.Devices[0], ComputeCommandQueueFlags.None);
+            ComputeCommandQueue commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
 
             ComputeEventList events = new ComputeEventList();
 

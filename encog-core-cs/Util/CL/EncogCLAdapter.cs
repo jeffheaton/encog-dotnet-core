@@ -50,8 +50,8 @@ namespace Encog.Util.CL
         {
             ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
             this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
-            this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context, "Encog.Resources.KernelSingleNetCalculate.txt");
-            this.kerSingleNetworkCalculate.compile();
+            this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context);
+            this.kerSingleNetworkCalculate.Compile();
         }
 
         

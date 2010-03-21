@@ -124,7 +124,7 @@ kernel void SingleNetworkCalculate(
             program.Build(null, null, null, IntPtr.Zero);
 
             ComputeKernel kernel = program.CreateKernel("SingleNetworkCalculate");
-            
+
             kernel.SetValueArgument<int>(0, flat.InputCount);
             kernel.SetValueArgument<int>(1, flat.OutputCount);
             kernel.SetValueArgument<int>(2, flat.LayerCounts.Length);
@@ -158,7 +158,7 @@ kernel void SingleNetworkCalculate(
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
             TrainFlatNetwork train = new TrainFlatNetwork(flat, training);
-            for(int i=0;i<100;i++)
+            for (int i = 0; i < 100; i++)
             {
                 train.Iteration();
                 Console.WriteLine(train.Error);
@@ -172,12 +172,21 @@ kernel void SingleNetworkCalculate(
 
             Encog.Encog.Instance.InitGPU();
 
-            double[] output = new double[1];
-            for (int i = 0; i < XOR_INPUT.Length; i++)
+            long start = Environment.TickCount;
+
+            for (int j = 0; j < 100; j++)
             {
-                flat.CalculateForceGPU( XOR_INPUT[i], output);
-                Console.WriteLine(XOR_INPUT[i][0] + ":" + XOR_INPUT[i][1] + ":" + output[0]);
+
+                double[] output = new double[1];
+                for (int i = 0; i < XOR_INPUT.Length; i++)
+                {
+                    flat.Calculate(XOR_INPUT[i], output);
+                    //Console.WriteLine(XOR_INPUT[i][0] + ":" + XOR_INPUT[i][1] + ":" + output[0]);
+                }
             }
+
+            long stop = Environment.TickCount;
+            Console.WriteLine("Time: " + (stop - start));
 
             Console.WriteLine("Done");
         }
