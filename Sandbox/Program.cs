@@ -172,21 +172,37 @@ kernel void SingleNetworkCalculate(
 
             Encog.Encog.Instance.InitGPU();
 
-            long start = Environment.TickCount;
+            Console.WriteLine( "Error1:" + flat.CalculateError(training) );
+            Console.WriteLine( "Error2:" + flat.CalculateErrorGPU(training) );
 
-            for (int j = 0; j < 100; j++)
-            {
+            Console.WriteLine("Done");
+        }
 
-                double[] output = new double[1];
-                for (int i = 0; i < XOR_INPUT.Length; i++)
-                {
-                    flat.Compute(XOR_INPUT[i], output);
-                    //Console.WriteLine(XOR_INPUT[i][0] + ":" + XOR_INPUT[i][1] + ":" + output[0]);
-                }
-            }
 
-            long stop = Environment.TickCount;
-            Console.WriteLine("Time: " + (stop - start));
+        public static void benchmark()
+        {
+            INeuralDataSet training = RandomTrainingFactory.Generate(50000, 10, 10, -1, 1);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(10, 6, 0, 10, true);
+            network.Reset();
+            FlatNetwork flat = new FlatNetwork(network);
+            Encog.Encog.Instance.InitGPU();
+            long start;
+            long stop;
+
+            start = Environment.TickCount;
+            double error = network.CalculateError(training);
+            stop = Environment.TickCount;
+            Console.WriteLine("Error1:" + error + ",Time:" + (stop-start) );
+
+            start = Environment.TickCount;
+            error = flat.CalculateError(training);
+            stop = Environment.TickCount;
+            Console.WriteLine("Error2:" + error + ",Time:" + (stop - start));
+            
+            start = Environment.TickCount;
+            flat.CalculateErrorGPU(training);
+            stop = Environment.TickCount;
+            Console.WriteLine("Error3:" + error + ",Time:" + (stop - start));
 
             Console.WriteLine("Done");
         }
@@ -197,7 +213,7 @@ kernel void SingleNetworkCalculate(
             {
                 ///testCL();
                 //stress();
-                linear();
+                benchmark();
                 //testBuffer();
             }
             //catch (Exception e)

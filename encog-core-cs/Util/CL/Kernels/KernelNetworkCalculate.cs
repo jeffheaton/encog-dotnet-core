@@ -12,25 +12,12 @@ namespace Encog.Util.CL.Kernels
 {
     public class KernelNetworkCalculate: EncogKernel
     {
-        private float[] inputArray;
+
         private float[] outputArray;
 
         public KernelNetworkCalculate(ComputeContext context)
             : base(context, "Encog.Resources.KernelNetCalculate.txt")
         {
-        }
-
-        private void BuildInputArray(double[][] input)
-        {
-            inputArray = new float[input.Length * input[0].Length];
-            int index = 0;
-            for (int row = 0; row < input.Length; row++)
-            {
-                for (int col = 0; col < input[0].Length; col++)
-                {
-                    inputArray[index++] = (float)input[row][col];
-                }
-            }
         }
 
         public double[][] Calculate(FlatNetwork flat, INeuralDataSet input)
@@ -43,6 +30,19 @@ namespace Encog.Util.CL.Kernels
             IIndexable indexable = (IIndexable)input;
 
             double[][] result = EncogArray.AllocateDouble2D((int)indexable.Count,(int)flat.OutputCount);
+
+            float[] inputArray = new float[indexable.Count * flat.InputCount];
+            int index = 0;
+
+            foreach( INeuralDataPair pair in input )
+            {
+                for (int col = 0; col < flat.InputCount; col++)
+                {
+                    inputArray[index++] = (float)pair.Input.Data[col];
+                }
+            }
+
+            Calculate(flat, inputArray, result);
 
             return result;
         }
@@ -58,18 +58,32 @@ namespace Encog.Util.CL.Kernels
             if (output[0].Length != flat.OutputCount)
                 throw new NeuralNetworkError("The output column count must match the network output neuron count");
 
+            float[] inputArray = new float[input.Length * input[0].Length];
+            int index = 0;
+            for (int row = 0; row < input.Length; row++)
+            {
+                for (int col = 0; col < input[0].Length; col++)
+                {
+                    inputArray[index++] = (float)input[row][col];
+                }
+            }
 
-            float[] outputArray = new float[flat.OutputCount*input.Length];
+            Calculate(flat, inputArray, output);
+        }
+
+        public void Calculate(FlatNetwork flat, float[] input, double[][] output)
+        {
+            Random rand = new Random();
+
+            int totalOutputLength = flat.LayerOutput.Length * output.Length;
             float[] weightArray = new float[flat.Weights.Length];
 
-            Random rand = new Random();
-            
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
-            ComputeBuffer<float> a = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, inputArray);
+            ComputeBuffer<float> a = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, input);
             ComputeBuffer<float> b = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
-            ComputeBuffer<float> c = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.LayerOutput.Length);
+            ComputeBuffer<float> c = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, totalOutputLength);
 
             ComputeBuffer<int> d = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
             ComputeBuffer<int> e = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
@@ -94,9 +108,18 @@ namespace Encog.Util.CL.Kernels
 
             ComputeEventList events = new ComputeEventList();
 
-            commands.Execute(kernel, null, new long[] { input.Length }, null, events);
+            commands.Execute(kernel, null, new long[] { output.Length }, null, events);
 
-            outputArray = commands.Read(c, true, 0, flat.LayerOutput.Length, events);            
+            outputArray = commands.Read(c, true, 0, totalOutputLength, events);
+
+            for (int row = 0; row < output.Length; row++)
+            {
+                int index = row * flat.LayerOutput.Length;
+                for (int col = 0; col < output[0].Length; col++)
+                {
+                    output[row][col] = this.outputArray[index+col];
+                }
+            }
         }
     }
 }

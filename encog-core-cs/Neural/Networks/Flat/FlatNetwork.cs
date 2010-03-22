@@ -383,15 +383,14 @@ namespace Encog.Neural.Networks.Flat
         /// <returns>The error percentage.</returns>
         public double CalculateErrorGPU(INeuralDataSet data)
         {
-            Encog.Instance.GPU.ChooseAdapter().NetworkCalculate.Calculate(this,data);
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
-            double[] actual = new double[OutputCount];
+            double[][] actual = Encog.Instance.GPU.ChooseAdapter().NetworkCalculate.Calculate(this, data);
 
+            int index = 0;
             foreach (INeuralDataPair pair in data)
             {
-                Compute(pair.Input.Data, actual);
-                errorCalculation.UpdateError(actual, pair.Ideal.Data);
+                errorCalculation.UpdateError(actual[index++], pair.Ideal.Data);
             }
             return errorCalculation.CalculateRMS();
         }

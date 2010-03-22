@@ -11,10 +11,14 @@
     global write_only float *layerOutput
     )
 {
+	int taskIndex = get_global_id(0);
+	int taskOutputIndex = taskIndex * neuronCount;
+	int taskInputIndex = taskIndex * inputSize;
+	
     int sourceIndex = neuronCount - inputSize;
 
     for(int i=0;i<inputSize;i++)
-        layerOutput[sourceIndex+i] = input[i];
+        layerOutput[taskOutputIndex+(sourceIndex+i)] = input[taskInputIndex+i];
 
     for (int currentLayer = layerCount - 1; currentLayer > 0; currentLayer--)
     {
@@ -26,7 +30,7 @@
 
       for (int i = 0; i < outputSize; i++)
       {
-        layerOutput[i + outputIndex] = weights[index++];
+        layerOutput[ taskOutputIndex+(i + outputIndex)] = weights[index++];
       }
 
       for (int x = 0; x < outputSize; x++)
@@ -34,15 +38,12 @@
         float sum = 0;
         for (int y = 0; y < inputSize; y++)
         {
-          float value = layerOutput[inputIndex + y];
-          value = -1 + (2 / (1 + exp(-2 * value)));
-          sum += weights[index++] * value;
+          sum += weights[index++] * layerOutput[taskOutputIndex+(inputIndex + y)];
         }
-        
-        layerOutput[outputIndex + x] += sum;
-
-        layerOutput[outputIndex + x] = layerOutput[outputIndex + x];
-        
+       
+        float value = layerOutput[taskOutputIndex+(outputIndex + x)] + sum;
+        value = -1 + (2 / (1 + exp(-2 * value)));
+        layerOutput[taskOutputIndex+(outputIndex + x)] = value;
       }
     }
 }
