@@ -20,6 +20,7 @@ namespace Encog.Util.CL
 
         private KernelSingleNetworkCalculate kerSingleNetworkCalculate;
         private KernelNetworkCalculate kerNetworkCalculate;
+        private KernelNetworkTrain kerNetworkTrain;
 
         public KernelSingleNetworkCalculate SingleNetworkCalculate
         {
@@ -34,6 +35,14 @@ namespace Encog.Util.CL
             get
             {
                 return this.kerNetworkCalculate;
+            }
+        }
+
+        public KernelNetworkTrain NetworkTrain
+        {
+            get
+            {
+                return this.kerNetworkTrain;
             }
         }
 
@@ -65,6 +74,9 @@ namespace Encog.Util.CL
 
             this.kerNetworkCalculate = new KernelNetworkCalculate(this.context);
             this.kerNetworkCalculate.Compile();
+
+            this.kerNetworkTrain = new KernelNetworkTrain(this.context);
+            this.kerNetworkTrain.Compile();
         }
     }
 }
