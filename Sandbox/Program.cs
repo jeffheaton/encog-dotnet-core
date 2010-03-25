@@ -207,14 +207,31 @@ kernel void SingleNetworkCalculate(
             Console.WriteLine("Done");
         }
 
+        public static void train()
+        {
+            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
+            FlatNetwork flat = new FlatNetwork(network);
+            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
+            for (int i = 0; i < 100; i++)
+            {
+                train.Iteration();
+                Console.WriteLine(train.Error);
+            }
+
+            Console.WriteLine("Done");
+        }
+
         static void Main(string[] args)
         {
             //try
             {
                 ///testCL();
                 //stress();
-                benchmark();
+                //benchmark();
                 //testBuffer();
+                train();
             }
             //catch (Exception e)
             {
