@@ -14,7 +14,7 @@ namespace Encog.Neural.Networks.Flat
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.
     /// </summary>
-    public class GradientWorker : IEncogTask
+    public class GradientWorkerCPU : IEncogTask
     {
         /// <summary>
         /// The network to train.
@@ -81,7 +81,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="training">The training data.</param>
         /// <param name="low">The low index to use in the training data.</param>
         /// <param name="high">The high index to use in the training data.</param>
-        public GradientWorker(FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
+        public GradientWorkerCPU(FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
         {
             this.network = network;
             this.training = training;

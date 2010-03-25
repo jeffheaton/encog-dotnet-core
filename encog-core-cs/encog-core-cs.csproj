@@ -149,7 +149,8 @@
     <Compile Include="Neural\Data\XML\XMLNeuralDataSet.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\Flat\FlatNetwork.cs" />
-    <Compile Include="Neural\Networks\Flat\GradientWorker.cs" />
+    <Compile Include="Neural\Networks\Flat\GradientWorkerCPU.cs" />
+    <Compile Include="Neural\Networks\Flat\GradientWorkerGPU.cs" />
     <Compile Include="Neural\Networks\Flat\TrainFlatNetwork.cs" />
     <Compile Include="Neural\Networks\Flat\TrainFlatNetworkMulti.cs" />
     <Compile Include="Neural\Networks\Flat\ValidateForFlat.cs" />
