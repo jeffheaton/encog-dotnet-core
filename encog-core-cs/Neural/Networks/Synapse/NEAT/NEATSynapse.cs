@@ -79,7 +79,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <param name="neurons">The neurons in this synapse.</param>
         /// <param name="activationFunction">The activation function to use.</param>
         /// <param name="networkDepth">The depth of the network.</param>
-        public NEATSynapse(BasicLayer fromLayer, BasicLayer toLayer,
+        public NEATSynapse(ILayer fromLayer, ILayer toLayer,
                  IList<NEATNeuron> neurons,
                  IActivationFunction activationFunction, int networkDepth)
         {
@@ -88,6 +88,19 @@ namespace Encog.Neural.Networks.Synapse.NEAT
             this.neurons.AddRange(neurons);
             this.networkDepth = networkDepth;
             this.activationFunction = activationFunction;
+        }
+
+        /// <summary>
+        /// Create a NEAT synapse.
+        /// </summary>
+        /// <param name="fromLayer">The from layer.</param>
+        /// <param name="toLayer">The to layer.</param>
+        public NEATSynapse(ILayer fromLayer, ILayer toLayer)
+        {
+            this.fromLayer = fromLayer;
+            this.toLayer = toLayer;
+            this.networkDepth = 0;
+            this.activationFunction = new ActivationSigmoid();
         }
 
         /// <summary>

@@ -40,6 +40,7 @@ using Encog.Persist.Persistors;
 
 #if logging
 using log4net;
+using Encog.Neural.Networks.Synapse.NEAT;
 #endif
 
 namespace Encog.Neural.Networks.Layers
@@ -183,6 +184,12 @@ namespace Encog.Neural.Networks.Layers
                     break;
                 case SynapseType.Direct:
                     synapse = new DirectSynapse(this, next);
+                    break;
+                case SynapseType.NEAT:
+                    synapse = new NEATSynapse(this, next);
+                    break;
+                case SynapseType.PARTIAL:
+                    synapse = new PartialSynapse(this, next);
                     break;
                 default:
                     throw new NeuralNetworkError("Unknown synapse type");

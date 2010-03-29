@@ -203,6 +203,7 @@
     <Compile Include="Neural\Networks\Synapse\NEAT\NEATNeuronType.cs" />
     <Compile Include="Neural\Networks\Synapse\NEAT\NEATSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\OneToOneSynapse.cs" />
+    <Compile Include="Neural\Networks\Synapse\PartialSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\SynapseType.cs" />
     <Compile Include="Neural\Networks\Synapse\WeightedSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\WeightlessSynapse.cs" />

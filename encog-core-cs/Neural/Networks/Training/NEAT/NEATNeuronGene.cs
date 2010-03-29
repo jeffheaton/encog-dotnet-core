@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse.NEAT;
 using Encog.Solve.Genetic.Genes;
+using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -22,31 +23,31 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// The activation response, the slope of the activation function.
         /// </summary>
+        [@EGAttribute]
         private double activationResponse;
-
-        /// <summary>
-        /// The neuron id.
-        /// </summary>
-        private long id;
 
         /// <summary>
         /// The neuron type.
         /// </summary>
+        [@EGAttribute]
         private NEATNeuronType neuronType;
 
         /// <summary>
         /// True if this is recurrent.
         /// </summary>
+        [@EGAttribute]
         private bool recurrent;
 
         /// <summary>
         /// The x-split.
         /// </summary>
+        [@EGAttribute]
         private double splitX;
 
         /// <summary>
         /// The y-split.
         /// </summary>
+        [@EGAttribute]
         private double splitY;
 
         
@@ -79,7 +80,7 @@ namespace Encog.Neural.Networks.Training.NEAT
                 double act)
         {
             neuronType = type;
-            this.id = id;
+            this.Id = id;
             this.splitX = splitX;
             this.splitY = splitY;
             this.recurrent = recurrent;
@@ -94,7 +95,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         {
             NEATNeuronGene other = (NEATNeuronGene)gene;
             activationResponse = other.activationResponse;
-            id = other.id;
+            Id = other.Id;
             neuronType = other.neuronType;
             recurrent = other.recurrent;
             splitX = other.splitX;
@@ -117,20 +118,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
         }
 
-        /// <summary>
-        /// The id for this neuron gene.
-        /// </summary>
-        public long Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                this.id = value;
-            }
-        }
 
         /// <summary>
         /// The type for this neuron.

@@ -118,7 +118,10 @@ namespace Encog.Persist
         /// </summary>
         public const String TYPE_PARSE_TEMPLATE = "ParseTemplate";
 
-
+        /// <summary>
+        /// A population.
+        /// </summary>
+        public const String TYPE_POPULATION = "BasicPopulation";
 
         /// <summary>
         /// The name attribute.

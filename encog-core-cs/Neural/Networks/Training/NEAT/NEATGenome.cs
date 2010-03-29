@@ -73,6 +73,14 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         private NEATTraining training;
 
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATGenome():base(null)
+        {
+        }
+
         /// <summary>
         /// Construct a genome by copying another. 
         /// </summary>

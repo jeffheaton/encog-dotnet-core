@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic.Genes;
+using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -21,18 +22,30 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// The from neuron id.
         /// </summary>
+        [EGAttribute]
         private long fromNeuronID;
 
         /// <summary>
         /// Is this a recurrent connection.
         /// </summary>
+        [EGAttribute]
         private bool recurrent;
 
         /// <summary>
         /// The to neuron id.
         /// </summary>
+        [EGAttribute]
         private long toNeuronID;
+
+        [EGAttribute]
         private double weight;
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATLinkGene()
+        {
+        }
 
         public NEATLinkGene(long fromNeuronID, long toNeuronID,
                 bool enabled, long innovationID,
