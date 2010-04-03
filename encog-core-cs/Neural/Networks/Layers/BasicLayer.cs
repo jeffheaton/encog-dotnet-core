@@ -188,7 +188,7 @@ namespace Encog.Neural.Networks.Layers
                 case SynapseType.NEAT:
                     synapse = new NEATSynapse(this, next);
                     break;
-                case SynapseType.PARTIAL:
+                case SynapseType.Partial:
                     synapse = new PartialSynapse(this, next);
                     break;
                 default:

@@ -71,7 +71,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// PARTIAL - A synapse where only some of the connections are in force.
         /// </summary>
-        PARTIAL
+        Partial
     }
 
 }

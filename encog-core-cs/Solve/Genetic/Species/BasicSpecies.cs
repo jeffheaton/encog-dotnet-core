@@ -95,6 +95,7 @@ namespace Encog.Solve.Genetic.Species
 
         /// <summary>
         /// Adjust the score.  This is to give bonus or penalty.
+        /// The adjustment goes into the adjusted score.
         /// </summary>
         public void AdjustScore()
         {
@@ -103,12 +104,13 @@ namespace Encog.Solve.Genetic.Species
             {
                 double score = member.Score;
 
+                // apply a youth bonus
                 if (Age < Owner.Population.YoungBonusAgeThreshold)
                 {
                     score = Owner.Comparator.ApplyBonus(score,
                             Owner.Population.YoungScoreBonus);
                 }
-
+                // apply an old age penalty
                 if (Age > Owner.Population.OldAgeThreshold)
                 {
                     score = Owner.Comparator.ApplyPenalty(score,
@@ -137,13 +139,16 @@ namespace Encog.Solve.Genetic.Species
 
         
         /// <summary>
-        /// Choose a parent to mate.
+        /// Choose a parent to mate. Choose from the population,
+	    /// determined by the survival rate.  From this pool, a random
+	    /// parent is chosen.
         /// </summary>
         /// <returns>The parent.</returns>
         public IGenome ChooseParent()
         {
             IGenome baby;
 
+            // If there is a single member, then choose that one.
             if (members.Count == 1)
             {
                 baby = members[0];
@@ -151,6 +156,9 @@ namespace Encog.Solve.Genetic.Species
 
             else
             {
+                // If there are many, then choose the population based on survival rate
+                // and select a random genome.
+
                 int maxIndexSize = (int)(Owner.Population
                         .SurvivalRate * members.Count) + 1;
                 int theOne = (int)RangeRandomizer.Randomize(0, maxIndexSize);
@@ -175,7 +183,8 @@ namespace Encog.Solve.Genetic.Species
 
 
         /// <summary>
-        /// Purge all members.
+        /// Purge all members, increase age by one and count the number of generations
+	    /// with no improvement.
         /// </summary>
         public void Purge()
         {

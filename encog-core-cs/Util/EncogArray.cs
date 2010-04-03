@@ -82,6 +82,22 @@ namespace Encog.Util
             return result;
         }
 
+        /// <summary>
+        /// Allocate a 2D array of bools.
+        /// </summary>
+        /// <param name="rows">The number of rows.</param>
+        /// <param name="cols">The number of columns.</param>
+        /// <returns>The array.</returns>
+        public static bool[][] AllocateBool2D(int rows, int cols)
+        {
+            bool[][] result = new bool[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                result[i] = new bool[cols];
+            }
+            return result;
+        }
+
         public static void ArrayCopy(double[] input, int sourceIndex, double[] output, int targetIndex, int size)
         {
             Array.Copy(input, sourceIndex, output, targetIndex, size);

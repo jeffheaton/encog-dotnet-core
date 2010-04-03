@@ -113,6 +113,10 @@ namespace Encog.Persist.Persistors.Generic
                 {
                     // nothing to save
                 }
+                else if (fieldObject is Enum)
+                {
+                    this.xmlOut.AddText(fieldObject.ToString());
+                }
                 else if (fieldObject is ICollection)
                 {
                     SaveCollection((ICollection)fieldObject);

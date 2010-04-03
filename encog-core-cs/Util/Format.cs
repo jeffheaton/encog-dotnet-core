@@ -60,7 +60,7 @@ namespace Encog.Util
         /// <param name="d">The double value to format.</param>
         /// <param name="i">The number of decimal places.</param>
         /// <returns>The double as a string.</returns>
-        public static Object FormatDouble(double d, int i)
+        public static String FormatDouble(double d, int i)
         {
             return d.ToString("N" + i);
         }

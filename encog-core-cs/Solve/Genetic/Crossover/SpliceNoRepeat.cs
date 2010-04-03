@@ -82,7 +82,7 @@ namespace Encog.Solve.Genetic.Crossover
             int cutpoint1 = (int)(ThreadSafeRandom.NextDouble() * (geneLength - cutLength));
             int cutpoint2 = cutpoint1 + cutLength;
 
-            // keep track of which cities have been taken in each of the two
+            // keep track of which genes have been taken in each of the two
             // offspring, defaults to false.
             IList<IGene> taken1 = new List<IGene>();
             IList<IGene> taken2 = new List<IGene>();

@@ -6,45 +6,162 @@ using Encog.Util.Identity;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Innovation;
 using Encog.Solve.Genetic.Species;
+using Encog.Persist;
+using Encog.Persist.Persistors.Generic;
 
 namespace Encog.Solve.Genetic.Population
 {
-    public class BasicPopulation : IPopulation
+    public class BasicPopulation : IPopulation, IEncogPersistedObject
     {
         /// <summary>
-        /// A list of innovations in this population.
+        /// The name of this object.
         /// </summary>
-        public IInnovationList Innovations { get; set; }
+        private String name;
+
+        /// <summary>
+        /// The description of this object.
+        /// </summary>
+        private String description;
+
+        /// <summary>
+        /// The innovations for this population.
+        /// </summary>
+        private IInnovationList innovations;
 
         /// <summary>
         /// The percent to decrease "old" genom's score by.
         /// </summary>
-        public double OldAgePenalty { get; set; }
+        private double oldAgePenalty;
 
         /// <summary>
         /// The age at which to consider a genome "old".
         /// </summary>
-        public int OldAgeThreshold { get; set; }
+        private int oldAgeThreshold;
 
         /// <summary>
         /// The max population size.
         /// </summary>
-        public int PopulationSize { get; set; }
+        private int populationSize;
 
         /// <summary>
         /// The survival rate.
         /// </summary>
-        public double SurvivalRate { get; set; }
+        private double survivalRate;
 
         /// <summary>
         /// The age, below which, a genome is considered "young".
         /// </summary>
-        public int YoungBonusAgeThreshold { get; set; }
+        private int youngBonusAgeThreshold;
 
         /// <summary>
         /// The bonus given to "young" genomes.
         /// </summary>
-        public double YoungScoreBonus { get; set; }
+        private double youngScoreBonus;
+
+        /// <summary>
+        /// A list of innovations in this population.
+        /// </summary>
+        public IInnovationList Innovations 
+        {
+            get
+            {
+                return this.innovations;
+            }
+            set
+            {
+                this.innovations = value;
+            }   
+        }
+
+        /// <summary>
+        /// The percent to decrease "old" genom's score by.
+        /// </summary>
+        public double OldAgePenalty 
+        {
+            get
+            {
+                return this.oldAgePenalty;
+            }
+            set
+            {
+                this.oldAgePenalty = value;
+            }  
+        }
+
+        /// <summary>
+        /// The age at which to consider a genome "old".
+        /// </summary>
+        public int OldAgeThreshold 
+        {
+            get
+            {
+                return this.oldAgeThreshold;
+            }
+            set
+            {
+                this.oldAgeThreshold = value;
+            } 
+        }
+
+        /// <summary>
+        /// The max population size.
+        /// </summary>
+        public int PopulationSize 
+        {
+            get
+            {
+                return this.populationSize;
+            }
+            set
+            {
+                this.populationSize = value;
+            } 
+        }
+
+        /// <summary>
+        /// The survival rate.
+        /// </summary>
+        public double SurvivalRate 
+        {
+            get
+            {
+                return this.survivalRate;
+            }
+            set
+            {
+                this.survivalRate = value;
+            } 
+        }
+
+        /// <summary>
+        /// The age, below which, a genome is considered "young".
+        /// </summary>
+        public int YoungBonusAgeThreshold 
+        {
+            get
+            {
+                return this.youngBonusAgeThreshold;
+            }
+            set
+            {
+                this.youngBonusAgeThreshold = value;
+            }
+        }
+
+        /// <summary>
+        /// The bonus given to "young" genomes.
+        /// </summary>
+        public double YoungScoreBonus 
+        {
+            get
+            {
+                return this.youngScoreBonus;
+            }
+            set
+            {
+                this.youngScoreBonus = value;
+            }
+        }
 
         /// <summary>
         /// Generate gene id's.
@@ -199,7 +316,39 @@ namespace Encog.Solve.Genetic.Population
         {
             genomes.Sort();
         }
+        public string Description
+        {
+            get
+            {
+                return this.description;
+            }
+            set
+            {
+                this.description = value;
+            }
+        }
 
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                this.name = value;
+            }
+        }
+
+        public IPersistor CreatePersistor()
+        {
+            return new GenericPersistor(typeof(BasicPopulation));
+        }
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

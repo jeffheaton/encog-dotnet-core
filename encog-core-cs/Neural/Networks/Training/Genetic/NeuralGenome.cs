@@ -29,8 +29,6 @@ namespace Encog.Neural.Networks.Training.Genetic
         public NeuralGenome(NeuralGeneticAlgorithm nga, BasicNetwork network)
             : base(nga.Helper)
         {
-
-            this.neuralGenetic = nga;
             this.Organism = network;
             this.networkChromosome = new Chromosome();
 
@@ -46,11 +44,6 @@ namespace Encog.Neural.Networks.Training.Genetic
 
             Encode();
         }
-
-        /// <summary>
-        /// The genetic algorithm that uses this chromosome.
-        /// </summary>
-        private NeuralGeneticAlgorithm neuralGenetic;
 
         /// <summary>
         /// Decode the genome to a network.

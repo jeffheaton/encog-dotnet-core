@@ -92,7 +92,7 @@ namespace Encog.Util
                 result.Add(field);
             }
 
-            if( c.BaseType!=null )
+            if (c.BaseType != null)
                 GetAllFields(c.BaseType, result);
         }
 
@@ -104,7 +104,7 @@ namespace Encog.Util
         /// <returns>True if the object is simple.</returns>
         public static bool IsSimple(Type t)
         {
-            return (t == typeof(File)) || (t == typeof(String) ) || (t == typeof(int)) || (t == typeof(double) ) || (t == typeof(float) ) || (t==typeof(short)) || (t==typeof(char) || (t==typeof(bool)));
+            return (t == typeof(File)) || (t == typeof(String)) || (t == typeof(long)) || (t == typeof(int)) || (t == typeof(double)) || (t == typeof(float)) || (t == typeof(short)) || (t == typeof(char) || (t == typeof(bool)));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Encog.Util
                     int idx = line.LastIndexOf('.');
                     if (idx != -1)
                     {
-                        String simpleName = line.Substring(idx+1);
+                        String simpleName = line.Substring(idx + 1);
                         ReflectionUtil.classMap[simpleName] = line;
                     }
                 }
@@ -221,6 +221,24 @@ namespace Encog.Util
         private ReflectionUtil()
         {
 
+        }
+
+        /// <summary>
+        /// Resolve an enumeration.
+        /// </summary>
+        /// <param name="field">The field to resolve.</param>
+        /// <param name="value">The value to get the enum for.</param>
+        /// <returns>The enum that was resolved.</returns>
+        public static Object ResolveEnum(FieldInfo field, FieldInfo value)
+        {
+            Type type = field.GetType();
+            Object[] objs = type.GetMembers(BindingFlags.Public | BindingFlags.Static);
+            foreach (MemberInfo obj in objs)
+            {
+                if (obj.Name.Equals(value))
+                    return obj;
+            }
+            return null;
         }
 
     }

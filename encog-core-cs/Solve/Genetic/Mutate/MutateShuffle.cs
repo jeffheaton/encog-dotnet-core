@@ -55,7 +55,7 @@ namespace Encog.Solve.Genetic.Mutate
             chromosome.Genes.Remove(gene1);
             chromosome.Genes.Remove(gene2);
 
-            // insert them back in, opposit order
+            // insert them back in, reverse order
             chromosome.Genes.Insert(iswap1, gene2);
             chromosome.Genes.Insert(iswap2, gene1);
         }
