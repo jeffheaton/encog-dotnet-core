@@ -67,11 +67,6 @@ namespace Encog.Solve.Genetic.Species
         double NumToSpawn { get; set; }
 
         /// <summary>
-        /// The number of spawns this species requires.
-        /// </summary>
-        double SpawnsRequired { get; set; }
-
-        /// <summary>
         /// The species ID.
         /// </summary>
         long SpeciesID { get; set; }

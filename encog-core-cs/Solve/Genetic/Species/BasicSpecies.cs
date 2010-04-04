@@ -39,13 +39,6 @@ namespace Encog.Solve.Genetic.Species
         private IGenome leader;
 
         /// <summary>
-        /// The number of genomes this species will try to spawn into the
-        /// next generation.
-        /// </summary>
-        [EGAttribute]
-        private double numToSpawn;
-
-        /// <summary>
         /// The number of spawns this species requires.
         /// </summary>
         [EGAttribute]
@@ -126,21 +119,6 @@ namespace Encog.Solve.Genetic.Species
         {
             get
             {
-                return this.numToSpawn;
-            }
-            set
-            {
-                this.numToSpawn = value;
-            }
-        }
-
-        /// <summary>
-        /// The number of spawns this species requires.
-        /// </summary>
-        public double SpawnsRequired 
-        {
-            get
-            {
                 return this.spawnsRequired;
             }
             set
@@ -201,7 +179,7 @@ namespace Encog.Solve.Genetic.Species
             GensNoImprovement = 0;
             Age = 0;
             Leader = first;
-            SpawnsRequired = 0;
+            spawnsRequired = 0;
             members.Add(first);
         }
 
@@ -261,10 +239,10 @@ namespace Encog.Solve.Genetic.Species
         /// </summary>
         public void CalculateSpawnAmount()
         {
-            this.SpawnsRequired = 0;
+            this.spawnsRequired = 0;
             foreach (IGenome genome in members)
             {
-                SpawnsRequired += genome.AmountToSpawn;
+                spawnsRequired += genome.AmountToSpawn;
             }
 
         }
@@ -326,7 +304,7 @@ namespace Encog.Solve.Genetic.Species
 
             GensNoImprovement++;
 
-            SpawnsRequired = 0;
+            spawnsRequired = 0;
 
         }
 

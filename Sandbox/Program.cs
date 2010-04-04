@@ -13,6 +13,9 @@ using Encog.Neural.Networks.Flat;
 using Encog.Neural.Data.Basic;
 using Cloo;
 using Encog.Util.CL.Kernels;
+using Encog.Neural.Networks.Training;
+using Encog.Neural.Activation;
+using Encog.Neural.Networks.Training.NEAT;
 
 namespace Sandbox
 {
@@ -207,6 +210,32 @@ kernel void SingleNetworkCalculate(
             Console.WriteLine("Done");
         }
 
+        public static void XORNEAT()
+        {
+            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+
+            ICalculateScore score = new TrainingSetScore(trainingSet);
+            // train the neural network
+            ActivationStep step = new ActivationStep();
+            step.Center = 0.5;
+
+            NEATTraining train = new NEATTraining(
+                    score, 2, 1, 1000);
+            train.OutputActivationFunction = step;
+
+            int epoch = 1;
+
+            do
+            {
+                train.Iteration();
+                Console.WriteLine("Epoch #" + epoch + " Error:" + train.Error);
+                epoch++;
+            } while ((train.Error > 0.001));
+
+            BasicNetwork network = train.Network;
+
+        }
+
         public static void train()
         {
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
@@ -231,7 +260,8 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train();
+                //train();
+                XORNEAT();
             }
             //catch (Exception e)
             {
