@@ -181,6 +181,7 @@
     <Compile Include="Neural\Networks\Pattern\HopfieldPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\INeuralNetworkPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\JordanPattern.cs" />
+    <Compile Include="Neural\Networks\Pattern\NEATPattern.cs" />
     <Compile Include="Neural\Networks\Pattern\PatternConst.cs" />
     <Compile Include="Neural\Networks\Pattern\PatternError.cs" />
     <Compile Include="Neural\Networks\Pattern\RadialBasisPattern.cs" />

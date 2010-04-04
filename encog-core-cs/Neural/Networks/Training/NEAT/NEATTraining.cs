@@ -11,6 +11,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Genetic;
 using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
+using Encog.Neural.Networks.Layers;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -165,6 +166,12 @@ namespace Encog.Neural.Networks.Training.NEAT
             this.inputCount = genome.InputCount;
             this.outputCount = genome.OutputCount;
 
+            foreach (IGenome obj in population.Genomes)
+            {
+                NEATGenome neat = (NEATGenome)obj;
+                neat.GA = this;
+            }
+
             Init();
         }
 
@@ -197,6 +204,32 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
 
            Init();
+        }
+
+        /// <summary>
+        /// Construct a NEAT training class.
+        /// </summary>
+        /// <param name="score">How to score the networks.</param>
+        /// <param name="network">The network to base this on.</param>
+        /// <param name="population">The population to use.</param>
+        public NEATTraining(ICalculateScore score, BasicNetwork network,
+        IPopulation population)
+        {
+            ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
+            ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
+            this.CalculateScore = new GeneticScoreAdapter(score);
+            this.Comparator = new GenomeComparator(CalculateScore);
+            this.inputCount = inputLayer.NeuronCount;
+            this.outputCount = outputLayer.NeuronCount;
+            this.Population = population;
+
+            foreach (IGenome obj in population.Genomes)
+            {
+                NEATGenome neat = (NEATGenome)obj;
+                neat.GA = this;
+            }
+
+            Init();
         }
 
         /// <summary>
@@ -242,12 +275,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             else
             {
                 bestEverScore = double.MinValue;
-            }
-
-            foreach (IGenome genome2 in Population.Genomes)
-            {
-                genome2.Decode();
-                PerformScoreCalculation(genome2);
             }
 
             ResetAndKill();
@@ -728,15 +755,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             for (int i = 0; i < newPop.Count; i++)
                 Population.Add(newPop[i]);
 
-            foreach (IGenome genome2 in Population.Genomes)
-            {
-                if (genome2.Organism == null)
-                {
-                    genome2.Decode();
-                    PerformScoreCalculation(genome2);
-                }
-            }
-
             ResetAndKill();
             SortAndRecord();
             SpeciateAndCalculateSpawnLevels();
@@ -771,6 +789,12 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         public void SortAndRecord()
         {
+            foreach (IGenome genome in this.Population.Genomes)
+            {
+                genome.Decode();
+                PerformScoreCalculation(genome);
+            }
+
             Population.Sort();
 
             bestEverScore = Comparator.BestScore(Error, bestEverScore);

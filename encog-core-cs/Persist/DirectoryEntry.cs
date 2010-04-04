@@ -62,10 +62,16 @@ namespace Encog.Persist
         /// Construct a directory entry for the specified object.
         /// </summary>
         /// <param name="obj">The Encog object.</param>
-        public DirectoryEntry(IEncogPersistedObject obj) :
-            this(obj.GetType().Name, obj.Name, obj.Description)
+        public DirectoryEntry(IEncogPersistedObject obj)
         {
+            String type = obj.GetType().Name;
 
+            if (type.Equals("BasicNeuralDataSet"))
+                type = EncogPersistedCollection.TYPE_TRAINING;
+
+            this.type = type;
+            this.description = obj.Description;
+            this.name = obj.Name;
         }
 
         /// <summary>

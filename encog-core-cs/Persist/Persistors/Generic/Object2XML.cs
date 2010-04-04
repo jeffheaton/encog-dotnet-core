@@ -57,6 +57,8 @@ namespace Encog.Persist.Persistors.Generic
         /// </summary>
         private ObjectTagger tagger = new ObjectTagger();
 
+        public static readonly String REFF_ID = "idx";
+
         /// <summary>
         /// Save the object to XML.
         /// </summary>
@@ -171,7 +173,7 @@ namespace Encog.Persist.Persistors.Generic
             if (this.tagger.HasReference(obj))
             {
                 int id = this.tagger.GetReference(obj);
-                this.xmlOut.AddAttribute("id", "" + id);
+                this.xmlOut.AddAttribute(REFF_ID, "" + id);
             }
 
             // get all fields

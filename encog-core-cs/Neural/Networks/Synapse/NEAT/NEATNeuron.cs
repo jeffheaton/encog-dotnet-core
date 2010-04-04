@@ -24,6 +24,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// The activation response. This is evolved to allow NEAT to scale the slope
         /// of the activation function.
         /// </summary>
+        [EGAttribute]
         private double activationResponse;
 
         /// <summary>
@@ -40,11 +41,13 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <summary>
         /// The type of neuron this is.
         /// </summary>
+        [EGAttribute]
         private NEATNeuronType neuronType;
 
         /// <summary>
         /// The output from the neuron.
         /// </summary>
+        [EGAttribute]
         private double output;
 
         /// <summary>
@@ -79,6 +82,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <summary>
         /// The sum activation.
         /// </summary>
+        [EGAttribute]
         private double sumActivation;
 
         /// <summary>
@@ -102,6 +106,13 @@ namespace Encog.Neural.Networks.Synapse.NEAT
             posY = 0;
             output = 0;
             sumActivation = 0;
+        }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATNeuron()
+        {
         }
 
         /// <summary>

@@ -15,84 +15,99 @@ namespace Encog.Neural.Networks.Synapse.NEAT
     /// 
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
-    
+
     public class NEATLink
     {
-        /**
-	 * The source neuron.
-	 */
-	[EGReference]
-	private NEATNeuron fromNeuron;
+        /// <summary>
+        /// The source neuron.
+        /// </summary>
+        [EGReference]
+        private NEATNeuron fromNeuron;
 
-	/**
-	 * Is this link recurrent.
-	 */
-	private bool recurrent;
+        /// <summary>
+        /// Is this link recurrent.
+        /// </summary>
+        [EGAttribute]
+        private bool recurrent;
 
-	/**
-	 * The target neuron.
-	 */
-	[EGReference]
-	private NEATNeuron toNeuron;
-	
-	/**
-	 * The weight between the two neurons.
-	 */
-	private double weight;
+        /// <summary>
+        /// The target neuron.
+        /// </summary>
+        [EGReference]
+        private NEATNeuron toNeuron;
 
-	/**
-	 * Construct a NEAT link.
-	 * @param weight The weight between the two neurons.
-	 * @param fromNeuron The source neuron.
-	 * @param toNeuron The target neuron.
-	 * @param recurrent Is this a recurrent link.
-	 */
-	public NEATLink(double weight, NEATNeuron fromNeuron,
-			NEATNeuron toNeuron, bool recurrent) {
-		this.weight = weight;
-		this.fromNeuron = fromNeuron;
-		this.toNeuron = toNeuron;
-		this.recurrent = recurrent;
-	}
+        /// <summary>
+        /// The weight between the two neurons.
+        /// </summary>
+        [EGAttribute]
+        private double weight;
 
-	/**
-	 * @return The source neuron.
-	 */
-	public NEATNeuron FromNeuron {
-        get
+        
+        /// <summary>
+        /// Construct a NEAT link. 
+        /// </summary>
+        /// <param name="weight">The weight between the two neurons.</param>
+        /// <param name="fromNeuron">The source neuron.</param>
+        /// <param name="toNeuron">The target neuron.</param>
+        /// <param name="recurrent">Is this a recurrent link.</param>
+        public NEATLink(double weight, NEATNeuron fromNeuron,
+                NEATNeuron toNeuron, bool recurrent)
         {
-		return fromNeuron;
+            this.weight = weight;
+            this.fromNeuron = fromNeuron;
+            this.toNeuron = toNeuron;
+            this.recurrent = recurrent;
         }
-	}
 
-	/**
-	 * @return The target neuron.
-	 */
-	public NEATNeuron ToNeuron {
-        get
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATLink()
         {
-		return toNeuron;
         }
-	}
 
-	/**
-	 * @return The weight of the link.
-	 */
-	public double Weight {
-        get
+        /// <summary>
+        /// The source neuron.
+        /// </summary>
+        public NEATNeuron FromNeuron
         {
-            return weight;
+            get
+            {
+                return fromNeuron;
+            }
         }
-	}
 
-	/**
-	 * @return True if this is a recurrent link.
-	 */
-	public bool IsRecurrent {
-        get
+        /// <summary>
+        /// The target neuron.
+        /// </summary>
+        public NEATNeuron ToNeuron
         {
-            return recurrent;
+            get
+            {
+                return toNeuron;
+            }
         }
-	}
+
+        /// <summary>
+        /// The weight of the link.
+        /// </summary>
+        public double Weight
+        {
+            get
+            {
+                return weight;
+            }
+        }
+
+        /// <summary>
+        /// True if this is a recurrent link.
+        /// </summary>
+        public bool IsRecurrent
+        {
+            get
+            {
+                return recurrent;
+            }
+        }
     }
 }

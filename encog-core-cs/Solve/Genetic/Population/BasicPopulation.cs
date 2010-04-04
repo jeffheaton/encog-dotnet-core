@@ -8,10 +8,12 @@ using Encog.Solve.Genetic.Innovation;
 using Encog.Solve.Genetic.Species;
 using Encog.Persist;
 using Encog.Persist.Persistors.Generic;
+using Encog.Persist.Attributes;
 
 namespace Encog.Solve.Genetic.Population
 {
-    public class BasicPopulation : IPopulation, IEncogPersistedObject
+    [EGReferenceable]
+    public class BasicPopulation : IPopulation
     {
         /// <summary>
         /// The name of this object.

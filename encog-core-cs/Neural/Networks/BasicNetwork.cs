@@ -68,7 +68,7 @@ namespace Encog.Neural.Networks
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNetwork : INetwork
+    public class BasicNetwork : INetwork, IContextClearable
     {
 
         /// <summary>
@@ -633,5 +633,28 @@ namespace Encog.Neural.Networks
 
             return result;
         }
+
+        /// <summary>
+        /// Clear any data from any context layers.
+        /// </summary>
+        public void ClearContext()
+        {
+            foreach (ILayer layer in this.structure.Layers)
+            {
+                if (layer is IContextClearable)
+                {
+                    ((IContextClearable)layer).ClearContext();
+                }
+            }
+
+            foreach (ISynapse synapse in this.structure.Synapses)
+            {
+                if (synapse is IContextClearable)
+                {
+                    ((IContextClearable)synapse).ClearContext();
+                }
+            }
+
+	}
     }
 }

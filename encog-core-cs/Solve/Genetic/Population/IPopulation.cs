@@ -5,13 +5,14 @@ using System.Text;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Innovation;
 using Encog.Solve.Genetic.Species;
+using Encog.Persist;
 
 namespace Encog.Solve.Genetic.Population
 {
     /// <summary>
     /// A population of genomes.
     /// </summary>
-    public interface IPopulation
+    public interface IPopulation: IEncogPersistedObject
     {
         /// <summary>
         /// Add a genome to the population.

@@ -7,6 +7,7 @@ using Encog.Solve.Genetic.Population;
 using Encog.Neural.Networks.Synapse.NEAT;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Genes;
+using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -24,11 +25,13 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// The next neuron id.
         /// </summary>
+        [EGAttribute]
         private long nextNeuronID = 0;
 
         /// <summary>
         /// The population.
         /// </summary>
+        [EGReference]
         private IPopulation population;
 
         /// <summary>
@@ -61,6 +64,13 @@ namespace Encog.Neural.Networks.Training.NEAT
                 Innovations.Add(innovation);
 
             }
+        }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATInnovationList()
+        {
         }
 
         

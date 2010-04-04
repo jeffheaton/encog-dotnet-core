@@ -449,7 +449,20 @@ namespace Encog.Persist
 
         }
 
-
+        /// <summary>
+        /// Determine if the specified resource exists. 
+        /// </summary>
+        /// <param name="name">The name of the resource to check.</param>
+        /// <returns>True if it exists.</returns>
+        public bool Exists(String name)
+        {
+            foreach (DirectoryEntry dir in this.directory)
+            {
+                if (dir.Name.Equals(name))
+                    return true;
+            }
+            return false;
+        }
 
     }
 }

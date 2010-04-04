@@ -9,6 +9,8 @@ using Encog.Neural.Networks.Synapse.NEAT;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil;
 using Encog.Neural.Activation;
+using Encog.Neural.Networks.Pattern;
+using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -41,38 +43,38 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// The number of inputs.
         /// </summary>
+        [EGAttribute]
         private int inputCount;
 
         /// <summary>
         /// The chromsome that holds the links.
         /// </summary>
+        [EGReference]
         private Chromosome linksChromosome;
 
         /// <summary>
         /// The network depth.
         /// </summary>
+        [EGAttribute]
         private int networkDepth;
 
         /// <summary>
         /// The chromosome that holds the neurons.
         /// </summary>
+        [EGReference]
         private Chromosome neuronsChromosome;
 
         /// <summary>
         /// The number of outputs.
         /// </summary>
+        [EGAttribute]
         private int outputCount;
 
         /// <summary>
         /// The species id.
         /// </summary>
+        [EGAttribute]
         private long speciesID;
-
-        /// <summary>
-        /// The owner object.
-        /// </summary>
-        private NEATTraining training;
-
 
         /// <summary>
         /// Default constructor.
@@ -86,7 +88,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         /// <param name="other">The other genome.</param>
         public NEATGenome(NEATGenome other)
-            : base(other.training)
+            : base(other.GA)
         {
 
             neuronsChromosome = new Chromosome();
@@ -100,7 +102,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             inputCount = other.inputCount;
             outputCount = other.outputCount;
             speciesID = other.speciesID;
-            training = other.training;
 
             // copy neurons
             foreach (IGene gene in other.Neurons.Genes)
@@ -147,7 +148,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             AdjustedScore = 0;
             this.inputCount = inputCount;
             this.outputCount = outputCount;
-            this.training = training;
         }
 
     
@@ -169,7 +169,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             this.outputCount = outputCount;
             AmountToSpawn = 0;
             speciesID = 0;
-            this.training = training;
 
             double inputRowSlice = 0.8 / (inputCount);
             neuronsChromosome = new Chromosome();
@@ -280,7 +279,7 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
 
             // check to see if this innovation has already been tried
-            NEATInnovation innovation = training.Innovations
+            NEATInnovation innovation = ((NEATTraining)GA).Innovations
                     .CheckInnovation(neuron1ID, neuron1ID,
                             NEATInnovationType.NewLink);
 
@@ -296,10 +295,10 @@ namespace Encog.Neural.Networks.Training.NEAT
             if (innovation == null)
             {
                 // new innovation
-                training.Innovations.CreateNewInnovation(neuron1ID, neuron2ID,
+                ((NEATTraining)GA).Innovations.CreateNewInnovation(neuron1ID, neuron2ID,
                         NEATInnovationType.NewLink);
 
-                long id2 = training.Population.AssignInnovationID();
+                long id2 = ((NEATTraining)GA).Population.AssignInnovationID();
 
                 NEATLinkGene linkGene = new NEATLinkGene(neuron1ID,
                         neuron2ID, true, id2, RangeRandomizer.Randomize(-1, 1),
@@ -386,7 +385,7 @@ namespace Encog.Neural.Networks.Training.NEAT
             double newWidth = (fromGene.SplitX + toGene.SplitX) / 2;
 
             // has this innovation already been tried?
-            NEATInnovation innovation = training.Innovations.CheckInnovation(
+            NEATInnovation innovation = ((NEATTraining)GA).Innovations.CheckInnovation(
                     from, to, NEATInnovationType.NewNeuron);
 
             // prevent chaining
@@ -403,7 +402,7 @@ namespace Encog.Neural.Networks.Training.NEAT
             if (innovation == null)
             {
                 // this innovation has not been tried, create it
-                long newNeuronID = training.Innovations
+                long newNeuronID = ((NEATTraining)GA).Innovations
                         .CreateNewInnovation(from, to,
                                 NEATInnovationType.NewNeuron,
                                 NEATNeuronType.Hidden, newWidth, newDepth);
@@ -412,9 +411,9 @@ namespace Encog.Neural.Networks.Training.NEAT
                         newNeuronID, newDepth, newWidth));
 
                 // add the first link
-                long link1ID = training.Population.AssignInnovationID();
+                long link1ID = ((NEATTraining)GA).Population.AssignInnovationID();
 
-                training.Innovations.CreateNewInnovation(from, newNeuronID,
+                ((NEATTraining)GA).Innovations.CreateNewInnovation(from, newNeuronID,
                         NEATInnovationType.NewLink);
 
                 NEATLinkGene link1 = new NEATLinkGene(from, newNeuronID,
@@ -423,9 +422,9 @@ namespace Encog.Neural.Networks.Training.NEAT
                 linksChromosome.Genes.Add(link1);
 
                 // add the second link
-                long link2ID = training.Population.AssignInnovationID();
+                long link2ID = ((NEATTraining)GA).Population.AssignInnovationID();
 
-                training.Innovations.CreateNewInnovation(newNeuronID, to,
+                ((NEATTraining)GA).Innovations.CreateNewInnovation(newNeuronID, to,
                         NEATInnovationType.NewLink);
 
                 NEATLinkGene link2 = new NEATLinkGene(newNeuronID, to, true,
@@ -439,10 +438,10 @@ namespace Encog.Neural.Networks.Training.NEAT
                 // existing innovation
                 long newNeuronID = innovation.NeuronID;
 
-                NEATInnovation innovationLink1 = training.Innovations
+                NEATInnovation innovationLink1 = ((NEATTraining)GA).Innovations
                         .CheckInnovation(from, newNeuronID,
                                 NEATInnovationType.NewLink);
-                NEATInnovation innovationLink2 = training.Innovations
+                NEATInnovation innovationLink2 = ((NEATTraining)GA).Innovations
                         .CheckInnovation(newNeuronID, to,
                                 NEATInnovationType.NewLink);
 
@@ -520,7 +519,10 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         public override void Decode()
         {
-            IList<NEATNeuron> neurons = new List<NEATNeuron>();
+            NEATPattern pattern = new NEATPattern();
+		
+		    IList<NEATNeuron> neurons = pattern.Neurons;
+
 
             foreach (IGene gene in Neurons.Genes)
             {
@@ -554,20 +556,13 @@ namespace Encog.Neural.Networks.Training.NEAT
                 }
             }
 
-            BasicLayer inputLayer = new BasicLayer(new ActivationLinear(),
-                    false, inputCount);
-            BasicLayer outputLayer = new BasicLayer(training
-                    .OutputActivationFunction, false, outputCount);
-            NEATSynapse synapse = new NEATSynapse(inputLayer, outputLayer,
-                    neurons, training.NeatActivationFunction, networkDepth);
-            synapse.Snapshot = this.training.Snapshot;
-            inputLayer.AddSynapse(synapse);
-            BasicNetwork network = new BasicNetwork();
-            network.TagLayer(BasicNetwork.TAG_INPUT, inputLayer);
-            network.TagLayer(BasicNetwork.TAG_OUTPUT, outputLayer);
-            network.Structure.FinalizeStructure();
-            Organism = network;
+            pattern.NEATActivation = (((NEATTraining)GA).NeatActivationFunction);
+            pattern.ActivationFunction = (((NEATTraining)GA).OutputActivationFunction);
+            pattern.InputNeurons = (inputCount);
+            pattern.OutputNeurons = (outputCount);
+            pattern.Snapshot = ((NEATTraining)GA).Snapshot;
 
+            Organism = pattern.Generate();
         }
 
         /// <summary>
@@ -870,5 +865,6 @@ namespace Encog.Neural.Networks.Training.NEAT
             result.Append(")");
             return result.ToString();
         }
+
     }
 }

@@ -37,7 +37,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
     /// 
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
-    public class NEATSynapse : ISynapse
+    public class NEATSynapse : ISynapse, IContextClearable
     {
         /// <summary>
         /// The activation function to use with the NEAT neurons.
@@ -53,6 +53,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <summary>
         /// The depth of the network.
         /// </summary>
+        [EGIgnore]
         private int networkDepth;
 
         /// <summary>
@@ -63,6 +64,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <summary>
         /// Should snapshot be used to calculate the output of the neural network.
         /// </summary>
+        [EGIgnore]
         private bool snapshot = false;
 
         /// <summary>
@@ -104,6 +106,13 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         }
 
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATSynapse()
+        {
+        }
+
+        /// <summary>
         /// A clone of this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
@@ -121,6 +130,11 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         public INeuralData Compute(INeuralData input)
         {
             INeuralData result = new BasicNeuralData(ToNeuronCount);
+
+            if (this.neurons.Count == 0)
+            {
+                throw new NeuralNetworkError("This network has not been evolved yet, it has no neurons in the NEAT synapse.");
+            }
 
             int flushCount = 1;
 
@@ -173,14 +187,6 @@ namespace Encog.Neural.Networks.Synapse.NEAT
                         result.Data[outputIndex++] = currentNeuron.Output;
                     }
                     index++;
-                }
-            }
-
-            if (snapshot)
-            {
-                foreach (NEATNeuron neuron in neurons)
-                {
-                    neuron.Output = 0;
                 }
             }
 
@@ -392,6 +398,13 @@ namespace Encog.Neural.Networks.Synapse.NEAT
             {
             }
         }
-    }
 
+        public void ClearContext()
+        {
+            foreach( NEATNeuron neurons in this.neurons )
+            {
+                neurons.Output = 0;
+            }
+        }
+    }
 }

@@ -90,10 +90,10 @@ namespace Encog.Persist.Persistors.Generic
                 }
 
                 // see if there is an id
-                if (key.Equals("id"))
+                if (key.Equals(Object2XML.REFF_ID))
                 {
                     int reff = int.Parse(this.xmlIn.LastTag
-                            .GetAttributeValue("id"));
+                            .GetAttributeValue(Object2XML.REFF_ID));
                     this.mapper.AddObjectMapping(reff, target);
                     continue;
                 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic.Genome;
 using Encog.MathUtil.Randomize;
+using Encog.Persist.Attributes;
 
 namespace Encog.Solve.Genetic.Species
 {
@@ -12,41 +13,170 @@ namespace Encog.Solve.Genetic.Species
         /// <summary>
         /// The age of this species.
         /// </summary>
-        public int Age { get; set; }
+        [EGAttribute]
+        private int age;
+
+        [EGIgnore]
+        private GeneticAlgorithm owner;
 
         /// <summary>
         /// The best score for this species.
         /// </summary>
-        public double BestScore { get; set; }
+        [EGAttribute]
+        private double bestScore;
 
         /// <summary>
         /// How many generations with no improvement.
         /// </summary>
-        public int GensNoImprovement { get; set; }
+        [EGAttribute]
+        private int gensNoImprovement;
 
         /// <summary>
         /// Get the leader for this species. The leader is the genome with
         /// the best score.
         /// </summary>
-        public IGenome Leader { get; set; }
+        [EGReference]
+        private IGenome leader;
 
         /// <summary>
         /// The number of genomes this species will try to spawn into the
         /// next generation.
         /// </summary>
-        public double NumToSpawn { get; set; }
+        [EGAttribute]
+        private double numToSpawn;
 
         /// <summary>
         /// The number of spawns this species requires.
         /// </summary>
-        public double SpawnsRequired { get; set; }
+        [EGAttribute]
+        private double spawnsRequired;
 
         /// <summary>
         /// The species ID.
         /// </summary>
-        public long SpeciesID { get; set; }
+        [EGAttribute]
+        private long speciesID;
 
-        public GeneticAlgorithm Owner { get; set; }
+        /// <summary>
+        /// The age of this species.
+        /// </summary>
+        public int Age 
+        {
+            get
+            {
+                return this.age;
+            }
+            set
+            {
+                this.age = value;
+            }
+        }
+
+        /// <summary>
+        /// The best score for this species.
+        /// </summary>
+        public double BestScore 
+        {
+            get
+            {
+                return this.bestScore;
+            }
+            set
+            {
+                this.bestScore = value;
+            }
+        }
+
+        /// <summary>
+        /// How many generations with no improvement.
+        /// </summary>
+        public int GensNoImprovement 
+        {
+            get
+            {
+                return this.gensNoImprovement;
+            }
+            set
+            {
+                this.gensNoImprovement = value;
+            }
+        }
+
+        /// <summary>
+        /// Get the leader for this species. The leader is the genome with
+        /// the best score.
+        /// </summary>
+        public IGenome Leader 
+        {
+            get
+            {
+                return this.leader;
+            }
+            set
+            {
+                this.leader = value;
+            }
+        }
+
+        /// <summary>
+        /// The number of genomes this species will try to spawn into the
+        /// next generation.
+        /// </summary>
+        public double NumToSpawn 
+        {
+            get
+            {
+                return this.numToSpawn;
+            }
+            set
+            {
+                this.numToSpawn = value;
+            }
+        }
+
+        /// <summary>
+        /// The number of spawns this species requires.
+        /// </summary>
+        public double SpawnsRequired 
+        {
+            get
+            {
+                return this.spawnsRequired;
+            }
+            set
+            {
+                this.spawnsRequired = value;
+            }
+        }
+
+        /// <summary>
+        /// The species ID.
+        /// </summary>
+        public long SpeciesID 
+        {
+            get
+            {
+                return this.speciesID;
+            }
+            set
+            {
+                this.speciesID = value;
+            }
+
+        }
+
+        public GeneticAlgorithm Owner 
+        {
+            get
+            {
+                return this.owner;
+            }
+            set
+            {
+                this.owner = value;
+            }
+        }
+
 
 
 
@@ -55,12 +185,13 @@ namespace Encog.Solve.Genetic.Species
          */
         private IList<IGenome> members = new List<IGenome>();
 
-        /**
-         * Construct a species.
-         * @param training
-         * @param first
-         * @param speciesID
-         */
+        
+        /// <summary>
+        /// Construct a species. 
+        /// </summary>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="first">The first genome.</param>
+        /// <param name="speciesID">The species id.</param>
         public BasicSpecies(GeneticAlgorithm training,
                 IGenome first, long speciesID)
         {
@@ -74,10 +205,11 @@ namespace Encog.Solve.Genetic.Species
             members.Add(first);
         }
 
-        /**
-         * Add a genome.
-         * @param genome The genome to add.
-         */
+        
+        /// <summary>
+        /// Add a genome. 
+        /// </summary>
+        /// <param name="genome">The genome to add.</param>
         public void AddMember(IGenome genome)
         {
 

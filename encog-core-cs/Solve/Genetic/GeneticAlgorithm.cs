@@ -8,6 +8,7 @@ using Encog.Solve.Genetic.Crossover;
 using Encog.Solve.Genetic.Mutate;
 using Encog.Solve.Genetic.Population;
 using Encog.MathUtil;
+using Encog.Neural.Networks;
 
 namespace Encog.Solve.Genetic
 {
@@ -65,6 +66,7 @@ namespace Encog.Solve.Genetic
         /// <param name="g">The genome to calculate for.</param>
         public void PerformScoreCalculation(IGenome g)
         {
+            ((IContextClearable)g.Organism).ClearContext();
             double score = CalculateScore.CalculateScore(g);
             g.Score = score;
         }

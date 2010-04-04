@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic.Genes;
+using Encog.Persist.Attributes;
 
 namespace Encog.Solve.Genetic.Genome
 {
@@ -14,6 +15,7 @@ namespace Encog.Solve.Genetic.Genome
     /// 
     /// Genomes in this genetic algorithm consist of one or more chromosomes.
     /// </summary>
+    [EGReferenceable]
     public class Chromosome
     {
         /// <summary>

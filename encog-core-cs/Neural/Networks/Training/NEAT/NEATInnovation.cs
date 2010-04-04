@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Solve.Genetic.Innovation;
 using Encog.Neural.Networks.Synapse.NEAT;
+using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -12,36 +13,43 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// The from neuron id.
         /// </summary>
+        [EGAttribute]
         private long fromNeuronID;
 
         /// <summary>
         /// The type of innovation.
         /// </summary>
+        [EGAttribute]
         private NEATInnovationType innovationType;
 
         /// <summary>
         /// The neuron id.
         /// </summary>
+        [EGAttribute]
         private long neuronID;
 
         /// <summary>
         /// The type of neuron, or none, if this is a link innovation.
         /// </summary>
+        [EGAttribute]
         private NEATNeuronType neuronType;
 
         /// <summary>
         /// The split x property.
         /// </summary>
+        [EGAttribute]
         private double splitX;
 
         /// <summary>
         /// The split y property.
         /// </summary>
+        [EGAttribute]
         private double splitY;
 
         /// <summary>
         /// The to neuron's id.
         /// </summary>
+        [EGAttribute]
         private long toNeuronID;
 
         /// <summary>
@@ -64,6 +72,13 @@ namespace Encog.Neural.Networks.Training.NEAT
             splitX = 0;
             splitY = 0;
             neuronType = NEATNeuronType.None;
+        }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public NEATInnovation()
+        {
         }
 
 
@@ -192,6 +207,31 @@ namespace Encog.Neural.Networks.Training.NEAT
             {
                 return toNeuronID;
             }
+        }
+
+        public String ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append("[NeatInnovation:type=");
+            switch (this.innovationType)
+            {
+                case NEATInnovationType.NewLink:
+                    result.Append("link");
+                    break;
+                case NEATInnovationType.NewNeuron:
+                    result.Append("neuron");
+                    break;
+            }
+            result.Append(",from=");
+            result.Append(this.fromNeuronID);
+            result.Append(",to=");
+            result.Append(this.toNeuronID);
+            result.Append(",splitX=");
+            result.Append(this.splitX);
+            result.Append(",splitY=");
+            result.Append(this.splitY);
+            result.Append("]");
+            return result.ToString();
         }
     }
 }
