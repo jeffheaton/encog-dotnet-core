@@ -105,7 +105,8 @@ Encog.Neural.Data.XML.PropertyData
 Encog.Neural.Data.XML.XMLNeuralDataSet
 Encog.Neural.Networks.BasicNetwork
 Encog.Neural.Networks.Flat.FlatNetwork
-Encog.Neural.Networks.Flat.GradientWorker
+Encog.Neural.Networks.Flat.GradientWorkerCPU
+Encog.Neural.Networks.Flat.GradientWorkerGPU
 Encog.Neural.Networks.Flat.TrainFlatNetwork
 Encog.Neural.Networks.Flat.TrainFlatNetworkMulti
 Encog.Neural.Networks.Flat.ValidateForFlat
@@ -136,6 +137,7 @@ Encog.Neural.Networks.Pattern.FeedFowardPattern
 Encog.Neural.Networks.Pattern.HopfieldPattern
 Encog.Neural.Networks.Pattern.INeuralNetworkPattern
 Encog.Neural.Networks.Pattern.JordanPattern
+Encog.Neural.Networks.Pattern.NEATPattern
 Encog.Neural.Networks.Pattern.PatternConst
 Encog.Neural.Networks.Pattern.PatternError
 Encog.Neural.Networks.Pattern.RadialBasisPattern
@@ -158,6 +160,7 @@ Encog.Neural.Networks.Synapse.NEAT.NEATNeuron
 Encog.Neural.Networks.Synapse.NEAT.NEATNeuronType
 Encog.Neural.Networks.Synapse.NEAT.NEATSynapse
 Encog.Neural.Networks.Synapse.OneToOneSynapse
+Encog.Neural.Networks.Synapse.PartialSynapse
 Encog.Neural.Networks.Synapse.SynapseType
 Encog.Neural.Networks.Synapse.WeightedSynapse
 Encog.Neural.Networks.Synapse.WeightlessSynapse
@@ -334,11 +337,12 @@ Encog.C:.shared.encog-cs.encog-core.encog-core-cs.StatusReportable
 Encog.Util.Banchmark.EncogBenchmark
 Encog.Util.Banchmark.Evaluate
 Encog.Util.Banchmark.RandomTrainingFactory
-Encog.Util.CL.CLPayload
 Encog.Util.CL.EncogCL
 Encog.Util.CL.EncogCLAdapter
-Encog.Util.CL.EncogCLVector
-Encog.Util.CL.EncogKernel
+Encog.Util.CL.Kernels.EncogKernel
+Encog.Util.CL.Kernels.KernelNetworkCalculate
+Encog.Util.CL.Kernels.KernelNetworkTrain
+Encog.Util.CL.Kernels.KernelSingleNetworkCalculate
 Encog.Util.Concurrency.DetermineWorkload
 Encog.Util.Concurrency.EncogConcurrency
 Encog.Util.Concurrency.EncogTask

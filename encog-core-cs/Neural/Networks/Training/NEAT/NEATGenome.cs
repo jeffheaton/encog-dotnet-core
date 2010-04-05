@@ -94,6 +94,9 @@ namespace Encog.Neural.Networks.Training.NEAT
             neuronsChromosome = new Chromosome();
             linksChromosome = new Chromosome();
 
+            this.Chromosomes.Add(neuronsChromosome);
+            this.Chromosomes.Add(linksChromosome);
+
             GenomeID = other.GenomeID;
             networkDepth = other.networkDepth;
             Score = other.Score;

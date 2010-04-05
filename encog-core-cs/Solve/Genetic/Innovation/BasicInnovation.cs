@@ -20,6 +20,16 @@ namespace Encog.Solve.Genetic.Innovation
         /// <summary>
         /// The innovation id.
         /// </summary>
-        public long InnovationID { get; set; }
+        public long InnovationID 
+        {
+            get
+            {
+                return this.innovationID;
+            }
+            set
+            {
+                this.innovationID = value;
+            }
+        }
     }
 }

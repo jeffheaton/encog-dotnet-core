@@ -81,7 +81,6 @@ namespace Encog.Solve.Genetic.Genome
         /// <summary>
         /// The chromosomes for this gene.
         /// </summary>
-        [EGReference]
         private IList<Chromosome> chromosomes = new List<Chromosome>();
 
         /// <summary>

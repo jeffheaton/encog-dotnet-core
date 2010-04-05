@@ -16,6 +16,8 @@ using Encog.Util.CL.Kernels;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.NEAT;
+using Encog.Persist;
+using System.IO;
 
 namespace Sandbox
 {
@@ -220,7 +222,7 @@ kernel void SingleNetworkCalculate(
             step.Center = 0.5;
 
             NEATTraining train = new NEATTraining(
-                    score, 2, 1, 1000);
+                    score, 2, 1, 100);
             train.OutputActivationFunction = step;
 
             int epoch = 1;
@@ -234,6 +236,9 @@ kernel void SingleNetworkCalculate(
 
             BasicNetwork network = train.Network;
 
+            EncogPersistedCollection encog = new EncogPersistedCollection("d:\\test.eg",FileMode.Create);
+            //encog.Add("test", network);
+            encog.Add("test2", train.Population);
         }
 
         public static void train()
