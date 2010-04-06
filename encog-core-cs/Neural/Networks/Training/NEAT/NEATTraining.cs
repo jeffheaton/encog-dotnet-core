@@ -657,7 +657,7 @@ namespace Encog.Neural.Networks.Training.NEAT
 
                         if (!bChosenBestYet)
                         {
-                            baby = new NEATGenome((NEATGenome)s.Leader);
+                            baby = (NEATGenome)s.Leader;
 
                             bChosenBestYet = true;
                         }
@@ -733,6 +733,9 @@ namespace Encog.Neural.Networks.Training.NEAT
                             // sort the baby's genes by their innovation numbers
                             baby.SortGenes();
 
+                            if (newPop.Contains(baby))
+                                throw new EncogError("add");
+
                             newPop.Add(baby);
 
                             ++numSpawnedSoFar;
@@ -748,17 +751,21 @@ namespace Encog.Neural.Networks.Training.NEAT
 
             while (newPop.Count < Population.Genomes.Count)
             {
-                newPop.Add(TournamentSelection(Population.Genomes.Count / 5));
+                NEATGenome newOne = TournamentSelection(Population.Genomes.Count / 5);
+                newPop.Add(newOne);
             }
 
             Population.Clear();
             for (int i = 0; i < newPop.Count; i++)
+            {
                 Population.Add(newPop[i]);
+            }
 
             ResetAndKill();
             SortAndRecord();
             SpeciateAndCalculateSpawnLevels();
         }
+
 
         /// <summary>
         /// Reset for an iteration.

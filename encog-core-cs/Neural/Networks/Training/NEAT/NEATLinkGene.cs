@@ -37,7 +37,6 @@ namespace Encog.Neural.Networks.Training.NEAT
         [EGAttribute]
         private long toNeuronID;
 
-        [EGAttribute]
         private double weight;
 
         /// <summary>
