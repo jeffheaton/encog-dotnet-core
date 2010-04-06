@@ -23,6 +23,7 @@ namespace Encog.Neural.Networks.Training.NEAT
     /// 
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
+    [EGReferenceable]
     public class NEATGenome : BasicGenome
     {
         /// <summary>
@@ -151,6 +152,9 @@ namespace Encog.Neural.Networks.Training.NEAT
             AdjustedScore = 0;
             this.inputCount = inputCount;
             this.outputCount = outputCount;
+
+            this.Chromosomes.Add(neuronsChromosome);
+            this.Chromosomes.Add(linksChromosome);
         }
 
     
@@ -206,6 +210,9 @@ namespace Encog.Neural.Networks.Training.NEAT
                                     1), false));
                 }
             }
+
+            this.Chromosomes.Add(neuronsChromosome);
+            this.Chromosomes.Add(linksChromosome);
 
         }
 
