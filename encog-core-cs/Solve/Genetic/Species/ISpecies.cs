@@ -12,18 +12,6 @@ namespace Encog.Solve.Genetic.Species
     public interface ISpecies
     {
         /// <summary>
-        /// Add a genome to this species.
-        /// </summary>
-        /// <param name="genome">The genome to add.</param>
-        void AddMember(IGenome genome);
-
-        /// <summary>
-        /// Adjust the score of this species. This is where old age and youth
-        /// bonus/penalties happen.
-        /// </summary>
-        void AdjustScore();
-
-        /// <summary>
         /// Calculate the amount that a species will spawn.
         /// </summary>
         void CalculateSpawnAmount();
@@ -37,12 +25,12 @@ namespace Encog.Solve.Genetic.Species
         /// <summary>
         /// The age of this species.
         /// </summary>
-        int Age { get; }
+        int Age { get; set; }
 
         /// <summary>
         /// The best score for this species.
         /// </summary>
-        double BestScore { get; }
+        double BestScore { get; set; }
 
         /// <summary>
         /// How many generations with no improvement.

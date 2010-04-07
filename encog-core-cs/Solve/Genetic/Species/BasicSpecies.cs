@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Solve.Genetic.Genome;
 using Encog.MathUtil.Randomize;
 using Encog.Persist.Attributes;
+using Encog.Solve.Genetic.Population;
 
 namespace Encog.Solve.Genetic.Species
 {
@@ -15,9 +16,6 @@ namespace Encog.Solve.Genetic.Species
         /// </summary>
         [EGAttribute]
         private int age;
-
-        [EGIgnore]
-        private GeneticAlgorithm owner;
 
         /// <summary>
         /// The best score for this species.
@@ -49,6 +47,12 @@ namespace Encog.Solve.Genetic.Species
         /// </summary>
         [EGAttribute]
         private long speciesID;
+
+        /// <summary>
+        /// The population this species belongs to.
+        /// </summary>
+        [EGReference]
+        private IPopulation population;
 
         /// <summary>
         /// The age of this species.
@@ -143,15 +147,15 @@ namespace Encog.Solve.Genetic.Species
 
         }
 
-        public GeneticAlgorithm Owner 
+        public IPopulation Population 
         {
             get
             {
-                return this.owner;
+                return this.population;
             }
             set
             {
-                this.owner = value;
+                this.population = value;
             }
         }
 
@@ -170,10 +174,10 @@ namespace Encog.Solve.Genetic.Species
         /// <param name="training">The training data to use.</param>
         /// <param name="first">The first genome.</param>
         /// <param name="speciesID">The species id.</param>
-        public BasicSpecies(GeneticAlgorithm training,
+        public BasicSpecies(IPopulation population,
                 IGenome first, long speciesID)
         {
-            this.Owner = training;
+            this.Population = population;
             this.SpeciesID = speciesID;
             BestScore = first.Score;
             GensNoImprovement = 0;
@@ -183,57 +187,7 @@ namespace Encog.Solve.Genetic.Species
             members.Add(first);
         }
 
-        
-        /// <summary>
-        /// Add a genome. 
-        /// </summary>
-        /// <param name="genome">The genome to add.</param>
-        public void AddMember(IGenome genome)
-        {
-
-            if (Owner.Comparator.IsBetterThan(genome.Score,
-                    BestScore))
-            {
-                BestScore = genome.Score;
-                GensNoImprovement = 0;
-                Leader = genome;
-            }
-
-            members.Add(genome);
-
-        }
-
-        /// <summary>
-        /// Adjust the score.  This is to give bonus or penalty.
-        /// The adjustment goes into the adjusted score.
-        /// </summary>
-        public void AdjustScore()
-        {
-
-            foreach (IGenome member in members)
-            {
-                double score = member.Score;
-
-                // apply a youth bonus
-                if (Age < Owner.Population.YoungBonusAgeThreshold)
-                {
-                    score = Owner.Comparator.ApplyBonus(score,
-                            Owner.Population.YoungScoreBonus);
-                }
-                // apply an old age penalty
-                if (Age > Owner.Population.OldAgeThreshold)
-                {
-                    score = Owner.Comparator.ApplyPenalty(score,
-                            Owner.Population.OldAgePenalty);
-                }
-
-                double adjustedScore = score / members.Count;
-
-                member.AdjustedScore = adjustedScore;
-
-            }
-        }
-
+       
         /// <summary>
         /// Calculate the amount to spawn.
         /// </summary>
@@ -269,7 +223,7 @@ namespace Encog.Solve.Genetic.Species
                 // If there are many, then choose the population based on survival rate
                 // and select a random genome.
 
-                int maxIndexSize = (int)(Owner.Population
+                int maxIndexSize = (int)(this.Population
                         .SurvivalRate * members.Count) + 1;
                 int theOne = (int)RangeRandomizer.Randomize(0, maxIndexSize);
                 baby = members[theOne];

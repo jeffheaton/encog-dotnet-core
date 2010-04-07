@@ -9,6 +9,7 @@ using Encog.Solve.Genetic.Mutate;
 using Encog.Solve.Genetic.Population;
 using Encog.MathUtil;
 using Encog.Neural.Networks;
+using Encog.Solve.Genetic.Species;
 
 namespace Encog.Solve.Genetic
 {
@@ -124,6 +125,24 @@ namespace Encog.Solve.Genetic
 
             // sort the next generation
             Population.Sort();
+        }
+
+        /// <summary>
+        /// Add a genome. 
+        /// </summary>
+        /// <param name="genome">The genome to add.</param>
+        public void AddSpeciesMember(ISpecies species, IGenome genome)
+        {
+
+            if (this.Comparator.IsBetterThan(genome.Score, species.BestScore))
+            {
+                species.BestScore = genome.Score;
+                species.GensNoImprovement = 0;
+                species.Leader = genome;
+            }
+
+            species.Members.Add(genome);
+
         }
     }
 }

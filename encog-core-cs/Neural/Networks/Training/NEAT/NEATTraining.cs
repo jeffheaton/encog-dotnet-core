@@ -347,7 +347,28 @@ namespace Encog.Neural.Networks.Training.NEAT
         {
             foreach (ISpecies s in this.Population.Species)
             {
-                s.AdjustScore();
+                foreach (IGenome member in s.Members )
+                {
+                    double score = member.Score;
+
+                    // apply a youth bonus
+                    if (s.Age < this.Population.YoungBonusAgeThreshold)
+                    {
+                        score = this.Comparator.ApplyBonus(score,
+                                this.Population.YoungScoreBonus);
+                    }
+                    // apply an old age penalty
+                    if (s.Age > this.Population.OldAgeThreshold)
+                    {
+                        score = this.Comparator.ApplyPenalty(score,
+                                this.Population.OldAgePenalty);
+                    }
+
+                    double adjustedScore = score / s.Members.Count;
+
+                    member.AdjustedScore = adjustedScore;
+
+                }
             }
         }
 
@@ -829,7 +850,7 @@ namespace Encog.Neural.Networks.Training.NEAT
 
                     if (compatibility <= ParamCompatibilityThreshold)
                     {
-                        s.AddMember(genome);
+                        AddSpeciesMember(s, genome);
                         genome.SpeciesID = s.SpeciesID;
                         added = true;
                         break;
@@ -841,7 +862,7 @@ namespace Encog.Neural.Networks.Training.NEAT
                 if (!added)
                 {
                     Population.Species.Add(
-                            new BasicSpecies(this, genome, Population
+                            new BasicSpecies(this.Population, genome, Population
                                     .AssignSpeciesID()));
                 }
             }
