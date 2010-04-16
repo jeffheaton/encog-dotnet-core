@@ -45,8 +45,6 @@ namespace Encog.Neural.NeuralData.Market
     /// </summary>
     public class MarketDataDescription : TemporalDataDescription
     {
-
-
         /// <summary>
         /// The ticker symbol to be loaded.
         /// </summary>
@@ -62,18 +60,35 @@ namespace Encog.Neural.NeuralData.Market
         /// </summary>
         /// <param name="ticker">The ticker symbol to use.</param>
         /// <param name="dataType">The data type needed.</param>
-        /// <param name="activationFunction">The activation function to apply to this data, can be null.</param>
+        /// <param name="type">The normalization type.</param>
+        /// <param name="activationFunction"> The activation function to apply to this data, can be null.</param>
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
         public MarketDataDescription(TickerSymbol ticker,
-                 MarketDataType dataType,
-                 IActivationFunction activationFunction, bool input,
-                 bool predict)
-            : base(activationFunction, Type.PERCENT_CHANGE, input, predict)
+                MarketDataType dataType, Type type,
+                IActivationFunction activationFunction, bool input,
+                bool predict)
+            : base(activationFunction, type, input, predict)
         {
-
             this.ticker = ticker;
             this.dataType = dataType;
+        }
+
+
+        /// <summary>
+        /// Construct a MarketDataDescription item.
+        /// </summary>
+        /// <param name="ticker">The ticker symbol to use.</param>
+        /// <param name="dataType">The data type needed.</param>
+        /// <param name="type">The normalization type.</param>
+        /// <param name="input">Is this field used for input?</param>
+        /// <param name="predict">Is this field used for prediction?</param>
+        public MarketDataDescription(TickerSymbol ticker,
+                MarketDataType dataType, Type type, bool input,
+                bool predict)
+            : this(ticker, dataType, type, null, input, predict)
+        {
+
         }
 
         /// <summary>
@@ -84,9 +99,9 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
         public MarketDataDescription(TickerSymbol ticker,
-                 MarketDataType dataType, bool input,
-                 bool predict)
-            : this(ticker, dataType, null, input, predict)
+                MarketDataType dataType, bool input,
+                bool predict)
+            : this(ticker, dataType, Type.PERCENT_CHANGE, null, input, predict)
         {
 
         }
