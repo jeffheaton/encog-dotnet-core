@@ -62,11 +62,21 @@ namespace Encog.MathUtil.Randomize
         /// </summary>
         /// <param name="min">The minimum random value.</param>
         /// <param name="max">The maximum random value.</param>
-        public ConsistentRandomizer(double min, double max)
+        public ConsistentRandomizer(double min, double max): this(min,max,1000)
+        {
+        }
+
+        /// <summary>
+        /// Construct a range randomizer.
+        /// </summary>
+        /// <param name="min">The minimum random value.</param>
+        /// <param name="max">The maximum random value.</param>
+        /// <param name="seed">The seed value.</param>
+        public ConsistentRandomizer(double min, double max, int seed)
         {
             this.Max = max;
             this.Min = min;
-            this.rand = new LinearCongruentialGenerator(1000);
+            this.rand = new LinearCongruentialGenerator(seed);
         }
 
         /// <summary>
