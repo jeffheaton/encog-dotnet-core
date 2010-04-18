@@ -202,6 +202,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
         /// </summary>
         public override void Iteration()
         {
+            PreIteration();
 
             int numWeights = this.weights.Length;
             // Storage space for previous iteration values.
@@ -351,6 +352,8 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
             ++this.k;
 
             NetworkCODEC.ArrayToNetwork(this.weights, Network);
+            
+            PostIteration();
         }
 
         /// <summary>
