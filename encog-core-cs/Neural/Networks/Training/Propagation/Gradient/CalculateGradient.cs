@@ -137,7 +137,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             this.training = training;
             this.network = network;
 
-            if ((threads != 0) || !(this.training is IIndexable))
+            if (!(this.training is IIndexable))
             {
                 this.network = network;
                 this.threadCount = threads;

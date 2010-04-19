@@ -64,7 +64,9 @@ namespace Encog.Util.Concurrency
                 this.threadCount = num;
             }
             else
-                this.threadCount = threads;
+            {
+                this.threadCount = Math.Min(threads, workloadSize);
+            }
         }
 
 
