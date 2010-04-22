@@ -66,12 +66,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <summary>
         /// NEAT - A synapse implements a NEAT neural network.
         /// </summary>
-        NEAT,
-
-        /// <summary>
-        /// PARTIAL - A synapse where only some of the connections are in force.
-        /// </summary>
-        Partial
+        NEAT
     }
 
 }
