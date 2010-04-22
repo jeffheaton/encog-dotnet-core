@@ -37,6 +37,7 @@ using Encog.MathUtil;
 
 #if logging
 using log4net;
+using Encog.MathUtil.Matrices;
 #endif
 
 namespace Encog.Neural.Networks.Structure
@@ -80,6 +81,9 @@ namespace Encog.Neural.Networks.Structure
         /// The next ID to be assigned to a layer.
         /// </summary>
         private int nextID = 1;
+
+        private double connectionLimit;
+        private bool connectionLimited;
 
         /// <summary>
         /// Construct a structure object for the specified network. 
@@ -194,9 +198,11 @@ namespace Encog.Neural.Networks.Structure
         {
             FinalizeLayers();
             FinalizeSynapses();
-
+            FinalizeLimit();
+            this.layers.Sort();
             AssignID();
             this.network.Logic.Init(this.network);
+            EnforceLimit();
         }
 
         /// <summary>
@@ -397,6 +403,74 @@ namespace Encog.Neural.Networks.Structure
         {
             this.layers.Sort(new LayerComparator(this));
             this.synapses.Sort(new SynapseComparator(this));
+        }
+
+        public double ConnectionLimit
+        {
+            get
+            {
+                return this.connectionLimit;
+            }
+        }
+
+        public bool IsConnectionLimited
+        {
+            get
+            {
+                return this.connectionLimited;
+            }
+        }
+
+        private void FinalizeLimit()
+        {
+            // see if there is a connection limit imposed
+            String limit = this.network.GetPropertyString(BasicNetwork.TAG_LIMIT);
+            if (limit != null)
+            {
+                try
+                {
+                    this.connectionLimited = true;
+                    this.connectionLimit = double.Parse(limit);
+                }
+                catch (Exception e)
+                {
+                    throw new NeuralNetworkError(
+                            "Invalid property("
+                            + BasicNetwork.TAG_LIMIT
+                            + "):"
+                            + limit);
+                }
+            }
+            else
+            {
+                this.connectionLimited = false;
+                this.connectionLimit = 0;
+            }
+        }
+
+        public void EnforceLimit()
+        {
+            if (!this.connectionLimited)
+                return;
+
+            foreach (ISynapse synapse in this.synapses)
+            {
+                Matrix matrix = synapse.WeightMatrix;
+                if (matrix != null)
+                {
+                    for (int row = 0; row < matrix.Rows; row++)
+                    {
+                        for (int col = 0; col < matrix.Cols; col++)
+                        {
+                            double value = matrix[row, col];
+                            if (Math.Abs(value) < this.connectionLimit)
+                            {
+                                matrix[row, col] = 0;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

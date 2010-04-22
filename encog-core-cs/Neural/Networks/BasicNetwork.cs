@@ -82,6 +82,17 @@ namespace Encog.Neural.Networks
 	    public const String TAG_OUTPUT = "OUTPUT";
 
         /// <summary>
+        /// Tag used for the connection limit.
+        /// </summary>
+	    public const String TAG_LIMIT = "CONNECTION_LIMIT";
+	
+        /// <summary>
+        /// The default connection limit.
+        /// </summary>
+	    public const String DEFAULT_CONNECTION_LIMIT = "0.0000000001";
+
+
+        /// <summary>
         /// The description of this object.
         /// </summary>
         private String description;
@@ -184,6 +195,7 @@ namespace Encog.Neural.Networks
         /// <returns>The error percentage.</returns>
         public double CalculateError(INeuralDataSet data)
         {
+            ClearContext();
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
             foreach (INeuralDataPair pair in data)
@@ -655,6 +667,43 @@ namespace Encog.Neural.Networks
                 }
             }
 
-	}
+	    }
+
+        public bool IsConnected(ISynapse synapse, int fromNeuron, int toNeuron)
+        {
+            if (!this.structure.IsConnectionLimited )
+                return false;
+            double value = synapse.WeightMatrix[fromNeuron, toNeuron];
+
+            return (Math.Abs(value) > this.structure.ConnectionLimit );
+        }
+
+        public void EnableConnection(ISynapse synapse, int fromNeuron, int toNeuron, bool enable)
+        {
+            if (synapse.WeightMatrix == null)
+            {
+                throw new NeuralNetworkError("Can't enable/disable connection on a synapse that does not have a weight matrix.");
+            }
+
+            double value = synapse.WeightMatrix[fromNeuron, toNeuron];
+
+            if (enable)
+            {
+                if (!this.structure.IsConnectionLimited )
+                    return;
+
+                if (Math.Abs(value) < this.structure.ConnectionLimit )
+                    synapse.WeightMatrix[fromNeuron, toNeuron] = RangeRandomizer.Randomize(-1, 1);
+            }
+            else
+            {
+                if (!this.structure.IsConnectionLimited )
+                {
+                    this.Properties[BasicNetwork.TAG_LIMIT] = BasicNetwork.DEFAULT_CONNECTION_LIMIT;
+                    this.structure.FinalizeStructure();
+                }
+                synapse.WeightMatrix[fromNeuron, toNeuron] = 0;
+            }
+        }
     }
 }

@@ -81,22 +81,54 @@ namespace Encog.Neural.Networks.Structure
                 }
 
                 // process synapses
-                foreach (ISynapse synapse in network.Structure
+
+            }
+        }
+
+        private static int ProcessSynapseFull(BasicNetwork network, ILayer layer, double[] array, int index)
+        {
+            foreach (ISynapse synapse in network.Structure
                         .GetPreviousSynapses(layer))
+            {
+                if (synapse.WeightMatrix != null)
                 {
-                    if (synapse.WeightMatrix != null)
+                    // process each weight matrix
+                    for (int x = 0; x < synapse.ToNeuronCount; x++)
                     {
-                        // process each weight matrix
-                        for (int x = 0; x < synapse.ToNeuronCount; x++)
+                        for (int y = 0; y < synapse.FromNeuronCount; y++)
                         {
-                            for (int y = 0; y < synapse.FromNeuronCount; y++)
-                            {
-                                synapse.WeightMatrix[y, x] = array[index++];
-                            }
+                            synapse.WeightMatrix[y, x] = array[index++];
                         }
                     }
                 }
             }
+            return index;
+        }
+
+        private static int processSynapseLimited(BasicNetwork network, ILayer layer, double[] array, int index)
+        {
+            // process synapses
+            foreach (ISynapse synapse in network.Structure
+                    .GetPreviousSynapses(layer))
+            {
+                if (synapse.WeightMatrix != null)
+                {
+                    // process each weight matrix
+                    for (int x = 0; x < synapse.ToNeuronCount; x++)
+                    {
+                        for (int y = 0; y < synapse.FromNeuronCount; y++)
+                        {
+                            double oldValue = synapse.WeightMatrix[y, x];
+                            double value = array[index++];
+                            if (Math.Abs(oldValue) < network.Structure.ConnectionLimit)
+                                value = 0;
+                            synapse.WeightMatrix[y, x] = value;
+                        }
+                    }
+                }
+            }
+
+            return index;
         }
 
         /// <summary>
