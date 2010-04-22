@@ -33,6 +33,11 @@ namespace Encog.Neural.Networks.Training.NEAT
         private double bestEverScore;
 
         /// <summary>
+        /// The best ever network.
+        /// </summary>
+        private BasicNetwork bestEverNetwork;
+
+        /// <summary>
         /// The number of inputs.
         /// </summary>
         private int inputCount;
@@ -584,7 +589,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         {
             get
             {
-                return Population.GetBest().Score;
+                return this.bestEverScore;
             }
             set
             {
@@ -620,7 +625,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         {
             get
             {
-                return (BasicNetwork)Population.GetBest().Organism;
+                return this.bestEverNetwork;
             }
         }
 
@@ -784,6 +789,15 @@ namespace Encog.Neural.Networks.Training.NEAT
 
             ResetAndKill();
             SortAndRecord();
+
+            IGenome genome = Population.GetBest();
+            double currentBest = genome.Score;
+            if (this.Comparator.IsBetterThan(currentBest, bestEverScore))
+            {
+                bestEverScore = currentBest;
+                this.bestEverNetwork = ((BasicNetwork)genome.Organism);
+            }
+
             SpeciateAndCalculateSpawnLevels();
         }
 
