@@ -41,7 +41,7 @@ namespace Encog.Neural.Networks.Layers
     /// <summary>
     /// This interface defines all necessary methods for a neural network layer.
     /// </summary>
-    public interface ILayer : ICloneable, IEncogPersistedObject
+    public interface ILayer : ICloneable, IEncogPersistedObject, IComparable<ILayer>
     {
         /// <summary>
         /// Add a layer to this layer.  The "next" layer being added will

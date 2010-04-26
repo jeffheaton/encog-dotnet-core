@@ -351,7 +351,7 @@ namespace Encog.Neural.Networks.Layers
                 ICollection<ILayer> result = new List<ILayer>();
                 foreach (ISynapse synapse in this.next)
                 {
-                    if( !result.Contains(synapse.ToLayer) )
+                    if (!result.Contains(synapse.ToLayer))
                         result.Add(synapse.ToLayer);
                 }
                 return result;
@@ -499,5 +499,30 @@ namespace Encog.Neural.Networks.Layers
                 this.id = value;
             }
         }
+
+        /// <summary>
+        /// Compare this layer to another.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns> The value 0 if the argument layer is equal to this layer; a
+        /// value less than 0 if this layer is less
+        /// than the argument; and a value greater than 0 if this
+        /// layer is greater than the layer argument.</returns>
+        public int CompareTo(ILayer other)
+        {
+            if (other.ID == this.ID)
+            {
+                return 0;
+            }
+            else if (other.ID > ID)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
     }
 }

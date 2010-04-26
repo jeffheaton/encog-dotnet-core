@@ -105,6 +105,9 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
+            //float[] input = 
+
+
             this.errorCalculation.Reset();
             for (int i = this.low; i < high; i++)
             {

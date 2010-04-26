@@ -560,7 +560,10 @@ namespace Encog.Neural.Networks
         /// <returns>The property as a string.</returns>
         public String GetPropertyString(String name)
         {
-            return (String)this.properties[name];
+            if (this.properties.ContainsKey(name))
+                return (String)this.properties[name];
+            else
+                return null;
         }
 
         /// <summary>

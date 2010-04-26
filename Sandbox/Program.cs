@@ -263,10 +263,10 @@ kernel void SingleNetworkCalculate(
             {
                 ///testCL();
                 //stress();
-                //benchmark();
+                benchmark();
                 //testBuffer();
                 //train();
-                XORNEAT();
+                //XORNEAT();
             }
             //catch (Exception e)
             {
