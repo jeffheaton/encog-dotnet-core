@@ -3,6 +3,7 @@
     global read_only int outputSize,
     global read_only int layerCount,
     global read_only int neuronCount,
+    global write_only float *gradient,
     global read_only int *layerIndex,
     global read_only int *layerCounts,
     global read_only int *weightIndex,
@@ -46,4 +47,6 @@
         layerOutput[taskOutputIndex+(outputIndex + x)] = value;
       }
     }
+    
+    gradient[0] = 0.5;
 }

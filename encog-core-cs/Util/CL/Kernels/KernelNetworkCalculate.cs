@@ -47,29 +47,6 @@ namespace Encog.Util.CL.Kernels
             return result;
         }
 
-        public void Calculate(FlatNetwork flat, double[][] input, double[][] output)
-        {
-            if (input.Length != output.Length)
-                throw new NeuralNetworkError("The input and output row count must match");
-
-            if (input[0].Length != flat.InputCount)
-                throw new NeuralNetworkError("The input column count must match the network input neuron count");
-
-            if (output[0].Length != flat.OutputCount)
-                throw new NeuralNetworkError("The output column count must match the network output neuron count");
-
-            float[] inputArray = new float[input.Length * input[0].Length];
-            int index = 0;
-            for (int row = 0; row < input.Length; row++)
-            {
-                for (int col = 0; col < input[0].Length; col++)
-                {
-                    inputArray[index++] = (float)input[row][col];
-                }
-            }
-
-            Calculate(flat, inputArray, output);
-        }
 
         public void Calculate(FlatNetwork flat, float[] input, double[][] output)
         {

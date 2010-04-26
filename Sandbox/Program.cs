@@ -246,7 +246,7 @@ kernel void SingleNetworkCalculate(
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-
+            Encog.Encog.Instance.InitGPU();
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
             for (int i = 0; i < 100; i++)
             {
@@ -263,15 +263,16 @@ kernel void SingleNetworkCalculate(
             {
                 ///testCL();
                 //stress();
-                benchmark();
+                //benchmark();
                 //testBuffer();
-                //train();
+                train();
                 //XORNEAT();
             }
             //catch (Exception e)
             {
                 //Console.WriteLine(e.ToString());
             }
+            Console.WriteLine("Done");
 
         }
     }

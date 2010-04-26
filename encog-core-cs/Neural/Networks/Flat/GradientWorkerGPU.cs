@@ -105,17 +105,8 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            //float[] input = 
+            Encog.Instance.GPU.ChooseAdapter().NetworkTrain.Train(this.network, this.training, this.high, this.low);
 
-
-            this.errorCalculation.Reset();
-            for (int i = this.low; i < high; i++)
-            {
-                this.training.GetRecord(i, this.pair);
-                Process(pair.Input.Data, pair.Ideal.Data);
-            }
-            this.owner.Report(this.gradients, this.errorCalculation.CalculateRMS());
-            EncogArray.Fill(this.gradients, 0);
         }
 
         /// <summary>
