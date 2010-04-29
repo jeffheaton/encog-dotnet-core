@@ -37,6 +37,7 @@ using System.Net;
 
 #if logging
 using log4net;
+using Encog.Util.HTTP;
 #endif
 
 namespace Encog.Bot
@@ -104,7 +105,7 @@ namespace Encog.Bot
                 return null;
             }
 
-            return str.Substring(location1 + token1Lower.Length, location2 - (location1 + token1.Length) );
+            return str.Substring(location1 + token1Lower.Length, location2 - (location1 + token1.Length));
         }
 
         /// <summary>
@@ -149,7 +150,64 @@ namespace Encog.Bot
                 return null;
             }
 
-            return str.Substring(location1 + token1Lower.Length, location2-(location1+token1.Length));
+            return str.Substring(location1 + token1Lower.Length, location2 - (location1 + token1.Length));
+        }
+
+        public static String POSTPage(Uri uri, IDictionary<String, String> param)
+        {
+            MemoryStream ms = new MemoryStream();
+            FormUtility form = new FormUtility(ms, null);
+
+            foreach (String key in param.Keys)
+            {
+                form.Add(key, param[key]);
+            }
+            form.Complete();
+
+            String result = POSTPage(uri, ms.GetBuffer());
+            ms.Close();
+            return result;
+        }
+
+        public static String POSTPage(Uri uri, byte[] bytes)
+        {
+            WebRequest webRequest = WebRequest.Create(uri);
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.Method = "POST";
+
+            Stream os = null;
+            try
+            { // send the Post
+                webRequest.ContentLength = bytes.Length;   //Count bytes to send
+                os = webRequest.GetRequestStream();
+                os.Write(bytes, 0, bytes.Length);         //Send it
+            }
+            catch (WebException ex)
+            {
+                throw new BotError(ex);
+            }
+            finally
+            {
+                if (os != null)
+                {
+                    os.Close();
+                }
+            }
+
+            try
+            { // get the response
+                WebResponse webResponse = webRequest.GetResponse();
+                if (webResponse == null)
+                {
+                    return null;
+                }
+                StreamReader sr = new StreamReader(webResponse.GetResponseStream());
+                return sr.ReadToEnd();
+            }
+            catch (WebException ex)
+            {
+                throw new BotError(ex);
+            }
         }
 
         /// <summary>

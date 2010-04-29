@@ -82,6 +82,11 @@
     <Compile Include="Bot\DataUnits\TextDataUnit.cs" />
     <Compile Include="Bot\RSS\RSS.cs" />
     <Compile Include="Bot\RSS\RSSItem.cs" />
+    <Compile Include="Cloud\AsynchronousCloudRequest.cs" />
+    <Compile Include="Cloud\CloudRequest.cs" />
+    <Compile Include="Cloud\CloudTask.cs" />
+    <Compile Include="Cloud\EncogCloud.cs" />
+    <Compile Include="Cloud\EncogCloudError.cs" />
     <Compile Include="ConsoleStatusReportable.cs" />
     <Compile Include="encog-core-cs.Designer.cs">
       <AutoGen>True</AutoGen>
