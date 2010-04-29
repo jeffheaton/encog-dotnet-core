@@ -9,33 +9,38 @@ using Encog.Util.HTTP;
 
 namespace Encog.Cloud
 {
+    /// <summary>
+    /// An asynchronous cloud request is set to the cloud, but we do not require a
+    /// reply. This allows status updates to be executed in a separate therad without
+    /// the need to wait.
+    /// </summary>
     public class AsynchronousCloudRequest
     {
-        /**
- * The URL that the request was sent to.
- */
+        /// <summary>
+        /// The URL that the request was sent to.
+        /// </summary>
         private String url;
 
-        /**
-         * The parameters for the request.
-         */
+        /// <summary>
+        /// The parameters for the request.
+        /// </summary>
         private IDictionary<String, String> param;
 
-        /**
-         * Construct the cloud request.  Used for a simple GET request.
-         * @param url The URL this request is to go to.
-         */
+        /// <summary>
+        /// Construct the cloud request.  Used for a simple GET request.
+        /// </summary>
+        /// <param name="url">The URL this request is to go to.</param>
         public AsynchronousCloudRequest(String url)
         {
             this.url = url;
             this.param = new Dictionary<String, String>();
         }
 
-        /**
-         * Construct the cloud request.  Used for a POST request.
-         * @param url The URL this request goes to.
-         * @param params The POST params.
-         */
+        /// <summary>
+        /// Construct the cloud request.  Used for a POST request.
+        /// </summary>
+        /// <param name="url">The URL this request goes to.</param>
+        /// <param name="param">The POST params.</param>
         public AsynchronousCloudRequest(String url,
                  IDictionary<String, String> param)
         {
@@ -43,26 +48,32 @@ namespace Encog.Cloud
             this.param = param;
         }
 
-        /**
-         * @return The POST params.
-         */
-        public IDictionary<String, String> getParams()
+        /// <summary>
+        /// The POST params.
+        /// </summary>
+        public IDictionary<String, String> Params
         {
-            return this.param;
+            get
+            {
+                return this.param;
+            }
         }
 
-        /**
-         * @return The URL this request is going to.
-         */
-        public String getUrl()
+        /// <summary>
+        /// The URL this request is going to.
+        /// </summary>
+        public String Url
         {
-            return this.url;
+            get
+            {
+                return this.url;
+            }
         }
 
-        /**
-         * Ran by the thread to perform the request.
-         */
-        public void run()
+        /// <summary>
+        /// Ran by the thread to perform the request.
+        /// </summary>
+        public void Run()
         {
             if (this.param.Count > 0)
             {

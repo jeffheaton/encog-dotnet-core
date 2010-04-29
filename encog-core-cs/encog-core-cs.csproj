@@ -107,6 +107,8 @@
     <Compile Include="MathUtil\Matrices\Matrix.cs" />
     <Compile Include="MathUtil\Matrices\MatrixError.cs" />
     <Compile Include="MathUtil\Matrices\MatrixMath.cs" />
+    <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
     <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
     <Compile Include="Neural\Activation\ActivationCompetitive.cs" />
     <Compile Include="Neural\Activation\ActivationGaussian.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
+    <Compile Include="Neural\Networks\Training\TrainingStatusUtility.cs" />
     <Compile Include="Neural\NeuralNetworkError.cs" />
     <Compile Include="Normalize\Input\BasicInputField.cs" />
     <Compile Include="Normalize\Input\IHasFixedLength.cs" />

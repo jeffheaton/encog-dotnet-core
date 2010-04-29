@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Cloud;
 
 namespace Encog.Neural.Networks.Training
 {
@@ -56,6 +57,13 @@ namespace Encog.Neural.Networks.Training
         /// The current error rate.
         /// </summary>
         private double error;
+
+        /// <summary>
+        /// The Encog cloud to use.
+        /// </summary>
+        public EncogCloud Cloud { get; set; }
+
+        private TrainingStatusUtility statusUtil;
 
         /// <summary>
         /// Training strategies can be added to improve the training results. There
@@ -125,6 +133,20 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         public void PreIteration()
         {
+            if (this.statusUtil != null)
+            {
+                this.statusUtil.Update();
+            }
+            else
+            {
+                if (this.Cloud != null)
+                {
+                    this.statusUtil = new TrainingStatusUtility(this.Cloud, this);
+                    this.statusUtil.Update();
+                }
+            }
+
+
             foreach (IStrategy strategy in this.strategies)
             {
                 strategy.PreIteration();
@@ -137,6 +159,21 @@ namespace Encog.Neural.Networks.Training
         public abstract BasicNetwork Network
         {
             get;
+        }
+
+
+
+        /// <summary>
+        /// Should be called after training has completed and the iteration method
+        /// will not be called any further.
+        /// </summary>
+        public void FinishTraining()
+        {
+            if (this.statusUtil != null)
+            {
+                this.statusUtil.Finish();
+                this.statusUtil = null;
+            }
         }
 
         /// <summary>

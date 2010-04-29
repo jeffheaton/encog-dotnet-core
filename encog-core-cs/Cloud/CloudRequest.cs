@@ -9,165 +9,209 @@ using Encog.Bot;
 
 namespace Encog.Cloud
 {
+    /// <summary>
+    /// An Encog cloud request.  Sends a request to the Encog cloud and handles the response.
+    /// </summary>
     public class CloudRequest
     {
-        
-	/**
-	 * The header properties.
-	 */
-	private IDictionary<String, String> headerProperties = new Dictionary<String, String>();
-	
-	/**
-	 * The session properties.
-	 */
-	private IDictionary<String, String> sessionProperties = new Dictionary<String, String>();
-	
-	/**
-	 * The response properties.
-	 */
-	private IDictionary<String, String> responseProperties = new Dictionary<String, String>();
+        /// <summary>
+        /// The header properties.
+        /// </summary>
+        private IDictionary<String, String> headerProperties = new Dictionary<String, String>();
 
-	/**
-	 * @return The message returned from the cloud.
-	 */
-	public String getMessage() {
-        if (!this.headerProperties.ContainsKey("message"))
-            return null;
-        else
-		    return this.headerProperties["message"];
-	}
+        /// <summary>
+        /// The session properties.
+        /// </summary>
+        private IDictionary<String, String> sessionProperties = new Dictionary<String, String>();
 
-	/**
-	 * Get a response property.
-	 * @param key The key.
-	 * @return The property.
-	 */
-	public String getResponseProperty(String key) {
-        if (!this.responseProperties.ContainsKey(key))
-            return null;
-        else
-		    return this.responseProperties[key];
-	}
+        /// <summary>
+        /// The response properties.
+        /// </summary>
+        private IDictionary<String, String> responseProperties = new Dictionary<String, String>();
 
-	/**
-	 * @return The service.
-	 */
-	public String getService() {
-        if (this.headerProperties.ContainsKey("service"))
-            return this.headerProperties["service"];
-        else
-            return null;
-	}
+        /// <summary>
+        /// The message returned from the cloud.
+        /// </summary>
+        public String Message
+        {
+            get
+            {
+                if (this.headerProperties.ContainsKey("message"))
+                    return this.headerProperties["message"];
+                else
+                    return null;
+            }
+        }
 
-	/**
-	 * @return The url.
-	 */
-	public String getSession() {
-        if (this.sessionProperties.ContainsKey("url"))
-            return this.sessionProperties["url"];
-        else
-            return null;
-	}
 
-	/**
-	 * @return The status.
-	 */
-	public String getStatus() {
-        if (this.headerProperties.ContainsKey("status"))
-            return this.headerProperties["status"];
-        else
-            return null;
-	}
+        /// <summary>
+        /// Get a response property. 
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>The property.</returns>
+        public String GetResponseProperty(String key)
+        {
+            if (this.responseProperties.ContainsKey(key))
+                return this.responseProperties[key];
+            else
+                return null;
+        }
 
-	/**
-	 * Handle the cloud response.
-	 * @param contents The contents.
-	 */
-	private void handleResponse(String contents) {
-        byte[] bin = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(contents);
-		MemoryStream istream = new MemoryStream(bin);
-		ReadXML xml = new ReadXML(istream);
-		int ch;
+        /// <summary>
+        /// The service.
+        /// </summary>
+        public String Service
+        {
+            get
+            {
+                if (this.headerProperties.ContainsKey("service"))
+                    return this.headerProperties["service"];
+                else
+                    return null;
+            }
+        }
 
-		while ((ch = xml.Read()) != -1) {
-			if (ch == 0) {
-				if (xml.LastTag.Name.Equals("EncogCloud")) {
-					processCloud(xml);
-				}
-			}
-		}
+        /// <summary>
+        /// The session.
+        /// </summary>
+        public String Session
+        {
+            get
+            {
+                if (this.sessionProperties.ContainsKey("url"))
+                    return this.sessionProperties["url"];
+                else
+                    return null;
+            }
+        }
 
-		if ((getStatus() == null) || getStatus().Equals("failed")) {
-			throw new EncogCloudError(getMessage());
-		}
-	}
+        /// <summary>
+        /// The status.
+        /// </summary>
+        public String Status
+        {
+            get
+            {
+                if (this.headerProperties.ContainsKey("status"))
+                    return this.headerProperties["status"];
+                else
+                    return null;
+            }
+        }
 
-	/**
-	 * Perform a GET request.
-	 * @param async True if this request should be asynchronous.
-	 * @param url The URL.
-	 */
-	public void performURLGET(bool async, String url) {
-		try {
-			if (async) {
-				AsynchronousCloudRequest request = new AsynchronousCloudRequest(url);
-				Thread t = new Thread(new ThreadStart(request.run));
-				t.Start();
-			} else {
-				String contents = BotUtil.LoadPage(new Uri(url));
-				handleResponse(contents);
-			}
-		} catch ( IOException e) {
-			throw new EncogCloudError(e);
-		}
-	}
+        /// <summary>
+        /// Handle the cloud response. 
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        private void HandleResponse(String contents)
+        {
+            byte[] bin = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(contents);
+            MemoryStream istream = new MemoryStream(bin);
+            ReadXML xml = new ReadXML(istream);
+            int ch;
 
-	/**
-	 * Perform a POST to the cloud.
-	 * @param async True if this request should be asynchronous.
-	 * @param service The service.
-	 * @param args The POST arguments.
-	 */
-	public void performURLPOST(bool async, String service,
-			IDictionary<String, String> args) {
-		try {
-			if (async) {
-				AsynchronousCloudRequest request = new AsynchronousCloudRequest(
-						service, args);
-				Thread t = new Thread(new ThreadStart(request.run));
-				t.Start();
-			} else {
-                String contents = BotUtil.POSTPage(new Uri(service), args);
-				handleResponse(contents);
-			}
-		} catch (IOException e) {
-			throw new EncogCloudError(e);
-		}
-	}
-
-	/**
-	 * Process the cloud request.
-	 * @param xml The XML to parse.
-	 */
-	private void processCloud(ReadXML xml) {
-		int ch;
-
-		while ((ch = xml.Read()) != -1) {
-			if (ch == 0) {
-				if (xml.LastTag.Name.Equals("Header")) {
-					this.headerProperties = xml.ReadPropertyBlock();
-                }
-                else if (xml.LastTag.Name.Equals("Session"))
+            while ((ch = xml.Read()) != -1)
+            {
+                if (ch == 0)
                 {
-					this.sessionProperties = xml.ReadPropertyBlock();
+                    if (xml.LastTag.Name.Equals("EncogCloud"))
+                    {
+                        ProcessCloud(xml);
+                    }
                 }
-                else if (xml.LastTag.Name.Equals("Response"))
+            }
+
+            if ((Status == null) || Status.Equals("failed"))
+            {
+                throw new EncogCloudError(Message);
+            }
+        }
+
+        /// <summary>
+        /// Perform a GET request. 
+        /// </summary>
+        /// <param name="async">True if this request should be asynchronous.</param>
+        /// <param name="url">The URL.</param>
+        public void PerformURLGET(bool async, String url)
+        {
+            try
+            {
+                if (async)
                 {
-					this.responseProperties = xml.ReadPropertyBlock();
-				}
-			}
-		}
-	}
+                    AsynchronousCloudRequest request = new AsynchronousCloudRequest(url);
+                    Thread t = new Thread(new ThreadStart(request.Run));
+                    t.Start();
+                }
+                else
+                {
+                    String contents = BotUtil.LoadPage(new Uri(url));
+                    HandleResponse(contents);
+                }
+            }
+            catch (IOException e)
+            {
+                throw new EncogCloudError(e);
+            }
+        }
+
+        /// <summary>
+        /// Perform a POST to the cloud. 
+        /// </summary>
+        /// <param name="async">True if this request should be asynchronous.</param>
+        /// <param name="service">The service.</param>
+        /// <param name="args">The POST arguments.</param>
+        public void PerformURLPOST(bool async, String service,
+                IDictionary<String, String> args)
+        {
+            try
+            {
+                if (async)
+                {
+                    AsynchronousCloudRequest request = new AsynchronousCloudRequest(
+                            service, args);
+                    Thread t = new Thread(new ThreadStart(request.Run));
+                    t.Start();
+                }
+                else
+                {
+                    String contents = BotUtil.POSTPage(new Uri(service), args);
+                    HandleResponse(contents);
+                }
+            }
+            catch (IOException e)
+            {
+                throw new EncogCloudError(e);
+            }
+        }
+
+
+        /// <summary>
+        /// Process the cloud request. 
+        /// </summary>
+        /// <param name="xml">The XML to parse.</param>
+        private void ProcessCloud(ReadXML xml)
+        {
+            int ch;
+
+            while ((ch = xml.Read()) != -1)
+            {
+                if (ch == 0)
+                {
+                    if (xml.LastTag.Name.Equals("Header"))
+                    {
+                        this.headerProperties = xml.ReadPropertyBlock();
+                    }
+                    else if (xml.LastTag.Name.Equals("Session"))
+                    {
+                        this.sessionProperties = xml.ReadPropertyBlock();
+                    }
+                    else if (xml.LastTag.Name.Equals("Response"))
+                    {
+                        this.responseProperties = xml.ReadPropertyBlock();
+                    }
+                }
+            }
+        }
 
     }
 }

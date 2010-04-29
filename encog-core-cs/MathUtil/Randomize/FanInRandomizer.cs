@@ -179,7 +179,10 @@ namespace Encog.MathUtil.Randomize
         /// <param name="d">An array to randomize.</param>
         public override void Randomize(double[] d)
         {
-            CauseError();
+            for (int i = 0; i < d.Length; i++)
+            {
+                d[i] = CalculateValue(1);
+            }
         }
 
         /// <summary>

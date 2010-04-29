@@ -12,6 +12,7 @@ using Encog.Neural.Networks.Training.Genetic;
 using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Layers;
+using Encog.Cloud;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
@@ -136,6 +137,11 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// The probability that the weight will be totally replaced.
         /// </summary>
         public double ParamProbabilityWeightReplaced { get; set; }
+
+        /// <summary>
+        /// The cloud.
+        /// </summary>
+        public EncogCloud Cloud { get; set; }
 
         /// <summary>
         /// The splits.

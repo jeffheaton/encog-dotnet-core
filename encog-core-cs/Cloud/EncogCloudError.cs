@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Encog.Cloud
 {
-    public class EncogCloudError: EncogError
+    /// <summary>
+    /// Perform an asynchronous cloud request.
+    /// </summary>
+    public class EncogCloudError : EncogError
     {
-         /// <summary>
+        /// <summary>
         /// Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
@@ -31,7 +34,7 @@ namespace Encog.Cloud
         /// <param name="msg">The message.</param>
         /// <param name="e">The exception.</param>
         public EncogCloudError(String msg, Exception e)
-            : base(msg,e)
+            : base(msg, e)
         {
         }
     }

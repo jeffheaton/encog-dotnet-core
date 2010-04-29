@@ -5,122 +5,147 @@ using System.Text;
 
 namespace Encog.Cloud
 {
+    /// <summary>
+    /// Encapsulates an Encog cloud task.
+    /// </summary>
     public class EncogCloud
     {
-        /**
-	 * The default cloud server.
-	 */
-	public const String DEFAULT_SERVER = "http://cloud.encog.com/";
+        /// <summary>
+        /// The default cloud server.
+        /// </summary>
+        public const String DEFAULT_SERVER = "http://cloud.encog.com/";
 
-	/**
-	 * The session.
-	 */
-	private String session;
+        /// <summary>
+        /// The session.
+        /// </summary>
+        private String session;
 
-	/**
-	 * The server.
-	 */
-	private String server;
+        /// <summary>
+        /// The server.
+        /// </summary>
+ 
+        private String server;
 
-	/**
-	 * Construct an Encog cloud connection. The connection will not be
-	 * established until the connect method is called.
-	 * 
-	 * @param server
-	 *            The server to connect to.
-	 */
-	public EncogCloud(String server) {
-		this.server = server;
-		if (!this.server.EndsWith("/")) {
-			this.server += '/';
-		}
-	}
+        /// <summary>
+        /// Construct an Encog cloud connection. The connection will not be
+        /// established until the connect method is called. 
+        /// </summary>
+        /// <param name="server">The server to connect to.</param>
+        public EncogCloud(String server)
+        {
+            this.server = server;
+            if (!this.server.EndsWith("/"))
+            {
+                this.server += '/';
+            }
+        }
 
-	/**
-	 * Begin a task with the specified name.
-	 * @param name The name of the task to begin.
-	 * @return The new task.
-	 */
-	public CloudTask beginTask(String name) {
-		CloudTask result = new CloudTask(this);
-		result.init(name);
 
-		return result;
-	}
+        /// <summary>
+        /// Begin a task with the specified name. 
+        /// </summary>
+        /// <param name="name">The name of the task to begin.</param>
+        /// <returns>The new task.</returns>
+        public CloudTask BeginTask(String name)
+        {
+            CloudTask result = new CloudTask(this);
+            result.Init(name);
 
-	/**
-	 * Connect to the Encog cloud.
-	 * @param uid The user id.
-	 * @param pwd The password.
-	 */
-	public void connect(String uid, String pwd) {
-		CloudRequest request = new CloudRequest();
-		IDictionary<String, String> args = new Dictionary<String, String>();
-        args["uid" ] = uid;
-		args["pwd"] = pwd;
-		request.performURLPOST(false, constructService("login"), args);
-		if (!"success".Equals(request.getStatus())) {
-			throw new EncogCloudError(request.getMessage());
-		}
-		this.session = request.getSession();
-	}
+            return result;
+        }
 
-	/**
-	 * Construct a string that connects to the specified service.
-	 * @param service The service to connect to.
-	 * @return The complete URL.
-	 */
-	public String constructService(String service) {
-		return this.server + service;
-	}
+        /// <summary>
+        /// Connect to the Encog cloud.
+        /// </summary>
+        /// <param name="uid">The user id.</param>
+        /// <param name="pwd">The password.</param>
+        public void Connect(String uid, String pwd)
+        {
+            CloudRequest request = new CloudRequest();
+            IDictionary<String, String> args = new Dictionary<String, String>();
+            args["uid"] = uid;
+            args["pwd"] = pwd;
+            request.PerformURLPOST(false, ConstructService("login"), args);
+            if (!"success".Equals(request.Status))
+            {
+                throw new EncogCloudError(request.Message);
+            }
+            this.session = request.Session;
+        }
 
-	/**
-	 * @return The session we are connected to.
-	 */
-	public String getSession() {
-		return this.session;
-	}
+        /// <summary>
+        /// Construct a string that connects to the specified service.
+        /// </summary>
+        /// <param name="service">The service to connect to.</param>
+        /// <returns>The complete URL.</returns>
+        public String ConstructService(String service)
+        {
+            return this.server + service;
+        }
 
-	/**
-	 * @return True if we are connected.
-	 */
-	public bool isConnected() {
-		return this.session != null;
-	}
+        /// <summary>
+        /// The session we are connected to.
+        /// </summary>
+        public String Session
+        {
+            get
+            {
+                return this.session;
+            }
+        }
 
-	/**
-	 * Logout of the specified session.
-	 */
-	public void logout() {
-		CloudRequest request = new CloudRequest();
-		request.performURLGET(false, this.session + "logout");
-		this.session = null;
-	}
+        /// <summary>
+        /// True if we are connected.
+        /// </summary>
+        public bool IsConnected
+        {
+            get
+            {
+                return this.session != null;
+            }
+        }
 
-	/**
-	 * Validate the session.
-	 * @param failOnError True if an exception should be thrown on error.
-	 */
-	public void validateSession(bool failOnError) {
-		int max;
+        /// <summary>
+        /// Logout of the specified session.
+        /// </summary>
+        public void Logout()
+        {
+            CloudRequest request = new CloudRequest();
+            request.PerformURLGET(false, this.session + "logout");
+            this.session = null;
+        }
 
-		if (failOnError) {
-			max = 1;
-		} else {
-			max = 5;
-		}
+        /// <summary>
+        /// Validate the session.
+        /// </summary>
+        /// <param name="failOnError">True if an exception should be thrown on error.</param>
+        public void ValidateSession(bool failOnError)
+        {
+            int max;
 
-		for (int i = 0; i < max; i++) {
-			CloudRequest request = new CloudRequest();
-			request.performURLGET(false, this.session);
-			if ("success".Equals(request.getStatus())) {
-				return;
-			}
-		}
+            if (failOnError)
+            {
+                max = 1;
+            }
+            else
+            {
+                max = 5;
+            }
 
-		if (failOnError) {
-			throw new EncogCloudError("Connection lost");
-		}
-	}
+            for (int i = 0; i < max; i++)
+            {
+                CloudRequest request = new CloudRequest();
+                request.PerformURLGET(false, this.session);
+                if ("success".Equals(request.Status))
+                {
+                    return;
+                }
+            }
+
+            if (failOnError)
+            {
+                throw new EncogCloudError("Connection lost");
+            }
+        }
     }
 }

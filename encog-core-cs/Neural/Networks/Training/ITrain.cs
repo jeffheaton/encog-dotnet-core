@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Cloud;
 
 namespace Encog.Neural.Networks.Training
 {
@@ -88,7 +89,21 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         void Iteration();
 
+        /// <summary>
+        /// The Encog cloud to use.
+        /// </summary>
+        EncogCloud Cloud { get; set; }
 
+        /// <summary>
+        /// Should be called once training is complete and no more iterations are
+        /// needed. Calling iteration again will simply begin the training again, and
+        /// require finishTraining to be called once the new training session is
+        /// complete.
+        /// 
+        /// It is particularly important to call finishTraining for multithreaded
+        /// training techniques.
+        /// </summary>
+        void FinishTraining();
 
     }
 

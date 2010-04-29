@@ -79,17 +79,17 @@ namespace Encog.Neural.Networks
         /// <summary>
         /// The output layer.
         /// </summary>
-	    public const String TAG_OUTPUT = "OUTPUT";
+        public const String TAG_OUTPUT = "OUTPUT";
 
         /// <summary>
         /// Tag used for the connection limit.
         /// </summary>
-	    public const String TAG_LIMIT = "CONNECTION_LIMIT";
-	
+        public const String TAG_LIMIT = "CONNECTION_LIMIT";
+
         /// <summary>
         /// The default connection limit.
         /// </summary>
-	    public const String DEFAULT_CONNECTION_LIMIT = "0.0000000001";
+        public const String DEFAULT_CONNECTION_LIMIT = "0.0000000001";
 
 
         /// <summary>
@@ -278,29 +278,31 @@ namespace Encog.Neural.Networks
             return new BasicNetworkPersistor();
         }
 
-	/// <summary>
-	/// Compare the two neural networks. For them to be equal they must be of the
-	/// same structure, and have the same matrix values.
-	/// </summary>
+        /// <summary>
+        /// Compare the two neural networks. For them to be equal they must be of the
+        /// same structure, and have the same matrix values.
+        /// </summary>
         /// <param name="other">The other neural network.</param>
         /// <returns>True if the two networks are equal.</returns>
-	public bool Equals(BasicNetwork other) {
-		return Equals(other,
-				Encog.DEFAULT_PRECISION);
-	}
+        public bool Equals(BasicNetwork other)
+        {
+            return Equals(other,
+                    Encog.DEFAULT_PRECISION);
+        }
 
 
-	/// <summary>
-	/// Determine if this neural network is equal to another.  Equal neural
-    /// networks have the same weight matrix and threshold values, within
-    /// a specified precision.
-	/// </summary>
-    /// <param name="other">The other neural network.</param>
-    /// <param name="precision">The number of decimal places to compare to.</param>
-    /// <returns>True if the two neural networks are equal.</returns>
-	public bool Equals( BasicNetwork other,  int precision) {
-		return NetworkCODEC.Equals(this, other, precision);
-	}
+        /// <summary>
+        /// Determine if this neural network is equal to another.  Equal neural
+        /// networks have the same weight matrix and threshold values, within
+        /// a specified precision.
+        /// </summary>
+        /// <param name="other">The other neural network.</param>
+        /// <param name="precision">The number of decimal places to compare to.</param>
+        /// <returns>True if the two neural networks are equal.</returns>
+        public bool Equals(BasicNetwork other, int precision)
+        {
+            return NetworkCODEC.Equals(this, other, precision);
+        }
 
         /// <summary>
         /// The description for this object.
@@ -438,11 +440,11 @@ namespace Encog.Neural.Networks
         }
 
         /// <summary>
-        /// Reset the weight matrix and the thresholds.
+        /// Reset the weight matrix and the thresholds.  This is done using a Nguyen-Widrow randomizer.
         /// </summary>
         public void Reset()
         {
-            (new RangeRandomizer(-1, 1)).Randomize(this);
+            (new NguyenWidrowRandomizer(-1, 1)).Randomize(this);
         }
 
 
@@ -624,7 +626,7 @@ namespace Encog.Neural.Networks
         {
             if (!this.layerTags.ContainsKey(tag))
                 return null;
-            else 
+            else
                 return this.layerTags[tag];
         }
 
@@ -670,15 +672,15 @@ namespace Encog.Neural.Networks
                 }
             }
 
-	    }
+        }
 
         public bool IsConnected(ISynapse synapse, int fromNeuron, int toNeuron)
         {
-            if (!this.structure.IsConnectionLimited )
+            if (!this.structure.IsConnectionLimited)
                 return true;
             double value = synapse.WeightMatrix[fromNeuron, toNeuron];
 
-            return (Math.Abs(value) > this.structure.ConnectionLimit );
+            return (Math.Abs(value) > this.structure.ConnectionLimit);
         }
 
         public void EnableConnection(ISynapse synapse, int fromNeuron, int toNeuron, bool enable)
@@ -692,15 +694,15 @@ namespace Encog.Neural.Networks
 
             if (enable)
             {
-                if (!this.structure.IsConnectionLimited )
+                if (!this.structure.IsConnectionLimited)
                     return;
 
-                if (Math.Abs(value) < this.structure.ConnectionLimit )
+                if (Math.Abs(value) < this.structure.ConnectionLimit)
                     synapse.WeightMatrix[fromNeuron, toNeuron] = RangeRandomizer.Randomize(-1, 1);
             }
             else
             {
-                if (!this.structure.IsConnectionLimited )
+                if (!this.structure.IsConnectionLimited)
                 {
                     this.Properties[BasicNetwork.TAG_LIMIT] = BasicNetwork.DEFAULT_CONNECTION_LIMIT;
                     this.structure.FinalizeStructure();
