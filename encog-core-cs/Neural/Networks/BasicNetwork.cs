@@ -675,7 +675,7 @@ namespace Encog.Neural.Networks
         public bool IsConnected(ISynapse synapse, int fromNeuron, int toNeuron)
         {
             if (!this.structure.IsConnectionLimited )
-                return false;
+                return true;
             double value = synapse.WeightMatrix[fromNeuron, toNeuron];
 
             return (Math.Abs(value) > this.structure.ConnectionLimit );
