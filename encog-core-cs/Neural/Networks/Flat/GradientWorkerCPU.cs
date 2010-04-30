@@ -14,7 +14,7 @@ namespace Encog.Neural.Networks.Flat
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.
     /// </summary>
-    public class GradientWorkerCPU : IEncogTask
+    public class GradientWorkerCPU : IFlatGradientWorker
     {
         /// <summary>
         /// The network to train.
@@ -109,7 +109,7 @@ namespace Encog.Neural.Networks.Flat
         public void Run()
         {
             this.errorCalculation.Reset();
-            for (int i = this.low; i < high; i++)
+            for (int i = this.low; i <= high; i++)
             {
                 this.training.GetRecord(i, this.pair);
                 Process(pair.Input.Data, pair.Ideal.Data);

@@ -7,6 +7,7 @@ using Encog.Neural.Networks.Flat;
 using Encog.Neural;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.Neural.Data.Basic;
 
 namespace Encog.Util.CL.Kernels
 {
@@ -31,6 +32,7 @@ namespace Encog.Util.CL.Kernels
             IIndexable indexable = (IIndexable)input;
 
             double[][] result = EncogArray.AllocateDouble2D((int)indexable.Count, (int)flat.OutputCount);
+            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
             float[] inputArray = new float[indexable.Count * flat.InputCount];
             float[] idealArray = new float[indexable.Count * flat.OutputCount];
@@ -38,8 +40,9 @@ namespace Encog.Util.CL.Kernels
             int inputIndex = 0;
             int idealIndex = 0;
 
-            foreach (INeuralDataPair pair in input)
+            for(int i=low;i<=high;i++)
             {
+                indexable.GetRecord(i,pair);
                 for (int col = 0; col < flat.InputCount; col++)
                 {
                     inputArray[inputIndex++] = (float)pair.Input.Data[col];

@@ -55,7 +55,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// The workers.
         /// </summary>
-        private GradientWorkerGPU[] workers;
+        private IFlatGradientWorker[] workers;
 
         /// <summary>
         /// The total error.  Used to take the average of.
@@ -96,13 +96,13 @@ namespace Encog.Neural.Networks.Flat
             }
 
             DetermineWorkload determine = new DetermineWorkload(0, (int)this.indexable.Count);
-            this.workers = new GradientWorkerGPU[determine.ThreadCount];
+            this.workers = new GradientWorkerCPU[determine.ThreadCount];
             IList<IntRange> range = determine.CalculateWorkers();
 
             int index = 0;
             foreach (IntRange r in range)
             {
-                this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Encog.Neural.Networks.Flat
             TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
             this.totalError = 0;
 
-            foreach (GradientWorkerGPU worker in this.workers)
+            foreach (IFlatGradientWorker worker in this.workers)
             {
                 EncogConcurrency.Instance.ProcessTask(worker, group);
             }
@@ -153,10 +153,12 @@ namespace Encog.Neural.Networks.Flat
             Learn();
             this.currentError = this.totalError / this.workers.Length;
 
-            foreach (GradientWorkerGPU worker in this.workers)
+            foreach (IFlatGradientWorker worker in this.workers)
             {
                 EncogArray.ArrayCopy(this.weights, 0, worker.Weights, 0, this.weights.Length);
             }
+
+            EncogArray.ArrayCopy(this.weights, 0, this.network.Weights, 0, this.weights.Length);
         }
 
         /// <summary>

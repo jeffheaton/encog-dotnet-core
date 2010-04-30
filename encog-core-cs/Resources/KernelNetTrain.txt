@@ -5,7 +5,7 @@
 
 float derivativeSigmoid(float x)
 {
-	 return x * (1.0 - x);
+	return (1+x)*(1-x);
 }
 
 kernel void NetworkTrain(
@@ -80,7 +80,8 @@ kernel void NetworkTrain(
 		layerDelta[taskLayerDeltaIndex+i] = diff * derivativeSigmoid(layerOutput[taskOutputIndex+ i]);
     }
     
-    for(int currentLevel = 0; currentLevel<layerCount; currentLevel++)
+ 
+    for(int currentLevel = 0; (currentLevel<layerCount-1); currentLevel++)
     {
 		int fromLayerIndex = layerIndex[currentLevel + 1];
         int toLayerIndex = layerIndex[currentLevel];
@@ -90,27 +91,28 @@ kernel void NetworkTrain(
         // clear the to-deltas
         for (int i = 0; i < fromLayerSize; i++)
         {
-			layerDelta[fromLayerIndex + i] = 0;
+			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] = 0;
         }
         
-        int index = weightIndex[currentLevel] + toLayerSize + (taskIndex*weightsSize);
+        int index = weightIndex[currentLevel] + toLayerSize;
+        int gradientOffset = (taskIndex*weightsSize);
 
         for (int x = 0; x < toLayerSize; x++)
         {
 			for (int y = 0; y < fromLayerSize; y++)
             {
-				float value = layerOutput[fromLayerIndex + y]
-                            * layerDelta[toLayerIndex + x];
-                gradients[index] += value;
-                layerDelta[fromLayerIndex + y] += weights[index]
-                            * layerDelta[toLayerIndex + x];
+				float value = layerOutput[taskOutputIndex+fromLayerIndex + y]
+                            * layerDelta[taskLayerDeltaIndex+toLayerIndex + x];
+                gradients[gradientOffset+index] += value;
+                layerDelta[taskLayerDeltaIndex+fromLayerIndex + y] += weights[index]
+                            * layerDelta[taskLayerDeltaIndex+toLayerIndex + x];
                 index++;
             }
         }
         
         for (int i = 0; i < fromLayerSize; i++)
         {
-			layerDelta[fromLayerIndex + i] *= derivativeSigmoid(layerOutput[fromLayerIndex + i]);
+			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] *= derivativeSigmoid(layerOutput[taskOutputIndex+fromLayerIndex + i]);
         }
     }
 }

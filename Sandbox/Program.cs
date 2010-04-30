@@ -248,11 +248,16 @@ kernel void SingleNetworkCalculate(
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
             Encog.Encog.Instance.InitGPU();
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
-                Console.WriteLine(train.Error);
+                Console.WriteLine("Train error: " + train.Error);
+                Console.WriteLine("Netwk error: " + flat.CalculateError(training));
             }
+
+            train.Iteration();
+            flat.CalculateError(training);
+
 
             Console.WriteLine("Done");
         }

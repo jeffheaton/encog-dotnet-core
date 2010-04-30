@@ -12,7 +12,7 @@ using Encog.Util.CL.Kernels;
 
 namespace Encog.Neural.Networks.Flat
 {
-    public class GradientWorkerGPU:IEncogTask
+    public class GradientWorkerGPU:IFlatGradientWorker
     {
         /// <summary>
         /// The network to train.
@@ -104,11 +104,24 @@ namespace Encog.Neural.Networks.Flat
             KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
             k.Train(this.network, this.training, this.high, this.low);
 
+
+            
+            for (int j = 0; j < this.gradients.Length; j++)
+                this.gradients[j] = 0;
+
             double e = 0;
-            for (int i = low; i < high; i++)
+            int index = 0;
+            int errorIndex = 0;
+
+            for (int i = low; i <= high; i++)
             {
-                e += k.Errors[i];
+                e += k.Errors[errorIndex++];
+                for (int j = 0; j < this.gradients.Length; j++)
+                {
+                    this.gradients[j] += k.Gradients[index++];
+                }
             }
+            
 
             this.owner.Report(this.gradients, Math.Sqrt(e/(training.Count*training.IdealSize)));
 
