@@ -8,6 +8,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
+using Encog.Util.CL.Kernels;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -17,11 +18,6 @@ namespace Encog.Neural.Networks.Flat
         /// The network to train.
         /// </summary>
         private FlatNetwork network;
-
-        /// <summary>
-        /// The error calculation method.
-        /// </summary>
-        private ErrorCalculation errorCalculation = new ErrorCalculation();
 
         /// <summary>
         /// The actual values from the neural network.
@@ -105,86 +101,17 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            Encog.Instance.GPU.ChooseAdapter().NetworkTrain.Train(this.network, this.training, this.high, this.low);
+            KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
+            k.Train(this.network, this.training, this.high, this.low);
 
-        }
-
-        /// <summary>
-        /// Process one training set element.
-        /// </summary>
-        /// <param name="input">The network input.</param>
-        /// <param name="ideal">The ideal values.</param>
-        private void Process(double[] input, double[] ideal)
-        {
-            network.Compute(input, actual);
-
-            errorCalculation.UpdateError(actual, ideal);
-
-            for (int i = 0; i < actual.Length; i++)
+            double e = 0;
+            for (int i = low; i < high; i++)
             {
-                if (network.IsTanh)
-                {
-                    layerDelta[i] = TrainFlatNetwork.DerivativeTANH(actual[i])
-                            * (ideal[i] - actual[i]);
-                }
-                else
-                {
-                    layerDelta[i] = TrainFlatNetwork.DerivativeSigmoid(actual[i])
-                            * (ideal[i] - actual[i]);
-                }
+                e += k.Errors[i];
             }
 
-            for (int i = 0; i < layerCounts.Length - 1; i++)
-            {
-                ProcessLevel(i);
-            }
-        }
+            this.owner.Report(this.gradients, Math.Sqrt(e/(training.Count*training.IdealSize)));
 
-        /// <summary>
-        /// Process one level.
-        /// </summary>
-        /// <param name="currentLevel">The level.</param>
-        private void ProcessLevel(int currentLevel)
-        {
-            int fromLayerIndex = layerIndex[currentLevel + 1];
-            int toLayerIndex = layerIndex[currentLevel];
-            int fromLayerSize = layerCounts[currentLevel + 1];
-            int toLayerSize = layerCounts[currentLevel];
-
-            // clear the to-deltas
-            for (int i = 0; i < fromLayerSize; i++)
-            {
-                layerDelta[fromLayerIndex + i] = 0;
-            }
-
-            int index = weightIndex[currentLevel] + toLayerSize;
-
-            for (int x = 0; x < toLayerSize; x++)
-            {
-                for (int y = 0; y < fromLayerSize; y++)
-                {
-                    double value = layerOutput[fromLayerIndex + y]
-                            * layerDelta[toLayerIndex + x];
-                    gradients[index] += value;
-                    layerDelta[fromLayerIndex + y] += weights[index]
-                            * layerDelta[toLayerIndex + x];
-                    index++;
-                }
-            }
-
-            for (int i = 0; i < fromLayerSize; i++)
-            {
-                if (network.IsTanh)
-                {
-                    layerDelta[fromLayerIndex + i] *= TrainFlatNetwork.DerivativeTANH(layerOutput[fromLayerIndex
-                            + i]);
-                }
-                else
-                {
-                    layerDelta[fromLayerIndex + i] *= TrainFlatNetwork.DerivativeSigmoid(layerOutput[fromLayerIndex
-                            + i]);
-                }
-            }
         }
 
 

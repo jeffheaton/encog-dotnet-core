@@ -1,23 +1,44 @@
-﻿kernel void NetworkTrain(
-    global read_only int inputSize,
-    global read_only int outputSize,
-    global read_only int layerCount,
-    global read_only int neuronCount,
-    global write_only float *gradient,
+﻿float activationSigmoid(float x)
+{
+	return -1 + (2 / (1 + exp(-2 * x)));
+}
+
+float derivativeSigmoid(float x)
+{
+	 return x * (1.0 - x);
+}
+
+kernel void NetworkTrain(
+    global read_only int *params,
+    global write_only float *errors,
     global read_only int *layerIndex,
     global read_only int *layerCounts,
     global read_only int *weightIndex,
     global read_only float* input,
+    global read_only float* ideal,
     global read_only float* weights,
-    global write_only float *layerOutput
+    global write_only float *layerOutput,
+    global write_only float *layerDelta,
+    global write_only float *gradients
     )
 {
+	int inputSize = params[0];
+    int outputSize = params[1];
+    int layerCount = params[2];
+    int neuronCount = params[3];
+    int layerDeltaSize = params[4];
+    int weightsSize = params[5];
+	
+	// part 1: forward pass
 	int taskIndex = get_global_id(0);
 	int taskOutputIndex = taskIndex * neuronCount;
 	int taskInputIndex = taskIndex * inputSize;
+	int taskIdealIndex = taskIndex * outputSize;
+	int taskLayerDeltaIndex = taskIndex * layerDeltaSize;
 	
     int sourceIndex = neuronCount - inputSize;
 
+	// load the input into the layer output array, this feeds the first layer.
     for(int i=0;i<inputSize;i++)
         layerOutput[taskOutputIndex+(sourceIndex+i)] = input[taskInputIndex+i];
 
@@ -43,10 +64,53 @@
         }
        
         float value = layerOutput[taskOutputIndex+(outputIndex + x)] + sum;
-        value = -1 + (2 / (1 + exp(-2 * value)));
+        value = activationSigmoid(value);
         layerOutput[taskOutputIndex+(outputIndex + x)] = value;
       }
     }
+ 
+	// part 2: backward pass
+	int taskErrorIndex = taskIndex * outputSize;
+	   
+    float e = 0;
+    for(int i=0;i<outputSize;i++)
+    {
+		float diff = ideal[taskIdealIndex+i] - layerOutput[taskOutputIndex+ i];
+		errors[taskErrorIndex+i]=diff*diff;
+		layerDelta[taskLayerDeltaIndex+i] = diff * derivativeSigmoid(layerOutput[taskOutputIndex+ i]);
+    }
     
-    gradient[0] = 0.5;
+    for(int currentLevel = 0; currentLevel<layerCount; currentLevel++)
+    {
+		int fromLayerIndex = layerIndex[currentLevel + 1];
+        int toLayerIndex = layerIndex[currentLevel];
+        int fromLayerSize = layerCounts[currentLevel + 1];
+        int toLayerSize = layerCounts[currentLevel];
+        
+        // clear the to-deltas
+        for (int i = 0; i < fromLayerSize; i++)
+        {
+			layerDelta[fromLayerIndex + i] = 0;
+        }
+        
+        int index = weightIndex[currentLevel] + toLayerSize + (taskIndex*weightsSize);
+
+        for (int x = 0; x < toLayerSize; x++)
+        {
+			for (int y = 0; y < fromLayerSize; y++)
+            {
+				float value = layerOutput[fromLayerIndex + y]
+                            * layerDelta[toLayerIndex + x];
+                gradients[index] += value;
+                layerDelta[fromLayerIndex + y] += weights[index]
+                            * layerDelta[toLayerIndex + x];
+                index++;
+            }
+        }
+        
+        for (int i = 0; i < fromLayerSize; i++)
+        {
+			layerDelta[fromLayerIndex + i] *= derivativeSigmoid(layerOutput[fromLayerIndex + i]);
+        }
+    }
 }

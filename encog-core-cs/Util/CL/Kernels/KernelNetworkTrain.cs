@@ -13,7 +13,8 @@ namespace Encog.Util.CL.Kernels
     public class KernelNetworkTrain : EncogKernel
     {
 
-        private float[] outputArray;
+        public float[] Errors { get; set; }
+        public float[] Gradients { get; set; }
 
         public KernelNetworkTrain(ComputeContext context)
             : base(context, "Encog.Resources.KernelNetTrain.txt")
@@ -54,48 +55,65 @@ namespace Encog.Util.CL.Kernels
         }
 
 
-        public double Calculate(FlatNetwork flat, int length, float[] input, float[] idealArray)
+        public void Calculate(FlatNetwork flat, int length, float[] input, float[] idealArray)
         {
+            int[] paramArray = new int[10];
             int totalOutputLength = flat.LayerOutput.Length * length;
             float[] weightArray = new float[flat.Weights.Length];
+            int errorBufferSize = length*flat.LayerOutput.Length;
+            int layerDeltaSize = 0;
+
+            for (int i = 0; i < flat.LayerCounts.Length; i++)
+            {
+                layerDeltaSize += flat.LayerCounts[i];
+            }
 
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
-            ComputeBuffer<float> a = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, input);
-            ComputeBuffer<float> b = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
-            ComputeBuffer<float> c = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, totalOutputLength);
+            paramArray[0] = flat.InputCount;
+            paramArray[1] = flat.OutputCount;
+            paramArray[2] = flat.LayerCounts.Length;
+            paramArray[3] = flat.LayerOutput.Length;
+            paramArray[4] = layerDeltaSize;
+            paramArray[5] = flat.Weights.Length;
 
-            ComputeBuffer<int> d = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
-            ComputeBuffer<int> e = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
-            ComputeBuffer<int> f = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
+            ComputeBuffer<int> paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
+            ComputeBuffer<float> inputBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, input);
+            ComputeBuffer<float> idealBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, idealArray);
+            ComputeBuffer<float> weightArrayBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
+            ComputeBuffer<float> outputBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, totalOutputLength);
 
-            ComputeBuffer<float> gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, 1);
+            ComputeBuffer<int> layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
+            ComputeBuffer<int> layerCountBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
+            ComputeBuffer<int> weightIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
+
+            ComputeBuffer<float> errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, errorBufferSize);
+            ComputeBuffer<float> layerDeltaBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, layerDeltaSize * length);
+            ComputeBuffer<float> gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * length);
 
             ComputeKernel kernel = Program.CreateKernel("NetworkTrain");
 
-            kernel.SetValueArgument<int>(0, flat.InputCount);
-            kernel.SetValueArgument<int>(1, flat.OutputCount);
-            kernel.SetValueArgument<int>(2, flat.LayerCounts.Length);
-            kernel.SetValueArgument<int>(3, flat.LayerOutput.Length);
-            kernel.SetMemoryArgument(4, gradientBuffer);
-
-            kernel.SetMemoryArgument(5, d);
-            kernel.SetMemoryArgument(6, e);
-            kernel.SetMemoryArgument(7, f);
-
-            kernel.SetMemoryArgument(8, a);
-            kernel.SetMemoryArgument(9, b);
-            kernel.SetMemoryArgument(10, c);
+            kernel.SetMemoryArgument(0, paramBuffer);
+            kernel.SetMemoryArgument(1, errorBuffer);
+            kernel.SetMemoryArgument(2, layerIndexBuffer);
+            kernel.SetMemoryArgument(3, layerCountBuffer);
+            kernel.SetMemoryArgument(4, weightIndexBuffer);
+            kernel.SetMemoryArgument(5, inputBuffer);
+            kernel.SetMemoryArgument(6, idealBuffer);
+            kernel.SetMemoryArgument(7, weightArrayBuffer);
+            kernel.SetMemoryArgument(8, outputBuffer);
+            kernel.SetMemoryArgument(9, layerDeltaBuffer);
+            kernel.SetMemoryArgument(10, gradientBuffer);
 
             ComputeCommandQueue commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
-
             ComputeEventList events = new ComputeEventList();
 
             commands.Execute(kernel, null, new long[] { length }, null, events);
-  
-            outputArray = commands.Read(gradientBuffer, true, 0, 1, events);
-            return outputArray[0];
+
+            Errors = commands.Read(errorBuffer, true, 0, errorBufferSize, events);
+            Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * length, events);
+
         }
     }
 }
