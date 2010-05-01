@@ -166,8 +166,15 @@ namespace Encog.Neural.Networks.Flat
                 layerDelta[fromLayerIndex + i] = 0;
             }
 
-            int index = weightIndex[currentLevel] + toLayerSize;
+            int index = weightIndex[currentLevel];
 
+            // handle thresholds
+            for (int i = 0; i < toLayerSize; i++)
+            {
+                this.gradients[index++] += layerDelta[toLayerIndex+i];
+            }
+
+            // handle weights
             for (int x = 0; x < toLayerSize; x++)
             {
                 for (int y = 0; y < fromLayerSize; y++)

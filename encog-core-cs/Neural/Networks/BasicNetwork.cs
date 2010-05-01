@@ -440,11 +440,20 @@ namespace Encog.Neural.Networks
         }
 
         /// <summary>
-        /// Reset the weight matrix and the thresholds.  This is done using a Nguyen-Widrow randomizer.
+        /// Reset the weight matrix and the thresholds. This will use a Nguyen-Widrow
+        /// randomizer with a range between -1 and 1. If the network does not have an
+        /// input, output or hidden layers, then Nguyen-Widrow cannot be used and a
+        /// simple range randomize between -1 and 1 will be used.
         /// </summary>
         public void Reset()
         {
-            (new NguyenWidrowRandomizer(-1, 1)).Randomize(this);
+            ILayer inputLayer = GetLayer(BasicNetwork.TAG_INPUT);
+            ILayer outputLayer = GetLayer(BasicNetwork.TAG_OUTPUT);
+
+            if (inputLayer == null || outputLayer == null)
+                (new RangeRandomizer(-1, 1)).Randomize(this);
+            else
+                (new NguyenWidrowRandomizer(-1, 1)).Randomize(this);
         }
 
 

@@ -218,6 +218,31 @@ namespace Encog.MathUtil.Randomize
             }
         }
 
+        /// <summary>
+        /// Randomize a synapse, only randomize those connections that are actually connected.
+        /// </summary>
+        /// <param name="network">The network the synapse belongs to.</param>
+        /// <param name="synapse">The synapse to randomize.</param>
+        public void Randomize(BasicNetwork network, ISynapse synapse)
+        {
+            if (synapse.WeightMatrix != null)
+            {
+                bool limited = network.Structure.IsConnectionLimited;
+                double[][] d = synapse.WeightMatrix.Data;
+                for (int fromNeuron = 0; fromNeuron < synapse.WeightMatrix.Rows; fromNeuron++)
+                {
+                    for (int toNeuron = 0; toNeuron < synapse.WeightMatrix.Cols; toNeuron++)
+                    {
+                        if (!limited || network.IsConnected(synapse, fromNeuron, toNeuron))
+                            d[fromNeuron][toNeuron] = CalculateValue(synapse.WeightMatrix.Rows);
+                    }
+                }
+
+            }
+        }
+
+
+
     }
 
 }
