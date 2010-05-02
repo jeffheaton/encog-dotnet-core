@@ -63,11 +63,6 @@ namespace Encog.Neural.Networks.Flat
         private int outputCount;
 
         /// <summary>
-        /// Are we using the TANH function? If not, then the sigmoid.
-        /// </summary>
-        private bool tanh;
-
-        /// <summary>
         /// The index to where the weights and thresholds are stored at for a given
         /// layer.
         /// </summary>
@@ -139,14 +134,6 @@ namespace Encog.Neural.Networks.Flat
             weights = NetworkCODEC.NetworkToArray(network);
             layerOutput = new double[neuronCount];
 
-            if (input.ActivationFunction is ActivationSigmoid)
-            {
-                tanh = false;
-            }
-            else
-            {
-                tanh = true;
-            }
         }
 
         /// <summary>
@@ -155,16 +142,28 @@ namespace Encog.Neural.Networks.Flat
         /// <returns>A regular Encog neural network.</returns>
         public BasicNetwork Unflatten()
         {
-            IActivationFunction activation;
             BasicNetwork result = new BasicNetwork();
-
-            if (this.tanh)
-                activation = new ActivationTANH();
-            else
-                activation = new ActivationSigmoid();
 
             for (int i = this.layerCounts.Length - 1; i >= 0; i--)
             {
+                IActivationFunction activation;
+
+                switch (this.activationType[i])
+                {
+                    case FlatNetwork.ACTIVATION_LINEAR:
+                        activation = new ActivationLinear();
+                        break;
+                    case FlatNetwork.ACTIVATION_SIGMOID:
+                        activation = new ActivationSigmoid();
+                        break;
+                    case FlatNetwork.ACTIVATION_TANH:
+                        activation = new ActivationTANH();
+                        break;
+                    default:
+                        activation = null;
+                        break;
+                }
+
                 ILayer layer = new BasicLayer(activation, true, this.layerCounts[i]);
                 result.AddLayer(layer);
             }
@@ -243,15 +242,9 @@ namespace Encog.Neural.Networks.Flat
                 }
                 layerOutput[outputIndex + x] += sum;
 
-                if (tanh)
-                {
-                    layerOutput[outputIndex + x] = ActivateTANH(layerOutput[outputIndex + x]);
-                }
-                else
-                {
-                    layerOutput[outputIndex + x] = ActivateSigmoid(layerOutput[outputIndex
-                            + x]);
-                }
+                layerOutput[outputIndex + x] = FlatNetwork.CalculateActivation(
+                    this.activationType[0],
+                    layerOutput[outputIndex + x]);
             }
         }
 
@@ -333,37 +326,6 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
-        /// True if this is a TANH activation function.
-        /// </summary>
-        public bool IsTanh
-        {
-            get
-            {
-                return tanh;
-            }
-        }
-
-        /// <summary>
-        /// Implements a sigmoid activation function. 
-        /// </summary>
-        /// <param name="d">The value to take the sigmoid of.</param>
-        /// <returns>The result.</returns>
-        private double ActivateSigmoid(double d)
-        {
-            return 1.0 / (1 + BoundMath.Exp(-1.0 * d));
-        }
-
-        /// <summary>
-        /// Implements a hyperbolic tangent function.
-        /// </summary>
-        /// <param name="d">The value to take the htan of.</param>
-        /// <returns>The htan of the specified value.</returns>
-        private double ActivateTANH(double d)
-        {
-            return -1 + (2 / (1 + BoundMath.Exp(-2 * d)));
-        }
-
-        /// <summary>
         /// Clone the network.
         /// </summary>
         /// <returns>A clone of the network.</returns>
@@ -418,6 +380,36 @@ namespace Encog.Neural.Networks.Flat
             get
             {
                 return this.activationType;
+            }
+        }
+
+        public static double CalculateActivation(int type, double x)
+        {
+            switch(type)
+            {
+                case FlatNetwork.ACTIVATION_LINEAR:
+                    return x;
+                case FlatNetwork.ACTIVATION_TANH:
+                    return -1.0 + (2.0 / (1.0 + BoundMath.Exp(-2.0 * x)));
+                case FlatNetwork.ACTIVATION_SIGMOID:
+                    return 1.0 / (1.0 + BoundMath.Exp(-1.0 * x));
+                default:
+                    throw new NeuralNetworkError("Unknown activation type: " + type);
+            }
+        }
+
+        public static double CalculateActivationDerivative(int type, double x)
+        {
+            switch (type)
+            {
+                case FlatNetwork.ACTIVATION_LINEAR:
+                    return 1;
+                case FlatNetwork.ACTIVATION_TANH:
+                    return (1.0 + x) * (1.0 - x);
+                case FlatNetwork.ACTIVATION_SIGMOID:
+                    return x * (1.0 - x);
+                default:
+                    throw new NeuralNetworkError("Unknown activation type: " + type);
             }
         }
 

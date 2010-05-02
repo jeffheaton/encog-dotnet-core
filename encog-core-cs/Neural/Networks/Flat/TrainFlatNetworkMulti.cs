@@ -102,7 +102,7 @@ namespace Encog.Neural.Networks.Flat
             int index = 0;
             foreach (IntRange r in range)
             {
-                this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
         }
 

@@ -207,7 +207,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             }
 
             // get an activation function to use
-            synapse.FromLayer.ActivationFunction.DerivativeFunction(temp);
+            synapse.ToLayer.ActivationFunction.DerivativeFunction(temp);
 
             for (int i = 0; i < temp.Length; i++)
             {

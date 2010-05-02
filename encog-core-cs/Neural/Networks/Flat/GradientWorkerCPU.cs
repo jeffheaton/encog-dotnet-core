@@ -131,16 +131,8 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = 0; i < actual.Length; i++)
             {
-                if (network.IsTanh)
-                {
-                    layerDelta[i] = TrainFlatNetwork.DerivativeTANH(actual[i])
-                            * (ideal[i] - actual[i]);
-                }
-                else
-                {
-                    layerDelta[i] = TrainFlatNetwork.DerivativeSigmoid(actual[i])
-                            * (ideal[i] - actual[i]);
-                }
+                layerDelta[i] = FlatNetwork.CalculateActivationDerivative(0,actual[i])
+                  * (ideal[i] - actual[i]);
             }
 
             for (int i = 0; i < layerCounts.Length - 1; i++)
@@ -190,16 +182,9 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = 0; i < fromLayerSize; i++)
             {
-                if (network.IsTanh)
-                {
-                    layerDelta[fromLayerIndex + i] *= TrainFlatNetwork.DerivativeTANH(layerOutput[fromLayerIndex
-                            + i]);
-                }
-                else
-                {
-                    layerDelta[fromLayerIndex + i] *= TrainFlatNetwork.DerivativeSigmoid(layerOutput[fromLayerIndex
-                            + i]);
-                }
+                layerDelta[fromLayerIndex + i] *= FlatNetwork.CalculateActivationDerivative(
+                  this.network.ActivationType[currentLevel+1],
+                  layerOutput[fromLayerIndex + i]); 
             }
         }
 

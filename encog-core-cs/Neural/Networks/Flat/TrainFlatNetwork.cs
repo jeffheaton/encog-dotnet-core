@@ -103,26 +103,6 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
-        /// Calculate the derivative of the sigmoid function.
-        /// </summary>
-        /// <param name="d">The value to calculate for.</param>
-        /// <returns>The derivative.</returns>
-        public static double DerivativeSigmoid(double d)
-        {
-            return d * (1.0 - d);
-        }
-
-        /// <summary>
-        /// Calculate the derivative of the TANH function.
-        /// </summary>
-        /// <param name="d">The value to calculate for.</param>
-        /// <returns>The derivative.</returns>
-        public static double DerivativeTANH(double d)
-        {
-            return ((1 + d) * (1 - d));
-        }
-
-        /// <summary>
         /// The overall error.
         /// </summary>
         public double Error
@@ -152,16 +132,8 @@ namespace Encog.Neural.Networks.Flat
 
                 for (int i = 0; i < actual.Length; i++)
                 {
-                    if (network.IsTanh)
-                    {
-                        layerDelta[i] = DerivativeTANH(actual[i])
-                                * (ideal[i] - actual[i]);
-                    }
-                    else
-                    {
-                        layerDelta[i] = DerivativeSigmoid(actual[i])
-                                * (ideal[i] - actual[i]);
-                    }
+                    layerDelta[i] = FlatNetwork.CalculateActivationDerivative(this.network.ActivationType[0],actual[i])
+                      * (ideal[i] - actual[i]);  
                 }
 
                 for (int i = 0; i < layerCounts.Length - 1; i++)
@@ -219,16 +191,9 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = 0; i < fromLayerSize; i++)
             {
-                if (network.IsTanh)
-                {
-                    layerDelta[fromLayerIndex + i] *= DerivativeTANH(layerOutput[fromLayerIndex
-                            + i]);
-                }
-                else
-                {
-                    layerDelta[fromLayerIndex + i] *= DerivativeSigmoid(layerOutput[fromLayerIndex
-                            + i]);
-                }
+                layerDelta[fromLayerIndex + i] *= FlatNetwork.CalculateActivationDerivative(
+                    this.network.ActivationType[currentLevel],
+                    layerOutput[fromLayerIndex+ i]);
             }
         }
 
