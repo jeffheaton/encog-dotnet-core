@@ -32,6 +32,10 @@ namespace Encog.Neural.Networks.Flat
     /// </summary>
     public class FlatNetwork
     {
+        public const int ACTIVATION_LINEAR = 0;
+        public const int ACTIVATION_TANH = 1;
+        public const int ACTIVATION_SIGMOID = 2;
+
         /// <summary>
         /// The number of input neurons in this network.
         /// </summary>
@@ -75,6 +79,11 @@ namespace Encog.Neural.Networks.Flat
         private double[] weights;
 
         /// <summary>
+        /// The activation types.
+        /// </summary>
+        private int[] activationType;
+
+        /// <summary>
         /// Construct a flat network.
         /// </summary>
         /// <param name="network">The network to construct the flat network from.</param>
@@ -93,6 +102,7 @@ namespace Encog.Neural.Networks.Flat
             layerCounts = new int[layerCount];
             weightIndex = new int[layerCount];
             layerIndex = new int[layerCount];
+            activationType = new int[layerCount];
 
             int index = 0;
             int neuronCount = 0;
@@ -100,6 +110,14 @@ namespace Encog.Neural.Networks.Flat
             foreach (ILayer layer in network.Structure.Layers)
             {
                 layerCounts[index] = layer.NeuronCount;
+
+                if (layer.ActivationFunction is ActivationLinear)
+                    activationType[index] = FlatNetwork.ACTIVATION_LINEAR;
+                else if (layer.ActivationFunction is ActivationTANH)
+                    activationType[index] = FlatNetwork.ACTIVATION_TANH;
+                else if (layer.ActivationFunction is ActivationSigmoid)
+                    activationType[index] = FlatNetwork.ACTIVATION_SIGMOID;
+
                 neuronCount += layer.NeuronCount;
 
                 if (index == 0)
@@ -393,6 +411,14 @@ namespace Encog.Neural.Networks.Flat
                 errorCalculation.UpdateError(actual[index++], pair.Ideal.Data);
             }
             return errorCalculation.CalculateRMS();
+        }
+
+        public int[] ActivationType
+        {
+            get
+            {
+                return this.activationType;
+            }
         }
 
     }

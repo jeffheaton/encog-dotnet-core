@@ -243,10 +243,10 @@ kernel void SingleNetworkCalculate(
 
         public static void train()
         {
-            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, false);
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-            //Encog.Encog.Instance.InitGPU();
+            Encog.Encog.Instance.InitGPU();
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
             for (int i = 0; i < 50; i++)
             {

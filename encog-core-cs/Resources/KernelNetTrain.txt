@@ -1,11 +1,59 @@
-﻿float activationSigmoid(float x)
+﻿float activationTANH(float x)
 {
 	return -1 + (2 / (1 + exp(-2 * x)));
 }
 
-float derivativeSigmoid(float x)
+float derivativeTANH(float x)
 {
 	return (1+x)*(1-x);
+}
+
+float activationLinear(float x)
+{
+	return x;
+}
+
+float derivativeLinear(float x)
+{
+	return 1;
+}
+
+float activationSigmoid(float x)
+{
+	float p = -1.0 * x;
+	return 1.0 / (1.0 + exp(p));
+}
+
+float derivativeSigmoid(float x)
+{
+	return x * (1.0 - x);
+}
+
+float activation(int type, float x)
+{
+	switch(type)
+	{
+		case 0:
+			return activationLinear(x);
+		case 1:
+			return activationTANH(x);
+		case 2:
+			return activationSigmoid(x);
+
+	}
+}
+
+float derivative(int type, float x)
+{
+	switch(type)
+	{
+		case 0:
+			return derivativeLinear(x);
+		case 1:
+			return derivativeTANH(x);
+		case 2:
+			return derivativeSigmoid(x);
+	}
 }
 
 kernel void NetworkTrain(
@@ -19,7 +67,8 @@ kernel void NetworkTrain(
     global read_only float* weights,
     global write_only float *layerOutput,
     global write_only float *layerDelta,
-    global write_only float *gradients
+    global write_only float *gradients,
+    global read_only int *activationType
     )
 {
 	int inputSize = params[0];
@@ -64,7 +113,7 @@ kernel void NetworkTrain(
         }
        
         float value = layerOutput[taskOutputIndex+(outputIndex + x)] + sum;
-        value = activationSigmoid(value);
+        value = activation(activationType[0], value);
         layerOutput[taskOutputIndex+(outputIndex + x)] = value;
       }
     }
@@ -77,7 +126,7 @@ kernel void NetworkTrain(
     {
 		float diff = ideal[taskIdealIndex+i] - layerOutput[taskOutputIndex+ i];
 		errors[taskErrorIndex+i]=diff*diff;
-		layerDelta[taskLayerDeltaIndex+i] = diff * derivativeSigmoid(layerOutput[taskOutputIndex+ i]);
+		layerDelta[taskLayerDeltaIndex+i] = diff * derivative(activationType[0],layerOutput[taskOutputIndex+ i]);
     }
     
  
@@ -94,7 +143,15 @@ kernel void NetworkTrain(
 			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] = 0;
         }
         
-        int index = weightIndex[currentLevel] + toLayerSize;
+        int index = weightIndex[currentLevel];
+
+        // handle thresholds
+        for (int i = 0; i < toLayerSize; i++)
+        {
+			gradients[index++] += layerDelta[toLayerIndex+i];
+        }       
+        
+ 
         int gradientOffset = (taskIndex*weightsSize);
 
         for (int x = 0; x < toLayerSize; x++)
@@ -112,7 +169,7 @@ kernel void NetworkTrain(
         
         for (int i = 0; i < fromLayerSize; i++)
         {
-			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] *= derivativeSigmoid(layerOutput[taskOutputIndex+fromLayerIndex + i]);
+			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] *= derivative(activationType[currentLevel+1],layerOutput[taskOutputIndex+fromLayerIndex + i]);
         }
     }
 }

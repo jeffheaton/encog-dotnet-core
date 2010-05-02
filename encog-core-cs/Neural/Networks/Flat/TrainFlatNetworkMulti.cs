@@ -96,13 +96,13 @@ namespace Encog.Neural.Networks.Flat
             }
 
             DetermineWorkload determine = new DetermineWorkload(0, (int)this.indexable.Count);
-            this.workers = new GradientWorkerCPU[determine.ThreadCount];
+            this.workers = new IFlatGradientWorker[determine.ThreadCount];
             IList<IntRange> range = determine.CalculateWorkers();
 
             int index = 0;
             foreach (IntRange r in range)
             {
-                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
             }
         }
 

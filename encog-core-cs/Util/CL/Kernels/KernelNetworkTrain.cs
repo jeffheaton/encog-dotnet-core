@@ -65,6 +65,7 @@ namespace Encog.Util.CL.Kernels
             float[] weightArray = new float[flat.Weights.Length];
             int errorBufferSize = length*flat.LayerOutput.Length;
             int layerDeltaSize = 0;
+            int[] activationType = flat.ActivationType;
 
             for (int i = 0; i < flat.LayerCounts.Length; i++)
             {
@@ -94,6 +95,7 @@ namespace Encog.Util.CL.Kernels
             ComputeBuffer<float> errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, errorBufferSize);
             ComputeBuffer<float> layerDeltaBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, layerDeltaSize * length);
             ComputeBuffer<float> gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * length);
+            ComputeBuffer<int> activationTypeBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, activationType);
 
             ComputeKernel kernel = Program.CreateKernel("NetworkTrain");
 
@@ -108,6 +110,7 @@ namespace Encog.Util.CL.Kernels
             kernel.SetMemoryArgument(8, outputBuffer);
             kernel.SetMemoryArgument(9, layerDeltaBuffer);
             kernel.SetMemoryArgument(10, gradientBuffer);
+            kernel.SetMemoryArgument(11, activationTypeBuffer);
 
             ComputeCommandQueue commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
             ComputeEventList events = new ComputeEventList();
