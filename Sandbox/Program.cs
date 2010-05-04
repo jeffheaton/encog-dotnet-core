@@ -246,7 +246,7 @@ kernel void SingleNetworkCalculate(
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, false);
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-            //Encog.Encog.Instance.InitGPU();
+            Encog.Encog.Instance.InitGPU();
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
             for (int i = 0; i < 50; i++)
             {
@@ -262,6 +262,28 @@ kernel void SingleNetworkCalculate(
             Console.WriteLine("Done");
         }
 
+        public static void train2()
+        {
+            INeuralDataSet training = RandomTrainingFactory.Generate(50, 10, 1, -1, 2);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(10, 6, 0, 2, true);
+            network.Reset();
+            FlatNetwork flat = new FlatNetwork(network);
+            //Encog.Encog.Instance.InitGPU();
+
+            long start = Environment.TickCount;
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
+            for (int i = 0; i < 50; i++)
+            {
+                train.Iteration();
+                Console.WriteLine("Train error: " + train.Error);
+                Console.WriteLine("Netwk error: " + flat.CalculateError(training));
+            }
+            long stop = Environment.TickCount;
+
+            Console.WriteLine("Done:" + (stop-start));
+            Console.WriteLine("Stop");
+        }
+
         static void Main(string[] args)
         {
             //try
@@ -270,7 +292,8 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train();
+                train2();
+                //train2();
                 //XORNEAT();
             }
             //catch (Exception e)

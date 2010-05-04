@@ -116,10 +116,16 @@ namespace Encog.Util.CL.Kernels
             ComputeEventList events = new ComputeEventList();
 
             commands.Execute(kernel, null, new long[] { length }, null, events);
-
-            Errors = commands.Read(errorBuffer, true, 0, errorBufferSize, events);
+            try
+            {
+                Errors = commands.Read(errorBuffer, true, 0, errorBufferSize, events);
+            }
+            catch (OutOfResourcesComputeException ex)
+            {
+                throw new EncogError("GPU is out of resources");
+            }
+                
             Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * length, events);
-
         }
     }
 }

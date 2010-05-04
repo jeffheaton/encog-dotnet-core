@@ -18,6 +18,11 @@ namespace Encog.Neural.Networks.Flat
     public class TrainFlatNetworkMulti
     {
         /// <summary>
+        /// The number of threads to use.
+        /// </summary>
+        public int NumThreads { get; set; }
+
+        /// <summary>
         /// The gradients
         /// </summary>
         private double[] gradients;
@@ -95,14 +100,17 @@ namespace Encog.Neural.Networks.Flat
                 updateValues[i] = ResilientPropagation.DEFAULT_INITIAL_UPDATE;
             }
 
-            DetermineWorkload determine = new DetermineWorkload(0, (int)this.indexable.Count);
+            DetermineWorkload determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
             this.workers = new IFlatGradientWorker[determine.ThreadCount];
             IList<IntRange> range = determine.CalculateWorkers();
 
             int index = 0;
             foreach (IntRange r in range)
             {
-                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
+                if( Encog.Instance.GPU!=null )
+                    this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+                else
+                    this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
         }
 
