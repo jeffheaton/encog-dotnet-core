@@ -264,8 +264,12 @@ kernel void SingleNetworkCalculate(
 
         public static void train2()
         {
-            INeuralDataSet training = RandomTrainingFactory.Generate(50, 10, 1, -1, 2);
-            BasicNetwork network = EncogUtility.SimpleFeedForward(10, 6, 0, 2, true);
+            int outputSize = 2;
+            int inputSize = 10;
+            INeuralDataSet training = RandomTrainingFactory.Generate(
+                50, inputSize, outputSize, -1, 1);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(
+                training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
             FlatNetwork flat = new FlatNetwork(network);
             //Encog.Encog.Instance.InitGPU();
