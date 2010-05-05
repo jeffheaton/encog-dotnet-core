@@ -115,7 +115,11 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = low; i <= high; i++)
             {
-                e += k.Errors[errorIndex++];
+                for (int j = 0; j < this.network.OutputCount; j++)
+                {
+                    e += k.Errors[errorIndex++];
+                }
+
                 for (int j = 0; j < this.gradients.Length; j++)
                 {
                     this.gradients[j] += k.Gradients[index++];

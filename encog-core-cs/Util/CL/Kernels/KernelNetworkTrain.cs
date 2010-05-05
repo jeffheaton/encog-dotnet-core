@@ -57,13 +57,12 @@ namespace Encog.Util.CL.Kernels
             Calculate(flat, (int)indexable.Count , inputArray, idealArray);
         }
 
-
         public void Calculate(FlatNetwork flat, int length, float[] input, float[] idealArray)
         {
             int[] paramArray = new int[10];
             int totalOutputLength = flat.LayerOutput.Length * length;
             float[] weightArray = new float[flat.Weights.Length];
-            int errorBufferSize = length*flat.LayerOutput.Length;
+            int errorBufferSize = length*flat.OutputCount;
             int layerDeltaSize = 0;
             int[] activationType = flat.ActivationType;
 
