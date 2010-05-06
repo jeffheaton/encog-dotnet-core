@@ -19,8 +19,6 @@ namespace Encog.Util.CL.Kernels
 
 
         private ComputeBuffer<int> paramBuffer;
-        private ComputeBuffer<float> inputBuffer;
-        private ComputeBuffer<float> idealBuffer;
         private ComputeBuffer<float> weightArrayBuffer;
         private ComputeBuffer<float> outputBuffer;
 
@@ -39,12 +37,12 @@ namespace Encog.Util.CL.Kernels
         private int errorBufferSize;
         private int layerDeltaSize;
         private int[] activationType;
-        private float[] inputArray;
-        private float[] idealArray;
         private FlatNetwork flat;
         private int trainingLength;
         private ComputeKernel kernel;
         private ComputeCommandQueue commands;
+
+        private TrainingWorkload[] workload;
 
         public KernelNetworkTrain(ComputeContext context)
             : base(context, "Encog.Resources.KernelNetTrain.txt")
@@ -59,12 +57,14 @@ namespace Encog.Util.CL.Kernels
             }
 
             IIndexable indexable = (IIndexable)input;
+            this.flat = flat;
+            this.trainingLength = (high - low) + 1;
 
             double[][] result = EncogArray.AllocateDouble2D((int)indexable.Count, (int)flat.OutputCount);
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
-            this.inputArray = new float[indexable.Count * flat.InputCount];
-            this.idealArray = new float[indexable.Count * flat.OutputCount];
+            this.workload = new TrainingWorkload[1];
+            this.workload[0] = new TrainingWorkload(this.trainingLength, input.InputSize, input.IdealSize);
 
             int inputIndex = 0;
             int idealIndex = 0;
@@ -74,17 +74,16 @@ namespace Encog.Util.CL.Kernels
                 indexable.GetRecord(i,pair);
                 for (int col = 0; col < flat.InputCount; col++)
                 {
-                    inputArray[inputIndex++] = (float)pair.Input.Data[col];
+                    this.workload[0].InputArray[inputIndex++] = (float)pair.Input.Data[col];
                 }
 
                 for (int col = 0; col < flat.OutputCount; col++)
                 {
-                    idealArray[idealIndex++] = (float)pair.Ideal.Data[col];
+                    this.workload[0].IdealArray[idealIndex++] = (float)pair.Ideal.Data[col];
                 }
             }
 
-            this.flat = flat;
-            this.trainingLength = (high-low)+1;
+
 
         }
 
@@ -110,41 +109,46 @@ namespace Encog.Util.CL.Kernels
             paramArray[5] = flat.Weights.Length;
 
             this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
-            this.inputBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, inputArray);
-            this.idealBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, idealArray);
+            
             this.outputBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, totalOutputLength);
+            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, errorBufferSize);
+            this.layerDeltaBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, layerDeltaSize * this.trainingLength);
+            this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.trainingLength);
 
             this.layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
             this.layerCountBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
             this.weightIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
 
-            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, errorBufferSize);
-            this.layerDeltaBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, layerDeltaSize * this.trainingLength);
-            this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.trainingLength);
             this.activationTypeBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, activationType);
             this.kernel = Program.CreateKernel("NetworkTrain");
             this.commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
+
+            this.workload[0].Init(Context);
         }
 
         public void Calculate()
         {
+            Calculate(0);
+        }
+
+        private void Calculate(int index)
+        {
             Init();
+
+            TrainingWorkload workload = this.workload[0];
 
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
             this.weightArrayBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
 
-            
-
-
             kernel.SetMemoryArgument(0, paramBuffer);
             kernel.SetMemoryArgument(1, errorBuffer);
             kernel.SetMemoryArgument(2, layerIndexBuffer);
             kernel.SetMemoryArgument(3, layerCountBuffer);
             kernel.SetMemoryArgument(4, weightIndexBuffer);
-            kernel.SetMemoryArgument(5, inputBuffer);
-            kernel.SetMemoryArgument(6, idealBuffer);
+            kernel.SetMemoryArgument(5, workload.InputBuffer);
+            kernel.SetMemoryArgument(6, workload.IdealBuffer);
             kernel.SetMemoryArgument(7, weightArrayBuffer);
             kernel.SetMemoryArgument(8, outputBuffer);
             kernel.SetMemoryArgument(9, layerDeltaBuffer);

@@ -93,6 +93,10 @@ namespace Encog.Neural.Networks.Flat
             layerOutput = network.LayerOutput;
 
             this.pair = BasicNeuralDataPair.CreatePair(network.InputCount, network.OutputCount);
+
+            KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
+            k.Train(this.network, this.training, this.high, this.low);
+            k.Init();
         }
 
 
@@ -102,10 +106,9 @@ namespace Encog.Neural.Networks.Flat
         public void Run()
         {
             KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
-            k.Train(this.network, this.training, this.high, this.low);
-
-
             
+            k.Calculate();
+
             for (int j = 0; j < this.gradients.Length; j++)
                 this.gradients[j] = 0;
 

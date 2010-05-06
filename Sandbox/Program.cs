@@ -18,6 +18,7 @@ using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.NEAT;
 using Encog.Persist;
 using System.IO;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
 
 namespace Sandbox
 {
@@ -276,6 +277,7 @@ kernel void SingleNetworkCalculate(
 
             long start = Environment.TickCount;
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
+            train.NumThreads = 1;
             for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
@@ -288,6 +290,22 @@ kernel void SingleNetworkCalculate(
             Console.WriteLine("Stop");
         }
 
+        static void simple()
+        {
+            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
+            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            ResilientPropagation train = new ResilientPropagation(network, training);
+
+            do
+            {
+                train.Iteration();
+                Console.WriteLine("Train error: " + train.Error);
+            } while (train.Error > .001);
+
+            Console.WriteLine("Done");
+            Console.ReadKey();
+        }
+
         static void Main(string[] args)
         {
             //try
@@ -297,8 +315,8 @@ kernel void SingleNetworkCalculate(
                 //benchmark();
                 //testBuffer();
                 train2();
-                //train2();
                 //XORNEAT();
+                //simple();
             }
             //catch (Exception e)
             {
