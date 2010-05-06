@@ -81,6 +81,10 @@ namespace Encog.Neural.Networks.Structure
                 }
 
                 // process synapses
+                if (network.Structure.IsConnectionLimited )
+                    index = ProcessSynapseLimited(network, layer, array, index);
+                else
+                    index = ProcessSynapseFull(network, layer, array, index);
 
             }
         }
@@ -105,7 +109,7 @@ namespace Encog.Neural.Networks.Structure
             return index;
         }
 
-        private static int processSynapseLimited(BasicNetwork network, ILayer layer, double[] array, int index)
+        private static int ProcessSynapseLimited(BasicNetwork network, ILayer layer, double[] array, int index)
         {
             // process synapses
             foreach (ISynapse synapse in network.Structure
