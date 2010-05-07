@@ -69,11 +69,11 @@ namespace Encog.Util.CL
             ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
             this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
 
-            this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context);
-            this.kerSingleNetworkCalculate.Compile();
+            //this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context);
+            //this.kerSingleNetworkCalculate.Compile();
 
-            this.kerNetworkCalculate = new KernelNetworkCalculate(this.context);
-            this.kerNetworkCalculate.Compile();
+            //this.kerNetworkCalculate = new KernelNetworkCalculate(this.context);
+            //this.kerNetworkCalculate.Compile();
 
             this.kerNetworkTrain = new KernelNetworkTrain(this.context);
             this.kerNetworkTrain.Compile();
