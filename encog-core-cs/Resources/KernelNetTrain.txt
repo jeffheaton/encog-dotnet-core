@@ -77,6 +77,8 @@ kernel void NetworkTrain(
     int neuronCount = params[3];
     int layerDeltaSize = params[4];
     int weightsSize = params[5];
+    
+    float test[inputSize];
 	
 	// part 1: forward pass
 	int taskIndex = get_global_id(0);

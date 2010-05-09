@@ -133,8 +133,6 @@ namespace Encog.Util.CL.Kernels
 
         private void Calculate(int index)
         {
-            Init();
-
             TrainingWorkload workload = this.workload[0];
 
             for (int i = 0; i < flat.Weights.Length; i++)
@@ -155,10 +153,8 @@ namespace Encog.Util.CL.Kernels
             kernel.SetMemoryArgument(10, gradientBuffer);
             kernel.SetMemoryArgument(11, activationTypeBuffer);
 
-
-            
             ComputeEventList events = new ComputeEventList();
-            commands.Execute(kernel, null, new long[] { this.trainingLength }, null, events);
+            commands.Execute(kernel, null, new long[] { workload.TrainingLength }, null, events);
 
             try
             {
