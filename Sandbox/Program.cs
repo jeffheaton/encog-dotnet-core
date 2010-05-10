@@ -267,7 +267,7 @@ kernel void SingleNetworkCalculate(
         {
             int outputSize = 2;
             int inputSize = 10;
-            int trainingSize = 100;
+            int trainingSize = 1000;
 
             INeuralDataSet training = RandomTrainingFactory.Generate(
                 trainingSize, inputSize, outputSize, -1, 1);

@@ -65,6 +65,7 @@ namespace Encog.Neural.Networks.Flat
         private int low;
         private int high;
         private TrainFlatNetworkMulti owner;
+        private int elapsedTime;
 
         /// <summary>
         /// Construct a gradient worker.
@@ -105,6 +106,7 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
+            DateTime start = DateTime.Now;
             KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
             
             k.Calculate();
@@ -132,6 +134,9 @@ namespace Encog.Neural.Networks.Flat
             int count = (high - low) + 1;
             this.owner.Report(this.gradients, Math.Sqrt(e/(count*training.IdealSize)));
 
+            DateTime stop = DateTime.Now;
+            TimeSpan elapsed = stop - start;
+            this.elapsedTime = (int)elapsed.TotalMilliseconds;
         }
 
 
@@ -143,6 +148,17 @@ namespace Encog.Neural.Networks.Flat
             get
             {
                 return weights;
+            }
+        }
+
+        /// <summary>
+        /// Elapsed time for the last iteration.
+        /// </summary>
+        public int ElapsedTime
+        {
+            get
+            {
+                return this.elapsedTime;
             }
         }
     }

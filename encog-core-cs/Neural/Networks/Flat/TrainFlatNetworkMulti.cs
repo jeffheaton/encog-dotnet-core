@@ -103,10 +103,16 @@ namespace Encog.Neural.Networks.Flat
             DetermineWorkload determine;
             
             //  consider GPU, if enabled
-            if (Encog.Instance.GPU != null)
+            /*if (Encog.Instance.GPU != null)
                 determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
+            */
+
+            if (Encog.Instance.GPU != null)
+                determine = new DetermineWorkload(4, 1, (int)this.indexable.Count);
+            else
+                determine = new DetermineWorkload(4, 0, (int)this.indexable.Count);
             
             
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
