@@ -20,13 +20,13 @@ float derivativeLinear(float x)
 
 float activationSigmoid(float x)
 {
-	float p = -1.0 * x;
-	return 1.0 / (1.0 + exp(p));
+	float p = -1.0f * x;
+	return 1.0f / (1.0f + exp(p));
 }
 
 float derivativeSigmoid(float x)
 {
-	return x * (1.0 - x);
+	return x * (1.0f - x);
 }
 
 float activation(int type, float x)
@@ -39,7 +39,8 @@ float activation(int type, float x)
 			return activationTANH(x);
 		case 2:
 			return activationSigmoid(x);
-
+		default:
+			return 0;
 	}
 }
 
@@ -53,6 +54,8 @@ float derivative(int type, float x)
 			return derivativeTANH(x);
 		case 2:
 			return derivativeSigmoid(x);
+		default:
+			return 0;
 	}
 }
 
@@ -78,8 +81,6 @@ kernel void NetworkTrain(
     int layerDeltaSize = params[4];
     int weightsSize = params[5];
     
-    float test[inputSize];
-	
 	// part 1: forward pass
 	int taskIndex = get_global_id(0);
 	int taskOutputIndex = taskIndex * neuronCount;
@@ -123,7 +124,6 @@ kernel void NetworkTrain(
 	// part 2: backward pass
 	int taskErrorIndex = taskIndex * outputSize;
 	   
-    float e = 0;
     for(int i=0;i<outputSize;i++)
     {
 		float diff = ideal[taskIdealIndex+i] - layerOutput[taskOutputIndex+ i];

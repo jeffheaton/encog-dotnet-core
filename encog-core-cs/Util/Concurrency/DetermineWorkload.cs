@@ -22,7 +22,7 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// How many threads to use.
         /// </summary>
-        private int threadCount;
+        private int cpuWorkerCount;
 
         /// <summary>
         /// What is the total workload size?
@@ -30,15 +30,39 @@ namespace Encog.Util.Concurrency
         private int workloadSize;
 
         /// <summary>
+        /// GPU count.
+        /// </summary>
+        private int gpuWorkerCount;
+
+        /// <summary>
+        /// The total task count.
+        /// </summary>
+        private int totalWorkerCount;
+
+        /// <summary>
         /// Determine the workload.
         /// </summary>
         /// <param name="threads">Threads to use, or zero to allow Encog to pick.</param>
         /// <param name="workloadSize">Total workload size.</param>
-        public DetermineWorkload(int threads, int workloadSize)
+        public DetermineWorkload(int threads, int workloadSize) :
+            this(threads,0,workloadSize)
         {
+        }
 
+        /// <summary>
+        /// Determine the workload, consider GPU count.
+        /// </summary>
+        /// <param name="cpuWorkerCount">Threads to use, or zero to allow Encog to pick.</param>
+        /// <param name="gpuWorkerCount">The number of GPU workers.</param>
+        /// <param name="workloadSize">Total workload size.</param>
+        public DetermineWorkload(int cpuWorkerCount, int gpuWorkerCount, int workloadSize)
+        {
+            this.cpuWorkerCount = cpuWorkerCount;
+            this.gpuWorkerCount = gpuWorkerCount;
+            this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
             this.workloadSize = workloadSize;
-            if (threads == 0)
+
+            if (cpuWorkerCount == 0)
             {
                 int num = System.Environment.ProcessorCount;
 
@@ -61,11 +85,16 @@ namespace Encog.Util.Concurrency
                     num = Math.Max(1, (int)(recordCount / 100));
                 }
 
-                this.threadCount = num;
+                this.cpuWorkerCount = num;
+                this.totalWorkerCount = this.gpuWorkerCount + this.cpuWorkerCount;
             }
             else
             {
-                this.threadCount = Math.Min(threads, workloadSize);
+                this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
+                if (this.totalWorkerCount > workloadSize)
+                    this.gpuWorkerCount = 0;
+                this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
+                this.totalWorkerCount = Math.Min(this.totalWorkerCount, workloadSize);
             }
         }
 
@@ -77,17 +106,17 @@ namespace Encog.Util.Concurrency
         public IList<IntRange> CalculateWorkers()
         {
             IList<IntRange> result = new List<IntRange>();
-            int sizePerThread = this.workloadSize / this.threadCount;
+            int sizePerThread = this.workloadSize / this.totalWorkerCount;
 
             // create the workers
-            for (int i = 0; i < this.threadCount; i++)
+            for (int i = 0; i < this.totalWorkerCount; i++)
             {
                 int low = i * sizePerThread;
                 int high;
 
                 // if this is the last record, then high to be the last item
                 // in the training set.
-                if (i == (this.threadCount - 1))
+                if (i == (this.totalWorkerCount - 1))
                 {
                     high = this.workloadSize - 1;
                 }
@@ -105,11 +134,33 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// The thread count.
         /// </summary>
-        public int ThreadCount
+        public int TotalWorkerCount
         {
             get
             {
-                return this.threadCount;
+                return this.totalWorkerCount;
+            }
+        }
+        
+        /// <summary>
+        /// The GPU thread count.
+        /// </summary>
+        public int GPUWorkerCount
+        {
+            get
+            {
+                return this.gpuWorkerCount;
+            }
+        }
+
+        /// <summary>
+        /// The thread count.
+        /// </summary>
+        public int CPUWorkerCount
+        {
+            get
+            {
+                return this.cpuWorkerCount;
             }
         }
     }

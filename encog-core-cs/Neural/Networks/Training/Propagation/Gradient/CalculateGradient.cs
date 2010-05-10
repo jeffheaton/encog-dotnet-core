@@ -146,7 +146,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             {
                 this.indexed = (IIndexable)this.training;
                 this.determine = new DetermineWorkload(threads, (int)this.indexed.Count);
-                this.threadCount = this.determine.ThreadCount;
+                this.threadCount = this.determine.TotalWorkerCount;
             }
 
             // setup workers

@@ -100,17 +100,27 @@ namespace Encog.Neural.Networks.Flat
                 updateValues[i] = ResilientPropagation.DEFAULT_INITIAL_UPDATE;
             }
 
-            DetermineWorkload determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
-            this.workers = new IFlatGradientWorker[determine.ThreadCount];
+            DetermineWorkload determine;
+            
+            //  consider GPU, if enabled
+            if (Encog.Instance.GPU != null)
+                determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
+            else
+                determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
+            
+            
+            this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
             IList<IntRange> range = determine.CalculateWorkers();
 
+            int cpuWorkerCount = determine.CPUWorkerCount;
             int index = 0;
             foreach (IntRange r in range)
             {
-                if( Encog.Instance.GPU!=null )
-                    this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
-                else
+                if( cpuWorkerCount>0 )
                     this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
+                else
+                    this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+                cpuWorkerCount--;
             }
         }
 

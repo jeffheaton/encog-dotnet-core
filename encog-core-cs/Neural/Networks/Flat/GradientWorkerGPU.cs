@@ -128,9 +128,9 @@ namespace Encog.Neural.Networks.Flat
                     this.gradients[j] += k.Gradients[index++];
                 }
             }
-            
 
-            this.owner.Report(this.gradients, Math.Sqrt(e/(training.Count*training.IdealSize)));
+            int count = (high - low) + 1;
+            this.owner.Report(this.gradients, Math.Sqrt(e/(count*training.IdealSize)));
 
         }
 
