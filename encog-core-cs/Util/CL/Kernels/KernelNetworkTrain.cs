@@ -166,6 +166,8 @@ namespace Encog.Util.CL.Kernels
             }
 
             Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.trainingLength, events);
+
+            this.weightArrayBuffer.Dispose();
         }
     }
 }

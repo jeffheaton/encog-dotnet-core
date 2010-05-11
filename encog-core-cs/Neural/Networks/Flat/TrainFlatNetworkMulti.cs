@@ -86,7 +86,7 @@ namespace Encog.Neural.Networks.Flat
         /// The performance ratio between CPU & GPU.  
         /// Positive number means GPU workers are faster than CPU ones.
         /// </summary>
-        private double gpuRatio;
+        private double calculatedGPURatio;
 
         /// <summary>
         /// Train a flat network multithreaded. 
@@ -119,17 +119,10 @@ namespace Encog.Neural.Networks.Flat
             DetermineWorkload determine;
             
             //  consider GPU, if enabled
-            /*if (Encog.Instance.GPU != null)
+            if (Encog.Instance.GPU != null)
                 determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
-            */
-
-            if (Encog.Instance.GPU != null)
-                determine = new DetermineWorkload(4, 1, (int)this.indexable.Count);
-            else
-                determine = new DetermineWorkload(4, 0, (int)this.indexable.Count);
-            
             
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
 
@@ -330,9 +323,13 @@ namespace Encog.Neural.Networks.Flat
                 }
             }
 
-            this.cpuTimePerIteration = totalCPU/countCPU;
-            this.gpuTimePerIteration = totalGPU/countGPU;
-            this.gpuRatio = ((double)this.cpuTimePerIteration) /
+            if( countCPU>0 )
+                this.cpuTimePerIteration = totalCPU/countCPU;
+            
+            if( countGPU>0 )
+                this.gpuTimePerIteration = totalGPU/countGPU;
+            
+            this.calculatedGPURatio = ((double)this.cpuTimePerIteration) /
                 ((double)this.gpuTimePerIteration);
         }
 
@@ -362,11 +359,11 @@ namespace Encog.Neural.Networks.Flat
         /// The performance ratio between CPU & GPU.  
         /// Positive number means GPU workers are faster than CPU ones.
         /// </summary>
-        public double GPURatio
+        public double CalculatedGPURatio
         {
             get
             {
-                return this.gpuRatio;
+                return this.calculatedGPURatio;
             }
         }
     }

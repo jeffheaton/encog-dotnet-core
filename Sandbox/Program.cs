@@ -290,7 +290,7 @@ kernel void SingleNetworkCalculate(
 
             Console.WriteLine("GPU Time:" + train.GPUTimePerIteration);
             Console.WriteLine("CPU Time:" + train.CPUTimePerIteration);
-            Console.WriteLine("Ratio:" + train.GPURatio);
+            Console.WriteLine("Ratio:" + train.CalculatedGPURatio);
             Console.WriteLine("Done:" + (stop-start));
             Console.WriteLine("Stop");
         }
@@ -319,7 +319,7 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train2();
+                train();
                 //XORNEAT();
                 //simple();
             }
