@@ -255,7 +255,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             this.indexed = training;
             // setup the workers
             this.workers = new GradientWorker[this.threadCount];
-            IList<IntRange> workloadRange = this.determine.CalculateWorkers();
+            this.determine.CalculateWorkers();
+            IList<IntRange> workloadRange = this.determine.CPURanges;
 
             int i = 0;
             foreach (IntRange range in workloadRange)

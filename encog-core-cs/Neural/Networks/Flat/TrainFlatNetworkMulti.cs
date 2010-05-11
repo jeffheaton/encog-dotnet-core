@@ -73,6 +73,22 @@ namespace Encog.Neural.Networks.Flat
         private double currentError;
 
         /// <summary>
+        /// The average number of miliseconds that each GPU worker took.
+        /// </summary>
+        private int gpuTimePerIteration;
+
+        /// <summary>
+        /// The average number of miliseconds that each CPU worker took.
+        /// </summary>
+        private int cpuTimePerIteration;
+
+        /// <summary>
+        /// The performance ratio between CPU & GPU.  
+        /// Positive number means GPU workers are faster than CPU ones.
+        /// </summary>
+        private double gpuRatio;
+
+        /// <summary>
         /// Train a flat network multithreaded. 
         /// </summary>
         /// <param name="network">The network to train.</param>
@@ -116,18 +132,22 @@ namespace Encog.Neural.Networks.Flat
             
             
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
-            IList<IntRange> range = determine.CalculateWorkers();
 
-            int cpuWorkerCount = determine.CPUWorkerCount;
+            determine.CalculateWorkers();
             int index = 0;
-            foreach (IntRange r in range)
+
+            // handle CPU
+            foreach (IntRange r in determine.CPURanges )
             {
-                if( cpuWorkerCount>0 )
-                    this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
-                else
-                    this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
-                cpuWorkerCount--;
+                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
+
+            // handle GPU
+            foreach (IntRange r in determine.GPURanges)
+            {
+                this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+            }
+
         }
 
         /// <summary>
@@ -183,6 +203,8 @@ namespace Encog.Neural.Networks.Flat
             }
 
             EncogArray.ArrayCopy(this.weights, 0, this.network.Weights, 0, this.weights.Length);
+
+            CalculatePerformance();
         }
 
         /// <summary>
@@ -286,6 +308,67 @@ namespace Encog.Neural.Networks.Flat
             get
             {
                 return training;
+            }
+        }
+
+        private void CalculatePerformance()
+        {
+            int totalCPU = 0;
+            int countCPU = 0;
+            int totalGPU = 0;
+            int countGPU = 0;
+
+            foreach(IFlatGradientWorker worker in this.workers )
+            {
+                if( worker is GradientWorkerCPU )
+                {
+                    countCPU++;
+                    totalCPU+=worker.ElapsedTime;
+                }
+                else if( worker is GradientWorkerGPU )
+                {
+                    countGPU++;
+                    totalGPU+=worker.ElapsedTime;
+                }
+            }
+
+            this.cpuTimePerIteration = totalCPU/countCPU;
+            this.gpuTimePerIteration = totalGPU/countGPU;
+            this.gpuRatio = ((double)this.gpuTimePerIteration) /
+                ((double)this.cpuTimePerIteration);
+        }
+
+        /// <summary>
+        /// The average number of miliseconds that each GPU worker took.
+        /// </summary>
+        public int GPUTimePerIteration
+        {
+            get
+            {
+                return this.gpuTimePerIteration;
+            }
+        }
+
+        /// <summary>
+        /// The average number of miliseconds that each CPU worker took.
+        /// </summary>
+        public int CPUTimePerIteration
+        {
+            get
+            {
+                return this.cpuTimePerIteration;
+            }
+        }
+
+        /// <summary>
+        /// The performance ratio between CPU & GPU.  
+        /// Positive number means GPU workers are faster than CPU ones.
+        /// </summary>
+        public double GPURatio
+        {
+            get
+            {
+                return this.gpuRatio;
             }
         }
     }

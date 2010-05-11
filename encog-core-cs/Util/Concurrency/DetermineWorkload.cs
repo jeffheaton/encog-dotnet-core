@@ -17,7 +17,7 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// What is the minimum number of workload entries for a thread to be worthwhile.
         /// </summary>
-        public static int MIN_WORTHWHILE = 100;
+        public const int MIN_WORTHWHILE = 100;
 
         /// <summary>
         /// How many threads to use.
@@ -27,7 +27,17 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// What is the total workload size?
         /// </summary>
-        private int workloadSize;
+        private int totalWorkloadSize;
+
+        /// <summary>
+        /// What is the GPU workload size?
+        /// </summary>
+        private int gpuWorkloadSize;
+
+        /// <summary>
+        /// What is the CPU workload size?
+        /// </summary>
+        private int cpuWorkloadSize;
 
         /// <summary>
         /// GPU count.
@@ -38,6 +48,13 @@ namespace Encog.Util.Concurrency
         /// The total task count.
         /// </summary>
         private int totalWorkerCount;
+
+        private List<IntRange> cpuRanges;
+
+        private List<IntRange> gpuRanges;
+
+        public double GPURatio { get; set; }
+
 
         /// <summary>
         /// Determine the workload.
@@ -60,7 +77,7 @@ namespace Encog.Util.Concurrency
             this.cpuWorkerCount = cpuWorkerCount;
             this.gpuWorkerCount = gpuWorkerCount;
             this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
-            this.workloadSize = workloadSize;
+            this.totalWorkloadSize = workloadSize;
 
             if (cpuWorkerCount == 0)
             {
@@ -77,12 +94,12 @@ namespace Encog.Util.Concurrency
                 // We want at least 100 training elements in each.
                 // This method will likely be further "tuned" in future versions.
 
-                long recordCount = this.workloadSize;
+                long recordCount = this.totalWorkloadSize;
                 long workPerThread = recordCount / num;
 
-                if (workPerThread < 100)
+                if (workPerThread < DetermineWorkload.MIN_WORTHWHILE )
                 {
-                    num = Math.Max(1, (int)(recordCount / 100));
+                    num = Math.Max(1, (int)(recordCount / DetermineWorkload.MIN_WORTHWHILE));
                 }
 
                 this.cpuWorkerCount = num;
@@ -102,33 +119,48 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// Calculate the high and low ranges for each worker.
         /// </summary>
-        /// <returns>A list of IntRange objects.</returns>
-        public IList<IntRange> CalculateWorkers()
+        public void CalculateWorkers()
         {
-            IList<IntRange> result = new List<IntRange>();
-            int sizePerThread = this.workloadSize / this.totalWorkerCount;
+            this.cpuRanges.Clear();
+            this.gpuRanges.Clear();
 
-            // create the workers
-            for (int i = 0; i < this.totalWorkerCount; i++)
+            int baseSizePerThread = this.totalWorkloadSize / this.totalWorkerCount;
+            int gpuSizePerThread = (int)((double)baseSizePerThread * this.GPURatio);
+            int cpuWorkloadSize = this.totalWorkloadSize - (gpuSizePerThread * this.gpuWorkerCount);
+            int cpuSizePerThread = cpuWorkloadSize / this.cpuWorkerCount;
+
+            int index = 0;
+
+            // create the GPU workers
+            for (int i = 0; i < this.gpuWorkerCount; i++)
             {
-                int low = i * sizePerThread;
+                int low = index;
+                int high = low + gpuSizePerThread;
+                this.gpuRanges.Add(new IntRange(high, low));
+                index += gpuSizePerThread;
+            }
+
+            // create the CPU workers
+            for (int i = 0; i < this.cpuWorkerCount; i++)
+            {
+                int low = index;
                 int high;
 
                 // if this is the last record, then high to be the last item
                 // in the training set.
-                if (i == (this.totalWorkerCount - 1))
+                if (i == (this.cpuWorkerCount - 1))
                 {
-                    high = this.workloadSize - 1;
+                    high = this.totalWorkloadSize - 1;
                 }
                 else
                 {
-                    high = ((i + 1) * sizePerThread) - 1;
+                    high = low + cpuSizePerThread;
                 }
 
-                result.Add(new IntRange(high, low));
+                this.cpuRanges.Add(new IntRange(high, low));
+                index += cpuSizePerThread;
             }
 
-            return result;
         }
 
         /// <summary>
@@ -163,5 +195,61 @@ namespace Encog.Util.Concurrency
                 return this.cpuWorkerCount;
             }
         }
+
+        /// <summary>
+        /// Workload ranges for CPU workers.
+        /// </summary>
+        public List<IntRange> CPURanges
+        {
+            get
+            {
+                return this.cpuRanges;
+            }
+        }
+
+        /// <summary>
+        /// Workload ranges for GPU workers.
+        /// </summary>
+        public List<IntRange> GPURanges
+        {
+            get
+            {
+                return this.gpuRanges;
+            }
+        }
+
+        /// <summary>
+        /// What is the total workload size?
+        /// </summary>
+        private int TotalWorkloadSize
+        {
+            get
+            {
+                return this.totalWorkloadSize;
+            }
+        }
+
+        /// <summary>
+        /// What is the GPU workload size?
+        /// </summary>
+        private int GPUWorkloadSize
+        {
+            get
+            {
+                return this.gpuWorkloadSize;
+            }
+        }
+
+        /// <summary>
+        /// What is the CPU workload size?
+        /// </summary>
+        private int CPUWorkloadSize
+        {
+            get
+            {
+                return this.cpuWorkloadSize;
+            }
+        }
+
     }
 }
