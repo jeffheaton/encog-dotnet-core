@@ -136,18 +136,17 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
-            // handle CPU
-            foreach (IntRange r in determine.CPURanges )
-            {
-                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
-            }
-
             // handle GPU
             foreach (IntRange r in determine.GPURanges)
             {
                 this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
             }
 
+            // handle CPU
+            foreach (IntRange r in determine.CPURanges )
+            {
+                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
+            }
         }
 
         /// <summary>
@@ -183,7 +182,6 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Iteration()
         {
-
             TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
             this.totalError = 0;
 
@@ -334,8 +332,8 @@ namespace Encog.Neural.Networks.Flat
 
             this.cpuTimePerIteration = totalCPU/countCPU;
             this.gpuTimePerIteration = totalGPU/countGPU;
-            this.gpuRatio = ((double)this.gpuTimePerIteration) /
-                ((double)this.cpuTimePerIteration);
+            this.gpuRatio = ((double)this.cpuTimePerIteration) /
+                ((double)this.gpuTimePerIteration);
         }
 
         /// <summary>

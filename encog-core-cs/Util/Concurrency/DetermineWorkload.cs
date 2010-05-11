@@ -49,9 +49,9 @@ namespace Encog.Util.Concurrency
         /// </summary>
         private int totalWorkerCount;
 
-        private List<IntRange> cpuRanges;
+        private IList<IntRange> cpuRanges = new List<IntRange>();
 
-        private List<IntRange> gpuRanges;
+        private IList<IntRange> gpuRanges = new List<IntRange>();
 
         public double GPURatio { get; set; }
 
@@ -74,6 +74,7 @@ namespace Encog.Util.Concurrency
         /// <param name="workloadSize">Total workload size.</param>
         public DetermineWorkload(int cpuWorkerCount, int gpuWorkerCount, int workloadSize)
         {
+            this.GPURatio = 1;
             this.cpuWorkerCount = cpuWorkerCount;
             this.gpuWorkerCount = gpuWorkerCount;
             this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
@@ -199,7 +200,7 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// Workload ranges for CPU workers.
         /// </summary>
-        public List<IntRange> CPURanges
+        public IList<IntRange> CPURanges
         {
             get
             {
@@ -210,7 +211,7 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// Workload ranges for GPU workers.
         /// </summary>
-        public List<IntRange> GPURanges
+        public IList<IntRange> GPURanges
         {
             get
             {

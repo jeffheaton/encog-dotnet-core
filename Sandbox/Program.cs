@@ -288,6 +288,9 @@ kernel void SingleNetworkCalculate(
             }
             long stop = Environment.TickCount;
 
+            Console.WriteLine("GPU Time:" + train.GPUTimePerIteration);
+            Console.WriteLine("CPU Time:" + train.CPUTimePerIteration);
+            Console.WriteLine("Ratio:" + train.GPURatio);
             Console.WriteLine("Done:" + (stop-start));
             Console.WriteLine("Stop");
         }
