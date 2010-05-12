@@ -136,7 +136,7 @@ namespace Encog.Util.Concurrency
             for (int i = 0; i < this.gpuWorkerCount; i++)
             {
                 int low = index;
-                int high = low + gpuSizePerThread;
+                int high = (low + gpuSizePerThread)-1;
                 this.gpuRanges.Add(new IntRange(high, low));
                 index += gpuSizePerThread;
             }
@@ -155,7 +155,7 @@ namespace Encog.Util.Concurrency
                 }
                 else
                 {
-                    high = low + cpuSizePerThread;
+                    high = (low + cpuSizePerThread)-1;
                 }
 
                 this.cpuRanges.Add(new IntRange(high, low));

@@ -58,9 +58,8 @@ namespace Encog.Util.CL.Kernels
 
             IIndexable indexable = (IIndexable)input;
             this.flat = flat;
-            this.trainingLength = (high - low) + 1;
+            this.trainingLength = (high - low) +1;
 
-            double[][] result = EncogArray.AllocateDouble2D((int)indexable.Count, (int)flat.OutputCount);
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
             this.workload = new TrainingWorkload[1];
@@ -133,6 +132,7 @@ namespace Encog.Util.CL.Kernels
 
         private void Calculate(int index)
         {
+            Init();
             TrainingWorkload workload = this.workload[0];
 
             for (int i = 0; i < flat.Weights.Length; i++)
