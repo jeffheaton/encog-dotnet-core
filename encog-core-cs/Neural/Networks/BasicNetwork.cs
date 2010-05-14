@@ -719,5 +719,19 @@ namespace Encog.Neural.Networks
                 synapse.WeightMatrix[fromNeuron, toNeuron] = 0;
             }
         }
+
+        /// <summary>
+        /// Set the bias activation on all layers.
+        /// </summary>
+        public double BiasActivation
+        {
+            set
+            {
+                foreach (ILayer layer in Structure.Layers)
+                {
+                    layer.BiasActivation = value;
+                }
+            }
+        }
     }
 }

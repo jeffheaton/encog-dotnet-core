@@ -40,6 +40,12 @@ namespace Encog.Neural.Networks.Layers
 {
     /// <summary>
     /// This interface defines all necessary methods for a neural network layer.
+    /// 
+    /// Layers can also have bias values attached. This makes up sort of "virtual
+	/// layer" that connects to this layer. This allows you to specify a bias
+	/// activation connected via bias weights to the neurons of this level. The
+	/// bias weights and bias activations are set by the biasWeights and
+	/// biasActivation properties.
     /// </summary>
     public interface ILayer : ICloneable, IEncogPersistedObject, IComparable<ILayer>
     {
@@ -185,6 +191,13 @@ namespace Encog.Neural.Networks.Layers
         /// <returns>The recurrent output.</returns>
         INeuralData Recur();
 
+        /// <summary>
+        /// Most layer types will default this value to one. However, it is possible
+	    /// to use other values. This is the activation that will be passed over the
+	    /// bias weights to the inputs of this layer. See the Layer interface
+	    /// documentation for more information on how Encog handles bias values.
+        /// </summary>
+        double BiasActivation { get; set; }
     }
 
 }

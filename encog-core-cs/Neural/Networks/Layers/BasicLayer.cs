@@ -50,6 +50,36 @@ namespace Encog.Neural.Networks.Layers
     /// is often used by itself to implement forward or recurrent layers. Other layer
     /// types are based on the basic layer as well.
     /// 
+    /// The following summarizes how basic layers calculate the output for a neural
+    /// network.
+    /// 
+    /// Example of a simple XOR network.
+    /// 
+    /// Input: BasicLayer: 2 Neurons, null biasWeights, null biasActivation
+    /// 
+    /// Hidden: BasicLayer: 2 Neurons, 2 biasWeights, 1 biasActivation
+    /// 
+    /// Output: BasicLayer: 1 Neuron, 1 biasWeights, 1 biasActivation
+    /// 
+    /// Input1Output and Input2Output are both provided.
+    /// 
+    /// Synapse 1: Input to Hidden Hidden1Activation = (Input1Output *
+    /// Input1->Hidden1Weight) + (Input2Output * Input2->Hidden1Weight) +
+    /// (HiddenBiasActivation * Hidden1BiasWeight)
+    /// 
+    /// Hidden1Output = calculate(Hidden1Activation, HiddenActivationFunction)
+    /// 
+    /// Hidden2Activation = (Input1Output * Input1->Hidden2Weight) + (Input2Output *
+    /// Input2->Hidden2Weight) + (HiddenBiasActivation * Hidden2BiasWeight)
+    /// 
+    /// Hidden2Output = calculate(Hidden2Activation, HiddenActivationFunction)
+    /// 
+    /// Synapse 2: Hidden to Output
+    /// 
+    /// Output1Activation = (Hidden1Output * Hidden1->Output1Weight) + (Hidden2Output *
+    /// Hidden2->Output1Weight) + (OutputBiasActivation * Output1BiasWeight)
+    /// 
+    /// Output1Output = calculate(Output1Activation, OutputActivationFunction) 
     /// </summary>
 #if !SILVERLIGHT
     [Serializable]
@@ -75,6 +105,11 @@ namespace Encog.Neural.Networks.Layers
         /// The id of this layer.
         /// </summary>
         private int id;
+
+        /// <summary>
+        /// The bias activation for this layer, normally 1.
+        /// </summary>
+        private double biasActivation;
 
 #if logging
         /// <summary>
@@ -130,6 +165,7 @@ namespace Encog.Neural.Networks.Layers
         {
             this.neuronCount = neuronCount;
             this.ActivationFunction = activationFunction;
+            this.biasActivation = 1;
             if (hasBias)
             {
                 this.biasWeights = new double[neuronCount];
@@ -515,6 +551,21 @@ namespace Encog.Neural.Networks.Layers
             else
             {
                 return -1;
+            }
+        }
+
+        /// <summary>
+        /// The bias activation, usually 1.  See Layer for more info.
+        /// </summary>
+        public double BiasActivation
+        {
+            get
+            {
+                return this.biasActivation;
+            }
+            set
+            {
+                this.biasActivation = value;
             }
         }
 

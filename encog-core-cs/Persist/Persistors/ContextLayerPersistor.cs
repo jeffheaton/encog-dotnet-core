@@ -68,6 +68,7 @@ namespace Encog.Persist.Persistors
             int neuronCount = 0;
             int x = 0;
             int y = 0;
+            double biasActivation = 1;
             String threshold = null;
             IActivationFunction activation = null;
             String end = xmlIn.LastTag.Name;
@@ -97,6 +98,10 @@ namespace Encog.Persist.Persistors
                 {
                     threshold = xmlIn.ReadTextToTag();
                 }
+                else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, true))
+                {
+                    biasActivation = double.Parse(xmlIn.ReadTextToTag());
+                }
                 else if (xmlIn.IsIt(end, false))
                 {
                     break;
@@ -123,6 +128,7 @@ namespace Encog.Persist.Persistors
 
                 layer.X = x;
                 layer.Y = y;
+                layer.BiasActivation = biasActivation;
 
                 return layer;
             }
@@ -153,6 +159,8 @@ namespace Encog.Persist.Persistors
                         .ToString());
             }
 
+
+            xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation );
             xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
             IPersistor persistor = layer.ActivationFunction
                    .CreatePersistor();

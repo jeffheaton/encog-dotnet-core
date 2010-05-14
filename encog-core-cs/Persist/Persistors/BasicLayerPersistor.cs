@@ -61,6 +61,11 @@ namespace Encog.Persist.Persistors
         public const String PROPERTY_THRESHOLD = "threshold";
 
         /// <summary>
+        /// The bias activation.
+        /// </summary>
+	    public const String PROPERTY_BIAS_ACTIVATION = "biasActivation";
+
+        /// <summary>
         /// The x-coordinate to place this object at.
         /// </summary>
         public const String PROPERTY_X = "x";
@@ -83,6 +88,7 @@ namespace Encog.Persist.Persistors
             String threshold = null;
             IActivationFunction activation = null;
             String end = xmlIn.LastTag.Name;
+            double biasActivation = 1;
 
             while (xmlIn.ReadToTag())
             {
@@ -109,6 +115,10 @@ namespace Encog.Persist.Persistors
                 {
                     y = xmlIn.ReadIntToTag();
                 }
+                else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, true))
+                {
+                    biasActivation = double.Parse( xmlIn.ReadTextToTag() );
+                }
                 else if (xmlIn.IsIt(end, false))
                 {
                     break;
@@ -134,6 +144,7 @@ namespace Encog.Persist.Persistors
                 }
                 layer.X = x;
                 layer.Y = y;
+                layer.BiasActivation = biasActivation;
                 return layer;
             }
             return null;
@@ -163,6 +174,7 @@ namespace Encog.Persist.Persistors
                         .ToString());
             }
 
+            xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation);
             xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
             IPersistor persistor = layer.ActivationFunction
                    .CreatePersistor();
