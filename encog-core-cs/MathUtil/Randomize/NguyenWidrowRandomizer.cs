@@ -97,7 +97,7 @@ namespace Encog.MathUtil.Randomize
                     norm += v * v;
                 }
 
-                double value = synapse.ToLayer.Threshold[j];
+                double value = synapse.ToLayer.BiasWeights[j];
                 norm += value * value;
                 norm = Math.Sqrt(norm);
 
@@ -108,8 +108,8 @@ namespace Encog.MathUtil.Randomize
                     synapse.WeightMatrix[k, j] = beta * value / norm;
                 }
 
-                value = synapse.ToLayer.Threshold[j];
-                synapse.ToLayer.Threshold[j] = beta * value / norm;
+                value = synapse.ToLayer.BiasWeights[j];
+                synapse.ToLayer.BiasWeights[j] = beta * value / norm;
             }
         }
     }

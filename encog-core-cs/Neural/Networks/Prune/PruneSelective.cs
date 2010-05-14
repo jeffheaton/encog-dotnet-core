@@ -125,12 +125,12 @@ namespace Encog.Neural.Networks.Prune
         public double DetermineNeuronSignificance(ILayer layer,
                 int neuron)
         {
-            // calculate the threshold significance
+            // calculate the bias significance
             double result = 0;
 
-            if (layer.HasThreshold)
+            if (layer.HasBias)
             {
-                result += layer.Threshold[neuron];
+                result += layer.BiasWeights[neuron];
             }
 
             // calculate the outbound significance
@@ -142,7 +142,7 @@ namespace Encog.Neural.Networks.Prune
                 }
             }
 
-            // calculate the threshold significance
+            // calculate the bias significance
             ICollection<ISynapse> inboundSynapses = this.network.Structure
                     .GetPreviousSynapses(layer);
 
@@ -219,16 +219,16 @@ namespace Encog.Neural.Networks.Prune
         /// <param name="neuronCount">The new neuron count.</param>
         private void IncreaseNeuronCount(ILayer layer, int neuronCount)
         {
-            // adjust the threshold
-            double[] newThreshold = new double[neuronCount];
-            if (layer.HasThreshold)
+            // adjust the bias
+            double[] newBias = new double[neuronCount];
+            if (layer.HasBias)
             {
                 for (int i = 0; i < layer.NeuronCount; i++)
                 {
-                    newThreshold[i] = layer.Threshold[i];
+                    newBias[i] = layer.BiasWeights[i];
                 }
 
-                layer.Threshold = newThreshold;
+                layer.BiasWeights = newBias;
             }
 
             // adjust the outbound weight matrixes
@@ -266,16 +266,16 @@ namespace Encog.Neural.Networks.Prune
                 synapse.WeightMatrix = newMatrix;
             }
 
-            // adjust the thresholds
-            if (layer.HasThreshold)
+            // adjust the bias
+            if (layer.HasBias)
             {
-                double[] newThresholds = new double[neuronCount];
+                double[] newBias2 = new double[neuronCount];
 
                 for (int i = 0; i < layer.NeuronCount; i++)
                 {
-                    newThresholds[i] = layer.Threshold[i];
+                    newBias2[i] = layer.BiasWeights[i];
                 }
-                layer.Threshold = newThreshold;
+                layer.BiasWeights = newBias2;
             }
 
             // adjust RBF
@@ -335,10 +335,10 @@ namespace Encog.Neural.Networks.Prune
                 }
             }
 
-            // remove the threshold
-            if (targetLayer.HasThreshold)
+            // remove the bias
+            if (targetLayer.HasBias)
             {
-                double[] newThreshold = new double[targetLayer
+                double[] newBias = new double[targetLayer
                         .NeuronCount - 1];
 
                 int targetIndex = 0;
@@ -346,11 +346,11 @@ namespace Encog.Neural.Networks.Prune
                 {
                     if (i != neuron)
                     {
-                        newThreshold[targetIndex++] = targetLayer.Threshold[i];
+                        newBias[targetIndex++] = targetLayer.BiasWeights[i];
                     }
                 }
 
-                targetLayer.Threshold = newThreshold;
+                targetLayer.BiasWeights = newBias;
             }
 
             // adjust RBF
@@ -379,7 +379,7 @@ namespace Encog.Neural.Networks.Prune
 
         /// <summary>
         /// Stimulate the specified neuron by the specified percent. This is used to
-        /// randomize the weights and thresholds for weak neurons. 
+        /// randomize the weights and bias values for weak neurons. 
         /// </summary>
         /// <param name="percent">The percent to randomize by.</param>
         /// <param name="layer">The layer that the neuron is on.</param>
@@ -389,9 +389,9 @@ namespace Encog.Neural.Networks.Prune
         {
             Distort d = new Distort(percent);
 
-            if (layer.HasThreshold)
+            if (layer.HasBias)
             {
-                layer.Threshold[neuron] = d.Randomize(layer.Threshold[neuron]);
+                layer.BiasWeights[neuron] = d.Randomize(layer.BiasWeights[neuron]);
             }
 
             // calculate the outbound significance

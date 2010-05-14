@@ -120,7 +120,7 @@ namespace Encog.Neural.Networks.Structure
 
         /// <summary>
         /// Calculate the size that an array should be to hold all of the weights
-        /// and threshold values. 
+        /// and bias values. 
         /// </summary>
         /// <returns>The size of the calculated array.</returns>
         public int CalculateSize()
@@ -134,10 +134,10 @@ namespace Encog.Neural.Networks.Structure
                 size += synapse.MatrixSize;
             }
 
-            // determine size from threshold values
+            // determine size from bias values
             foreach (ILayer layer in this.network.Structure.Layers)
             {
-                if (layer.HasThreshold)
+                if (layer.HasBias)
                 {
                     size += layer.NeuronCount;
                 }

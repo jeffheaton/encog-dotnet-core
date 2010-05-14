@@ -126,11 +126,11 @@ namespace Encog.Neural.Networks.Training.Simple
                                 learningRate * diff * input);
                     }
 
-                    // threshold (bias)
-                    double t = outputLayer.Threshold[
+                    // bias
+                    double t = outputLayer.BiasWeights[
                             currentAdaline];
                     t += learningRate * diff;
-                    outputLayer.Threshold[currentAdaline] = t;
+                    outputLayer.BiasWeights[currentAdaline] = t;
                 }
 
                 errorCalculation.UpdateError(output.Data, pair.Ideal.Data);

@@ -32,7 +32,7 @@ namespace Encog.Neural.Networks.Training.LMA
         private int inputLength;
 
         /// <summary>
-        /// The number of weights and thresholds in the neural network.
+        /// The number of weights and weights in the neural network.
         /// </summary>
         private int parameterSize;
 
@@ -179,7 +179,7 @@ namespace Encog.Neural.Networks.Training.LMA
                 {
                     output = outputData[neuron];
 
-                    int thresholdCol = this.jacobianCol++;
+                    int biasCol = this.jacobianCol++;
 
                     // for each weight of the input neuron
                     for (int i = 0; i < synapse.FromNeuronCount; i++)
@@ -194,7 +194,7 @@ namespace Encog.Neural.Networks.Training.LMA
                                 sum += synapse.WeightMatrix[k, j]
                                         * outputData[k];
                             }
-                            sum += synapse.ToLayer.Threshold[j];
+                            sum += synapse.ToLayer.BiasWeights[j];
                         }
 
                         double w = synapse.WeightMatrix[neuron, i];
@@ -203,7 +203,7 @@ namespace Encog.Neural.Networks.Training.LMA
 
                         this.jacobian[this.jacobianRow][this.jacobianCol++] = val
                                 * holder.Result[synapse][i];
-                        this.jacobian[this.jacobianRow][thresholdCol] = val;
+                        this.jacobian[this.jacobianRow][biasCol] = val;
                     }
                 }
             }

@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// Set or get the neuron count, this will NOT adjust the synapses, or thresholds
+        /// Set or get the neuron count, this will NOT adjust the synapses, or bias values
         /// other code must do that.
         /// </summary>
         int NeuronCount
@@ -114,10 +114,10 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// This layer's threshold values, if present, otherwise
+        /// This layer's bias weights, if present, otherwise
         /// this function returns null.
         /// </summary>
-        double[] Threshold
+        double[] BiasWeights
         {
             get;
             set;
@@ -154,9 +154,9 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// True if this layer has threshold values.
+        /// True if this layer has bias values.
         /// </summary>
-        bool HasThreshold
+        bool HasBias
         {
             get;
         }

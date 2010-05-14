@@ -140,7 +140,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
             {
                 double[] layerDeltas = GetLayerDeltas(layer);
 
-                if (layer.HasThreshold)
+                if (layer.HasBias)
                 {
                     foreach (double layerDelta in layerDeltas)
                     {

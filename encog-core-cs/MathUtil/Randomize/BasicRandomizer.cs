@@ -69,12 +69,12 @@ namespace Encog.MathUtil.Randomize
                 }
             }
 
-            // randomize the thresholds
+            // randomize the bias
             foreach (ILayer layer in network.Structure.Layers)
             {
-                if (layer.HasThreshold)
+                if (layer.HasBias)
                 {
-                    Randomize(layer.Threshold);
+                    Randomize(layer.BiasWeights);
                 }
             }
         }

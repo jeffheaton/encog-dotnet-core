@@ -114,7 +114,7 @@ namespace Encog.Neural.Networks.Logic
                 sum += this.ThermalSynapse.WeightMatrix[i, j]
                         * (this.CurrentState.GetBoolean(j) ? 1 : 0);
             }
-            sum -= this.ThermalLayer.Threshold[i];
+            sum -= this.ThermalLayer.BiasWeights[i];
             probability = 1 / (1 + BoundMath.Exp(-sum / temperature));
             if (RangeRandomizer.Randomize(0, 1) <= probability)
                 this.CurrentState.SetBoolean(i, true);

@@ -117,7 +117,7 @@ namespace Encog.Persist.Persistors
                     layer = new ContextLayer(activation, true, neuronCount);
                     for (int i = 0; i < t.Length; i++)
                     {
-                        layer.Threshold[i] = t[i];
+                        layer.BiasWeights[i] = t[i];
                     }
                 }
 
@@ -145,10 +145,10 @@ namespace Encog.Persist.Persistors
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_X, layer.X);
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_Y, layer.Y);
 
-            if (layer.HasThreshold)
+            if (layer.HasBias)
             {
                 StringBuilder result = new StringBuilder();
-                NumberList.ToList(CSVFormat.EG_FORMAT, result, layer.Threshold);
+                NumberList.ToList(CSVFormat.EG_FORMAT, result, layer.BiasWeights);
                 xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_THRESHOLD, result
                         .ToString());
             }

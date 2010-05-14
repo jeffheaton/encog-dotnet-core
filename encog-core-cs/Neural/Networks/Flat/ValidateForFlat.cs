@@ -14,7 +14,7 @@ namespace Encog.Neural.Networks.Flat
     /// 1. Feedforward only, no self-connections or recurrent links
     /// 2. Sigmoid or TANH activation only
     /// 3. All layers the same activation function
-    /// 4. Must have threshold values
+    /// 4. Must have bias weight values
     /// </summary>
     public class ValidateForFlat
     {
@@ -51,10 +51,10 @@ namespace Encog.Neural.Networks.Flat
                     }
                 }
 
-                if (!layer.HasThreshold && (lastActivation != null))
+                if (!layer.HasBias && (lastActivation != null))
                 {
                     throw new NeuralNetworkError(
-                            "To convert to flat, all non-input layers must have threshold values.");
+                            "To convert to flat, all non-input layers must have bias weight values.");
                 }
 
                 lastActivation = layer.ActivationFunction;

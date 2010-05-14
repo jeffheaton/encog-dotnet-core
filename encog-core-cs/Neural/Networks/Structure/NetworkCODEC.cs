@@ -42,7 +42,7 @@ namespace Encog.Neural.Networks.Structure
 {
     /// <summary>
     /// This class will extract the "long term memory" of a neural network, that is
-    /// the weights and threshold values into an array. This array can be used to
+    /// the weights and bias values into an array. This array can be used to
     /// view the neural network as a linear array of doubles. These values can then
     /// be modified and copied back into the neural network. This is very useful for
     /// simulated annealing, as well as genetic algorithms.
@@ -71,12 +71,12 @@ namespace Encog.Neural.Networks.Structure
 
             foreach (ILayer layer in network.Structure.Layers)
             {
-                if (layer.HasThreshold)
+                if (layer.HasBias)
                 {
-                    // process layer thresholds
+                    // process layer bias values
                     for (int i = 0; i < layer.NeuronCount; i++)
                     {
-                        layer.Threshold[i] = array[index++];
+                        layer.BiasWeights[i] = array[index++];
                     }
                 }
 
@@ -182,7 +182,7 @@ namespace Encog.Neural.Networks.Structure
 
         /// <summary>
         /// Convert to an array. This is used with some training algorithms that
-        /// require that the "memory" of the neuron(the weight and threshold values)
+        /// require that the "memory" of the neuron(the weight and bias values)
         /// be expressed as a linear array. 
         /// </summary>
         /// <param name="network">The network to encode.</param>
@@ -198,12 +198,12 @@ namespace Encog.Neural.Networks.Structure
 
             foreach (ILayer layer in network.Structure.Layers)
             {
-                // process layer thresholds
-                if (layer.HasThreshold)
+                // process layer bias values
+                if (layer.HasBias)
                 {
                     for (int i = 0; i < layer.NeuronCount; i++)
                     {
-                        result[index++] = layer.Threshold[i];
+                        result[index++] = layer.BiasWeights[i];
                     }
                 }
 

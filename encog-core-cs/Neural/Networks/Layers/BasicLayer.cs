@@ -50,12 +50,6 @@ namespace Encog.Neural.Networks.Layers
     /// is often used by itself to implement forward or recurrent layers. Other layer
     /// types are based on the basic layer as well.
     /// 
-    /// The layer will either have thresholds are not.  Thresholds are values that
-    /// correspond to each of the neurons.  The threshold values will be added to
-    /// the output calculated for each neuron.  Together with the weight matrix
-    /// the threshold values make up the memory of the neural network.  When the
-    /// neural network is trained, these threshold values (along with the weight
-    /// matrix values) will be modified.
     /// </summary>
 #if !SILVERLIGHT
     [Serializable]
@@ -111,9 +105,9 @@ namespace Encog.Neural.Networks.Layers
         private int neuronCount;
 
         /// <summary>
-        /// The threshold values for this layer.
+        /// The bias weights for this layer.
         /// </summary>
-        private double[] threshold;
+        private double[] biasWeights;
 
         /// <summary>
         /// Default constructor, mainly so the workbench can easily create a default
@@ -126,24 +120,24 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// Construct this layer with a non-default threshold function.
+        /// Construct this layer with a non-default activation function.
         /// </summary>
-        /// <param name="activationFunction">The threshold function to use.</param>
-        /// <param name="hasThreshold">How many neurons in this layer.</param>
-        /// <param name="neuronCount">True if this layer has threshold values.</param>
+        /// <param name="activationFunction">The activation function to use.</param>
+        /// <param name="hasBias">How many neurons in this layer.</param>
+        /// <param name="neuronCount">True if this layer has bias weight values.</param>
         public BasicLayer(IActivationFunction activationFunction,
-                 bool hasThreshold, int neuronCount)
+                 bool hasBias, int neuronCount)
         {
             this.neuronCount = neuronCount;
             this.ActivationFunction = activationFunction;
-            if (hasThreshold)
+            if (hasBias)
             {
-                this.threshold = new double[neuronCount];
+                this.biasWeights = new double[neuronCount];
             }
         }
 
         /// <summary>
-        /// Construct this layer with a sigmoid threshold function.
+        /// Construct this layer with a TANH activation function.
         /// </summary>
         /// <param name="neuronCount">How many neurons in this layer.</param>
         public BasicLayer(int neuronCount)
@@ -228,7 +222,7 @@ namespace Encog.Neural.Networks.Layers
         {
             BasicLayer result = new BasicLayer(
                    (IActivationFunction)this.activationFunction.Clone(),
-                   this.HasThreshold, this.NeuronCount);
+                   this.HasBias, this.NeuronCount);
             return result;
 
         }
@@ -244,12 +238,12 @@ namespace Encog.Neural.Networks.Layers
 
             INeuralData result = (INeuralData)pattern.Clone();
 
-            if (this.HasThreshold)
+            if (this.HasBias)
             {
-                // apply the thresholds
-                for (int i = 0; i < this.threshold.Length; i++)
+                // apply the bias values
+                for (int i = 0; i < this.biasWeights.Length; i++)
                 {
-                    result[i] = result[i] + this.threshold[i];
+                    result[i] = result[i] + this.biasWeights[i];
                 }
             }
 
@@ -359,20 +353,20 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// Set or gets the threshold array.  This does not modify any of the other values
-        /// in the network, it just sets the threshold array.  If you want to 
+        /// Set or gets the bias weight array.  This does not modify any of the other values
+        /// in the network, it just sets the bias array.  If you want to 
         /// change the structure of the neural network you should use the pruning 
         /// classes.
         /// </summary>
-        public double[] Threshold
+        public double[] BiasWeights
         {
             get
             {
-                return this.threshold;
+                return this.biasWeights;
             }
             set
             {
-                this.threshold = value;
+                this.biasWeights = value;
             }
         }
 
@@ -407,13 +401,13 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// True if threshold values are present.
+        /// True if bias weight values are present.
         /// </summary>
-        public bool HasThreshold
+        public bool HasBias
         {
             get
             {
-                return this.threshold != null;
+                return this.biasWeights != null;
             }
         }
 
