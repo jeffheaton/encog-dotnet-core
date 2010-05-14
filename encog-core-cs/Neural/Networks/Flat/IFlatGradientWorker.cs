@@ -9,6 +9,6 @@ namespace Encog.Neural.Networks.Flat
     public interface IFlatGradientWorker: IEncogTask
     {
         double[] Weights { get;  }
-        int ElapsedTime { get; }
+        long ElapsedTime { get; }
     }
 }

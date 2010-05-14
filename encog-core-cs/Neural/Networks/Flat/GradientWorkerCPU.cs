@@ -8,6 +8,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
 using Encog.Util.Concurrency;
+using System.Diagnostics;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -72,7 +73,9 @@ namespace Encog.Neural.Networks.Flat
         private int low;
         private int high;
         private TrainFlatNetworkMulti owner;
-        private int elapsedTime;
+        private long elapsedTime;
+        private Stopwatch stopwatch;
+
 
         /// <summary>
         /// Construct a gradient worker.
@@ -89,6 +92,8 @@ namespace Encog.Neural.Networks.Flat
             this.low = low;
             this.high = high;
             this.owner = owner;
+
+            this.stopwatch = new Stopwatch();
 
             layerDelta = new double[network.LayerOutput.Length];
             gradients = new double[network.Weights.Length];
@@ -109,7 +114,8 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            DateTime start = DateTime.Now;
+            this.stopwatch.Reset();
+            this.stopwatch.Start();
             this.errorCalculation.Reset();
             for (int i = this.low; i <= high; i++)
             {
@@ -119,9 +125,8 @@ namespace Encog.Neural.Networks.Flat
             double error = this.errorCalculation.CalculateRMS();
             this.owner.Report(this.gradients, error);
             EncogArray.Fill(this.gradients, 0);
-            DateTime stop = DateTime.Now;
-            TimeSpan elapsed = stop - start;
-            this.elapsedTime = (int)elapsed.TotalMilliseconds;
+            this.stopwatch.Stop();
+            this.elapsedTime = this.stopwatch.ElapsedTicks;
         }
 
         /// <summary>
@@ -210,7 +215,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// Elapsed time for the last iteration.
         /// </summary>
-        public int ElapsedTime
+        public long ElapsedTime
         {
             get
             {

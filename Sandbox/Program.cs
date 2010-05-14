@@ -252,8 +252,8 @@ kernel void SingleNetworkCalculate(
             for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
-                Console.WriteLine("Train error: " + train.Error);
                 Console.WriteLine("Netwk error: " + flat.CalculateError(training));
+                Console.WriteLine("Train error: " + train.Error);
             }
 
             train.Iteration();
@@ -319,7 +319,7 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train();
+                train2();
                 //XORNEAT();
                 //simple();
             }

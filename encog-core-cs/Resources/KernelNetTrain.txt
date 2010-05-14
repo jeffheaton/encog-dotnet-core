@@ -1,4 +1,6 @@
-﻿float activationTANH(float x)
+﻿#define NEURON_COUNT 100
+
+float activationTANH(float x)
 {
 	return -1 + (2 / (1 + exp(-2 * x)));
 }
@@ -31,13 +33,34 @@ float derivativeSigmoid(float x)
 
 float activation(int type, float x)
 {
+	switch(type)
+	{
+		case 0:
+			return activationLinear(x);
+		case 1:
+			return activationTANH(x);
+		case 2:
 			return activationSigmoid(x);
+		default:
+			return 0;
+	}
 }
 
 float derivative(int type, float x)
 {
-	return derivativeSigmoid(x);
+	switch(type)
+	{
+		case 0:
+			return derivativeLinear(x);
+		case 1:
+			return derivativeTANH(x);
+		case 2:
+			return derivativeSigmoid(x);
+		default:
+			return 0;
+	}
 }
+
 
 kernel void NetworkTrain(
     global read_only int *params,
@@ -69,15 +92,9 @@ kernel void NetworkTrain(
 	
     int sourceIndex = neuronCount - inputSize;
 
-	private float layerOutput[100];
-	private float layerDelta[100];
+	private float layerOutput[NEURON_COUNT];
+	private float layerDelta[NEURON_COUNT];
 	
-	for(int i=0;i<100;i++)
-	{
-		layerOutput[i] = 0;
-		layerDelta[i] = 0;
-	}
-
 	// load the input into the layer output array, this feeds the first layer.
     for(int i=0;i<inputSize;i++)
         layerOutput[sourceIndex+i] = input[taskInputIndex+i];

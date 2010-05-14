@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using Encog.Util.Concurrency;
 using Encog.MathUtil;
 using Encog.Neural.NeuralData;
@@ -9,6 +10,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
 using Encog.Util.CL.Kernels;
+
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -65,7 +67,8 @@ namespace Encog.Neural.Networks.Flat
         private int low;
         private int high;
         private TrainFlatNetworkMulti owner;
-        private int elapsedTime;
+        private long elapsedTime;
+        private Stopwatch stopwatch;
 
         /// <summary>
         /// Construct a gradient worker.
@@ -82,6 +85,8 @@ namespace Encog.Neural.Networks.Flat
             this.low = low;
             this.high = high;
             this.owner = owner;
+
+            this.stopwatch = new Stopwatch();
 
             layerDelta = new double[network.LayerOutput.Length];
             gradients = new double[network.Weights.Length];
@@ -106,7 +111,9 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            DateTime start = DateTime.Now;
+            this.stopwatch.Reset();
+            this.stopwatch.Start();
+
             KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
             
             k.Calculate();
@@ -132,9 +139,8 @@ namespace Encog.Neural.Networks.Flat
             double error = Math.Sqrt(e / (count * training.IdealSize));
             this.owner.Report(this.gradients, error);
 
-            DateTime stop = DateTime.Now;
-            TimeSpan elapsed = stop - start;
-            this.elapsedTime = (int)elapsed.TotalMilliseconds;
+            this.stopwatch.Stop();
+            this.elapsedTime = this.stopwatch.ElapsedTicks;
         }
 
 
@@ -152,7 +158,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// Elapsed time for the last iteration.
         /// </summary>
-        public int ElapsedTime
+        public long ElapsedTime
         {
             get
             {

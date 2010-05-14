@@ -73,23 +73,20 @@ namespace Encog.Neural.Networks.Flat
         private double currentError;
 
         /// <summary>
-        /// The average number of miliseconds that each GPU worker took.
+        /// The average number of ticks that each GPU worker took.
         /// </summary>
-        private int gpuTimePerIteration;
+        private long gpuTimePerIteration;
 
         /// <summary>
-        /// The average number of miliseconds that each CPU worker took.
+        /// The average number of ticks that each CPU worker took.
         /// </summary>
-        private int cpuTimePerIteration;
+        private long cpuTimePerIteration;
 
         /// <summary>
         /// The performance ratio between CPU & GPU.  
         /// Positive number means GPU workers are faster than CPU ones.
         /// </summary>
         private double calculatedGPURatio;
-
-        GradientWorkerGPU testGPU;
-        GradientWorkerCPU testCPU;
 
         /// <summary>
         /// Train a flat network multithreaded. 
@@ -143,13 +140,6 @@ namespace Encog.Neural.Networks.Flat
             {
                 this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
-
-            //testCPU = new GradientWorkerCPU(network.Clone(), this, indexable, 0, 3);
-            //testGPU = new GradientWorkerGPU(network.Clone(), this, indexable, 0, 3);
-
-            //testCPU.Run();
-            //testGPU.Run();
-            //Console.WriteLine("Stop");
         }
 
         /// <summary>
@@ -314,10 +304,10 @@ namespace Encog.Neural.Networks.Flat
 
         private void CalculatePerformance()
         {
-            int totalCPU = 0;
-            int countCPU = 0;
-            int totalGPU = 0;
-            int countGPU = 0;
+            long totalCPU = 0;
+            long countCPU = 0;
+            long totalGPU = 0;
+            long countGPU = 0;
 
             foreach(IFlatGradientWorker worker in this.workers )
             {
@@ -346,7 +336,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// The average number of miliseconds that each GPU worker took.
         /// </summary>
-        public int GPUTimePerIteration
+        public long GPUTimePerIteration
         {
             get
             {
@@ -357,7 +347,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// The average number of miliseconds that each CPU worker took.
         /// </summary>
-        public int CPUTimePerIteration
+        public long CPUTimePerIteration
         {
             get
             {
