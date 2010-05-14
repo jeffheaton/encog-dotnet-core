@@ -88,6 +88,9 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         private double calculatedGPURatio;
 
+        GradientWorkerGPU testGPU;
+        GradientWorkerCPU testCPU;
+
         /// <summary>
         /// Train a flat network multithreaded. 
         /// </summary>
@@ -140,6 +143,13 @@ namespace Encog.Neural.Networks.Flat
             {
                 this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
+
+            //testCPU = new GradientWorkerCPU(network.Clone(), this, indexable, 0, 3);
+            //testGPU = new GradientWorkerGPU(network.Clone(), this, indexable, 0, 3);
+
+            //testCPU.Run();
+            //testGPU.Run();
+            //Console.WriteLine("Stop");
         }
 
         /// <summary>

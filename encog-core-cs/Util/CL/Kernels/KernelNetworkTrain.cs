@@ -20,21 +20,18 @@ namespace Encog.Util.CL.Kernels
 
         private ComputeBuffer<int> paramBuffer;
         private ComputeBuffer<float> weightArrayBuffer;
-        private ComputeBuffer<float> outputBuffer;
 
         private ComputeBuffer<int> layerIndexBuffer;
         private ComputeBuffer<int> layerCountBuffer;
         private ComputeBuffer<int> weightIndexBuffer;
 
         private ComputeBuffer<float> errorBuffer;
-        private ComputeBuffer<float> layerDeltaBuffer;
         private ComputeBuffer<float> gradientBuffer;
         private ComputeBuffer<int> activationTypeBuffer;
 
         private int[] paramArray;
         private int totalOutputLength;
         private float[] weightArray;
-        private int errorBufferSize;
         private int layerDeltaSize;
         private int[] activationType;
         private FlatNetwork flat;
@@ -91,7 +88,6 @@ namespace Encog.Util.CL.Kernels
             this.paramArray = new int[10];
             this.totalOutputLength = flat.LayerOutput.Length * this.trainingLength;
             this.weightArray = new float[flat.Weights.Length];
-            this.errorBufferSize = this.trainingLength * flat.OutputCount;
             this.layerDeltaSize = 0;
             this.activationType = flat.ActivationType;
 
@@ -109,9 +105,7 @@ namespace Encog.Util.CL.Kernels
 
             this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
             
-            this.outputBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, totalOutputLength);
-            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, errorBufferSize);
-            this.layerDeltaBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, layerDeltaSize * this.trainingLength);
+            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, this.trainingLength);
             this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.trainingLength);
 
             this.layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
@@ -148,17 +142,15 @@ namespace Encog.Util.CL.Kernels
             kernel.SetMemoryArgument(5, workload.InputBuffer);
             kernel.SetMemoryArgument(6, workload.IdealBuffer);
             kernel.SetMemoryArgument(7, weightArrayBuffer);
-            kernel.SetMemoryArgument(8, outputBuffer);
-            kernel.SetMemoryArgument(9, layerDeltaBuffer);
-            kernel.SetMemoryArgument(10, gradientBuffer);
-            kernel.SetMemoryArgument(11, activationTypeBuffer);
+            kernel.SetMemoryArgument(8, gradientBuffer);
+            kernel.SetMemoryArgument(9, activationTypeBuffer);
 
             ComputeEventList events = new ComputeEventList();
             commands.Execute(kernel, null, new long[] { workload.TrainingLength }, null, events);
 
             try
             {
-                Errors = commands.Read(errorBuffer, true, 0, errorBufferSize, events);
+                Errors = commands.Read(errorBuffer, true, 0, workload.TrainingLength, events);
             }
             catch (OutOfResourcesComputeException ex)
             {

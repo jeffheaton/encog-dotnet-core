@@ -120,11 +120,8 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = low; i <= high; i++)
             {
-                for (int j = 0; j < this.network.OutputCount; j++)
-                {
-                    e += k.Errors[errorIndex++];
-                }
-
+                e += k.Errors[errorIndex++];
+                
                 for (int j = 0; j < this.gradients.Length; j++)
                 {
                     this.gradients[j] += k.Gradients[index++];
@@ -132,7 +129,8 @@ namespace Encog.Neural.Networks.Flat
             }
 
             int count = (high - low) + 1;
-            this.owner.Report(this.gradients, Math.Sqrt(e/(count*training.IdealSize)));
+            double error = Math.Sqrt(e / (count * training.IdealSize));
+            this.owner.Report(this.gradients, error);
 
             DateTime stop = DateTime.Now;
             TimeSpan elapsed = stop - start;

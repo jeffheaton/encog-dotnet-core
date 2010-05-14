@@ -31,32 +31,12 @@ float derivativeSigmoid(float x)
 
 float activation(int type, float x)
 {
-	switch(type)
-	{
-		case 0:
-			return activationLinear(x);
-		case 1:
-			return activationTANH(x);
-		case 2:
 			return activationSigmoid(x);
-		default:
-			return 0;
-	}
 }
 
 float derivative(int type, float x)
 {
-	switch(type)
-	{
-		case 0:
-			return derivativeLinear(x);
-		case 1:
-			return derivativeTANH(x);
-		case 2:
-			return derivativeSigmoid(x);
-		default:
-			return 0;
-	}
+	return derivativeSigmoid(x);
 }
 
 kernel void NetworkTrain(
@@ -68,31 +48,39 @@ kernel void NetworkTrain(
     global read_only float* input,
     global read_only float* ideal,
     global read_only float* weights,
-    global write_only float *layerOutput,
-    global write_only float *layerDelta,
     global write_only float *gradients,
     global read_only int *activationType
     )
 {
+	int taskIndex = get_global_id(0);
+
 	int inputSize = params[0];
     int outputSize = params[1];
     int layerCount = params[2];
     int neuronCount = params[3];
     int layerDeltaSize = params[4];
     int weightsSize = params[5];
+
+	int gradientOffset = (taskIndex*weightsSize);
     
 	// part 1: forward pass
-	int taskIndex = get_global_id(0);
-	int taskOutputIndex = taskIndex * neuronCount;
 	int taskInputIndex = taskIndex * inputSize;
 	int taskIdealIndex = taskIndex * outputSize;
-	int taskLayerDeltaIndex = taskIndex * layerDeltaSize;
 	
     int sourceIndex = neuronCount - inputSize;
 
+	private float layerOutput[100];
+	private float layerDelta[100];
+	
+	for(int i=0;i<100;i++)
+	{
+		layerOutput[i] = 0;
+		layerDelta[i] = 0;
+	}
+
 	// load the input into the layer output array, this feeds the first layer.
     for(int i=0;i<inputSize;i++)
-        layerOutput[taskOutputIndex+(sourceIndex+i)] = input[taskInputIndex+i];
+        layerOutput[sourceIndex+i] = input[taskInputIndex+i];
 
     for (int currentLayer = layerCount - 1; currentLayer > 0; currentLayer--)
     {
@@ -102,9 +90,10 @@ kernel void NetworkTrain(
       int outputSize = layerCounts[currentLayer - 1];
       int index = weightIndex[currentLayer - 1];
 
+	// bias values
       for (int i = 0; i < outputSize; i++)
       {
-        layerOutput[ taskOutputIndex+(i + outputIndex)] = weights[index++];
+        layerOutput[ i + outputIndex] = weights[index++];
       }
 
       for (int x = 0; x < outputSize; x++)
@@ -112,67 +101,74 @@ kernel void NetworkTrain(
         float sum = 0;
         for (int y = 0; y < inputSize; y++)
         {
-          sum += weights[index++] * layerOutput[taskOutputIndex+(inputIndex + y)];
+          sum += weights[index++] * layerOutput[inputIndex + y];
         }
        
-        float value = layerOutput[taskOutputIndex+(outputIndex + x)] + sum;
+        float value = layerOutput[outputIndex + x] + sum;
         value = activation(activationType[0], value);
-        layerOutput[taskOutputIndex+(outputIndex + x)] = value;
+        layerOutput[outputIndex + x] = value;
       }
     }
  
 	// part 2: backward pass
+
+	// process the output layer first
 	int taskErrorIndex = taskIndex * outputSize;
-	   
+	
+	float e = 0;
+   
     for(int i=0;i<outputSize;i++)
     {
-		float diff = ideal[taskIdealIndex+i] - layerOutput[taskOutputIndex+ i];
-		errors[taskErrorIndex+i]=diff*diff;
-		layerDelta[taskLayerDeltaIndex+i] = diff * derivative(activationType[0],layerOutput[taskOutputIndex+ i]);
+		float diff = ideal[taskIdealIndex+i] - layerOutput[i];
+		e+=diff*diff;
+		layerDelta[i] = diff * derivative(activationType[0],layerOutput[i]);
     }
-    
- 
-    for(int currentLevel = 0; (currentLevel<layerCount-1); currentLevel++)
+
+	errors[taskIndex] = e;
+
+	// process hidden layers
+		
+	for(int currentLevel = 0; (currentLevel<layerCount-1); currentLevel++)
     {
-		int fromLayerIndex = layerIndex[currentLevel + 1];
-        int toLayerIndex = layerIndex[currentLevel];
-        int fromLayerSize = layerCounts[currentLevel + 1];
-        int toLayerSize = layerCounts[currentLevel];
-        
-        // clear the to-deltas
-        for (int i = 0; i < fromLayerSize; i++)
-        {
-			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] = 0;
-        }
-        
-        int index = weightIndex[currentLevel];
+            int fromLayerIndex = layerIndex[currentLevel + 1];
+            int toLayerIndex = layerIndex[currentLevel];
+            int fromLayerSize = layerCounts[currentLevel + 1];
+            int toLayerSize = layerCounts[currentLevel];
 
-        // handle thresholds
-        for (int i = 0; i < toLayerSize; i++)
-        {
-			gradients[index++] += layerDelta[toLayerIndex+i];
-        }       
-        
- 
-        int gradientOffset = (taskIndex*weightsSize);
-
-        for (int x = 0; x < toLayerSize; x++)
-        {
-			for (int y = 0; y < fromLayerSize; y++)
+            // clear the to-deltas
+            for (int i = 0; i < fromLayerSize; i++)
             {
-				float value = layerOutput[taskOutputIndex+fromLayerIndex + y]
-                            * layerDelta[taskLayerDeltaIndex+toLayerIndex + x];
-                gradients[gradientOffset+index] += value;
-                layerDelta[taskLayerDeltaIndex+fromLayerIndex + y] += weights[index]
-                            * layerDelta[taskLayerDeltaIndex+toLayerIndex + x];
+                layerDelta[fromLayerIndex + i] = 0;
+            }
+
+            int index = weightIndex[currentLevel];
+
+            // handle thresholds
+            for (int i = 0; i < toLayerSize; i++)
+            {
+                gradients[index+gradientOffset] = layerDelta[toLayerIndex+i];
                 index++;
             }
-        }
-        
-        for (int i = 0; i < fromLayerSize; i++)
-        {
-			layerDelta[taskLayerDeltaIndex+fromLayerIndex + i] *= 
-				derivative(activationType[currentLevel+1],layerOutput[taskOutputIndex+fromLayerIndex + i]);
-        }
-    }
+
+            // handle weights
+            for (int x = 0; x < toLayerSize; x++)
+            {
+                for (int y = 0; y < fromLayerSize; y++)
+                {
+                    float value = layerOutput[fromLayerIndex + y]
+                            * layerDelta[toLayerIndex + x];
+                    gradients[index+gradientOffset] = value;
+                    layerDelta[fromLayerIndex + y] += weights[index]
+                            * layerDelta[toLayerIndex + x];
+                    index++;
+                }
+            }
+
+            for (int i = 0; i < fromLayerSize; i++)
+            {
+                layerDelta[fromLayerIndex + i] *= derivative(
+                  activationType[currentLevel+1],
+                  layerOutput[fromLayerIndex + i]); 
+            }
+	}
 }

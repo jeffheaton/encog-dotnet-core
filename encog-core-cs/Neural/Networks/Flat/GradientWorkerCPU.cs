@@ -116,7 +116,8 @@ namespace Encog.Neural.Networks.Flat
                 this.training.GetRecord(i, this.pair);
                 Process(pair.Input.Data, pair.Ideal.Data);
             }
-            this.owner.Report(this.gradients, this.errorCalculation.CalculateRMS());
+            double error = this.errorCalculation.CalculateRMS();
+            this.owner.Report(this.gradients, error);
             EncogArray.Fill(this.gradients, 0);
             DateTime stop = DateTime.Now;
             TimeSpan elapsed = stop - start;
@@ -136,7 +137,8 @@ namespace Encog.Neural.Networks.Flat
 
             for (int i = 0; i < actual.Length; i++)
             {
-                layerDelta[i] = FlatNetwork.CalculateActivationDerivative(0,actual[i])
+                
+                layerDelta[i] = FlatNetwork.CalculateActivationDerivative(this.network.ActivationType[0],actual[i])
                   * (ideal[i] - actual[i]);
             }
 
