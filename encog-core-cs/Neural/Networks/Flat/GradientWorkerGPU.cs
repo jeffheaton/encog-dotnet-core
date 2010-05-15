@@ -134,11 +134,11 @@ namespace Encog.Neural.Networks.Flat
                     this.gradients[j] += k.Gradients[index++];
                 }
             }
-
+            
             int count = (high - low) + 1;
             double error = Math.Sqrt(e / (count * training.IdealSize));
             this.owner.Report(this.gradients, error);
-
+             
             this.stopwatch.Stop();
             this.elapsedTime = this.stopwatch.ElapsedTicks;
         }

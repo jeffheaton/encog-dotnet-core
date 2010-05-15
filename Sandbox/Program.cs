@@ -319,9 +319,9 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                //train2();
+                train2();
                 //XORNEAT();
-                simple();
+                //simple();
             }
             //catch (Exception e)
             {

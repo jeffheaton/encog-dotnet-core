@@ -126,7 +126,6 @@ namespace Encog.Util.CL.Kernels
 
         private void Calculate(int index)
         {
-            Init();
             TrainingWorkload workload = this.workload[0];
 
             for (int i = 0; i < flat.Weights.Length; i++)
@@ -145,19 +144,17 @@ namespace Encog.Util.CL.Kernels
             kernel.SetMemoryArgument(8, gradientBuffer);
             kernel.SetMemoryArgument(9, activationTypeBuffer);
 
-            ComputeEventList events = new ComputeEventList();
-            commands.Execute(kernel, null, new long[] { workload.TrainingLength }, null, events);
-
             try
             {
+                ComputeEventList events = new ComputeEventList();
+                commands.Execute(kernel, null, new long[] { workload.TrainingLength }, null, events);
                 Errors = commands.Read(errorBuffer, true, 0, workload.TrainingLength, events);
+                Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.trainingLength, events);
             }
             catch (OutOfResourcesComputeException ex)
             {
                 throw new EncogError("GPU is out of resources");
             }
-
-            Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.trainingLength, events);
 
             this.weightArrayBuffer.Dispose();
         }
