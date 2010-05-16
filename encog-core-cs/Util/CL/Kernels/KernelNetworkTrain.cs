@@ -55,7 +55,7 @@ namespace Encog.Util.CL.Kernels
 
             IIndexable indexable = (IIndexable)input;
             this.flat = flat;
-            this.trainingLength = (high - low) +1;
+            this.trainingLength = (high - low) + 1;
 
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
@@ -65,9 +65,9 @@ namespace Encog.Util.CL.Kernels
             int inputIndex = 0;
             int idealIndex = 0;
 
-            for(int i=low;i<=high;i++)
+            for (int i = low; i <= high; i++)
             {
-                indexable.GetRecord(i,pair);
+                indexable.GetRecord(i, pair);
                 for (int col = 0; col < flat.InputCount; col++)
                 {
                     this.workload[0].InputArray[inputIndex++] = (float)pair.Input.Data[col];
@@ -104,12 +104,13 @@ namespace Encog.Util.CL.Kernels
             paramArray[5] = flat.Weights.Length;
 
             this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
-            
+
             this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, this.trainingLength);
             this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.trainingLength);
 
             this.layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
             this.layerCountBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
+            this.weightArrayBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
             this.weightIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
 
             this.activationTypeBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, activationType);
@@ -131,8 +132,6 @@ namespace Encog.Util.CL.Kernels
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
-            this.weightArrayBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, weightArray);
-
             kernel.SetMemoryArgument(0, paramBuffer);
             kernel.SetMemoryArgument(1, errorBuffer);
             kernel.SetMemoryArgument(2, layerIndexBuffer);
@@ -146,8 +145,10 @@ namespace Encog.Util.CL.Kernels
 
             try
             {
+                long[] workItems = new long[] { workload.TrainingLength };
                 ComputeEventList events = new ComputeEventList();
-                commands.Execute(kernel, null, new long[] { workload.TrainingLength }, null, events);
+                commands.Write(weightArrayBuffer, true, 0, flat.Weights.Length, weightArray, events);
+                commands.Execute(kernel, null, workItems, workItems, events);
                 Errors = commands.Read(errorBuffer, true, 0, workload.TrainingLength, events);
                 Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.trainingLength, events);
             }
@@ -155,8 +156,6 @@ namespace Encog.Util.CL.Kernels
             {
                 throw new EncogError("GPU is out of resources");
             }
-
-            this.weightArrayBuffer.Dispose();
         }
     }
 }

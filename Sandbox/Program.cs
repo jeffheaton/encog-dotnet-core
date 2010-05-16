@@ -319,7 +319,7 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train2();
+                train();
                 //XORNEAT();
                 //simple();
             }
