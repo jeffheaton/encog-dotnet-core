@@ -38,7 +38,7 @@ namespace Encog.Util.CL.Kernels
         private int trainingLength;
         private ComputeKernel kernel;
         private ComputeCommandQueue commands;
-
+        private int maxUnits;
         private TrainingWorkload[] workload;
 
         public KernelNetworkTrain(ComputeContext context)
@@ -96,12 +96,23 @@ namespace Encog.Util.CL.Kernels
                 layerDeltaSize += flat.LayerCounts[i];
             }
 
+            if( Context.Devices[0].MaxComputeUnits>100000 )
+                this.maxUnits = 100000;
+            else
+                this.maxUnits = (int)Context.Devices[0].MaxComputeUnits;
+
+            this.maxUnits = Math.Min(this.maxUnits, trainingLength);
+
             paramArray[0] = flat.InputCount;
             paramArray[1] = flat.OutputCount;
             paramArray[2] = flat.LayerCounts.Length;
             paramArray[3] = flat.LayerOutput.Length;
             paramArray[4] = layerDeltaSize;
             paramArray[5] = flat.Weights.Length;
+            paramArray[6] = maxUnits-1;// index of last item
+            paramArray[7] = Math.Max(this.trainingLength/maxUnits,1);// size each item
+            paramArray[8] = Math.Max(this.trainingLength%maxUnits,1);// size of last item
+
 
             this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
 
@@ -145,7 +156,7 @@ namespace Encog.Util.CL.Kernels
 
             try
             {
-                long[] workItems = new long[] { workload.TrainingLength };
+                long[] workItems = new long[] { maxUnits };
                 ComputeEventList events = new ComputeEventList();
                 commands.Write(weightArrayBuffer, true, 0, flat.Weights.Length, weightArray, events);
                 commands.Execute(kernel, null, workItems, workItems, events);

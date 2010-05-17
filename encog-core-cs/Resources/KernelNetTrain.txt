@@ -83,70 +83,83 @@ kernel void NetworkTrain(
     int neuronCount = params[3];
     int layerDeltaSize = params[4];
     int weightsSize = params[5];
+    int indexLastElement = params[6];
+    int sizeElement = params[7];
+    int sizeLastElement = params[8];
 
-	int gradientOffset = (taskIndex*weightsSize);
+	int size;
+	if( taskIndex==indexLastElement )
+		size = sizeLastElement;
+	else
+		size = sizeElement;
+
+	for(int index=0;index<size;index++)
+	{		
+		int subtaskIndex = (taskIndex*sizeElement)+index;
+
+		int gradientOffset = (subtaskIndex*weightsSize);
     
-	// part 1: forward pass
-	int taskInputIndex = taskIndex * inputSize;
-	int taskIdealIndex = taskIndex * outputSize;
+		// part 1: forward pass
+		int taskInputIndex = subtaskIndex * inputSize;
+		int taskIdealIndex = subtaskIndex * outputSize;
 	
-    int sourceIndex = neuronCount - inputSize;
+		int sourceIndex = neuronCount - inputSize;
 
-	private float layerOutput[NEURON_COUNT];
-	private float layerDelta[NEURON_COUNT];
+		private float layerOutput[NEURON_COUNT];
+		private float layerDelta[NEURON_COUNT];
 	
-	// load the input into the layer output array, this feeds the first layer.
-    for(int i=0;i<inputSize;i++)
-        layerOutput[sourceIndex+i] = input[taskInputIndex+i];
+		// load the input into the layer output array, this feeds the first layer.
+		for(int i=0;i<inputSize;i++)
+			layerOutput[sourceIndex+i] = input[taskInputIndex+i];
 
-    for (int currentLayer = layerCount - 1; currentLayer > 0; currentLayer--)
-    {
-      int inputIndex = layerIndex[currentLayer];
-      int outputIndex = layerIndex[currentLayer - 1];
-      int inputSize = layerCounts[currentLayer];
-      int outputSize = layerCounts[currentLayer - 1];
-      int index = weightIndex[currentLayer - 1];
+		for (int currentLayer = layerCount - 1; currentLayer > 0; currentLayer--)
+		{
+			int inputIndex = layerIndex[currentLayer];
+			int outputIndex = layerIndex[currentLayer - 1];
+			int inputSize = layerCounts[currentLayer];
+			int outputSize = layerCounts[currentLayer - 1];
+			int index = weightIndex[currentLayer - 1];
 
-	// bias values
-      for (int i = 0; i < outputSize; i++)
-      {
-        layerOutput[ i + outputIndex] = weights[index++];
-      }
+			// bias values
+			for (int i = 0; i < outputSize; i++)
+			{
+				layerOutput[ i + outputIndex] = weights[index++];
+			}
 
-      for (int x = 0; x < outputSize; x++)
-      {
-        float sum = 0;
-        for (int y = 0; y < inputSize; y++)
-        {
-          sum += weights[index++] * layerOutput[inputIndex + y];
-        }
+			for (int x = 0; x < outputSize; x++)
+			{
+				float sum = 0;
+				for (int y = 0; y < inputSize; y++)
+				{
+					sum += weights[index++] * layerOutput[inputIndex + y];
+				}
        
-        float value = layerOutput[outputIndex + x] + sum;
-        value = activation(activationType[0], value);
-        layerOutput[outputIndex + x] = value;
-      }
-    }
+				float value = layerOutput[outputIndex + x] + sum;
+				value = activation(activationType[0], value);
+				layerOutput[outputIndex + x] = value;
+			}
+		}
  
-	// part 2: backward pass
+		// part 2: backward pass
 
-	// process the output layer first
-	int taskErrorIndex = taskIndex * outputSize;
+		// process the output layer first
+		int taskErrorIndex = subtaskIndex * outputSize;
 	
-	float e = 0;
+		float e = 0;
    
-    for(int i=0;i<outputSize;i++)
-    {
-		float diff = ideal[taskIdealIndex+i] - layerOutput[i];
-		e+=diff*diff;
-		layerDelta[i] = diff * derivative(activationType[0],layerOutput[i]);
-    }
+		for(int i=0;i<outputSize;i++)
+		{
+			float diff = ideal[taskIdealIndex+i] - layerOutput[i];
+			e+=diff*diff;
+			layerDelta[i] = diff * derivative(activationType[0],layerOutput[i]);
+		}
 
-	errors[taskIndex] = e;
+		errors[subtaskIndex] = e;
 
-	// process hidden layers
+		// process hidden layers
 		
-	for(int currentLevel = 0; (currentLevel<layerCount-1); currentLevel++)
-    {
+		for(int currentLevel = 0; (currentLevel<layerCount-1); currentLevel++)
+		{
             int fromLayerIndex = layerIndex[currentLevel + 1];
             int toLayerIndex = layerIndex[currentLevel];
             int fromLayerSize = layerCounts[currentLevel + 1];
@@ -187,5 +200,6 @@ kernel void NetworkTrain(
                   activationType[currentLevel+1],
                   layerOutput[fromLayerIndex + i]); 
             }
+		}
 	}
 }
