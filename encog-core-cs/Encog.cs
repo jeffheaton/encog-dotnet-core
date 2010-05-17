@@ -62,7 +62,7 @@ namespace Encog
 	    /// </summary>
 	    private static String FILE_VERSION = "1";
 
-        public EncogCL GPU { get; set; }
+        public EncogCL CL { get; set; }
 		
 #if logging
         /// <summary>
@@ -137,13 +137,13 @@ namespace Encog
             }
         }
 
-        public void InitGPU()
+        public void InitCL()
         {
             EncogCL cl = new EncogCL();
             try
             {
                 cl.Init();
-                this.GPU = cl;
+                this.CL = cl;
             }
             catch (Exception e)
             {

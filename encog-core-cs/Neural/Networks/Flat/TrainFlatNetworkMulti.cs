@@ -73,9 +73,9 @@ namespace Encog.Neural.Networks.Flat
         private double currentError;
 
         /// <summary>
-        /// The average number of ticks that each GPU worker took.
+        /// The average number of ticks that each CL worker took.
         /// </summary>
-        private long gpuTimePerIteration;
+        private long clTimePerIteration;
 
         /// <summary>
         /// The average number of ticks that each CPU worker took.
@@ -83,10 +83,10 @@ namespace Encog.Neural.Networks.Flat
         private long cpuTimePerIteration;
 
         /// <summary>
-        /// The performance ratio between CPU & GPU.  
-        /// Positive number means GPU workers are faster than CPU ones.
+        /// The performance ratio between CPU & CL.  
+        /// Positive number means CL workers are faster than CPU ones.
         /// </summary>
-        private double calculatedGPURatio;
+        private double calculatedCLRatio;
 
         /// <summary>
         /// Train a flat network multithreaded. 
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkMulti(FlatNetwork network,
-                 INeuralDataSet training, double enforcedGPURatio)
+                 INeuralDataSet training, double enforcedCLRatio)
         {
 
             if (!(training is IIndexable))
@@ -118,22 +118,22 @@ namespace Encog.Neural.Networks.Flat
 
             DetermineWorkload determine;
             
-            //  consider GPU, if enabled
-            if (Encog.Instance.GPU != null)
+            //  consider CL, if enabled
+            if (Encog.Instance.CL != null)
                 determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
 
-            determine.GPURatio = enforcedGPURatio;
+            determine.CLRatio = enforcedCLRatio;
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
 
             determine.CalculateWorkers();
             int index = 0;
 
-            // handle GPU
-            foreach (IntRange r in determine.GPURanges)
+            // handle CL
+            foreach (IntRange r in determine.CLRanges)
             {
-                this.workers[index++] = new GradientWorkerGPU(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCL(network.Clone(), this, indexable, r.Low, r.High);
             }
 
             // handle CPU
@@ -307,8 +307,8 @@ namespace Encog.Neural.Networks.Flat
         {
             long totalCPU = 0;
             long countCPU = 0;
-            long totalGPU = 0;
-            long countGPU = 0;
+            long totalCL = 0;
+            long countCL = 0;
 
             foreach(IFlatGradientWorker worker in this.workers )
             {
@@ -317,31 +317,31 @@ namespace Encog.Neural.Networks.Flat
                     countCPU++;
                     totalCPU+=worker.ElapsedTime;
                 }
-                else if( worker is GradientWorkerGPU )
+                else if( worker is GradientWorkerCL )
                 {
-                    countGPU++;
-                    totalGPU+=worker.ElapsedTime;
+                    countCL++;
+                    totalCL+=worker.ElapsedTime;
                 }
             }
 
             if( countCPU>0 )
                 this.cpuTimePerIteration = totalCPU/countCPU;
             
-            if( countGPU>0 )
-                this.gpuTimePerIteration = totalGPU/countGPU;
+            if( countCL>0 )
+                this.clTimePerIteration = totalCL/countCL;
             
-            this.calculatedGPURatio = ((double)this.cpuTimePerIteration) /
-                ((double)this.gpuTimePerIteration);
+            this.calculatedCLRatio = ((double)this.cpuTimePerIteration) /
+                ((double)this.clTimePerIteration);
         }
 
         /// <summary>
-        /// The average number of miliseconds that each GPU worker took.
+        /// The average number of miliseconds that each CL worker took.
         /// </summary>
-        public long GPUTimePerIteration
+        public long CLTimePerIteration
         {
             get
             {
-                return this.gpuTimePerIteration;
+                return this.clTimePerIteration;
             }
         }
 
@@ -357,14 +357,14 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
-        /// The performance ratio between CPU & GPU.  
-        /// Positive number means GPU workers are faster than CPU ones.
+        /// The performance ratio between CPU & CL.  
+        /// Positive number means CL workers are faster than CPU ones.
         /// </summary>
-        public double CalculatedGPURatio
+        public double CalculatedCLRatio
         {
             get
             {
-                return this.calculatedGPURatio;
+                return this.calculatedCLRatio;
             }
         }
     }

@@ -30,9 +30,9 @@ namespace Encog.Util.Concurrency
         private int totalWorkloadSize;
 
         /// <summary>
-        /// What is the GPU workload size?
+        /// What is the CL workload size?
         /// </summary>
-        private int gpuWorkloadSize;
+        private int clWorkloadSize;
 
         /// <summary>
         /// What is the CPU workload size?
@@ -40,9 +40,9 @@ namespace Encog.Util.Concurrency
         private int cpuWorkloadSize;
 
         /// <summary>
-        /// GPU count.
+        /// CL worker count.
         /// </summary>
-        private int gpuWorkerCount;
+        private int clWorkerCount;
 
         /// <summary>
         /// The total task count.
@@ -51,9 +51,9 @@ namespace Encog.Util.Concurrency
 
         private IList<IntRange> cpuRanges = new List<IntRange>();
 
-        private IList<IntRange> gpuRanges = new List<IntRange>();
+        private IList<IntRange> clRanges = new List<IntRange>();
 
-        public double GPURatio { get; set; }
+        public double CLRatio { get; set; }
 
 
         /// <summary>
@@ -67,17 +67,17 @@ namespace Encog.Util.Concurrency
         }
 
         /// <summary>
-        /// Determine the workload, consider GPU count.
+        /// Determine the workload, consider CL count.
         /// </summary>
         /// <param name="cpuWorkerCount">Threads to use, or zero to allow Encog to pick.</param>
-        /// <param name="gpuWorkerCount">The number of GPU workers.</param>
+        /// <param name="clWorkerCount">The number of CL workers.</param>
         /// <param name="workloadSize">Total workload size.</param>
-        public DetermineWorkload(int cpuWorkerCount, int gpuWorkerCount, int workloadSize)
+        public DetermineWorkload(int cpuWorkerCount, int clWorkerCount, int workloadSize)
         {
-            this.GPURatio = 1;
+            this.CLRatio = 1;
             this.cpuWorkerCount = cpuWorkerCount;
-            this.gpuWorkerCount = gpuWorkerCount;
-            this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
+            this.clWorkerCount = clWorkerCount;
+            this.totalWorkerCount = clWorkerCount + cpuWorkerCount;
             this.totalWorkloadSize = workloadSize;
 
             if (cpuWorkerCount == 0)
@@ -104,14 +104,14 @@ namespace Encog.Util.Concurrency
                 }
 
                 this.cpuWorkerCount = num;
-                this.totalWorkerCount = this.gpuWorkerCount + this.cpuWorkerCount;
+                this.totalWorkerCount = this.clWorkerCount + this.cpuWorkerCount;
             }
             else
             {
-                this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
+                this.totalWorkerCount = clWorkerCount + cpuWorkerCount;
                 if (this.totalWorkerCount > workloadSize)
-                    this.gpuWorkerCount = 0;
-                this.totalWorkerCount = gpuWorkerCount + cpuWorkerCount;
+                    this.clWorkerCount = 0;
+                this.totalWorkerCount = clWorkerCount + cpuWorkerCount;
                 this.totalWorkerCount = Math.Min(this.totalWorkerCount, workloadSize);
             }
         }
@@ -123,22 +123,22 @@ namespace Encog.Util.Concurrency
         public void CalculateWorkers()
         {
             this.cpuRanges.Clear();
-            this.gpuRanges.Clear();
+            this.clRanges.Clear();
 
             int baseSizePerThread = this.totalWorkloadSize / this.totalWorkerCount;
-            int gpuSizePerThread = (int)((double)baseSizePerThread * this.GPURatio);
-            int cpuWorkloadSize = this.totalWorkloadSize - (gpuSizePerThread * this.gpuWorkerCount);
+            int clSizePerThread = (int)((double)baseSizePerThread * this.CLRatio);
+            int cpuWorkloadSize = this.totalWorkloadSize - (clSizePerThread * this.clWorkerCount);
             int cpuSizePerThread = cpuWorkloadSize / this.cpuWorkerCount;
 
             int index = 0;
 
-            // create the GPU workers
-            for (int i = 0; i < this.gpuWorkerCount; i++)
+            // create the CL workers
+            for (int i = 0; i < this.clWorkerCount; i++)
             {
                 int low = index;
-                int high = (low + gpuSizePerThread)-1;
-                this.gpuRanges.Add(new IntRange(high, low));
-                index += gpuSizePerThread;
+                int high = (low + clSizePerThread)-1;
+                this.clRanges.Add(new IntRange(high, low));
+                index += clSizePerThread;
             }
 
             // create the CPU workers
@@ -176,13 +176,13 @@ namespace Encog.Util.Concurrency
         }
         
         /// <summary>
-        /// The GPU thread count.
+        /// The CL thread count.
         /// </summary>
-        public int GPUWorkerCount
+        public int CLWorkerCount
         {
             get
             {
-                return this.gpuWorkerCount;
+                return this.clWorkerCount;
             }
         }
 
@@ -209,13 +209,13 @@ namespace Encog.Util.Concurrency
         }
 
         /// <summary>
-        /// Workload ranges for GPU workers.
+        /// Workload ranges for CL workers.
         /// </summary>
-        public IList<IntRange> GPURanges
+        public IList<IntRange> CLRanges
         {
             get
             {
-                return this.gpuRanges;
+                return this.CLRanges;
             }
         }
 
@@ -231,13 +231,13 @@ namespace Encog.Util.Concurrency
         }
 
         /// <summary>
-        /// What is the GPU workload size?
+        /// What is the CL workload size?
         /// </summary>
-        private int GPUWorkloadSize
+        private int CLWorkloadSize
         {
             get
             {
-                return this.gpuWorkloadSize;
+                return this.clWorkloadSize;
             }
         }
 

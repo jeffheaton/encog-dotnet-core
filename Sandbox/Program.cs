@@ -176,7 +176,7 @@ kernel void SingleNetworkCalculate(
             KernelSingleNetworkCalculate k = new KernelSingleNetworkCalculate(context, "Encog.Resources.KernelSingleNetCalculate.txt");
             k.compile();*/
 
-            Encog.Encog.Instance.InitGPU();
+            Encog.Encog.Instance.InitCL();
 
             Console.WriteLine( "Error1:" + flat.CalculateError(training) );
             Console.WriteLine( "Error2:" + flat.CalculateErrorGPU(training) );
@@ -191,7 +191,7 @@ kernel void SingleNetworkCalculate(
             BasicNetwork network = EncogUtility.SimpleFeedForward(10, 6, 0, 10, true);
             network.Reset();
             FlatNetwork flat = new FlatNetwork(network);
-            Encog.Encog.Instance.InitGPU();
+            Encog.Encog.Instance.InitCL();
             long start;
             long stop;
 
@@ -247,7 +247,7 @@ kernel void SingleNetworkCalculate(
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, false);
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-            Encog.Encog.Instance.InitGPU();
+            Encog.Encog.Instance.InitCL();
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
             for (int i = 0; i < 50; i++)
             {
@@ -288,9 +288,9 @@ kernel void SingleNetworkCalculate(
             }
             long stop = Environment.TickCount;
 
-            Console.WriteLine("GPU Time:" + train.GPUTimePerIteration);
+            Console.WriteLine("GPU Time:" + train.CLTimePerIteration);
             Console.WriteLine("CPU Time:" + train.CPUTimePerIteration);
-            Console.WriteLine("Ratio:" + train.CalculatedGPURatio);
+            Console.WriteLine("Ratio:" + train.CalculatedCLRatio);
             Console.WriteLine("Done:" + (stop-start));
             Console.WriteLine("Stop");
         }

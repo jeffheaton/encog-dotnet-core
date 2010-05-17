@@ -26,8 +26,8 @@ namespace Encog.Neural.Networks.Flat
     /// 3. All layers the same activation function
     /// 4. Must have threshold values
     /// 
-    /// Vector based neural networks are also very good for GPU processing. The flat
-    /// network classes will make use of the GPU if you have enabled GPU processing.
+    /// Vector based neural networks are also very good for CL processing. The flat
+    /// network classes will make use of the CL if you have enabled CL processing.
     /// See the Encog class for more info.
     /// </summary>
     public class FlatNetwork
@@ -193,24 +193,6 @@ namespace Encog.Neural.Networks.Flat
             EncogArray.ArrayCopy(layerOutput, 0, output, 0, outputCount);
         }
 
-        /// <summary>
-        /// Calculate the output for the given input, using the GPU(if enabled).
-        /// Normally, you would not want to calculate a single neural network
-        /// with the GPU, as it would be faster to use the CPU.  However
-        /// this can be a quick test to verify the GPU is online and working
-        /// with Encog.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <param name="output">Output will be placed here.</param>
-        public void ComputeForceGPU(double[] input, double[] output)
-        {
-            if (Encog.Instance.GPU != null)
-            {
-                Encog.Instance.GPU.ChooseAdapter().SingleNetworkCalculate.Calculate(this, input, output);
-            }
-            else
-                throw new NeuralNetworkError("GPU processing is not enabled.");
-        }
 
         /// <summary>
         /// Calculate a layer. 
@@ -355,25 +337,6 @@ namespace Encog.Neural.Networks.Flat
             return errorCalculation.CalculateRMS();
         }
 
-        /// <summary>
-        /// Calculate the error for this neural network. The error is calculated
-        /// using root-mean-square(RMS).
-        /// </summary>
-        /// <param name="data">The training set.</param>
-        /// <returns>The error percentage.</returns>
-        public double CalculateErrorGPU(INeuralDataSet data)
-        {
-            ErrorCalculation errorCalculation = new ErrorCalculation();
-
-            double[][] actual = Encog.Instance.GPU.ChooseAdapter().NetworkCalculate.Calculate(this, data);
-
-            int index = 0;
-            foreach (INeuralDataPair pair in data)
-            {
-                errorCalculation.UpdateError(actual[index++], pair.Ideal.Data);
-            }
-            return errorCalculation.CalculateRMS();
-        }
 
         public int[] ActivationType
         {

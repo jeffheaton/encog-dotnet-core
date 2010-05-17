@@ -14,7 +14,7 @@ using Encog.Util.CL.Kernels;
 
 namespace Encog.Neural.Networks.Flat
 {
-    public class GradientWorkerGPU:IFlatGradientWorker
+    public class GradientWorkerCL:IFlatGradientWorker
     {
         /// <summary>
         /// The network to train.
@@ -78,7 +78,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="training">The training data.</param>
         /// <param name="low">The low index to use in the training data.</param>
         /// <param name="high">The high index to use in the training data.</param>
-        public GradientWorkerGPU(FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
+        public GradientWorkerCL(FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
         {
             this.network = network;
             this.training = training;
@@ -100,7 +100,7 @@ namespace Encog.Neural.Networks.Flat
 
             this.pair = BasicNeuralDataPair.CreatePair(network.InputCount, network.OutputCount);
 
-            KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
+            KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
             k.Train(this.network, this.training, this.high, this.low);
             k.Init();
         }
@@ -114,7 +114,7 @@ namespace Encog.Neural.Networks.Flat
             this.stopwatch.Reset();
             this.stopwatch.Start();
 
-            KernelNetworkTrain k = Encog.Instance.GPU.ChooseAdapter().NetworkTrain;
+            KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
             
             k.Calculate();
 
