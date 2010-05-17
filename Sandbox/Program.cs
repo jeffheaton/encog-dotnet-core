@@ -178,8 +178,8 @@ kernel void SingleNetworkCalculate(
 
             Encog.Encog.Instance.InitCL();
 
-            Console.WriteLine( "Error1:" + flat.CalculateError(training) );
-            Console.WriteLine( "Error2:" + flat.CalculateErrorGPU(training) );
+            //Console.WriteLine( "Error1:" + flat.CalculateError(training) );
+            //Console.WriteLine( "Error2:" + flat.CalculateErrorGPU(training) );
 
             Console.WriteLine("Done");
         }
@@ -206,7 +206,7 @@ kernel void SingleNetworkCalculate(
             Console.WriteLine("Error2:" + error + ",Time:" + (stop - start));
             
             start = Environment.TickCount;
-            flat.CalculateErrorGPU(training);
+            //flat.CalculateErrorGPU(training);
             stop = Environment.TickCount;
             Console.WriteLine("Error3:" + error + ",Time:" + (stop - start));
 

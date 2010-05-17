@@ -215,7 +215,7 @@ namespace Encog.Util.Concurrency
         {
             get
             {
-                return this.CLRanges;
+                return this.clRanges;
             }
         }
 
