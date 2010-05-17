@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks.Flat
             int index = 0;
             int errorIndex = 0;
 
-            for (int i = low; i <= high; i++)
+            for (int i = 0; i < k.MaxUnits; i++)
             {
                 e += k.Errors[errorIndex++];
                 

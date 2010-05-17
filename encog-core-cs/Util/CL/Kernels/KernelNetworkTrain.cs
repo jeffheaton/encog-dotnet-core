@@ -38,7 +38,7 @@ namespace Encog.Util.CL.Kernels
         private int trainingLength;
         private ComputeKernel kernel;
         private ComputeCommandQueue commands;
-        private int maxUnits;
+        public int MaxUnits { get; set; }
         private TrainingWorkload[] workload;
 
         public KernelNetworkTrain(ComputeContext context)
@@ -101,9 +101,9 @@ namespace Encog.Util.CL.Kernels
             else
                 this.maxUnits = (int)Context.Devices[0].MaxComputeUnits;*/
 
-            this.maxUnits = 100;
+            this.MaxUnits = 100;
 
-            this.maxUnits = Math.Min(this.maxUnits, trainingLength);
+            this.MaxUnits = Math.Min(this.MaxUnits, trainingLength);
 
             paramArray[0] = flat.InputCount;
             paramArray[1] = flat.OutputCount;
@@ -111,15 +111,15 @@ namespace Encog.Util.CL.Kernels
             paramArray[3] = flat.LayerOutput.Length;
             paramArray[4] = layerDeltaSize;
             paramArray[5] = flat.Weights.Length;
-            paramArray[6] = maxUnits-1;// index of last item
-            paramArray[7] = Math.Max(this.trainingLength/maxUnits,1);// size each item
-            paramArray[8] = Math.Max(this.trainingLength%maxUnits,1);// size of last item
+            paramArray[6] = MaxUnits-1;// index of last item
+            paramArray[7] = Math.Max(this.trainingLength/MaxUnits,1);// size each item
+            paramArray[8] = Math.Max(this.trainingLength%MaxUnits,1);// size of last item
 
 
             this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
 
-            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, this.trainingLength);
-            this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.trainingLength);
+            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, this.MaxUnits);
+            this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.MaxUnits);
 
             this.layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
             this.layerCountBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
@@ -158,12 +158,12 @@ namespace Encog.Util.CL.Kernels
 
             try
             {
-                long[] workItems = new long[] { maxUnits };
+                long[] workItems = new long[] { MaxUnits };
                 ComputeEventList events = new ComputeEventList();
                 commands.Write(weightArrayBuffer, true, 0, flat.Weights.Length, weightArray, events);
                 commands.Execute(kernel, null, workItems, workItems, events);
-                Errors = commands.Read(errorBuffer, true, 0, workload.TrainingLength, events);
-                Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.trainingLength, events);
+                Errors = commands.Read(errorBuffer, true, 0, this.MaxUnits, events);
+                Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.MaxUnits, events);
             }
             catch (OutOfResourcesComputeException ex)
             {

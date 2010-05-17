@@ -87,17 +87,22 @@ kernel void NetworkTrain(
     int sizeElement = params[7];
     int sizeLastElement = params[8];
 
+	int gradientOffset = (taskIndex*weightsSize);
+
 	int size;
 	if( taskIndex==indexLastElement )
 		size = sizeLastElement;
 	else
 		size = sizeElement;
-
+		
+	// clear out the gradients and errors
+	for(int i=0;i<weightsSize;i++)
+		gradients[gradientOffset+i]=0;
+	errors[taskIndex] = 0;
+	
 	for(int index=0;index<size;index++)
 	{		
 		int subtaskIndex = (taskIndex*sizeElement)+index;
-
-		int gradientOffset = (subtaskIndex*weightsSize);
     
 		// part 1: forward pass
 		int taskInputIndex = subtaskIndex * inputSize;
@@ -107,7 +112,7 @@ kernel void NetworkTrain(
 
 		private float layerOutput[NEURON_COUNT];
 		private float layerDelta[NEURON_COUNT];
-	
+			
 		// load the input into the layer output array, this feeds the first layer.
 		for(int i=0;i<inputSize;i++)
 			layerOutput[sourceIndex+i] = input[taskInputIndex+i];
@@ -154,7 +159,7 @@ kernel void NetworkTrain(
 			layerDelta[i] = diff * derivative(activationType[0],layerOutput[i]);
 		}
 
-		errors[subtaskIndex] = e;
+		errors[taskIndex] += e;
 
 		// process hidden layers
 		
@@ -176,7 +181,7 @@ kernel void NetworkTrain(
             // handle thresholds
             for (int i = 0; i < toLayerSize; i++)
             {
-                gradients[index+gradientOffset] = layerDelta[toLayerIndex+i];
+                gradients[index+gradientOffset] += layerDelta[toLayerIndex+i];
                 index++;
             }
 
@@ -187,7 +192,7 @@ kernel void NetworkTrain(
                 {
                     float value = layerOutput[fromLayerIndex + y]
                             * layerDelta[toLayerIndex + x];
-                    gradients[index+gradientOffset] = value;
+                    gradients[index+gradientOffset] += value;
                     layerDelta[fromLayerIndex + y] += weights[index]
                             * layerDelta[toLayerIndex + x];
                     index++;

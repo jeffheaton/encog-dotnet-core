@@ -278,7 +278,7 @@ kernel void SingleNetworkCalculate(
             //Encog.Encog.Instance.InitGPU();
 
             long start = Environment.TickCount;
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.5);
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 3.0);
             train.NumThreads = 0;
             for (int i = 0; i < 50; i++)
             {
