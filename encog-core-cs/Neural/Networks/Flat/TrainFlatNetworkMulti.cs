@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkMulti(FlatNetwork network,
-                 INeuralDataSet training)
+                 INeuralDataSet training, double enforcedGPURatio)
         {
 
             if (!(training is IIndexable))
@@ -123,7 +123,8 @@ namespace Encog.Neural.Networks.Flat
                 determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
-            
+
+            determine.GPURatio = enforcedGPURatio;
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
 
             determine.CalculateWorkers();

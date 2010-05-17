@@ -96,10 +96,12 @@ namespace Encog.Util.CL.Kernels
                 layerDeltaSize += flat.LayerCounts[i];
             }
 
-            if( Context.Devices[0].MaxComputeUnits>100000 )
+            /*if( Context.Devices[0].MaxComputeUnits>100000 )
                 this.maxUnits = 100000;
             else
-                this.maxUnits = (int)Context.Devices[0].MaxComputeUnits;
+                this.maxUnits = (int)Context.Devices[0].MaxComputeUnits;*/
+
+            this.maxUnits = 100;
 
             this.maxUnits = Math.Min(this.maxUnits, trainingLength);
 

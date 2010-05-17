@@ -248,7 +248,7 @@ kernel void SingleNetworkCalculate(
             FlatNetwork flat = new FlatNetwork(network);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
             Encog.Encog.Instance.InitGPU();
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
             for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
@@ -267,7 +267,7 @@ kernel void SingleNetworkCalculate(
         {
             int outputSize = 2;
             int inputSize = 10;
-            int trainingSize = 1000;
+            int trainingSize = 100000;
 
             INeuralDataSet training = RandomTrainingFactory.Generate(
                 trainingSize, inputSize, outputSize, -1, 1);
@@ -275,10 +275,10 @@ kernel void SingleNetworkCalculate(
                 training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
             FlatNetwork flat = new FlatNetwork(network);
-            Encog.Encog.Instance.InitGPU();
+            //Encog.Encog.Instance.InitGPU();
 
             long start = Environment.TickCount;
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training);
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.5);
             train.NumThreads = 0;
             for (int i = 0; i < 50; i++)
             {
@@ -319,7 +319,7 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train();
+                train2();
                 //XORNEAT();
                 //simple();
             }
