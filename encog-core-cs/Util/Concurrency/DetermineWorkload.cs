@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.MathUtil;
+using Encog.Neural;
 
 namespace Encog.Util.Concurrency
 {
@@ -108,6 +109,9 @@ namespace Encog.Util.Concurrency
             }
             else
             {
+                if (cpuWorkerCount == -1)
+                    cpuWorkerCount = 0;
+
                 this.totalWorkerCount = clWorkerCount + cpuWorkerCount;
                 if (this.totalWorkerCount > workloadSize)
                     this.clWorkerCount = 0;
@@ -125,10 +129,13 @@ namespace Encog.Util.Concurrency
             this.cpuRanges.Clear();
             this.clRanges.Clear();
 
+            if (this.totalWorkerCount == 0)
+                throw new NeuralNetworkError("Can't train with zero workers.");
+
             int baseSizePerThread = this.totalWorkloadSize / this.totalWorkerCount;
             int clSizePerThread = (int)((double)baseSizePerThread * this.CLRatio);
-            int cpuWorkloadSize = this.totalWorkloadSize - (clSizePerThread * this.clWorkerCount);
-            int cpuSizePerThread = cpuWorkloadSize / this.cpuWorkerCount;
+            int cpuWorkloadSize = Math.Max( this.totalWorkloadSize - (clSizePerThread * this.clWorkerCount), 0);
+            int cpuSizePerThread = Math.Max(cpuWorkloadSize / this.cpuWorkerCount, 0);
 
             int index = 0;
 

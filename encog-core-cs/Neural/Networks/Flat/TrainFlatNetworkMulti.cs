@@ -88,13 +88,16 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         private double calculatedCLRatio;
 
+        private double enforcedCLRatio;
+
         /// <summary>
         /// Train a flat network multithreaded. 
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkMulti(FlatNetwork network,
-                 INeuralDataSet training, double enforcedCLRatio)
+            INeuralDataSet training,
+            double enforcedCLRatio)
         {
 
             if (!(training is IIndexable))
@@ -104,7 +107,13 @@ namespace Encog.Neural.Networks.Flat
             this.network = network;
 
             this.indexable = (IIndexable)training;
+            this.enforcedCLRatio = enforcedCLRatio;
+            this.NumThreads = 0;   
+            
+        }
 
+        private void Init()
+        {
             gradients = new double[network.Weights.Length];
             updateValues = new double[network.Weights.Length];
             lastGradient = new double[network.Weights.Length];
@@ -117,7 +126,7 @@ namespace Encog.Neural.Networks.Flat
             }
 
             DetermineWorkload determine;
-            
+
             //  consider CL, if enabled
             if (Encog.Instance.CL != null)
                 determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
@@ -137,7 +146,7 @@ namespace Encog.Neural.Networks.Flat
             }
 
             // handle CPU
-            foreach (IntRange r in determine.CPURanges )
+            foreach (IntRange r in determine.CPURanges)
             {
                 this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
@@ -176,6 +185,9 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Iteration()
         {
+            if (this.workers == null)
+                Init();
+
             TaskGroup group = EncogConcurrency.Instance.CreateTaskGroup();
             this.totalError = 0;
 

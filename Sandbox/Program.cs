@@ -275,10 +275,11 @@ kernel void SingleNetworkCalculate(
                 training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
             FlatNetwork flat = new FlatNetwork(network);
-            //Encog.Encog.Instance.InitGPU();
+            
+            //Encog.Encog.Instance.InitCL();
 
             long start = Environment.TickCount;
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 3.0);
+            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
             train.NumThreads = 0;
             for (int i = 0; i < 50; i++)
             {
