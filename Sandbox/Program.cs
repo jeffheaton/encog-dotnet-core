@@ -276,11 +276,11 @@ kernel void SingleNetworkCalculate(
             network.Reset();
             FlatNetwork flat = new FlatNetwork(network);
             
-            //Encog.Encog.Instance.InitCL();
+            Encog.Encog.Instance.InitCL();
 
             long start = Environment.TickCount;
             TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
-            train.NumThreads = 0;
+            train.NumThreads = 1;
             for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
@@ -320,7 +320,7 @@ kernel void SingleNetworkCalculate(
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train2();
+                train();
                 //XORNEAT();
                 //simple();
             }

@@ -160,10 +160,11 @@ namespace Encog.Util.CL.Kernels
             {
                 long[] workItems = new long[] { MaxUnits };
                 ComputeEventList events = new ComputeEventList();
-                commands.Write(weightArrayBuffer, true, 0, flat.Weights.Length, weightArray, events);
+                commands.Write(weightArrayBuffer, false, 0, flat.Weights.Length, weightArray, events);
                 commands.Execute(kernel, null, workItems, workItems, events);
-                Errors = commands.Read(errorBuffer, true, 0, this.MaxUnits, events);
-                Gradients = commands.Read(gradientBuffer, true, 0, flat.Weights.Length * this.MaxUnits, events);
+                Errors = commands.Read(errorBuffer, false, 0, this.MaxUnits, events);
+                Gradients = commands.Read(gradientBuffer, false, 0, flat.Weights.Length * this.MaxUnits, events);
+                commands.Finish();
             }
             catch (OutOfResourcesComputeException ex)
             {
