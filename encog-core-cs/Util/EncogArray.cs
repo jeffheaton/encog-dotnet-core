@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Encog.Util
 {
@@ -101,6 +102,23 @@ namespace Encog.Util
         public static void ArrayCopy(double[] input, int sourceIndex, double[] output, int targetIndex, int size)
         {
             Array.Copy(input, sourceIndex, output, targetIndex, size);
+        }
+
+        /// <summary>
+        /// Convert the collection to an array list of doubles.
+        /// </summary>
+        /// <param name="list">The list to convert.</param>
+        /// <returns>The array of doubles.</returns>
+        public static double[] ListToDouble(IList<double> list)
+        {
+            double[] result = new double[list.Count];
+            int index = 0;
+            foreach (Object obj in list)
+            {
+                result[index++] = (Double)obj;
+            }
+
+            return result;
         }
 
         internal static void Fill(double[] p, double value)

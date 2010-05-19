@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.3
+// Encog(tm) Artificial Intelligence Framework v2.4
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/

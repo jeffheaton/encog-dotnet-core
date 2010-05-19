@@ -450,7 +450,9 @@ namespace Encog.Neural.Networks
             ILayer inputLayer = GetLayer(BasicNetwork.TAG_INPUT);
             ILayer outputLayer = GetLayer(BasicNetwork.TAG_OUTPUT);
 
-            if (inputLayer == null || outputLayer == null)
+            if ( this.structure.Layers.Count<3 
+                || inputLayer == null 
+                || outputLayer == null)
                 (new RangeRandomizer(-1, 1)).Randomize(this);
             else
                 (new NguyenWidrowRandomizer(-1, 1)).Randomize(this);

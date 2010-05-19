@@ -107,6 +107,7 @@
     <Compile Include="MathUtil\Matrices\Matrix.cs" />
     <Compile Include="MathUtil\Matrices\MatrixError.cs" />
     <Compile Include="MathUtil\Matrices\MatrixMath.cs" />
+    <Compile Include="MathUtil\NumericRange.cs" />
     <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
     <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Neural\Networks\Prune\NetworkPattern.cs" />
     <Compile Include="Neural\Networks\Prune\PruneIncremental.cs" />
     <Compile Include="Neural\Networks\Prune\PruneSelective.cs" />
+    <Compile Include="Neural\Networks\Structure\AnalyzeNetwork.cs" />
     <Compile Include="Neural\Networks\Structure\CalculateDepth.cs" />
     <Compile Include="Neural\Networks\Structure\LayerComparator.cs" />
     <Compile Include="Neural\Networks\Structure\NetworkCODEC.cs" />

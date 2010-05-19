@@ -22,7 +22,7 @@ namespace Encog.Neural.Networks.Training.LMA
         private BasicNetwork network;
 
         /// <summary>
-        /// THe training set to use. Must be indexable.
+        /// The training set to use. Must be indexable.
         /// </summary>
         private IIndexable indexableTraining;
 
@@ -32,7 +32,7 @@ namespace Encog.Neural.Networks.Training.LMA
         private int inputLength;
 
         /// <summary>
-        /// The number of weights and weights in the neural network.
+        /// The number of weights and bias values in the neural network.
         /// </summary>
         private int parameterSize;
 
@@ -66,13 +66,14 @@ namespace Encog.Neural.Networks.Training.LMA
         /// </summary>
         private double error;
 
+
         /// <summary>
-        /// Construct the chain rule calculation. 
+        /// Construct the chain rule calculation.
         /// </summary>
         /// <param name="network">The network to use.</param>
         /// <param name="indexableTraining">The training set to use.</param>
         public JacobianChainRule(BasicNetwork network,
-                IIndexable indexableTraining)
+                 IIndexable indexableTraining)
         {
             this.indexableTraining = indexableTraining;
             this.network = network;
@@ -82,20 +83,34 @@ namespace Encog.Neural.Networks.Training.LMA
             this.rowErrors = new double[this.inputLength];
 
             BasicNeuralData input = new BasicNeuralData(
-                    this.indexableTraining.InputSize);
+                   this.indexableTraining.InputSize);
             BasicNeuralData ideal = new BasicNeuralData(
-                    this.indexableTraining.IdealSize);
+                   this.indexableTraining.IdealSize);
             this.pair = new BasicNeuralDataPair(input, ideal);
         }
 
-        
         /// <summary>
-        /// Calculate the derivative. 
+        /// Calculate the derivative.
         /// </summary>
-        /// <param name="a">The value to calculate for.</param>
-        /// <param name="d">The derivative.</param>
-        /// <returns></returns>
+        /// <param name="a">The activation function.</param>
+        /// <param name="d">The value to calculate for.</param>
+        /// <returns>The derivative.</returns>
         private double CalcDerivative(IActivationFunction a, double d)
+        {
+            double[] temp = new double[1];
+            temp[0] = d;
+            //a.activationFunction(temp);
+            a.DerivativeFunction(temp);
+            return temp[0];
+        }
+
+        /// <summary>
+        /// Calculate the derivative.
+        /// </summary>
+        /// <param name="a">The activation function.</param>
+        /// <param name="d">The value to calculate for.</param>
+        /// <returns>The derivative.</returns>
+        private double CalcDerivative2(IActivationFunction a, double d)
         {
             double[] temp = new double[1];
             temp[0] = d;
@@ -104,9 +119,8 @@ namespace Encog.Neural.Networks.Training.LMA
             return temp[0];
         }
 
-
         /// <summary>
-        /// Calculate the Jacobian matrix.
+        ///  Calculate the Jacobian matrix.
         /// </summary>
         /// <param name="weights">The weights for the neural network.</param>
         /// <returns>The sum squared of the weights.</returns>
@@ -131,7 +145,7 @@ namespace Encog.Neural.Networks.Training.LMA
         }
 
         /// <summary>
-        /// Calculate the derivatives for this training set element. 
+        /// Calculate the derivatives for this training set element.
         /// </summary>
         /// <param name="pair">The training set element.</param>
         /// <returns>The sum squared of errors.</returns>
@@ -145,10 +159,10 @@ namespace Encog.Neural.Networks.Training.LMA
                     BasicNetwork.TAG_INPUT).ActivationFunction;
 
             NeuralOutputHolder holder = new NeuralOutputHolder();
+
             this.network.Compute(pair.Input, holder);
 
-            IList<ISynapse> synapses = this.network.Structure
-                    .Synapses;
+            IList<ISynapse> synapses = this.network.Structure.Synapses;
 
             int synapseNumber = 0;
 
@@ -165,45 +179,59 @@ namespace Encog.Neural.Networks.Training.LMA
                 double lastOutput = holder.Result[synapse][i];
 
                 this.jacobian[this.jacobianRow][this.jacobianCol++] = CalcDerivative(
-                        function, lastOutput)
+                        function, output)
                         * lastOutput;
             }
 
+            ISynapse lastSynapse;
+
             while (synapseNumber < synapses.Count)
             {
+                lastSynapse = synapse;
                 synapse = synapses[synapseNumber++];
-                INeuralData outputData = holder.Result[synapse];
+                INeuralData outputData = holder.Result[lastSynapse];
+
+                int biasCol = this.jacobianCol;
+                this.jacobianCol += synapse.ToLayer.NeuronCount;
 
                 // for each neuron in the input layer
-                for (int neuron = 0; neuron < synapse.FromNeuronCount; neuron++)
+                for (int neuron = 0; neuron < synapse.ToNeuronCount; neuron++)
                 {
                     output = outputData[neuron];
-
-                    int biasCol = this.jacobianCol++;
 
                     // for each weight of the input neuron
                     for (int i = 0; i < synapse.FromNeuronCount; i++)
                     {
                         sum = 0.0;
                         // for each neuron in the next layer
-                        for (int j = 0; j < synapse.ToNeuronCount; j++)
+                        for (int j = 0; j < lastSynapse.ToNeuronCount; j++)
                         {
                             // for each weight of the next neuron
-                            for (int k = 0; k < synapse.FromNeuronCount; k++)
+                            for (int k = 0; k < lastSynapse.FromNeuronCount; k++)
                             {
-                                sum += synapse.WeightMatrix[k, j]
-                                        * outputData[k];
+                                double x = lastSynapse.WeightMatrix[k, j];
+                                double y = output;
+                                sum += lastSynapse.WeightMatrix[k, j]
+                                        * output;
                             }
-                            sum += synapse.ToLayer.BiasWeights[j];
+                            sum += lastSynapse.ToLayer.BiasWeights[j];
                         }
 
-                        double w = synapse.WeightMatrix[neuron, i];
+                        double x1 = CalcDerivative(function, output);
+                        double x2 = CalcDerivative2(function, sum);
+                        double x3 = holder.Result[synapse][i];
+
+                        double w = lastSynapse.WeightMatrix[neuron, 0];
                         double val = CalcDerivative(function, output)
-                                * CalcDerivative(function, sum) * w;
+                                * CalcDerivative2(function, sum) * w;
+
+                        double z1 = val
+                        * holder.Result[synapse][i];
+                        double z2 = val;
 
                         this.jacobian[this.jacobianRow][this.jacobianCol++] = val
                                 * holder.Result[synapse][i];
-                        this.jacobian[this.jacobianRow][biasCol] = val;
+                        this.jacobian[this.jacobianRow][biasCol + neuron] = val;
                     }
                 }
             }
