@@ -146,10 +146,14 @@ namespace Sandbox
         public static void testSimpleCL()
         {
             Encog.Encog.Instance.InitCL();
-            KernelVectorAdd k = Encog.Encog.Instance.CL.Adapters[0].VectorAdd;
+
+            EncogCLDevice device = Encog.Encog.Instance.CL.Devices[0];
+            KernelVectorAdd k = Encog.Encog.Instance.CL.Devices[0].Platform.VectorAdd;
+            k.Compile();
+
             double[] a = { 1, 2, 3, 4 };
             double[] b = { 5, 6, 7, 8 };
-            double[] c = k.Add(a, b);
+            double[] c = k.Add(device, a, b);
 
             for (int i = 0; i < a.Length; i++)
             {
@@ -165,7 +169,7 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                testSimpleCL();
+                train();
                 //XORNEAT();
                 //simple();
             }

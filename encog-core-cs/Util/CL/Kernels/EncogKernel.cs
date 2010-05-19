@@ -12,18 +12,33 @@ namespace Encog.Util.CL.Kernels
         private String cl;
         private ComputeContext context;
         private ComputeProgram program;
+        private ComputeKernel kernel;
+        private String kernelName;
 
-        public EncogKernel(ComputeContext context, String sourceName)
+        public EncogKernel(ComputeContext context, String sourceName, String kernelName)
         {
             ResourcePersistence resource = new ResourcePersistence(sourceName);
             this.context = context;
+            this.kernelName = kernelName;
             this.cl = resource.LoadString();
         }
 
         public void Compile()
         {
+            // clear out any old program
+            if (this.program != null)
+                this.program.Dispose();
+
+            // load and compile the program
             this.program = new ComputeProgram(this.context, new string[] { this.cl });
             program.Build(null, null, null, IntPtr.Zero);
+            this.kernel = Program.CreateKernel(this.kernelName);
+        }
+
+        public void PrepareKernel()
+        {
+            if (this.kernel == null)
+                throw new EncogError("Must compile CL kernel before using it.");
         }
 
         public ComputeContext Context
@@ -38,6 +53,14 @@ namespace Encog.Util.CL.Kernels
             get
             {
                 return this.program;
+            }
+        }
+
+        public ComputeKernel Kernel
+        {
+            get
+            {
+                return this.kernel;
             }
         }
     }

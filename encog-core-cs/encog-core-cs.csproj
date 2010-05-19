@@ -392,7 +392,9 @@
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
     <Compile Include="Util\CL\EncogCL.cs" />
-    <Compile Include="Util\CL\EncogCLAdapter.cs" />
+    <Compile Include="Util\CL\EncogCLDevice.cs" />
+    <Compile Include="Util\CL\EncogCLItem.cs" />
+    <Compile Include="Util\CL\EncogCLPlatform.cs" />
     <Compile Include="Util\CL\Kernels\KernelNetworkTrain.cs" />
     <Compile Include="Util\CL\Kernels\EncogKernel.cs" />
     <Compile Include="Util\CL\Kernels\KernelVectorAdd.cs" />

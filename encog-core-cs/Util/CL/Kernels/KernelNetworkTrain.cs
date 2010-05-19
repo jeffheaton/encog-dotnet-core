@@ -13,40 +13,24 @@ namespace Encog.Util.CL.Kernels
 {
     public class KernelNetworkTrain : EncogKernel
     {
-
-        public float[] Errors { get; set; }
-        public float[] Gradients { get; set; }
-
-
-        private ComputeBuffer<int> paramBuffer;
         private ComputeBuffer<float> weightArrayBuffer;
 
         private ComputeBuffer<int> layerIndexBuffer;
         private ComputeBuffer<int> layerCountBuffer;
         private ComputeBuffer<int> weightIndexBuffer;
-
-        private ComputeBuffer<float> errorBuffer;
-        private ComputeBuffer<float> gradientBuffer;
         private ComputeBuffer<int> activationTypeBuffer;
 
-        private int[] paramArray;
         private int totalOutputLength;
         private float[] weightArray;
         private int layerDeltaSize;
         private int[] activationType;
-        private FlatNetwork flat;
-        private int trainingLength;
-        private ComputeKernel kernel;
-        private ComputeCommandQueue commands;
-        public int MaxUnits { get; set; }
-        private TrainingWorkload[] workload;
-
+ 
         public KernelNetworkTrain(ComputeContext context)
-            : base(context, "Encog.Resources.KernelNetTrain.txt")
+            : base(context, "Encog.Resources.KernelNetTrain.txt", "NetworkTrain")
         {
         }
 
-        public void Train(FlatNetwork flat, INeuralDataSet input, int high, int low)
+        public static TrainingWorkload CreateWorkload(EncogCLDevice device, FlatNetwork flat, INeuralDataSet input, int high, int low)
         {
             if (!(input is IIndexable))
             {
@@ -54,13 +38,11 @@ namespace Encog.Util.CL.Kernels
             }
 
             IIndexable indexable = (IIndexable)input;
-            this.flat = flat;
-            this.trainingLength = (high - low) + 1;
+            int trainingLength = (high - low) + 1;
 
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
-            this.workload = new TrainingWorkload[1];
-            this.workload[0] = new TrainingWorkload(this.trainingLength, input.InputSize, input.IdealSize);
+            TrainingWorkload result = new TrainingWorkload(device, flat, high, low);
 
             int inputIndex = 0;
             int idealIndex = 0;
@@ -70,56 +52,30 @@ namespace Encog.Util.CL.Kernels
                 indexable.GetRecord(i, pair);
                 for (int col = 0; col < flat.InputCount; col++)
                 {
-                    this.workload[0].InputArray[inputIndex++] = (float)pair.Input.Data[col];
+                    result.InputArray[inputIndex++] = (float)pair.Input.Data[col];
                 }
 
                 for (int col = 0; col < flat.OutputCount; col++)
                 {
-                    this.workload[0].IdealArray[idealIndex++] = (float)pair.Ideal.Data[col];
+                    result.IdealArray[idealIndex++] = (float)pair.Ideal.Data[col];
                 }
             }
 
-
+            return result;
 
         }
 
-        public void Init()
+        public void Init(FlatNetwork flat)
         {
-            this.paramArray = new int[10];
-            this.totalOutputLength = flat.LayerOutput.Length * this.trainingLength;
+
             this.weightArray = new float[flat.Weights.Length];
-            this.layerDeltaSize = 0;
             this.activationType = flat.ActivationType;
 
+            this.layerDeltaSize = 0;
             for (int i = 0; i < flat.LayerCounts.Length; i++)
             {
                 layerDeltaSize += flat.LayerCounts[i];
             }
-
-            /*if( Context.Devices[0].MaxComputeUnits>100000 )
-                this.maxUnits = 100000;
-            else
-                this.maxUnits = (int)Context.Devices[0].MaxComputeUnits;*/
-
-            this.MaxUnits = 100;
-
-            this.MaxUnits = Math.Min(this.MaxUnits, trainingLength);
-
-            paramArray[0] = flat.InputCount;
-            paramArray[1] = flat.OutputCount;
-            paramArray[2] = flat.LayerCounts.Length;
-            paramArray[3] = flat.LayerOutput.Length;
-            paramArray[4] = layerDeltaSize;
-            paramArray[5] = flat.Weights.Length;
-            paramArray[6] = MaxUnits-1;// index of last item
-            paramArray[7] = Math.Max(this.trainingLength/MaxUnits,1);// size each item
-            paramArray[8] = Math.Max(this.trainingLength%MaxUnits,1);// size of last item
-
-
-            this.paramBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, paramArray);
-
-            this.errorBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, this.MaxUnits);
-            this.gradientBuffer = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, flat.Weights.Length * this.MaxUnits);
 
             this.layerIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerIndex);
             this.layerCountBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.LayerCounts);
@@ -127,48 +83,42 @@ namespace Encog.Util.CL.Kernels
             this.weightIndexBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, flat.WeightIndex);
 
             this.activationTypeBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, activationType);
-            this.kernel = Program.CreateKernel("NetworkTrain");
-            this.commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
-
-            this.workload[0].Init(Context);
         }
 
-        public void Calculate()
+        public void Calculate(TrainingWorkload workload)
         {
-            Calculate(0);
-        }
+            PrepareKernel();
 
-        private void Calculate(int index)
-        {
-            TrainingWorkload workload = this.workload[0];
+            FlatNetwork flat = workload.Network;
 
             for (int i = 0; i < flat.Weights.Length; i++)
                 weightArray[i] = (float)flat.Weights[i];
 
-            kernel.SetMemoryArgument(0, paramBuffer);
-            kernel.SetMemoryArgument(1, errorBuffer);
-            kernel.SetMemoryArgument(2, layerIndexBuffer);
-            kernel.SetMemoryArgument(3, layerCountBuffer);
-            kernel.SetMemoryArgument(4, weightIndexBuffer);
-            kernel.SetMemoryArgument(5, workload.InputBuffer);
-            kernel.SetMemoryArgument(6, workload.IdealBuffer);
-            kernel.SetMemoryArgument(7, weightArrayBuffer);
-            kernel.SetMemoryArgument(8, gradientBuffer);
-            kernel.SetMemoryArgument(9, activationTypeBuffer);
+            Kernel.SetMemoryArgument(0, workload.ParamBuffer);
+            Kernel.SetMemoryArgument(1, workload.ErrorBuffer);
+            Kernel.SetMemoryArgument(2, layerIndexBuffer);
+            Kernel.SetMemoryArgument(3, layerCountBuffer);
+            Kernel.SetMemoryArgument(4, weightIndexBuffer);
+            Kernel.SetMemoryArgument(5, workload.InputBuffer);
+            Kernel.SetMemoryArgument(6, workload.IdealBuffer);
+            Kernel.SetMemoryArgument(7, weightArrayBuffer);
+            Kernel.SetMemoryArgument(8, workload.GradientBuffer);
+            Kernel.SetMemoryArgument(9, activationTypeBuffer);
 
             try
             {
-                long[] workItems = new long[] { MaxUnits };
+                ComputeCommandQueue commands = workload.Device.Commands;
+                long[] workItems = new long[] { workload.MaxUnits };
                 ComputeEventList events = new ComputeEventList();
                 commands.Write(weightArrayBuffer, false, 0, flat.Weights.Length, weightArray, events);
-                commands.Execute(kernel, null, workItems, workItems, events);
-                Errors = commands.Read(errorBuffer, false, 0, this.MaxUnits, events);
-                Gradients = commands.Read(gradientBuffer, false, 0, flat.Weights.Length * this.MaxUnits, events);
+                commands.Execute(Kernel, null, workItems, workItems, events);
+                workload.Errors = commands.Read(workload.ErrorBuffer, false, 0, workload.MaxUnits, events);
+                workload.Gradients = commands.Read(workload.GradientBuffer, false, 0, flat.Weights.Length * workload.MaxUnits, events);
                 commands.Finish();
             }
             catch (OutOfResourcesComputeException ex)
             {
-                throw new EncogError("GPU is out of resources");
+                throw new EncogError("CL device is out of resources");
             }
         }
     }

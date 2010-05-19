@@ -10,6 +10,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
 using Encog.Util.CL.Kernels;
+using Encog.Util.CL;
 
 
 namespace Encog.Neural.Networks.Flat
@@ -69,6 +70,8 @@ namespace Encog.Neural.Networks.Flat
         private TrainFlatNetworkMulti owner;
         private long elapsedTime;
         private Stopwatch stopwatch;
+        private EncogCLDevice device;
+        private TrainingWorkload workload;
 
         /// <summary>
         /// Construct a gradient worker.
@@ -78,7 +81,7 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="training">The training data.</param>
         /// <param name="low">The low index to use in the training data.</param>
         /// <param name="high">The high index to use in the training data.</param>
-        public GradientWorkerCL(FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
+        public GradientWorkerCL(EncogCLDevice device, FlatNetwork network, TrainFlatNetworkMulti owner, IIndexable training, int low, int high)
         {
             this.network = network;
             this.training = training;
@@ -100,9 +103,14 @@ namespace Encog.Neural.Networks.Flat
 
             this.pair = BasicNeuralDataPair.CreatePair(network.InputCount, network.OutputCount);
 
-            KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
-            k.Train(this.network, this.training, this.high, this.low);
-            k.Init();
+            this.device = device;
+
+            this.workload = new TrainingWorkload(device, network, high, low);
+            this.workload.Init(network, 100);
+
+            //KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
+            //k.Train(this.network, this.training, this.high, this.low);
+            //k.Init();
         }
 
 
@@ -114,9 +122,9 @@ namespace Encog.Neural.Networks.Flat
             this.stopwatch.Reset();
             this.stopwatch.Start();
 
-            KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
+            KernelNetworkTrain k = this.device.Platform.NetworkTrain;
             
-            k.Calculate();
+            k.Calculate(workload);
 
             for (int j = 0; j < this.gradients.Length; j++)
                 this.gradients[j] = 0;
@@ -125,13 +133,13 @@ namespace Encog.Neural.Networks.Flat
             int index = 0;
             int errorIndex = 0;
 
-            for (int i = 0; i < k.MaxUnits; i++)
+            for (int i = 0; i < workload.MaxUnits; i++)
             {
-                e += k.Errors[errorIndex++];
+                e += workload.Errors[errorIndex++];
                 
                 for (int j = 0; j < this.gradients.Length; j++)
                 {
-                    this.gradients[j] += k.Gradients[index++];
+                    this.gradients[j] += workload.Gradients[index++];
                 }
             }
             

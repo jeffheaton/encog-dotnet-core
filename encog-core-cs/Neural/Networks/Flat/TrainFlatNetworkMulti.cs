@@ -9,6 +9,7 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util.Concurrency;
 using Encog.MathUtil;
 using Encog.Util;
+using Encog.Util.CL;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -125,11 +126,16 @@ namespace Encog.Neural.Networks.Flat
                 updateValues[i] = ResilientPropagation.DEFAULT_INITIAL_UPDATE;
             }
 
+            IList<EncogCLDevice> clDevices = null;
+
             DetermineWorkload determine;
 
             //  consider CL, if enabled
             if (Encog.Instance.CL != null)
-                determine = new DetermineWorkload(NumThreads, 1, (int)this.indexable.Count);
+            {
+                clDevices = Encog.Instance.CL.EnabledDevices;
+                determine = new DetermineWorkload(NumThreads, clDevices.Count, (int)this.indexable.Count);
+            }
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
 
@@ -139,10 +145,17 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
+            foreach (EncogCLPlatform platform in Encog.Instance.CL.Platforms)
+            {
+                platform.NetworkTrain.Compile();
+                platform.NetworkTrain.Init(network);
+            }
+
             // handle CL
+            int idx = 0;
             foreach (IntRange r in determine.CLRanges)
             {
-                this.workers[index++] = new GradientWorkerCL(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCL(clDevices[idx++], network.Clone(), this, indexable, r.Low, r.High);
             }
 
             // handle CPU

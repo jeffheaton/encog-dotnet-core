@@ -10,44 +10,63 @@ namespace Encog.Util.CL
     public class EncogCL
     {
         private ComputeContextPropertyList cp;
-        private IList<EncogCLAdapter> adapters = new List<EncogCLAdapter>();
+        private IList<EncogCLPlatform> platforms = new List<EncogCLPlatform>();
+        private IList<EncogCLDevice> devices = new List<EncogCLDevice>();
+        private ComputeContext context;
 
         public EncogCL()
         {
-            for (int i = 0; i < ComputePlatform.Platforms.Count; i++)
+            if (ComputePlatform.Platforms.Count == 0)
+                throw new EncogError("Can't find any OpenCL platforms");
+
+            foreach(ComputePlatform platform in ComputePlatform.Platforms)
             {
-                ComputePlatform platform = ComputePlatform.Platforms[i];
-                EncogCLAdapter adapter = new EncogCLAdapter(platform);
-                this.adapters.Add(adapter);
+                EncogCLPlatform encogPlatform = new EncogCLPlatform(platform);
+                platforms.Add(encogPlatform);
+                foreach( EncogCLDevice device in encogPlatform.Devices )
+                {
+                    devices.Add(device);
+                }
             }
         }
 
-        public void Init()
-        {
-            foreach( EncogCLAdapter adapter in this.adapters )
-            {
-                if( adapter.Enabled )
-                    adapter.Init();
-            }
-        }
-
-        public IList<EncogCLAdapter> Adapters
+        public IList<EncogCLDevice> Devices
         {
             get
             {
-                return this.adapters;
+                return this.devices;
             }
         }
 
-        public EncogCLAdapter ChooseAdapter()
+        public IList<EncogCLDevice> EnabledDevices
         {
-            foreach (EncogCLAdapter adapter in adapters)
+            get
             {
-                if (adapter.Enabled)
-                    return adapter;
-            }
+                IList<EncogCLDevice> result = new List<EncogCLDevice>();
+                foreach(EncogCLDevice device in devices)
+                {
+                    if ( device.Enabled && device.Platform.Enabled )
+                        result.Add(device);
+                }
 
-            return null;
+                return result;
+            }
+        }
+
+        public IList<EncogCLPlatform> Platforms
+        {
+            get
+            {
+                return this.platforms;
+            }
+        }
+
+        public EncogCLDevice ChooseAdapter()
+        {
+            if (this.devices.Count < 1)
+                return null;
+            else
+                return this.devices[0];
         }
     }
 }

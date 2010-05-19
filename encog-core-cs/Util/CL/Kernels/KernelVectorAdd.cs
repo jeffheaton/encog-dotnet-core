@@ -9,24 +9,18 @@ namespace Encog.Util.CL.Kernels
 {
     public class KernelVectorAdd : EncogKernel
     {
-        private ComputeKernel kernel;
-        private ComputeCommandQueue commands;
-
         public KernelVectorAdd(ComputeContext context)
-            : base(context, "Encog.Resources.KernelVectorAdd.txt")
+            : base(context, "Encog.Resources.KernelVectorAdd.txt", "VectorAdd")
         {
         }
 
-        public double[] Add(double[] inputA, double[] inputB)
+        public double[] Add(EncogCLDevice device, double[] inputA, double[] inputB)
         {
+            PrepareKernel();
+
             int count = inputA.Length;
             float[] arrA = new float[count];
             float[] arrB = new float[count];
-
-            this.kernel = Program.CreateKernel("VectorAdd");
-            this.commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
-
-            Random rand = new Random();
 
             for (int i = 0; i < count; i++)
             {
@@ -38,19 +32,17 @@ namespace Encog.Util.CL.Kernels
             ComputeBuffer<float> b = new ComputeBuffer<float>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, arrB);
             ComputeBuffer<float> c = new ComputeBuffer<float>(Context, ComputeMemoryFlags.WriteOnly, arrA.Length);
 
-            kernel.SetMemoryArgument(0, a);
-            kernel.SetMemoryArgument(1, b);
-            kernel.SetMemoryArgument(2, c);
-
-            this.commands = new ComputeCommandQueue(Context, Context.Devices[0], ComputeCommandQueueFlags.None);
+            Kernel.SetMemoryArgument(0, a);
+            Kernel.SetMemoryArgument(1, b);
+            Kernel.SetMemoryArgument(2, c);
 
             ComputeEventList events = new ComputeEventList();
 
-            commands.Execute(kernel, null, new long[] { count }, null, events);
+            device.Commands.Execute(Kernel, null, new long[] { count }, null, events);
 
 
-            float[] arrC = commands.Read(c, false, 0, inputA.Length, events);
-            commands.Finish();
+            float[] arrC = device.Commands.Read(c, false, 0, inputA.Length, events);
+            device.Commands.Finish();
 
             double[] result = new double[arrA.Length];
             for (int i = 0; i < result.Length; i++)

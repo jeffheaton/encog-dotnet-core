@@ -139,10 +139,9 @@ namespace Encog
 
         public void InitCL()
         {
-            EncogCL cl = new EncogCL();
             try
             {
-                cl.Init();
+                EncogCL cl = new EncogCL();
                 this.CL = cl;
             }
             catch (Exception e)

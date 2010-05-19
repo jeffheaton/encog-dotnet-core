@@ -7,16 +7,12 @@ using Encog.Util.CL.Kernels;
 
 namespace Encog.Util.CL
 {
-    
-
-    public class EncogCLAdapter
+    public class EncogCLPlatform: EncogCLItem
     {
-        public bool Enabled { get; set; }
-        public String Name { get; set; }
-        public String Vender { get; set; }
-
         private ComputePlatform platform;
         private ComputeContext context;
+        private IList<EncogCLDevice> devices = new List<EncogCLDevice>();
+
 
         private KernelNetworkTrain kerNetworkTrain;
         private KernelVectorAdd kerVectorAdd;
@@ -37,14 +33,21 @@ namespace Encog.Util.CL
             }
         }
 
-        public EncogCLAdapter(ComputePlatform platform)
-        {
-            this.Name = platform.Name;
-            this.Enabled = true;
-            this.platform = platform;
-            this.Name = platform.Name;
-            this.Vender = Vender;
 
+        public IList<EncogCLDevice> Devices
+        {
+            get
+            {
+                return this.devices;
+            }
+        }
+
+        public ComputePlatform Platform
+        {
+            get
+            {
+                return this.platform;
+            }
         }
 
         public ComputeContext Context
@@ -55,16 +58,24 @@ namespace Encog.Util.CL
             }
         }
 
-        public void Init()
+        public EncogCLPlatform(ComputePlatform platform)
         {
+            this.platform = platform;
+
             ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
             this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
+            this.Name = platform.Name;
+            this.Vender = platform.Vendor;
+            this.Enabled = true;
+
+            foreach (ComputeDevice device in context.Devices)
+            {
+                EncogCLDevice adapter = new EncogCLDevice(this, device);
+                this.devices.Add(adapter);
+            }
 
             this.kerVectorAdd = new KernelVectorAdd(this.context);
-            this.kerVectorAdd.Compile();
-
             this.kerNetworkTrain = new KernelNetworkTrain(this.context);
-            this.kerNetworkTrain.Compile();
         }
     }
 }
