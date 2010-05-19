@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -395,8 +395,7 @@
     <Compile Include="Util\CL\EncogCLAdapter.cs" />
     <Compile Include="Util\CL\Kernels\KernelNetworkTrain.cs" />
     <Compile Include="Util\CL\Kernels\EncogKernel.cs" />
-    <Compile Include="Util\CL\Kernels\KernelNetworkCalculate.cs" />
-    <Compile Include="Util\CL\Kernels\KernelSingleNetworkCalculate.cs" />
+    <Compile Include="Util\CL\Kernels\KernelVectorAdd.cs" />
     <Compile Include="Util\CL\Kernels\TrainingWorkload.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
@@ -476,12 +475,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelVectorAdd.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\KernelSingleNetCalculate.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\KernelNetCalculate.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelNetTrain.txt" />

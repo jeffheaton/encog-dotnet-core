@@ -18,31 +18,22 @@ namespace Encog.Util.CL
         private ComputePlatform platform;
         private ComputeContext context;
 
-        private KernelSingleNetworkCalculate kerSingleNetworkCalculate;
-        private KernelNetworkCalculate kerNetworkCalculate;
         private KernelNetworkTrain kerNetworkTrain;
-
-        public KernelSingleNetworkCalculate SingleNetworkCalculate
-        {
-            get
-            {
-                return this.kerSingleNetworkCalculate;
-            }
-        }
-
-        public KernelNetworkCalculate NetworkCalculate
-        {
-            get
-            {
-                return this.kerNetworkCalculate;
-            }
-        }
+        private KernelVectorAdd kerVectorAdd;
 
         public KernelNetworkTrain NetworkTrain
         {
             get
             {
                 return this.kerNetworkTrain;
+            }
+        }
+
+        public KernelVectorAdd VectorAdd
+        {
+            get
+            {
+                return this.kerVectorAdd;
             }
         }
 
@@ -69,11 +60,8 @@ namespace Encog.Util.CL
             ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
             this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
 
-            //this.kerSingleNetworkCalculate = new KernelSingleNetworkCalculate(this.context);
-            //this.kerSingleNetworkCalculate.Compile();
-
-            //this.kerNetworkCalculate = new KernelNetworkCalculate(this.context);
-            //this.kerNetworkCalculate.Compile();
+            this.kerVectorAdd = new KernelVectorAdd(this.context);
+            this.kerVectorAdd.Compile();
 
             this.kerNetworkTrain = new KernelNetworkTrain(this.context);
             this.kerNetworkTrain.Compile();
