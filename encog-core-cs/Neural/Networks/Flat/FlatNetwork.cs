@@ -361,6 +361,19 @@ namespace Encog.Neural.Networks.Flat
             }
         }
 
+        public int NeuronCount
+        {
+            get
+            {
+                int result = 0;
+                for (int i = 0; i < LayerCounts.Length; i++)
+                {
+                    result += LayerCounts[i];
+                }
+                return result;
+            }
+        }
+
         public static double CalculateActivationDerivative(int type, double x)
         {
             switch (type)

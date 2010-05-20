@@ -146,12 +146,8 @@ namespace Encog.Util.CL.Kernels
             this.idealArray = new float[idealSize * trainingLength];
             this.paramArray = new int[10];
             this.device = device;
-        
-            int layerDeltaSize = 0;
-            for (int i = 0; i < flat.LayerCounts.Length; i++)
-            {
-                layerDeltaSize += flat.LayerCounts[i];
-            }
+
+            int layerDeltaSize = flat.NeuronCount;
 
             this.MaxUnits = Math.Min( this.trainingLength, maxUnits);
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);

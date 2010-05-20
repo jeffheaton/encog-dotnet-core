@@ -25,13 +25,36 @@ namespace Encog.Util.CL.Kernels
 
         public void Compile()
         {
+            Compile(new Dictionary<String,String>());
+        }
+
+        public void Compile(IDictionary<String,String> options)
+        {
             // clear out any old program
             if (this.program != null)
                 this.program.Dispose();
 
             // load and compile the program
             this.program = new ComputeProgram(this.context, new string[] { this.cl });
-            program.Build(null, null, null, IntPtr.Zero);
+
+            if (options.Count > 0)
+            {
+                StringBuilder builder = new StringBuilder();
+                foreach (KeyValuePair<String,String> obj in options)
+                {
+                    if (builder.Length > 0)
+                        builder.Append(" ");
+                    builder.Append("-D ");
+                    builder.Append(obj.Key);
+                    builder.Append("=");
+                    builder.Append(obj.Value);
+                }
+
+                program.Build(null, builder.ToString(), null, IntPtr.Zero);
+            }
+            else
+                program.Build(null, null, null, IntPtr.Zero);
+            
             this.kernel = Program.CreateKernel(this.kernelName);
         }
 

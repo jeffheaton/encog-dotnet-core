@@ -10,6 +10,7 @@ using Encog.Util.Concurrency;
 using Encog.MathUtil;
 using Encog.Util;
 using Encog.Util.CL;
+using System.Collections;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -145,11 +146,14 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
+            IDictionary<String, String> options = new Dictionary<String, String>();
+            options["NEURON_COUNT"] = ""+network.NeuronCount;
+
             if (Encog.Instance.CL != null)
             {
                 foreach (EncogCLPlatform platform in Encog.Instance.CL.Platforms)
                 {
-                    platform.NetworkTrain.Compile();
+                    platform.NetworkTrain.Compile(options);
                     platform.NetworkTrain.Init(network);
                 }
             }
