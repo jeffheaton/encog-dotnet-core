@@ -151,6 +151,7 @@ namespace Encog.Neural.Networks.Flat
             {
                 IDictionary<String, String> options = new Dictionary<String, String>();
                 options["NEURON_COUNT"] = "" + network.NeuronCount;
+                options["WEIGHT_COUNT"] = "" + network.Weights.Length;
 
                 // is there only one activation function?  If so, there are some optimizations we can use.
                 int act = network.HasSameActivationFunction();

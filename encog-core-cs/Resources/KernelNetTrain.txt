@@ -96,13 +96,20 @@ kernel void NetworkTrain(
     global read_only int *weightIndex,
     global read_only float* input,
     global read_only float* ideal,
-    global read_only float* weights,
+    global read_only float* weightsIn,
     global write_only float *gradients,
     global read_only int *activationType
     )
 {
 	private float layerOutput[NEURON_COUNT];
 	private float layerDelta[NEURON_COUNT];
+	
+	local float weights[WEIGHT_COUNT];
+	for(int i=0;i<WEIGHT_COUNT;i++)
+		weights[i] = weightsIn[i];
+		
+	//async_work_group_copy(weights,weightsIn,(size_t)4,0);
+	//async_work_group_copy(dst, src, (size_t)4, 0);
 		
 	int taskIndex = get_global_id(0);
 

@@ -8,6 +8,7 @@ using Encog.Neural;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
+using System.Runtime.InteropServices;
 
 namespace Encog.Util.CL.Kernels
 {
@@ -68,6 +69,8 @@ namespace Encog.Util.CL.Kernels
             Kernel.SetMemoryArgument(5, workload.InputBuffer);
             Kernel.SetMemoryArgument(6, workload.IdealBuffer);
             Kernel.SetMemoryArgument(7, weightArrayBuffer);
+            //Kernel.SetArgument(7, new IntPtr(weightArray.Length*Marshal.SizeOf(typeof(float))), IntPtr.Zero);
+
             Kernel.SetMemoryArgument(8, workload.GradientBuffer);
             Kernel.SetMemoryArgument(9, activationTypeBuffer);
 
