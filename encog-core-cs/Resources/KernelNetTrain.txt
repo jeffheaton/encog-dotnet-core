@@ -1,8 +1,5 @@
-﻿//#define NEURON_COUNT 100
-#define CONCURRENT_TASKS 200
-
-
-#ifndef USE_SIGMOID && USE_TANH
+﻿#ifndef USE_SIGMOID 
+#ifndef USE_TANH
 float activationTANH(float x)
 {
 	return -1 + (2 / (1 + exp(-2 * x)));
@@ -64,6 +61,7 @@ float derivative(int type, float x)
 	}
 }
 #endif
+#endif
 
 #ifdef USE_SIGMOID
 float activation(int t, float x)
@@ -112,7 +110,7 @@ kernel void NetworkTrain(
     int outputSize = params[1];
     int layerCount = params[2];
     int neuronCount = params[3];
-    int layerDeltaSize = params[4];
+    //int layerDeltaSize = params[4];
     int weightsSize = params[5];
     int indexLastElement = params[6];
     int sizeElement = params[7];
@@ -176,7 +174,6 @@ kernel void NetworkTrain(
 		// part 2: backward pass
 
 		// process the output layer first
-		int taskErrorIndex = subtaskIndex * outputSize;
 	
 		float e = 0;
    
