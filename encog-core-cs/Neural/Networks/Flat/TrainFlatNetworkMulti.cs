@@ -146,11 +146,20 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
-            IDictionary<String, String> options = new Dictionary<String, String>();
-            options["NEURON_COUNT"] = ""+network.NeuronCount;
-
+            // if we are using CL, then we need to compile the kernels for this network
             if (Encog.Instance.CL != null)
             {
+                IDictionary<String, String> options = new Dictionary<String, String>();
+                options["NEURON_COUNT"] = "" + network.NeuronCount;
+
+                // is there only one activation function?  If so, there are some optimizations we can use.
+                int act = network.HasSameActivationFunction();
+
+                if (act == FlatNetwork.ACTIVATION_SIGMOID)
+                    options["USE_SIGMOID"] = "1";
+                else if (act == FlatNetwork.ACTIVATION_TANH)
+                    options["USE_TANH"] = "1";
+
                 foreach (EncogCLPlatform platform in Encog.Instance.CL.Platforms)
                 {
                     platform.NetworkTrain.Compile(options);
@@ -171,6 +180,7 @@ namespace Encog.Neural.Networks.Flat
                 this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
             }
         }
+
 
         /// <summary>
         /// Called by the worker threads to report the progress at each step.

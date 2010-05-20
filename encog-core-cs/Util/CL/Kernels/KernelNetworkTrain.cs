@@ -84,7 +84,7 @@ namespace Encog.Util.CL.Kernels
             }
             catch (OutOfResourcesComputeException ex)
             {
-                throw new EncogError("CL device is out of resources");
+                throw new EncogError("CL device is out of resources, try fewer threads, current CL threadcount=" + workload.MaxUnits);
             }
         }
     }

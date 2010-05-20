@@ -348,7 +348,7 @@ namespace Encog.Neural.Networks.Flat
 
         public static double CalculateActivation(int type, double x)
         {
-            switch(type)
+            switch (type)
             {
                 case FlatNetwork.ACTIVATION_LINEAR:
                     return x;
@@ -387,6 +387,29 @@ namespace Encog.Neural.Networks.Flat
                 default:
                     throw new NeuralNetworkError("Unknown activation type: " + type);
             }
+        }
+
+        /// <summary>
+        /// Neural networks with only one type of activation function offer certain 
+        /// optimization options.  This method determines if only a single activation 
+        /// function is used.
+        /// </summary>
+        /// <returns>The number of the single activation function, or -1 if there 
+        /// are no activation functions or more than one type of activation function.</returns>
+        public int HasSameActivationFunction()
+        {
+            IList<int> map = new List<int>();
+
+            foreach (int activation in this.activationType)
+            {
+                if (!map.Contains(activation))
+                    map.Add(activation);
+            }
+
+            if (map.Count != 1)
+                return -1;
+            else
+                return map[0];
         }
 
     }

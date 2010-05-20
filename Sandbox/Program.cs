@@ -169,7 +169,7 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train();
+                train2();
                 //XORNEAT();
                 //simple();
             }
