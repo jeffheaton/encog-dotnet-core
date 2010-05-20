@@ -105,12 +105,7 @@ namespace Encog.Neural.Networks.Flat
 
             this.device = device;
 
-            this.workload = new TrainingWorkload(device, network, high, low);
-            this.workload.Init(network, 100);
-
-            //KernelNetworkTrain k = Encog.Instance.CL.ChooseAdapter().NetworkTrain;
-            //k.Train(this.network, this.training, this.high, this.low);
-            //k.Init();
+            this.workload = new TrainingWorkload(device, network, training, 100, high, low);
         }
 
 

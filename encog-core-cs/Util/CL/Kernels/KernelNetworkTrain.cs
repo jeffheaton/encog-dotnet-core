@@ -30,41 +30,7 @@ namespace Encog.Util.CL.Kernels
         {
         }
 
-        public static TrainingWorkload CreateWorkload(EncogCLDevice device, FlatNetwork flat, INeuralDataSet input, int high, int low)
-        {
-            if (!(input is IIndexable))
-            {
-                throw new NeuralNetworkError("Neural network input must support IIndexable");
-            }
-
-            IIndexable indexable = (IIndexable)input;
-            int trainingLength = (high - low) + 1;
-
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
-
-            TrainingWorkload result = new TrainingWorkload(device, flat, high, low);
-
-            int inputIndex = 0;
-            int idealIndex = 0;
-
-            for (int i = low; i <= high; i++)
-            {
-                indexable.GetRecord(i, pair);
-                for (int col = 0; col < flat.InputCount; col++)
-                {
-                    result.InputArray[inputIndex++] = (float)pair.Input.Data[col];
-                }
-
-                for (int col = 0; col < flat.OutputCount; col++)
-                {
-                    result.IdealArray[idealIndex++] = (float)pair.Ideal.Data[col];
-                }
-            }
-
-            return result;
-
-        }
-
+        
         public void Init(FlatNetwork flat)
         {
 
@@ -110,10 +76,10 @@ namespace Encog.Util.CL.Kernels
                 ComputeCommandQueue commands = workload.Device.Commands;
                 long[] workItems = new long[] { workload.MaxUnits };
                 ComputeEventList events = new ComputeEventList();
-                commands.Write(weightArrayBuffer, false, 0, flat.Weights.Length, weightArray, events);
+                commands.Write(weightArrayBuffer, true, 0, weightArray.Length, weightArray, events);
                 commands.Execute(Kernel, null, workItems, workItems, events);
-                workload.Errors = commands.Read(workload.ErrorBuffer, false, 0, workload.MaxUnits, events);
-                workload.Gradients = commands.Read(workload.GradientBuffer, false, 0, flat.Weights.Length * workload.MaxUnits, events);
+                workload.Errors = commands.Read(workload.ErrorBuffer, true, 0, workload.MaxUnits, events);
+                workload.Gradients = commands.Read(workload.GradientBuffer, true, 0, flat.Weights.Length * workload.MaxUnits, events);
                 commands.Finish();
             }
             catch (OutOfResourcesComputeException ex)

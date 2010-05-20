@@ -145,10 +145,13 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
-            foreach (EncogCLPlatform platform in Encog.Instance.CL.Platforms)
+            if (Encog.Instance.CL != null)
             {
-                platform.NetworkTrain.Compile();
-                platform.NetworkTrain.Init(network);
+                foreach (EncogCLPlatform platform in Encog.Instance.CL.Platforms)
+                {
+                    platform.NetworkTrain.Compile();
+                    platform.NetworkTrain.Init(network);
+                }
             }
 
             // handle CL
