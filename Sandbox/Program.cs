@@ -102,13 +102,14 @@ namespace Sandbox
             network.Reset();
             
             Encog.Encog.Instance.InitCL();
-            Console.WriteLine(Encog.Encog.Instance.CL.ToString());
+
+            ResilientPropagation train = new ResilientPropagation(network, training);
+            train.EnforcedCLRatio = 2.0;
+            train.NumThreads = 0;
+            train.Iteration();
 
             long start = Environment.TickCount;
-            ResilientPropagation train = new ResilientPropagation(network, training);
-
-            train.NumThreads = 0;
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
                 train.Iteration();
                 Console.WriteLine("Train error: " + train.Error);
@@ -120,6 +121,8 @@ namespace Sandbox
             Console.WriteLine("Ratio:" + train.FlatTraining.CalculatedCLRatio);
             Console.WriteLine("Done:" + (stop-start));
             Console.WriteLine("Stop");
+            if( Encog.Encog.Instance.CL!=null )
+                Console.WriteLine(Encog.Encog.Instance.CL.ToString());
         }
 
         public static void testSimpleCL()

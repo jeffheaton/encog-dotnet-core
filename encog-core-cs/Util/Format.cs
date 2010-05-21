@@ -40,6 +40,26 @@ namespace Encog.Util
     public class Format
     {
         /// <summary>
+        /// Bytes in a KB.
+        /// </summary>
+        const long MEMORY_K = 1024;
+
+        /// <summary>
+        /// Bytes in a MB.
+        /// </summary>
+        const long MEMORY_MEG = (1024 * MEMORY_K);
+
+        /// <summary>
+        /// Bytes in a GB.
+        /// </summary>
+        const long MEMORY_GIG = (1024 * MEMORY_MEG);
+
+        /// <summary>
+        /// Bytes in a TB.
+        /// </summary>
+        const long MEMORY_TERA = (1024 * MEMORY_GIG);
+
+        /// <summary>
         /// Seconds in a minute.
         /// </summary>
         public const int SECONDS_INA_MINUTE = 60;
@@ -63,6 +83,31 @@ namespace Encog.Util
         public static String FormatDouble(double d, int i)
         {
             return d.ToString("N" + i);
+        }
+
+
+        public static String FormatMemory(long memory)
+        {
+            if (memory < Format.MEMORY_K)
+            {
+                return memory + " bytes";
+            }
+            else if (memory < Format.MEMORY_MEG)
+            {
+                return FormatDouble( ((double)memory) / ((double)Format.MEMORY_K), 2)+" KB";
+            }
+            else if (memory < Format.MEMORY_GIG)
+            {
+                return FormatDouble(((double)memory) / ((double)Format.MEMORY_MEG), 2) + " MB";
+            }
+            else if (memory < Format.MEMORY_TERA)
+            {
+                return FormatDouble(((double)memory) / ((double)Format.MEMORY_GIG), 2) + " GB";
+            }
+            else 
+            {
+                return FormatDouble(((double)memory) / ((double)Format.MEMORY_TERA), 2) + " TB";
+            }
         }
 
         /**

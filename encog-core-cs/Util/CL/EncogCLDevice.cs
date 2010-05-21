@@ -178,9 +178,9 @@ namespace Encog.Util.CL
             builder.Append(",ClockFreq:");
             builder.Append(this.MaxClockFrequency);
             builder.Append(",LocalMemory=");
-            builder.Append(this.LocalMemorySize);
+            builder.Append(Format.FormatMemory(this.LocalMemorySize));
             builder.Append(",GlobalMemory=");
-            builder.Append(this.LocalMemorySize);
+            builder.Append(Format.FormatMemory(this.GlobalMemorySize));
             return builder.ToString();
         }
     }
