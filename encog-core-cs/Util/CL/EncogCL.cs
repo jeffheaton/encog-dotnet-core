@@ -136,5 +136,48 @@ namespace Encog.Util.CL
                     device.Enabled = false;
             }
         }
+
+        /// <summary>
+        /// Enable all devices that are CPU's.  
+        /// </summary>
+        public void EnableAllCPUs()
+        {
+            foreach (EncogCLDevice device in this.devices)
+            {
+                if (device.IsCPU)
+                    device.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// True if CPUs are present.
+        /// </summary>
+        public bool AreCPUsPresent
+        {
+            get
+            {
+                foreach (EncogCLDevice device in this.devices)
+                {
+                    if (device.IsCPU)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Dump all devices as a string.
+        /// </summary>
+        /// <returns>The devices.</returns>
+        public String ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (EncogCLDevice device in this.devices)
+            {
+                result.Append(device.ToString());
+                result.Append("\n");
+            }
+            return result.ToString();
+        }
     }
 }

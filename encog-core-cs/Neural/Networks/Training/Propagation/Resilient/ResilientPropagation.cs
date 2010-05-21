@@ -176,26 +176,17 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                  double initialUpdate, double maxStep)
             : base(network, training)
         {
-            if (ValidateForFlat.CanBeFlat(network)==null && training is IIndexable)
+            this.initialUpdate = initialUpdate;
+            this.maxStep = maxStep;
+            this.zeroTolerance = zeroTolerance;
+
+            this.updateValues = new double[network.Structure.CalculateSize()];
+            this.lastGradient = new double[network.Structure.CalculateSize()];
+
+            for (int i = 0; i < this.updateValues.Length; i++)
             {
-                this.CurrentFlatNetwork = new FlatNetwork(network);
-                this.FlatTraining = new TrainFlatNetworkMulti(CurrentFlatNetwork,training,1.0);
+                this.updateValues[i] = this.initialUpdate;
             }
-            else
-            {
-                this.initialUpdate = initialUpdate;
-                this.maxStep = maxStep;
-                this.zeroTolerance = zeroTolerance;
-
-                this.updateValues = new double[network.Structure.CalculateSize()];
-                this.lastGradient = new double[network.Structure.CalculateSize()];
-
-                for (int i = 0; i < this.updateValues.Length; i++)
-                {
-                    this.updateValues[i] = this.initialUpdate;
-                }
-            }
-
         }
 
         /// <summary>

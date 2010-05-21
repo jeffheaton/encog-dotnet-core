@@ -89,28 +89,7 @@ namespace Sandbox
             Console.ReadKey();
         }
 
-        public static void train()
-        {
-            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, false);
-            FlatNetwork flat = new FlatNetwork(network);
-            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-            Encog.Encog.Instance.InitCL();
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
-            for (int i = 0; i < 50; i++)
-            {
-                train.Iteration();
-                Console.WriteLine("Netwk error: " + flat.CalculateError(training));
-                Console.WriteLine("Train error: " + train.Error);
-            }
-
-            train.Iteration();
-            flat.CalculateError(training);
-
-
-            Console.WriteLine("Done");
-        }
-
-        public static void train2()
+        public static void benchmarkCL()
         {
             int outputSize = 2;
             int inputSize = 10;
@@ -121,24 +100,24 @@ namespace Sandbox
             BasicNetwork network = EncogUtility.SimpleFeedForward(
                 training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
-            FlatNetwork flat = new FlatNetwork(network);
             
             Encog.Encog.Instance.InitCL();
+            Console.WriteLine(Encog.Encog.Instance.CL.ToString());
 
             long start = Environment.TickCount;
-            TrainFlatNetworkMulti train = new TrainFlatNetworkMulti(flat, training, 1.0);
-            train.NumThreads = 1;
+            ResilientPropagation train = new ResilientPropagation(network, training);
+
+            train.NumThreads = 0;
             for (int i = 0; i < 50; i++)
             {
                 train.Iteration();
                 Console.WriteLine("Train error: " + train.Error);
-                Console.WriteLine("Netwk error: " + flat.CalculateError(training));
             }
             long stop = Environment.TickCount;
 
-            Console.WriteLine("GPU Time:" + train.CLTimePerIteration);
-            Console.WriteLine("CPU Time:" + train.CPUTimePerIteration);
-            Console.WriteLine("Ratio:" + train.CalculatedCLRatio);
+            Console.WriteLine("GPU Time:" + train.FlatTraining.CLTimePerIteration);
+            Console.WriteLine("CPU Time:" + train.FlatTraining.CPUTimePerIteration);
+            Console.WriteLine("Ratio:" + train.FlatTraining.CalculatedCLRatio);
             Console.WriteLine("Done:" + (stop-start));
             Console.WriteLine("Stop");
         }
@@ -163,9 +142,12 @@ namespace Sandbox
 
         static void testFlatten()
         {
+            //Encog.Encog.Instance.InitCL();
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
             ResilientPropagation train = new ResilientPropagation(network, training);
+            //train.AttemptFlatten = false;
+
             long start = Environment.TickCount;
             for(int i=0;i<1000;i++)
             {
@@ -184,9 +166,9 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                //train2();
+                benchmarkCL();
                 //XORNEAT();
-                testFlatten();
+                //testFlatten();
             }
             //catch (Exception e)
             {

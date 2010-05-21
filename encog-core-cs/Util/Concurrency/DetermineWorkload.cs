@@ -71,7 +71,8 @@ namespace Encog.Util.Concurrency
         }
 
         /// <summary>
-        /// Determine the workload, consider CL count.
+        /// Determine the workload, consider CL count.  If worker count is zero, Encog picks using 
+        /// processor count.  If worker count is -1 then no CPU threads will be used. 
         /// </summary>
         /// <param name="cpuWorkerCount">Threads to use, or zero to allow Encog to pick.</param>
         /// <param name="clWorkerCount">The number of CL workers.</param>
@@ -104,7 +105,9 @@ namespace Encog.Util.Concurrency
 
                 if (workPerThread < DetermineWorkload.MIN_WORTHWHILE )
                 {
+                    // if we need to reduce, then cut the CL workers to zero
                     num = Math.Max(1, (int)(recordCount / DetermineWorkload.MIN_WORTHWHILE));
+                    this.clWorkerCount = 0;
                 }
 
                 this.cpuWorkerCount = num;

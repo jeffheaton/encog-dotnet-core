@@ -69,12 +69,21 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         /// <param name="network">The network.</param>
         /// <param name="training">The training set.</param>
-        public Propagation(BasicNetwork network,
-                 INeuralDataSet training)
+        public Propagation(BasicNetwork network, INeuralDataSet training)
             : base()
         {
             this.network = network;
             this.Training = training;
+            this.EnforcedCLRatio = 1.0;
+
+            if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network) == null)
+            {
+                this.AttemptFlatten = true;
+            }
+            else
+            {
+                this.AttemptFlatten = false;
+            }
         }
 
         /// <summary>
@@ -99,8 +108,27 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
+        /// <summary>
+        /// The current flat network we are using for training, or null for none.
+        /// </summary>
         public FlatNetwork CurrentFlatNetwork { get; set; }
+
+        /// <summary>
+        /// The current flat trainer we are using, or null for none.
+        /// </summary>
         public TrainFlatNetworkMulti FlatTraining { get; set; }
+
+        /// <summary>
+        /// Should we attempt to flatten the network?  Usually you want this to be true, 
+        /// a flat network can train much faster.  However, we can not always use flat networks.  
+        /// See the FlatNetwork class for more info.
+        /// </summary>
+        public bool AttemptFlatten { get; set; }
+
+        /// <summary>
+        /// The enforced CL ratio.
+        /// </summary>
+        public double EnforcedCLRatio { get; set; }
 
         /// <summary>
         /// Determine if this specified training continuation object is valid for
@@ -114,6 +142,24 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <summary>
+        /// Attempt to flatten the network.
+        /// </summary>
+        private void ProcessFlatten()
+        {
+            if (this.AttemptFlatten && this.CurrentFlatNetwork==null)
+            {
+                if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network)==null )
+                {
+                    this.CurrentFlatNetwork = new FlatNetwork(network);
+                    this.FlatTraining = new TrainFlatNetworkMulti(CurrentFlatNetwork, Training, EnforcedCLRatio);
+                    this.FlatTraining.NumThreads = NumThreads;
+                }
+                else
+                    this.AttemptFlatten = false;
+            }
+        }
+
+        /// <summary>
         /// Perform one training iteration.
         /// </summary>
         public override void Iteration()
@@ -121,6 +167,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             try
             {
                 PreIteration();
+                ProcessFlatten();
 
                 if (this.FlatTraining == null)
                 {

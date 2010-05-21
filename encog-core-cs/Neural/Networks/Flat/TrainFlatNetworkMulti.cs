@@ -90,6 +90,9 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         private double calculatedCLRatio;
 
+        /// <summary>
+        /// The enforced CL ratio.
+        /// </summary>
         private double enforcedCLRatio;
 
         /// <summary>
@@ -138,6 +141,13 @@ namespace Encog.Neural.Networks.Flat
             //  consider CL, if enabled
             if (Encog.Instance.CL != null)
             {
+                // if we are already using CPU devices, then do not reuse them as CL devices.
+                // They would be pulling "double duity" and have bad performance.
+                if (NumThreads != -1)
+                    Encog.Instance.CL.DisableAllCPUs();
+                else
+                    Encog.Instance.CL.EnableAllCPUs();
+
                 clDevices = Encog.Instance.CL.EnabledDevices;
                 determine = new DetermineWorkload(NumThreads, clDevices.Count, (int)this.indexable.Count);
             }
