@@ -61,11 +61,6 @@ namespace Encog.Neural.Networks.Training.LMA
         /// </summary>
         private double[] rowErrors;
 
-        /// <summary>
-        /// The current error.
-        /// </summary>
-        private double error;
-
 
         /// <summary>
         /// Construct the chain rule calculation.
@@ -240,16 +235,6 @@ namespace Encog.Neural.Networks.Training.LMA
             return e;
         }
 
-        /// <summary>
-        /// The sum squared errors.
-        /// </summary>
-        public double Error
-        {
-            get
-            {
-                return this.error;
-            }
-        }
 
         /// <summary>
         /// The Jacobian matrix.

@@ -6,6 +6,9 @@ using Encog.Solve.Genetic.Genome;
 
 namespace Encog.Solve.Genetic.Mutate
 {
+    /// <summary>
+    /// Interface that defines how to mutate chromosomes.
+    /// </summary>
     public interface IMutate
     {
         /// <summary>

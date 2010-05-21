@@ -32,8 +32,19 @@ namespace Encog.Neural.Networks.Flat
     /// </summary>
     public class FlatNetwork
     {
+        /// <summary>
+        /// A linear activation function.
+        /// </summary>
         public const int ACTIVATION_LINEAR = 0;
+
+        /// <summary>
+        /// A TANH activation function.
+        /// </summary>
         public const int ACTIVATION_TANH = 1;
+
+        /// <summary>
+        /// A sigmoid activation function.
+        /// </summary>
         public const int ACTIVATION_SIGMOID = 2;
 
         /// <summary>
@@ -337,7 +348,9 @@ namespace Encog.Neural.Networks.Flat
             return errorCalculation.CalculateRMS();
         }
 
-
+        /// <summary>
+        /// The activation types for each of the layers.
+        /// </summary>
         public int[] ActivationType
         {
             get
@@ -346,6 +359,12 @@ namespace Encog.Neural.Networks.Flat
             }
         }
 
+        /// <summary>
+        /// Calculate an activation.
+        /// </summary>
+        /// <param name="type">The type of activation.</param>
+        /// <param name="x">The value to calculate the activation for.</param>
+        /// <returns>The resulting value.</returns>
         public static double CalculateActivation(int type, double x)
         {
             switch (type)
@@ -361,6 +380,9 @@ namespace Encog.Neural.Networks.Flat
             }
         }
 
+        /// <summary>
+        /// The neuron count.
+        /// </summary>
         public int NeuronCount
         {
             get
@@ -374,6 +396,12 @@ namespace Encog.Neural.Networks.Flat
             }
         }
 
+        /// <summary>
+        /// Calculate the derivative of the activation.
+        /// </summary>
+        /// <param name="type">The type of activation.</param>
+        /// <param name="x">The value to calculate for.</param>
+        /// <returns>The result.</returns>
         public static double CalculateActivationDerivative(int type, double x)
         {
             switch (type)

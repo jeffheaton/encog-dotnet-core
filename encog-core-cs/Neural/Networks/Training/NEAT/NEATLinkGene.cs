@@ -46,6 +46,15 @@ namespace Encog.Neural.Networks.Training.NEAT
         {
         }
 
+        /// <summary>
+        /// Construct a link gene.
+        /// </summary>
+        /// <param name="fromNeuronID">The from neuron's id.</param>
+        /// <param name="toNeuronID">The to neuron's id.</param>
+        /// <param name="enabled">True, if this link is enabled.</param>
+        /// <param name="innovationID">The innovation id.</param>
+        /// <param name="weight">The weight of this link.</param>
+        /// <param name="recurrent">True, if this is a recurrent link.</param>
         public NEATLinkGene(long fromNeuronID, long toNeuronID,
                 bool enabled, long innovationID,
                 double weight, bool recurrent)

@@ -13,6 +13,14 @@ using Encog.Solve.Genetic.Species;
 
 namespace Encog.Solve.Genetic
 {
+    /// <summary>
+    /// Implements a genetic algorithm. This is an abstract class. Other classes are
+    /// provided by Encog use this base class to train neural networks or
+    /// provide an answer to the traveling salesman problem.
+    ///
+    /// The genetic algorithm is also capable of using a thread pool to speed
+    /// execution.
+    /// </summary>
     public class GeneticAlgorithm
     {
         /// <summary>
@@ -128,8 +136,9 @@ namespace Encog.Solve.Genetic
         }
 
         /// <summary>
-        /// Add a genome. 
+        /// Add a genome to a species.
         /// </summary>
+        /// <param name="species">Tge soecues to add to.</param>
         /// <param name="genome">The genome to add.</param>
         public void AddSpeciesMember(ISpecies species, IGenome genome)
         {

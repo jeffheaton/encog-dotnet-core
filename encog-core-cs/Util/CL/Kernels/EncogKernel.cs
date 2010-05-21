@@ -7,14 +7,48 @@ using Encog.Persist.Location;
 
 namespace Encog.Util.CL.Kernels
 {
+    /// <summary>
+    /// Defines a basic OpenCL kernal, as used by Encog.  Contains the 
+    /// kernal source code and a compiled program/kernal.
+    /// </summary>
     public class EncogKernel
     {
+        /// <summary>
+        /// The source code for the kernel.
+        /// </summary>
         private String cl;
+
+        /// <summary>
+        /// The OpenCL context.
+        /// </summary>
         private ComputeContext context;
+
+        /// <summary>
+        /// The OpenCL program.
+        /// </summary>
         private ComputeProgram program;
+
+        /// <summary>
+        /// The OpenCL kernel.
+        /// </summary>
         private ComputeKernel kernel;
+
+        /// <summary>
+        /// The name of the function that should be called to execute 
+        /// this kernel, from inside the OpenCL source code.
+        /// </summary>
         private String kernelName;
 
+        /// <summary>
+        /// Create an Encog OpenCL kernel.  The Kernel will be loaded from an 
+        /// embedded resource.
+        /// </summary>
+        /// <param name="context">The OpenCL context that this kernel 
+        /// belongs to.</param>
+        /// <param name="sourceName">The name of the kernel, from an embedded 
+        /// resource.</param>
+        /// <param name="kernelName">The name of the function, in the kernal, 
+        /// called to start the kernel.</param>
         public EncogKernel(ComputeContext context, String sourceName, String kernelName)
         {
             ResourcePersistence resource = new ResourcePersistence(sourceName);
@@ -23,11 +57,19 @@ namespace Encog.Util.CL.Kernels
             this.cl = resource.LoadString();
         }
 
+        /// <summary>
+        /// Compile the kernel with no preprocessor defines.
+        /// </summary>
         public void Compile()
         {
             Compile(new Dictionary<String,String>());
         }
 
+        /// <summary>
+        /// Compile the kernel with a map of preprocessor defines, a collection 
+        /// of name-value pairs.
+        /// </summary>
+        /// <param name="options">A map of preprocessor defines.</param>
         public void Compile(IDictionary<String,String> options)
         {
             // clear out any old program
@@ -58,12 +100,18 @@ namespace Encog.Util.CL.Kernels
             this.kernel = Program.CreateKernel(this.kernelName);
         }
 
+        /// <summary>
+        /// Called internally to prepare to execute a kernel.
+        /// </summary>
         public void PrepareKernel()
         {
             if (this.kernel == null)
                 throw new EncogError("Must compile CL kernel before using it.");
         }
 
+        /// <summary>
+        /// The OpenCL context that this kernel belongs to.
+        /// </summary>
         public ComputeContext Context
         {
             get
@@ -71,6 +119,10 @@ namespace Encog.Util.CL.Kernels
                 return this.context;
             }
         }
+
+        /// <summary>
+        /// The OpenCL program that the kernel belongs to.
+        /// </summary>
         public ComputeProgram Program
         {
             get
@@ -79,6 +131,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The OpenCL kernel.
+        /// </summary>
         public ComputeKernel Kernel
         {
             get

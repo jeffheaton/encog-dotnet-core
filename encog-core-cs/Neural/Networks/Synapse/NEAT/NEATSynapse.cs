@@ -399,6 +399,9 @@ namespace Encog.Neural.Networks.Synapse.NEAT
             }
         }
 
+        /// <summary>
+        /// Clear any context.
+        /// </summary>
         public void ClearContext()
         {
             foreach( NEATNeuron neurons in this.neurons )

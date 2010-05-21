@@ -42,6 +42,7 @@ using Encog.Neural.Networks.Structure;
 #if logging
 using log4net;
 using Encog.Util;
+using Encog.Neural.Networks.Flat;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation
@@ -98,6 +99,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
+        public FlatNetwork CurrentFlatNetwork { get; set; }
+        public TrainFlatNetworkMulti FlatTraining { get; set; }
+
         /// <summary>
         /// Determine if this specified training continuation object is valid for
         /// this training method.
@@ -118,14 +122,26 @@ namespace Encog.Neural.Networks.Training.Propagation
             {
                 PreIteration();
 
-                CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
-                double[] weights = NetworkCODEC.NetworkToArray(Network);
-                prop.Calculate(weights);
+                if (this.FlatTraining == null)
+                {
+                    CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
+                    double[] weights = NetworkCODEC.NetworkToArray(Network);
+                    prop.Calculate(weights);
 
-                PerformIteration(prop, weights);
+                    PerformIteration(prop, weights);
 
-                NetworkCODEC.ArrayToNetwork(weights, Network);
-                Error = prop.Error;
+                    NetworkCODEC.ArrayToNetwork(weights, Network);
+                    Error = prop.Error;
+                }
+                else
+                {
+                    EncogArray.ArrayCopy(
+                        NetworkCODEC.NetworkToArray(this.network),
+                        CurrentFlatNetwork.Weights);
+                    this.FlatTraining.Iteration();
+                    this.Error = FlatTraining.Error;
+                    NetworkCODEC.ArrayToNetwork(CurrentFlatNetwork.Weights, this.network);
+                }
 
                 PostIteration();
             }

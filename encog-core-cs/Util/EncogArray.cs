@@ -99,9 +99,17 @@ namespace Encog.Util
             return result;
         }
 
-        public static void ArrayCopy(double[] input, int sourceIndex, double[] output, int targetIndex, int size)
+        /// <summary>
+        /// Copy an array of doubles.
+        /// </summary>
+        /// <param name="source">The source array.</param>
+        /// <param name="sourceIndex">The source index.</param>
+        /// <param name="output">The output array.</param>
+        /// <param name="targetIndex">The output index.</param>
+        /// <param name="size">The size to copy.</param>
+        public static void ArrayCopy(double[] source, int sourceIndex, double[] output, int targetIndex, int size)
         {
-            Array.Copy(input, sourceIndex, output, targetIndex, size);
+            Array.Copy(source, sourceIndex, output, targetIndex, size);
         }
 
         /// <summary>
@@ -121,6 +129,11 @@ namespace Encog.Util
             return result;
         }
 
+        /// <summary>
+        /// Fill the specified array with the specified value.
+        /// </summary>
+        /// <param name="p">The array to fill.</param>
+        /// <param name="value">The value to fill.</param>
         internal static void Fill(double[] p, double value)
         {
             for (int i = 0; i < p.Length; i++)

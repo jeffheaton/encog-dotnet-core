@@ -16,11 +16,18 @@ using Encog.Cloud;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
+    /// <summary>
+    /// Simple enum to hold parents.
+    /// </summary>
     enum NEATParent
     {
         Mom,
         Dad
     }
+
+    /// <summary>
+    /// Train a NEAT neural network, using a Genetic Algorithm.
+    /// </summary>
     public class NEATTraining : GeneticAlgorithm, ITrain
     {
         /// <summary>
@@ -635,6 +642,9 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
         }
 
+        /// <summary>
+        /// The number of output neurons.
+        /// </summary>
         public int OutputCount
         {
             get

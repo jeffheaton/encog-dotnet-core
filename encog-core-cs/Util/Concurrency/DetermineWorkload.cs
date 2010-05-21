@@ -31,16 +31,6 @@ namespace Encog.Util.Concurrency
         private int totalWorkloadSize;
 
         /// <summary>
-        /// What is the CL workload size?
-        /// </summary>
-        private int clWorkloadSize;
-
-        /// <summary>
-        /// What is the CPU workload size?
-        /// </summary>
-        private int cpuWorkloadSize;
-
-        /// <summary>
         /// CL worker count.
         /// </summary>
         private int clWorkerCount;
@@ -50,10 +40,23 @@ namespace Encog.Util.Concurrency
         /// </summary>
         private int totalWorkerCount;
 
+        /// <summary>
+        /// Workloads for CPU workers.
+        /// </summary>
         private IList<IntRange> cpuRanges = new List<IntRange>();
 
+        /// <summary>
+        /// Workloads for OpenCL workers.
+        /// </summary>
         private IList<IntRange> clRanges = new List<IntRange>();
 
+        /// <summary>
+        /// The ratio to hand out work between CL and CPU workers.  Values 
+        /// above 1 give more work to the CPU, values below 0 give more to 
+        /// the GPU.  For example, to have the GPU's do twice as much as the 
+        /// CPU set this to 1.5.  Sometimes CPU's may be faster than GPU's.  
+        /// Often GPU is faster.  This allows the work to be better balanced.
+        /// </summary>
         public double CLRatio { get; set; }
 
 
@@ -234,28 +237,6 @@ namespace Encog.Util.Concurrency
             get
             {
                 return this.totalWorkloadSize;
-            }
-        }
-
-        /// <summary>
-        /// What is the CL workload size?
-        /// </summary>
-        private int CLWorkloadSize
-        {
-            get
-            {
-                return this.clWorkloadSize;
-            }
-        }
-
-        /// <summary>
-        /// What is the CPU workload size?
-        /// </summary>
-        private int CPUWorkloadSize
-        {
-            get
-            {
-                return this.cpuWorkloadSize;
             }
         }
 

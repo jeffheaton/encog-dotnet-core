@@ -5,24 +5,26 @@ using System.Text;
 
 namespace Encog.MathUtil
 {
+    /// <summary>
+    /// A range of integers.
+    /// </summary>
     public class IntRange
     {
-        /**
- * The low end of the range.
- */
+        /// <summary>
+        /// The low end of the range.
+        /// </summary>
         public int High { get; set; }
 
-        /**
-         * The high end of the range.
-         */
+        /// <summary>
+        /// The high end of the range.
+        /// </summary>
         public int Low { get; set; }
 
-
-        /**
-         * Construct an integer range.
-         * @param high The high  end of the range.
-         * @param low The low end of the range.
-         */
+        /// <summary>
+        /// Construct an integer range.
+        /// </summary>
+        /// <param name="high">The high  end of the range.</param>
+        /// <param name="low">The low end of the range.</param>
         public IntRange(int high, int low)
         {
             this.High = high;

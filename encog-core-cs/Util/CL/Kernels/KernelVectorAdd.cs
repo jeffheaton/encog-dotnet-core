@@ -7,13 +7,28 @@ using System.Runtime.InteropServices;
 
 namespace Encog.Util.CL.Kernels
 {
+    /// <summary>
+    /// A very simple kernel, used to add a vector.  Not actually used by Encog, 
+    /// it is a simple test case to verify that OpenCL is working.
+    /// </summary>
     public class KernelVectorAdd : EncogKernel
     {
+        /// <summary>
+        /// Construct a simple kernal to add two vectors.
+        /// </summary>
+        /// <param name="context">The context to use.</param>
         public KernelVectorAdd(ComputeContext context)
             : base(context, "Encog.Resources.KernelVectorAdd.txt", "VectorAdd")
         {
         }
 
+        /// <summary>
+        /// Perform the addition.
+        /// </summary>
+        /// <param name="device">The OpenCL device to use.</param>
+        /// <param name="inputA">The first vector to add.</param>
+        /// <param name="inputB">The second vector to add.</param>
+        /// <returns>The result of the addition.</returns>
         public double[] Add(EncogCLDevice device, double[] inputA, double[] inputB)
         {
             PrepareKernel();

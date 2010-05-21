@@ -685,6 +685,16 @@ namespace Encog.Neural.Networks
 
         }
 
+        /// <summary>
+        /// Determine of two neurons are connected.  They are not connected 
+        /// if they have a zero weight, or a weight below the connection level.  
+        /// Non-connected weights have no effect on the output of the neural 
+        /// network, and are not trained.
+        /// </summary>
+        /// <param name="synapse">The synapse.</param>
+        /// <param name="fromNeuron">The from neuron.</param>
+        /// <param name="toNeuron">The to neuron.</param>
+        /// <returns></returns>
         public bool IsConnected(ISynapse synapse, int fromNeuron, int toNeuron)
         {
             if (!this.structure.IsConnectionLimited)
@@ -694,6 +704,13 @@ namespace Encog.Neural.Networks
             return (Math.Abs(value) > this.structure.ConnectionLimit);
         }
 
+        /// <summary>
+        /// Enable(or disable) a connection.
+        /// </summary>
+        /// <param name="synapse">The synapse.</param>
+        /// <param name="fromNeuron">The from neuron.</param>
+        /// <param name="toNeuron">The to neuron.</param>
+        /// <param name="enable">True, if enabled.</param>
         public void EnableConnection(ISynapse synapse, int fromNeuron, int toNeuron, bool enable)
         {
             if (synapse.WeightMatrix == null)

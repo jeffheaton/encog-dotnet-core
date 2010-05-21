@@ -12,26 +12,66 @@ using System.Runtime.InteropServices;
 
 namespace Encog.Util.CL.Kernels
 {
+    /// <summary>
+    /// An OpenCL kernel that is designed to calculate gradients and help 
+    /// train a neural network.
+    /// </summary>
     public class KernelNetworkTrain : EncogKernel
     {
+        /// <summary>
+        /// A buffer to hold the weight and bias matrix.
+        /// </summary>
         private ComputeBuffer<float> weightArrayBuffer;
 
+        /// <summary>
+        /// A buffer to hold the layer index.
+        /// </summary>
         private ComputeBuffer<int> layerIndexBuffer;
+
+        /// <summary>
+        /// A buffer to hold the layer counts.
+        /// </summary>
         private ComputeBuffer<int> layerCountBuffer;
+
+        /// <summary>
+        /// A buffer to hold the weight indexes.
+        /// </summary>
         private ComputeBuffer<int> weightIndexBuffer;
+
+        /// <summary>
+        /// A buffer to hold the activations for each of the layers.
+        /// </summary>
         private ComputeBuffer<int> activationTypeBuffer;
 
-        private int totalOutputLength;
+        /// <summary>
+        /// The weight and bias array for the network.
+        /// </summary>
         private float[] weightArray;
+
+        /// <summary>
+        /// The size of all layer deltas.
+        /// </summary>
         private int layerDeltaSize;
+
+        /// <summary>
+        /// An array of activation function types.
+        /// </summary>
         private int[] activationType;
  
+        /// <summary>
+        /// Construct the kernel for the specified context.
+        /// </summary>
+        /// <param name="context">The context to calculate for.</param>
         public KernelNetworkTrain(ComputeContext context)
             : base(context, "Encog.Resources.KernelNetTrain.txt", "NetworkTrain")
         {
         }
 
-        
+
+        /// <summary>
+        /// Init the kernal for new training.
+        /// </summary>
+        /// <param name="flat">The network to be trained.</param>
         public void Init(FlatNetwork flat)
         {
 
@@ -52,6 +92,10 @@ namespace Encog.Util.CL.Kernels
             this.activationTypeBuffer = new ComputeBuffer<int>(Context, ComputeMemoryFlags.ReadOnly | ComputeMemoryFlags.CopyHostPointer, activationType);
         }
 
+        /// <summary>
+        /// Calculate the gradients for one workload.
+        /// </summary>
+        /// <param name="workload">The workload to calculate for.</param>
         public void Calculate(TrainingWorkload workload)
         {
             PrepareKernel();
@@ -86,7 +130,7 @@ namespace Encog.Util.CL.Kernels
                 workload.Gradients = commands.Read(workload.GradientBuffer, true, 0, flat.Weights.Length * workload.MaxUnits, events);
                 commands.Finish();
             }
-            catch (OutOfResourcesComputeException ex)
+            catch (OutOfResourcesComputeException )
             {
                 throw new EncogError("CL device is out of resources, try fewer threads, current CL threadcount=" + workload.MaxUnits);
             }

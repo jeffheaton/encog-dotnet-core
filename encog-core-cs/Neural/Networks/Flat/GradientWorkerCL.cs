@@ -15,6 +15,9 @@ using Encog.Util.CL;
 
 namespace Encog.Neural.Networks.Flat
 {
+    /// <summary>
+    /// A worker that uses OpenCL to process its workload.
+    /// </summary>
     public class GradientWorkerCL:IFlatGradientWorker
     {
         /// <summary>
@@ -76,6 +79,7 @@ namespace Encog.Neural.Networks.Flat
         /// <summary>
         /// Construct a gradient worker.
         /// </summary>
+        /// <param name="device">The device to execute on</param>
         /// <param name="network">The network to train.</param>
         /// <param name="owner">The owner that is doing the training.</param>
         /// <param name="training">The training data.</param>

@@ -12,6 +12,9 @@ using Encog.Persist.Attributes;
 
 namespace Encog.Solve.Genetic.Population
 {
+    /// <summary>
+    /// Provides basic functions for a population.
+    /// </summary>
     [EGReferenceable]
     public class BasicPopulation : IPopulation
     {
@@ -318,6 +321,10 @@ namespace Encog.Solve.Genetic.Population
         {
             genomes.Sort();
         }
+
+        /// <summary>
+        /// The object description.
+        /// </summary>
         public string Description
         {
             get
@@ -330,6 +337,9 @@ namespace Encog.Solve.Genetic.Population
             }
         }
 
+        /// <summary>
+        /// The object name.
+        /// </summary>
         public string Name
         {
             get
@@ -342,11 +352,20 @@ namespace Encog.Solve.Genetic.Population
             }
         }
 
+        /// <summary>
+        /// Create a persistor.
+        /// </summary>
+        /// <returns>The new persistor.</returns>
         public IPersistor CreatePersistor()
         {
             return new GenericPersistor(typeof(BasicPopulation));
         }
 
+        /// <summary>
+        /// Clone is not supported for this object type, an error will be
+        /// thrown.
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             throw new NotImplementedException();

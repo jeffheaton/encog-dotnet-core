@@ -33,6 +33,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
+using Encog.Neural.Networks.Flat;
+using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient
 {
@@ -174,18 +176,24 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                  double initialUpdate, double maxStep)
             : base(network, training)
         {
-
-
-            this.initialUpdate = initialUpdate;
-            this.maxStep = maxStep;
-            this.zeroTolerance = zeroTolerance;
-
-            this.updateValues = new double[network.Structure.CalculateSize()];
-            this.lastGradient = new double[network.Structure.CalculateSize()];
-
-            for (int i = 0; i < this.updateValues.Length; i++)
+            if (ValidateForFlat.CanBeFlat(network)==null && training is IIndexable)
             {
-                this.updateValues[i] = this.initialUpdate;
+                this.CurrentFlatNetwork = new FlatNetwork(network);
+                this.FlatTraining = new TrainFlatNetworkMulti(CurrentFlatNetwork,training,1.0);
+            }
+            else
+            {
+                this.initialUpdate = initialUpdate;
+                this.maxStep = maxStep;
+                this.zeroTolerance = zeroTolerance;
+
+                this.updateValues = new double[network.Structure.CalculateSize()];
+                this.lastGradient = new double[network.Structure.CalculateSize()];
+
+                for (int i = 0; i < this.updateValues.Length; i++)
+                {
+                    this.updateValues[i] = this.initialUpdate;
+                }
             }
 
         }
@@ -277,13 +285,13 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public override void PerformIteration(CalculateGradient prop,
                 double[] weights)
         {
-
             this.gradients = prop.Gradients;
 
             for (int i = 0; i < this.gradients.Length; i++)
             {
                 weights[i] += UpdateWeight(this.gradients, i);
             }
+
         }
 
         /// <summary>

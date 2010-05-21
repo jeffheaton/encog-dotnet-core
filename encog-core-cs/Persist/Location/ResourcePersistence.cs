@@ -130,6 +130,10 @@ namespace Encog.Persist.Location
             throw new PersistError(str);
         }
 
+        /// <summary>
+        /// Load a string.
+        /// </summary>
+        /// <returns>The loaded string.</returns>
         public String LoadString()
         {
             StringBuilder result = new StringBuilder();

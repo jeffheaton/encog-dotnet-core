@@ -153,6 +153,12 @@ namespace Encog.Bot
             return str.Substring(location1 + token1Lower.Length, location2 - (location1 + token1.Length));
         }
 
+        /// <summary>
+        /// Post to a page.
+        /// </summary>
+        /// <param name="uri">The URI to post to.</param>
+        /// <param name="param">The post params.</param>
+        /// <returns>The HTTP response.</returns>
         public static String POSTPage(Uri uri, IDictionary<String, String> param)
         {
             MemoryStream ms = new MemoryStream();
@@ -169,6 +175,12 @@ namespace Encog.Bot
             return result;
         }
 
+        /// <summary>
+        /// Post byes to a page.
+        /// </summary>
+        /// <param name="uri">The URI to post to.</param>
+        /// <param name="bytes">The bytes to post.</param>
+        /// <returns>The HTTP response.</returns>
         public static String POSTPage(Uri uri, byte[] bytes)
         {
             WebRequest webRequest = WebRequest.Create(uri);

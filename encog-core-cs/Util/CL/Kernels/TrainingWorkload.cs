@@ -10,12 +10,96 @@ using Encog.Neural.Data.Basic;
 
 namespace Encog.Util.CL.Kernels
 {
+    /// <summary>
+    /// Holds one OpenCL workload.  These workloads will be created for all 
+    /// OpenCL devices that will be used.
+    /// </summary>
     public class TrainingWorkload
     {
+        /// <summary>
+        /// The length of the training data.
+        /// </summary>
+        private int trainingLength;
+
+        /// <summary>
+        /// The size of the input layer.
+        /// </summary>
+        private int inputSize;
+
+        /// <summary>
+        /// The size of the output layer.
+        /// </summary>
+        private int idealSize;
+
+        /// <summary>
+        /// An array to hold the input to the neural network.
+        /// </summary>
+        private float[] inputArray;
+
+        /// <summary>
+        /// An array to hold the ideal values expected from the network.
+        /// </summary>
+        private float[] idealArray;
+
+        /// <summary>
+        /// The input buffer.
+        /// </summary>
+        private ComputeBuffer<float> inputBuffer;
+
+        /// <summary>
+        /// The ideal buffer.
+        /// </summary>
+        private ComputeBuffer<float> idealBuffer;
+
+        /// <summary>
+        /// Holds parameters passed to the kernel.
+        /// </summary>
+        private int[] paramArray;
+
+        /// <summary>
+        /// A buffer to hold the parameters.
+        /// </summary>
+        private ComputeBuffer<int> paramBuffer;
+
+        /// <summary>
+        /// The device to use with this training data.
+        /// </summary>
+        private EncogCLDevice device;
+
+        /// <summary>
+        /// The network to train.
+        /// </summary>
+        private FlatNetwork flat;
+
+        /// <summary>
+        /// A buffer to hold the errors.
+        /// </summary>
+        private ComputeBuffer<float> errorBuffer;
+
+        /// <summary>
+        /// A buffer to hold the gradients.
+        /// </summary>
+        private ComputeBuffer<float> gradientBuffer;
+
+
+        /// <summary>
+        /// The training errors for this workload.
+        /// </summary>
         public float[] Errors { get; set; }
+
+        /// <summary>
+        /// The gradients for this workload.
+        /// </summary>
         public float[] Gradients { get; set; }
+
+        /// <summary>
+        /// The number of threads that OpenCL will use.
+        /// </summary>
         public int MaxUnits { get; set; }
         
+        /// <summary>
+        /// The length of the training data.
+        /// </summary>
         public int TrainingLength
         {
             get
@@ -24,6 +108,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The size of the input array, presented to the neural network.
+        /// </summary>
         public int InputSize
         {
             get
@@ -32,6 +119,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The size of the ideal array, sent from the neural network.
+        /// </summary>
         public int IdealSize
         {
             get
@@ -40,6 +130,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The input data sent to the neural network.
+        /// </summary>
         public float[] InputArray
         {
             get
@@ -48,6 +141,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The ideal data expected from the neural network.
+        /// </summary>
         public float[] IdealArray
         {
             get
@@ -56,6 +152,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The input data buffer.
+        /// </summary>
         public ComputeBuffer<float> InputBuffer
         {
             get
@@ -64,6 +163,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The ideal data buffer.
+        /// </summary>
         public ComputeBuffer<float> IdealBuffer
         {
             get
@@ -72,6 +174,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// Several parameters sent to the OpenCL kernel.
+        /// </summary>
         public int[] ParamArray
         {
             get
@@ -80,6 +185,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// A buffer to hold the parameters.
+        /// </summary>
         public ComputeBuffer<int> ParamBuffer
         {
             get
@@ -88,6 +196,10 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+
+        /// <summary>
+        /// A buffer to hold the errors.
+        /// </summary>
         public ComputeBuffer<float> ErrorBuffer
         {
             get
@@ -96,6 +208,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// A buffer to hold the gradients.
+        /// </summary>
         public ComputeBuffer<float> GradientBuffer
         {
             get
@@ -104,6 +219,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The network being trained.
+        /// </summary>
         public FlatNetwork Network
         {
             get
@@ -112,6 +230,9 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
+        /// <summary>
+        /// The OpenCL device this workload is used with.
+        /// </summary>
         public EncogCLDevice Device
         {
             get
@@ -120,22 +241,15 @@ namespace Encog.Util.CL.Kernels
             }
         }
 
-        private int trainingLength;
-        private int inputSize;
-        private int idealSize;
-        private float[] inputArray;
-        private float[] idealArray;
-        private ComputeBuffer<float> inputBuffer;
-        private ComputeBuffer<float> idealBuffer;
-        private int[] paramArray;
-        private ComputeBuffer<int> paramBuffer;
-        private EncogCLDevice device;
-        private FlatNetwork flat;
-        private int high;
-        private int low;
-        private ComputeBuffer<float> errorBuffer;
-        private ComputeBuffer<float> gradientBuffer;
-
+        /// <summary>
+        /// Construct an OpenCL training workload.
+        /// </summary>
+        /// <param name="device">The device to use.</param>
+        /// <param name="flat">The network to use.</param>
+        /// <param name="training"></param>
+        /// <param name="maxUnits">The number of CL threads to use.</param>
+        /// <param name="high">The high index to train from.</param>
+        /// <param name="low">The low index to train from.</param>
         public TrainingWorkload(EncogCLDevice device, FlatNetwork flat, IIndexable training, int maxUnits, int high, int low)
         {
             this.flat = flat;

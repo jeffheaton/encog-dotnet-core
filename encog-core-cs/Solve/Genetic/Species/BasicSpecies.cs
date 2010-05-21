@@ -9,6 +9,9 @@ using Encog.Solve.Genetic.Population;
 
 namespace Encog.Solve.Genetic.Species
 {
+    /// <summary>
+    /// A basic Encog species.
+    /// </summary>
     public class BasicSpecies : ISpecies
     {
         /// <summary>
@@ -147,6 +150,9 @@ namespace Encog.Solve.Genetic.Species
 
         }
 
+        /// <summary>
+        /// The population.
+        /// </summary>
         public IPopulation Population 
         {
             get
@@ -159,19 +165,16 @@ namespace Encog.Solve.Genetic.Species
             }
         }
 
-
-
-
-        /**
-         * The list of genomes.
-         */
+        /// <summary>
+        /// The list of genomes.
+        /// </summary>
         private IList<IGenome> members = new List<IGenome>();
 
         
         /// <summary>
         /// Construct a species. 
         /// </summary>
-        /// <param name="training">The training data to use.</param>
+        /// <param name="population">The population.</param>
         /// <param name="first">The first genome.</param>
         /// <param name="speciesID">The species id.</param>
         public BasicSpecies(IPopulation population,

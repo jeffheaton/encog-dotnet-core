@@ -12,9 +12,8 @@ namespace Encog.Neural.Networks.Flat
     /// This class validates this.  Specifically the network must be:
     /// 
     /// 1. Feedforward only, no self-connections or recurrent links
-    /// 2. Sigmoid or TANH activation only
-    /// 3. All layers the same activation function
-    /// 4. Must have bias weight values
+    /// 2. Sigmoid, TANH or linear activation only
+    /// 3. Must have bias weight values
     /// </summary>
     public class ValidateForFlat
     {
@@ -24,41 +23,51 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="network">The network to validate.</param>
         public static void ValidateNetwork(BasicNetwork network)
         {
-            IActivationFunction lastActivation = null;
+            String str = CanBeFlat(network);
+            if (str != null)
+                throw new NeuralNetworkError(str);
+        }
+
+        /// <summary>
+        /// Determine if the specified neural network can be flat.  If it can 
+        /// a null is returned, otherwise, an error is returned to show why the 
+        /// network cannot be flattened.
+        /// </summary>
+        /// <param name="network">The network to check.</param>
+        /// <returns>Null, if the net can not be flattened, an error 
+        /// message otherwise.</returns>
+        public static String CanBeFlat(BasicNetwork network)
+        {
+            ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
+            ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
+
+            if (inputLayer == null)
+                return "To convert to a flat network, there must be an input layer.";
+
+            if (outputLayer == null)
+                return "To convert to a flat network, there must be an output layer.";
 
             foreach (ILayer layer in network.Structure.Layers)
             {
                 // only feedforward
                 if (layer.Next.Count > 1)
                 {
-                    throw new NeuralNetworkError(
-                            "To convert to flat a network must be feedforward only.");
+                    return "To convert to flat a network must be feedforward only.";
                 }
 
                 if (!(layer.ActivationFunction is ActivationSigmoid)
                         && !(layer.ActivationFunction is ActivationTANH))
                 {
-                    throw new NeuralNetworkError(
-                            "To convert to flat a network must only use sigmoid and tanh activation.");
+                    return "To convert to flat a network must only use sigmoid, linear or tanh activation.";
                 }
 
-                if (lastActivation != null)
+                if (!layer.HasBias && layer!=inputLayer )
                 {
-                    if (layer.ActivationFunction.GetType() != lastActivation.GetType())
-                    {
-                        throw new NeuralNetworkError(
-                                "To convert to flat, a network must use the same activation function on each layer.");
-                    }
+                    return "To convert to flat, all non-input layers must have bias weight values.";
                 }
-
-                if (!layer.HasBias && (lastActivation != null))
-                {
-                    throw new NeuralNetworkError(
-                            "To convert to flat, all non-input layers must have bias weight values.");
-                }
-
-                lastActivation = layer.ActivationFunction;
             }
+            return null;
         }
     }
 }
+

@@ -223,7 +223,7 @@ namespace Encog.MathUtil.Randomize
         /// </summary>
         /// <param name="network">The network the synapse belongs to.</param>
         /// <param name="synapse">The synapse to randomize.</param>
-        public void Randomize(BasicNetwork network, ISynapse synapse)
+        public override void Randomize(BasicNetwork network, ISynapse synapse)
         {
             if (synapse.WeightMatrix != null)
             {

@@ -8,6 +8,10 @@ using Encog.Persist.Attributes;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {
+    /// <summary>
+    /// Stores a NEAT innovation.  This is an improvement that was attempted
+    /// to the neural network.
+    /// </summary>
     public class NEATInnovation : BasicInnovation
     {
         /// <summary>
@@ -209,7 +213,11 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
         }
 
-        public String ToString()
+        /// <summary>
+        /// Convert the innovation to a string.
+        /// </summary>
+        /// <returns>The innovation as a string.</returns>
+        public override String ToString()
         {
             StringBuilder result = new StringBuilder();
             result.Append("[NeatInnovation:type=");

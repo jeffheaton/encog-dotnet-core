@@ -161,6 +161,21 @@ namespace Sandbox
             }
         }
 
+        static void testFlatten()
+        {
+            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
+            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            ResilientPropagation train = new ResilientPropagation(network, training);
+            long start = Environment.TickCount;
+            for(int i=0;i<1000;i++)
+            {
+                train.Iteration();
+                Console.WriteLine(i + " Train error: " + train.Error);
+            } 
+            long stop = Environment.TickCount;
+            Console.WriteLine("Done:" + (stop - start));
+        }
+
         static void Main(string[] args)
         {
             //try
@@ -169,9 +184,9 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                train2();
+                //train2();
                 //XORNEAT();
-                //simple();
+                testFlatten();
             }
             //catch (Exception e)
             {

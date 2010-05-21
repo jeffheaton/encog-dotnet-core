@@ -6,7 +6,7 @@ using System.Text;
 namespace Encog.Solve.Genetic.Genes
 {
     /// <summary>
-    /// 
+    /// A gene that holds an integer.
     /// </summary>
     public class IntegerGene : BasicGene
     {
@@ -40,6 +40,15 @@ namespace Encog.Solve.Genetic.Genes
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Generate a hash code.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            return this.Value;
         }
 
 

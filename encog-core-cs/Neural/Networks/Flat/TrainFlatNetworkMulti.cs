@@ -85,7 +85,7 @@ namespace Encog.Neural.Networks.Flat
         private long cpuTimePerIteration;
 
         /// <summary>
-        /// The performance ratio between CPU & CL.  
+        /// The performance ratio between CPU and CL.  
         /// Positive number means CL workers are faster than CPU ones.
         /// </summary>
         private double calculatedCLRatio;
@@ -97,6 +97,10 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
+        /// <param name="enforcedCLRatio">Allows you to determine how much 
+        /// work the CPU and GPU get.  For example, to give the CL/GPU 
+        /// twice as much work as the CPU, specify 1.5.  To give it half as 
+        /// much, choose 0.5.</param>
         public TrainFlatNetworkMulti(FlatNetwork network,
             INeuralDataSet training,
             double enforcedCLRatio)
@@ -400,7 +404,7 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
-        /// The performance ratio between CPU & CL.  
+        /// The performance ratio between CPU and CL.  
         /// Positive number means CL workers are faster than CPU ones.
         /// </summary>
         public double CalculatedCLRatio

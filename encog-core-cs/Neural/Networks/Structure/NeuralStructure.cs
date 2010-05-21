@@ -405,6 +405,10 @@ namespace Encog.Neural.Networks.Structure
             this.synapses.Sort(new SynapseComparator(this));
         }
 
+        /// <summary>
+        /// The current connection limit, any connections below this limit 
+        /// are considered disabled.
+        /// </summary>
         public double ConnectionLimit
         {
             get
@@ -413,6 +417,10 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// True if connection limiting is being used.  If false, all layers 
+        /// are fully connected.
+        /// </summary>
         public bool IsConnectionLimited
         {
             get
@@ -421,6 +429,10 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// Read the connection limit value from the network properties and 
+        /// finalize the connection limiting.
+        /// </summary>
         private void FinalizeLimit()
         {
             // see if there is a connection limit imposed
@@ -432,7 +444,7 @@ namespace Encog.Neural.Networks.Structure
                     this.connectionLimited = true;
                     this.connectionLimit = double.Parse(limit);
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     throw new NeuralNetworkError(
                             "Invalid property("
@@ -448,6 +460,9 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// Enforce the connection limit.  Any connections below the limit are removed.
+        /// </summary>
         public void EnforceLimit()
         {
             if (!this.connectionLimited)

@@ -7,16 +7,41 @@ using Encog.Util.CL.Kernels;
 
 namespace Encog.Util.CL
 {
+    /// <summary>
+    /// An OpenCL platform.  A platform is a collection of OpenCL devices
+    /// from the same vendor.  Often, you will have only a single platform.
+    /// </summary>
     public class EncogCLPlatform: EncogCLItem
     {
+        /// <summary>
+        /// The OpenCL platform.
+        /// </summary>
         private ComputePlatform platform;
+
+        /// <summary>
+        /// The OpenCL context for this platform.  One context is created
+        /// for each platform.
+        /// </summary>
         private ComputeContext context;
+
+        /// <summary>
+        /// All of the devices on this platform.
+        /// </summary>
         private IList<EncogCLDevice> devices = new List<EncogCLDevice>();
 
-
+        /// <summary>
+        /// A kernel used to help train a network.
+        /// </summary>
         private KernelNetworkTrain kerNetworkTrain;
+
+        /// <summary>
+        /// A simple test kernel to add a vector.
+        /// </summary>
         private KernelVectorAdd kerVectorAdd;
 
+        /// <summary>
+        /// A kernel used to help train a network.
+        /// </summary>
         public KernelNetworkTrain NetworkTrain
         {
             get
@@ -25,6 +50,9 @@ namespace Encog.Util.CL
             }
         }
 
+        /// <summary>
+        /// A simple kernel to add two vectors, used to test only.
+        /// </summary>
         public KernelVectorAdd VectorAdd
         {
             get
@@ -33,7 +61,9 @@ namespace Encog.Util.CL
             }
         }
 
-
+        /// <summary>
+        /// All devices on this platform.
+        /// </summary>
         public IList<EncogCLDevice> Devices
         {
             get
@@ -42,6 +72,9 @@ namespace Encog.Util.CL
             }
         }
 
+        /// <summary>
+        /// The OpenCL platform.
+        /// </summary>
         public ComputePlatform Platform
         {
             get
@@ -50,6 +83,9 @@ namespace Encog.Util.CL
             }
         }
 
+        /// <summary>
+        /// The context for this platform.
+        /// </summary>
         public ComputeContext Context
         {
             get
@@ -58,6 +94,10 @@ namespace Encog.Util.CL
             }
         }
 
+        /// <summary>
+        /// Construct an OpenCL platform.
+        /// </summary>
+        /// <param name="platform">The OpenCL platform.</param>
         public EncogCLPlatform(ComputePlatform platform)
         {
             this.platform = platform;
