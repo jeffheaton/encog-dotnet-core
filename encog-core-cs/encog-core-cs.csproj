@@ -161,7 +161,10 @@
     <Compile Include="Neural\Networks\Flat\GradientWorkerCL.cs" />
     <Compile Include="Neural\Networks\Flat\IFlatGradientWorker.cs" />
     <Compile Include="Neural\Networks\Flat\TrainFlatNetwork.cs" />
+    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkBackPropagation.cs" />
+    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkManhattan.cs" />
     <Compile Include="Neural\Networks\Flat\TrainFlatNetworkMulti.cs" />
+    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkResilient.cs" />
     <Compile Include="Neural\Networks\Flat\ValidateForFlat.cs" />
     <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />

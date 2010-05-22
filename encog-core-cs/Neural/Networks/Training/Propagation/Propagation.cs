@@ -43,6 +43,9 @@ using Encog.Neural.Networks.Structure;
 using log4net;
 using Encog.Util;
 using Encog.Neural.Networks.Flat;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Neural.Networks.Training.Propagation.Back;
+using Encog.Neural.Networks.Training.Propagation.Manhattan;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation
@@ -151,7 +154,27 @@ namespace Encog.Neural.Networks.Training.Propagation
                 if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network)==null )
                 {
                     this.CurrentFlatNetwork = new FlatNetwork(network);
-                    this.FlatTraining = new TrainFlatNetworkMulti(CurrentFlatNetwork, Training, EnforcedCLRatio);
+
+                    if (this is ResilientPropagation)
+                    {
+                        this.FlatTraining = new TrainFlatNetworkResilient(CurrentFlatNetwork, Training, EnforcedCLRatio);
+                    }
+                    else if (this is Backpropagation)
+                    {
+                        Backpropagation b = (Backpropagation)this;
+                        this.FlatTraining = new TrainFlatNetworkBackPropagation(CurrentFlatNetwork, Training, b.LearningRate, b.Momentum, EnforcedCLRatio);
+                    }
+                    else if (this is ManhattanPropagation)
+                    {
+                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, EnforcedCLRatio);
+                    }
+                    else
+                    {
+                        this.CurrentFlatNetwork = null;
+                        this.AttemptFlatten = false;
+                        return;
+                    }
+
                     this.FlatTraining.NumThreads = NumThreads;
                 }
                 else

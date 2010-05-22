@@ -19,6 +19,11 @@ using Encog.Neural.Networks.Training.NEAT;
 using Encog.Persist;
 using System.IO;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Neural.Networks.Training.Propagation.Back;
+using Encog.Neural.Networks.Structure;
+using Encog.Neural.Networks.Layers;
+using Encog.Neural.Networks.Logic;
+using Encog.Neural.Networks.Training.Propagation;
 
 namespace Sandbox
 {
@@ -101,9 +106,10 @@ namespace Sandbox
                 training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
             
-            Encog.Encog.Instance.InitCL();
+            //Encog.Encog.Instance.InitCL();
 
-            ResilientPropagation train = new ResilientPropagation(network, training);
+            //ResilientPropagation train = new ResilientPropagation(network, training);
+            Propagation train = new Backpropagation(network, training, 0.000007, 0.0);
             train.EnforcedCLRatio = 2.0;
             train.NumThreads = 0;
             train.Iteration();
@@ -161,6 +167,46 @@ namespace Sandbox
             Console.WriteLine("Done:" + (stop - start));
         }
 
+        public static void test()
+        {
+            BasicNetwork network = new BasicNetwork();
+            //network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 2));
+
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 2));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
+
+            network.Logic = new FeedforwardLogic();
+            network.Structure.FinalizeStructure();
+
+            NetworkCODEC.ArrayToNetwork(new double[] { 0.0, 0.0, 0.3, 0.35, 0.45, 0.35, 0.25, 0.3, 0.0, 0.0, 0.0, 0.1, 0.2, 0.25, 0.55, 0.45, 0.15, 0.35, 0.35, 0.6, 0.0, 0.0, 0.0, 0.5, 0.2, 0.4, 0.6, 0.1, 0.2 }, network);
+
+            double[][] XOR_INPUT = new double[1][];
+            XOR_INPUT[0] = new double[] { 0.05, 0.02 };
+
+            double[][] XOR_IDEAL = new double[1][];
+            XOR_IDEAL[0] = new double[] { 1.0, 0.0 };
+
+            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+
+            // train the neural network
+            ITrain train = new Backpropagation(network, trainingSet, 0.3, 0.0);
+            Console.WriteLine(DateTime.Now);
+            for (int i = 0; i < 100000; i++)
+            {
+                train.Iteration();
+            }
+            Console.WriteLine(DateTime.Now);
+            Console.WriteLine(train.Error);
+            double[] array = NetworkCODEC.NetworkToArray(network);
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.WriteLine(array[i]);
+            }
+
+        }
+
         static void Main(string[] args)
         {
             //try
@@ -172,6 +218,7 @@ namespace Sandbox
                 benchmarkCL();
                 //XORNEAT();
                 //testFlatten();
+                //test();
             }
             //catch (Exception e)
             {

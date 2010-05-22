@@ -17,7 +17,7 @@ namespace Encog.Neural.Networks.Flat
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.
     /// </summary>
-    public class TrainFlatNetworkMulti
+    public abstract class TrainFlatNetworkMulti
     {
         /// <summary>
         /// The number of threads to use.
@@ -43,11 +43,6 @@ namespace Encog.Neural.Networks.Flat
         /// The training data.
         /// </summary>
         private INeuralDataSet training;
-
-        /// <summary>
-        /// The update values, for the weights and thresholds.
-        /// </summary>
-        private double[] updateValues;
 
         /// <summary>
         /// The network in indexable form.
@@ -121,18 +116,15 @@ namespace Encog.Neural.Networks.Flat
             
         }
 
+
+        public abstract double UpdateWeight(double[] gradients, double[] lastGradient, int index);
+
         private void Init()
         {
             gradients = new double[network.Weights.Length];
-            updateValues = new double[network.Weights.Length];
             lastGradient = new double[network.Weights.Length];
 
             weights = network.Weights;
-
-            for (int i = 0; i < updateValues.Length; i++)
-            {
-                updateValues[i] = ResilientPropagation.DEFAULT_INITIAL_UPDATE;
-            }
 
             IList<EncogCLDevice> clDevices = null;
 
@@ -263,79 +255,9 @@ namespace Encog.Neural.Networks.Flat
         {
             for (int i = 0; i < gradients.Length; i++)
             {
-                weights[i] += UpdateWeight(gradients, i);
+                weights[i] += UpdateWeight(gradients, lastGradient, i);
                 gradients[i] = 0;
             }
-        }
-
-
-        /// <summary>
-        /// Determine the sign of the value. 
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
-        private int Sign(double value)
-        {
-            if (Math.Abs(value) < ResilientPropagation.DEFAULT_ZERO_TOLERANCE)
-            {
-                return 0;
-            }
-            else if (value > 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// Determine the amount to change a weight by.
-        /// </summary>
-        /// <param name="gradients">The gradients.</param>
-        /// <param name="index">The weight to adjust.</param>
-        /// <returns>The amount to change this weight by.</returns>
-        private double UpdateWeight(double[] gradients, int index)
-        {
-            // multiply the current and previous gradient, and take the
-            // sign. We want to see if the gradient has changed its sign.
-            int change = Sign(this.gradients[index] * lastGradient[index]);
-            double weightChange = 0;
-
-            // if the gradient has retained its sign, then we increase the
-            // delta so that it will converge faster
-            if (change > 0)
-            {
-                double delta = updateValues[index]
-                        * ResilientPropagation.POSITIVE_ETA;
-                delta = Math.Min(delta, ResilientPropagation.DEFAULT_MAX_STEP);
-                weightChange = Sign(this.gradients[index]) * delta;
-                updateValues[index] = delta;
-                lastGradient[index] = this.gradients[index];
-            }
-            else if (change < 0)
-            {
-                // if change<0, then the sign has changed, and the last
-                // delta was too big
-                double delta = updateValues[index]
-                        * ResilientPropagation.NEGATIVE_ETA;
-                delta = Math.Max(delta, ResilientPropagation.DELTA_MIN);
-                updateValues[index] = delta;
-                // set the previous gradent to zero so that there will be no
-                // adjustment the next iteration
-                lastGradient[index] = 0;
-            }
-            else if (change == 0)
-            {
-                // if change==0 then there is no change to the delta
-                double delta = lastGradient[index];
-                weightChange = Sign(this.gradients[index]) * delta;
-                lastGradient[index] = this.gradients[index];
-            }
-
-            // apply the weight change, if any
-            return weightChange;
         }
 
         /// <summary>
