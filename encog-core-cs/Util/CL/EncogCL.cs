@@ -169,7 +169,7 @@ namespace Encog.Util.CL
         /// Dump all devices as a string.
         /// </summary>
         /// <returns>The devices.</returns>
-        public String ToString()
+        public override String ToString()
         {
             StringBuilder result = new StringBuilder();
             foreach (EncogCLDevice device in this.devices)

@@ -116,7 +116,13 @@ namespace Encog.Neural.Networks.Flat
             
         }
 
-
+        /// <summary>
+        /// Update a weight, the means by which weights are updated vary depending on the training.
+        /// </summary>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>The update value.</returns>
         public abstract double UpdateWeight(double[] gradients, double[] lastGradient, int index);
 
         private void Init()

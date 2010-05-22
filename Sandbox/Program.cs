@@ -189,9 +189,10 @@ namespace Sandbox
             XOR_IDEAL[0] = new double[] { 1.0, 0.0 };
 
             INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-
+            Encog.Encog.Instance.InitCL();
             // train the neural network
-            ITrain train = new Backpropagation(network, trainingSet, 0.3, 0.0);
+            Propagation train = new Backpropagation(network, trainingSet, 0.3, 0.0);
+            train.NumThreads = -1;
             Console.WriteLine(DateTime.Now);
             for (int i = 0; i < 100000; i++)
             {
@@ -215,10 +216,10 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                benchmarkCL();
+                //benchmarkCL();
                 //XORNEAT();
                 //testFlatten();
-                //test();
+                test();
             }
             //catch (Exception e)
             {

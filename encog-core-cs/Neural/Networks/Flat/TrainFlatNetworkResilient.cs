@@ -7,6 +7,9 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 
 namespace Encog.Neural.Networks.Flat
 {
+    /// <summary>
+    /// Train a flat network using RPROP.
+    /// </summary>
     public class TrainFlatNetworkResilient : TrainFlatNetworkMulti
     {
         /// <summary>
@@ -14,7 +17,12 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         private double[] updateValues;
 
-
+        /// <summary>
+        /// Construct a resilient trainer for flat networks.
+        /// </summary>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="enforcedCLRatio">The CL ratio.</param>
         public TrainFlatNetworkResilient(FlatNetwork network,
             INeuralDataSet training, double enforcedCLRatio):
             base(network,training,enforcedCLRatio)
@@ -28,11 +36,12 @@ namespace Encog.Neural.Networks.Flat
         }
 
         /// <summary>
-        /// Determine the amount to change a weight by.
+        /// Calculate the amount to change the weight by.
         /// </summary>
         /// <param name="gradients">The gradients.</param>
-        /// <param name="index">The weight to adjust.</param>
-        /// <returns>The amount to change this weight by.</returns>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index to update.</param>
+        /// <returns>The amount to change the weight by.</returns>
         public override double UpdateWeight(double[] gradients, double[] lastGradient, int index)
         {
             // multiply the current and previous gradient, and take the

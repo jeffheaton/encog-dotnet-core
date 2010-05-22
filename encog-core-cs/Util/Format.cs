@@ -86,6 +86,11 @@ namespace Encog.Util
         }
 
 
+        /// <summary>
+        /// Format a memory amount, to something like 32 MB.
+        /// </summary>
+        /// <param name="memory">The amount of bytes.</param>
+        /// <returns>The formatted memory size.</returns>
         public static String FormatMemory(long memory)
         {
             if (memory < Format.MEMORY_K)

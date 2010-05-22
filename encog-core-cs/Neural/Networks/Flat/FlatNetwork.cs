@@ -154,6 +154,7 @@ namespace Encog.Neural.Networks.Flat
         public BasicNetwork Unflatten()
         {
             BasicNetwork result = new BasicNetwork();
+            bool first = false;
 
             for (int i = this.layerCounts.Length - 1; i >= 0; i--)
             {
@@ -175,7 +176,8 @@ namespace Encog.Neural.Networks.Flat
                         break;
                 }
 
-                ILayer layer = new BasicLayer(activation, true, this.layerCounts[i]);
+                ILayer layer = new BasicLayer(activation, first, this.layerCounts[i]);
+                first = true;
                 result.AddLayer(layer);
             }
             result.Structure.FinalizeStructure();

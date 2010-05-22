@@ -166,7 +166,8 @@ namespace Encog.Neural.Networks.Training.Propagation
                     }
                     else if (this is ManhattanPropagation)
                     {
-                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, EnforcedCLRatio);
+                        ManhattanPropagation m = (ManhattanPropagation)this;
+                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, m.LearningRate, EnforcedCLRatio);
                     }
                     else
                     {
