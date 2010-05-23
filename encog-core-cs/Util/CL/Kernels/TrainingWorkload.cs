@@ -247,7 +247,6 @@ namespace Encog.Util.CL.Kernels
         /// <param name="device">The device to use.</param>
         /// <param name="flat">The network to use.</param>
         /// <param name="training"></param>
-        /// <param name="maxUnits">The number of CL threads to use.</param>
         /// <param name="high">The high index to train from.</param>
         /// <param name="low">The low index to train from.</param>
         public TrainingWorkload(EncogCLDevice device, FlatNetwork flat, IIndexable training, int high, int low)

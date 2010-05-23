@@ -23,15 +23,22 @@ namespace Encog.Neural.Networks.Flat
         private double zeroTolerance;
 
         /// <summary>
+        /// The maximum step value for rprop.
+        /// </summary>
+        private double maxStep;
+
+        /// <summary>
         /// Construct a resilient trainer for flat networks.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
+        /// <param name="zeroTolerance">How close a number should 
+        /// be to zero to be counted as zero.</param>
+        /// <param name="initialUpdate">The initial update value.</param>
+        /// <param name="maxStep">The maximum step value.</param>
         /// <summary>
         /// The maximum delta amount.
         /// </summary>
-        private double maxStep;
-
         public TrainFlatNetworkResilient(FlatNetwork network,
             INeuralDataSet training, double zeroTolerance,
                  double initialUpdate, double maxStep) :

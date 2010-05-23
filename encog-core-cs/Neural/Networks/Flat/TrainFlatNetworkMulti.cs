@@ -137,11 +137,12 @@ namespace Encog.Neural.Networks.Flat
 
                 clDevices = Encog.Instance.CL.EnabledDevices;
                 determine = new DetermineWorkload(NumThreads, clDevices.Count, (int)this.indexable.Count);
+                determine.CLRatio = Encog.Instance.CL.EnforcedCLRatio;
             }
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
 
-            determine.CLRatio = Encog.Instance.CL.EnforcedCLRatio;
+            
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
 
             determine.CalculateWorkers();

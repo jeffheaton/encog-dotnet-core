@@ -80,7 +80,7 @@ namespace Encog.Neural.Networks.Pattern
         public BasicNetwork Generate()
         {
             int y = PatternConst.START_Y;
-            ILayer input = new BasicLayer(this.activation, true,
+            ILayer input = new BasicLayer(this.activation, false,
                    this.inputNeurons);
 
             BasicNetwork result = new BasicNetwork();

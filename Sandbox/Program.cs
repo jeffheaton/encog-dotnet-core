@@ -106,12 +106,11 @@ namespace Sandbox
                 training.InputSize, 6, 0, training.IdealSize, true);
             network.Reset();
             
-            //Encog.Encog.Instance.InitCL();
+            Encog.Encog.Instance.InitCL();
 
-            //ResilientPropagation train = new ResilientPropagation(network, training);
-            Propagation train = new Backpropagation(network, training, 0.000007, 0.0);
-            train.EnforcedCLRatio = 2.0;
-            train.NumThreads = 0;
+            ResilientPropagation train = new ResilientPropagation(network, training);
+            //Propagation train = new Backpropagation(network, training, 0.000007, 0.0);
+            train.NumThreads = -1;
             train.Iteration();
 
             long start = Environment.TickCount;
@@ -216,10 +215,10 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                //benchmarkCL();
+                benchmarkCL();
                 //XORNEAT();
                 //testFlatten();
-                test();
+                //test();
             }
             //catch (Exception e)
             {
