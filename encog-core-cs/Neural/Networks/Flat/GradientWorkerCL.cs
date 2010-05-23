@@ -109,7 +109,7 @@ namespace Encog.Neural.Networks.Flat
 
             this.device = device;
 
-            this.workload = new TrainingWorkload(device, network, training, 200, high, low);
+            this.workload = new TrainingWorkload(device, network, training, high, low);
         }
 
 

@@ -77,8 +77,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             this.network = network;
             this.Training = training;
-            this.EnforcedCLRatio = 1.0;
-
+         
             if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network) == null)
             {
                 this.AttemptFlatten = true;
@@ -129,11 +128,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         public bool AttemptFlatten { get; set; }
 
         /// <summary>
-        /// The enforced CL ratio.
-        /// </summary>
-        public double EnforcedCLRatio { get; set; }
-
-        /// <summary>
         /// Determine if this specified training continuation object is valid for
         /// this training method.
         /// </summary>
@@ -157,17 +151,23 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                     if (this is ResilientPropagation)
                     {
-                        this.FlatTraining = new TrainFlatNetworkResilient(CurrentFlatNetwork, Training, EnforcedCLRatio);
+                        ResilientPropagation r = (ResilientPropagation)this;
+                        this.FlatTraining = new TrainFlatNetworkResilient(
+                            CurrentFlatNetwork, 
+                            Training,  
+                            r.ZeroTolerance,
+                            r.InitialUpdate,
+                            r.MaxStep);
                     }
                     else if (this is Backpropagation)
                     {
                         Backpropagation b = (Backpropagation)this;
-                        this.FlatTraining = new TrainFlatNetworkBackPropagation(CurrentFlatNetwork, Training, b.LearningRate, b.Momentum, EnforcedCLRatio);
+                        this.FlatTraining = new TrainFlatNetworkBackPropagation(CurrentFlatNetwork, Training, b.LearningRate, b.Momentum);
                     }
                     else if (this is ManhattanPropagation)
                     {
                         ManhattanPropagation m = (ManhattanPropagation)this;
-                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, m.LearningRate, EnforcedCLRatio);
+                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, m.LearningRate);
                     }
                     else
                     {

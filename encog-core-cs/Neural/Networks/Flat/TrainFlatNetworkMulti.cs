@@ -86,22 +86,12 @@ namespace Encog.Neural.Networks.Flat
         private double calculatedCLRatio;
 
         /// <summary>
-        /// The enforced CL ratio.
-        /// </summary>
-        private double enforcedCLRatio;
-
-        /// <summary>
         /// Train a flat network multithreaded. 
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
-        /// <param name="enforcedCLRatio">Allows you to determine how much 
-        /// work the CPU and GPU get.  For example, to give the CL/GPU 
-        /// twice as much work as the CPU, specify 1.5.  To give it half as 
-        /// much, choose 0.5.</param>
         public TrainFlatNetworkMulti(FlatNetwork network,
-            INeuralDataSet training,
-            double enforcedCLRatio)
+            INeuralDataSet training)
         {
 
             if (!(training is IIndexable))
@@ -111,7 +101,6 @@ namespace Encog.Neural.Networks.Flat
             this.network = network;
 
             this.indexable = (IIndexable)training;
-            this.enforcedCLRatio = enforcedCLRatio;
             this.NumThreads = 0;   
             
         }
@@ -152,7 +141,7 @@ namespace Encog.Neural.Networks.Flat
             else
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
 
-            determine.CLRatio = enforcedCLRatio;
+            determine.CLRatio = Encog.Instance.CL.EnforcedCLRatio;
             this.workers = new IFlatGradientWorker[determine.TotalWorkerCount];
 
             determine.CalculateWorkers();

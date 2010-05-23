@@ -250,7 +250,7 @@ namespace Encog.Util.CL.Kernels
         /// <param name="maxUnits">The number of CL threads to use.</param>
         /// <param name="high">The high index to train from.</param>
         /// <param name="low">The low index to train from.</param>
-        public TrainingWorkload(EncogCLDevice device, FlatNetwork flat, IIndexable training, int maxUnits, int high, int low)
+        public TrainingWorkload(EncogCLDevice device, FlatNetwork flat, IIndexable training, int high, int low)
         {
             this.flat = flat;
             this.trainingLength = (high-low)+1;
@@ -263,7 +263,7 @@ namespace Encog.Util.CL.Kernels
 
             int layerDeltaSize = flat.NeuronCount;
 
-            this.MaxUnits = Math.Min( this.trainingLength, maxUnits);
+            this.MaxUnits = Math.Min( this.trainingLength, Encog.Instance.CL.CLThreads);
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(flat.InputCount, flat.OutputCount);
 
 

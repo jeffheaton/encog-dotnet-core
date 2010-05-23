@@ -50,10 +50,32 @@ namespace Encog.Util.CL
         private IList<EncogCLDevice> devices = new List<EncogCLDevice>();
 
         /// <summary>
+        /// Allows you to determine how much 
+        /// work the CPU and GPU get.  For example, to give the CL/GPU 
+        /// twice as much work as the CPU, specify 1.5.  To give it half as 
+        /// much, choose 0.5.
+        /// </summary>
+        public double EnforcedCLRatio { get; set; }
+
+        /// <summary>
+        /// The number of CL threads to use, defaults to 200.
+        /// </summary>
+        public int CLThreads { get; set; }
+
+        /// <summary>
+        /// The size of a CL workload, defaults to 10.
+        /// </summary>
+        public int CLWorkloadSize { get; set; }
+
+        /// <summary>
         /// Construct an Encog OpenCL object.
         /// </summary>
         public EncogCL()
         {
+            this.EnforcedCLRatio = 1.0;
+            this.CLThreads = 200;
+            this.CLWorkloadSize = 10;
+
             if (ComputePlatform.Platforms.Count == 0)
                 throw new EncogError("Can't find any OpenCL platforms");
 

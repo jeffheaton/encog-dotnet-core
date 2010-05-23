@@ -18,20 +18,32 @@ namespace Encog.Neural.Networks.Flat
         private double[] updateValues;
 
         /// <summary>
+        /// The zero tolerance.
+        /// </summary>
+        private double zeroTolerance;
+
+        /// <summary>
         /// Construct a resilient trainer for flat networks.
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
-        /// <param name="enforcedCLRatio">The CL ratio.</param>
+        /// <summary>
+        /// The maximum delta amount.
+        /// </summary>
+        private double maxStep;
+
         public TrainFlatNetworkResilient(FlatNetwork network,
-            INeuralDataSet training, double enforcedCLRatio):
-            base(network,training,enforcedCLRatio)
+            INeuralDataSet training, double zeroTolerance,
+                 double initialUpdate, double maxStep) :
+            base(network,training)
         {
             updateValues = new double[network.Weights.Length];
+            this.zeroTolerance = zeroTolerance;
+            this.maxStep = maxStep;
 
             for (int i = 0; i < updateValues.Length; i++)
             {
-                updateValues[i] = ResilientPropagation.DEFAULT_INITIAL_UPDATE;
+                updateValues[i] = initialUpdate;
             }
         }
 
@@ -55,7 +67,7 @@ namespace Encog.Neural.Networks.Flat
             {
                 double delta = updateValues[index]
                         * ResilientPropagation.POSITIVE_ETA;
-                delta = Math.Min(delta, ResilientPropagation.DEFAULT_MAX_STEP);
+                delta = Math.Min(delta, this.maxStep);
                 weightChange = Sign(gradients[index]) * delta;
                 updateValues[index] = delta;
                 lastGradient[index] = gradients[index];
@@ -91,7 +103,7 @@ namespace Encog.Neural.Networks.Flat
         /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
         private int Sign(double value)
         {
-            if (Math.Abs(value) < ResilientPropagation.DEFAULT_ZERO_TOLERANCE)
+            if (Math.Abs(value) < this.zeroTolerance)
             {
                 return 0;
             }
@@ -104,7 +116,5 @@ namespace Encog.Neural.Networks.Flat
                 return -1;
             }
         }
-
-
     }
 }

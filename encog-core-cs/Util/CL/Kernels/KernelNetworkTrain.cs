@@ -121,14 +121,14 @@ namespace Encog.Util.CL.Kernels
             try
             {
                 ComputeCommandQueue commands = workload.Device.Commands;
-                long workItems = Math.Max( 1, workload.MaxUnits/20);
+                long workItems = Math.Max( 1, Encog.Instance.CL.CLWorkloadSize);
 
                 ComputeEventList events = new ComputeEventList();
                 commands.Write(weightArrayBuffer, true, 0, weightArray.Length, weightArray, events);
                 commands.Execute(
                     Kernel, 
                     null, 
-                    new long[]{workload.MaxUnits}, 
+                    new long[]{Encog.Instance.CL.CLThreads}, 
                     new long[]{workItems}, 
                     events);
                 workload.Errors = commands.Read(workload.ErrorBuffer, true, 0, workload.MaxUnits, events);

@@ -27,13 +27,11 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="learningRate">The learning rate to use.</param>
-        /// <param name="enforcedCLRatio">The CL ratio.</param>
         public TrainFlatNetworkManhattan(
             FlatNetwork network,
             INeuralDataSet training,
-            double learningRate,
-            double enforcedCLRatio):
-            base(network,training,enforcedCLRatio)
+            double learningRate):
+            base(network,training)
         {
             LearningRate = learningRate;
             ZeroTolerance = Encog.DEFAULT_PRECISION;

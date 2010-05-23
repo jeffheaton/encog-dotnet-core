@@ -34,14 +34,12 @@ namespace Encog.Neural.Networks.Flat
         /// <param name="training">The training data.</param>
         /// <param name="learningRate">The learning rate.</param>
         /// <param name="momentum">The momentum.</param>
-        /// <param name="enforcedCLRatio">The CL ratio.</param>
         public TrainFlatNetworkBackPropagation(
             FlatNetwork network,
             INeuralDataSet training,
             double learningRate,
-            double momentum,
-            double enforcedCLRatio):
-            base(network,training,enforcedCLRatio)
+            double momentum):
+            base(network,training)
         {
             this.Momentum = momentum;
             this.LearningRate = learningRate;
