@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
+using Encog.Neural.Networks.Training.Propagation.Manhattan;
 
 namespace Encog.Neural.Networks.Flat
 {
@@ -34,7 +35,7 @@ namespace Encog.Neural.Networks.Flat
             base(network,training)
         {
             LearningRate = learningRate;
-            ZeroTolerance = Encog.DEFAULT_PRECISION;
+            ZeroTolerance = Encog.DEFAULT_DOUBLE_EQUAL;
         }
 
         /// <summary>

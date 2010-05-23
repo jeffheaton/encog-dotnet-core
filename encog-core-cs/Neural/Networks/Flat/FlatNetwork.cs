@@ -90,6 +90,14 @@ namespace Encog.Neural.Networks.Flat
         private int[] activationType;
 
         /// <summary>
+        /// Bias values on the input layer serve no value.  But some networks are 
+        /// constructed in this way, because they use the default BasicLayer 
+        /// constructor.  We need to remember that there was an input bias, so that 
+        /// the network is unflattened this way.
+        /// </summary>
+        public bool HasInputBias { get; set; }
+
+        /// <summary>
         /// Construct a flat network.
         /// </summary>
         /// <param name="network">The network to construct the flat network from.</param>
@@ -102,6 +110,8 @@ namespace Encog.Neural.Networks.Flat
 
             inputCount = input.NeuronCount;
             outputCount = output.NeuronCount;
+
+            HasInputBias = input.HasBias;
 
             int layerCount = network.Structure.Layers.Count;
 
@@ -154,7 +164,7 @@ namespace Encog.Neural.Networks.Flat
         public BasicNetwork Unflatten()
         {
             BasicNetwork result = new BasicNetwork();
-            bool first = false;
+            bool useBias = HasInputBias;
 
             for (int i = this.layerCounts.Length - 1; i >= 0; i--)
             {
@@ -176,8 +186,8 @@ namespace Encog.Neural.Networks.Flat
                         break;
                 }
 
-                ILayer layer = new BasicLayer(activation, first, this.layerCounts[i]);
-                first = true;
+                ILayer layer = new BasicLayer(activation, useBias, this.layerCounts[i]);
+                useBias = true;
                 result.AddLayer(layer);
             }
             result.Structure.FinalizeStructure();

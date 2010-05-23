@@ -86,6 +86,9 @@ namespace Encog.MathUtil.Randomize
         /// <param name="synapse">The synapse to modify.</param>
         private void Randomize(double beta, ISynapse synapse)
         {
+            if (synapse.WeightMatrix == null)
+                return;
+
             for (int j = 0; j < synapse.ToNeuronCount; j++)
             {
                 double norm = 0.0;
