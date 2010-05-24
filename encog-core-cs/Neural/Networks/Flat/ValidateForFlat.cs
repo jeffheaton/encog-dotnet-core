@@ -47,6 +47,11 @@ namespace Encog.Neural.Networks.Flat
             if (outputLayer == null)
                 return "To convert to a flat network, there must be an output layer.";
 
+            if (network.Structure.IsRecurrent())
+            {
+                return "To convert to a flat network there cannot be context layers.";
+            }
+
             foreach (ILayer layer in network.Structure.Layers)
             {
                 // only feedforward

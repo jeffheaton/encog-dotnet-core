@@ -165,7 +165,7 @@ namespace Encog
             }
             catch (Exception e)
             {
-                throw new EncogError(e);
+                throw new EncogCLError(e);
             }
         }
 

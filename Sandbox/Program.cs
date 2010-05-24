@@ -64,20 +64,12 @@ namespace Sandbox
                     score, 2, 1, 100);
             train.OutputActivationFunction = step;
 
-            int epoch = 1;
-
-            do
-            {
-                train.Iteration();
-                Console.WriteLine("Epoch #" + epoch + " Error:" + train.Error);
-                epoch++;
-            } while ((train.Error > 0.001));
+            EncogUtility.TrainToError(train,trainingSet,0.01);
 
             BasicNetwork network = train.Network;
+            network.ClearContext();
+            EncogUtility.Evaluate(network, trainingSet);
 
-            EncogPersistedCollection encog = new EncogPersistedCollection("d:\\test.eg",FileMode.Create);
-            //encog.Add("test", network);
-            encog.Add("test2", train.Population);
         }
 
         static void simple()
@@ -134,19 +126,27 @@ namespace Sandbox
 
         public static void testSimpleCL()
         {
-            Encog.Encog.Instance.InitCL();
-
-            EncogCLDevice device = Encog.Encog.Instance.CL.Devices[0];
-            KernelVectorAdd k = Encog.Encog.Instance.CL.Devices[0].Platform.VectorAdd;
-            k.Compile();
-
-            double[] a = { 1, 2, 3, 4 };
-            double[] b = { 5, 6, 7, 8 };
-            double[] c = k.Add(device, a, b);
-
-            for (int i = 0; i < a.Length; i++)
+            try
             {
-                Console.WriteLine(a[i] + " + " + b[i] + " = " + c[i]);
+                Encog.Encog.Instance.InitCL();
+
+                EncogCLDevice device = Encog.Encog.Instance.CL.Devices[0];
+                KernelVectorAdd k = Encog.Encog.Instance.CL.Devices[0].Platform.VectorAdd;
+                k.Compile();
+
+                double[] a = { 1, 2, 3, 4 };
+                double[] b = { 5, 6, 7, 8 };
+                double[] c = k.Add(device, a, b);
+
+                for (int i = 0; i < a.Length; i++)
+                {
+                    Console.WriteLine(a[i] + " + " + b[i] + " = " + c[i]);
+                }
+            }
+            catch (EncogCLError ex)
+            {
+                Console.WriteLine("Can't startup CL, make sure you have drivers loaded.");
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -170,16 +170,31 @@ namespace Sandbox
 
         public static void test()
         {
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
-            network.Structure.FinalizeStructure();
+            BasicNeuralDataSet training = (BasicNeuralDataSet)RandomTrainingFactory.Generate(
+                3, 3, 3, -1, 1);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(3, 6, 0, 3, true);
             (new ConsistentRandomizer(-1, 1)).Randomize(network);
 
-            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
-            ManhattanPropagation m = new ManhattanPropagation(network, training, 0.0001);
-            EncogUtility.TrainConsole(m,network, training, 1);
+            Backpropagation t = new Backpropagation(network, training, 0.4,0.0);
+            t.AttemptFlatten = false;
+
+            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(3, 3);
+
+            for (int i = 0; i < 3; i++)
+            {
+                training.GetRecord(i, pair);
+                Console.WriteLine("Before:"+i+":"+pair.ToString());
+            }
+            
+            for(int i=0;i<100;i++)
+                t.Iteration();
+
+            for (int i = 0; i < 3; i++)
+            {
+                training.GetRecord(i, pair);
+                Console.WriteLine("After:" + i + ":" + pair.ToString());
+            }
+
         }
 
         static void Main(string[] args)
@@ -191,8 +206,10 @@ namespace Sandbox
                 //benchmark();
                 //testBuffer();
                 //benchmarkCL();
+                //testSimpleCL();
                 //XORNEAT();
                 //testFlatten();
+                //test();
                 test();
             }
             //catch (Exception e)

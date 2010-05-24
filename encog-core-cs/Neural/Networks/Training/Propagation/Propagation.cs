@@ -78,7 +78,8 @@ namespace Encog.Neural.Networks.Training.Propagation
             this.network = network;
             this.Training = training;
          
-            if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network) == null)
+            if (this.Training is IIndexable 
+                && ValidateForFlat.CanBeFlat(this.network) == null )
             {
                 this.AttemptFlatten = true;
             }

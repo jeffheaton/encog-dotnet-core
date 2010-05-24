@@ -487,5 +487,22 @@ namespace Encog.Neural.Networks.Structure
                 }
             }
         }
+
+        /// <summary>
+        /// Is this network recurrent?  A recurrent network has context layers.
+        /// </summary>
+        /// <returns>True if this network is recurrent.</returns>
+        public bool IsRecurrent()
+        {
+            foreach (ILayer layer in this.layers)
+            {
+                if (layer is ContextLayer)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

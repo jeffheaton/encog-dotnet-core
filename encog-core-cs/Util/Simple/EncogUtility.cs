@@ -216,6 +216,7 @@ namespace Encog.Util.Simple
                         + Format.FormatTimeSpan((int)remaining * 60));
                 epoch++;
             } while (remaining > 0);
+            train.FinishTraining();
         }
 
 #if !SILVERLIGHT
@@ -263,7 +264,7 @@ namespace Encog.Util.Simple
             Propagation train = new ResilientPropagation(network,
                     trainingSet);
             train.NumThreads = 0;
-            EncogUtility.TrainToError(train, network, trainingSet, error);
+            EncogUtility.TrainToError(train, trainingSet, error);
         }
 
         /// <summary>
@@ -271,11 +272,10 @@ namespace Encog.Util.Simple
         /// output to the console.
         /// </summary>
         /// <param name="train">The training method.</param>
-        /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The desired error level.</param>
         public static void TrainToError(ITrain train,
-                BasicNetwork network, INeuralDataSet trainingSet,
+                INeuralDataSet trainingSet,
                 double error)
         {
 
@@ -292,6 +292,7 @@ namespace Encog.Util.Simple
                         + " Target Error: " + Format.FormatPercent(error));
                 epoch++;
             } while (train.Error > error);
+            train.FinishTraining();
         }
     }
 }

@@ -75,7 +75,10 @@ namespace Encog.Solve.Genetic
         /// <param name="g">The genome to calculate for.</param>
         public void PerformScoreCalculation(IGenome g)
         {
-            ((IContextClearable)g.Organism).ClearContext();
+            if (g.Organism is IContextClearable)
+            {
+                ((IContextClearable)g.Organism).ClearContext();
+            }
             double score = CalculateScore.CalculateScore(g);
             g.Score = score;
         }

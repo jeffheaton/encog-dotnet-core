@@ -100,19 +100,27 @@ namespace Encog.MathUtil.Randomize
                     norm += v * v;
                 }
 
-                double value = synapse.ToLayer.BiasWeights[j];
-                norm += value * value;
+                if (synapse.ToLayer.HasBias)
+                {
+                    double value = synapse.ToLayer.BiasWeights[j];
+                    norm += value * value;
+                }
+
+
                 norm = Math.Sqrt(norm);
 
                 // Rescale the weights using beta and the norm
                 for (int k = 0; k < synapse.FromNeuronCount; k++)
                 {
-                    value = synapse.WeightMatrix[k, j];
+                    double value = synapse.WeightMatrix[k, j];
                     synapse.WeightMatrix[k, j] = beta * value / norm;
                 }
 
-                value = synapse.ToLayer.BiasWeights[j];
-                synapse.ToLayer.BiasWeights[j] = beta * value / norm;
+                if (synapse.ToLayer.HasBias)
+                {
+                    double value = synapse.ToLayer.BiasWeights[j];
+                    synapse.ToLayer.BiasWeights[j] = beta * value / norm;
+                }
             }
         }
     }
