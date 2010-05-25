@@ -174,13 +174,13 @@ namespace Encog.Neural.Networks.Flat
             int idx = 0;
             foreach (IntRange r in determine.CLRanges)
             {
-                this.workers[index++] = new GradientWorkerCL(clDevices[idx++], network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCL(clDevices[idx++], network.Clone(), this, indexable.OpenAdditional(), r.Low, r.High);
             }
 
             // handle CPU
             foreach (IntRange r in determine.CPURanges)
             {
-                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable, r.Low, r.High);
+                this.workers[index++] = new GradientWorkerCPU(network.Clone(), this, indexable.OpenAdditional(), r.Low, r.High);
             }
         }
 

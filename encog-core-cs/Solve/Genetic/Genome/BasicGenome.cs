@@ -195,7 +195,7 @@ namespace Encog.Solve.Genetic.Genome
             }
             else
             {
-                if ((Score - other.Score) < Encog.DEFAULT_DOUBLE_EQUAL)
+                if ( Math.Abs(Score - other.Score) < Encog.DEFAULT_DOUBLE_EQUAL)
                 {
                     return 0;
                 }
