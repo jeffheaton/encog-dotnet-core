@@ -90,9 +90,9 @@ namespace Sandbox
 
         public static void benchmarkCL()
         {
-            int outputSize = 2;
+            int outputSize = 1;
             int inputSize = 10;
-            int trainingSize = 100000;
+            int trainingSize = 10000;
 
             INeuralDataSet training = RandomTrainingFactory.Generate(
                 trainingSize, inputSize, outputSize, -1, 1);
@@ -104,7 +104,7 @@ namespace Sandbox
 
             ResilientPropagation train = new ResilientPropagation(network, training);
             //Propagation train = new Backpropagation(network, training, 0.000007, 0.0);
-            train.NumThreads = -1;
+            train.NumThreads = 0;
             train.Iteration();
 
             long start = Environment.TickCount;
@@ -205,12 +205,12 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                //benchmarkCL();
+                benchmarkCL();
                 //testSimpleCL();
                 //XORNEAT();
                 //testFlatten();
                 //test();
-                test();
+                //test();
             }
             //catch (Exception e)
             {
