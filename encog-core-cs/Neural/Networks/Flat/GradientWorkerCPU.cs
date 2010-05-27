@@ -114,19 +114,26 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            this.stopwatch.Reset();
-            this.stopwatch.Start();
-            this.errorCalculation.Reset();
-            for (int i = this.low; i <= high; i++)
+            try
             {
-                this.training.GetRecord(i, this.pair);
-                Process(pair.Input.Data, pair.Ideal.Data);
+                this.stopwatch.Reset();
+                this.stopwatch.Start();
+                this.errorCalculation.Reset();
+                for (int i = this.low; i <= high; i++)
+                {
+                    this.training.GetRecord(i, this.pair);
+                    Process(pair.Input.Data, pair.Ideal.Data);
+                }
+                double error = this.errorCalculation.CalculateRMS();
+                this.owner.Report(this.gradients, error, null);
+                EncogArray.Fill(this.gradients, 0);
+                this.stopwatch.Stop();
+                this.elapsedTime = this.stopwatch.ElapsedTicks;
             }
-            double error = this.errorCalculation.CalculateRMS();
-            this.owner.Report(this.gradients, error);
-            EncogArray.Fill(this.gradients, 0);
-            this.stopwatch.Stop();
-            this.elapsedTime = this.stopwatch.ElapsedTicks;
+            catch (Exception ex)
+            {
+                this.owner.Report(null, 0, ex);
+            }
         }
 
         /// <summary>

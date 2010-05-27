@@ -86,6 +86,11 @@ namespace Encog.Neural.Networks.Flat
         private double calculatedCLRatio;
 
         /// <summary>
+        /// A reported exception from the threads.
+        /// </summary>
+        private Exception reportedException;
+
+        /// <summary>
         /// Train a flat network multithreaded. 
         /// </summary>
         /// <param name="network">The network to train.</param>
@@ -101,8 +106,8 @@ namespace Encog.Neural.Networks.Flat
             this.network = network;
 
             this.indexable = (IIndexable)training;
-            this.NumThreads = 0;   
-            
+            this.NumThreads = 0;
+            this.reportedException = null;
         }
 
         /// <summary>
@@ -190,15 +195,23 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         /// <param name="gradients">The gradients from that worker.</param>
         /// <param name="error">The error for that worker.</param>
-        public void Report(double[] gradients, double error)
+        /// <param name="ex">A reported exception from the thread.</param>
+        public void Report(double[] gradients, double error, Exception ex)
         {
             lock (this)
             {
-                for (int i = 0; i < gradients.Length; i++)
+                if (ex == null)
                 {
-                    this.gradients[i] += gradients[i];
+                    for (int i = 0; i < gradients.Length; i++)
+                    {
+                        this.gradients[i] += gradients[i];
+                    }
+                    this.totalError += error;
                 }
-                this.totalError += error;
+                else
+                {
+                    this.reportedException = ex;
+                }
             }
         }
 
@@ -242,6 +255,11 @@ namespace Encog.Neural.Networks.Flat
             EncogArray.ArrayCopy(this.weights, 0, this.network.Weights, 0, this.weights.Length);
 
             CalculatePerformance();
+
+            if (this.reportedException != null)
+            {
+                throw new NeuralNetworkError(this.reportedException);
+            }
         }
 
         /// <summary>

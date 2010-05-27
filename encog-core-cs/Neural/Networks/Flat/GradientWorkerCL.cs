@@ -118,36 +118,43 @@ namespace Encog.Neural.Networks.Flat
         /// </summary>
         public void Run()
         {
-            this.stopwatch.Reset();
-            this.stopwatch.Start();
-
-            KernelNetworkTrain k = this.device.Platform.NetworkTrain;
-            
-            k.Calculate(workload);
-
-            for (int j = 0; j < this.gradients.Length; j++)
-                this.gradients[j] = 0;
-
-            double e = 0;
-            int index = 0;
-            int errorIndex = 0;
-
-            for (int i = 0; i < workload.MaxUnits; i++)
+            try
             {
-                e += workload.Errors[errorIndex++];
-                
+                this.stopwatch.Reset();
+                this.stopwatch.Start();
+
+                KernelNetworkTrain k = this.device.Platform.NetworkTrain;
+
+                k.Calculate(workload);
+
                 for (int j = 0; j < this.gradients.Length; j++)
+                    this.gradients[j] = 0;
+
+                double e = 0;
+                int index = 0;
+                int errorIndex = 0;
+
+                for (int i = 0; i < workload.MaxUnits; i++)
                 {
-                    this.gradients[j] += workload.Gradients[index++];
+                    e += workload.Errors[errorIndex++];
+
+                    for (int j = 0; j < this.gradients.Length; j++)
+                    {
+                        this.gradients[j] += workload.Gradients[index++];
+                    }
                 }
+
+                int count = (high - low) + 1;
+                double error = Math.Sqrt(e / (count * training.IdealSize));
+                this.owner.Report(this.gradients, error,null);
+
+                this.stopwatch.Stop();
+                this.elapsedTime = this.stopwatch.ElapsedTicks;
             }
-            
-            int count = (high - low) + 1;
-            double error = Math.Sqrt(e / (count * training.IdealSize));
-            this.owner.Report(this.gradients, error);
-             
-            this.stopwatch.Stop();
-            this.elapsedTime = this.stopwatch.ElapsedTicks;
+            catch (Exception ex)
+            {
+                this.owner.Report(null, 0, ex);
+            }
         }
 
 
