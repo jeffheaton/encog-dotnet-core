@@ -156,7 +156,7 @@ namespace Sandbox
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 3, 0, 1, true);
             BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
             ResilientPropagation train = new ResilientPropagation(network, training);
-            //train.AttemptFlatten = false;
+            train.AttemptFlatten = true;
 
             long start = Environment.TickCount;
             for(int i=0;i<1000;i++)
@@ -168,34 +168,6 @@ namespace Sandbox
             Console.WriteLine("Done:" + (stop - start));
         }
 
-        public static void test()
-        {
-            BasicNeuralDataSet training = (BasicNeuralDataSet)RandomTrainingFactory.Generate(
-                3, 3, 3, -1, 1);
-            BasicNetwork network = EncogUtility.SimpleFeedForward(3, 6, 0, 3, true);
-            (new ConsistentRandomizer(-1, 1)).Randomize(network);
-
-            Backpropagation t = new Backpropagation(network, training, 0.4,0.0);
-            t.AttemptFlatten = false;
-
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(3, 3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                training.GetRecord(i, pair);
-                Console.WriteLine("Before:"+i+":"+pair.ToString());
-            }
-            
-            for(int i=0;i<100;i++)
-                t.Iteration();
-
-            for (int i = 0; i < 3; i++)
-            {
-                training.GetRecord(i, pair);
-                Console.WriteLine("After:" + i + ":" + pair.ToString());
-            }
-
-        }
 
         static void Main(string[] args)
         {
@@ -205,10 +177,10 @@ namespace Sandbox
                 //stress();
                 //benchmark();
                 //testBuffer();
-                benchmarkCL();
+                //benchmarkCL();
                 //testSimpleCL();
                 //XORNEAT();
-                //testFlatten();
+                testFlatten();
                 //test();
                 //test();
             }

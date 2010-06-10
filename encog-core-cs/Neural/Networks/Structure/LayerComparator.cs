@@ -105,7 +105,7 @@ namespace Encog.Neural.Networks.Structure
             }
             else if (depth1 != depth2)
             {
-                return depth2 - depth1;
+                return depth1 - depth2;
                 // failing all else, just sort them by their ids
             }
             else

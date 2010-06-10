@@ -95,7 +95,7 @@ namespace Encog.Neural.Networks.Structure
 
             // traverse all of the ways to get to that layer
             ICollection<ILayer> prev = this.network.Structure
-                    .GetPreviousLayers(this.outputLayer);
+                    .GetPreviousLayers(layer);
 
             foreach (ILayer nextLayer in prev)
             {

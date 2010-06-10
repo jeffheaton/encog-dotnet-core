@@ -142,8 +142,7 @@ namespace Encog.Persist.Persistors
                     true);
             this.current = (TrainingContinuation)obj;
 
-            // save the layers
-            xmlout.BeginTag(BasicNetworkPersistor.TAG_LAYERS);
+            xmlout.BeginTag(TrainingContinuationPersistor.TAG_ITEMS);
             SaveItems(xmlout);
             xmlout.EndTag();
 
