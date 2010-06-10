@@ -156,7 +156,7 @@ namespace Encog.Neural.Networks.Training.CPN
                 error.UpdateError(output.Data, pair.Ideal.Data);
             }
 
-            this.Error = error.CalculateRMS();
+            this.Error = error.Calculate();
         }
     }
 }

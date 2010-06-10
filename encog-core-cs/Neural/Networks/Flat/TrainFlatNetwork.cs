@@ -109,7 +109,7 @@ namespace Encog.Neural.Networks.Flat
         {
             get
             {
-                return errorCalculation.CalculateRMS();
+                return errorCalculation.Calculate();
             }
         }
 

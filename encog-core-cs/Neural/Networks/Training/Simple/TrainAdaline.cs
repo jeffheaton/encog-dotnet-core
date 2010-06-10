@@ -137,7 +137,7 @@ namespace Encog.Neural.Networks.Training.Simple
             }
 
             // set the global error
-            this.Error = errorCalculation.CalculateRMS();
+            this.Error = errorCalculation.Calculate();
         }
 
         /// <summary>

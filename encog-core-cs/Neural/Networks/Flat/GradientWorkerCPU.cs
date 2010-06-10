@@ -124,7 +124,7 @@ namespace Encog.Neural.Networks.Flat
                     this.training.GetRecord(i, this.pair);
                     Process(pair.Input.Data, pair.Ideal.Data);
                 }
-                double error = this.errorCalculation.CalculateRMS();
+                double error = this.errorCalculation.Calculate();
                 this.owner.Report(this.gradients, error, null);
                 EncogArray.Fill(this.gradients, 0);
                 this.stopwatch.Stop();

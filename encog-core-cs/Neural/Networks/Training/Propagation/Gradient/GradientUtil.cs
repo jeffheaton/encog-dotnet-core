@@ -250,7 +250,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Gradient
         {
             get
             {
-                return this.error.CalculateRMS();
+                return this.error.Calculate();
             }
         }
 

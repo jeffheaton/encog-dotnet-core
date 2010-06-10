@@ -203,7 +203,7 @@ namespace Encog.Neural.Networks
                 INeuralData actual = Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
             }
-            return errorCalculation.CalculateRMS();
+            return errorCalculation.Calculate();
         }
 
         /// <summary>

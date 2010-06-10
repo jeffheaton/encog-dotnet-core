@@ -357,7 +357,7 @@ namespace Encog.Neural.Networks.Flat
                 Compute(pair.Input.Data, actual);
                 errorCalculation.UpdateError(actual, pair.Ideal.Data);
             }
-            return errorCalculation.CalculateRMS();
+            return errorCalculation.Calculate();
         }
 
         /// <summary>

@@ -97,6 +97,7 @@
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
     <Compile Include="MathUtil\IntRange.cs" />
     <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\CholeskyDecomposition.cs" />
