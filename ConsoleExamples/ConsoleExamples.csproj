@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A65A5878-6336-4ACF-9C40-540F8FAF2CC7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encog</RootNamespace>
+    <AssemblyName>ConsoleExamples</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleExamples.cs" />
+    <Compile Include="Examples\Adaline\AdalineDigits.cs" />
+    <Compile Include="Examples\Benchmark\ThreadCount.cs" />
+    <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
+    <Compile Include="Examples\CL\BenchmarkCL.cs" />
+    <Compile Include="Examples\CL\TuneCL.cs" />
+    <Compile Include="Examples\CL\SimpleCL.cs" />
+    <Compile Include="Examples\Forest\Constant.cs" />
+    <Compile Include="Examples\Forest\Evaluate.cs" />
+    <Compile Include="Examples\Forest\ForestCover.cs" />
+    <Compile Include="Examples\Forest\GenerateData.cs" />
+    <Compile Include="Examples\Forest\TrainNetwork.cs" />
+    <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
+    <Compile Include="Examples\GeneticTSP\TSPGenome.cs" />
+    <Compile Include="Examples\GeneticTSP\TSPScore.cs" />
+    <Compile Include="Examples\Hopfield\Associate\HopfieldAssociate.cs" />
+    <Compile Include="Examples\Hopfield\Simple\HopfieldSimple.cs" />
+    <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
+    <Compile Include="Examples\Image\ImagePair.cs" />
+    <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
+    <Compile Include="Examples\Lunar\LanderSimulator.cs" />
+    <Compile Include="Examples\Lunar\LunarLander.cs" />
+    <Compile Include="Examples\Lunar\NeuralPilot.cs" />
+    <Compile Include="Examples\Lunar\PilotScore.cs" />
+    <Compile Include="Examples\Market\Config.cs" />
+    <Compile Include="Examples\Market\Market.cs" />
+    <Compile Include="Examples\Market\MarketBuildTraining.cs" />
+    <Compile Include="Examples\Market\MarketPredict.cs" />
+    <Compile Include="Examples\Market\MarketPrune.cs" />
+    <Compile Include="Examples\Market\MarketTrain.cs" />
+    <Compile Include="Examples\MultiBench\MultiThreadBenchmark.cs" />
+    <Compile Include="Examples\Persist\PersistEncog.cs" />
+    <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Examples\Sunspots\Sunspots.cs" />
+    <Compile Include="Examples\Util\City.cs" />
+    <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
+    <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
+    <Compile Include="Examples\Art\ART1\ClassifyART1.cs" />
+    <Compile Include="Examples\BAM\BidirectionalAssociativeMemory.cs" />
+    <Compile Include="Examples\Benchmark\EncogBenchmarkExample.cs" />
+    <Compile Include="Examples\Boltzmann\BoltzTSP.cs" />
+    <Compile Include="Examples\ConsoleInterface.cs" />
+    <Compile Include="Examples\CPN\RocketCPN.cs" />
+    <Compile Include="Examples\ElmanNetwork\ElmanExample.cs" />
+    <Compile Include="Examples\ExampleArgument.cs" />
+    <Compile Include="Examples\ExampleInfo.cs" />
+    <Compile Include="Examples\IExample.cs" />
+    <Compile Include="Examples\IExampleInterface.cs" />
+    <Compile Include="Examples\Util\TemporalXOR.cs" />
+    <Compile Include="Examples\XOR\Anneal\XorAnneal.cs" />
+    <Compile Include="Examples\XOR\Backprop\XorBackprop.cs" />
+    <Compile Include="Examples\XOR\Gaussian\XorGaussian.cs" />
+    <Compile Include="Examples\XOR\Genetic\XorGenetic.cs" />
+    <Compile Include="Examples\XOR\LMA\XORLMA.cs" />
+    <Compile Include="Examples\XOR\Manhattan\XORManhattan.cs" />
+    <Compile Include="Examples\XOR\NEAT\XORNEAT.cs" />
+    <Compile Include="Examples\XOR\Radial\XorRadial.cs" />
+    <Compile Include="Examples\XOR\Resilient\XORResilient.cs" />
+    <Compile Include="Examples\XOR\SCG\XORSCG.cs" />
+    <Compile Include="Examples\XOR\Thresholdless\XorThresholdless.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\encog-core-cs\encog-core-cs.csproj">
+      <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
+      <Name>encog-core-cs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
