@@ -174,8 +174,14 @@ namespace Encog.MathUtil
         /// </summary>
         public static ErrorCalculationMode Mode
         {
-            get;
-            set;
+            get
+            {
+                return ErrorCalculation.mode;
+            }
+            set
+            {
+                ErrorCalculation.mode = value;
+            }
         }
     }
 }
