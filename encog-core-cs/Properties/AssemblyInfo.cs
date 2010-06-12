@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.3
+// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Encog")]
-[assembly: AssemblyDescription("Encog Artificial Intelligence Framework v2.4")]
+[assembly: AssemblyDescription("Encog Artificial Intelligence Framework v2.5")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Heaton Research, Inc.")]
 [assembly: AssemblyProduct("Encog")]
@@ -61,5 +61,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.4.0.0")]
-[assembly: AssemblyFileVersion("2.4.0.0")]
+[assembly: AssemblyVersion("2.5.0.0")]
+[assembly: AssemblyFileVersion("2.5.0.0")]

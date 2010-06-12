@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.3
+// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -26,6 +26,7 @@
 // For information on Heaton Research trademarks, visit:
 // 
 // http://www.heatonresearch.com/copyright.html
+
 #if !SILVERLIGHT
 using System;
 using System.Collections.Generic;
