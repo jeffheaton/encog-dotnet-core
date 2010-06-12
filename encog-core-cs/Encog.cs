@@ -31,12 +31,15 @@
 using log4net;
 using log4net.Config;
 #endif
+#if !SILVERLIGHT
+using Encog.Util.CL;
+#endif
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.CL;
+
 
 namespace Encog
 {
@@ -62,11 +65,13 @@ namespace Encog
 	    /// </summary>
 	    private static String FILE_VERSION = "1";
 
+#if !SILVERLIGHT
         /// <summary>
         /// If Encog is not using GPU/CL processing this attribute will be null.  
         /// Otherwise it holds the Encog CL object.
         /// </summary>
         public EncogCL CL { get; set; }
+#endif
 		
 #if logging
         /// <summary>
@@ -144,6 +149,7 @@ namespace Encog
             }
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Enable OpenCL processing.  OpenCL processing allows Encog to 
         /// use GPU devices to speed calculations.  Not all areas of Encog 
@@ -168,6 +174,6 @@ namespace Encog
                 throw new EncogCLError(e);
             }
         }
-
+#endif
     }
 }
