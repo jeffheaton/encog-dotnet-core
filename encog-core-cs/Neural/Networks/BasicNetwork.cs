@@ -42,10 +42,10 @@ using Encog.Persist.Persistors;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Structure;
+using Encog.Util;
 
 #if logging
 using log4net;
-using Encog.Util;
 #endif
 
 namespace Encog.Neural.Networks

@@ -27,6 +27,10 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if logging
+using log4net;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +41,10 @@ using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.NeuralData;
 using Encog.MathUtil;
-
-#if logging
-using log4net;
 using Encog.MathUtil.Matrices;
 using Encog.Util;
-#endif
+
+
 namespace Encog.Neural.Networks.Training.Competitive
 {
     /// <summary>
@@ -399,7 +401,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// </summary>
         public override void Iteration()
         {
-#if !SILVERLIGHT
+#if logging
             if (logger.IsInfoEnabled)
             {
                 logger.Info("Performing Competitive Training iteration.");

@@ -27,6 +27,10 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if logging
+using log4net;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,15 +42,11 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
-
-#if logging
-using log4net;
 using Encog.Util;
 using Encog.Neural.Networks.Flat;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Manhattan;
-#endif
 
 namespace Encog.Neural.Networks.Training.Propagation
 {

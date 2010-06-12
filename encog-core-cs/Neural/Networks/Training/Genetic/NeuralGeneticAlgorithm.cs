@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Encog.Solve.Genetic;
 using Encog.MathUtil.Randomize;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Population;
 using Encog.Solve.Genetic.Crossover;
 using Encog.Solve.Genetic.Mutate;
+
+#if logging
+using log4net;
+#endif
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
@@ -134,11 +137,12 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         public override void Iteration()
         {
-
+#if logging
             if (logger.IsInfoEnabled)
             {
                 logger.Info("Performing Genetic iteration.");
             }
+#endif
             PreIteration();
             Helper.Iteration();
             Error = Helper.Error;

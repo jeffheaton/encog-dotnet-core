@@ -27,16 +27,16 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if logging
+using log4net;
+using log4net.Config;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-#if logging
-using log4net;
-using log4net.Config;
 using Encog.Util.CL;
-#endif
 
 namespace Encog
 {

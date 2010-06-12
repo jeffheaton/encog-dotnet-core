@@ -1,4 +1,7 @@
-﻿using System;
+﻿#if !SILVERLIGHT
+using Encog.Util.CL;
+#endif
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +12,6 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util.Concurrency;
 using Encog.MathUtil;
 using Encog.Util;
-using Encog.Util.CL;
 using System.Collections;
 
 namespace Encog.Neural.Networks.Flat

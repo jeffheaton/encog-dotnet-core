@@ -34,9 +34,10 @@ using System.Text;
 using Encog.Persist;
 using System.Runtime.Serialization;
 using Encog.MathUtil;
+using Encog.MathUtil.Matrices.Decomposition;
 #if logging
 using log4net;
-using Encog.MathUtil.Matrices.Decomposition;
+
 #endif
 namespace Encog.MathUtil.Matrices
 {

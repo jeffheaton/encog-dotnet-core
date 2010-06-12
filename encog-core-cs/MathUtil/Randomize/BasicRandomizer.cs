@@ -26,6 +26,10 @@
 // For information on Heaton Research trademarks, visit:
 // 
 // http://www.heatonresearch.com/copyright.html
+#if logging
+using log4net;
+#endif
+
 
 using System;
 using System.Collections.Generic;
@@ -34,10 +38,8 @@ using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-#if logging
-using log4net;
 using Encog.MathUtil.Matrices;
-#endif
+
 namespace Encog.MathUtil.Randomize
 {
     /// <summary>

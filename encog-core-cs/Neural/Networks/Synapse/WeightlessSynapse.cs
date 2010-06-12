@@ -36,9 +36,10 @@ using Encog.Neural.Data;
 using Encog.Persist;
 using Encog.Neural.Data.Basic;
 using Encog.Persist.Persistors;
+using Encog.MathUtil.Matrices;
+
 #if logging
 using log4net;
-using Encog.MathUtil.Matrices;
 #endif
 namespace Encog.Neural.Networks.Synapse
 {

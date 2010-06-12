@@ -34,11 +34,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
-
-#if logging
-using log4net;
 using Encog.Util.HTTP;
-#endif
+using log4net;
 
 namespace Encog.Bot
 {

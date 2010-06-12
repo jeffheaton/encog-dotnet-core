@@ -35,12 +35,12 @@ using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
 using Encog.MathUtil;
 using System.Reflection;
-
-#if logging
-using log4net;
 using Encog.MathUtil.Matrices;
 using Encog.Util.CSV;
 using Encog.Util;
+
+#if logging
+using log4net;
 #endif
 
 namespace Encog.Persist.Persistors

@@ -27,6 +27,10 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if logging
+using log4net;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,23 +40,17 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-#if logging
-using log4net;
 using Encog.Util.Concurrency.Job;
-#endif
 
 namespace Encog.Neural.Networks.Prune
 {
-    /**
- * This class is used to help determine the optimal configuration for the hidden
- * layers of a neural network. It can accept a pattern, which specifies the type
- * of neural network to create, and a list of the maximum and minimum hidden
- * layer neurons. It will then attempt to train the neural network at all
- * configurations and see which hidden neuron counts work the best.
- * 
- * @author jheaton
- * 
- */
+    /// <summary>
+    /// This class is used to help determine the optimal configuration for the hidden
+    /// layers of a neural network. It can accept a pattern, which specifies the type
+    /// of neural network to create, and a list of the maximum and minimum hidden
+    /// layer neurons. It will then attempt to train the neural network at all
+    /// configurations and see which hidden neuron counts work the best.
+    /// </summary>
     public class PruneIncremental : ConcurrentJob
     {
 #if logging

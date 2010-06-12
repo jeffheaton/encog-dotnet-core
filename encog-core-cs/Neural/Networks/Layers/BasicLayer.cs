@@ -27,6 +27,10 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if logging
+using log4net;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +41,7 @@ using Encog.Neural.Data;
 using System.Runtime.Serialization;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-
-#if logging
-using log4net;
 using Encog.Neural.Networks.Synapse.NEAT;
-#endif
 
 namespace Encog.Neural.Networks.Layers
 {

@@ -36,10 +36,10 @@ using System.Text;
 using System.IO;
 using Encog.Bot.Browse.Range;
 using System.Net;
+using Encog.Util.HTTP;
 
 #if logging
 using log4net;
-using Encog.Util.HTTP;
 #endif
 
 namespace Encog.Bot.Browse
