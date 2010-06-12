@@ -145,10 +145,12 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         public double ParamProbabilityWeightReplaced { get; set; }
 
+#if !SILVERLIGHT
         /// <summary>
         /// The cloud.
         /// </summary>
         public EncogCloud Cloud { get; set; }
+#endif
 
         /// <summary>
         /// The splits.

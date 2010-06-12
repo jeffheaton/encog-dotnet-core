@@ -127,10 +127,10 @@ namespace Encog.Neural.Networks.Flat
             lastGradient = new double[network.Weights.Length];
 
             weights = network.Weights;
-
-            IList<EncogCLDevice> clDevices = null;
-
             DetermineWorkload determine;
+
+#if !SILVERLIGHT
+            IList<EncogCLDevice> clDevices = null;
 
             //  consider CL, if enabled
             if (Encog.Instance.CL != null)
@@ -147,6 +147,7 @@ namespace Encog.Neural.Networks.Flat
                 determine.CLRatio = Encog.Instance.CL.EnforcedCLRatio;
             }
             else
+#endif
                 determine = new DetermineWorkload(NumThreads, (int)this.indexable.Count);
 
             
@@ -155,6 +156,7 @@ namespace Encog.Neural.Networks.Flat
             determine.CalculateWorkers();
             int index = 0;
 
+#if !SILVERLIGHT
             // if we are using CL, then we need to compile the kernels for this network
             if (Encog.Instance.CL != null)
             {
@@ -183,6 +185,7 @@ namespace Encog.Neural.Networks.Flat
             {
                 this.workers[index++] = new GradientWorkerCL(clDevices[idx++], network.Clone(), this, indexable.OpenAdditional(), r.Low, r.High);
             }
+#endif
 
             // handle CPU
             foreach (IntRange r in determine.CPURanges)
@@ -312,11 +315,13 @@ namespace Encog.Neural.Networks.Flat
                     countCPU++;
                     totalCPU+=worker.ElapsedTime;
                 }
+#if !SILVERLIGHT
                 else if( worker is GradientWorkerCL )
                 {
                     countCL++;
                     totalCL+=worker.ElapsedTime;
                 }
+#endif
             }
 
             if( countCPU>0 )

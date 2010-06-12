@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SILVERLIGHT
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,6 @@ namespace Encog.Neural.Networks.Training
         /// The task that we are reporting to.
         /// </summary>
         private CloudTask task;
-
 
         /// <summary>
         /// Create a training status utility.
@@ -95,3 +95,4 @@ namespace Encog.Neural.Networks.Training
 
     }
 }
+#endif

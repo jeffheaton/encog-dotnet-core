@@ -89,10 +89,12 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         void Iteration();
 
+#if !SILVERLIGHT
         /// <summary>
         /// The Encog cloud to use.
         /// </summary>
         EncogCloud Cloud { get; set; }
+#endif
 
         /// <summary>
         /// Should be called once training is complete and no more iterations are

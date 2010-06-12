@@ -26,7 +26,7 @@
 // For information on Heaton Research trademarks, visit:
 // 
 // http://www.heatonresearch.com/copyright.html
-
+#if !SILVERLIGHT
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -141,3 +141,4 @@ namespace Encog.Util.Simple
         }
     }
 }
+#endif

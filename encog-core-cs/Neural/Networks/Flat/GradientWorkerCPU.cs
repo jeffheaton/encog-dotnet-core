@@ -9,6 +9,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Util;
 using Encog.Util.Concurrency;
 using System.Diagnostics;
+using Encog.Util.Time;
 
 namespace Encog.Neural.Networks.Flat
 {

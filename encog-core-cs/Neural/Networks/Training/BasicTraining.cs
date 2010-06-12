@@ -58,12 +58,14 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         private double error;
 
+#if !SILVERLIGHT
         /// <summary>
         /// The Encog cloud to use.
         /// </summary>
         public EncogCloud Cloud { get; set; }
 
         private TrainingStatusUtility statusUtil;
+#endif
 
         /// <summary>
         /// Training strategies can be added to improve the training results. There
@@ -133,6 +135,7 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         public void PreIteration()
         {
+#if !SILVERLIGHT
             if (this.statusUtil != null)
             {
                 this.statusUtil.Update();
@@ -145,6 +148,7 @@ namespace Encog.Neural.Networks.Training
                     this.statusUtil.Update();
                 }
             }
+#endif
 
 
             foreach (IStrategy strategy in this.strategies)
@@ -169,11 +173,13 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         public void FinishTraining()
         {
+#if !SILVERLIGHT
             if (this.statusUtil != null)
             {
                 this.statusUtil.Finish();
                 this.statusUtil = null;
             }
+#endif
         }
 
         /// <summary>
