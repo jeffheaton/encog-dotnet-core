@@ -1,33 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
-// .Net Version
-// http://www.heatonresearch.com/encog/
-// http://code.google.com/p/encog-java/
-// 
-// Copyright 2008-2010 by Heaton Research Inc.
-// 
-// Released under the LGPL.
-//
-// This is free software; you can redistribute it and/or modify it
-// under the terms of the GNU Lesser General Public License as
-// published by the Free Software Foundation; either version 2.1 of
-// the License, or (at your option) any later version.
-//
-// This software is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-// Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public
-// License along with this software; if not, write to the Free
-// Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-// 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-// 
-// Encog and Heaton Research are Trademarks of Heaton Research, Inc.
-// For information on Heaton Research trademarks, visit:
-// 
-// http://www.heatonresearch.com/copyright.html
-
-namespace TuneEncogOpenCL
+﻿namespace TuneEncogOpenCL
 {
     partial class EncogTuneForm
     {
@@ -75,7 +46,6 @@ namespace TuneEncogOpenCL
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnAutoTune = new System.Windows.Forms.Button();
             this.textCLRatio = new System.Windows.Forms.TextBox();
             this.textWorkgroupSize = new System.Windows.Forms.TextBox();
             this.textCLThreadCount = new System.Windows.Forms.TextBox();
@@ -83,13 +53,18 @@ namespace TuneEncogOpenCL
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textTimedResult = new System.Windows.Forms.TextBox();
+            this.textPerf = new System.Windows.Forms.TextBox();
+            this.textNonCLResult = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textCalcCLRatio = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textCLResult = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnBenchmark = new System.Windows.Forms.Button();
             this.statusBarText = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textCalcCLRatio = new System.Windows.Forms.TextBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -157,7 +132,7 @@ namespace TuneEncogOpenCL
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 129);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(237, 121);
+            this.groupBox1.Size = new System.Drawing.Size(237, 145);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Network Configuration";
@@ -236,7 +211,7 @@ namespace TuneEncogOpenCL
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnAutoTune);
+            this.groupBox2.Controls.Add(this.linkLabel1);
             this.groupBox2.Controls.Add(this.textCLRatio);
             this.groupBox2.Controls.Add(this.textWorkgroupSize);
             this.groupBox2.Controls.Add(this.textCLThreadCount);
@@ -245,20 +220,10 @@ namespace TuneEncogOpenCL
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Location = new System.Drawing.Point(255, 129);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(220, 121);
+            this.groupBox2.Size = new System.Drawing.Size(220, 145);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "OpenCL Configuration";
-            // 
-            // btnAutoTune
-            // 
-            this.btnAutoTune.Location = new System.Drawing.Point(9, 92);
-            this.btnAutoTune.Name = "btnAutoTune";
-            this.btnAutoTune.Size = new System.Drawing.Size(205, 23);
-            this.btnAutoTune.TabIndex = 6;
-            this.btnAutoTune.Text = "Auto Tune";
-            this.btnAutoTune.UseVisualStyleBackColor = true;
-            this.btnAutoTune.Click += new System.EventHandler(this.btnAutoTune_Click);
             // 
             // textCLRatio
             // 
@@ -312,39 +277,97 @@ namespace TuneEncogOpenCL
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.textPerf);
+            this.groupBox3.Controls.Add(this.textNonCLResult);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.textCalcCLRatio);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.textTimedResult);
+            this.groupBox3.Controls.Add(this.textCLResult);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.btnBenchmark);
             this.groupBox3.Location = new System.Drawing.Point(481, 129);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(191, 121);
+            this.groupBox3.Size = new System.Drawing.Size(191, 145);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Benchmark Results";
             // 
-            // textTimedResult
+            // textPerf
             // 
-            this.textTimedResult.Location = new System.Drawing.Point(85, 23);
-            this.textTimedResult.Name = "textTimedResult";
-            this.textTimedResult.ReadOnly = true;
-            this.textTimedResult.Size = new System.Drawing.Size(100, 20);
-            this.textTimedResult.TabIndex = 2;
-            this.textTimedResult.Text = "n/a";
+            this.textPerf.Location = new System.Drawing.Point(85, 67);
+            this.textPerf.Name = "textPerf";
+            this.textPerf.ReadOnly = true;
+            this.textPerf.Size = new System.Drawing.Size(100, 20);
+            this.textPerf.TabIndex = 8;
+            this.textPerf.Text = "n/a";
+            // 
+            // textNonCLResult
+            // 
+            this.textNonCLResult.Location = new System.Drawing.Point(85, 45);
+            this.textNonCLResult.Name = "textNonCLResult";
+            this.textNonCLResult.ReadOnly = true;
+            this.textNonCLResult.Size = new System.Drawing.Size(100, 20);
+            this.textNonCLResult.TabIndex = 7;
+            this.textNonCLResult.Text = "n/a";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 72);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Perf. Inc.:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 48);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(79, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Non-CL Result:";
+            // 
+            // textCalcCLRatio
+            // 
+            this.textCalcCLRatio.Location = new System.Drawing.Point(85, 90);
+            this.textCalcCLRatio.Name = "textCalcCLRatio";
+            this.textCalcCLRatio.ReadOnly = true;
+            this.textCalcCLRatio.Size = new System.Drawing.Size(100, 20);
+            this.textCalcCLRatio.TabIndex = 4;
+            this.textCalcCLRatio.Text = "n/a";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 93);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(75, 13);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Calc CL Ratio:";
+            // 
+            // textCLResult
+            // 
+            this.textCLResult.Location = new System.Drawing.Point(85, 23);
+            this.textCLResult.Name = "textCLResult";
+            this.textCLResult.ReadOnly = true;
+            this.textCLResult.Size = new System.Drawing.Size(100, 20);
+            this.textCLResult.TabIndex = 2;
+            this.textCLResult.Text = "n/a";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(6, 26);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 13);
+            this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 1;
-            this.label8.Text = "Timed Result:";
+            this.label8.Text = "CL Result:";
             // 
             // btnBenchmark
             // 
-            this.btnBenchmark.Location = new System.Drawing.Point(6, 92);
+            this.btnBenchmark.Location = new System.Drawing.Point(6, 116);
             this.btnBenchmark.Name = "btnBenchmark";
             this.btnBenchmark.Size = new System.Drawing.Size(179, 23);
             this.btnBenchmark.TabIndex = 0;
@@ -362,36 +385,29 @@ namespace TuneEncogOpenCL
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusBarText});
-            this.statusBar.Location = new System.Drawing.Point(0, 251);
+            this.statusBar.Location = new System.Drawing.Point(0, 277);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(684, 22);
             this.statusBar.SizingGrip = false;
             this.statusBar.TabIndex = 4;
             this.statusBar.Text = "statusStrip1";
             // 
-            // label9
+            // linkLabel1
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 48);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 13);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Calc CL Ratio:";
-            // 
-            // textCalcCLRatio
-            // 
-            this.textCalcCLRatio.Location = new System.Drawing.Point(85, 45);
-            this.textCalcCLRatio.Name = "textCalcCLRatio";
-            this.textCalcCLRatio.ReadOnly = true;
-            this.textCalcCLRatio.Size = new System.Drawing.Size(100, 20);
-            this.textCalcCLRatio.TabIndex = 4;
-            this.textCalcCLRatio.Text = "n/a";
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(6, 121);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "How to tune";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // EncogTuneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 273);
+            this.ClientSize = new System.Drawing.Size(684, 299);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -399,7 +415,7 @@ namespace TuneEncogOpenCL
             this.Controls.Add(this.listGPU);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EncogTuneForm";
-            this.Text = "Tune Encog OpenCL";
+            this.Text = "Tune Encog OpenCL v1.0";
             this.Load += new System.EventHandler(this.EncogTuneForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -434,7 +450,6 @@ namespace TuneEncogOpenCL
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAutoTune;
         private System.Windows.Forms.TextBox textCLRatio;
         private System.Windows.Forms.TextBox textWorkgroupSize;
         private System.Windows.Forms.TextBox textCLThreadCount;
@@ -444,11 +459,16 @@ namespace TuneEncogOpenCL
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnBenchmark;
-        private System.Windows.Forms.TextBox textTimedResult;
+        private System.Windows.Forms.TextBox textCLResult;
         private System.Windows.Forms.ToolStripStatusLabel statusBarText;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.TextBox textCalcCLRatio;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textPerf;
+        private System.Windows.Forms.TextBox textNonCLResult;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
