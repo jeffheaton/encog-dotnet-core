@@ -39,6 +39,7 @@ using Encog.Util;
 using Encog.Util.Concurrency;
 using System.Diagnostics;
 using Encog.Util.Time;
+using Encog.MathUtil.Error;
 
 namespace Encog.Neural.Networks.Flat
 {

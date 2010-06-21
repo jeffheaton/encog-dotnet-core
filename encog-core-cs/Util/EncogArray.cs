@@ -139,5 +139,21 @@ namespace Encog.Util
             for (int i = 0; i < p.Length; i++)
                 p[i] = value;
         }
+
+        /// <summary>
+        /// Search for a string in an array. 
+        /// </summary>
+        /// <param name="search">Where to search.</param>
+        /// <param name="searchFor">What we are looking for.</param>
+        /// <returns>The index that the string occurs at.</returns>
+        public static int FindStringInArray(String[] search, String searchFor)
+        {
+            for (int i = 0; i < search.Length; i++)
+            {
+                if (search[i].Equals(searchFor))
+                    return i;
+            }
+            return -1;
+        }
     }
 }

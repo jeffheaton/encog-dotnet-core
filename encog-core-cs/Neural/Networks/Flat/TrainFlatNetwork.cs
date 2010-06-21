@@ -34,6 +34,7 @@ using System.Text;
 using Encog.MathUtil;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.NeuralData;
+using Encog.MathUtil.Error;
 
 namespace Encog.Neural.Networks.Flat
 {

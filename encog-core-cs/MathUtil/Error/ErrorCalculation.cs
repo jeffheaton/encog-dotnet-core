@@ -34,7 +34,7 @@ using System.Text;
 using Encog.MathUtil.Error;
 using Encog.Neural.Data;
 
-namespace Encog.MathUtil
+namespace Encog.MathUtil.Error
 {
     /// <summary>
     /// Calculate the error of a neural network. Encog currently supports three error
@@ -183,5 +183,25 @@ namespace Encog.MathUtil
                 ErrorCalculation.mode = value;
             }
         }
+
+        /// <summary>
+        /// Update the error with single values.
+        /// </summary>
+        /// <param name="actual">The actual value.</param>
+        /// <param name="ideal">The ideal value.</param>
+        public void UpdateError(double actual, double ideal)
+        {
+
+            double delta = ideal - actual;
+
+            if ( Mode == ErrorCalculationMode.ARCTAN)
+                delta = Math.Atan(delta);
+
+            this.globalError += delta * delta;
+
+            this.setSize++;
+
+        }
+
     }
 }

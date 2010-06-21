@@ -38,6 +38,7 @@ using Encog.Neural.Activation;
 using Encog.Util;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.MathUtil.Error;
 
 namespace Encog.Neural.Networks.Flat
 {

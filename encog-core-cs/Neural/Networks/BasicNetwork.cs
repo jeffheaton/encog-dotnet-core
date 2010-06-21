@@ -46,6 +46,7 @@ using Encog.Util;
 
 #if logging
 using log4net;
+using Encog.MathUtil.Error;
 #endif
 
 namespace Encog.Neural.Networks

@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using Encog.MathUtil;
+using Encog.MathUtil.Error;
 
 namespace Encog.Neural.Networks.Training.CPN
 {

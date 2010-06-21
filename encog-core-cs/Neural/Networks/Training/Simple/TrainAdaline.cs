@@ -36,6 +36,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil;
 using Encog.Neural.Data;
+using Encog.MathUtil.Error;
 
 namespace Encog.Neural.Networks.Training.Simple
 {

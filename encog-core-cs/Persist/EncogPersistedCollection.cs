@@ -124,6 +124,11 @@ namespace Encog.Persist
         public const String TYPE_POPULATION = "BasicPopulation";
 
         /// <summary>
+        /// A Support Vector Machine.
+        /// </summary>
+        public const String TYPE_SVM = "SVM";
+
+        /// <summary>
         /// The name attribute.
         /// </summary>
         public const String ATTRIBUTE_NAME = "name";

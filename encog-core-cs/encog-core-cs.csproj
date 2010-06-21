@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -99,6 +99,12 @@
     <Compile Include="MathUtil\EncogMath.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
     <Compile Include="MathUtil\IntRange.cs" />
+    <Compile Include="MathUtil\LIBSVM\SupportClass.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_model.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_node.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_parameter.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_problem.cs" />
     <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\CholeskyDecomposition.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\EigenvalueDecomposition.cs" />
@@ -210,6 +216,9 @@
     <Compile Include="Neural\Networks\Structure\NetworkCODEC.cs" />
     <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
     <Compile Include="Neural\Networks\Structure\SynapseComparator.cs" />
+    <Compile Include="Neural\Networks\SVM\KernelType.cs" />
+    <Compile Include="Neural\Networks\SVM\SVMNetwork.cs" />
+    <Compile Include="Neural\Networks\SVM\SVMType.cs" />
     <Compile Include="Neural\Networks\Synapse\BasicSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\DirectSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\ISynapse.cs" />
@@ -271,6 +280,8 @@
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\SVM\EncodeSVMProblem.cs" />
+    <Compile Include="Neural\Networks\Training\SVM\SVMTrain.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
     <Compile Include="Neural\Networks\Training\TrainingStatusUtility.cs" />
@@ -356,6 +367,7 @@
     <Compile Include="Persist\Persistors\PersistorUtil.cs" />
     <Compile Include="Persist\Persistors\PropertyDataPersistor.cs" />
     <Compile Include="Persist\Persistors\RadialBasisFunctionLayerPersistor.cs" />
+    <Compile Include="Persist\Persistors\SVMNetworkPersistor.cs" />
     <Compile Include="Persist\Persistors\TextDataPersistor.cs" />
     <Compile Include="Persist\Persistors\TrainingContinuationPersistor.cs" />
     <Compile Include="Persist\Persistors\WeightedSynapsePersistor.cs" />

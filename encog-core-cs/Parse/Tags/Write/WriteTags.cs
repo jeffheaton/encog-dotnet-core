@@ -260,6 +260,43 @@ namespace Encog.Parse.Tags.Write
 
         }
 
+        	/**
+	 * Write an array as a property.
+	 * @param name The name of the property.
+	 * @param array The array to write.
+	 * @param len The length of the array to write.
+	 */
+	public void AddProperty(String name, double[] array, int len) {
+		if (array != null) {
+			StringBuilder str = new StringBuilder();
+			for (int i = 0; i < len; i++) {
+				if (i != 0)
+					str.Append(' ');
+				str.Append(array[i]);
+			}
+			AddProperty(name, str.ToString());
+		}
+	}
+	
+	/**
+	 * Write an array as a property.
+	 * @param name The name of the property.
+	 * @param array The array to write.
+	 * @param len The length of the array to write.
+	 */
+	public void AddProperty(String name, int[] array, int len) {
+		if (array != null) {
+			StringBuilder str = new StringBuilder();
+			for (int i = 0; i < len; i++) {
+				if (i != 0)
+					str.Append(' ');
+				str.Append(array[i]);
+			}
+			AddProperty(name, str.ToString());
+		}
+	}
+
+
         /// <summary>
         /// End a tag, require that we are ending the specified tag.
         /// </summary>
