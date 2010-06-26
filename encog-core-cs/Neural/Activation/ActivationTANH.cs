@@ -102,7 +102,7 @@ namespace Encog.Neural.Activation
 
             for (int i = 0; i < d.Length; i++)
             {
-                d[i] = (1+d[i])*(1-d[i]);
+                d[i] = 1.0-(d[i]*d[i]);
             }
         }
 
