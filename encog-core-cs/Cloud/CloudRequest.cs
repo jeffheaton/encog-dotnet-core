@@ -243,6 +243,20 @@ namespace Encog.Cloud
             }
         }
 
+
+        public void PerformURLPOST(string service, Stream stream)
+        {
+            try
+            {
+                String contents = BotUtil.POSTPage(new Uri(service), stream);
+                HandleResponse(contents);                
+            }
+            catch (IOException e)
+            {
+                throw new EncogCloudError(e);
+            }
+
+        }
     }
 }
 #endif

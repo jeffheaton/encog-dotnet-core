@@ -36,6 +36,7 @@ using System.IO;
 using System.Net;
 using Encog.Util.HTTP;
 using log4net;
+using Encog.Util;
 
 namespace Encog.Bot
 {
@@ -158,38 +159,59 @@ namespace Encog.Bot
         /// <returns>The HTTP response.</returns>
         public static String POSTPage(Uri uri, IDictionary<String, String> param)
         {
-            MemoryStream ms = new MemoryStream();
-            FormUtility form = new FormUtility(ms, null);
+            WebRequest req = WebRequest.Create(uri);
 
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+
+            StringBuilder postString = new StringBuilder();
             foreach (String key in param.Keys)
             {
-                form.Add(key, param[key]);
+                String value = param[key];
+                if (value != null)
+                {
+                    if (postString.Length != 0)
+                        postString.Append('&');
+                    postString.Append(key);
+                    postString.Append('=');
+                    postString.Append( FormUtility.Encode(value));
+                }
             }
-            form.Complete();
 
-            String result = POSTPage(uri, ms.GetBuffer());
-            ms.Close();
-            return result;
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(postString.ToString());
+            req.ContentLength = bytes.Length;
+
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length);
+            os.Close();
+
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
         }
 
         /// <summary>
-        /// Post byes to a page.
+        /// Post bytes to a page.
         /// </summary>
         /// <param name="uri">The URI to post to.</param>
         /// <param name="bytes">The bytes to post.</param>
         /// <returns>The HTTP response.</returns>
-        public static String POSTPage(Uri uri, byte[] bytes)
+        public static String POSTPage(Uri uri, byte[] bytes, int length)
         {
             WebRequest webRequest = WebRequest.Create(uri);
-            webRequest.ContentType = "application/x-www-form-urlencoded";
+            //webRequest.ContentType = "application/x-www-form-urlencoded";
             webRequest.Method = "POST";
+            webRequest.ContentLength = length;
+            
 
             Stream os = null;
             try
             { // send the Post
                 webRequest.ContentLength = bytes.Length;   //Count bytes to send
                 os = webRequest.GetRequestStream();
-                os.Write(bytes, 0, bytes.Length);         //Send it
+                os.Write(bytes, 0, length);         //Send it
             }
             catch (WebException ex)
             {
@@ -199,7 +221,7 @@ namespace Encog.Bot
             {
                 if (os != null)
                 {
-                    os.Close();
+                    os.Flush();
                 }
             }
 
@@ -266,6 +288,26 @@ namespace Encog.Bot
         /// </summary>
         private BotUtil()
         {
+
+        }
+
+        public static string POSTPage(Uri uri, Stream stream)
+        {
+            WebRequest req = WebRequest.Create(uri);
+
+            //req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+
+            System.IO.Stream os = req.GetRequestStream();
+
+            FileUtil.CopyStream(stream, os);
+            os.Close();
+
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
 
         }
     }

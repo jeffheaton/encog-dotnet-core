@@ -86,7 +86,7 @@ namespace Encog.Util.HTTP
         /// </summary>
         /// <param name="str">The string to encode.</param>
         /// <returns>The encoded string.</returns>
-        private static String Encode(String str)
+        public static String Encode(String str)
         {
             return HttpUtility.HtmlEncode(str);
         }

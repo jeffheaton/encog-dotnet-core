@@ -32,6 +32,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using Encog.Bot;
 
 namespace Encog.Cloud
 {
@@ -143,6 +145,27 @@ namespace Encog.Cloud
             CloudRequest request = new CloudRequest();
             request.PerformURLGET(false, this.session + "logout");
             this.session = null;
+        }
+
+        public void PublishFile(Stream stream, String publishedPath)
+        {
+            String uri = this.session + "publish" + publishedPath;
+            CloudRequest request = new CloudRequest();
+            request.PerformURLPOST(uri, stream);
+
+        }
+
+        public void PublishFile(String file, String publishedPath)
+        {
+            Stream stream = new FileStream(file, FileMode.Open);
+            PublishFile(stream, publishedPath);
+            stream.Close();
+        }
+
+        public String GetPublishedTextFile(String publishedPath)
+        {
+            String uri = this.server + "published" + publishedPath;
+            return BotUtil.LoadPage(new Uri(uri));
         }
 
         /// <summary>
