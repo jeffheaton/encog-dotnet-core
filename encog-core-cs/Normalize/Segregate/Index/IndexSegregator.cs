@@ -107,6 +107,7 @@ namespace Encog.Normalize.Segregate.Index
         /// </summary>
         public void PassInit()
         {
+            this.currentIndex = 0;
         }
 
     }
