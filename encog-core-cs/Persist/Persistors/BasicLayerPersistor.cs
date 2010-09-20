@@ -175,11 +175,15 @@ namespace Encog.Persist.Persistors
             }
 
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation);
-            xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
-            IPersistor persistor = layer.ActivationFunction
-                   .CreatePersistor();
-            persistor.Save(layer.ActivationFunction, xmlOut);
-            xmlOut.EndTag();
+
+            if (layer.ActivationFunction != null)
+            {
+                xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
+                IPersistor persistor = layer.ActivationFunction
+                    .CreatePersistor();
+                persistor.Save(layer.ActivationFunction, xmlOut);
+                xmlOut.EndTag();
+            }
 
             xmlOut.EndTag();
         }
