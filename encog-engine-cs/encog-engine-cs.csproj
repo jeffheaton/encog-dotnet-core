@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D3C03377-8B5A-487B-9293-EF3915D5C034}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encog</RootNamespace>
+    <AssemblyName>encog-engine-cs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cloo, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Cloo.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\Concurrency\EncogConcurrency.cs" />
+    <Compile Include="Engine\Concurrency\IEncogTask.cs" />
+    <Compile Include="Engine\Concurrency\Job\ConcurrentJob.cs" />
+    <Compile Include="Engine\Concurrency\Job\JobUnitContext.cs" />
+    <Compile Include="Engine\Concurrency\Job\JobUnitWorker.cs" />
+    <Compile Include="Engine\Concurrency\PoolItem.cs" />
+    <Compile Include="Engine\Concurrency\TaskGroup.cs" />
+    <Compile Include="Engine\IEngineNeuralNetwork.cs" />
+    <Compile Include="Engine\IEngineMachineLearning.cs" />
+    <Compile Include="Engine\IStatusReportable.cs" />
+    <Compile Include="Engine\Util\EngineArray.cs" />
+    <Compile Include="Engine\Util\ErrorCalculation.cs" />
+    <Compile Include="Engine\Util\ErrorCalculationMode.cs" />
+    <Compile Include="Engine\Util\Format.cs" />
+    <Compile Include="Engine\Util\IntRange.cs" />
+    <Compile Include="Engine\Util\ObjectPair.cs" />
+    <Compile Include="Engine\Util\ResourceLoader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Engine\Util\BoundMath.cs" />
+    <Compile Include="Engine\Util\BoundNumbers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\Data\BasicEngineData.cs" />
+    <Compile Include="Engine\Data\BasicEngineDataSet.cs" />
+    <Compile Include="Engine\Data\EngineData.cs" />
+    <Compile Include="Engine\Data\EngineDataSet.cs" />
+    <Compile Include="Engine\Data\EngineIndexableSet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\Network\Flat\ActivationFunctions.cs" />
+    <Compile Include="Engine\Network\Flat\FlatLayer.cs" />
+    <Compile Include="Engine\Network\Flat\FlatNetwork.cs" />
+    <Compile Include="Engine\Network\Flat\FlatNetworkRBF.cs" />
+    <Compile Include="Engine\Network\Flat\ValidateForOpenCL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\Validate\BasicMachineLearningValidate.cs" />
+    <Compile Include="Engine\Validate\IValidateMachineLearning.cs" />
+    <Compile Include="Engine\Validate\ValidateMachineLearningError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\EncogEngineError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\EncogEngine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Network\Train\" />
+    <Folder Include="Engine\OpenCL\Kernels\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

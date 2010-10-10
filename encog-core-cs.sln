@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOMColors", "SOMColors\SOMC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuneEncogOpenCL", "TuneEncogOpenCL\TuneEncogOpenCL.csproj", "{842FE724-77E7-414D-984E-E4456A3B9599}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-engine-cs", "encog-engine-cs\encog-engine-cs.csproj", "{D3C03377-8B5A-487B-9293-EF3915D5C034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{842FE724-77E7-414D-984E-E4456A3B9599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{842FE724-77E7-414D-984E-E4456A3B9599}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{842FE724-77E7-414D-984E-E4456A3B9599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C03377-8B5A-487B-9293-EF3915D5C034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C03377-8B5A-487B-9293-EF3915D5C034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C03377-8B5A-487B-9293-EF3915D5C034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C03377-8B5A-487B-9293-EF3915D5C034}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
