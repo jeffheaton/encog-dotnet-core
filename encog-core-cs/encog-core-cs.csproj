@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -117,6 +117,11 @@
     <Compile Include="MathUtil\NumericRange.cs" />
     <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
+    <Compile Include="MathUtil\RBF\InverseMultiquadricFunction.cs" />
+    <Compile Include="MathUtil\RBF\InverseMultiquadricFunctionMulti.cs" />
+    <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
+    <Compile Include="MathUtil\RBF\MultiquadricFunctionMulti.cs" />
+    <Compile Include="MathUtil\RBF\RBFEnum.cs" />
     <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
     <Compile Include="Neural\Activation\ActivationCompetitive.cs" />
     <Compile Include="Neural\Activation\ActivationGaussian.cs" />
@@ -179,6 +184,7 @@
     <Compile Include="Neural\Networks\Layers\ILayer.cs" />
     <Compile Include="Neural\Networks\INetwork.cs" />
     <Compile Include="Neural\Networks\Layers\RadialBasisFunctionLayer.cs" />
+    <Compile Include="Neural\Networks\Layers\RadialBasisFunctionMultiLayer.cs" />
     <Compile Include="Neural\Networks\Logic\ART1Logic.cs" />
     <Compile Include="Neural\Networks\Logic\ARTLogic.cs" />
     <Compile Include="Neural\Networks\Logic\BAMLogic.cs" />

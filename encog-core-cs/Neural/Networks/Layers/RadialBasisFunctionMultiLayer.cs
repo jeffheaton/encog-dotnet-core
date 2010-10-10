@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Layers
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class RadialBasisFunctionLayer : BasicLayer
+    public class RadialBasisFunctionMultiLayer : BasicLayer
     {
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// The radial basis functions to use, there should be one for each neuron.
         /// </summary>
-        private IRadialBasisFunction[] radialBasisFunction;
+        private IRadialBasisFunctionMulti[] radialBasisFunction;
 
         /// <summary>
         /// Default constructor, mainly so the workbench can easily create a default
         /// layer.
         /// </summary>
-        public RadialBasisFunctionLayer()
+        public RadialBasisFunctionMultiLayer()
             : this(1)
         {
 
@@ -93,10 +93,10 @@ namespace Encog.Neural.Networks.Layers
         /// Construct a radial basis function layer.
         /// </summary>
         /// <param name="neuronCount">The neuron count.</param>
-        public RadialBasisFunctionLayer(int neuronCount)
+        public RadialBasisFunctionMultiLayer(int neuronCount)
             : base(new ActivationLinear(), false, neuronCount)
         {
-            this.radialBasisFunction = new IRadialBasisFunction[neuronCount];
+            this.radialBasisFunction = new IRadialBasisFunctionMulti[neuronCount];
         }
 
 
@@ -118,21 +118,20 @@ namespace Encog.Neural.Networks.Layers
                     String str =
                "Error, must define radial functions for each neuron";
 #if logging
-                    if (RadialBasisFunctionLayer.logger.IsErrorEnabled)
+                    if (RadialBasisFunctionMultiLayer.logger.IsErrorEnabled)
                     {
-                        RadialBasisFunctionLayer.logger.Error(str);
+                        RadialBasisFunctionMultiLayer.logger.Error(str);
                     }
 #endif
                     throw new NeuralNetworkError(str);
                 }
 
-                IRadialBasisFunction f = this.radialBasisFunction[i];
-                double total = 0;
-                for (int j = 0; j < pattern.Count; j++)
-                {
-                    double value = f.Calculate(pattern[j]);
-                    total += value * value;
-                }
+                IRadialBasisFunctionMulti f = this.radialBasisFunction[i];
+
+                if (pattern.Data.Length != f.Dimensions)
+                    throw new Exception("Inputs must equal the number of dimensions.");
+
+                double total = f.Calculate(pattern.Data);
 
                 result[i] = BoundMath.Sqrt(total);
 
@@ -147,13 +146,13 @@ namespace Encog.Neural.Networks.Layers
         /// <returns></returns>
         public override IPersistor CreatePersistor()
         {
-            return new RadialBasisFunctionLayerPersistor();
+            throw new NotImplementedException();
         }
 
         /// <summary>
         /// An array of radial basis functions.
         /// </summary>
-        public IRadialBasisFunction[] RadialBasisFunction
+        public IRadialBasisFunctionMulti[] RadialBasisFunction
         {
             get
             {
@@ -168,37 +167,32 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// Set the gausian components to random values.
         /// </summary>
+        /// <param name="dimensions">The number of dimensions in the network.</param>
         /// <param name="min">The minimum value for the centers, widths and peaks.</param>
         /// <param name="max">The maximum value for the centers, widths and peaks.</param>
         /// <param name="RBFType">The RBF to use.</param>
-        public void RandomizeRBFCentersAndWidths(double min, double max, RBFEnum RBFType)
+        public void RandomizeMultiRBFCentersAndWidths(int dimensions, double min, double max, RBFEnum RBFType)
         {
             for (int i = 0; i < this.NeuronCount; i++)
             {
-                SetRBFFunction(i, RBFType, RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max));
+                SetRBFFunction(i, RBFType, RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max), dimensions);
             }
         }
 
-        public void SetRBFCentersAndWidths(double[] centers, double[] widths, RBFEnum RBFType)
-        {
-            for (int i = 0; i < this.NeuronCount; i++)
-                SetRBFFunction(i, RBFType, centers[i], RangeRandomizer.Randomize(0, 1), widths[i]);
-        }
-
-        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double center, double peak, double width)
+        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double center, double peak, double width, int dimensions)
         {
             if (RBFType == RBFEnum.Gaussian)
-                this.radialBasisFunction[RBFIndex] = new GaussianFunction(center, peak, width);
+                throw new NotSupportedException();
             else if (RBFType == RBFEnum.GaussianMulti)
-                throw new NotSupportedException();
+                this.radialBasisFunction[RBFIndex] = new GaussianFunctionMulti(dimensions, peak, center, width);
             else if (RBFType == RBFEnum.Multiquadric)
-                this.radialBasisFunction[RBFIndex] = new MultiquadricFunction(center, peak, width);
+                throw new NotSupportedException();
             else if (RBFType == RBFEnum.MultiquadricMulti)
-                throw new NotSupportedException();
+                this.radialBasisFunction[RBFIndex] = new MultiquadricFunctionMulti(dimensions, center, peak, width);
             else if (RBFType == RBFEnum.InverseMultiquadric)
-                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunction(center, peak, width);
-            else if (RBFType == RBFEnum.InverseMultiquadricMulti)
                 throw new NotSupportedException();
+            else if (RBFType == RBFEnum.InverseMultiquadricMulti)
+                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunctionMulti(dimensions, center, peak, width);
         }
     }
 

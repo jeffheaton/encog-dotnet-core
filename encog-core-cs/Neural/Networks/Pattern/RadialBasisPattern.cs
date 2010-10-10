@@ -120,7 +120,7 @@ namespace Encog.Neural.Networks.Pattern
             network.Structure.FinalizeStructure();
             network.Reset();
             network.TagLayer(RBF_LAYER, rbfLayer);
-            rbfLayer.RandomizeGaussianCentersAndWidths(0, 1);
+            rbfLayer.RandomizeRBFCentersAndWidths(0, 1, RBFEnum.Gaussian);
             int y = PatternConst.START_Y;
             input.X = PatternConst.START_X;
             input.Y = y;
