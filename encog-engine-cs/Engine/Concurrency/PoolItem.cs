@@ -42,12 +42,12 @@ namespace Encog.Engine.Concurrency.Job
         /// <summary>
         /// The task that was executed.
         /// </summary>
-        private IEncogTask task;
+        private IEngineTask task;
 
         /// <summary>
         /// The concurrency object that started this.
         /// </summary>
-        private EncogConcurrency owner;
+        private EngineConcurrency owner;
 
         /// <summary>
         /// The task group that this item is a part of.
@@ -60,7 +60,7 @@ namespace Encog.Engine.Concurrency.Job
         /// <param name="owner">The owner of this task.</param>
         /// <param name="task">The task to execute.</param>
         /// <param name="group">The group that this task belongs to.</param>
-        public PoolItem(EncogConcurrency owner, IEncogTask task,  TaskGroup group)
+        public PoolItem(EngineConcurrency owner, IEngineTask task,  TaskGroup group)
         {
             this.owner = owner;
             this.task = task;

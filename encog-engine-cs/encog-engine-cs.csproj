@@ -49,8 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Concurrency\EncogConcurrency.cs" />
-    <Compile Include="Engine\Concurrency\IEncogTask.cs" />
+    <Compile Include="Engine\Concurrency\EngineConcurrency.cs" />
+    <Compile Include="Engine\Concurrency\IEngineTask.cs" />
     <Compile Include="Engine\Concurrency\Job\ConcurrentJob.cs" />
     <Compile Include="Engine\Concurrency\Job\JobUnitContext.cs" />
     <Compile Include="Engine\Concurrency\Job\JobUnitWorker.cs" />
@@ -78,13 +78,6 @@
     <Compile Include="Engine\Data\EngineIndexableSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Network\Flat\ActivationFunctions.cs" />
-    <Compile Include="Engine\Network\Flat\FlatLayer.cs" />
-    <Compile Include="Engine\Network\Flat\FlatNetwork.cs" />
-    <Compile Include="Engine\Network\Flat\FlatNetworkRBF.cs" />
-    <Compile Include="Engine\Network\Flat\ValidateForOpenCL.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Engine\Validate\BasicMachineLearningValidate.cs" />
     <Compile Include="Engine\Validate\IValidateMachineLearning.cs" />
     <Compile Include="Engine\Validate\ValidateMachineLearningError.cs" />
@@ -93,11 +86,48 @@
     <Compile Include="Engine\EncogEngineError.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Engine\EncogEngine.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Network\Train\" />
-    <Folder Include="Engine\OpenCL\Kernels\" />
+    <Compile Include="Engine\Network\Activation\ActivationBiPolar.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationCompetitive.cs" />
+    <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationGaussian.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationLinear.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationLOG.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationRamp.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSigmoid.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSIN.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSoftMax.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
+    <Compile Include="Engine\Network\Flat\FlatLayer.cs" />
+    <Compile Include="Engine\Network\Flat\FlatNetwork.cs" />
+    <Compile Include="Engine\Network\Flat\FlatNetworkRBF.cs" />
+    <Compile Include="Engine\Network\Flat\ValidateForOpenCL.cs" />
+    <Compile Include="Engine\Network\RBF\RadialBasisFunction.cs" />
+    <Compile Include="Engine\Network\Train\Gradient\IFlatGradientWorker.cs" />
+    <Compile Include="Engine\Network\Train\Gradient\GradientWorkerCPU.cs" />
+    <Compile Include="Engine\Network\Train\Prop\OpenCLTrainingProfile.cs" />
+    <Compile Include="Engine\Network\Train\Prop\RPROPConst.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkBackPropagation.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkManhattan.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkOpenCL.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkProp.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkResilient.cs" />
+    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkSCG.cs" />
+    <Compile Include="Engine\Network\Train\ITrainFlatNetwork.cs" />
+    <Compile Include="Engine\OpenCL\EncogCL.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLDevice.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLError.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLItem.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLPlatform.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLQueue.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\MissingOpenCLAdapterError.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\OpenCLError.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\OutOfOpenCLResources.cs" />
+    <Compile Include="Engine\OpenCL\kernels\EncogKernel.cs" />
+    <Compile Include="Engine\OpenCL\kernels\KernelNetworkTrain.cs" />
+    <Compile Include="Engine\OpenCL\kernels\KernelVectorAdd.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

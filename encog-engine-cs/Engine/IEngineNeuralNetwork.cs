@@ -9,7 +9,7 @@ namespace Encog.Engine
     /// An interface that defines a neural network. Mainly adds the ability to
     /// encode/decode weights to/from a double array.
     /// </summary>
-    public interface IEngineNeuralNetwork
+    public interface IEngineNeuralNetwork: IEngineMachineLearning
     {     
         /// <summary>
         /// Decode an array to the neural network weights. 

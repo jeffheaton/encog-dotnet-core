@@ -191,10 +191,7 @@ namespace Encog.Engine.Data
         }
 
 
-        /// <summary>
-        /// {@inheritDoc}
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override System.String ToString()
         {
             StringBuilder builder = new StringBuilder("[NeuralDataPair:");

@@ -211,5 +211,41 @@ namespace Encog.Engine.Util
             return result;
         }
 
+        /// <summary>
+        /// Copy a float array to a double array.
+        /// </summary>
+        /// <param name="source">The double array.</param>
+        /// <param name="target">The float array.</param>
+        public static void ArrayCopy(float[] source, double[] target)
+        {
+            for(int i=0;i<source.Length;i++)
+            {
+                target[i] = source[i];
+            }
+        }
+
+        /// <summary>
+        /// Copy a double array to a float array.
+        /// </summary>
+        /// <param name="source">The double array.</param>
+        /// <param name="target">The float array.</param>
+        public static void ArrayCopy(double[] source, float[] target)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                target[i] = (float)source[i];
+            }
+        }
+
+        /// <summary>
+        /// Fill the array with the specified value.
+        /// </summary>
+        /// <param name="target">The array to fill.</param>
+        /// <param name="value">The value to fill.</param>
+        public static void Fill(float[] target, int value)
+        {
+            for (int i = 0; i < target.Length; i++)
+                target[i] = value;
+        }
     }
 }
