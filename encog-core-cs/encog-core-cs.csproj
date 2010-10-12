@@ -139,7 +139,15 @@
     <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
     <Compile Include="Neural\Data\Bipolar\BiPolarNeuralData.cs" />
+    <Compile Include="Neural\Data\Buffer\BinaryDataLoader.cs" />
+    <Compile Include="Neural\Data\Buffer\BufferedDataError.cs" />
     <Compile Include="Neural\Data\Buffer\BufferedNeuralDataSet.cs" />
+    <Compile Include="Neural\Data\Buffer\BufferedNeuralDataSetEnumerator.cs" />
+    <Compile Include="Neural\Data\Buffer\CODEC\ArrayDataCODEC.cs" />
+    <Compile Include="Neural\Data\Buffer\CODEC\CSVDataCODEC.cs" />
+    <Compile Include="Neural\Data\Buffer\CODEC\IDataSetCODEC.cs" />
+    <Compile Include="Neural\Data\Buffer\CODEC\NeuralDataSetCODEC.cs" />
+    <Compile Include="Neural\Data\Buffer\EncogEGBFile.cs" />
     <Compile Include="Neural\Data\CSV\CSVNeuralDataSet.cs" />
     <Compile Include="Neural\Data\IIndexable.cs" />
     <Compile Include="Neural\Data\Image\ImageNeuralData.cs" />
