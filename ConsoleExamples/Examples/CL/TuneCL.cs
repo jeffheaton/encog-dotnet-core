@@ -32,13 +32,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
-using Encog.Util.CL;
-using Encog.Util.CL.Kernels;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.NeuralData;
 using Encog.Util.Banchmark;
 using Encog.Util.Simple;
 using Encog.Neural.Networks;
+using Encog.Engine.Opencl;
 
 namespace Encog.Examples.CL
 {
@@ -89,11 +88,7 @@ namespace Encog.Examples.CL
                     Console.WriteLine("Train error: " + train.Error);
                 }
                 long stop = Environment.TickCount;
-
-                Console.WriteLine("GPU Time:" + train.FlatTraining.CLTimePerIteration);
-                Console.WriteLine("CPU Time:" + train.FlatTraining.CPUTimePerIteration);
-                Console.WriteLine("Ratio:" + train.FlatTraining.CalculatedCLRatio);
-                Console.WriteLine("This ratio should be used as the \"enforced ratio\" to balance workloads.");
+Console.WriteLine("This ratio should be used as the \"enforced ratio\" to balance workloads.");
                 Console.WriteLine("Done:" + (stop - start));
                 Console.WriteLine("Stop");
                 if (Encog.Instance.CL != null)

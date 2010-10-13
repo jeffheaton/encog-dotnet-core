@@ -43,7 +43,6 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
 using Encog.Util;
-using Encog.Neural.Networks.Flat;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Manhattan;
@@ -78,15 +77,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             this.network = network;
             this.Training = training;
          
-            if (this.Training is IIndexable 
-                && ValidateForFlat.CanBeFlat(this.network) == null )
-            {
-                this.AttemptFlatten = true;
-            }
-            else
-            {
-                this.AttemptFlatten = false;
-            }
         }
 
         /// <summary>
@@ -111,15 +101,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /// <summary>
-        /// The current flat network we are using for training, or null for none.
-        /// </summary>
-        public FlatNetwork CurrentFlatNetwork { get; set; }
-
-        /// <summary>
-        /// The current flat trainer we are using, or null for none.
-        /// </summary>
-        public TrainFlatNetworkMulti FlatTraining { get; set; }
 
         /// <summary>
         /// Should we attempt to flatten the network?  Usually you want this to be true, 
@@ -139,50 +120,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             return false;
         }
 
-        /// <summary>
-        /// Attempt to flatten the network.
-        /// </summary>
-        private void ProcessFlatten()
-        {
-            if (this.AttemptFlatten && this.CurrentFlatNetwork==null)
-            {
-                if (this.Training is IIndexable && ValidateForFlat.CanBeFlat(this.network)==null )
-                {
-                    this.CurrentFlatNetwork = new FlatNetwork(network);
-
-                    if (this is ResilientPropagation)
-                    {
-                        ResilientPropagation r = (ResilientPropagation)this;
-                        this.FlatTraining = new TrainFlatNetworkResilient(
-                            CurrentFlatNetwork, 
-                            Training,  
-                            r.ZeroTolerance,
-                            r.InitialUpdate,
-                            r.MaxStep);
-                    }
-                    else if (this is Backpropagation)
-                    {
-                        Backpropagation b = (Backpropagation)this;
-                        this.FlatTraining = new TrainFlatNetworkBackPropagation(CurrentFlatNetwork, Training, b.LearningRate, b.Momentum);
-                    }
-                    else if (this is ManhattanPropagation)
-                    {
-                        ManhattanPropagation m = (ManhattanPropagation)this;
-                        this.FlatTraining = new TrainFlatNetworkManhattan(CurrentFlatNetwork, Training, m.LearningRate);
-                    }
-                    else
-                    {
-                        this.CurrentFlatNetwork = null;
-                        this.AttemptFlatten = false;
-                        return;
-                    }
-
-                    this.FlatTraining.NumThreads = NumThreads;
-                }
-                else
-                    this.AttemptFlatten = false;
-            }
-        }
 
         /// <summary>
         /// Perform one training iteration.
@@ -192,10 +129,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             try
             {
                 PreIteration();
-                ProcessFlatten();
-
-                if (this.FlatTraining == null)
-                {
+              
                     CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
                     double[] weights = NetworkCODEC.NetworkToArray(Network);
                     prop.Calculate(weights);
@@ -204,16 +138,6 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                     NetworkCODEC.ArrayToNetwork(weights, Network);
                     Error = prop.Error;
-                }
-                else
-                {
-                    EncogArray.ArrayCopy(
-                        NetworkCODEC.NetworkToArray(this.network),
-                        CurrentFlatNetwork.Weights);
-                    this.FlatTraining.Iteration();
-                    this.Error = FlatTraining.Error;
-                    NetworkCODEC.ArrayToNetwork(CurrentFlatNetwork.Weights, this.network);
-                }
 
                 PostIteration();
             }

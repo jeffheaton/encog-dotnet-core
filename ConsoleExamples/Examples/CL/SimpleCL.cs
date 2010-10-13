@@ -32,8 +32,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
-using Encog.Util.CL;
-using Encog.Util.CL.Kernels;
+using Encog.Engine.Opencl;
+using Encog.Engine.Opencl.Kernels;
 
 namespace Encog.Examples.CL
 {
@@ -64,7 +64,7 @@ namespace Encog.Examples.CL
                 Encog.Instance.InitCL();
 
                 EncogCLDevice device = Encog.Instance.CL.Devices[0];
-                KernelVectorAdd k = Encog.Instance.CL.Devices[0].Platform.VectorAdd;
+                KernelVectorAdd k = null;// Encog.Instance.CL.Devices[0].Platform.VectorAdd;
                 k.Compile();
 
                 double[] a = { 1, 2, 3, 4 };

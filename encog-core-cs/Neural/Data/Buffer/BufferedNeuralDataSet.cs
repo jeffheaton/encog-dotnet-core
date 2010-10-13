@@ -35,6 +35,7 @@ using Encog.Neural.NeuralData;
 using System.IO;
 using Encog.Neural.Data.Basic;
 using Encog.Persist;
+using Encog.Engine.Data;
 
 namespace Encog.Neural.Data.Buffer
 {
@@ -159,10 +160,10 @@ namespace Encog.Neural.Data.Buffer
         /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
         /// the second, and so on.</param>
         /// <param name="pair">The data to read.</param>
-        public void GetRecord(long index, INeuralDataPair pair)
+        public void GetRecord(long index, IEngineData pair)
         {
-            double[] inputTarget = pair.Input.Data;
-            double[] idealTarget = pair.Ideal.Data;
+            double[] inputTarget = pair.InputArray;
+            double[] idealTarget = pair.IdealArray;
 
             this.egb.SetLocation((int)index);
             this.egb.Read(inputTarget);
@@ -173,7 +174,7 @@ namespace Encog.Neural.Data.Buffer
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>
-        public IIndexable OpenAdditional()
+        public IEngineIndexableSet OpenAdditional()
         {
 
             BufferedNeuralDataSet result = new BufferedNeuralDataSet(this.file);
@@ -294,7 +295,7 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// True if this dataset is supervised.
         /// </summary>
-        public bool IsSupervised
+        public bool Supervised
         {
             get
             {
@@ -429,6 +430,5 @@ namespace Encog.Neural.Data.Buffer
                 this.owner = value;
             }
         }
-
     }
 }

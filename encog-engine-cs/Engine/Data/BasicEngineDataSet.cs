@@ -247,7 +247,7 @@ namespace Encog.Engine.Data
 
 
         /// <returns>The total number of records in the file.</returns>
-        public virtual long RecordCount
+        public virtual long Count
         {
 
             /// <returns>The total number of records in the file.</returns>

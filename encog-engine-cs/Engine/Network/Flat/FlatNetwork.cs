@@ -267,7 +267,7 @@ namespace Encog.Engine.Network.Flat
             IEngineData pair = BasicEngineData.CreatePair(data.InputSize,
                     data.IdealSize);
 
-            for (int i = 0; i < data.RecordCount; i++)
+            for (int i = 0; i < data.Count; i++)
             {
                 data.GetRecord(i, pair);
                 Compute(pair.InputArray, actual);

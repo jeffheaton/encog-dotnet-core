@@ -31,14 +31,12 @@
 using log4net;
 using log4net.Config;
 #endif
-#if !SILVERLIGHT
-using Encog.Util.CL;
-#endif
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Engine.Opencl;
 
 
 namespace Encog

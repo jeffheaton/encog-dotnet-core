@@ -614,6 +614,17 @@ namespace Encog.Neural.Data.XML
             }
         }
 
+        /// <summary>
+        /// Return true if this dataset is supervised.
+        /// </summary>
+        public bool Supervised
+        {
+            get
+            {
+                return this.idealSize > 0;
+            }
+        }
+
     }
 
 }

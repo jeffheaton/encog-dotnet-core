@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Propagation.Gradient;
-using Encog.Neural.Networks.Flat;
 using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient

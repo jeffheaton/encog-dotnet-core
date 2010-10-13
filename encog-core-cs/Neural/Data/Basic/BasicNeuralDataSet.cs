@@ -35,6 +35,7 @@ using Encog.Neural.NeuralData;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using System.Runtime.Serialization;
+using Encog.Engine.Data;
 
 namespace Encog.Neural.Data.Basic
 {
@@ -372,13 +373,13 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        public void GetRecord(long index, INeuralDataPair pair)
+        public void GetRecord(long index, IEngineData pair)
         {
             INeuralDataPair source = this.data[(int)index];
-            pair.Input.Data = source.Input.Data;
-            if (pair.Ideal != null)
+            pair.InputArray = source.Input.Data;
+            if (pair.IdealArray != null)
             {
-                pair.Ideal.Data = source.Ideal.Data;
+                pair.IdealArray = source.Ideal.Data;
             }
         }
 
@@ -386,9 +387,28 @@ namespace Encog.Neural.Data.Basic
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
-        public IIndexable OpenAdditional()
+        public IEngineIndexableSet OpenAdditional()
         {
             return new BasicNeuralDataSet(this.Data);
+        }
+
+
+        /// <summary>
+        /// Return true if supervised.
+        /// </summary>
+        public bool Supervised
+        {
+            get 
+            {
+                if (this.data.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return this.data[0].Supervised;
+                }
+            }
         }
     }
 }

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Data;
+using Encog.Engine.Data;
 
 namespace Encog.Neural.NeuralData
 {
@@ -39,7 +40,7 @@ namespace Encog.Neural.NeuralData
     /// A neural data pair holds both the input and ideal data.  If this
     /// is an unsupervised data element, then only input is provided.
     /// </summary>
-    public interface INeuralDataPair: ICloneable
+    public interface INeuralDataPair: ICloneable, IEngineData
     {
         /// <summary>
         /// The input that the neural network.

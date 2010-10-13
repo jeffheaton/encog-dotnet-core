@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using Encog.Neural.Data;
+using Encog.Engine.Data;
 
 namespace Encog.Neural.NeuralData
 {
@@ -49,7 +50,7 @@ namespace Encog.Neural.NeuralData
     /// to be used. Typically the add methods are not supported on non-memory based
     /// datasets.
     /// </summary>
-    public interface INeuralDataSet
+    public interface INeuralDataSet: IEngineDataSet
     {
         /// <summary>
         /// The size of the ideal data.  Zero if unsupervised.

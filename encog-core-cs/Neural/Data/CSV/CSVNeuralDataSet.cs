@@ -305,5 +305,16 @@ namespace Encog.Neural.NeuralData.CSV
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Return true if this dataset is supervised.
+        /// </summary>
+        public bool Supervised
+        {
+            get
+            {
+                return this.idealSize > 0;
+            }
+        }
     }
 }

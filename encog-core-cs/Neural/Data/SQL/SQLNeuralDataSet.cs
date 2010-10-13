@@ -280,6 +280,22 @@ namespace Encog.Neural.NeuralData.SQL
             return new SQLNeuralEnumerator(this);
         }
 
+
+        #region IEngineDataSet Members
+
+
+        /// <summary>
+        /// Return true if this dataset is supervised.
+        /// </summary>
+        public bool Supervised
+        {
+            get
+            { 
+                return this.idealSize > 0; 
+            }
+        }
+
+        #endregion
     }
 }
 #endif

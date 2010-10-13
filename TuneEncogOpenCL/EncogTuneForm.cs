@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Encog.Util.CL;
 using Encog;
 using Encog.Util;
 using System.Threading;
@@ -16,6 +15,7 @@ using Encog.Neural.Networks;
 using Encog.Util.Simple;
 using System.Diagnostics;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Engine.Opencl;
 
 namespace TuneEncogOpenCL
 {
@@ -36,19 +36,19 @@ namespace TuneEncogOpenCL
 
                 Encog.Encog.Instance.InitCL();
 
-                this.textCLThreadCount.Text = ""+Encog.Encog.Instance.CL.CLThreads;
-                this.textCLRatio.Text = "" + Encog.Encog.Instance.CL.EnforcedCLRatio;
-                this.textWorkgroupSize.Text = "" + Encog.Encog.Instance.CL.CLWorkloadSize;
+                //this.textCLThreadCount.Text = ""+Encog.Encog.Instance.CL.CLThreads;
+                //this.textCLRatio.Text = "" + Encog.Encog.Instance.CL.EnforcedCLRatio;
+                //this.textWorkgroupSize.Text = "" + Encog.Encog.Instance.CL.CLWorkloadSize;
 
                 deviceMap.Clear();
                 foreach (EncogCLDevice device in Encog.Encog.Instance.CL.Devices)
                 {
-                    ListViewItem item = new ListViewItem(new String[] { (device.IsCPU?"CPU":"GPU"), 
+                    /*ListViewItem item = new ListViewItem(new String[] { (device.IsCPU?"CPU":"GPU"), 
                         device.Vender, device.Name, ""+device.MaxComputeUnits, ""+device.MaxClockFrequency,
                         Format.FormatMemory(device.LocalMemorySize), 
                         Format.FormatMemory(device.GlobalMemorySize) });
                     deviceMap[item] = device;
-                    listGPU.Items.Add(item);
+                    listGPU.Items.Add(item);*/
                 }
 
                 SelectDevices();
@@ -154,7 +154,7 @@ namespace TuneEncogOpenCL
                 int outputSize = int.Parse(textOutputNeurons.Text);
                 int hiddenSize = int.Parse(textHiddenNeurons.Text);
 
-                Encog.Encog.Instance.CL.CLThreads = int.Parse(textCLThreadCount.Text);
+                /*Encog.Encog.Instance.CL.CLThreads = int.Parse(textCLThreadCount.Text);
                 Encog.Encog.Instance.CL.CLWorkloadSize = int.Parse(textWorkgroupSize.Text);
                 Encog.Encog.Instance.CL.EnforcedCLRatio = double.Parse(textCLRatio.Text);
 
@@ -162,7 +162,7 @@ namespace TuneEncogOpenCL
                 {
                     MessageBox.Show("Workload size cannot be larger than the number of threads.");
                     return;
-                }
+                }*/
 
                 INeuralDataSet training = RandomTrainingFactory.Generate(trainingSize, inputSize, outputSize, -1, 1);
                 BasicNetwork network = EncogUtility.SimpleFeedForward(
@@ -186,14 +186,14 @@ namespace TuneEncogOpenCL
                 long clTime = stopwatch.ElapsedMilliseconds;
                 this.Invoke((MethodInvoker)delegate { this.textCLResult.Text = Format.FormatInteger((int)stopwatch.ElapsedMilliseconds) + "ms"; });
                 String ratio;
-                if (((int)train.FlatTraining.CLTimePerIteration) == 0)
+                /*if (((int)train.FlatTraining.CLTimePerIteration) == 0)
                 {
                     ratio = "n/a (no GPU)";
                 }
                 else
                 {
                     ratio = Format.FormatDouble(train.FlatTraining.CalculatedCLRatio, 2);
-                }
+                }*/
 
                 //
                 // Non-CL
@@ -222,7 +222,7 @@ namespace TuneEncogOpenCL
                 //
                 // finish up
                 //
-                this.Invoke((MethodInvoker)delegate { this.textCalcCLRatio.Text = ratio; });
+                //this.Invoke((MethodInvoker)delegate { this.textCalcCLRatio.Text = ratio; });
                 this.Invoke((MethodInvoker)delegate { statusBarText.Text = "Ready."; });
                 this.Invoke((MethodInvoker)delegate { btnBenchmark.Enabled = true; });
             }

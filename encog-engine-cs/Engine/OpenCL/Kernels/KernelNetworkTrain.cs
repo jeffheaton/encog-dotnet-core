@@ -282,7 +282,7 @@ namespace Encog.Engine.Opencl.Kernels
             : base(device_0, "org/encog/engine/resources/KernelNetTrain.txt", "NetworkTrain")
         {
             this.training = training_2;
-            this.trainingLength = (int)this.training.RecordCount;
+            this.trainingLength = (int)this.training.Count;
             this.device = device_0;
             this.flat = flat_1;
             this.weightInArray = new float[flat_1.Weights.Length];

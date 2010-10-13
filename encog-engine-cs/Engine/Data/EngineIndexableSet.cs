@@ -48,12 +48,7 @@
 		/// </summary>
 		///
 		/// <returns>The total number of records in the set.</returns>
-		long RecordCount {
-		/// <summary>
-		/// Determine the total number of records in the set.
-		/// </summary>
-		///
-		/// <returns>The total number of records in the set.</returns>
+		long Count {
 		  get;
 		}
 		

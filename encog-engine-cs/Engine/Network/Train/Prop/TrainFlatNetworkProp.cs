@@ -255,7 +255,7 @@ namespace Encog.Engine.Network.Train.Prop
         {
 
             DetermineWorkload determine = new DetermineWorkload(
-                    this.numThreads, (int)this.indexable.RecordCount);
+                    this.numThreads, (int)this.indexable.Count);
 
             this.workers = new IFlatGradientWorker[determine.ThreadCount];
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -176,16 +176,6 @@
     <Compile Include="Neural\Data\XML\PropertyData.cs" />
     <Compile Include="Neural\Data\XML\XMLNeuralDataSet.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
-    <Compile Include="Neural\Networks\Flat\FlatNetwork.cs" />
-    <Compile Include="Neural\Networks\Flat\GradientWorkerCPU.cs" />
-    <Compile Include="Neural\Networks\Flat\GradientWorkerCL.cs" />
-    <Compile Include="Neural\Networks\Flat\IFlatGradientWorker.cs" />
-    <Compile Include="Neural\Networks\Flat\TrainFlatNetwork.cs" />
-    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkBackPropagation.cs" />
-    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkManhattan.cs" />
-    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkMulti.cs" />
-    <Compile Include="Neural\Networks\Flat\TrainFlatNetworkResilient.cs" />
-    <Compile Include="Neural\Networks\Flat\ValidateForFlat.cs" />
     <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
     <Compile Include="Neural\Networks\Layers\ContextLayer.cs" />
@@ -422,15 +412,6 @@
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
-    <Compile Include="Util\CL\EncogCL.cs" />
-    <Compile Include="Util\CL\EncogCLDevice.cs" />
-    <Compile Include="Util\CL\EncogCLError.cs" />
-    <Compile Include="Util\CL\EncogCLItem.cs" />
-    <Compile Include="Util\CL\EncogCLPlatform.cs" />
-    <Compile Include="Util\CL\Kernels\KernelNetworkTrain.cs" />
-    <Compile Include="Util\CL\Kernels\EncogKernel.cs" />
-    <Compile Include="Util\CL\Kernels\KernelVectorAdd.cs" />
-    <Compile Include="Util\CL\Kernels\TrainingWorkload.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEncogTask.cs" />
@@ -513,6 +494,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\KernelNetTrain.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\encog-engine-cs\encog-engine-cs.csproj">
+      <Project>{D3C03377-8B5A-487B-9293-EF3915D5C034}</Project>
+      <Name>encog-engine-cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

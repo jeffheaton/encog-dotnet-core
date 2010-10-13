@@ -204,7 +204,7 @@ namespace Encog.Engine.Network.Train.Prop
             {
                 // if the segmentation ratio is 1, then we want NO SEGMENTATION
                 // we will have to find a workgroup size that is even
-                int trialLocalSize = (int)Math.Min(kernel.MaxWorkGroupSize, training.RecordCount);
+                int trialLocalSize = (int)Math.Min(kernel.MaxWorkGroupSize, training.Count);
 
                 trialLocalSize++;// falsely add one so the loop can decrease it with
                 // no effect.
@@ -215,10 +215,10 @@ namespace Encog.Engine.Network.Train.Prop
                     trialLocalSize--;
                     this.kernelLocalWorkgroup = (int)(trialLocalSize * this.localRatio);
                     this.kernelGlobalWorkgroup = (int)(this.kernelLocalWorkgroup * this.globalRatio);
-                    this.kernelWorkPerCall = (int)((training.RecordCount / this.kernelGlobalWorkgroup) * this.segmentationRatio);
+                    this.kernelWorkPerCall = (int)((training.Count / this.kernelGlobalWorkgroup) * this.segmentationRatio);
                     workPerIteration = this.kernelGlobalWorkgroup
                             * this.kernelWorkPerCall;
-                } while ((workPerIteration != training.RecordCount)
+                } while ((workPerIteration != training.Count)
                         && trialLocalSize > 1);
 
                 if (trialLocalSize > 0)
@@ -230,7 +230,7 @@ namespace Encog.Engine.Network.Train.Prop
             if (!globalValuesAssigned)
             {
                 // otherwise divide into segments
-                int maxLocalSize = (int)Math.Min(kernel.MaxWorkGroupSize, training.RecordCount);
+                int maxLocalSize = (int)Math.Min(kernel.MaxWorkGroupSize, training.Count);
                 this.kernelLocalWorkgroup = (int)(maxLocalSize * this.localRatio);
                 this.kernelGlobalWorkgroup = (int)(this.kernelLocalWorkgroup * this.globalRatio);
 
@@ -239,13 +239,13 @@ namespace Encog.Engine.Network.Train.Prop
                 if (this.segmentationRatio < EncogEngine.DEFAULT_ZERO_TOLERANCE)
                     this.kernelWorkPerCall = 1;
                 else
-                    this.kernelWorkPerCall = (int)((training.RecordCount / this.kernelGlobalWorkgroup) * this.segmentationRatio);
+                    this.kernelWorkPerCall = (int)((training.Count / this.kernelGlobalWorkgroup) * this.segmentationRatio);
             }
 
             workPerIteration = this.kernelGlobalWorkgroup * this.kernelWorkPerCall;
 
-            this.kernelNumberOfCalls = (int)(training.RecordCount / workPerIteration);
-            this.kernelRemainder = (int)(training.RecordCount % workPerIteration);
+            this.kernelNumberOfCalls = (int)(training.Count / workPerIteration);
+            this.kernelRemainder = (int)(training.Count % workPerIteration);
 
             this.kernelRemainderGlobal = this.kernelGlobalWorkgroup;
 

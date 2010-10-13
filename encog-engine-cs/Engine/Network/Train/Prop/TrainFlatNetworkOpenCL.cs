@@ -394,7 +394,7 @@ namespace Encog.Engine.Network.Train.Prop
             CallKernel(currentIndex, this.profile.KernelRemainderPer, true,
                     iterations);
 
-            count = (int)this.training.RecordCount;
+            count = (int)this.training.Count;
             this.error = this.error / (count * this.training.IdealSize);
 
             if (Util.ErrorCalculation.Mode == Util.ErrorCalculationMode.RMS)
