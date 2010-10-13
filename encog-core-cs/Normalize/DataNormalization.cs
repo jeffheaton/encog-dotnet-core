@@ -109,7 +109,7 @@ namespace Encog.Normalize
     /// method is called.
     /// </summary>
     [EGReferenceable]
-    public class DataNormalization : IEncogPersistedObject
+    public class DataNormalization : BasicPersistedObject
     {
         /// <summary>
         /// The input fields.

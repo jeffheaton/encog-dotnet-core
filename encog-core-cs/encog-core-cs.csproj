@@ -346,6 +346,7 @@
     <Compile Include="Persist\Attributes\EGReferenceable.cs" />
     <Compile Include="Persist\Attributes\EGUnsupported.cs" />
     <Compile Include="Persist\BasicPersistedObject.cs" />
+    <Compile Include="Persist\BasicPersistedSubObject.cs" />
     <Compile Include="Persist\DirectoryEntry.cs" />
     <Compile Include="Persist\EncogMemoryCollection.cs" />
     <Compile Include="Persist\EncogPersistedCollection.cs" />

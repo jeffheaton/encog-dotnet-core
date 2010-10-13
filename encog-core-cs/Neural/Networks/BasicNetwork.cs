@@ -69,7 +69,7 @@ namespace Encog.Neural.Networks
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNetwork : INetwork, IContextClearable
+    public class BasicNetwork : BasicPersistedObject, INetwork, IContextClearable
     {
 
         /// <summary>
@@ -92,16 +92,6 @@ namespace Encog.Neural.Networks
         /// </summary>
         public const String DEFAULT_CONNECTION_LIMIT = "0.0000000001";
 
-
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        private String description;
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        private String name;
 
         /// <summary>
         /// Holds the structure of the network. This keeps the network from having to
@@ -303,36 +293,6 @@ namespace Encog.Neural.Networks
         public bool Equals(BasicNetwork other, int precision)
         {
             return NetworkCODEC.Equals(this, other, precision);
-        }
-
-        /// <summary>
-        /// The description for this object.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The name.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
         }
 
 

@@ -84,7 +84,7 @@ namespace Encog.Neural.Networks.Layers
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicLayer : ILayer
+    public class BasicLayer : BasicPersistedObject, ILayer
     {
         /// <summary>
         /// The outbound synapse connections from this layer.
@@ -123,16 +123,6 @@ namespace Encog.Neural.Networks.Layers
         /// Which activation function to use for this layer.
         /// </summary>
         private IActivationFunction activationFunction;
-
-        /// <summary>
-        /// The description for this object.
-        /// </summary>
-        private String description;
-
-        /// <summary>
-        /// The name for this object.
-        /// </summary>
-        private String name;
 
         /// <summary>
         /// How many neurons does this layer hold.
@@ -310,36 +300,6 @@ namespace Encog.Neural.Networks.Layers
             set
             {
                 this.activationFunction = value;
-            }
-        }
-
-        /// <summary>
-        /// The description.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
             }
         }
 

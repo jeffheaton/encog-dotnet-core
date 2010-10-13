@@ -45,18 +45,8 @@ namespace Encog.Solve.Genetic.Population
     /// Provides basic functions for a population.
     /// </summary>
     [EGReferenceable]
-    public class BasicPopulation : IPopulation
+    public class BasicPopulation : BasicPersistedObject, IPopulation
     {
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        private String name;
-
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        private String description;
-
         /// <summary>
         /// The innovations for this population.
         /// </summary>
@@ -349,36 +339,6 @@ namespace Encog.Solve.Genetic.Population
         public void Sort()
         {
             genomes.Sort();
-        }
-
-        /// <summary>
-        /// The object description.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The object name.
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
         }
 
         /// <summary>

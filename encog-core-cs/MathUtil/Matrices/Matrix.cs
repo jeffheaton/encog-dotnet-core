@@ -50,18 +50,8 @@ namespace Encog.MathUtil.Matrices
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class Matrix : IEncogPersistedObject
+    public class Matrix : BasicPersistedSubObject ,IEncogPersistedObject
     {
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public string Name { get; set; }
-
         /// <summary>
         /// Allows index access to the elements of the matrix.
         /// Warning: This can be a somewhat slow way to access the matrix.  
@@ -503,7 +493,7 @@ namespace Encog.MathUtil.Matrices
         /// Create a persistor for this object.
         /// </summary>
         /// <returns>A persistor for this object.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             // Matrixes are not persisted directly.
             return null;

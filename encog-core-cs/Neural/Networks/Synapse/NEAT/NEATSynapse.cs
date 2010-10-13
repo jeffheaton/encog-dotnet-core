@@ -66,7 +66,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
     /// 
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
-    public class NEATSynapse : ISynapse, IContextClearable
+    public class NEATSynapse : BasicPersistedSubObject, ISynapse, IContextClearable
     {
         /// <summary>
         /// The activation function to use with the NEAT neurons.
@@ -226,7 +226,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// A persistor to load/save this type of synapse.
         /// </summary>
         /// <returns></returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new GenericPersistor(typeof(NEATSynapse));
         }

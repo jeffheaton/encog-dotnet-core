@@ -43,6 +43,11 @@ namespace Encog.Persist.Persistors
     public class TextDataPersistor : IPersistor
     {
         /// <summary>
+        /// The text of this object.
+        /// </summary>
+        public String Text { get; set; }
+
+        /// <summary>
         /// Load the specified Encog object from an XML reader.
         /// </summary>
         /// <param name="xmlin">The XML reader to use.</param>

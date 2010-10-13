@@ -48,38 +48,8 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject, IIndexable
-    {
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public virtual String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public virtual String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
-        }
-
+    public class BasicNeuralDataSet : BasicPersistedObject, INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject, IIndexable
+    {      
         /// <summary>
         /// The enumerator for the basic neural data set.
         /// </summary>

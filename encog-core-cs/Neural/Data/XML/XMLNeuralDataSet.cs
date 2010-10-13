@@ -68,7 +68,7 @@ namespace Encog.Neural.Data.XML
     /// &lt;/pair&gt;
     /// &lt;/DataSet&gt;
     /// </summary>
-    public class XMLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
+    public class XMLNeuralDataSet : BasicPersistedObject, INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {
 
         /// <summary>
@@ -335,16 +335,6 @@ namespace Encog.Neural.Data.XML
         private int idealSize;
 
         /// <summary>
-        /// The description.
-        /// </summary>
-        private String description;
-
-        /// <summary>
-        /// The name.
-        /// </summary>
-        private String name;
-
-        /// <summary>
         /// A collection of iterators that have been created.
         /// </summary>
         private IList<XMLNeuralEnumerator> iterators =
@@ -508,70 +498,7 @@ namespace Encog.Neural.Data.XML
             return null;
         }
 
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public virtual String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public virtual String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
-        }
-
-        string IEncogPersistedObject.Description
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        string IEncogPersistedObject.Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         IPersistor IEncogPersistedObject.CreatePersistor()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The clone of this object.</returns>
-        object IEncogPersistedObject.Clone()
         {
             throw new NotImplementedException();
         }

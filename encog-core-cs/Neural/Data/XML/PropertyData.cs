@@ -40,18 +40,8 @@ namespace Encog.Neural.Data.XML
     /// An Encog data object that can be used to hold property data. This is a
     /// collection of name-value pairs that can be saved in an Encog persisted file.
     /// </summary>
-    public class PropertyData : IEncogPersistedObject
+    public class PropertyData : BasicPersistedObject
     {
-        /// <summary>
-        /// The name.
-        /// </summary>
-        private String name;
-
-        /// <summary>
-        /// The description.
-        /// </summary>
-        private String description;
-
         /// <summary>
         /// The property data.
         /// </summary>
@@ -65,7 +55,7 @@ namespace Encog.Neural.Data.XML
         {
             PropertyData result = new PropertyData();
             result.Name = this.Name;
-            result.Description = this.description;
+            result.Description = this.Description;
 
             foreach (String key in this.data.Keys)
             {
@@ -174,36 +164,6 @@ namespace Encog.Neural.Data.XML
             IFormatProvider formatProvider = System.Globalization.CultureInfo.CurrentCulture;
             DateTime result = DateTime.ParseExact(str, "MM/dd/yyyy", formatProvider);
             return result;
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
-        }
-
-        /// <summary>
-        /// The description for this object.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Synapse
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public abstract class BasicSynapse : ISynapse
+    public abstract class BasicSynapse : BasicPersistedSubObject, ISynapse
     {
         /// <summary>
         /// The from layer.
@@ -77,20 +77,6 @@ namespace Encog.Neural.Networks.Synapse
         /// <returns>A clone of this object.</returns>
         public abstract Object Clone();
 
-        /// <summary>
-        /// The EncogPersistedObject requires a name and description, however, these
-        /// are not used on synapses.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-            }
-        }
 
         /// <summary>
         /// The from layer.
@@ -115,21 +101,6 @@ namespace Encog.Neural.Networks.Synapse
             get
             {
                 return this.fromLayer.NeuronCount;
-            }
-        }
-
-        /// <summary>
-        /// The EncogPersistedObject requires a name and description, however, these
-        /// are not used on synapses.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
             }
         }
 
@@ -170,12 +141,6 @@ namespace Encog.Neural.Networks.Synapse
                 return this.fromLayer == this.toLayer;
             }
         }
-
-        /// <summary>
-        /// Create a persistor that will be used to persist this synapse.
-        /// </summary>
-        /// <returns>The persistor.</returns>
-        public abstract IPersistor CreatePersistor();
 
         /// <summary>
         /// What type of synapse is this?

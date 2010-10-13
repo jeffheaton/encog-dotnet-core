@@ -120,5 +120,16 @@ namespace Encog.Neural.Activation
         /// </summary>
         /// <param name="d">The input array to the activation function.</param>
         public abstract void ActivationFunction(double[] d);
+
+        public IEncogCollection Collection
+        {
+            get
+            {
+                return null;
+            }
+            set
+            {
+            }
+        }
     }
 }

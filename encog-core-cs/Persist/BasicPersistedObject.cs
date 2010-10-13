@@ -12,50 +12,52 @@ namespace Encog.Persist
     /// </summary>
     public abstract class BasicPersistedObject : IEncogPersistedObject
     {
+        /// <summary>
+        /// The name of the object.
+        /// </summary>
+        public String Name { get; set; }
 
-	/**
-	 * The name of the object.
-	 */
-	public String Name { get; set; }
+        /// <summary>
+        /// The description of the object.
+        /// </summary>
+        public String Description { get; set; }
 
-	/**
-	 * The description of the object.
-	 */
-    public String Description { get; set; }
-
-	/**
-	 * The collection the object belongs to.
-	 */
-    [NonSerialized]
-    public IEncogCollection collection;
+        /// <summary>
+        /// The collection the object belongs to.
+        /// </summary>
+        [NonSerialized]
+        public IEncogCollection collection;
 
 
-    /**
- * The collection the object belongs to.
- */
-    public IEncogCollection Collection
-    {
-        get
+        /// <summary>
+        /// The collection the object belongs to.
+        /// </summary>
+        public IEncogCollection Collection
         {
-            return this.collection;
+            get
+            {
+                return this.collection;
+            }
+            set
+            {
+                this.collection = value;
+            }
         }
-        set
+
+        /// <inheritdoc/>
+        public virtual IPersistor CreatePersistor()
         {
-            this.collection = value;
+            return new GenericPersistor(this.GetType());
         }
-    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public IPersistor CreatePersistor() {
-		return new GenericPersistor(this.GetType());
-	}
+        /// <summary>
+        /// Clone this object.
+        /// </summary>
+        /// <returns>A cloned object.</returns>
+        object ICloneable.Clone()
+        {
+            throw new NotImplementedException();
+        }
 
-
-    /**
- * {@inheritDoc}
- */
-    public abstract object Clone();    
     }
 }

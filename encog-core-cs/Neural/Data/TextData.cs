@@ -45,22 +45,13 @@ namespace Encog.Neural.Data
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class TextData : IEncogPersistedObject
+    public class TextData : BasicPersistedObject
     {
         /// <summary>
         /// The text data that is stored.
         /// </summary>
-        private String text;
+        public String Text { get; set; }
 
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        private String name;
-
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        private String description;
 
 #if logging
         /// <summary>
@@ -80,53 +71,6 @@ namespace Encog.Neural.Data
             result.Description = this.Description;
             result.Text = this.Text;
             return result;
-        }
-
-
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
-            }
-        }
-
-        /// <summary>
-        /// The description for this object.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        /// <summary>
-        /// The text that this object holds.
-        /// </summary>
-        public String Text
-        {
-            get
-            {
-                return this.text;
-            }
-            set
-            {
-                this.text = value;
-            }
         }
 
         /// <summary>

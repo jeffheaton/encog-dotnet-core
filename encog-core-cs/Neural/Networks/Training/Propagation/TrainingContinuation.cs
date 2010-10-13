@@ -39,18 +39,8 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// <summary>
     /// Allows training to contune.
     /// </summary>
-    public class TrainingContinuation : IEncogPersistedObject
+    public class TrainingContinuation : BasicPersistedObject
     {
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public String Name { get; set; }
-
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public String Description { get; set; }
-
         /// <summary>
         /// The contents of this object.
         /// </summary>

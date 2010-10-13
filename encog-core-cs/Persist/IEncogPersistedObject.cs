@@ -62,15 +62,15 @@ namespace Encog.Persist
         }
 
         /// <summary>
+        /// The Encog collection this object belongs to.
+        /// </summary>
+        IEncogCollection Collection { get; set; }
+
+        /// <summary>
         /// Create a persistor for this object.
         /// </summary>
         /// <returns>A persistor for this object.</returns>
         IPersistor CreatePersistor();
 
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>A cloned version of this object.</returns>
-        new Object Clone();
     }
 }
