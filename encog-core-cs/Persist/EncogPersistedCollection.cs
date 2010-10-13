@@ -49,7 +49,7 @@ namespace Encog.Persist
  /// The EncogPersistedCollection does not load the object into memory at once.
  /// This allows it to manage large files.
     /// </summary>
-    public class EncogPersistedCollection
+    public class EncogPersistedCollection: IEncogCollection
     {
 
         /// <summary>
@@ -148,6 +148,7 @@ namespace Encog.Persist
         /// Training continuation.
         /// </summary>
         public const String TYPE_TRAINING_CONTINUATION = "TrainingContinuation";
+
         /// <summary>
         /// Throw and log an error.
         /// </summary>
@@ -468,6 +469,18 @@ namespace Encog.Persist
             }
             return false;
         }
+
+        /// <summary>
+        /// The location.
+        /// </summary>
+        public IPersistenceLocation Location
+        {
+            get
+            {
+                return this.filePrimary;
+            }
+        }
+
 
     }
 }

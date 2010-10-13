@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -345,9 +345,11 @@
     <Compile Include="Persist\Attributes\EGReference.cs" />
     <Compile Include="Persist\Attributes\EGReferenceable.cs" />
     <Compile Include="Persist\Attributes\EGUnsupported.cs" />
+    <Compile Include="Persist\BasicPersistedObject.cs" />
     <Compile Include="Persist\DirectoryEntry.cs" />
     <Compile Include="Persist\EncogMemoryCollection.cs" />
     <Compile Include="Persist\EncogPersistedCollection.cs" />
+    <Compile Include="Persist\IEncogCollection.cs" />
     <Compile Include="Persist\IEncogPersistedObject.cs" />
     <Compile Include="Persist\Location\FilePersistence.cs" />
     <Compile Include="Persist\Location\IPersistenceLocation.cs" />

@@ -45,7 +45,7 @@ namespace Encog.Persist
     /// This class can be very useful in the Silverlight version of Encog, which does not
     /// support the EncogPersistedCollection class.
     /// </summary>
-    public class EncogMemoryCollection
+    public class EncogMemoryCollection : IEncogCollection
     {
         /// <summary>
         /// The contents of this collection.
@@ -68,12 +68,24 @@ namespace Encog.Persist
         public String Platform { get; set; }
 
         /// <summary>
+        /// The location this collection is saved at.
+        /// </summary>
+        private IPersistenceLocation location;
+
+        /// <summary>
+        /// The elements in this collection.
+        /// </summary>
+	    private IList<DirectoryEntry> directory = new List<DirectoryEntry>();
+
+
+        /// <summary>
         /// Load the contents of a location.
         /// </summary>
         /// <param name="location">The location to load from.</param>
         public void Load(IPersistenceLocation location)
         {
             PersistReader reader = null;
+            this.location = location;
 
             try
             {
@@ -116,6 +128,7 @@ namespace Encog.Persist
                 {
                     reader.Close();
                 }
+                BuildDirectory();
             }
 
         }
@@ -144,6 +157,93 @@ namespace Encog.Persist
             {
                 writer.End();
                 writer.Close();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Add(string name, IEncogPersistedObject obj)
+        {
+            this.Contents[name] = obj;
+            BuildDirectory();
+        }
+
+        /// <inheritdoc/>
+        public void BuildDirectory()
+        {
+            this.directory.Clear();
+		    foreach ( IEncogPersistedObject obj in this.Contents.Values) 
+            {
+			    DirectoryEntry entry = new DirectoryEntry(obj);
+			    this.directory.Add(entry);
+		    }
+
+        }
+
+        /// <inheritdoc/>
+        public void Clear()
+        {
+            this.Contents.Clear();
+            BuildDirectory();
+        }
+
+        /// <inheritdoc/>
+        public void Delete(DirectoryEntry o)
+        {
+            this.Contents.Remove(o.Name);
+            BuildDirectory();
+        }
+
+        /// <inheritdoc/>
+        public void Delete(string key)
+        {
+            this.Contents.Remove(key);
+            BuildDirectory();
+        }
+
+        /// <inheritdoc/>
+        public bool Exists(string key)
+        {
+            return this.Contents.ContainsKey(key);
+        }
+
+        /// <inheritdoc/>
+        public IEncogPersistedObject Find(DirectoryEntry entry)
+        {
+            return this.Contents[entry.Name];
+        }
+
+        /// <inheritdoc/>
+        public IEncogPersistedObject Find(string key)
+        {
+            return this.Contents[key];
+        }
+
+        /// <inheritdoc/>
+        public IList<DirectoryEntry> Directory
+        {
+            get
+            {
+                return this.directory;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void UpdateProperties(string name, string newName, string desc)
+        {
+            IEncogPersistedObject obj = this.Contents[name];
+		    obj.Name  = newName;
+		    obj.Description = desc;
+		    this.Contents.Remove(name);
+		    this.Contents[newName] = obj;
+		    BuildDirectory();
+        }
+
+        /// <inheritdoc/>
+        public IPersistenceLocation Location
+        {
+            get 
+            {
+                return this.location ;
             }
         }
     }
