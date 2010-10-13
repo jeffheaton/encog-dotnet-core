@@ -65,12 +65,6 @@ namespace Encog.Engine.Network.Activation
         public const int PARAM_STEP_HIGH = 2;
 
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 3416782010146745754L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

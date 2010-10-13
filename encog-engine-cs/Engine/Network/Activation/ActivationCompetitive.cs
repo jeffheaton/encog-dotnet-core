@@ -49,12 +49,6 @@ namespace Encog.Engine.Network.Activation
         public const int PARAM_COMPETITIVE_MAX_WINNERS = 0;
 
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 5396927873082336888L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

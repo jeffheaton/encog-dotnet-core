@@ -65,12 +65,6 @@ namespace Encog.Engine.Network.Activation
         public const int PARAM_RAMP_LOW = 3;
 
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 6336245112244386279L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

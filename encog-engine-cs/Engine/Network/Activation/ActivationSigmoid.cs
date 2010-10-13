@@ -49,12 +49,6 @@ namespace Encog.Engine.Network.Activation
         public const int PARAM_SIGMOID_SLOPE = 0;
 
         /// <summary>
-        /// Serial id for this class.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 5622349801036468572L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

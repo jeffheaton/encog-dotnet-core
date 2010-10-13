@@ -65,12 +65,6 @@ namespace Encog.Engine.Network.Activation
         private double[] paras;
 
         /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -7166136514935838114L;
-
-        /// <summary>
         /// Create a gaussian activation function.
         /// </summary>
         ///

@@ -47,13 +47,6 @@ namespace Encog.Engine.Opencl.Exceptions
     [Serializable]
     public class OutOfOpenCLResources : OpenCLError
     {
-
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
         /// <summary>
         /// Construct the exception.
         /// </summary>

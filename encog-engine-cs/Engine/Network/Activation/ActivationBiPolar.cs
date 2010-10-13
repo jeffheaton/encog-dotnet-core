@@ -38,13 +38,6 @@ namespace Encog.Engine.Network.Activation
     ///
     public class ActivationBiPolar : IActivationFunction
     {
-
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -7166136514935838114L;
-
         /// <summary>
         /// The parameters.
         /// </summary>

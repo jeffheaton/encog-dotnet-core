@@ -64,7 +64,6 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// The serial id.
         /// </summary>
-        private const long serialVersionUID = 2779781041654829282L;
 
 #if logging
         /// <summary>

@@ -43,7 +43,6 @@
 	[Serializable]
 	public class EncogEngineError : Exception {
 	
-		private const long serialVersionUID = 1L;
 	
 		/// <summary>
 		/// Construct a message exception.

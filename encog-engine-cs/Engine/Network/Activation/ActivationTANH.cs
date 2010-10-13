@@ -50,12 +50,6 @@ namespace Encog.Engine.Network.Activation
         public const int PARAM_TANH_SLOPE = 0;
 
         /// <summary>
-        /// Serial id for this class.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 9121998892720207643L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

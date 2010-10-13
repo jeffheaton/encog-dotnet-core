@@ -39,13 +39,6 @@ namespace Encog.Engine.Network.Activation
     ///
     public class ActivationSoftMax : IActivationFunction
     {
-
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -960489243250457611L;
-
         /// <summary>
         /// The parameters.
         /// </summary>

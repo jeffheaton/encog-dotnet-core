@@ -39,12 +39,6 @@ namespace Encog.Engine.Opencl.Exceptions
     public class OpenCLError : EncogEngineError
     {
         /// <summary>
-        /// The serial id. 
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Construct a message exception.
         /// </summary>
         ///

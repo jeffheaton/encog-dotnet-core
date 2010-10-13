@@ -46,12 +46,6 @@ namespace Encog.Engine.Network.Activation
     {
 
         /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 7134233791725797522L;
-
-        /// <summary>
         /// The parameters.
         /// </summary>
         ///

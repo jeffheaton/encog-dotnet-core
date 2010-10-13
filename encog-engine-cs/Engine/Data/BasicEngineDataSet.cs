@@ -52,11 +52,6 @@ namespace Encog.Engine.Data
     public class BasicEngineDataSet : IEngineIndexableSet
     {
 
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -2279722928570071183L;
 
         /// <summary>
         /// The data held by this object.

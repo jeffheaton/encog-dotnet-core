@@ -39,9 +39,6 @@ namespace Encog.Engine.Network.Activation
     ///
     public class ActivationSIN : IActivationFunction
     {
-
-        private const long serialVersionUID = 5301501177778271284L;
-
         /// <summary>
         /// Construct the sin activation function.
         /// </summary>
