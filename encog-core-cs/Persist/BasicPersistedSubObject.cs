@@ -5,6 +5,11 @@ using System.Text;
 
 namespace Encog.Persist
 {
+    /// <summary>
+    /// An object that is not stored at the top level of an EG file.  Therefore the name 
+    /// and description attributes are not needed.
+    /// </summary>
+    [Serializable]
     public abstract class BasicPersistedSubObject : IEncogPersistedObject
     {
         public string Description

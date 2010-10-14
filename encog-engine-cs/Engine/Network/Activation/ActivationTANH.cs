@@ -39,7 +39,7 @@ namespace Encog.Engine.Network.Activation
     /// negative output. Use this activation function if both negative and positive
     /// output is desired.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationTANH : IActivationFunction
     {
 

@@ -37,7 +37,7 @@ namespace Encog.Engine.Network.Activation
     /// primarily theoretical and of little actual use. Usually an activation
     /// function that scales between 0 and 1 or -1 and 1 should be used.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationLinear : IActivationFunction
     {
 

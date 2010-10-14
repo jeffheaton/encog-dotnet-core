@@ -41,7 +41,7 @@ namespace Encog.Engine.Network.Activation
     /// phenomena occurs during training then the learning of the network can be
     /// slowed significantly since the error surface is very at in this instance.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationLOG : IActivationFunction
     {
 

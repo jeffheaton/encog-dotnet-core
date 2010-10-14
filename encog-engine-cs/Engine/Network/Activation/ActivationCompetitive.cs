@@ -38,7 +38,7 @@ namespace Encog.Engine.Network.Activation
     /// the output, whereas the other neurons will receive zero.
     /// This activation function can be useful for "winner take all" layers.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationCompetitive : IActivationFunction
     {
 

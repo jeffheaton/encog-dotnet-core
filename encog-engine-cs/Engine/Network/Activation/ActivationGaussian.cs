@@ -36,7 +36,7 @@ namespace Encog.Engine.Network.Activation
     /// <summary>
     /// An activation function based on the gaussian function.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationGaussian : IActivationFunction
     {
 

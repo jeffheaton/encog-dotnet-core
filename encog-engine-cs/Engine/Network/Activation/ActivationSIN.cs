@@ -36,7 +36,7 @@ namespace Encog.Engine.Network.Activation
     /// <summary>
     /// An activation function based on the sin function.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationSIN : IActivationFunction
     {
         /// <summary>

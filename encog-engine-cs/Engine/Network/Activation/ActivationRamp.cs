@@ -36,7 +36,7 @@ namespace Encog.Engine.Network.Activation
     /// the high threshold is exceeded a fixed value is returned. Likewise, if the
     /// low value is exceeded another fixed value is returned.
     /// </summary>
-    ///
+    [Serializable]
     public class ActivationRamp : IActivationFunction
     {
 

@@ -10,6 +10,7 @@ namespace Encog.Persist
     /// A basic Encog persisted object. Provides the name, description and collection
     /// attributes. Also provides a generic persistor.
     /// </summary>
+    [Serializable]
     public abstract class BasicPersistedObject : IEncogPersistedObject
     {
         /// <summary>
