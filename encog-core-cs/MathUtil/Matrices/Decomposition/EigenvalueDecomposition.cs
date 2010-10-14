@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {
@@ -1054,7 +1055,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
         {
             double[][] a = matrix.Data;
             n = matrix.Cols;
-            v = EncogArray.AllocateDouble2D(n, n);
+            v = EngineArray.AllocateDouble2D(n, n);
             d = new double[n];
             e = new double[n];
 
@@ -1086,7 +1087,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
             }
             else
             {
-                h = EncogArray.AllocateDouble2D(n, n);
+                h = EngineArray.AllocateDouble2D(n, n);
                 ort = new double[n];
 
                 for (int j = 0; j < n; j++)

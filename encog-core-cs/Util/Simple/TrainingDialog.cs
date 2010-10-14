@@ -38,6 +38,7 @@ using System.Text;
 using System.Windows.Forms;
 using Encog.Neural.Networks.Training;
 using System.Threading;
+using Encog.Engine.Util;
 
 namespace Encog.Util.Simple
 {

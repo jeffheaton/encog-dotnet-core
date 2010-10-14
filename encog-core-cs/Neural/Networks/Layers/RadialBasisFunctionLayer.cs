@@ -41,6 +41,7 @@ using Encog.Persist.Persistors;
 #if logging
 using log4net;
 using Encog.Engine.Network.Activation;
+using Encog.Engine.Util;
 #endif
 namespace Encog.Neural.Networks.Layers
 {

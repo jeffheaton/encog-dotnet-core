@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using System.Runtime.Serialization;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Data.Basic
 {
@@ -147,7 +148,7 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         public void Clear()
         {
-            EncogArray.Fill(this.data, 0);
+            EngineArray.Fill(this.data, 0);
         }
     }
 }

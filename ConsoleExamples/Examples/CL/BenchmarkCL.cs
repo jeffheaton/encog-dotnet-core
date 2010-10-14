@@ -40,6 +40,7 @@ using Encog.Neural.Networks;
 using System.Diagnostics;
 using Encog.Util;
 using Encog.Engine.Opencl;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.CL
 {

@@ -39,6 +39,7 @@ using System.IO;
 using Encog.Persist;
 using Encog.Util.CSV;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.Forest
 {

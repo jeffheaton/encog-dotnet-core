@@ -34,6 +34,7 @@ using System.Linq;
 using System.Text;
 using Encog.Cloud;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training
 {

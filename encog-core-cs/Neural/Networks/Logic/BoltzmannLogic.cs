@@ -37,6 +37,7 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
 #if logging
 using log4net;
+using Encog.Engine.Util;
 #endif
 
 namespace Encog.Neural.Networks.Logic

@@ -37,6 +37,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Synapse;
 using Encog.Engine.Network.Activation;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.LMA
 {
@@ -103,7 +104,7 @@ namespace Encog.Neural.Networks.Training.LMA
             this.network = network;
             this.parameterSize = network.Structure.CalculateSize();
             this.inputLength = (int)this.indexableTraining.Count;
-            this.jacobian = EncogArray.AllocateDouble2D(this.inputLength, this.parameterSize);
+            this.jacobian = EngineArray.AllocateDouble2D(this.inputLength, this.parameterSize);
             this.rowErrors = new double[this.inputLength];
 
             BasicNeuralData input = new BasicNeuralData(

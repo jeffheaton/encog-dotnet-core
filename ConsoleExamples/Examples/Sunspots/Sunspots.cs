@@ -45,6 +45,7 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.Sunspots
 {

@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Data;
 using Encog.MathUtil;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.Competitive
 {

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {
@@ -420,7 +421,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
             int count = rows;
             double[][] lu = LU;
 
-            double[][] X = EncogArray.AllocateDouble2D(rows, columns);
+            double[][] X = EngineArray.AllocateDouble2D(rows, columns);
             for (int i = 0; i < rows; i++)
             {
                 int k = this.piv[i];

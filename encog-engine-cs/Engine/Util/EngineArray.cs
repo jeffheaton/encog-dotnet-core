@@ -242,6 +242,17 @@ namespace Encog.Engine.Util
         /// </summary>
         /// <param name="target">The array to fill.</param>
         /// <param name="value">The value to fill.</param>
+        public static void Fill(double[] target, int value)
+        {
+            for (int i = 0; i < target.Length; i++)
+                target[i] = value;
+        }
+
+        /// <summary>
+        /// Fill the array with the specified value.
+        /// </summary>
+        /// <param name="target">The array to fill.</param>
+        /// <param name="value">The value to fill.</param>
         public static void Fill(float[] target, int value)
         {
             for (int i = 0; i < target.Length; i++)

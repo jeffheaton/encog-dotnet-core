@@ -39,6 +39,7 @@ using Encog.Neural.Networks;
 using Encog.Persist;
 using System.IO;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.Persist
 {

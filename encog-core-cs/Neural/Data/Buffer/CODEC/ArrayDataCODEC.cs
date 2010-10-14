@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Data.Buffer.CODEC
 {
@@ -84,8 +85,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
             }
             else
             {
-                EncogArray.ArrayCopy(this.input[index], input);
-                EncogArray.ArrayCopy(this.ideal[index], ideal);
+                EngineArray.ArrayCopy(this.input[index], input);
+                EngineArray.ArrayCopy(this.ideal[index], ideal);
                 index++;
                 return true;
             }
@@ -94,8 +95,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal)
         {
-            EncogArray.ArrayCopy(input, this.input[index]);
-            EncogArray.ArrayCopy(ideal, this.ideal[index]);
+            EngineArray.ArrayCopy(input, this.input[index]);
+            EngineArray.ArrayCopy(ideal, this.ideal[index]);
             index++;
         }
 
@@ -103,8 +104,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
         public void PrepareWrite(int recordCount,
             int inputSize, int idealSize)
         {
-            this.input = EncogArray.AllocateDouble2D(recordCount, inputSize);
-            this.ideal = EncogArray.AllocateDouble2D(recordCount, idealSize);
+            this.input = EngineArray.AllocateDouble2D(recordCount, inputSize);
+            this.ideal = EngineArray.AllocateDouble2D(recordCount, idealSize);
             this.inputSize = inputSize;
             this.idealSize = idealSize;
             this.index = 0;

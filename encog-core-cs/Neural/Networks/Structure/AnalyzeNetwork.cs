@@ -35,6 +35,7 @@ using Encog.MathUtil;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Structure
 {
@@ -136,9 +137,9 @@ namespace Encog.Neural.Networks.Structure
             this.weights = new NumericRange(weightList);
             this.bias = new NumericRange(biasList);
             this.weightsAndBias = new NumericRange(allList);
-            this.weightValues = EncogArray.ListToDouble(weightList);
-            this.allValues = EncogArray.ListToDouble(allList);
-            this.biasValues = EncogArray.ListToDouble(biasList);
+            this.weightValues = EngineArray.ListToDouble(weightList);
+            this.allValues = EngineArray.ListToDouble(allList);
+            this.biasValues = EngineArray.ListToDouble(biasList);
         }
 
         /// <summary>

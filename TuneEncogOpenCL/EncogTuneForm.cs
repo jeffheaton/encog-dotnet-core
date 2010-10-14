@@ -16,6 +16,7 @@ using Encog.Util.Simple;
 using System.Diagnostics;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Engine.Opencl;
+using Encog.Engine.Util;
 
 namespace TuneEncogOpenCL
 {

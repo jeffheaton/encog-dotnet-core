@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {
@@ -99,8 +100,8 @@ namespace Encog.MathUtil.Matrices.Decomposition
              */
             int nu = Math.Min(m, n);
             s = new double[Math.Min(m + 1, n)];
-            umatrix = EncogArray.AllocateDouble2D(m, nu);
-            vmatrix = EncogArray.AllocateDouble2D(n, n);
+            umatrix = EngineArray.AllocateDouble2D(m, nu);
+            vmatrix = EngineArray.AllocateDouble2D(n, n);
             double[] e = new double[n];
             double[] work = new double[m];
             bool wantu = true;

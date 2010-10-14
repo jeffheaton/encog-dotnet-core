@@ -97,7 +97,6 @@
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
-    <Compile Include="MathUtil\IntRange.cs" />
     <Compile Include="MathUtil\LIBSVM\SupportClass.cs" />
     <Compile Include="MathUtil\LIBSVM\svm.cs" />
     <Compile Include="MathUtil\LIBSVM\svm_model.cs" />
@@ -405,18 +404,14 @@
     <Compile Include="Util\DownSample\IDownSample.cs" />
     <Compile Include="Util\DownSample\RGBDownsample.cs" />
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
-    <Compile Include="Util\EncogArray.cs" />
     <Compile Include="Util\EncogValidate.cs" />
     <Compile Include="Util\FileUtil.cs" />
-    <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />
     <Compile Include="Util\HTTP\URLUtility.cs" />
     <Compile Include="Util\Identity\BasicGenerateID.cs" />
     <Compile Include="Util\Identity\IGenerateID.cs" />
     <Compile Include="Util\Logging\DumpMatrix.cs" />
     <Compile Include="Util\Logging\Logging.cs" />
-    <Compile Include="MathUtil\BoundMath.cs" />
-    <Compile Include="MathUtil\BoundNumbers.cs" />
     <Compile Include="MathUtil\Convert.cs" />
     <Compile Include="MathUtil\Equilateral.cs" />
     <Compile Include="MathUtil\LinearCongruentialGenerator.cs" />

@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Data.Buffer.CODEC
 {
@@ -72,8 +73,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
             else
             {
                 INeuralDataPair pair = enumerator.Current;
-                EncogArray.ArrayCopy(pair.Input.Data, input);
-                EncogArray.ArrayCopy(pair.Ideal.Data, ideal);
+                EngineArray.ArrayCopy(pair.Input.Data, input);
+                EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
                 return true;
             }
         }
@@ -83,8 +84,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
         {
             INeuralDataPair pair = BasicNeuralDataPair.CreatePair(inputSize,
                     idealSize);
-            EncogArray.ArrayCopy(input, pair.Input.Data);
-            EncogArray.ArrayCopy(ideal, pair.Ideal.Data);
+            EngineArray.ArrayCopy(input, pair.Input.Data);
+            EngineArray.ArrayCopy(ideal, pair.Ideal.Data);
         }
 
         /// <inheritdoc/>

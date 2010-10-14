@@ -7,6 +7,7 @@ using Encog.Neural.Networks.SVM;
 using Encog.MathUtil.LIBSVM;
 using Encog.Util;
 using Encog.Parse.Tags.Write;
+using Encog.Engine.Util;
 
 namespace Encog.Persist.Persistors
 {
@@ -199,7 +200,7 @@ namespace Encog.Persist.Persistors
             {
                 if (xmlin.IsIt(SVMNetworkPersistor.TAG_TYPE_SVM, true))
                 {
-                    int i = EncogArray.FindStringInArray(
+                    int i = EngineArray.FindStringInArray(
                             SVMNetworkPersistor.svm_type_table, xmlin.ReadTextToTag());
                     model.param.svm_type = i;
                 }
@@ -265,7 +266,7 @@ namespace Encog.Persist.Persistors
                 }
                 else if (xmlin.IsIt(SVMNetworkPersistor.TAG_TYPE_KERNEL, true))
                 {
-                    int i = EncogArray.FindStringInArray(
+                    int i = EngineArray.FindStringInArray(
                             SVMNetworkPersistor.kernel_type_table, xmlin
                                     .ReadTextToTag());
                     model.param.kernel_type = i;
@@ -292,7 +293,7 @@ namespace Encog.Persist.Persistors
             int m = model.nr_class - 1;
             int l = model.l;
 
-            model.sv_coef = EncogArray.AllocateDouble2D(m, l);
+            model.sv_coef = EngineArray.AllocateDouble2D(m, l);
             model.SV = new svm_node[l][];
 
             while (xmlin.ReadToTag())

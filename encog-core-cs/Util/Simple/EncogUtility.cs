@@ -45,6 +45,7 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 #if !SILVERLIGHT
 using System.Windows.Forms;
 using Encog.Engine.Network.Activation;
+using Encog.Engine.Util;
 #endif
 
 namespace Encog.Util.Simple

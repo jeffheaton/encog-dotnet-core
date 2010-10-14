@@ -97,7 +97,6 @@ namespace Encog.Examples.XOR.Resilient
             INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
 
             // train the neural network
-            // train the neural network
             ITrain train = new ResilientPropagation(network, trainingSet);
 
             int epoch = 1;

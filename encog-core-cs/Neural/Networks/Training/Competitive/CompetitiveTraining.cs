@@ -43,6 +43,7 @@ using Encog.Neural.NeuralData;
 using Encog.MathUtil;
 using Encog.MathUtil.Matrices;
 using Encog.Util;
+using Encog.Engine.Util;
 
 
 namespace Encog.Neural.Networks.Training.Competitive

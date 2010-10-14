@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Util.CSV;
 using System.IO;
 using Encog.Util;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Data.Buffer.CODEC
 {
@@ -128,8 +129,8 @@ namespace Encog.Neural.Data.Buffer.CODEC
         public void Write(double[] input, double[] ideal)
         {
             double[] record = new double[input.Length + ideal.Length];
-            EncogArray.ArrayCopy(input, record);
-            EncogArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
+            EngineArray.ArrayCopy(input, record);
+            EngineArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
             StringBuilder result = new StringBuilder();
             NumberList.ToList(this.format, result, record);
             this.output.WriteLine(result.ToString());
