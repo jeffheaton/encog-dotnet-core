@@ -35,6 +35,7 @@ using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+using Encog.Engine;
 
 namespace Encog.Util.Banchmark
 {

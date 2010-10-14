@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.Concurrency;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Crossover;
 using Encog.Solve.Genetic.Mutate;
@@ -39,6 +38,7 @@ using Encog.Solve.Genetic.Population;
 using Encog.MathUtil;
 using Encog.Neural.Networks;
 using Encog.Solve.Genetic.Species;
+using Encog.Engine.Concurrency.Job;
 
 namespace Encog.Solve.Genetic
 {
@@ -140,7 +140,7 @@ namespace Encog.Solve.Genetic
             int offspringIndex = Population.Genomes.Count - offspringCount;
             int matingPopulationSize = (int)(Population.Genomes.Count * MatingPopulation);
 
-            TaskGroup group = EncogConcurrency.Instance
+            TaskGroup group = EngineConcurrency.Instance
                     .CreateTaskGroup();
 
             // mate and form the next generation
@@ -156,7 +156,7 @@ namespace Encog.Solve.Genetic
                 MateWorker worker = new MateWorker(mother, father, child1,
                         child2);
 
-                EncogConcurrency.Instance.ProcessTask(worker, group);
+                EngineConcurrency.Instance.ProcessTask(worker, group);
 
                 offspringIndex += 2;
             }

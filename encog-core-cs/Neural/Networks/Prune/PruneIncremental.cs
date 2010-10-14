@@ -40,7 +40,8 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Util.Concurrency.Job;
+using Encog.Engine.Concurrency.Job;
+using Encog.Engine;
 
 namespace Encog.Neural.Networks.Prune
 {

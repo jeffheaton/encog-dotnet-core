@@ -38,6 +38,7 @@ using Encog.Normalize.Target;
 using Encog.Normalize.Output;
 using Encog.Normalize.Segregate.Index;
 using Encog.Normalize.Segregate;
+using Encog.Engine;
 
 namespace Encog.Examples.Forest
 {

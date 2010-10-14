@@ -367,7 +367,6 @@
     <Compile Include="Persist\PersistWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solve\Anneal\SimulatedAnnealing.cs" />
-    <Compile Include="IStatusReportable.cs" />
     <Compile Include="Solve\Genetic\Crossover\ICrossover.cs" />
     <Compile Include="Solve\Genetic\Crossover\Splice.cs" />
     <Compile Include="Solve\Genetic\Crossover\SpliceNoRepeat.cs" />
@@ -399,14 +398,6 @@
     <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
     <Compile Include="Util\Banchmark\Evaluate.cs" />
     <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
-    <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
-    <Compile Include="Util\Concurrency\EncogConcurrency.cs" />
-    <Compile Include="Util\Concurrency\IEncogTask.cs" />
-    <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />
-    <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
-    <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
-    <Compile Include="Util\Concurrency\PoolItem.cs" />
-    <Compile Include="Util\Concurrency\TaskGroup.cs" />
     <Compile Include="Util\CSV\NumberList.cs" />
     <Compile Include="Util\CSV\CSVError.cs" />
     <Compile Include="Util\CSV\CSVFormat.cs" />

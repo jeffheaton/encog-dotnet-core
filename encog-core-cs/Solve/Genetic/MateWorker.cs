@@ -31,15 +31,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Util.Concurrency;
 using Encog.Solve.Genetic.Genome;
+using Encog.Engine.Concurrency.Job;
 
 namespace Encog.Solve.Genetic
 {
     /// <summary>
     /// Worker that is used to mate the genomes in a multithreaded way.
     /// </summary>
-    public class MateWorker : IEncogTask
+    public class MateWorker : IEngineTask
     {
         /// <summary>
         /// The first child.

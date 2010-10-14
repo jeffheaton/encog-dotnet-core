@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Util.Banchmark;
 using ConsoleExamples.Examples;
+using Encog.Engine;
 
 namespace Encog.Examples.Benchmark
 {

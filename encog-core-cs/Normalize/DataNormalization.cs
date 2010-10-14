@@ -43,6 +43,7 @@ using Encog.Normalize.Target;
 using Encog.Persist;
 using Encog.Persist.Persistors.Generic;
 using Encog.Util.CSV;
+using Encog.Engine;
 
 namespace Encog.Normalize
 {
