@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Activation;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;

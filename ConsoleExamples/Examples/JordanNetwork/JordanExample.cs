@@ -43,7 +43,7 @@ using Encog.Util.Logging;
 using Encog.Examples.Util;
 using ConsoleExamples.Examples;
 using Encog.Neural.Networks.Pattern;
-using Encog.Neural.Activation;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.JordanNetwork
 {

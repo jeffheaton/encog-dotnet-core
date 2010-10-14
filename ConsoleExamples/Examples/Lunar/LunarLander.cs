@@ -35,11 +35,11 @@ using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks;
 using Encog.Util.Logging;
 using Encog.Neural.Networks.Training;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.Genetic;
 using Encog.Neural.Networks.Training.Anneal;
 using ConsoleExamples.Examples;
 using Encog.MathUtil.Randomize;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.Lunar
 {

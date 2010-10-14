@@ -37,7 +37,6 @@ using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Data;

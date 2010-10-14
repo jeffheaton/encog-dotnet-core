@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Logic;
 using Encog.Persist;
@@ -41,6 +40,7 @@ using Encog.Normalize;
 using Encog.Neural.Data.Buffer;
 using Encog.Util.Simple;
 using System.IO;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.Forest
 {

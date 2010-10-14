@@ -32,9 +32,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Encog.Neural.Activation;
 using Encog.Persist.Persistors;
 using Encog;
+using Encog.Engine.Network.Activation;
 
 namespace encog_test.Encog.Neural.Activation
 {
@@ -45,14 +45,14 @@ namespace encog_test.Encog.Neural.Activation
         public void testLinear()
         {
             ActivationLinear activation = new ActivationLinear();
-            Assert.IsTrue(activation.HasDerivative);
+            Assert.IsTrue(activation.HasDerivative());
 
             ActivationLinear clone = (ActivationLinear)activation.Clone();
             Assert.IsNotNull(clone);
 
             double[] input = { 1, 2, 3 };
 
-            activation.ActivationFunction(input);
+            activation.ActivationFunction(input,0,1);
 
             Assert.AreEqual(1.0, input[0], 0.1);
             Assert.AreEqual(2.0, input[1], 0.1);
@@ -60,15 +60,9 @@ namespace encog_test.Encog.Neural.Activation
 
             
             // test derivative, should not throw an error
-            activation.DerivativeFunction(input);
+            input[0] = activation.DerivativeFunction(input[0]);
    
 
-            // test name and description
-            // names and descriptions are not stored for these
-            activation.Name = "name";
-            activation.Description = "name";
-            Assert.AreEqual(null, activation.Name);
-            Assert.AreEqual(null, activation.Description);
         }
     }
 }

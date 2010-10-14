@@ -43,7 +43,7 @@ using Encog.Neural.Networks.Training.Strategy;
 using Encog.Util.Logging;
 using Encog.Examples.Util;
 using Encog.Neural.Networks.Pattern;
-using Encog.Neural.Activation;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.ElmanNetwork
 {

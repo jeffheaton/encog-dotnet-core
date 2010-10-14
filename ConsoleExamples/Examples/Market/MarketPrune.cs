@@ -35,8 +35,8 @@ using System.IO;
 using Encog.Persist;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Prune;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.Market
 {

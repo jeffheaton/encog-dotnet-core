@@ -37,9 +37,9 @@ using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training;
 using ConsoleExamples.Examples;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.XOR.Anneal
 {

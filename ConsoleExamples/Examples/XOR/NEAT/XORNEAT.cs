@@ -34,11 +34,11 @@ using System.Text;
 using ConsoleExamples.Examples;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Training.NEAT;
 using Encog.Neural.Data.Basic;
 using Encog.Util.Simple;
 using Encog.Neural.Networks;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.XOR.NEAT
 {

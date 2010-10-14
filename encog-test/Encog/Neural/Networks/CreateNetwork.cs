@@ -33,8 +33,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Structure;
+using Encog.Engine.Network.Activation;
 
 namespace encog_test.Neural.Networks
 {

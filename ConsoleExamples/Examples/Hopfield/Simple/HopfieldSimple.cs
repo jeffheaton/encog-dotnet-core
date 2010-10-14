@@ -36,10 +36,10 @@ using Encog.Util.Logging;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks;
 using Encog.Neural.NeuralData.Bipolar;
-using Encog.Neural.Activation;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks.Training.Hopfield;
 using ConsoleExamples.Examples;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.Hopfield.Simple
 {

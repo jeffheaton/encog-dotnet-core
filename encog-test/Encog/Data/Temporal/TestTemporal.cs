@@ -34,7 +34,7 @@ using System.Text;
 using NUnit.Framework;
 using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Activation;
+using Encog.Engine.Network.Activation;
 
 namespace encog_test.Data.Temporal
 {

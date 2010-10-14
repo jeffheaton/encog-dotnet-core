@@ -40,7 +40,6 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Competitive;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Data.Basic;
-using Encog.Neural.Activation;
 using Encog.Neural.Data;
 using Encog.MathUtil.Matrices;
 using Encog.Neural.Networks.Pattern;

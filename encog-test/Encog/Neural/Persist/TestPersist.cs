@@ -34,9 +34,9 @@ using System.Text;
 using NUnit.Framework;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Pattern;
-using Encog.Neural.Activation;
 using Encog.Persist;
 using System.IO;
+using Encog.Engine.Network.Activation;
 
 namespace encog_test.Neural.Persist
 {
