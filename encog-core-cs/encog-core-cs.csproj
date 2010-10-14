@@ -231,6 +231,14 @@
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussian.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussianMulti.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodSingle.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\ConcurrentTrainingManager.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Jobs\BPROPJob.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Jobs\RPROPJob.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Jobs\TrainingJob.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Performers\ConcurrentTrainingPerformerCPU.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Performers\ConcurrentTrainingPerformerOpenCL.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Performers\IConcurrentTrainingPerformer.cs" />
+    <Compile Include="Neural\Networks\Training\Concurrent\Performers\PerformerTask.cs" />
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
@@ -263,6 +271,7 @@
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\Greedy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\HybridStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\IEndTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\RequiredImprovementStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\ResetStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
