@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Strategy;
 using Encog.Neural.Networks.Structure;
+using Encog.Engine.Network.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Propagation.Back
 {
@@ -65,39 +66,60 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
             ILearningRate
     {
         /// <summary>
+        /// The resume key for backpropagation.
+        /// </summary>
+        public readonly static String LAST_DELTA = "LAST_DELTA";
+
+        /// <summary>
         /// Set the momentum for training. This is the degree to which changes from
         /// which the previous training iteration will affect this training
         /// iteration. This can be useful to overcome local minima.
         /// </summary>
-        public double Momentum { get; set; }
+        public double Momentum
+        {
+            get
+            {
+                return ((TrainFlatNetworkBackPropagation)this.FlatTraining).Momentum;
+            }
+            set
+            {
+                ((TrainFlatNetworkBackPropagation)this.FlatTraining).Momentum = value;
+            }
+        }
 
         /// <summary>
         /// The learning rate, this is value is essentially a percent. It is the
         /// degree to which the gradients are applied to the weight matrix to allow
         /// learning.
         /// </summary>
-        public double LearningRate { get; set; }
+        public double LearningRate
+        {
+            get
+            {
+                return ((TrainFlatNetworkBackPropagation)this.FlatTraining).LearningRate;
+            }
+            set
+            {
+                ((TrainFlatNetworkBackPropagation)this.FlatTraining).LearningRate = value;
+            }
+
+        }
 
         /// <summary>
-        /// The last delta values, used for momentum.
-        /// </summary>
-        private double[] lastDelta;
-
-        /// <summary>
-        /// Create a class to train using backpropagation. 
+        /// Create a class to train using backpropagation.  Use auto learn rate and momentum.  Use the CPU to train.
         /// </summary>
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
         public Backpropagation(BasicNetwork network,
-                 INeuralDataSet training)
-            : base(network, training)
+                INeuralDataSet training)
+            : this(network, training, null, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
         }
-       
+
         /// <summary>
-        /// Construct a backpropagation object.
+        /// Train using the specified learning rate and momentum.  Use the CPU to train.
         /// </summary>
         /// <param name="network">The network that is to be trained</param>
         /// <param name="training">The training set</param>
@@ -108,21 +130,105 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public Backpropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate,
                  double momentum)
+            : this(network, training, null, learnRate, momentum)
+        {
+        }
+        
+        /// <summary>
+        /// The network that is to be trained.
+        /// </summary>
+        /// <param name="network">The training set.</param>
+        /// <param name="training">The OpenCL profile to use, null for CPU.</param>
+        /// <param name="profile">The OpenCL profile, or null for none.</param>
+        /// <param name="learnRate">The rate at which the weight matrix will be adjusted based on
+        /// learning.</param>
+        /// <param name="momentum">The influence that previous iteration's training deltas will
+        /// have on the current iteration.</param>
+        public Backpropagation(BasicNetwork network,
+                 INeuralDataSet training, OpenCLTrainingProfile profile, double learnRate,
+                 double momentum)
             : base(network, training)
         {
 
-            this.Momentum = momentum;
-            this.LearningRate = learnRate;
+            if (profile == null)
+            {
+                TrainFlatNetworkBackPropagation backFlat = new TrainFlatNetworkBackPropagation(
+                        network.Structure.Flat,
+                        this.Training,
+                        learnRate,
+                        momentum);
+                this.FlatTraining = backFlat;
+            }
+            else
+            {
+                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
+                        network.Structure.Flat, this.Training,
+                        profile);
+                rpropFlat.LearnBPROP(learnRate, momentum);
+                this.FlatTraining = rpropFlat;
+            }
+
+
         }
 
-        public override BasicNetwork Network
+        /// <summary>
+        /// Determine if the specified continuation object is valid to resume with. 
+        /// </summary>
+        /// <param name="state">The continuation object to check.</param>
+        /// <returns>True if the specified continuation object is valid for this
+        /// training method and network.</returns>
+        public override bool IsValidResume(TrainingContinuation state)
         {
-            get { throw new NotImplementedException(); }
+            if (!state.Contents.ContainsKey(Backpropagation.LAST_DELTA))
+            {
+                return false;
+            }
+
+            double[] d = (double[])state
+                    [Backpropagation.LAST_DELTA];
+            return d.Length == Network.Structure.CalculateSize();
+        }
+        
+        /// <summary>
+        /// Pause the training. 
+        /// </summary>
+        /// <returns>A training continuation object to continue with.</returns>
+        public override TrainingContinuation Pause()
+        {
+            TrainingContinuation result = new TrainingContinuation();
+
+            TrainFlatNetworkBackPropagation backFlat = (TrainFlatNetworkBackPropagation)FlatTraining;
+            double[] d = backFlat.LastDelta;
+            result[Backpropagation.LAST_DELTA] = d;
+            return result;
+        }
+        
+        /// <summary>
+        /// Resume training. 
+        /// </summary>
+        /// <param name="state">The training state to return to.</param>
+        public override void Resume(TrainingContinuation state)
+        {
+            if (!IsValidResume(state))
+            {
+                throw new TrainingError("Invalid training resume data length");
+            }
+
+            ((TrainFlatNetworkBackPropagation)this.FlatTraining).LastDelta =
+                (double[])state[Backpropagation.LAST_DELTA];
+
         }
 
-        public override void Iteration()
+        /// <summary>
+        /// The last deltas.
+        /// </summary>
+        public double[] LastDelta
         {
-            throw new NotImplementedException();
+            get
+            {
+                return ((TrainFlatNetworkBackPropagation)this.FlatTraining).LastDelta;
+            }
         }
+
     }
 }

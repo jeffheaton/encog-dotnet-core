@@ -221,6 +221,7 @@ namespace Encog.Neural.Networks.Structure
             AssignID();
             this.network.Logic.Init(this.network);
             EnforceLimit();
+            Flatten();
         }
 
         /// <summary>
@@ -524,7 +525,9 @@ namespace Encog.Neural.Networks.Structure
         }
 
 
-
+        /// <summary>
+        /// Create the flat neural network.
+        /// </summary>
         public void Flatten()
         {
             bool isRBF = false;
@@ -636,6 +639,9 @@ namespace Encog.Neural.Networks.Structure
                 this.flatUpdate = FlatUpdateNeeded.Never;
         }
 
+        /// <summary>
+        /// Flatten the weights of a neural network.
+        /// </summary>
         public void FlattenWeights()
         {
             if (this.flat != null)
@@ -660,6 +666,9 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// The type of flat update that is needed.
+        /// </summary>
         public FlatUpdateNeeded FlatUpdate
         {
             get
@@ -672,6 +681,9 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// The flat network.
+        /// </summary>
         public FlatNetwork Flat
         {
             get
@@ -680,6 +692,9 @@ namespace Encog.Neural.Networks.Structure
             }
         }
 
+        /// <summary>
+        /// Update the flat network.  Either flatten or unflatten as needed.
+        /// </summary>
         public void UpdateFlatNetwork()
         {
 
@@ -709,6 +724,11 @@ namespace Encog.Neural.Networks.Structure
             this.flatUpdate = FlatUpdateNeeded.None;
         }
 
+        /// <summary>
+        /// Find the next bias layer for a given layer.
+        /// </summary>
+        /// <param name="layer">The layer to search from.</param>
+        /// <returns>The layer bias.</returns>
         private double FindNextBias(ILayer layer)
         {
             double bias = FlatNetwork.NO_BIAS_ACTIVATION;
@@ -727,6 +747,10 @@ namespace Encog.Neural.Networks.Structure
             return bias;
         }
 
+        /// <summary>
+        /// Unflatten the weights, copy the flat network weights to the
+        /// neural network weight matrixes.
+        /// </summary>
         public void UnflattenWeights()
         {
             double[] sourceWeights = flat.Weights;
@@ -734,6 +758,10 @@ namespace Encog.Neural.Networks.Structure
             this.flatUpdate = FlatUpdateNeeded.None;
         }
 
+        /// <summary>
+        /// Count the non-context layers in a network.
+        /// </summary>
+        /// <returns>The number of layers that are not contextual.</returns>
         private int CountNonContext()
         {
             int result = 0;
@@ -747,6 +775,13 @@ namespace Encog.Neural.Networks.Structure
             return result;
         }
 
+        /// <summary>
+        /// Find the previous synapse of a layer type.
+        /// </summary>
+        /// <param name="layer">The layer to search from.</param>
+        /// <param name="type">The layer type.</param>
+        /// <returns></returns>
+
         public ISynapse FindPreviousSynapseByLayerType(ILayer layer,
                 Type type)
         {
@@ -758,6 +793,12 @@ namespace Encog.Neural.Networks.Structure
             return null;
         }
 
+        /// <summary>
+        /// Find the next synapse of a layer type.
+        /// </summary>
+        /// <param name="layer">The layer to search from.</param>
+        /// <param name="type">The layer type.</param>
+        /// <returns></returns>
         public ISynapse FindNextSynapseByLayerType(ILayer layer,
                 Type type)
         {

@@ -33,6 +33,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
+using Encog.Engine.Network.Train.Prop;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient
 {
@@ -67,124 +69,80 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
     public class ResilientPropagation : Propagation
     {
         /// <summary>
-        /// The default zero tolerance.
-        /// </summary>
-        public const double DEFAULT_ZERO_TOLERANCE = 0.00000000000000001;
-
-        /// <summary>
-        /// The POSITIVE ETA value. This is specified by the resilient propagation
-        /// algorithm. This is the percentage by which the deltas are increased by if
-        /// the partial derivative is greater than zero.
-        /// </summary>
-        public const double POSITIVE_ETA = 1.2;
-
-        /// <summary>
-        /// The NEGATIVE ETA value. This is specified by the resilient propagation
-        /// algorithm. This is the percentage by which the deltas are increased by if
-        /// the partial derivative is less than zero.
-        /// </summary>
-        public const double NEGATIVE_ETA = 0.5;
-
-        /// <summary>
-        /// The minimum delta value for a weight matrix value.
-        /// </summary>
-        public const double DELTA_MIN = 1e-6;
-
-        /// <summary>
-        /// The starting update for a delta.
-        /// </summary>
-        public const double DEFAULT_INITIAL_UPDATE = 0.1;
-
-        /// <summary>
-        /// The maximum amount a delta can reach.
-        /// </summary>
-        public const double DEFAULT_MAX_STEP = 50;
-
-        /// <summary>
         /// Continuation tag for the last gradients.
         /// </summary>
-        public const String LAST_GRADIENTS = "LAST_GRADIENTS";
+        public readonly static String LAST_GRADIENTS = "LAST_GRADIENTS";
 
         /// <summary>
         /// Continuation tag for the last values.
         /// </summary>
-        public const String UPDATE_VALUES = "UPDATE_VALUES";
-
-        /// <summary>
-        /// The zero tolerance.
-        /// </summary>
-        private double zeroTolerance;
-
-        /// <summary>
-        /// The initial update value.
-        /// </summary>
-        private double initialUpdate;
-
-        /// <summary>
-        /// The maximum delta amount.
-        /// </summary>
-        private double maxStep;
-
-        /// <summary>
-        /// The update value.
-        /// </summary>
-        private double[] updateValues;
-
-        /// <summary>
-        /// The last gradients.
-        /// </summary>
-        private double[] lastGradient;
-
-        /// <summary>
-        /// The current gradients.
-        /// </summary>
-        private double[] gradients;
-
+        public readonly static String UPDATE_VALUES = "UPDATE_VALUES";
+        
         /// <summary>
         /// Construct a resilient training object. Use the defaults for all training
         /// parameters. Usually this is the constructor to use as the resilient
         /// training algorithm is designed for the default parameters to be
-        /// acceptable for nearly all problems.
+        /// acceptable for nearly all problems. Use the CPU to train. 
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set to use.</param>
         public ResilientPropagation(BasicNetwork network,
                  INeuralDataSet training)
-            : this(network, training, ResilientPropagation.DEFAULT_ZERO_TOLERANCE,
-                ResilientPropagation.DEFAULT_INITIAL_UPDATE,
-                ResilientPropagation.DEFAULT_MAX_STEP)
+            : this(network, training, null, RPROPConst.DEFAULT_INITIAL_UPDATE,
+                RPROPConst.DEFAULT_MAX_STEP)
         {
 
         }
-        
+
+        /// <summary>
+        /// Construct an RPROP trainer, allows an OpenCL device to be specified. Use
+        /// the defaults for all training parameters. Usually this is the constructor
+        /// to use as the resilient training algorithm is designed for the default
+        /// parameters to be acceptable for nearly all problems. 
+        /// </summary>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="profile">The profile to use.</param>
+        public ResilientPropagation(BasicNetwork network,
+                 INeuralDataSet training, OpenCLTrainingProfile profile)
+            : this(network, training, profile, RPROPConst.DEFAULT_INITIAL_UPDATE,
+                RPROPConst.DEFAULT_MAX_STEP)
+        {
+
+        }
+
         /// <summary>
         /// Construct a resilient training object, allow the training parameters to
         /// be specified. Usually the default parameters are acceptable for the
         /// resilient training algorithm. Therefore you should usually use the other
-        /// constructor, that makes use of the default values.
+        /// constructor, that makes use of the default values. 
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set to use.</param>
-        /// <param name="zeroTolerance">The zero tolerance.</param>
+        /// <param name="profile">Optional EncogCL profile to execute on.</param>
         /// <param name="initialUpdate">The initial update values, this is the amount that the deltas
         /// are all initially set to.</param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
         public ResilientPropagation(BasicNetwork network,
-                 INeuralDataSet training, double zeroTolerance,
+                 INeuralDataSet training, OpenCLTrainingProfile profile,
                  double initialUpdate, double maxStep)
             : base(network, training)
         {
-            this.initialUpdate = initialUpdate;
-            this.maxStep = maxStep;
-            this.zeroTolerance = zeroTolerance;
-
-            this.updateValues = new double[network.Structure.CalculateSize()];
-            this.lastGradient = new double[network.Structure.CalculateSize()];
-
-            for (int i = 0; i < this.updateValues.Length; i++)
+            if (profile == null)
             {
-                this.updateValues[i] = this.initialUpdate;
+                TrainFlatNetworkResilient rpropFlat = new TrainFlatNetworkResilient(
+                        network.Structure.Flat, this.Training);
+                this.FlatTraining = rpropFlat;
             }
+            else
+            {
+                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
+                        network.Structure.Flat, this.Training,
+                        profile);
+                rpropFlat.LearnRPROP(initialUpdate, maxStep);
+                this.FlatTraining = rpropFlat;
+            }
+
         }
 
         /// <summary>
@@ -199,61 +157,55 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         }
 
         /// <summary>
-        /// The initial update amount, set by the constructor.
-        /// </summary>
-        public double InitialUpdate
-        {
-            get
-            {
-                return this.initialUpdate;
-            }
-        }
-
-        /// <summary>
-        /// The maximum step, set by the constructor.
-        /// </summary>
-        public double MaxStep
-        {
-            get
-            {
-                return this.maxStep;
-            }
-        }
-
-        /// <summary>
-        /// The zero tolerance, set by the constructor.
-        /// </summary>
-        public double ZeroTolerance
-        {
-            get
-            {
-                return this.zeroTolerance;
-            }
-        }
-
-        /// <summary>
-        /// Determine if the specified continuation object is valid to resume with.
+        /// Determine if the specified continuation object is valid to resume with. 
         /// </summary>
         /// <param name="state">The continuation object to check.</param>
         /// <returns>True if the specified continuation object is valid for this
         /// training method and network.</returns>
         public override bool IsValidResume(TrainingContinuation state)
         {
-            return false;
-        }
+            if (!state.Contents.ContainsKey(
+                    ResilientPropagation.LAST_GRADIENTS)
+                    || !state.Contents.ContainsKey(
+                            ResilientPropagation.UPDATE_VALUES))
+            {
+                return false;
+            }
 
+            double[] d = (double[])state
+                    [ResilientPropagation.LAST_GRADIENTS];
+            return d.Length == Network.Structure.CalculateSize();
+        }
+        
         /// <summary>
-        /// Pause the training.
+        /// Pause the training. 
         /// </summary>
         /// <returns>A training continuation object to continue with.</returns>
         public override TrainingContinuation Pause()
         {
             TrainingContinuation result = new TrainingContinuation();
-            result[ResilientPropagation.LAST_GRADIENTS] = this.lastGradient;
-            result[ResilientPropagation.UPDATE_VALUES] = this.updateValues;
+
+            if (this.FlatTraining is TrainFlatNetworkResilient)
+            {
+                result[ResilientPropagation.LAST_GRADIENTS] =
+                        ((TrainFlatNetworkResilient)this.FlatTraining)
+                                .LastGradient;
+                result[ResilientPropagation.UPDATE_VALUES] =
+                        ((TrainFlatNetworkResilient)this.FlatTraining)
+                                .UpdateValues;
+            }
+            else
+            {
+                result[ResilientPropagation.LAST_GRADIENTS] =
+                        ((TrainFlatNetworkOpenCL)this.FlatTraining)
+                                .LastGradient;
+                result[ResilientPropagation.UPDATE_VALUES] =
+                        ((TrainFlatNetworkOpenCL)this.FlatTraining)
+                                .UpdateValues;
+            }
+
             return result;
         }
-
 
         /// <summary>
         /// Resume training.
@@ -261,17 +213,31 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="state">The training state to return to.</param>
         public override void Resume(TrainingContinuation state)
         {
+            if (!IsValidResume(state))
+            {
+                throw new TrainingError("Invalid training resume data length");
+            }
+            double[] lastGradient = (double[])state
+                    [ResilientPropagation.LAST_GRADIENTS];
+            double[] updateValues = (double[])state
+                    [ResilientPropagation.UPDATE_VALUES];
 
-        }
-
-        public override BasicNetwork Network
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public override void Iteration()
-        {
-            throw new NotImplementedException();
+            if (this.FlatTraining is TrainFlatNetworkResilient)
+            {
+                EngineArray.ArrayCopy(lastGradient,
+                        ((TrainFlatNetworkResilient)this.FlatTraining)
+                                .LastGradient);
+                EngineArray.ArrayCopy(updateValues,
+                        ((TrainFlatNetworkResilient)this.FlatTraining)
+                                .UpdateValues);
+            }
+            else if (this.FlatTraining is TrainFlatNetworkOpenCL)
+            {
+                EngineArray.ArrayCopy(lastGradient, ((TrainFlatNetworkOpenCL)this
+                        .FlatTraining).LastGradient);
+                EngineArray.ArrayCopy(updateValues, ((TrainFlatNetworkOpenCL)this
+                        .FlatTraining).UpdateValues);
+            }
         }
     }
 }

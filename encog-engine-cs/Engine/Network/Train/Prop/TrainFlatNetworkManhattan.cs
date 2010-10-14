@@ -92,5 +92,20 @@ namespace Encog.Engine.Network.Train.Prop
             }
         }
 
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
+        public double LearningRate
+        {
+            get
+            {
+                return this.learningRate;
+            }
+            set
+            {
+                this.learningRate = value;
+            }
+        }
+
     }
 }

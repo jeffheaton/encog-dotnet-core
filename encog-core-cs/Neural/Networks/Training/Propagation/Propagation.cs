@@ -66,29 +66,26 @@ namespace Encog.Neural.Networks.Training.Propagation
         private static readonly ILog LOGGER = LogManager.GetLogger(typeof(Propagation));
 #endif
 
-        /**
-	 * The network.
-	 */
+        /// <summary>
+        /// The network.
+        /// </summary>
         private BasicNetwork network;
 
-        /**
-         * The current flat network we are using for training, or null for none.
-         */
+        /// <summary>
+        /// The current flat network we are using for training, or null for none.
+        /// </summary>
         private FlatNetwork currentFlatNetwork;
 
-        /**
-         * The current flat trainer we are using, or null for none.
-         */
+        /// <summary>
+        /// The current flat trainer we are using, or null for none.
+        /// </summary>
         private ITrainFlatNetwork flatTraining;
-
-        /**
-         * Construct a propagation object.
-         * 
-         * @param network
-         *            The network.
-         * @param training
-         *            The training set.
-         */
+        
+        /// <summary>
+        /// Construct a propagation object. 
+        /// </summary>
+        /// <param name="network">The network.</param>
+        /// <param name="training">The training set.</param>
         public Propagation(BasicNetwork network, INeuralDataSet training)
             : base()
         {
@@ -96,9 +93,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             Training = training;
         }
 
-        /**
-         * @return True if this training can be continued.
-         */
+        /// <summary>
+        /// True if this training can be continued.
+        /// </summary>
         public virtual bool CanContinue
         {
             get
@@ -107,9 +104,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /**
-         * @return the currentFlatNetwork
-         */
+        /// <summary>
+        /// The flat network.
+        /// </summary>
         public FlatNetwork CurrentFlatNetwork
         {
             get
@@ -118,9 +115,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /**
-         * @return the flatTraining
-         */
+        /// <summary>
+        /// The flat training.
+        /// </summary>
         public ITrainFlatNetwork FlatTraining
         {
             get
@@ -133,9 +130,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /**
-         * @return The network.
-         */
+        /// <summary>
+        /// The network.
+        /// </summary>
         public override BasicNetwork Network
         {
             get
@@ -144,9 +141,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /**
-         * @return The number of threads.
-         */
+        /// <summary>
+        /// The number of threads.
+        /// </summary>
         public int NumThreads
         {
             get
@@ -159,22 +156,20 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /**
-         * Determine if this specified training continuation object is valid for
-         * this training method.
-         * 
-         * @param state
-         *            The training continuation object to check.
-         * @return True if the continuation object is valid.
-         */
+        /// <summary>
+        /// Determine if this specified training continuation object is valid for
+        /// this training method. 
+        /// </summary>
+        /// <param name="state">The training continuation object to check.</param>
+        /// <returns>True if the continuation object is valid.</returns>
         public virtual bool IsValidResume(TrainingContinuation state)
         {
             return false;
         }
 
-        /**
-         * Perform one training iteration.
-         */
+        /// <summary>
+        /// Perform one training iteration.
+        /// </summary>
         public override void Iteration()
         {
             try
@@ -200,47 +195,38 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-
-
-        /**
-         * Pause the training to continue later.
-         * 
-         * @return A training continuation object.
-         */
+        /// <summary>
+        /// Pause the training to continue later. 
+        /// </summary>
+        /// <returns>A training continuation object.</returns>
         public virtual TrainingContinuation Pause()
         {
             throw new TrainingError("This training type does not support pause.");
         }
 
-
-        /**
-         * Resume training.
-         * 
-         * @param state
-         *            The training continuation object to use to continue.
-         */
+        /// <summary>
+        /// Resume training. 
+        /// </summary>
+        /// <param name="state">The training continuation object to use to continue.</param>
         public virtual void Resume(TrainingContinuation state)
         {
             throw new TrainingError("This training type does not support resume.");
         }
 
-
-
-
-        /**
-         * Should be called after training has completed and the iteration method
-         * will not be called any further.
-         */
-        public void finishTraining()
+        /// <summary>
+        /// Should be called after training has completed and the iteration method
+        /// will not be called any further.
+        /// </summary>
+        public void FinishTraining()
         {
             base.FinishTraining();
             this.network.Structure.UpdateFlatNetwork();
             this.flatTraining.FinishTraining();
         }
 
-        /**
-         * @return The OpenCL device to use, or null for the CPU.
-         */
+        /// <summary>
+        /// The OpenCL device to use, or null for the CPU.
+        /// </summary>
         public OpenCLTrainingProfile Profile
         {
             get
@@ -248,14 +234,13 @@ namespace Encog.Neural.Networks.Training.Propagation
                 return null;
             }
         }
-
-
-        /**
-         * Perform the specified number of training iterations. This can be more efficient than single 
-         * training iterations.  This is particularly true if you are training with a GPU.
-         * @param count The number of training iterations.
-         */
-        public void iteration(int count)
+        
+        /// <summary>
+        /// Perform the specified number of training iterations. This can be more efficient than single 
+        /// training iterations.  This is particularly true if you are training with a GPU. 
+        /// </summary>
+        /// <param name="count">The number of training iterations.</param>
+        public void Iteration(int count)
         {
             try
             {

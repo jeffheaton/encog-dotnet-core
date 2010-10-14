@@ -35,6 +35,7 @@ using Encog.Neural.NeuralData;
 
 #if logging
 using log4net;
+using Encog.Engine.Network.Train.Prop;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
@@ -54,36 +55,65 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
     /// to determine the update value.
     /// </summary>
     public class ManhattanPropagation : Propagation, ILearningRate
-    {
+    {        
         /// <summary>
-        /// The learning rate.
+        /// Construct a Manhattan propagation training object. 
         /// </summary>
-        public double LearningRate { get; set; }
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="profile">The learning rate.</param>
+        /// <param name="learnRate">The OpenCL profile to use, null for CPU.</param>
+        public ManhattanPropagation(BasicNetwork network,
+                 INeuralDataSet training, OpenCLTrainingProfile profile, double learnRate)
+            : base(network, training)
+        {
+
+            if (profile == null)
+            {
+                FlatTraining = new TrainFlatNetworkManhattan(
+                        network.Structure.Flat,
+                        this.Training,
+                        learnRate);
+            }
+            else
+            {
+                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
+                        network.Structure.Flat, this.Training,
+                        profile);
+                rpropFlat.LearnManhattan(learnRate);
+                this.FlatTraining = rpropFlat;
+            }
+        }
 
         /// <summary>
-        /// Construct a Manhattan propagation training object.
+        /// The learning rate, this is value is essentially a percent. It is the
+        /// degree to which the gradients are applied to the weight matrix to allow
+        /// learning.
+        /// </summary>
+        public double LearningRate
+        {
+            get
+            {
+                return ((TrainFlatNetworkManhattan)this.FlatTraining).LearningRate;
+            }
+            set
+            {
+                ((TrainFlatNetworkManhattan)this.FlatTraining).LearningRate = value;
+            }
+        }
+
+        /// <summary>
+        /// Construct a Manhattan propagation training object.  Use the CPU to train. 
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="learnRate">The learning rate.</param>
-        /// <param name="zeroTolerance">The zero tolerance.</param>
         public ManhattanPropagation(BasicNetwork network,
                  INeuralDataSet training, double learnRate)
-            : base(network, training)
+            : this(network, training, null, learnRate)
         {
-            this.LearningRate = learnRate;
 
         }
 
-
-        public override BasicNetwork Network
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public override void Iteration()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
