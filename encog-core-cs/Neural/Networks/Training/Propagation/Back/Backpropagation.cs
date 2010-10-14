@@ -114,5 +114,15 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
             this.Momentum = momentum;
             this.LearningRate = learnRate;
         }
+
+        public override BasicNetwork Network
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override void Iteration()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

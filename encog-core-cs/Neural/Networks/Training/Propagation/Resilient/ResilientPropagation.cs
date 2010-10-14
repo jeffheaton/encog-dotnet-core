@@ -263,5 +263,15 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         {
 
         }
+
+        public override BasicNetwork Network
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override void Iteration()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

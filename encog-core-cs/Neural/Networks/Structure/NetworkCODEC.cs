@@ -36,6 +36,7 @@ using Encog.Neural.Networks.Synapse;
 
 #if logging
 using log4net;
+using Encog.Engine.Util;
 #endif
 
 namespace Encog.Neural.Networks.Structure
@@ -66,74 +67,149 @@ namespace Encog.Neural.Networks.Structure
         public static void ArrayToNetwork(double[] array,
                  BasicNetwork network)
         {
-
             int index = 0;
 
             foreach (ILayer layer in network.Structure.Layers)
             {
-                if (layer.HasBias)
-                {
-                    // process layer bias values
-                    for (int i = 0; i < layer.NeuronCount; i++)
-                    {
-                        layer.BiasWeights[i] = array[index++];
-                    }
-                }
-
-                // process synapses
-                if (network.Structure.IsConnectionLimited )
-                    index = ProcessSynapseLimited(network, layer, array, index);
-                else
-                    index = ProcessSynapseFull(network, layer, array, index);
-
+                index = NetworkCODEC.ProcessLayer(network, layer, array, index);
             }
+
+            network.Structure.FlatUpdate = FlatUpdateNeeded.Flatten;
         }
 
-        private static int ProcessSynapseFull(BasicNetwork network, ILayer layer, double[] array, int index)
+        public static int networkSize(BasicNetwork network)
         {
-            foreach (ISynapse synapse in network.Structure
-                        .GetPreviousSynapses(layer))
+
+            // see if there is already an up to date flat network
+            if (network.Structure.Flat != null
+                && (network.Structure.FlatUpdate == FlatUpdateNeeded.None
+                || network.Structure.FlatUpdate == FlatUpdateNeeded.Unflatten))
             {
-                if (synapse.WeightMatrix != null)
+                return network.Structure.Flat.Weights.Length;
+            }
+
+            int index = 0;
+
+            // loop over all of the layers, take the output layer first
+            foreach (ILayer layer in network.Structure.Layers)
+            {
+
+                // see if the previous layer, which is the next layer that the loop will hit,
+                // is either a connection to a BasicLayer or a ContextLayer.
+                ISynapse synapse = network.Structure
+                        .FindPreviousSynapseByLayerType(layer, typeof(BasicLayer));
+                ISynapse contextSynapse = network.Structure.FindPreviousSynapseByLayerType(
+                        layer, typeof(ContextLayer));
+
+                // get a list of of the previous synapses to this layer
+                IList<ISynapse> list = network.Structure.GetPreviousSynapses(layer);
+
+                // If there is not a BasicLayer or contextLayer as the next layer, then
+                // just take the first synapse of any type.
+                if (synapse == null && contextSynapse == null && list.Count > 0)
+                {
+                    synapse = list[0];
+                }
+
+                // is there any data to record for this synapse?
+                if (synapse != null && synapse.WeightMatrix != null)
                 {
                     // process each weight matrix
                     for (int x = 0; x < synapse.ToNeuronCount; x++)
                     {
-                        for (int y = 0; y < synapse.FromNeuronCount; y++)
+
+                        index += synapse.FromNeuronCount;
+
+
+                        if (synapse.ToLayer.HasBias)
                         {
-                            synapse.WeightMatrix[y, x] = array[index++];
+                            index++;
+                        }
+
+                        if (contextSynapse != null)
+                        {
+                            index += synapse.FromNeuronCount;
                         }
                     }
                 }
             }
+
             return index;
         }
 
-        private static int ProcessSynapseLimited(BasicNetwork network, ILayer layer, double[] array, int index)
+        /// <summary>
+        /// Process a synapse.
+        /// </summary>
+        /// <param name="network">The network to process.</param>
+        /// <param name="layer">The layer to process.</param>
+        /// <param name="array">The array to process.</param>
+        /// <param name="index">The current index.</param>
+        /// <returns>The index after this synapse has been read.</returns>
+        private static int ProcessLayer(BasicNetwork network,
+                ILayer layer, double[] array, int index)
         {
-            // process synapses
-            foreach (ISynapse synapse in network.Structure
-                    .GetPreviousSynapses(layer))
+            int result = index;
+
+            // see if the previous layer, which is the next layer that the loop will hit,
+            // is either a connection to a BasicLayer or a ContextLayer.
+            ISynapse synapse = network.Structure
+                    .FindPreviousSynapseByLayerType(layer, typeof(BasicLayer));
+            ISynapse contextSynapse = network.Structure
+                    .FindPreviousSynapseByLayerType(layer, typeof(ContextLayer));
+
+            // get a list of of the previous synapses to this layer
+            IList<ISynapse> list = network.Structure.GetPreviousSynapses(layer);
+
+            // If there is not a BasicLayer or contextLayer as the next layer, then
+            // just take the first synapse of any type.
+            if (synapse == null && contextSynapse == null && list.Count > 0)
             {
-                if (synapse.WeightMatrix != null)
+                synapse = list[0];
+            }
+
+            // is there any data to record for this synapse?		
+            if (synapse != null && synapse.WeightMatrix != null)
+            {
+                // process each weight matrix
+                for (int x = 0; x < synapse.ToNeuronCount; x++)
                 {
-                    // process each weight matrix
-                    for (int x = 0; x < synapse.ToNeuronCount; x++)
+                    for (int y = 0; y < synapse.FromNeuronCount; y++)
                     {
-                        for (int y = 0; y < synapse.FromNeuronCount; y++)
+                        synapse.WeightMatrix[y, x] = array[result++];
+                    }
+                    if (synapse.ToLayer.HasBias)
+                    {
+                        synapse.ToLayer.BiasWeights[x] = array[result++];
+                    }
+
+                    if (contextSynapse != null)
+                    {
+                        for (int z = 0; z < synapse.FromNeuronCount; z++)
                         {
-                            double oldValue = synapse.WeightMatrix[y, x];
-                            double value = array[index++];
-                            if (Math.Abs(oldValue) < network.Structure.ConnectionLimit)
+
+                            double value = array[result++];
+
+                            double oldValue = synapse.WeightMatrix[z, x];
+
+                            // if this connection is limited, do not update it to anything but zero
+                            if (Math.Abs(oldValue) < network.Structure
+                                    .ConnectionLimit)
+                            {
                                 value = 0;
-                            synapse.WeightMatrix[y, x] = value;
+                            }
+
+                            // update the actual matrix
+                            contextSynapse.WeightMatrix[z, x] = value;
                         }
                     }
+
                 }
             }
 
-            return index;
+            return result;
         }
+
+
 
         /// <summary>
         /// Determine if the two neural networks are equal. 
@@ -180,6 +256,8 @@ namespace Encog.Neural.Networks.Structure
             return true;
         }
 
+
+
         /// <summary>
         /// Convert to an array. This is used with some training algorithms that
         /// require that the "memory" of the neuron(the weight and bias values)
@@ -189,40 +267,68 @@ namespace Encog.Neural.Networks.Structure
         /// <returns>The memory of the neuron.</returns>
         public static double[] NetworkToArray(BasicNetwork network)
         {
-            int size = network.Structure.CalculateSize();
+            int size = networkSize(network);
+
+            // see if there is already an up to date flat network
+            if (network.Structure.Flat != null
+                && (network.Structure.FlatUpdate == FlatUpdateNeeded.None
+                || network.Structure.FlatUpdate == FlatUpdateNeeded.Unflatten))
+            {
+                return EngineArray.ArrayCopy(network.Structure.Flat.Weights);
+            }
 
             // allocate an array to hold
             double[] result = new double[size];
 
             int index = 0;
 
+            // loop over all of the layers, take the output layer first
             foreach (ILayer layer in network.Structure.Layers)
             {
-                // process layer bias values
-                if (layer.HasBias)
+
+                // see if the previous layer, which is the next layer that the loop will hit,
+                // is either a connection to a BasicLayer or a ContextLayer.
+                ISynapse synapse = network.Structure
+                        .FindPreviousSynapseByLayerType(layer, typeof(BasicLayer));
+                ISynapse contextSynapse = network.Structure.FindPreviousSynapseByLayerType(
+                        layer, typeof(ContextLayer));
+
+                // get a list of of the previous synapses to this layer
+                IList<ISynapse> list = network.Structure.GetPreviousSynapses(layer);
+
+                // If there is not a BasicLayer or contextLayer as the next layer, then
+                // just take the first synapse of any type.
+                if (synapse == null && contextSynapse == null && list.Count > 0)
                 {
-                    for (int i = 0; i < layer.NeuronCount; i++)
-                    {
-                        result[index++] = layer.BiasWeights[i];
-                    }
+                    synapse = list[0];
                 }
 
-                // process synapses
-                foreach (ISynapse synapse in network.Structure
-                        .GetPreviousSynapses(layer))
+                // is there any data to record for this synapse?
+                if (synapse != null && synapse.WeightMatrix != null)
                 {
-                    if (synapse.WeightMatrix != null)
+                    // process each weight matrix
+                    for (int x = 0; x < synapse.ToNeuronCount; x++)
                     {
-                        // process each weight matrix
-                        for (int x = 0; x < synapse.ToNeuronCount; x++)
+                        for (int y = 0; y < synapse.FromNeuronCount; y++)
                         {
-                            for (int y = 0; y < synapse.FromNeuronCount; y++)
+                            result[index++] = synapse.WeightMatrix[y, x];
+                        }
+
+                        if (synapse.ToLayer.HasBias)
+                        {
+                            result[index++] = synapse.ToLayer.BiasWeights[x];
+                        }
+
+                        if (contextSynapse != null)
+                        {
+                            for (int z = 0; z < synapse.FromNeuronCount; z++)
                             {
-                                result[index++] = synapse.WeightMatrix[y, x];
+                                result[index++] = contextSynapse.WeightMatrix[z, x];
                             }
                         }
                     }
                 }
+
             }
 
             return result;

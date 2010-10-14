@@ -138,13 +138,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
         {
         }
 
-        /// <summary>
-        /// Perform one iteration.
-        /// </summary>
-        public override void Iteration()
-        {
 
-        }
 
 
     }

@@ -58,6 +58,11 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         private double error;
 
+        /// <summary>
+        /// The current iteration.
+        /// </summary>
+        private int iteration;
+
 #if !SILVERLIGHT
         /// <summary>
         /// The Encog cloud to use.
@@ -135,6 +140,7 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         public void PreIteration()
         {
+            this.iteration++;
 #if !SILVERLIGHT
             if (this.statusUtil != null)
             {
@@ -186,5 +192,46 @@ namespace Encog.Neural.Networks.Training
         /// Perform one iteration of training.
         /// </summary>
         public abstract void Iteration();
+
+
+        /// <summary>
+        /// True if training can progress no further.  Not all training methods use this, as not all can tell when they are done.          
+        /// </summary>
+        public bool TrainingDone
+        {
+            get
+            {
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// Perform the specified number of training iterations. This is a basic implementation 
+        /// that just calls iteration the specified number of times.  However, some training 
+        /// methods, particularly with the GPU, benefit greatly by calling with higher numbers than 1. 
+        /// </summary>
+        /// <param name="count">The number of training iterations.</param>
+        public virtual void Iteration(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Iteration();
+            }
+        }
+
+        /// <summary>
+        /// The current iteration.
+        /// </summary>
+        public int CurrentIteration
+        {
+            get
+            {
+                return iteration;
+            }
+            set
+            {
+                this.iteration = value;
+            }
+        }
     }
 }

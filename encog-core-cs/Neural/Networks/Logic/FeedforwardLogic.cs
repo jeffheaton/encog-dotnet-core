@@ -37,6 +37,7 @@ using Encog.Neural.Networks.Layers;
 
 #if logging
 using log4net;
+using Encog.Neural.Data.Basic;
 #endif
 
 namespace Encog.Neural.Networks.Logic
@@ -99,6 +100,14 @@ namespace Encog.Neural.Networks.Logic
                 holder = useHolder;
             }
 
+            if (holder == null && this.network.Structure.Flat != null)
+            {
+                this.network.Structure.UpdateFlatNetwork();
+                INeuralData result = new BasicNeuralData(this.network.Structure.Flat.OutputCount);
+                this.network.Structure.Flat.Compute(input.Data, result.Data);
+                return result;
+            }
+
             Compute(holder, inputLayer, input, null);
             return holder.Output;
         }
@@ -125,7 +134,7 @@ namespace Encog.Neural.Networks.Logic
                         + input.ToString());
                 }
 #endif
-
+                
                 // typically used to process any recurrent layers that feed into this
                 // layer.
                 PreprocessLayer(layer, input, source);

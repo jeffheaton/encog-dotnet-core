@@ -107,6 +107,22 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         void FinishTraining();
 
+        /// <summary>
+        /// Determine if training can progress no further.
+        /// </summary>
+        /// <returns>True if training can progress no further.</returns>
+        bool TrainingDone { get; }
+
+        /// <summary>
+        /// The current training iteration.
+        /// </summary>
+        int CurrentIteration { get; set; }
+
+        /// <summary>
+        /// Perform a number of training iterations.
+        /// </summary>
+        /// <param name="count">The number of iterations.</param>
+        void Iteration(int count);
     }
 
 }

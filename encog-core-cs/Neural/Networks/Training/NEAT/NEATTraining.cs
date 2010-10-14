@@ -80,6 +80,11 @@ namespace Encog.Neural.Networks.Training.NEAT
         private int inputCount;
 
         /// <summary>
+        /// The current iteration.
+        /// </summary>
+        private int iteration;
+
+        /// <summary>
         /// The activation function for neat to use.
         /// </summary>
         public IActivationFunction NeatActivationFunction { get; set; }
@@ -711,7 +716,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// </summary>
         public override void Iteration()
         {
-
+            this.iteration++;
             IList<NEATGenome> newPop = new List<NEATGenome>();
 
             int numSpawnedSoFar = 0;
@@ -1012,6 +1017,46 @@ namespace Encog.Neural.Networks.Training.NEAT
             }
 
             return (NEATGenome)Population.Genomes[ChosenOne];
+        }
+
+        /// <summary>
+        /// Perform the specified number of training iterations. This is a basic implementation 
+        /// that just calls iteration the specified number of times.  However, some training 
+        /// methods, particularly with the GPU, benefit greatly by calling with higher numbers than 1. 
+        /// </summary>
+        /// <param name="count">The number of training iterations.</param>
+        public virtual void Iteration(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Iteration();
+            }
+        }
+
+        /// <summary>
+        /// This training method will not determine when it is done, so this method returns false always.
+        /// </summary>
+        public bool TrainingDone
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// The current iteration.
+        /// </summary>
+        public int CurrentIteration
+        {
+            get
+            {
+                return this.CurrentIteration;
+            }
+            set
+            {
+                this.iteration = value;
+            }
         }
     }
 }
