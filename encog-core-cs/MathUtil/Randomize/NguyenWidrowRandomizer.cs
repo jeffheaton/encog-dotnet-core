@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
+using Encog.Neural.Networks.Structure;
 
 namespace Encog.MathUtil.Randomize
 {
@@ -106,6 +107,8 @@ namespace Encog.MathUtil.Randomize
                 Randomize(beta, synapse);
             }
 
+            network.Structure.FlatUpdate = FlatUpdateNeeded.Flatten;
+            network.Structure.FlattenWeights();
         }
 
         /// <summary>

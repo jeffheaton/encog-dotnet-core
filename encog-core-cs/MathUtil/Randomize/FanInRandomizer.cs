@@ -142,7 +142,7 @@ namespace Encog.MathUtil.Randomize
                 rowValue = rows;
             }
 
-            return (this.lowerBound / rowValue) + ThreadSafeRandom.NextDouble()
+            return (this.lowerBound / rowValue) + this.RandomGenerator.NextDouble()
                     * ((this.upperBound - this.lowerBound) / rowValue);
         }
 
@@ -241,9 +241,5 @@ namespace Encog.MathUtil.Randomize
 
             }
         }
-
-
-
     }
-
 }

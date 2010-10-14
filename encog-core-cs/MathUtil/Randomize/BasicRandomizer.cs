@@ -40,6 +40,7 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil.Matrices;
+using Encog.Neural.Networks.Structure;
 
 namespace Encog.MathUtil.Randomize
 {
@@ -55,6 +56,11 @@ namespace Encog.MathUtil.Randomize
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicRandomizer));
 #endif
         /// <summary>
+        /// The randomizer.
+        /// </summary>
+        private Random random;
+
+        /// <summary>
         /// Randomize the synapses and thresholds in the basic network based on an
         /// array, modify the array. Previous values may be used, or they may be
         /// discarded, depending on the randomizer.
@@ -62,7 +68,7 @@ namespace Encog.MathUtil.Randomize
         /// <param name="network">A network to randomize.</param>
         public virtual void Randomize(BasicNetwork network)
         {
-
+            this.random = new Random((int)DateTime.Now.Ticks);
             // randomize the weight matrix
             foreach (ISynapse synapse in network.Structure.Synapses)
             {
@@ -80,6 +86,9 @@ namespace Encog.MathUtil.Randomize
                     Randomize(layer.BiasWeights);
                 }
             }
+
+            network.Structure.FlatUpdate = FlatUpdateNeeded.Flatten;
+            network.Structure.FlattenWeights();
         }
 
         /// <summary>
@@ -166,6 +175,42 @@ namespace Encog.MathUtil.Randomize
             }
         }
 
-    }
+        /// <summary>
+        /// The random number generator in use. Use this to set the seed, if
+        /// desired.
+        /// </summary>
+        public Random RandomGenerator
+        {
+            get
+            {
+                return this.random;
+            }
+            set
+            {
+                this.random = value;
+            }
+        }
 
+        /// <summary>
+        /// Generate the next double.
+        /// </summary>
+        /// <returns>The next double.</returns>
+        public double NextDouble()
+        {
+            return this.random.NextDouble();
+        }
+
+        /// <summary>
+        /// Generate a random number in the specified range. 
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <returns>A random number.</returns>
+        public double NextDouble(double min, double max)
+        {
+            double range = max - min;
+            return (range * this.random.NextDouble()) + min;
+        }
+
+    }
 }

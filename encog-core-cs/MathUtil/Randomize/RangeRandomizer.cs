@@ -92,7 +92,7 @@ namespace Encog.MathUtil.Randomize
         /// <returns>The random number.</returns>
         public override double Randomize(double d)
         {
-            return RangeRandomizer.Randomize(this.min, this.max);
+            return this.NextDouble(this.min, this.max);
         }
 
         /// <summary>
