@@ -34,9 +34,11 @@ using System.Text;
 using Encog.Parse.Tags.Write;
 using Encog.MathUtil;
 using Encog.Parse.Tags.Read;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Util.CSV;
+using Encog.Engine.Network.Activation;
+using Encog.Util;
+using System.Reflection;
 
 namespace Encog.Persist.Persistors
 {
@@ -178,14 +180,58 @@ namespace Encog.Persist.Persistors
 
             if (layer.ActivationFunction != null)
             {
-                xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
-                IPersistor persistor = layer.ActivationFunction
-                    .CreatePersistor();
-                persistor.Save(layer.ActivationFunction, xmlOut);
-                xmlOut.EndTag();
+                saveActivationFunction(layer.ActivationFunction, xmlOut);
             }
 
             xmlOut.EndTag();
         }
+
+        
+        public static void saveActivationFunction(
+			IActivationFunction activationFunction, WriteXML xmlOut) {
+		if (activationFunction != null) {
+			xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
+			xmlOut.BeginTag(activationFunction.GetType().Name);
+			String[] names = activationFunction.ParamNames;
+			for (int i = 0; i < names.Length; i++) {
+				String str = names[i];
+				double d = activationFunction.Params[i];
+                xmlOut.AddAttribute(str, "" + CSVFormat.EG_FORMAT.Format(d, 10));
+			}
+			xmlOut.EndTag();
+			xmlOut.EndTag();
+		}
+	}
+
+	public static IActivationFunction loadActivation(String type, ReadXML xmlIn) {
+
+		try {
+			String clazz = ReflectionUtil.ResolveEncogClass(type);
+
+            IActivationFunction result = (IActivationFunction)Assembly.GetExecutingAssembly().CreateInstance(clazz);
+
+			foreach (String key in xmlIn.LastTag.Attributes.Keys ) {
+				int index = -1;
+
+				for (int i = 0; i < result.ParamNames.Length; i++) {
+					if ( String.Compare(key,result.ParamNames[i],true)==0) {
+						index = i;
+						break;
+					}
+
+					if (index != -1) {
+						String str = xmlIn.LastTag.GetAttributeValue(key);
+						double d = CSVFormat.EG_FORMAT.Parse(str);
+						result.SetParam(index, d);
+					}
+				}
+			}
+
+			return result;
+		} catch (Exception e) {
+			throw new EncogError(e);
+		} 
+	}
+
     }
 }

@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
-using Encog.Neural.Activation;
 using Encog.Util.Time;
 
 namespace Encog.Neural.NeuralData.Temporal
@@ -582,18 +581,18 @@ namespace Encog.Neural.NeuralData.Temporal
         private double FormatData(TemporalDataDescription desc,
                 int index)
         {
-            double result = 0;
+            double[] result = new double[1];
 
             switch (desc.DescriptionType)
             {
                 case TemporalDataDescription.Type.DELTA_CHANGE:
-                    result = GetDataDeltaChange(desc, index);
+                    result[0] = GetDataDeltaChange(desc, index);
                     break;
                 case TemporalDataDescription.Type.PERCENT_CHANGE:
-                    result = GetDataPercentChange(desc, index);
+                    result[0] = GetDataPercentChange(desc, index);
                     break;
                 case TemporalDataDescription.Type.RAW:
-                    result = GetDataRAW(desc, index);
+                    result[0] = GetDataRAW(desc, index);
                     break;
                 default:
                     throw new TemporalError("Unsupported data type.");
@@ -601,12 +600,10 @@ namespace Encog.Neural.NeuralData.Temporal
 
             if (desc.ActivationFunction != null)
             {
-                double[] d = ActivationUtil.ToArray(result);
-                desc.ActivationFunction.ActivationFunction(d);
-                result = ActivationUtil.FromArray(d);
+                desc.ActivationFunction.ActivationFunction(result,0,1);
             }
 
-            return result;
+            return result[0];
         }
 
         /// <summary>

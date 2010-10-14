@@ -35,9 +35,9 @@ using Encog.Neural.Data.Basic;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Neural.Data;
-using Encog.Neural.Activation;
 #if logging
 using log4net;
+using Encog.Engine.Network.Activation;
 #endif
 namespace Encog.Neural.Networks.Layers
 {

@@ -5,7 +5,7 @@ using System.Text;
 using Encog.Neural.Networks.SVM;
 using Encog.MathUtil.LIBSVM;
 using Encog.Neural.NeuralData;
-using Encog.MathUtil.Error;
+using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.SVM
 {

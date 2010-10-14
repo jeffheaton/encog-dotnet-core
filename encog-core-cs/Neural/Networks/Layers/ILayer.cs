@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Persist;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Data;
-using Encog.Neural.Activation;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Layers
 {

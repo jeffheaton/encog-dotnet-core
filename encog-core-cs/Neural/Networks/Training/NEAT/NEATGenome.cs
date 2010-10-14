@@ -37,7 +37,6 @@ using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Synapse.NEAT;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Pattern;
 using Encog.Persist.Attributes;
 

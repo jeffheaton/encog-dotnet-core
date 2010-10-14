@@ -31,12 +31,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 
 #if logging
 using log4net;
+using Encog.Engine.Network.Activation;
 #endif
 
 namespace Encog.Neural.Networks.Pattern

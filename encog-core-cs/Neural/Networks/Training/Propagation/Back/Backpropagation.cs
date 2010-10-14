@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Strategy;
-using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
 
 namespace Encog.Neural.Networks.Training.Propagation.Back
@@ -114,32 +113,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
 
             this.Momentum = momentum;
             this.LearningRate = learnRate;
-            this.lastDelta = new double[network.Structure.CalculateSize()];
-        }
-
-        /// <summary>
-        /// Perform a training iteration.  This is where the actual backprop
-        /// specific training takes place.
-        /// </summary>
-        /// <param name="prop">The gradients.</param>
-        /// <param name="weights">The network weights.</param>
-        public override void PerformIteration(CalculateGradient prop,
-                 double[] weights)
-        {
-
-            double[] gradients = prop.Gradients;
-
-            for (int i = 0; i < gradients.Length; i++)
-            {
-                double last = this.lastDelta[i];
-                this.lastDelta[i] = (gradients[i] * this.LearningRate)
-                        + (last * this.Momentum);
-                weights[i] += this.lastDelta[i];
-            }
-            NetworkCODEC.ArrayToNetwork(weights, Network);
-
-            Error = prop.Error;
-
         }
     }
 }

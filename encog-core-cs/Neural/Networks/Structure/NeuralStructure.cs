@@ -39,6 +39,9 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.MathUtil;
 using Encog.MathUtil.Matrices;
+using Encog.Engine.Network.Flat;
+using Encog.Engine.Util;
+using Encog.Engine.Network.Activation;
 
 
 
@@ -86,6 +89,19 @@ namespace Encog.Neural.Networks.Structure
 
         private double connectionLimit;
         private bool connectionLimited;
+
+        /// <summary>
+        /// The flattened form of the network.
+        /// </summary>
+        [NonSerialized]
+        private FlatNetwork flat;
+
+        /// <summary>
+        /// What type of update is needed to the flat network.
+        /// </summary>
+        [NonSerialized]
+        private FlatUpdateNeeded flatUpdate;
+
 
         /// <summary>
         /// Construct a structure object for the specified network. 
@@ -446,7 +462,7 @@ namespace Encog.Neural.Networks.Structure
                     this.connectionLimited = true;
                     this.connectionLimit = double.Parse(limit);
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     throw new NeuralNetworkError(
                             "Invalid property("
@@ -506,5 +522,212 @@ namespace Encog.Neural.Networks.Structure
 
             return false;
         }
+
+
+
+        	public void Flatten() {
+		bool isRBF = false;
+		IDictionary<ILayer, FlatLayer> regular2flat = new Dictionary<ILayer, FlatLayer>();
+		IList<ObjectPair<ILayer, ILayer>> contexts = new List<ObjectPair<ILayer, ILayer>>();
+		this.flat = null;
+
+		ValidateForFlat val = new ValidateForFlat();
+
+		if (val.IsValid(this.network) == null) {
+			if (this.layers.Count == 3
+					&& this.layers[1] is RadialBasisFunctionLayer) {
+				RadialBasisFunctionLayer rbf = (RadialBasisFunctionLayer) this.layers[1];
+				/*this.flat = new FlatNetworkRBF(this.network.InputCount,
+						rbf.NeuronCount, this.network.OutputCount,
+						rbf.Center, rbf.Radius);*/
+				FlattenWeights();
+				this.flatUpdate = FlatUpdateNeeded.None;
+				return;
+			}
+
+			FlatLayer[] flatLayers = new FlatLayer[CountNonContext()];
+
+			int index = flatLayers.Length - 1;
+			foreach (ILayer layer in this.layers) {
+
+				if (layer is ContextLayer) {
+					ISynapse inboundSynapse = network.Structure
+							.FindPreviousSynapseByLayerType(layer,
+									typeof(BasicLayer));
+					ISynapse outboundSynapse = network
+							.Structure
+							.FindNextSynapseByLayerType(layer, typeof(BasicLayer));
+
+					if (inboundSynapse == null)
+						throw new NeuralNetworkError(
+								"Context layer must be connected to by one BasicLayer.");
+
+					if (outboundSynapse == null)
+						throw new NeuralNetworkError(
+								"Context layer must connect to by one BasicLayer.");
+
+					ILayer inbound = inboundSynapse.FromLayer;
+					ILayer outbound = outboundSynapse.ToLayer;
+
+					contexts
+							.Add(new ObjectPair<ILayer, ILayer>(inbound, outbound));
+				} else {
+					double bias = this.FindNextBias(layer);
+
+					IActivationFunction activationType;
+					double[] param = new double[1];
+
+					if (layer.ActivationFunction == null) {
+						activationType = new ActivationLinear();
+						param = new double[1];
+						param[0] = 1;
+					} else {
+						activationType = layer.ActivationFunction;
+						param = layer.ActivationFunction.Params;
+					}
+
+					FlatLayer flatLayer = new FlatLayer(activationType, layer
+							.NeuronCount, bias, param);
+
+					regular2flat[layer] = flatLayer;
+					flatLayers[index--] = flatLayer;
+				}
+			}
+
+			// now link up the context layers
+			foreach (ObjectPair<ILayer, ILayer> context in contexts) {
+				ILayer layer = context.B;
+				ISynapse synapse = this.network
+						.Structure
+						.FindPreviousSynapseByLayerType(layer, typeof(BasicLayer));
+				FlatLayer from = regular2flat[context.A];
+				FlatLayer to = regular2flat[synapse.FromLayer];
+				to.ContextFedBy = from;
+			}
+
+			this.flat = new FlatNetwork(flatLayers);
+
+			if (isRBF) {
+				this.flat.EndTraining = flatLayers.Length - 1;
+			}
+
+			FlattenWeights();
+
+			if (this.IsConnectionLimited) {
+
+			}
+
+			this.flatUpdate = FlatUpdateNeeded.None;
+		} else
+			this.flatUpdate = FlatUpdateNeeded.Never;
+	}
+
+	public void FlattenWeights() {
+		if (this.flat != null) {
+			this.flatUpdate = FlatUpdateNeeded.Flatten;
+
+			double[] targetWeights = this.flat.Weights;
+			double[] sourceWeights = NetworkCODEC.NetworkToArray(this.network);
+
+			EngineArray.ArrayCopy(sourceWeights, targetWeights);
+			this.flatUpdate = FlatUpdateNeeded.None;
+
+			// handle limited connection networks
+			if (this.connectionLimited) {
+				this.flat.ConnectionLimit = this.connectionLimit;
+			} else {
+				this.flat.ClearConnectionLimit();
+			}
+		}
+	}
+
+	public FlatUpdateNeeded getFlatUpdate() {
+		return flatUpdate;
+	}
+
+	public void setFlatUpdate(FlatUpdateNeeded flatUpdate) {
+		this.flatUpdate = flatUpdate;
+	}
+
+	public FlatNetwork getFlat() {
+		return flat;
+	}
+
+	public void updateFlatNetwork() {
+		
+		// if flatUpdate is null, the network was likely just loaded from a  serialized file
+		if( this.flatUpdate==null ) {
+			FlattenWeights();
+			this.flatUpdate = FlatUpdateNeeded.None;
+		}
+
+		switch (this.flatUpdate) {
+
+            case FlatUpdateNeeded.Flatten:
+                FlattenWeights();
+			break;
+
+        case FlatUpdateNeeded.Unflatten:
+			UnflattenWeights();
+			break;
+
+        case FlatUpdateNeeded.None:
+        case FlatUpdateNeeded.Never:
+			return;
+		}
+
+		this.flatUpdate = FlatUpdateNeeded.None;
+	}
+
+	private double FindNextBias(ILayer layer) {
+		double bias = FlatNetwork.NO_BIAS_ACTIVATION;
+
+		if (layer.Next.Count > 0) {
+			ISynapse synapse = network.Structure
+					.FindNextSynapseByLayerType(layer, typeof(BasicLayer));
+			if (synapse != null) {
+				ILayer nextLayer = synapse.ToLayer;
+				if (nextLayer.HasBias)
+					bias = nextLayer.BiasActivation;
+			}
+		}
+		return bias;
+	}
+
+        	public void UnflattenWeights() {
+		double[] sourceWeights = flat.Weights;
+		NetworkCODEC.ArrayToNetwork(sourceWeights, network);
+		this.flatUpdate = FlatUpdateNeeded.None;
+	}
+
+	private int CountNonContext() {
+		int result = 0;
+
+		foreach (ILayer layer in this.Layers) {
+			if (layer.GetType() != typeof(ContextLayer))
+				result++;
+		}
+
+		return result;
+	}
+
+	public ISynapse FindPreviousSynapseByLayerType(ILayer layer,
+			Type type) {
+		foreach (ISynapse synapse in GetPreviousSynapses(layer)) {
+			if (synapse.FromLayer.GetType() == type)
+				return synapse;
+		}
+		return null;
+	}
+
+	public ISynapse FindNextSynapseByLayerType(ILayer layer,
+			Type type) {
+		foreach (ISynapse synapse in layer.Next ) {
+			if (synapse.ToLayer.GetType() == type)
+				return synapse;
+		}
+		return null;
+	}
+
     }
 }

@@ -46,7 +46,9 @@ using Encog.Util;
 
 #if logging
 using log4net;
-using Encog.MathUtil.Error;
+using Encog.Engine;
+using Encog.Neural.Data.Basic;
+using Encog.Engine.Util;
 #endif
 
 namespace Encog.Neural.Networks
@@ -69,7 +71,7 @@ namespace Encog.Neural.Networks
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNetwork : BasicPersistedObject, INetwork, IContextClearable
+    public class BasicNetwork : BasicPersistedObject, INetwork, IContextClearable, IEngineMachineLearning
     {
 
         /// <summary>
@@ -713,5 +715,45 @@ namespace Encog.Neural.Networks
                 }
             }
         }
+
+        /**
+	 * {@inheritDoc}
+	 */
+	public void Compute(double[] input, double[] output) {
+		BasicNeuralData input2 = new BasicNeuralData(input);
+		INeuralData output2 = this.Compute(input2);
+		EngineArray.ArrayCopy(output2.Data, output);
+	}
+
+    /**
+* {@inheritDoc}
+*/
+    public int InputCount
+    {
+        get
+        {
+            ILayer layer = this.layerTags[BasicNetwork.TAG_INPUT];
+            if (layer == null)
+                return 0;
+            else
+                return layer.NeuronCount;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int OutputCount
+    {
+        get
+        {
+            ILayer layer = this.layerTags[BasicNetwork.TAG_OUTPUT];
+            if (layer == null)
+                return 0;
+            else
+                return layer.NeuronCount;
+        }
+    }
+
     }
 }

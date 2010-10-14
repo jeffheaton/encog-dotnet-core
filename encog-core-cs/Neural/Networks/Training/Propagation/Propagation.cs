@@ -40,7 +40,6 @@ using Encog.Neural.Data;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Networks.Structure;
 using Encog.Util;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
@@ -101,14 +100,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-
-        /// <summary>
-        /// Should we attempt to flatten the network?  Usually you want this to be true, 
-        /// a flat network can train much faster.  However, we can not always use flat networks.  
-        /// See the FlatNetwork class for more info.
-        /// </summary>
-        public bool AttemptFlatten { get; set; }
-
         /// <summary>
         /// Determine if this specified training continuation object is valid for
         /// this training method.
@@ -126,25 +117,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         public override void Iteration()
         {
-            try
-            {
-                PreIteration();
-              
-                    CalculateGradient prop = new CalculateGradient(Network, Training, NumThreads);
-                    double[] weights = NetworkCODEC.NetworkToArray(Network);
-                    prop.Calculate(weights);
 
-                    PerformIteration(prop, weights);
-
-                    NetworkCODEC.ArrayToNetwork(weights, Network);
-                    Error = prop.Error;
-
-                PostIteration();
-            }
-            catch (IndexOutOfRangeException )
-            {
-                EncogValidate.ValidateNetworkForTraining(network, Training);
-            }
         }
 
         /// <summary>
@@ -156,16 +129,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             throw new TrainingError("This training type does not support pause.");
         }
 
-
-
-        /// <summary>
-        /// Perform an iteration. This is implemented for each of the propagation
-        /// method types.
-        /// </summary>
-        /// <param name="prop">The gradients.</param>
-        /// <param name="weights">The weights.</param>
-        public abstract void PerformIteration(CalculateGradient prop,
-                double[] weights);
 
         /// <summary>
         /// Resume training.

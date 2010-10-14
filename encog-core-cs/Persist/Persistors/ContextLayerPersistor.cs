@@ -36,11 +36,11 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Parse.Tags.Write;
 using Encog.MathUtil;
-using Encog.Neural.Activation;
 using Encog.Util.CSV;
 
 #if logging
 using log4net;
+using Encog.Engine.Network.Activation;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -161,11 +161,7 @@ namespace Encog.Persist.Persistors
 
 
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation );
-            xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
-            IPersistor persistor = layer.ActivationFunction
-                   .CreatePersistor();
-            persistor.Save(layer.ActivationFunction, xmlOut);
-            xmlOut.EndTag();
+            BasicLayerPersistor.saveActivationFunction(layer.ActivationFunction, xmlOut);
 
             xmlOut.EndTag();
         }

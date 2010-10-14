@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Networks.Training.Propagation.Gradient;
 using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient
@@ -240,17 +239,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// training method and network.</returns>
         public override bool IsValidResume(TrainingContinuation state)
         {
-            if (!state.Contents.ContainsKey(
-                    ResilientPropagation.LAST_GRADIENTS)
-                    || !state.Contents.ContainsKey(
-                            ResilientPropagation.UPDATE_VALUES))
-            {
-                return false;
-            }
-
-            double[] d = (double[])state
-                   [ResilientPropagation.LAST_GRADIENTS];
-            return d.Length == Network.Structure.CalculateSize();
+            return false;
         }
 
         /// <summary>
@@ -267,107 +256,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
 
 
         /// <summary>
-        /// Perform a training iteration. This is where the actual RPROP specific
-        /// training takes place.
-        /// </summary>
-        /// <param name="prop">The gradients.</param>
-        /// <param name="weights">The network weights.</param>
-        public override void PerformIteration(CalculateGradient prop,
-                double[] weights)
-        {
-            this.gradients = prop.Gradients;
-
-            for (int i = 0; i < this.gradients.Length; i++)
-            {
-                weights[i] += UpdateWeight(this.gradients, i);
-            }
-
-        }
-
-        /// <summary>
         /// Resume training.
         /// </summary>
         /// <param name="state">The training state to return to.</param>
         public override void Resume(TrainingContinuation state)
         {
-            if (!IsValidResume(state))
-            {
-                throw new TrainingError("Invalid training resume data length");
-            }
-            this.lastGradient = (double[])state
-                    [ResilientPropagation.LAST_GRADIENTS];
-            this.updateValues = (double[])state
-                    [ResilientPropagation.UPDATE_VALUES];
-        }
 
-        /// <summary>
-        /// Determine the sign of the value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
-        private int Sign(double value)
-        {
-            if (Math.Abs(value) < this.zeroTolerance)
-            {
-                return 0;
-            }
-            else if (value > 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// Determine the amount to change a weight by.
-        /// </summary>
-        /// <param name="gradients">The gradients.</param>
-        /// <param name="index">The weight to adjust.</param>
-        /// <returns>The amount to change this weight by.</returns>
-        private double UpdateWeight(double[] gradients, int index)
-        {
-            // multiply the current and previous gradient, and take the
-            // sign. We want to see if the gradient has changed its sign.
-            int change = Sign(this.gradients[index]
-                   * this.lastGradient[index]);
-            double weightChange = 0;
-
-            // if the gradient has retained its sign, then we increase the
-            // delta so that it will converge faster
-            if (change > 0)
-            {
-                double delta = this.updateValues[index]
-                        * ResilientPropagation.POSITIVE_ETA;
-                delta = Math.Min(delta, this.maxStep);
-                weightChange = Sign(this.gradients[index]) * delta;
-                this.updateValues[index] = delta;
-                this.lastGradient[index] = this.gradients[index];
-            }
-            else if (change < 0)
-            {
-                // if change<0, then the sign has changed, and the last
-                // delta was too big
-                double delta = this.updateValues[index]
-                        * ResilientPropagation.NEGATIVE_ETA;
-                delta = Math.Max(delta, ResilientPropagation.DELTA_MIN);
-                this.updateValues[index] = delta;
-                // set the previous gradent to zero so that there will be no
-                // adjustment the next iteration
-                this.lastGradient[index] = 0;
-            }
-            else if (change == 0)
-            {
-                // if change==0 then there is no change to the delta
-                double delta = this.lastGradient[index];
-                weightChange = Sign(this.gradients[index]) * delta;
-                this.lastGradient[index] = this.gradients[index];
-            }
-
-            // apply the weight change, if any
-            return weightChange;
         }
     }
 }

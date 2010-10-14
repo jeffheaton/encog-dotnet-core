@@ -36,12 +36,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using Encog.Neural.Activation;
 using Encog.Neural.Data;
 using System.Runtime.Serialization;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Neural.Networks.Synapse.NEAT;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Layers
 {
@@ -274,7 +274,7 @@ namespace Encog.Neural.Networks.Layers
             }
 
             // apply the activation function
-            this.ActivationFunction.ActivationFunction(result.Data);
+            ActivationFunction.ActivationFunction(result.Data, 0, result.Data.Length);
 
             return result;
         }

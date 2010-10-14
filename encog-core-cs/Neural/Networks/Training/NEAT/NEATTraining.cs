@@ -34,7 +34,6 @@ using System.Text;
 using Encog.Solve.Genetic;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Species;
-using Encog.Neural.Activation;
 using Encog.Solve.Genetic.Population;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Genetic;
@@ -42,6 +41,7 @@ using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Layers;
 using Encog.Cloud;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Training.NEAT
 {

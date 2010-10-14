@@ -32,8 +32,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse.NEAT;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Layers;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Pattern
 {

@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Temporal;
-using Encog.Neural.Activation;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.NeuralData.Market
 {

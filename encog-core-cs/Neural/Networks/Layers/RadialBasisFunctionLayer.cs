@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Activation;
 using Encog.MathUtil.RBF;
 using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
@@ -41,6 +40,7 @@ using Encog.Persist;
 using Encog.Persist.Persistors;
 #if logging
 using log4net;
+using Encog.Engine.Network.Activation;
 #endif
 namespace Encog.Neural.Networks.Layers
 {

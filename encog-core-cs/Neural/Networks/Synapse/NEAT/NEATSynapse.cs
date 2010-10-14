@@ -34,11 +34,11 @@ using System.Text;
 using Encog.Persist.Attributes;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
-using Encog.Neural.Activation;
 using Encog.Persist;
 using Encog.MathUtil.Matrices;
 using Encog.Persist.Persistors.Generic;
 using Encog.Neural.Data.Basic;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Synapse.NEAT
 {
@@ -207,7 +207,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
 
                     double[] d = new double[1];
                     d[0] = sum / currentNeuron.ActivationResponse;
-                    activationFunction.ActivationFunction(d);
+                    activationFunction.ActivationFunction(d,0,1);
 
                     neurons[index].Output = d[0];
 

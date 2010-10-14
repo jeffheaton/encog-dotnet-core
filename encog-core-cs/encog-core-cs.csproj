@@ -97,7 +97,6 @@
     <Compile Include="EncogError.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
-    <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
     <Compile Include="MathUtil\IntRange.cs" />
     <Compile Include="MathUtil\LIBSVM\SupportClass.cs" />
     <Compile Include="MathUtil\LIBSVM\svm.cs" />
@@ -122,19 +121,6 @@
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
     <Compile Include="MathUtil\RBF\MultiquadricFunctionMulti.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
-    <Compile Include="Neural\Activation\ActivationBiPolar.cs" />
-    <Compile Include="Neural\Activation\ActivationCompetitive.cs" />
-    <Compile Include="Neural\Activation\ActivationGaussian.cs" />
-    <Compile Include="Neural\Activation\ActivationLinear.cs" />
-    <Compile Include="Neural\Activation\ActivationLOG.cs" />
-    <Compile Include="Neural\Activation\ActivationSigmoid.cs" />
-    <Compile Include="Neural\Activation\ActivationSIN.cs" />
-    <Compile Include="Neural\Activation\ActivationSoftMax.cs" />
-    <Compile Include="Neural\Activation\ActivationStep.cs" />
-    <Compile Include="Neural\Activation\ActivationTANH.cs" />
-    <Compile Include="Neural\Activation\ActivationUtil.cs" />
-    <Compile Include="Neural\Activation\BasicActivationFunction.cs" />
-    <Compile Include="Neural\Activation\IActivationFunction.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralData.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
@@ -216,10 +202,12 @@
     <Compile Include="Neural\Networks\Prune\PruneSelective.cs" />
     <Compile Include="Neural\Networks\Structure\AnalyzeNetwork.cs" />
     <Compile Include="Neural\Networks\Structure\CalculateDepth.cs" />
+    <Compile Include="Neural\Networks\Structure\FlatUpdateNeeded.cs" />
     <Compile Include="Neural\Networks\Structure\LayerComparator.cs" />
     <Compile Include="Neural\Networks\Structure\NetworkCODEC.cs" />
     <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
     <Compile Include="Neural\Networks\Structure\SynapseComparator.cs" />
+    <Compile Include="Neural\Networks\Structure\ValidateForFlat.cs" />
     <Compile Include="Neural\Networks\SVM\KernelType.cs" />
     <Compile Include="Neural\Networks\SVM\SVMNetwork.cs" />
     <Compile Include="Neural\Networks\SVM\SVMType.cs" />
@@ -268,9 +256,6 @@
     <Compile Include="Neural\Networks\Training\NEAT\NEATTraining.cs" />
     <Compile Include="Neural\Networks\Training\NEAT\SplitDepth.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Back\Backpropagation.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Gradient\CalculateGradient.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientUtil.cs" />
-    <Compile Include="Neural\Networks\Training\Propagation\Gradient\GradientWorker.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Propagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
@@ -358,7 +343,6 @@
     <Compile Include="Persist\Location\StreamPersistence.cs" />
     <Compile Include="Persist\PersistError.cs" />
     <Compile Include="Persist\IPersistor.cs" />
-    <Compile Include="Persist\Persistors\ActivationGaussianPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicNetworkPersistor.cs" />
     <Compile Include="Persist\Persistors\BasicNeuralDataSetPersistor.cs" />
@@ -432,7 +416,6 @@
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
     <Compile Include="Util\EncogArray.cs" />
     <Compile Include="Util\EncogValidate.cs" />
-    <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
     <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />

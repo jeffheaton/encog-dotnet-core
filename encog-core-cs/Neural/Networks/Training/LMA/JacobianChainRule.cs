@@ -35,8 +35,8 @@ using Encog.Neural.Data;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Activation;
 using Encog.Neural.Networks.Synapse;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Training.LMA
 {
@@ -121,11 +121,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <returns>The derivative.</returns>
         private double CalcDerivative(IActivationFunction a, double d)
         {
-            double[] temp = new double[1];
-            temp[0] = d;
-            //a.activationFunction(temp);
-            a.DerivativeFunction(temp);
-            return temp[0];
+            return a.DerivativeFunction(d);
         }
 
         /// <summary>
@@ -138,8 +134,8 @@ namespace Encog.Neural.Networks.Training.LMA
         {
             double[] temp = new double[1];
             temp[0] = d;
-            a.ActivationFunction(temp);
-            a.DerivativeFunction(temp);
+            a.ActivationFunction(temp, 0, 1);
+            a.ActivationFunction(temp, 0, 1);
             return temp[0];
         }
 
