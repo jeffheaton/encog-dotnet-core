@@ -176,6 +176,7 @@
     <Compile Include="Neural\Networks\Logic\HopfieldLogic.cs" />
     <Compile Include="Neural\Networks\Logic\INeuralLogic.cs" />
     <Compile Include="Neural\Networks\Logic\SimpleRecurrentLogic.cs" />
+    <Compile Include="Neural\Networks\Logic\SOMLogic.cs" />
     <Compile Include="Neural\Networks\Logic\ThermalLogic.cs" />
     <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
     <Compile Include="Neural\Networks\NeuralOutputHolder.cs" />
