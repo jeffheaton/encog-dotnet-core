@@ -103,7 +103,7 @@ namespace Encog.Neural.NeuralData.Market.Loader
 
             using (Stream istream = response.GetResponseStream())
             {
-                ReadCSV csv = new ReadCSV(istream, true, ',');
+                ReadCSV csv = new ReadCSV(istream, true, CSVFormat.DECIMAL_POINT);
 
                 while (csv.Next())
                 {
