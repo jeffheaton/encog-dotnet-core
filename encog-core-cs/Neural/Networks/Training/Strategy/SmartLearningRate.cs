@@ -35,6 +35,7 @@ using Encog.Neural.NeuralData;
 
 #if logging
 using log4net;
+using Encog.Neural.Data;
 #endif
 
 namespace Encog.Neural.Networks.Training.Strategy
@@ -95,10 +96,18 @@ namespace Encog.Neural.Networks.Training.Strategy
         private long DetermineTrainingSize()
         {
             long result = 0;
-            foreach (
-             INeuralDataPair pair in this.train.Training)
+
+            if (this.train is IIndexable)
             {
-                result++;
+                result = ((IIndexable)this.train).Count;
+            }
+            else
+            {
+                foreach (
+                 INeuralDataPair pair in this.train.Training)
+                {
+                    result++;
+                }
             }
             return result;
         }
