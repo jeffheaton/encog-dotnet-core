@@ -132,6 +132,11 @@ namespace Encog.Engine.Network.Train.Prop
         private readonly double[] oldGradient;
 
         /// <summary>
+        /// Should the initial gradients be calculated.
+        /// </summary>
+        private bool shouldInit;
+
+        /// <summary>
         /// Construct the training object.
         /// </summary>
         ///
@@ -160,8 +165,17 @@ namespace Encog.Engine.Network.Train.Prop
 
             this.p = new double[numWeights];
             this.r = new double[numWeights];
+            this.shouldInit = true;
+            
+            
+        }
 
-            // Calculate the starting set of gradients.
+        /// <summary>
+        /// Calculate the starting set of gradients.
+        /// </summary>
+        private void Init()
+        {
+            int numWeights = this.weights.Length;
             CalculateGradients();
 
             this.k = 1;
@@ -171,6 +185,7 @@ namespace Encog.Engine.Network.Train.Prop
                 this.p[i] = this.r[i] = -this.gradients[i];
             }
 
+            this.shouldInit = false;
         }
 
         /// <summary>
@@ -201,6 +216,10 @@ namespace Encog.Engine.Network.Train.Prop
         ///
         public override void Iteration()
         {
+            if (shouldInit)
+            {
+                Init();
+            }
 
             int numWeights = this.weights.Length;
             // Storage space for previous iteration values.

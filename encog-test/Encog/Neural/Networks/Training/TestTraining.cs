@@ -93,7 +93,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ITrain bprop = new ScaledConjugateGradient(network, trainingData);
-		NetworkUtil.TestTraining(bprop,0.04);
+		NetworkUtil.TestTraining(bprop,0.02);
 	}
 	
 	[Test]
