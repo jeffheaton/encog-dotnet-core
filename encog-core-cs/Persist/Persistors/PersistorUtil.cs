@@ -129,7 +129,7 @@ namespace Encog.Persist.Persistors
             {
                 String type = ReflectionUtil.ResolveEncogClass(className);
                 IEncogPersistedObject temp =
-                    (IEncogPersistedObject)Assembly.GetExecutingAssembly().CreateInstance(type);
+                    (IEncogPersistedObject)ReflectionUtil.LoadObject(type);
 
                 persistor = temp.CreatePersistor();
             }

@@ -69,6 +69,7 @@ namespace encog_test.Encog.Neural.Networks
             double error2 = train.Error;
 
             double improve = (error1 - error2) / error1;
+            Console.WriteLine(improve);
             Assert.IsTrue(improve >= requiredImprove);
         }
     }

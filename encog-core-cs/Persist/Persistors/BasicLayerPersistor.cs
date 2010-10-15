@@ -65,7 +65,7 @@ namespace Encog.Persist.Persistors
         /// <summary>
         /// The bias activation.
         /// </summary>
-	    public const String PROPERTY_BIAS_ACTIVATION = "biasActivation";
+        public const String PROPERTY_BIAS_ACTIVATION = "biasActivation";
 
         /// <summary>
         /// The x-coordinate to place this object at.
@@ -98,8 +98,7 @@ namespace Encog.Persist.Persistors
                 {
                     xmlIn.ReadToTag();
                     String type = xmlIn.LastTag.Name;
-                    IPersistor persistor = PersistorUtil.CreatePersistor(type);
-                    activation = (IActivationFunction)persistor.Load(xmlIn);
+                    activation = LoadActivation(type, xmlIn);
                 }
                 else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_NEURONS, true))
                 {
@@ -119,7 +118,7 @@ namespace Encog.Persist.Persistors
                 }
                 else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, true))
                 {
-                    biasActivation = double.Parse( xmlIn.ReadTextToTag() );
+                    biasActivation = double.Parse(xmlIn.ReadTextToTag());
                 }
                 else if (xmlIn.IsIt(end, false))
                 {
@@ -180,58 +179,79 @@ namespace Encog.Persist.Persistors
 
             if (layer.ActivationFunction != null)
             {
-                saveActivationFunction(layer.ActivationFunction, xmlOut);
+                SaveActivationFunction(layer.ActivationFunction, xmlOut);
             }
 
             xmlOut.EndTag();
         }
 
-        
-        public static void saveActivationFunction(
-			IActivationFunction activationFunction, WriteXML xmlOut) {
-		if (activationFunction != null) {
-			xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
-			xmlOut.BeginTag(activationFunction.GetType().Name);
-			String[] names = activationFunction.ParamNames;
-			for (int i = 0; i < names.Length; i++) {
-				String str = names[i];
-				double d = activationFunction.Params[i];
-                xmlOut.AddAttribute(str, "" + CSVFormat.EG_FORMAT.Format(d, 10));
-			}
-			xmlOut.EndTag();
-			xmlOut.EndTag();
-		}
-	}
+        /// <summary>
+        /// Save the activation function.
+        /// </summary>
+        /// <param name="activationFunction">The activation function.</param>
+        /// <param name="xmlOut">The XML.</param>
+        public static void SaveActivationFunction(
+            IActivationFunction activationFunction, WriteXML xmlOut)
+        {
+            if (activationFunction != null)
+            {
+                xmlOut.BeginTag(BasicLayerPersistor.TAG_ACTIVATION);
+                xmlOut.BeginTag(activationFunction.GetType().Name);
+                String[] names = activationFunction.ParamNames;
+                for (int i = 0; i < names.Length; i++)
+                {
+                    String str = names[i];
+                    double d = activationFunction.Params[i];
+                    xmlOut.AddAttribute(str, "" + CSVFormat.EG_FORMAT.Format(d, 10));
+                }
+                xmlOut.EndTag();
+                xmlOut.EndTag();
+            }
+        }
 
-	public static IActivationFunction loadActivation(String type, ReadXML xmlIn) {
+        /// <summary>
+        /// Load the specified activation function.
+        /// </summary>
+        /// <param name="type">The type of activation function.</param>
+        /// <param name="xmlIn">The XML.</param>
+        /// <returns>The activation function.</returns>
+        public static IActivationFunction LoadActivation(String type, ReadXML xmlIn)
+        {
 
-		try {
-			String clazz = ReflectionUtil.ResolveEncogClass(type);
+            try
+            {
+                String clazz = ReflectionUtil.ResolveEncogClass(type);
 
-            IActivationFunction result = (IActivationFunction)Assembly.GetExecutingAssembly().CreateInstance(clazz);
+                IActivationFunction result = (IActivationFunction)ReflectionUtil.LoadObject(clazz);
 
-			foreach (String key in xmlIn.LastTag.Attributes.Keys ) {
-				int index = -1;
+                foreach (String key in xmlIn.LastTag.Attributes.Keys)
+                {
+                    int index = -1;
 
-				for (int i = 0; i < result.ParamNames.Length; i++) {
-					if ( String.Compare(key,result.ParamNames[i],true)==0) {
-						index = i;
-						break;
-					}
+                    for (int i = 0; i < result.ParamNames.Length; i++)
+                    {
+                        if (String.Compare(key, result.ParamNames[i], true) == 0)
+                        {
+                            index = i;
+                            break;
+                        }
 
-					if (index != -1) {
-						String str = xmlIn.LastTag.GetAttributeValue(key);
-						double d = CSVFormat.EG_FORMAT.Parse(str);
-						result.SetParam(index, d);
-					}
-				}
-			}
+                        if (index != -1)
+                        {
+                            String str = xmlIn.LastTag.GetAttributeValue(key);
+                            double d = CSVFormat.EG_FORMAT.Parse(str);
+                            result.SetParam(index, d);
+                        }
+                    }
+                }
 
-			return result;
-		} catch (Exception e) {
-			throw new EncogError(e);
-		} 
-	}
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new EncogError(e);
+            }
+        }
 
     }
 }

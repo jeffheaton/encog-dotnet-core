@@ -45,31 +45,20 @@ namespace encog_test.Encog.Neural.Activation
         public void testBiPolar()
         {
             ActivationBiPolar activation = new ActivationBiPolar();
-            Assert.IsFalse(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative());
 
             ActivationBiPolar clone = (ActivationBiPolar)activation.Clone();
             Assert.IsNotNull(clone);
 
             double[] input = { 0.5, -0.5 };
 
-            activation.ActivationFunction(input,0,1);
+            activation.ActivationFunction(input,0,input.Length);
 
             Assert.AreEqual(1.0, input[0], 0.1);
             Assert.AreEqual(-1.0, input[1], 0.1);
 
             // test derivative, should throw an error
-            try
-            {
-                activation.DerivativeFunction(1);
-                Assert.IsTrue(false);// mark an error
-            }
-            catch (EncogError )
-            {
-                // good, this should happen
-            }
-
-        
-
+            activation.DerivativeFunction(1);
         }
     }
 }

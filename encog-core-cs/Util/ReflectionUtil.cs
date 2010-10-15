@@ -241,5 +241,25 @@ namespace Encog.Util
             return null;
         }
 
+        /// <summary>
+        /// Loop over all loaded assembles and try to create the class.
+        /// </summary>
+        /// <param name="name">The class to create.</param>
+        /// <returns>The created class.</returns>
+        public static Object LoadObject(String name)
+        {
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Object result = null;
+
+            foreach (Assembly a in assemblies)
+            {
+                result = a.CreateInstance(name);
+                if (result != null)
+                    break;
+            }
+
+            return result;
+        }
+
     }
 }

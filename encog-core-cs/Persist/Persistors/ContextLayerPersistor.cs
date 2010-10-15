@@ -79,8 +79,7 @@ namespace Encog.Persist.Persistors
                 {
                     xmlIn.ReadToTag();
                     String type = xmlIn.LastTag.Name;
-                    IPersistor persistor = PersistorUtil.CreatePersistor(type);
-                    activation = (IActivationFunction)persistor.Load(xmlIn);
+                    activation = BasicLayerPersistor.LoadActivation(type, xmlIn);
                 }
                 else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_NEURONS, true))
                 {
@@ -161,7 +160,7 @@ namespace Encog.Persist.Persistors
 
 
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation );
-            BasicLayerPersistor.saveActivationFunction(layer.ActivationFunction, xmlOut);
+            BasicLayerPersistor.SaveActivationFunction(layer.ActivationFunction, xmlOut);
 
             xmlOut.EndTag();
         }
