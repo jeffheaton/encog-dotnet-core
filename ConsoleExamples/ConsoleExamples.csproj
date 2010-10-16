@@ -53,6 +53,7 @@
     <Compile Include="Examples\CL\BenchmarkCL.cs" />
     <Compile Include="Examples\CL\TuneCL.cs" />
     <Compile Include="Examples\CL\SimpleCL.cs" />
+    <Compile Include="Examples\CL\XOROpenCL.cs" />
     <Compile Include="Examples\Forest\Constant.cs" />
     <Compile Include="Examples\Forest\Evaluate.cs" />
     <Compile Include="Examples\Forest\ForestCover.cs" />

@@ -86,6 +86,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.XOR.LMA.XORLMA.Info);
             examples.Add(Encog.Examples.CL.TuneCL.Info);
             examples.Add(Encog.Examples.CL.BenchmarkCL.Info);
+            examples.Add(Encog.Examples.CL.XOROpenCL.Info);
         }
 
         public void ListCommands()

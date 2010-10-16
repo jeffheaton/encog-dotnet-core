@@ -37,6 +37,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Engine.Opencl;
+using Encog.Engine;
 
 
 namespace Encog
@@ -68,7 +69,13 @@ namespace Encog
         /// If Encog is not using GPU/CL processing this attribute will be null.  
         /// Otherwise it holds the Encog CL object.
         /// </summary>
-        public EncogCL CL { get; set; }
+        public EncogCL CL 
+        {
+            get
+            {
+                return EncogEngine.Instance.CL;
+            }
+        }
 #endif
 		
 #if logging
@@ -162,15 +169,7 @@ namespace Encog
         /// </summary>
         public void InitCL()
         {
-            try
-            {
-                EncogCL cl = new EncogCL();
-                this.CL = cl;
-            }
-            catch (Exception e)
-            {
-                throw new EncogCLError(e);
-            }
+            EncogEngine.Instance.InitCL();
         }
 #endif
     }

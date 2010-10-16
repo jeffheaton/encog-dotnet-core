@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Engine.Opencl;
 using Encog.Engine.Util;
+using Encog.Engine;
 
 namespace TuneEncogOpenCL
 {
@@ -200,7 +201,6 @@ namespace TuneEncogOpenCL
                 // Non-CL
                 //
                 EncogCL temp = Encog.Encog.Instance.CL;
-                Encog.Encog.Instance.CL = null;
                 network.Reset();
                 train = new ResilientPropagation(network, training);
                 train.NumThreads = 0;
@@ -219,7 +219,7 @@ namespace TuneEncogOpenCL
                 this.Invoke((MethodInvoker)delegate { this.textNonCLResult.Text = Format.FormatInteger((int)stopwatch.ElapsedMilliseconds) + "ms"; });
                 this.Invoke((MethodInvoker)delegate { this.textPerf.Text = Format.FormatPercent(((double)nonCLTime/(double)clTime)); });
 
-                Encog.Encog.Instance.CL = temp;
+                
                 //
                 // finish up
                 //
