@@ -273,60 +273,60 @@ namespace Encog.Engine.Opencl.Kernels
         /// </summary>
         ///
         /// <param name="device_0"/>The OpenCL device to use.</param>
-        /// <param name="flat_1"/>The network to train.</param>
-        /// <param name="training_2"/>The training data.</param>
+        /// <param name="flat"/>The network to train.</param>
+        /// <param name="training"/>The training data.</param>
         /// <param name="tempDataSize"/>How much temp data.</param>
-        public KernelNetworkTrain(EncogCLDevice device_0,
-                FlatNetwork flat_1, IEngineIndexableSet training_2,
+        public KernelNetworkTrain(EncogCLDevice device,
+                FlatNetwork flat, IEngineIndexableSet training,
                 int tempDataSize)
-            : base(device_0, "org/encog/engine/resources/KernelNetTrain.txt", "NetworkTrain")
+            : base(device, "Encog.Engine.Resources.KernelNetTrain.txt", "NetworkTrain")
         {
-            this.training = training_2;
+            this.training = training;
             this.trainingLength = (int)this.training.Count;
-            this.device = device_0;
-            this.flat = flat_1;
-            this.weightInArray = new float[flat_1.Weights.Length];
-            this.weightOutArray = new float[flat_1.Weights.Length];
+            this.device = device;
+            this.flat = flat;
+            this.weightInArray = new float[flat.Weights.Length];
+            this.weightOutArray = new float[flat.Weights.Length];
             this.tempDataArray = new float[tempDataSize];
             this.slopeArray = new float[flat.LayerFeedCounts.Length];
-            this.gradients = new float[flat_1.Weights.Length];
+            this.gradients = new float[flat.Weights.Length];
 
             this.layerDeltaSize = 0;
-            for (int i = 0; i < flat_1.LayerCounts.Length; i++)
+            for (int i = 0; i < flat.LayerCounts.Length; i++)
             {
-                this.layerDeltaSize += flat_1.LayerCounts[i];
+                this.layerDeltaSize += flat.LayerCounts[i];
             }
 
             int index = 0;
-            for (int i_3 = 0; i_3 < flat_1.ActivationFunctions.Length; i_3++)
+            for (int i = 0; i < flat.ActivationFunctions.Length; i++)
             {
-                this.slopeArray[index++] = (float)flat_1.ActivationFunctions[i_3].Params[0];
+                this.slopeArray[index++] = (float)flat.ActivationFunctions[i].Params[0];
             }
 
-            int inputSize = flat_1.InputCount;
-            int idealSize = flat_1.OutputCount;
+            int inputSize = flat.InputCount;
+            int idealSize = flat.OutputCount;
 
             this.inputArray = new float[inputSize * this.trainingLength];
             this.idealArray = new float[idealSize * this.trainingLength];
             this.paramArray = new int[10];
 
             IEngineData pair = BasicEngineData.CreatePair(
-                    flat_1.InputCount, flat_1.OutputCount);
+                    flat.InputCount, flat.OutputCount);
 
             int inputIndex = 0;
             int idealIndex = 0;
 
-            for (int i_4 = 0; i_4 < this.trainingLength; i_4++)
+            for (int i = 0; i < this.trainingLength; i++)
             {
-                training_2.GetRecord(i_4, pair);
-                for (int col = 0; col < flat_1.InputCount; col++)
+                training.GetRecord(i, pair);
+                for (int col = 0; col < flat.InputCount; col++)
                 {
                     this.inputArray[inputIndex++] = (float)pair.InputArray[col];
                 }
 
-                for (int col_5 = 0; col_5 < flat_1.OutputCount; col_5++)
+                for (int col = 0; col < flat.OutputCount; col++)
                 {
-                    this.idealArray[idealIndex++] = (float)pair.IdealArray[col_5];
+                    this.idealArray[idealIndex++] = (float)pair.IdealArray[col];
                 }
             }
 

@@ -144,7 +144,7 @@ namespace Encog.Engine.Opencl.Kernels
 
             // Create the program from the source code
 
-            ComputeProgram program = new ComputeProgram(this.context, this.cl);
+            this.program = new ComputeProgram(this.context, this.cl);
 
             if (options.Count > 0)
             {

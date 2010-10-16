@@ -32,6 +32,7 @@ namespace Encog.Engine.Opencl
     using System.Runtime.CompilerServices;
     using Cloo;
     using Encog.Engine.Opencl.Kernels;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// An open CL queue.
@@ -72,8 +73,9 @@ namespace Encog.Engine.Opencl
         /// <param name="targetBuffer"/>The buffer.</param>
         public void Array2Buffer(float[] source, ComputeBuffer<float> targetBuffer)
         {
-
-            commands.Write(targetBuffer, true, 0, source.Length, source, null);
+            GCHandle arrCHandle = GCHandle.Alloc(source, GCHandleType.Pinned);            
+            commands.Write(targetBuffer, true, 0, source.Length, arrCHandle.AddrOfPinnedObject(), null);
+            arrCHandle.Free();
         }
 
         /// <summary>
@@ -84,7 +86,9 @@ namespace Encog.Engine.Opencl
         /// <param name="targetBuffer"/>The buffer.</param>
         public void Array2Buffer(int[] source, ComputeBuffer<int> targetBuffer)
         {
-            commands.Write(targetBuffer, true, 0, source.Length, source, null);
+            GCHandle arrCHandle = GCHandle.Alloc(source, GCHandleType.Pinned);
+            commands.Write(targetBuffer, true, 0, source.Length, arrCHandle.AddrOfPinnedObject(), null);
+            arrCHandle.Free();
         }
 
         /// <summary>
@@ -95,7 +99,9 @@ namespace Encog.Engine.Opencl
         /// <param name="target"/>The target array.</param>
         public void Buffer2Array(ComputeBuffer<float> sourceBuffer, float[] target)
         {
-            commands.Read(sourceBuffer, true, 0, target.Length, null);
+            GCHandle arrCHandle = GCHandle.Alloc(target, GCHandleType.Pinned);
+            commands.Read(sourceBuffer, true, 0, target.Length, arrCHandle.AddrOfPinnedObject(), null);
+            arrCHandle.Free();
         }
 
         /// <summary>
@@ -106,7 +112,9 @@ namespace Encog.Engine.Opencl
         /// <param name="target"/>The target array.</param>
         public void Buffer2Array(ComputeBuffer<int> sourceBuffer, int[] target)
         {
-            commands.Read(sourceBuffer, true, 0, target.Length, null);
+            GCHandle arrCHandle = GCHandle.Alloc(target, GCHandleType.Pinned);
+            commands.Read(sourceBuffer, true, 0, target.Length, arrCHandle.AddrOfPinnedObject(), null);
+            arrCHandle.Free();
         }
 
         /// <summary>

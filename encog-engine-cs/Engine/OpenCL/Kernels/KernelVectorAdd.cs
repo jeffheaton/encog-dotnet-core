@@ -83,7 +83,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// <param name="device"/>The device to use.</param>
         /// <param name="length"/>The length of the vector.</param>
         public KernelVectorAdd(EncogCLDevice device, int length)
-            : base(device, "org/encog/engine/resources/KernelVectorAdd.txt", "VectorAdd")
+            : base(device, "Encog.Engine.Resources.KernelVectorAdd.txt", "VectorAdd")
         {
             // Create input- and output data
             this.arrayA = new float[length];
@@ -128,12 +128,13 @@ namespace Encog.Engine.Opencl.Kernels
             queue.Execute(this);
 
             queue.Buffer2Array(this.bufferTargetArray, this.targetArray);
+            queue.WaitFinish();
 
             double[] result = new double[this.targetArray.Length];
 
-            for (int i_0 = 0; i_0 < this.targetArray.Length; i_0++)
+            for (int i = 0; i < this.targetArray.Length; i++)
             {
-                result[i_0] = this.targetArray[i_0];
+                result[i] = this.targetArray[i];
             }
 
             return result;

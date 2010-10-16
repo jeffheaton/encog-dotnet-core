@@ -26,9 +26,17 @@ namespace Encog.Engine.Util
         /// <returns>A stream.</returns>
         public static Stream CreateStream(String resource)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream(resource);
-            return stream;
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Stream result = null;
+
+            foreach (Assembly a in assemblies)
+            {
+                result = a.GetManifestResourceStream(resource);
+                if (result != null)
+                    break;
+            }
+
+            return result;
         }
 
         /// <summary>

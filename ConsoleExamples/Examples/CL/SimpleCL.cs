@@ -64,7 +64,7 @@ namespace Encog.Examples.CL
                 Encog.Instance.InitCL();
 
                 EncogCLDevice device = Encog.Instance.CL.Devices[0];
-                KernelVectorAdd k = null;// Encog.Instance.CL.Devices[0].Platform.VectorAdd;
+                KernelVectorAdd k = new KernelVectorAdd(device, 4);
                 k.Compile();
 
                 double[] a = { 1, 2, 3, 4 };

@@ -67,7 +67,7 @@ namespace Encog.Engine.Opencl
         {
 
             this.platform = platform;
-
+            this.devices = new List<EncogCLDevice>();
             ComputeContextPropertyList cpl = new ComputeContextPropertyList(platform);
             this.context = new ComputeContext(ComputeDeviceTypes.Default, cpl, null, IntPtr.Zero);
             this.Name = platform.Name;

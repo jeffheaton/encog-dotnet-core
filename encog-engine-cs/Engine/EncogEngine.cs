@@ -27,100 +27,111 @@
  * 
  * http://www.heatonresearch.com/copyright.html
  */
- namespace Encog.Engine {
-	
-	//using Encog.Engine.Opencl;
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Runtime.CompilerServices;
-     using Encog.Engine.Opencl;
-	
-	/// <summary>
-	/// The Encog Engine.
-	/// The Engine forms the core of Encog's neural network calculation and training.
-	/// </summary>
-	///
-	public class EncogEngine {
-	
-		/// <summary>
-		/// The default zero tolerance.
-		/// </summary>
-		///
-		public const double DEFAULT_ZERO_TOLERANCE = 0.000001d;
-	
-		/// <summary>
-		/// The instance.
-		/// </summary>
-		///
-		private static EncogEngine instance;
-	
-		/// <summary>
-		/// If Encog is not using GPU/CL processing this attribute will be null.
-		/// Otherwise it holds the Encog CL object.
-		/// </summary>
-		///
-		private EncogCL cl;
-	
-		/// <summary>
-		/// Get the instance to the singleton.
-		/// </summary>
-		///
-		/// <returns>The instance.</returns>
-		public static EncogEngine Instance {
-		/// <summary>
-		/// Get the instance to the singleton.
-		/// </summary>
-		///
-		/// <returns>The instance.</returns>
-		  get {
-				if (EncogEngine.instance == null) {
-					EncogEngine.instance = new EncogEngine();
-				}
-				return EncogEngine.instance;
-			}
-		}
-		
-	
-		/// <summary>
-		/// Enable OpenCL processing. OpenCL processing allows Encog to use GPU
-		/// devices to speed calculations. Not all areas of Encog can use this,
-		/// however, GPU's can currently accelerate the training of Feedforward
-		/// neural networks.
-		/// To make use of the GPU you must have OpenCL drivers installed. For more
-		/// information on getting OpenCL drivers, visit the following URL.
-		/// http://www.heatonresearch.com/encog/opencl
-		/// </summary>
-		///
-		public void InitCL() {
-		    try {
-				EncogCL cl_0 = new EncogCL();
-				this.cl = cl_0;
-			} catch (Exception e) {
-				throw new EncogEngineError(e);
-			}
-		}
-	
-		/// <summary>
-		/// Provides any shutdown that Encog may need. Currently this shuts down the
-		/// thread pool.
-		/// </summary>
-		///
-		public void Shutdown() {
-			//Org.Encog.Engine.Concurrency.EngineConcurrency.Instance.Shutdown(10000);
-		}
-	
-		
-		/// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
-		public EncogCL CL {
-		
-		/// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
-		  get {
-				return this.cl;
-			}
-		}
-		
-	
-	}
+namespace Encog.Engine
+{
+
+    //using Encog.Engine.Opencl;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using Encog.Engine.Opencl;
+
+    /// <summary>
+    /// The Encog Engine.
+    /// The Engine forms the core of Encog's neural network calculation and training.
+    /// </summary>
+    ///
+    public class EncogEngine
+    {
+
+        /// <summary>
+        /// The default zero tolerance.
+        /// </summary>
+        ///
+        public const double DEFAULT_ZERO_TOLERANCE = 0.000001d;
+
+        /// <summary>
+        /// The instance.
+        /// </summary>
+        ///
+        private static EncogEngine instance;
+
+        /// <summary>
+        /// If Encog is not using GPU/CL processing this attribute will be null.
+        /// Otherwise it holds the Encog CL object.
+        /// </summary>
+        ///
+        private EncogCL cl;
+
+        /// <summary>
+        /// Get the instance to the singleton.
+        /// </summary>
+        ///
+        /// <returns>The instance.</returns>
+        public static EncogEngine Instance
+        {
+            /// <summary>
+            /// Get the instance to the singleton.
+            /// </summary>
+            ///
+            /// <returns>The instance.</returns>
+            get
+            {
+                if (EncogEngine.instance == null)
+                {
+                    EncogEngine.instance = new EncogEngine();
+                }
+                return EncogEngine.instance;
+            }
+        }
+
+
+        /// <summary>
+        /// Enable OpenCL processing. OpenCL processing allows Encog to use GPU
+        /// devices to speed calculations. Not all areas of Encog can use this,
+        /// however, GPU's can currently accelerate the training of Feedforward
+        /// neural networks.
+        /// To make use of the GPU you must have OpenCL drivers installed. For more
+        /// information on getting OpenCL drivers, visit the following URL.
+        /// http://www.heatonresearch.com/encog/opencl
+        /// </summary>
+        ///
+        public void InitCL()
+        {
+            try
+            {
+                this.cl = new EncogCL();
+            }
+            catch (Exception e)
+            {
+                throw new EncogEngineError(e);
+            }
+        }
+
+        /// <summary>
+        /// Provides any shutdown that Encog may need. Currently this shuts down the
+        /// thread pool.
+        /// </summary>
+        ///
+        public void Shutdown()
+        {
+            //Org.Encog.Engine.Concurrency.EngineConcurrency.Instance.Shutdown(10000);
+        }
+
+
+        /// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
+        public EncogCL CL
+        {
+
+            /// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
+            get
+            {
+                return this.cl;
+            }
+        }
+
+
+    }
 }
