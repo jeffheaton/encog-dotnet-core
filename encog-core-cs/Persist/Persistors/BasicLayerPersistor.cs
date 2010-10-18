@@ -39,6 +39,7 @@ using Encog.Util.CSV;
 using Encog.Engine.Network.Activation;
 using Encog.Util;
 using System.Reflection;
+using Encog.Neural;
 
 namespace Encog.Persist.Persistors
 {
@@ -221,6 +222,11 @@ namespace Encog.Persist.Persistors
             try
             {
                 String clazz = ReflectionUtil.ResolveEncogClass(type);
+
+                if (clazz == null)
+                {
+                    throw new NeuralNetworkError("Unknown activation function: " + type);
+                }
 
                 IActivationFunction result = (IActivationFunction)ReflectionUtil.LoadObject(clazz);
 

@@ -137,51 +137,51 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a training profile.
         /// </summary>
         ///
-        /// <param name="device_0"/>The device to use.</param>
-        /// <param name="localRatio_1"/>The local ratio.</param>
-        /// <param name="globalRatio_2"/>The global ratio.</param>
-        /// <param name="segmentationRatio_3"/>The segmentation ratio.</param>
-        public OpenCLTrainingProfile(EncogCLDevice device_0, double localRatio_1,
-                int globalRatio_2, double segmentationRatio_3)
+        /// <param name="device"/>The device to use.</param>
+        /// <param name="localRatio"/>The local ratio.</param>
+        /// <param name="globalRatio"/>The global ratio.</param>
+        /// <param name="segmentationRatio"/>The segmentation ratio.</param>
+        public OpenCLTrainingProfile(EncogCLDevice device, double localRatio,
+                int globalRatio, double segmentationRatio)
             : base()
         {
-            this.device = device_0;
+            this.device = device;
 
-            if (localRatio_1 < 0 || globalRatio_2 < 0 || segmentationRatio_3 < 0)
+            if (localRatio < 0 || globalRatio < 0 || segmentationRatio < 0)
             {
                 throw new OpenCLError("None of the ratios can be below zero.");
             }
 
-            if (localRatio_1 > 1.0d)
+            if (localRatio > 1.0d)
             {
                 throw new OpenCLError(
                         "The local ratio cannot be greater than 1.0.  That would cause the OpenCL device to have more local items than it can handle.");
             }
 
-            if (globalRatio_2 < 1.0d)
+            if (globalRatio < 1.0d)
             {
                 throw new OpenCLError(
                         "The global ratio cannot be less than 1.0.  That would cause the global work area to be less than a local work area.");
             }
 
-            if (segmentationRatio_3 > 1.0d)
+            if (segmentationRatio > 1.0d)
             {
                 throw new OpenCLError(
                         "The segmentation ratio cannot be greater than 1.0.  That would cause the trainer to require more training elements per iteration than exist.");
             }
 
-            this.localRatio = localRatio_1;
-            this.globalRatio = globalRatio_2;
-            this.segmentationRatio = segmentationRatio_3;
+            this.localRatio = localRatio;
+            this.globalRatio = globalRatio;
+            this.segmentationRatio = segmentationRatio;
         }
 
         /// <summary>
         /// Construct a training profile with the specified device and the value of one for all ratios.
         /// </summary>
         ///
-        /// <param name="device_0"/>The device to use.</param>
-        public OpenCLTrainingProfile(EncogCLDevice device_0)
-            : this(device_0, 1.0d, 1, 1.0d)
+        /// <param name="device"/>The device to use.</param>
+        public OpenCLTrainingProfile(EncogCLDevice device)
+            : this(device, 1.0d, 1, 1.0d)
         {
         }
 
@@ -274,7 +274,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// Set the device to use.
         /// </summary>
         ///
-        /// <param name="device_0"/>The device to use.</param>
+        /// <param name="device"/>The device to use.</param>
         public EncogCLDevice Device
         {
 
@@ -287,7 +287,7 @@ namespace Encog.Engine.Network.Train.Prop
             /// Set the device to use.
             /// </summary>
             ///
-            /// <param name="device_0"/>The device to use.</param>
+            /// <param name="device"/>The device to use.</param>
             set
             {
                 this.device = value;

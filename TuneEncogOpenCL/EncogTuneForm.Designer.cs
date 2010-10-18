@@ -29,13 +29,8 @@
         private void InitializeComponent()
         {
             this.listGPU = new System.Windows.Forms.ListView();
-            this.colEnabled = new System.Windows.Forms.ColumnHeader();
-            this.colVendor = new System.Windows.Forms.ColumnHeader();
+            this.colType = new System.Windows.Forms.ColumnHeader();
             this.colName = new System.Windows.Forms.ColumnHeader();
-            this.colComputeUnits = new System.Windows.Forms.ColumnHeader();
-            this.colSpeed = new System.Windows.Forms.ColumnHeader();
-            this.colLocal = new System.Windows.Forms.ColumnHeader();
-            this.colGlobal = new System.Windows.Forms.ColumnHeader();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textTrainingSize = new System.Windows.Forms.TextBox();
             this.textOutputNeurons = new System.Windows.Forms.TextBox();
@@ -46,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.textCLRatio = new System.Windows.Forms.TextBox();
             this.textWorkgroupSize = new System.Windows.Forms.TextBox();
             this.textCLThreadCount = new System.Windows.Forms.TextBox();
@@ -64,7 +60,6 @@
             this.btnBenchmark = new System.Windows.Forms.Button();
             this.statusBarText = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -73,15 +68,9 @@
             // 
             // listGPU
             // 
-            this.listGPU.CheckBoxes = true;
             this.listGPU.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colEnabled,
-            this.colVendor,
-            this.colName,
-            this.colComputeUnits,
-            this.colSpeed,
-            this.colLocal,
-            this.colGlobal});
+            this.colType,
+            this.colName});
             this.listGPU.Dock = System.Windows.Forms.DockStyle.Top;
             this.listGPU.Location = new System.Drawing.Point(0, 0);
             this.listGPU.Name = "listGPU";
@@ -90,35 +79,14 @@
             this.listGPU.UseCompatibleStateImageBehavior = false;
             this.listGPU.View = System.Windows.Forms.View.Details;
             // 
-            // colEnabled
+            // colType
             // 
-            this.colEnabled.Text = "Enabled";
-            // 
-            // colVendor
-            // 
-            this.colVendor.Text = "Vendor";
-            this.colVendor.Width = 80;
+            this.colType.Text = "Type";
             // 
             // colName
             // 
             this.colName.Text = "Name";
-            this.colName.Width = 200;
-            // 
-            // colComputeUnits
-            // 
-            this.colComputeUnits.Text = "Units";
-            // 
-            // colSpeed
-            // 
-            this.colSpeed.Text = "Speed";
-            // 
-            // colLocal
-            // 
-            this.colLocal.Text = "Local";
-            // 
-            // colGlobal
-            // 
-            this.colGlobal.Text = "Global";
+            this.colName.Width = 80;
             // 
             // groupBox1
             // 
@@ -224,6 +192,17 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "OpenCL Configuration";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(6, 121);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "How to tune";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // textCLRatio
             // 
@@ -392,17 +371,6 @@
             this.statusBar.TabIndex = 4;
             this.statusBar.Text = "statusStrip1";
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(6, 121);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "How to tune";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // EncogTuneForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,13 +401,8 @@
         #endregion
 
         private System.Windows.Forms.ListView listGPU;
-        private System.Windows.Forms.ColumnHeader colEnabled;
-        private System.Windows.Forms.ColumnHeader colVendor;
+        private System.Windows.Forms.ColumnHeader colType;
         private System.Windows.Forms.ColumnHeader colName;
-        private System.Windows.Forms.ColumnHeader colComputeUnits;
-        private System.Windows.Forms.ColumnHeader colSpeed;
-        private System.Windows.Forms.ColumnHeader colLocal;
-        private System.Windows.Forms.ColumnHeader colGlobal;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textTrainingSize;
         private System.Windows.Forms.TextBox textOutputNeurons;

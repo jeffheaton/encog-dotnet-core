@@ -34,8 +34,6 @@ namespace TuneEncogOpenCL
         {
             try
             {
-                listGPU.CheckBoxes = true;
-
                 Encog.Encog.Instance.InitCL();
 
                 //this.textCLThreadCount.Text = ""+Encog.Encog.Instance.CL.CLThreads;
@@ -45,12 +43,12 @@ namespace TuneEncogOpenCL
                 deviceMap.Clear();
                 foreach (EncogCLDevice device in Encog.Encog.Instance.CL.Devices)
                 {
-                    /*ListViewItem item = new ListViewItem(new String[] { (device.IsCPU?"CPU":"GPU"), 
+                    ListViewItem item = new ListViewItem(new String[] { (device.CPU?"CPU":"GPU"), 
                         device.Vender, device.Name, ""+device.MaxComputeUnits, ""+device.MaxClockFrequency,
                         Format.FormatMemory(device.LocalMemorySize), 
                         Format.FormatMemory(device.GlobalMemorySize) });
                     deviceMap[item] = device;
-                    listGPU.Items.Add(item);*/
+                    listGPU.Items.Add(item);
                 }
 
                 SelectDevices();

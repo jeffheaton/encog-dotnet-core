@@ -55,6 +55,7 @@
       <DependentUpon>EncogTuneForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EncogOpenCLTune.cs" />
+    <Compile Include="FoundDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EncogTuneForm.resx">
       <DependentUpon>EncogTuneForm.cs</DependentUpon>
