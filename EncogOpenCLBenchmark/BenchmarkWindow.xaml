@@ -1,0 +1,120 @@
+﻿<Window x:Class="EncogOpenCLBenchmark.BenchmarkWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Encog(tm) OpenCL Benchmark 1.0" Height="620" Width="600" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Grid.Column="0" BorderBrush="LightBlue" BorderThickness="2" Background="CornflowerBlue">
+            <Label HorizontalAlignment="Center" Foreground="White" FontWeight="Bold">Select OpenCL Device to Benchmark</Label>
+        </Border>
+        
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="LightBlue" BorderThickness="2" Background="CornflowerBlue">
+            <Label HorizontalAlignment="Center" Foreground="White" FontWeight="Bold">Selected OpenCL Device</Label>
+        </Border>
+
+        <Border Grid.Row="2" Grid.Column="0" BorderBrush="LightBlue" BorderThickness="2" Background="CornflowerBlue">
+            <Label HorizontalAlignment="Center" Foreground="White" FontWeight="Bold">Benchmark Input</Label>
+        </Border>
+
+        <Border Grid.Row="2" Grid.Column="1" BorderBrush="LightBlue" BorderThickness="2" Background="CornflowerBlue">
+            <Label HorizontalAlignment="Center" Foreground="White" FontWeight="Bold">Benchmark Results</Label>
+        </Border>
+
+        <ListView Grid.Row="1" Grid.Column="0" Name="ListDevices" SelectionChanged="ListDevices_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="64" Header="Type" DisplayMemberBinding="{Binding DeviceType}" />
+                    <GridViewColumn Width="200" Header="Name" DisplayMemberBinding="{Binding DeviceName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="TextStats" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ></TextBox>
+        
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="bold">Encog OpenCL Ratios</Label>
+            <Label Grid.Row="1" Grid.Column="0">Global Ratio</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="TextGlobalRatio"> </TextBox>
+            <Label Grid.Row="2" Grid.Column="0">Local Ratio</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="TextLocalRatio"></TextBox>
+            <Label Grid.Row="3" Grid.Column="0">Segmentation Ratio</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" Name="TextSegRatio"></TextBox>
+            <Label Grid.Row="4" Grid.Column="0">Iterations Per Call</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" Name="TextIterationsPerCall"></TextBox>
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="bold">Neural Network Nature</Label>
+            <Label Grid.Row="6" Grid.Column="0">Input Neurons</Label>
+            <TextBox Grid.Row="6" Grid.Column="1" Name="TextInputNeurons"></TextBox>
+            <Label Grid.Row="7" Grid.Column="0">Hidden-1 Neurons</Label>
+            <TextBox Grid.Row="7" Grid.Column="1" Name="TextHidden1Neurons"></TextBox>
+            <Label Grid.Row="8" Grid.Column="0">Hidden-2 Neurons</Label>
+            <TextBox Grid.Row="8" Grid.Column="1" Name="TextHidden2Neurons"></TextBox>
+            <Label Grid.Row="9" Grid.Column="0">Output Neurons</Label>
+            <TextBox Grid.Row="9" Grid.Column="1" Name="TextOutputNeurons"></TextBox>
+            <Label Grid.Row="10" Grid.Column="0">Training Set Size</Label>
+            <TextBox Grid.Row="10" Grid.Column="1" Name="TextTrainingSetSize"></TextBox>
+            <Label Grid.Row="11" Grid.Column="0">Training Iterations</Label>
+            <TextBox Grid.Row="11" Grid.Column="1" Name="TextTrainingIterations"></TextBox>            
+            <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="bold">OpenCL Usage</Label>
+            <Label Grid.Row="1" Grid.Column="2">Global Workgroup Size</Label>
+            <Label Grid.Row="1" Grid.Column="3" Name="LabelGlobalWorkgroupSize"/>
+            <Label Grid.Row="2" Grid.Column="2">Local Workgroup Size</Label>
+            <Label Grid.Row="2" Grid.Column="3" Name="LabelLocalWorkgroupSize"/>
+            <Label Grid.Row="3" Grid.Column="2">Kernel Number of Calls</Label>
+            <Label Grid.Row="3" Grid.Column="3" Name="LabelNumberCalls"/>
+            <Label Grid.Row="4" Grid.Column="2">Remainder</Label>
+            <Label Grid.Row="4" Grid.Column="3" Name="LabelRemainder"/>
+            <Label Grid.Row="5" Grid.Column="2">Remainder Global</Label>
+            <Label Grid.Row="5" Grid.Column="3" Name="LabelRemainderGlobal"/>
+            <Label Grid.Row="6" Grid.Column="2">Remainder Per</Label>      
+            <Label Grid.Row="6" Grid.Column="3" Name="LabelRemainderPer"/>
+            <Label Grid.Row="7" Grid.Column="2">Work Per Kernel Call</Label>
+            <Label Grid.Row="7" Grid.Column="3" Name="LabelWorkPerCall"/>
+            <Label Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="bold">Benchmark Results</Label>
+            <Label Grid.Row="9" Grid.Column="2">Benchmark Time</Label>
+            <Label Grid.Row="9" Grid.Column="3" Name="LabelBenchmarkTime"/>
+            <Label Grid.Row="10" Grid.Column="2">Actual Iterations</Label>
+            <Label Grid.Row="10" Grid.Column="3" Name="LabelActualIterations"/>
+            <StackPanel Grid.Row="12" Grid.Column="0" Orientation="Horizontal" Background="Gray" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                <Button Name="ButtonDefaults" Click="ButtonDefaults_Click">Defaults</Button>
+                <Button Name="ButtonEncog" Click="ButtonEncog_Click">Perform Benchmark</Button>
+                <Button Name="ButtonShare" Click="ButtonShare_Click">Share Benchmark</Button>
+            </StackPanel>
+        </Grid>
+        <StatusBar Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4">
+            <Label Name="StatusText">Ready.</Label>
+        </StatusBar>
+    </Grid>
+    
+</Window>
