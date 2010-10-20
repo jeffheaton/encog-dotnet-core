@@ -25,6 +25,7 @@ using System.Windows.Threading;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Propagation;
 using System.Runtime.InteropServices;
+using Encog.Bot;
 
 namespace EncogOpenCLBenchmark
 {
@@ -50,7 +51,16 @@ namespace EncogOpenCLBenchmark
         private int paramTrainingIterations;
         private int paramTrainingSetSize;
         private EncogCLDevice device;
-
+        private String sendName;
+        private String sendVendor;
+        private String sendBenchmark;
+        private String sendCores;
+        private String sendLocal;
+        private String sendGlobal;
+        private String sendSpeed;
+        private String sendUID;
+        private String sendPWD;
+        private String sendStats;
 
         public BenchmarkWindow()
         {
@@ -104,22 +114,27 @@ namespace EncogOpenCLBenchmark
             this.TextOutputNeurons.Text = "1";
             this.TextIterationsPerCall.Text = "1";
             this.TextTrainingIterations.Text = "100";
-            this.TextTrainingSetSize.Text = "10000";
+            this.TextTrainingSetSize.Text = "100000";
         }
 
         private void ListDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FoundDevice found = (FoundDevice)this.ListDevices.SelectedItem;
             this.device = found.Device;
-
+            this.sendName = device.Device.Name;
+            this.sendVendor = device.Device.Vendor;
+            this.sendLocal = ""+device.Device.LocalMemorySize;
+            this.sendGlobal = "" + device.Device.GlobalMemorySize;
+            this.sendSpeed = "" + device.Device.MaxClockFrequency;
+            this.sendCores = "" + device.Device.MaxComputeUnits;
             StringBuilder str = new StringBuilder();
-            str.Append("Device Name:\t" + device.Device.Name + "\n");
-            str.Append("Device Vendor:\t" + device.Device.Vendor + "\n");
-            str.Append("Device Driver:\t" + device.Device.DriverVersion + "\n");
-            str.Append("***Platform Stats\n");
-            str.Append("Platform Name:\t" + device.Platform.Platform.Name + "\n");
-            str.Append("Platform Vendor:\t" + device.Platform.Platform.Vendor + "\n");
-            str.Append("Platform Version:\t" + device.Platform.Platform.Version + "\n");
+            str.Append("Device Name:\t" + device.Device.Name + "\r\n");
+            str.Append("Device Vendor:\t" + device.Device.Vendor + "\r\n");
+            str.Append("Device Driver:\t" + device.Device.DriverVersion + "\r\n");
+            str.Append("***Platform Stats\r\n");
+            str.Append("Platform Name:\t" + device.Platform.Platform.Name + "\r\n");
+            str.Append("Platform Vendor:\t" + device.Platform.Platform.Vendor + "\r\n");
+            str.Append("Platform Version:\t" + device.Platform.Platform.Version + "\r\n");
             str.Append("Platform Extensions:\t");
             foreach (String ex in device.Platform.Platform.Extensions)
             {
@@ -127,61 +142,61 @@ namespace EncogOpenCLBenchmark
                 str.Append(ex);
                 str.Append("] ");
             }
-            str.Append("\n");
-            str.Append("***Platform Stats\n");
-            try { str.Append("AddressBits:\t" + device.Device.AddressBits + "\n"); }
+            str.Append("\r\n");
+            str.Append("***Platform Stats\r\n");
+            try { str.Append("AddressBits:\t" + device.Device.AddressBits + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("DriverVersion:\t" + device.Device.DriverVersion + "\n"); }
+            try { str.Append("DriverVersion:\t" + device.Device.DriverVersion + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("LittleEndian:\t" + device.Device.EndianLittle + "\n"); }
+            try { str.Append("LittleEndian:\t" + device.Device.EndianLittle + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("ErrorCorrection Support:\t" + device.Device.ErrorCorrectionSupport + "\n"); }
+            try { str.Append("ErrorCorrection Support:\t" + device.Device.ErrorCorrectionSupport + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("ExecutionCapabilities:\t" + device.Device.ExecutionCapabilities + "\n"); }
+            try { str.Append("ExecutionCapabilities:\t" + device.Device.ExecutionCapabilities + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("GlobalMemoryCacheLineSize:\t" + device.Device.GlobalMemoryCacheLineSize + "\n"); }
+            try { str.Append("GlobalMemoryCacheLineSize:\t" + device.Device.GlobalMemoryCacheLineSize + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("GlobalMemoryCacheSize:\t" + device.Device.GlobalMemoryCacheSize + "\n"); }
+            try { str.Append("GlobalMemoryCacheSize:\t" + device.Device.GlobalMemoryCacheSize + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("GlobalMemoryCacheType:\t" + device.Device.GlobalMemoryCacheType + "\n"); }
+            try { str.Append("GlobalMemoryCacheType:\t" + device.Device.GlobalMemoryCacheType + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("GlobalMemorySize:\t" + device.Device.GlobalMemorySize + " (" + Format.FormatMemory(device.Device.GlobalMemorySize) + ")\n"); }
+            try { str.Append("GlobalMemorySize:\t" + device.Device.GlobalMemorySize + " (" + Format.FormatMemory(device.Device.GlobalMemorySize) + ")\r\n"); }
             catch (Exception) { }
-            try { str.Append("HostUnifiedMemory:\t" + device.Device.HostUnifiedMemory + "\n"); }
+            try { str.Append("HostUnifiedMemory:\t" + device.Device.HostUnifiedMemory + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Image2DMaxHeight:\t" + device.Device.Image2DMaxHeight + "\n"); }
+            try { str.Append("Image2DMaxHeight:\t" + device.Device.Image2DMaxHeight + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Image2DMaxWidth:\t" + device.Device.Image2DMaxWidth + "\n"); }
+            try { str.Append("Image2DMaxWidth:\t" + device.Device.Image2DMaxWidth + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Image3DMaxHeight:\t" + device.Device.Image3DMaxHeight + "\n"); }
+            try { str.Append("Image3DMaxHeight:\t" + device.Device.Image3DMaxHeight + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Image3DMaxWidth:\t" + device.Device.Image3DMaxWidth + "\n"); }
+            try { str.Append("Image3DMaxWidth:\t" + device.Device.Image3DMaxWidth + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("ImageSupport:\t" + device.Device.ImageSupport + "\n"); }
+            try { str.Append("ImageSupport:\t" + device.Device.ImageSupport + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("LocalMemorySize:\t" + device.Device.LocalMemorySize + " (" + Format.FormatMemory(device.Device.LocalMemorySize) + ")\n"); }
+            try { str.Append("LocalMemorySize:\t" + device.Device.LocalMemorySize + " (" + Format.FormatMemory(device.Device.LocalMemorySize) + ")\r\n"); }
             catch (Exception) { }
-            try { str.Append("LocalMemoryType:\t" + device.Device.LocalMemoryType + "\n"); }
+            try { str.Append("LocalMemoryType:\t" + device.Device.LocalMemoryType + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxClockFrequency:\t" + device.Device.MaxClockFrequency + "\n"); }
+            try { str.Append("MaxClockFrequency:\t" + device.Device.MaxClockFrequency + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxComputeUnits:\t" + device.Device.MaxComputeUnits + "\n"); }
+            try { str.Append("MaxComputeUnits:\t" + device.Device.MaxComputeUnits + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxConstantArguments:\t" + device.Device.MaxConstantArguments + "\n"); }
+            try { str.Append("MaxConstantArguments:\t" + device.Device.MaxConstantArguments + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxConstantBufferSize:\t" + device.Device.MaxConstantBufferSize + " (" + Format.FormatMemory(device.Device.MaxConstantBufferSize) + ")\n"); }
+            try { str.Append("MaxConstantBufferSize:\t" + device.Device.MaxConstantBufferSize + " (" + Format.FormatMemory(device.Device.MaxConstantBufferSize) + ")\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxMemoryAllocationSize:\t" + device.Device.MaxMemoryAllocationSize + " (" + Format.FormatMemory(device.Device.MaxMemoryAllocationSize) + ")\n"); }
+            try { str.Append("MaxMemoryAllocationSize:\t" + device.Device.MaxMemoryAllocationSize + " (" + Format.FormatMemory(device.Device.MaxMemoryAllocationSize) + ")\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxParameterSize:\t" + device.Device.MaxParameterSize + "\n"); }
+            try { str.Append("MaxParameterSize:\t" + device.Device.MaxParameterSize + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxReadImageArguments:\t" + device.Device.MaxReadImageArguments + "\n"); }
+            try { str.Append("MaxReadImageArguments:\t" + device.Device.MaxReadImageArguments + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxSamplers:\t" + device.Device.MaxSamplers + "\n"); }
+            try { str.Append("MaxSamplers:\t" + device.Device.MaxSamplers + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxWorkGroupSize:\t" + device.Device.MaxWorkGroupSize + "\n"); }
+            try { str.Append("MaxWorkGroupSize:\t" + device.Device.MaxWorkGroupSize + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MaxWorkItemDimensions:\t" + device.Device.MaxWorkItemDimensions + "\n"); }
+            try { str.Append("MaxWorkItemDimensions:\t" + device.Device.MaxWorkItemDimensions + "\r\n"); }
             catch (Exception) { }
             try
             {
@@ -192,60 +207,60 @@ namespace EncogOpenCLBenchmark
                     str.Append(ex);
                     str.Append("] ");
                 }
-                str.Append("\n");
+                str.Append("\r\n");
             }
             catch (Exception) { }
-            try { str.Append("MaxWriteImageArguments:\t" + device.Device.MaxWriteImageArguments + "\n"); }
+            try { str.Append("MaxWriteImageArguments:\t" + device.Device.MaxWriteImageArguments + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MemoryBaseAddressAlignment:\t" + device.Device.MemoryBaseAddressAlignment + "\n"); }
+            try { str.Append("MemoryBaseAddressAlignment:\t" + device.Device.MemoryBaseAddressAlignment + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("MinDataTypeAlignmentSize:\t" + device.Device.MinDataTypeAlignmentSize + "\n"); }
+            try { str.Append("MinDataTypeAlignmentSize:\t" + device.Device.MinDataTypeAlignmentSize + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthChar:\t" + device.Device.NativeVectorWidthChar + "\n"); }
+            try { str.Append("NativeVectorWidthChar:\t" + device.Device.NativeVectorWidthChar + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthDouble:\t" + device.Device.NativeVectorWidthDouble + "\n"); }
+            try { str.Append("NativeVectorWidthDouble:\t" + device.Device.NativeVectorWidthDouble + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthFloat:\t" + device.Device.NativeVectorWidthFloat + "\n"); }
+            try { str.Append("NativeVectorWidthFloat:\t" + device.Device.NativeVectorWidthFloat + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthHalf:\t" + device.Device.NativeVectorWidthHalf + "\n"); }
+            try { str.Append("NativeVectorWidthHalf:\t" + device.Device.NativeVectorWidthHalf + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthInt:\t" + device.Device.NativeVectorWidthInt + "\n"); }
+            try { str.Append("NativeVectorWidthInt:\t" + device.Device.NativeVectorWidthInt + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthLong:\t" + device.Device.NativeVectorWidthLong + "\n"); }
+            try { str.Append("NativeVectorWidthLong:\t" + device.Device.NativeVectorWidthLong + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("NativeVectorWidthShort:\t" + device.Device.NativeVectorWidthShort + "\n"); }
+            try { str.Append("NativeVectorWidthShort:\t" + device.Device.NativeVectorWidthShort + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("OpenCLCVersion:\t" + device.Device.OpenCLCVersion + "\n"); }
+            try { str.Append("OpenCLCVersion:\t" + device.Device.OpenCLCVersion + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("OpenCLCVersionString:\t" + device.Device.OpenCLCVersionString + "\n"); }
+            try { str.Append("OpenCLCVersionString:\t" + device.Device.OpenCLCVersionString + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthChar:\t" + device.Device.PreferredVectorWidthChar + "\n"); }
+            try { str.Append("PreferredVectorWidthChar:\t" + device.Device.PreferredVectorWidthChar + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthDouble:\t" + device.Device.PreferredVectorWidthDouble + "\n"); }
+            try { str.Append("PreferredVectorWidthDouble:\t" + device.Device.PreferredVectorWidthDouble + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthFloat:\t" + device.Device.PreferredVectorWidthFloat + "\n"); }
+            try { str.Append("PreferredVectorWidthFloat:\t" + device.Device.PreferredVectorWidthFloat + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthHalf:\t" + device.Device.PreferredVectorWidthHalf + "\n"); }
+            try { str.Append("PreferredVectorWidthHalf:\t" + device.Device.PreferredVectorWidthHalf + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthInt:\t" + device.Device.PreferredVectorWidthInt + "\n"); }
+            try { str.Append("PreferredVectorWidthInt:\t" + device.Device.PreferredVectorWidthInt + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthLong:\t" + device.Device.PreferredVectorWidthLong + "\n"); }
+            try { str.Append("PreferredVectorWidthLong:\t" + device.Device.PreferredVectorWidthLong + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("PreferredVectorWidthShort:\t" + device.Device.PreferredVectorWidthShort + "\n"); }
+            try { str.Append("PreferredVectorWidthShort:\t" + device.Device.PreferredVectorWidthShort + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("ProfilingTimerResolution:\t" + device.Device.ProfilingTimerResolution + "\n"); }
+            try { str.Append("ProfilingTimerResolution:\t" + device.Device.ProfilingTimerResolution + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("SingleCapabilites:\t" + device.Device.SingleCapabilites + "\n"); }
+            try { str.Append("SingleCapabilites:\t" + device.Device.SingleCapabilites + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Type:\t" + device.Device.Type + "\n"); }
+            try { str.Append("Type:\t" + device.Device.Type + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("VendorId:\t" + device.Device.VendorId + "\n"); }
+            try { str.Append("VendorId:\t" + device.Device.VendorId + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Vendor:\t" + device.Device.Vendor + "\n"); }
+            try { str.Append("Vendor:\t" + device.Device.Vendor + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("Version:\t" + device.Device.Version + "\n"); }
+            try { str.Append("Version:\t" + device.Device.Version + "\r\n"); }
             catch (Exception) { }
-            try { str.Append("VersionString:\t" + device.Device.VersionString + "\n"); }
+            try { str.Append("VersionString:\t" + device.Device.VersionString + "\r\n"); }
             catch (Exception) { }
             try { str.Append("Extensions:"); }
             catch (Exception) { }
@@ -255,9 +270,45 @@ namespace EncogOpenCLBenchmark
                 str.Append(ex);
                 str.Append("] ");
             }
-            str.Append("\n");
+            str.Append("\r\n");
 
             this.TextStats.Text = str.ToString();
+        }
+
+        public void ShareProc()
+        {
+            String result = "Unable to send";
+            try
+            {
+                IDictionary<String, String> map = new Dictionary<String, String>();
+                map["stats"] = this.sendStats;
+                map["name"] = this.sendName;
+                map["vendor"] = this.sendVendor;
+
+                map["benchmark"] = this.sendBenchmark;
+                map["cores"] = this.sendCores;
+                map["speed"] = this.sendSpeed;
+                map["local"] = this.sendLocal;
+                map["global"] = this.sendGlobal;
+                map["speed"] = this.sendSpeed;
+                map["uid"] = this.sendUID;
+                map["pwd"] = this.sendPWD;
+                result = BotUtil.POSTPage(new Uri("http://www.heatonresearch.com/opencl/share"), map);
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
+            {
+                this.ButtonDefaults.IsEnabled = true;
+                this.ButtonEncog.IsEnabled = true;
+                this.StatusText.Content = "Ready.";
+                MessageBox.Show(result, "Results");
+                if (result.ToLower().IndexOf("fail") != -1)
+                    this.ButtonShare.IsEnabled = true;
+            }));
+
         }
 
         public void BenchmarkProc()
@@ -296,6 +347,7 @@ namespace EncogOpenCLBenchmark
                 }
                 stopwatch.Stop();
                 long clTime = stopwatch.ElapsedMilliseconds;
+                this.sendBenchmark = "" + clTime;
 
                 Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
                 {
@@ -306,9 +358,10 @@ namespace EncogOpenCLBenchmark
                     this.LabelRemainderGlobal.Content = Format.FormatInteger(profile.KernelRemainderGlobal);
                     this.LabelRemainderPer.Content = Format.FormatInteger(profile.KernelRemainderPer);
                     this.LabelWorkPerCall.Content = Format.FormatInteger(profile.KernelWorkPerCall);
-                    this.LabelBenchmarkTime.Content = Format.FormatDouble(clTime/1000.0,4) + "sec";
+                    this.LabelBenchmarkTime.Content = Format.FormatDouble(clTime/1000.0,4) + " sec";
                     this.LabelActualIterations.Content = Format.FormatInteger( train.CurrentIteration );
                     this.ButtonShare.IsEnabled = true;
+                    this.sendStats = this.TextStats.Text;
                 }));
             }
             catch (Exception ex)
@@ -326,9 +379,44 @@ namespace EncogOpenCLBenchmark
             }
         }
 
+        private bool IsStandardBenchmark()
+        {
+            if (this.paramGlobalRatio != 1)
+                return false;
+
+            if (this.paramLocalRatio != 1.0)
+                return false;
+
+            if (this.paramSegRatio != 1.0)
+                return false;
+
+            if (this.paramInputNeurons != 10)
+                return false;
+
+            if (this.paramHidden1Neurons != 20)
+                return false;
+
+            if (this.paramHidden2Neurons != 5)
+                return false;
+
+            if (this.paramOutputNeurons != 1)
+                return false;
+
+            if (this.paramIterationsPerCall != 1)
+                return false;
+
+            if (this.paramTrainingIterations != 100)
+                return false;
+
+            if (this.paramTrainingSetSize != 100000)
+                return false;
+
+            return true;
+        }
+
         private void ButtonDefaults_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to lose your custom benchmark settings, \n and revert to the standard Encog OpenCL benchmark?", "Reset to Defaults", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to lose your custom benchmark settings, \r\n and revert to the standard Encog OpenCL benchmark?", "Reset to Defaults", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 SetToDefaults();
             }
@@ -370,7 +458,31 @@ namespace EncogOpenCLBenchmark
 
         private void ButtonShare_Click(object sender, RoutedEventArgs e)
         {
+            if (!this.IsStandardBenchmark())
+            {
+                MessageBox.Show("The results of this benchmark cannot be shared because you modified the benchmark values.\nIf you wish to share a benchmark, you must use default benchmark values.");
+                return;
+            }
 
+            Login dialog = new Login();
+
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult.HasValue && dialog.DialogResult.Value)
+            {
+                this.StatusText.Content = "Sharing your results.";
+                this.ButtonDefaults.IsEnabled = false;
+                this.ButtonEncog.IsEnabled = false;
+                this.ButtonShare.IsEnabled = false;
+                this.sendUID = dialog.UID;
+                this.sendPWD = dialog.PWD;
+                Thread thread = new Thread(this.ShareProc);
+                thread.Start();
+            }
+            else
+            {
+                return;
+            }            
         }
     }
 }
