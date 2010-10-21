@@ -25,14 +25,14 @@ namespace Encog.Neural.Networks.Training.Concurrent.Performers
             : base(number)
         {
 
-            if (Encog.Instance.CL == null)
+            if (EncogFramework.Instance.CL == null)
             {
                 throw new NeuralNetworkError(
                         "Can't use an OpenCL performer, because OpenCL "
                         + "is not enabled.");
             }
 
-            if (Encog.Instance.CL == null)
+            if (EncogFramework.Instance.CL == null)
             {
                 throw new NeuralNetworkError("Can't use a null OpenCL device.");
             }

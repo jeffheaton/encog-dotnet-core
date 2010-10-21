@@ -169,17 +169,17 @@ namespace Encog.Neural.Networks.Training.Concurrent
                 this.SingleThreaded = splitCores;
 
                 // handle OpenCL mode
-                if (Encog.Instance.CL != null)
+                if (EncogFramework.Instance.CL != null)
                 {
 
                     // should we let OpenCL run the CPU?
-                    if (Encog.Instance.CL.AreCPUsPresent())
+                    if (EncogFramework.Instance.CL.AreCPUsPresent())
                     {
                         useCPU = false;
                     }
 
                     // add a performer for each OpenCL device.
-                    foreach (EncogCLDevice device in Encog.Instance.CL
+                    foreach (EncogCLDevice device in EncogFramework.Instance.CL
                             .Devices)
                     {
                         AddPerformer(new ConcurrentTrainingPerformerOpenCL(clCount++, device));

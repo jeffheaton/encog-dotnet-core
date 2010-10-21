@@ -83,10 +83,6 @@
       <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
       <Name>encog-core-cs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\encog-engine-cs\encog-engine-cs.csproj">
-      <Project>{D3C03377-8B5A-487B-9293-EF3915D5C034}</Project>
-      <Name>encog-engine-cs</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -178,7 +178,7 @@ namespace Encog.Persist
         /// <summary>
         /// The platform this collection was created on.
         /// </summary>
-        private String platform = Encog.PLATFORM;
+        private String platform = EncogFramework.PLATFORM;
 
         /// <summary>
         /// The version of the persisted file.
@@ -194,7 +194,7 @@ namespace Encog.Persist
         /// <summary>
         /// The version of Encog.
         /// </summary>
-        private String encogVersion = Encog.Instance.Properties[Encog.ENCOG_VERSION];
+        private String encogVersion = EncogFramework.Instance.Properties[EncogFramework.ENCOG_VERSION];
 
         /// <summary>
         /// Create a persistance collection for the specified file.

@@ -280,7 +280,7 @@ namespace Encog.Neural.Networks
         public bool Equals(BasicNetwork other)
         {
             return Equals(other,
-                    Encog.DEFAULT_PRECISION);
+                    EncogFramework.DEFAULT_PRECISION);
         }
 
 

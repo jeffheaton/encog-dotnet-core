@@ -74,7 +74,7 @@ namespace Encog.Examples.CL
                     training.InputSize, 6, 0, training.IdealSize, true);
                 network.Reset();
 
-                Encog.Instance.InitCL();
+                EncogFramework.Instance.InitCL();
 
                 ResilientPropagation train = new ResilientPropagation(network, training);
                 
@@ -91,8 +91,8 @@ namespace Encog.Examples.CL
 Console.WriteLine("This ratio should be used as the \"enforced ratio\" to balance workloads.");
                 Console.WriteLine("Done:" + (stop - start));
                 Console.WriteLine("Stop");
-                if (Encog.Instance.CL != null)
-                    Console.WriteLine(Encog.Instance.CL.ToString());
+                if (EncogFramework.Instance.CL != null)
+                    Console.WriteLine(EncogFramework.Instance.CL.ToString());
             }
             catch (EncogCLError ex)
             {

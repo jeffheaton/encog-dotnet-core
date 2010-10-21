@@ -47,7 +47,7 @@ namespace Encog
     /// Also used to hold the ORM session that Encog uses to work with
     /// Hibernate.
     /// </summary>
-    public class Encog
+    public class EncogFramework
     {
 		/// <summary>
         /// The current engog version, this should be read from the properties.
@@ -82,7 +82,7 @@ namespace Encog
         /// <summary>
         /// The logging object.
         /// </summary>
-        private static readonly ILog logger = LogManager.GetLogger(typeof(Encog));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(EncogFramework));
 #endif
 
         /// <summary>
@@ -111,20 +111,20 @@ namespace Encog
         /// <summary>
         /// The instance.
         /// </summary>
-        private static Encog instance;
+        private static EncogFramework instance;
 
         /// <summary>
         /// Get the instance to the singleton.
         /// </summary>
-        public static Encog Instance
+        public static EncogFramework Instance
         {
             get
             {
-                if (Encog.instance == null)
+                if (EncogFramework.instance == null)
                 {
-                    Encog.instance = new Encog();
+                    EncogFramework.instance = new EncogFramework();
                 }
-                return Encog.instance;
+                return EncogFramework.instance;
             }
         }
 
@@ -137,10 +137,10 @@ namespace Encog
         /// <summary>
         /// Private constructor.
         /// </summary>
-        private Encog()
+        private EncogFramework()
         {
-            this.properties[Encog.ENCOG_VERSION] = VERSION;
-            this.properties[Encog.ENCOG_FILE_VERSION] = FILE_VERSION;
+            this.properties[EncogFramework.ENCOG_VERSION] = VERSION;
+            this.properties[EncogFramework.ENCOG_FILE_VERSION] = FILE_VERSION;
         }
 
         /// <summary>

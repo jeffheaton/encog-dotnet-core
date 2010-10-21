@@ -61,9 +61,9 @@ namespace Encog.Examples.CL
         {
             try
             {
-                Encog.Instance.InitCL();
+                EncogFramework.Instance.InitCL();
 
-                EncogCLDevice device = Encog.Instance.CL.Devices[0];
+                EncogCLDevice device = EncogFramework.Instance.CL.Devices[0];
                 KernelVectorAdd k = new KernelVectorAdd(device, 4);
                 k.Compile();
 

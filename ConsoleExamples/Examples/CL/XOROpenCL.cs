@@ -64,10 +64,10 @@ namespace Encog.Examples.CL
 
             INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
 
-            Encog.Instance.InitCL();
+            EncogFramework.Instance.InitCL();
 
             // train the neural network
-            EncogCLDevice device = Encog.Instance.CL.ChooseDevice();
+            EncogCLDevice device = EncogFramework.Instance.CL.ChooseDevice();
             OpenCLTrainingProfile profile = new OpenCLTrainingProfile(device);
             Propagation train = new ResilientPropagation(network, trainingSet, profile);
 

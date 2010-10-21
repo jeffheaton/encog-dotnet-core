@@ -74,7 +74,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// <summary>
         /// The logging object.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(Encog));
+        private readonly ILog logger = LogManager.GetLogger(typeof(Greedy));
 #endif
 
         /// <summary>

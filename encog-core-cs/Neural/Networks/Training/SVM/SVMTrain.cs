@@ -176,7 +176,7 @@ namespace Encog.Neural.Networks.Training.SVM
         {
             network.getParams()[index].C = c;
 
-            if (gamma > Encog.DEFAULT_DOUBLE_EQUAL)
+            if (gamma > EncogFramework.DEFAULT_DOUBLE_EQUAL)
             {
                 network.getParams()[index].gamma = 1.0 / this.network.getInputCount();
             }

@@ -156,8 +156,8 @@ namespace Encog.Persist
         {
             this.xmlOut.BeginTag("Header");
             this.xmlOut.AddProperty("platform", ".Net");
-            this.xmlOut.AddProperty("fileVersion", Encog.Instance.Properties[Encog.ENCOG_FILE_VERSION]);
-            this.xmlOut.AddProperty("encogVersion", Encog.Instance.Properties[Encog.ENCOG_VERSION]);
+            this.xmlOut.AddProperty("fileVersion", EncogFramework.Instance.Properties[EncogFramework.ENCOG_FILE_VERSION]);
+            this.xmlOut.AddProperty("encogVersion", EncogFramework.Instance.Properties[EncogFramework.ENCOG_VERSION]);
             this.xmlOut.AddProperty("modified", DateTime.Now.ToString());
             this.xmlOut.EndTag();
         }

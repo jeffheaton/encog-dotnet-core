@@ -117,7 +117,7 @@ namespace Encog.Examples.CL
                 long cpuTime = benchmarkCPU(network, training);
                 Console.WriteLine("Non-OpenCL test took " + cpuTime + "ms.");
                 Console.WriteLine("Starting OpenCL");
-                Encog.Instance.InitCL();
+                EncogFramework.Instance.InitCL();
                 Console.WriteLine("Running OpenCL test.");
                 long clTime = benchmarkCL(network, training);
                 Console.WriteLine("OpenCL test took " + clTime + "ms.");

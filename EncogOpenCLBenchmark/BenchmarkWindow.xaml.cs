@@ -84,11 +84,11 @@ namespace EncogOpenCLBenchmark
         {
             try
             {
-                Encog.Encog.Instance.InitCL();
+                EncogFramework.Instance.InitCL();
                 this.TextStats.IsReadOnly = true;
                 this.ButtonShare.IsEnabled = false;
 
-                foreach (EncogCLDevice device in Encog.Encog.Instance.CL.Devices)
+                foreach (EncogCLDevice device in EncogFramework.Instance.CL.Devices)
                 {
                     this.ListDevices.Items.Add(new FoundDevice(device));
                 }
@@ -328,7 +328,7 @@ namespace EncogOpenCLBenchmark
                 BasicNetwork network = EncogUtility.SimpleFeedForward(
                     training.InputSize, this.paramHidden1Neurons, this.paramHidden2Neurons, training.IdealSize, true);
 
-                EncogCLDevice device = Encog.Encog.Instance.CL.ChooseDevice();
+                EncogCLDevice device = EncogFramework.Instance.CL.ChooseDevice();
                 OpenCLTrainingProfile profile = new OpenCLTrainingProfile(device,
                     this.paramLocalRatio, this.paramGlobalRatio, this.paramSegRatio);
 

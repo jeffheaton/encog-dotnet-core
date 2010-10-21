@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C49ABF17-FDD3-4D06-9CB4-7963C3CB98DB}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -87,10 +87,6 @@
     <ProjectReference Include="..\encog-core-cs\encog-core-cs.csproj">
       <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
       <Name>encog-core-cs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\encog-engine-cs\encog-engine-cs.csproj">
-      <Project>{D3C03377-8B5A-487B-9293-EF3915D5C034}</Project>
-      <Name>encog-engine-cs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
