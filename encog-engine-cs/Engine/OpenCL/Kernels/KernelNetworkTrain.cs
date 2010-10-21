@@ -417,19 +417,20 @@ namespace Encog.Engine.Opencl.Kernels
                 queue.Buffer2Array(this.gradientOutBuffer, this.gradients);
 
             }
+            catch (Cloo.ComputeException ex)
+            {
+                if (ex.Message.IndexOf("OutOfResources")!=-1)
+                {
+                    throw new OutOfOpenCLResources(ex);
+                }
+                else
+                {
+                    throw new OpenCLError(ex);
+                }
+            }
             catch (Exception ex)
             {
                 throw new OpenCLError(ex);
-
-                /*catch (CLException e) {
-                    if (e.Message.Equals("CL_OUT_OF_RESOURCES")) {
-                        throw new OutOfOpenCLResources(e);
-                    } else {
-                        throw new OpenCLError(e);
-                    }
-                } catch (Exception e_0) {
-                    throw new OpenCLError(e_0);
-                }*/
             }
         }
 

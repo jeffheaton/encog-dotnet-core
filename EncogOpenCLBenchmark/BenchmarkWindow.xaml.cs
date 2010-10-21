@@ -26,6 +26,7 @@ using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Propagation;
 using System.Runtime.InteropServices;
 using Encog.Bot;
+using Encog.Engine.Opencl.Exceptions;
 
 namespace EncogOpenCLBenchmark
 {
@@ -329,7 +330,7 @@ namespace EncogOpenCLBenchmark
 
                 EncogCLDevice device = Encog.Encog.Instance.CL.ChooseDevice();
                 OpenCLTrainingProfile profile = new OpenCLTrainingProfile(device,
-                    this.paramLocalRatio,this.paramGlobalRatio,this.paramSegRatio);
+                    this.paramLocalRatio, this.paramGlobalRatio, this.paramSegRatio);
 
 
                 Propagation train = new ResilientPropagation(network, training, profile);
@@ -337,7 +338,7 @@ namespace EncogOpenCLBenchmark
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                while( train.CurrentIteration<this.paramTrainingIterations)
+                while (train.CurrentIteration < this.paramTrainingIterations)
                 {
                     train.Iteration(this.paramIterationsPerCall);
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
@@ -358,11 +359,15 @@ namespace EncogOpenCLBenchmark
                     this.LabelRemainderGlobal.Content = Format.FormatInteger(profile.KernelRemainderGlobal);
                     this.LabelRemainderPer.Content = Format.FormatInteger(profile.KernelRemainderPer);
                     this.LabelWorkPerCall.Content = Format.FormatInteger(profile.KernelWorkPerCall);
-                    this.LabelBenchmarkTime.Content = Format.FormatDouble(clTime/1000.0,4) + " sec";
-                    this.LabelActualIterations.Content = Format.FormatInteger( train.CurrentIteration );
+                    this.LabelBenchmarkTime.Content = Format.FormatDouble(clTime / 1000.0, 4) + " sec";
+                    this.LabelActualIterations.Content = Format.FormatInteger(train.CurrentIteration);
                     this.ButtonShare.IsEnabled = true;
                     this.sendStats = this.TextStats.Text;
                 }));
+            }
+            catch (OutOfOpenCLResources ex)
+            {
+                MessageBox.Show("Your GPU is out of resources.\nThis could also mean that your OS is timing your GPU out.  See\n http://www.heatonresearch.com/encog/troubleshooting");
             }
             catch (Exception ex)
             {
