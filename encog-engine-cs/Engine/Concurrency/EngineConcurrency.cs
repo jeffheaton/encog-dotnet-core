@@ -78,7 +78,7 @@ namespace Encog.Engine.Concurrency.Job
         /// <summary>
         /// The logging object.
         /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(EncogConcurrency));
+        private readonly ILog logger = LogManager.GetLogger(typeof(EngineConcurrency));
 #endif
 
         /// <summary>
