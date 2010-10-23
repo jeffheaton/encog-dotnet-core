@@ -328,7 +328,6 @@ namespace EncogOpenCLBenchmark
                 BasicNetwork network = EncogUtility.SimpleFeedForward(
                     training.InputSize, this.paramHidden1Neurons, this.paramHidden2Neurons, training.IdealSize, true);
 
-                EncogCLDevice device = EncogFramework.Instance.CL.ChooseDevice();
                 OpenCLTrainingProfile profile = new OpenCLTrainingProfile(device,
                     this.paramLocalRatio, this.paramGlobalRatio, this.paramSegRatio);
 
