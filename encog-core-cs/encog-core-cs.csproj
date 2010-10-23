@@ -340,9 +340,12 @@
     <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\End\EndIterationsStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\End\EndMaxErrorStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\End\EndMinutesStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\Greedy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\HybridStrategy.cs" />
-    <Compile Include="Neural\Networks\Training\Strategy\IEndTrainingStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\End\IEndTrainingStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\RequiredImprovementStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\ResetStrategy.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.Networks.Training.Strategy
+namespace Encog.Neural.Networks.Training.Strategy.End
 {
     public interface IEndTrainingStrategy: IStrategy
     {

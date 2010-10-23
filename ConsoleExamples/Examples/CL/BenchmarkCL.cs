@@ -41,11 +41,23 @@ using System.Diagnostics;
 using Encog.Util;
 using Encog.Engine.Opencl;
 using Encog.Engine.Util;
+using Encog.Util.Logging;
+using Encog.Engine.Network.Train.Prop;
+using Encog.Neural.Networks.Training.Strategy.End;
 
 namespace Encog.Examples.CL
 {
     public class BenchmarkCL : IExample
     {
+
+        public const int GLOBAL_SIZE = 200;
+        public const int BENCHMARK_ITERATIONS = 100;
+        public const double OPENCL_RATIO = 1.0;
+        public const int ITERATIONS_PER_CYCLE = 1;
+        public static OpenCLTrainingProfile profile;
+
+        public static IExampleInterface app;
+
         public static ExampleInfo Info
         {
             get
@@ -59,41 +71,49 @@ namespace Encog.Examples.CL
             }
         }
 
-        public long benchmarkCPU(BasicNetwork network, INeuralDataSet training)
+        public static long PerformBenchmarkCPU(BasicNetwork network, INeuralDataSet training)
         {
             ResilientPropagation train = new ResilientPropagation(network, training);
-
-            train.Iteration();
+            EndIterationsStrategy stop;
+            train.AddStrategy(stop = new EndIterationsStrategy(BENCHMARK_ITERATIONS));
+            train.Iteration(); // warmup
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            for (int i = 0; i < 100; i++)
+
+            while (!stop.ShouldStop())
             {
-                train.Iteration();
+                train.Iteration(ITERATIONS_PER_CYCLE);
             }
             stopwatch.Stop();
 
             return stopwatch.ElapsedMilliseconds;
         }
 
-        public long benchmarkCL(BasicNetwork network, INeuralDataSet training)
+        public static long PerformBenchmarkCL(BasicNetwork network, INeuralDataSet training)
         {
-            ResilientPropagation train = new ResilientPropagation(network, training);
-            
+            profile = new OpenCLTrainingProfile(EncogFramework.Instance.CL.ChooseDevice());
 
-            train.Iteration();
+            app.WriteLine("Using device: " + profile.Device.ToString());
+            ResilientPropagation train = new ResilientPropagation(network,
+                    training, profile);
 
+            train.Iteration(); // warmup
+
+            EndIterationsStrategy stop;
+
+            train.AddStrategy(stop = new EndIterationsStrategy(BENCHMARK_ITERATIONS));
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            for (int i = 0; i < 100; i++)
+
+            while (!stop.ShouldStop())
             {
-                train.Iteration();
+                train.Iteration(ITERATIONS_PER_CYCLE);
             }
             stopwatch.Stop();
 
             return stopwatch.ElapsedMilliseconds;
         }
-
 
         /// <summary>
         /// Program entry point.
@@ -103,33 +123,61 @@ namespace Encog.Examples.CL
         {
             try
             {
+                Logging.StopConsoleLogging();
                 int outputSize = 2;
                 int inputSize = 10;
                 int trainingSize = 100000;
 
-                INeuralDataSet training = RandomTrainingFactory.Generate(
-                    1000,trainingSize, inputSize, outputSize, -1, 1);
-                BasicNetwork network = EncogUtility.SimpleFeedForward(
-                    training.InputSize, 6, 0, training.IdealSize, true);
+                BenchmarkCL.app = app;
+
+                INeuralDataSet training = RandomTrainingFactory.Generate(1000,
+                        trainingSize, inputSize, outputSize, -1, 1);
+                BasicNetwork network = EncogUtility.SimpleFeedForward(training
+                        .InputSize, 6, 0, training.IdealSize, true);
                 network.Reset();
 
-                Console.WriteLine("Running non-OpenCL test.");
-                long cpuTime = benchmarkCPU(network, training);
-                Console.WriteLine("Non-OpenCL test took " + cpuTime + "ms.");
-                Console.WriteLine("Starting OpenCL");
-                EncogFramework.Instance.InitCL();
-                Console.WriteLine("Running OpenCL test.");
-                long clTime = benchmarkCL(network, training);
-                Console.WriteLine("OpenCL test took " + clTime + "ms.");
+                app.WriteLine("Running non-OpenCL test.");
+                long cpuTime = PerformBenchmarkCPU(network, training);
+                app.WriteLine("Non-OpenCL test took " + cpuTime + "ms.");
+                app.WriteLine();
 
-                double diff = ((double)cpuTime - (double)clTime);
-                String percent = Format.FormatPercent((double)cpuTime/(double)clTime);
-                Console.WriteLine("OpenCL Performed at " + percent + " the speed of non-OpenCL");
+                app.WriteLine("Starting OpenCL");
+                EncogFramework.Instance.InitCL();
+
+                int i = 0;
+                app.WriteLine("OpenCL Devices: (Encog will use the first GPU, or CPU if no GPU's)");
+                foreach (EncogCLDevice device in EncogFramework.Instance.CL
+                        .Devices)
+                {
+                    app.WriteLine("Device " + i + ": " + device.ToString());
+                    i++;
+                }
+
+                app.WriteLine("Running OpenCL test.");
+                long clTime = PerformBenchmarkCL(network, training);
+                app.WriteLine("OpenCL test took " + clTime + "ms.");
+                app.WriteLine();
+
+                app.WriteLine("ITERATIONS_PER_CYCLE: " + ITERATIONS_PER_CYCLE);
+
+                app.WriteLine();
+                app.WriteLine(profile.ToString());
+                app.WriteLine();
+                String percent = Format.FormatPercent((double)cpuTime
+                        / (double)clTime);
+                app.WriteLine("OpenCL Performed at " + percent
+                        + " the speed of non-OpenCL");
+                app.WriteLine("You will likely get better performance by tuning: ITERATIONS_PER_CYCLE, local ratio, global ratio & segmentation ratio.");
+
             }
             catch (EncogCLError ex)
             {
-                Console.WriteLine("Can't startup CL, make sure you have drivers loaded.");
-                Console.WriteLine(ex.ToString());
+                app.WriteLine("Can't startup CL, make sure you have drivers loaded.");
+                app.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                EncogFramework.Instance.Shutdown();
             }
         }
 

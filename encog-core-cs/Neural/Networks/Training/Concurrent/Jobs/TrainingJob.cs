@@ -5,6 +5,7 @@ using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Strategy;
+using Encog.Neural.Networks.Training.Strategy.End;
 
 namespace Encog.Neural.Networks.Training.Concurrent.Jobs
 {

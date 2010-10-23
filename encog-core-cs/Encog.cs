@@ -172,5 +172,13 @@ namespace Encog
             EncogEngine.Instance.InitCL();
         }
 #endif
+
+        /// <summary>
+        /// Shutdown Encog.
+        /// </summary>
+        public void Shutdown()
+        {
+
+        }
     }
 }
