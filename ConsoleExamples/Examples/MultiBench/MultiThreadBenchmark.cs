@@ -76,7 +76,7 @@ namespace Encog.Examples.MultiBench
 
         public INeuralDataSet generateTraining()
         {
-            INeuralDataSet training = RandomTrainingFactory.Generate(50000,
+            INeuralDataSet training = RandomTrainingFactory.Generate(1000,50000,
                     INPUT_COUNT, OUTPUT_COUNT, -1, 1);
             return training;
         }

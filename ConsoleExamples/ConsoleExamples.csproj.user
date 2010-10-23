@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>-pause opencl-xor</StartArguments>
+    <StartArguments>-pause benchmark</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause opencl-xor</StartArguments>
+    <StartArguments>-pause benchmark</StartArguments>
   </PropertyGroup>
 </Project>

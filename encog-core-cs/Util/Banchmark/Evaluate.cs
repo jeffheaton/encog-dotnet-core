@@ -35,6 +35,10 @@ using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Engine.Opencl;
+using Encog.Engine.Network.Train.Prop;
+using Encog.Util.Simple;
+using System.Diagnostics;
 
 namespace Encog.Util.Banchmark
 {
@@ -46,80 +50,88 @@ namespace Encog.Util.Banchmark
         /// <summary>
         /// Mili-seconds in a second.
         /// </summary>
-        public const double MILIS = 1000;
+        public const int MILIS = 1000;
 
         /// <summary>
-        /// Miliseconds in a tick.
+        /// Evaluate training, use CPU.
         /// </summary>
-        public const double TICKS = 10000;
-
-        /// <summary>
-        /// How many times to try.
-        /// </summary>
-        public const int TRYS = 10;
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        private Evaluate()
+        /// <param name="input">Input neurons.</param>
+        /// <param name="hidden1">Hidden 1 neurons.</param>
+        /// <param name="hidden2">Hidden 2 neurons.</param>
+        /// <param name="output">Output neurons.</param>
+        /// <returns>The result of the evaluation.</returns>
+        public static int EvaluateTrain(int input, int hidden1, int hidden2,
+                int output)
         {
+            return EvaluateTrain(null, input, hidden1, hidden2, output);
         }
 
         /// <summary>
-        /// Evaluate how long it takes to calculate the error for the network.  This 
-        /// causes each of the training pairs to be run through the network.  The 
-        /// network is evaluated 10 times and the lowest time is reported.
+        /// Evaluate training, use OpenCL.
         /// </summary>
-        /// <param name="network">The network to evaluate with.</param>
-        /// <param name="training">The training data to use.</param>
-        /// <returns>The lowest number of seconds that each of the ten attempts took.</returns>
-        public static double EvaluateNetwork(BasicNetwork network,
-                 INeuralDataSet training)
+        /// <param name="device">The OpenCL device, null for CPU.</param>
+        /// <param name="input">Input neurons.</param>
+        /// <param name="hidden1">Hidden 1 neurons.</param>
+        /// <param name="hidden2">Hidden 2 neurons.</param>
+        /// <param name="output">Output neurons.</param>
+        /// <returns>The result of the evaluation.</returns>
+        public static int EvaluateTrain(EncogCLDevice device, int input, int hidden1, int hidden2,
+                int output)
+        {
+            BasicNetwork network = EncogUtility.SimpleFeedForward(input,
+                    hidden1, hidden2, output, true);
+            INeuralDataSet training = RandomTrainingFactory.Generate(1000,
+                    10000, input, output, -1, 1);
+
+            OpenCLTrainingProfile profile = null;
+
+            if (device != null)
+                profile = new OpenCLTrainingProfile(device);
+
+            return EvaluateTrain(profile, network, training);
+        }
+
+
+        /// <summary>
+        /// Evaluate how long it takes to calculate the error for the network. This
+        /// causes each of the training pairs to be run through the network. The
+        /// network is evaluated 10 times and the lowest time is reported. 
+        /// </summary>
+        /// <param name="profile">The network to evaluate with.</param>
+        /// <param name="network">The training data to use.</param>
+        /// <param name="training">The number of seconds that it took.</param>
+        /// <returns></returns>
+        public static int EvaluateTrain(OpenCLTrainingProfile profile,
+                BasicNetwork network, INeuralDataSet training)
         {
             // train the neural network
-            long result = long.MaxValue;
+            ITrain train;
 
-            for (int i = 1; i < TRYS; i++)
+            if (profile == null)
             {
-                long start = DateTime.Now.Ticks;
-                network.CalculateError(training);
-                long time = DateTime.Now.Ticks - start;
-                if (time < result)
-                {
-                    result = time;
-                }
+                train = new ResilientPropagation(network, training);
+            }
+            else
+            {
+                train = new ResilientPropagation(
+                        network,
+                        training,
+                        profile,
+                        RPROPConst.DEFAULT_INITIAL_UPDATE,
+                        RPROPConst.DEFAULT_MAX_STEP);
             }
 
-            return result / MILIS / TICKS;
-        }
-
-        /// <summary>
-        /// Evaluate how long it takes to calculate the error for the network.  This 
-        /// causes each of the training pairs to be run through the network.  The 
-        /// network is evaluated 10 times and the lowest time is reported.
-        /// </summary>
-        /// <param name="network">The network to evaluate with.</param>
-        /// <param name="training">The training data to use.</param>
-        /// <returns>The lowest number of seconds that each of the ten attempts took.</returns>
-        public static double EvaluateTrain(BasicNetwork network,
-                 INeuralDataSet training)
-        {
-            // train the neural network
-            ITrain train = new ResilientPropagation(network, training);
-            long result = long.MaxValue;
-
-            for (int i = 1; i < TRYS; i++)
+            int iterations = 0;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            while (watch.ElapsedMilliseconds < (10 * MILIS))
             {
-                long start = DateTime.Now.Ticks;
+                iterations++;
                 train.Iteration();
-                long time = DateTime.Now.Ticks - start;
-                if (time < result)
-                {
-                    result = time;
-                }
             }
-            return result / MILIS / TICKS;
-        }
-    }
 
+            return iterations;
+        }
+
+    }
 }

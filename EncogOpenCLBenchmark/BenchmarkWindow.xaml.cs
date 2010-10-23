@@ -322,7 +322,7 @@ namespace EncogOpenCLBenchmark
                 }));
 
                 INeuralDataSet training = RandomTrainingFactory.Generate(
-                    this.paramTrainingSetSize,
+                    1000,this.paramTrainingSetSize,
                     this.paramInputNeurons,
                     this.paramOutputNeurons, -1, 1);
                 BasicNetwork network = EncogUtility.SimpleFeedForward(

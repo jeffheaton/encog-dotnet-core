@@ -69,7 +69,7 @@ namespace Encog.Examples.CL
                 int trainingSize = 100000;
 
                 INeuralDataSet training = RandomTrainingFactory.Generate(
-                    trainingSize, inputSize, outputSize, -1, 1);
+                    1000,trainingSize, inputSize, outputSize, -1, 1);
                 BasicNetwork network = EncogUtility.SimpleFeedForward(
                     training.InputSize, 6, 0, training.IdealSize, true);
                 network.Reset();

@@ -35,6 +35,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Data.Basic;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Data;
+using Encog.MathUtil;
 
 namespace Encog.Util.Banchmark
 {
@@ -42,7 +43,94 @@ namespace Encog.Util.Banchmark
     /// Class used to generate random training sets.
     /// </summary>
     public class RandomTrainingFactory
-    {
+    {      
+        /// <summary>
+        /// Generate a random training set. 
+        /// </summary>
+        /// <param name="seed">The seed value to use, the same seed value will always produce
+        /// the same results.</param>
+        /// <param name="count">How many training items to generate.</param>
+        /// <param name="inputCount">How many input numbers.</param>
+        /// <param name="idealCount">How many ideal numbers.</param>
+        /// <param name="min">The minimum random number.</param>
+        /// <param name="max">The maximum random number.</param>
+        /// <returns>The random training set.</returns>
+        public static BasicNeuralDataSet Generate(long seed,
+                int count, int inputCount,
+                int idealCount, double min, double max)
+        {
+
+            LinearCongruentialGenerator rand =
+                new LinearCongruentialGenerator(seed);
+
+            BasicNeuralDataSet result = new BasicNeuralDataSet();
+            for (int i = 0; i < count; i++)
+            {
+                INeuralData inputData = new BasicNeuralData(inputCount);
+
+                for (int j = 0; j < inputCount; j++)
+                {
+                    inputData.Data[j] = rand.Range(min, max);
+                }
+
+                INeuralData idealData = new BasicNeuralData(idealCount);
+
+                for (int j = 0; j < idealCount; j++)
+                {
+                    idealData[j] = rand.Range(min, max);
+                }
+
+                BasicNeuralDataPair pair = new BasicNeuralDataPair(inputData,
+                        idealData);
+                result.Add(pair);
+
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Generate random training into a training set.
+        /// </summary>
+        /// <param name="training">The training set to generate into.</param>
+        /// <param name="seed">The seed to use.</param>
+        /// <param name="count">How much data to generate.</param>
+        /// <param name="min">The low random value.</param>
+        /// <param name="max">The high random value.</param>
+        public static void Generate(INeuralDataSet training,
+                long seed,
+                int count,
+                double min, double max)
+        {
+
+            LinearCongruentialGenerator rand
+                = new LinearCongruentialGenerator(seed);
+
+            int inputCount = training.InputSize;
+            int idealCount = training.IdealSize;
+
+            for (int i = 0; i < count; i++)
+            {
+                INeuralData inputData = new BasicNeuralData(inputCount);
+
+                for (int j = 0; j < inputCount; j++)
+                {
+                    inputData[j] = rand.Range(min, max);
+                }
+
+                INeuralData idealData = new BasicNeuralData(idealCount);
+
+                for (int j = 0; j < idealCount; j++)
+                {
+                    idealData[j] = rand.Range(min, max);
+                }
+
+                BasicNeuralDataPair pair = new BasicNeuralDataPair(inputData,
+                        idealData);
+                training.Add(pair);
+
+            }
+        }
+
 
         /// <summary>
         /// Private constructor.
@@ -52,43 +140,6 @@ namespace Encog.Util.Banchmark
 
         }
 
-        /// <summary>
-        /// Generate a random training set.
-        /// </summary>
-        /// <param name="count">How many training items to generate.</param>
-        /// <param name="inputCount">How many input numbers.</param>
-        /// <param name="idealCount">How many ideal numbers.</param>
-        /// <param name="min">The minimum random number.</param>
-        /// <param name="max">The maximum random number.</param>
-        /// <returns>The random training set.</returns>
-        public static INeuralDataSet Generate(int count,
-                 int inputCount,
-                 int idealCount, double min, double max)
-        {
-            INeuralDataSet result = new BasicNeuralDataSet();
-            for (int i = 0; i < count; i++)
-            {
-                INeuralData inputData = new BasicNeuralData(inputCount);
-
-                for (int j = 0; j < inputCount; j++)
-                {
-                    inputData.Data[j] = RangeRandomizer.Randomize(min, max);
-                }
-
-                INeuralData idealData = new BasicNeuralData(idealCount);
-
-                for (int j = 0; j < idealCount; j++)
-                {
-                    idealData.Data[j] = RangeRandomizer.Randomize(min, max);
-                }
-
-                BasicNeuralDataPair pair = new BasicNeuralDataPair(inputData,
-                       idealData);
-                result.Add(pair);
-
-            }
-            return result;
-        }
     }
 
 }

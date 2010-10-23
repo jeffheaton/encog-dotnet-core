@@ -119,8 +119,8 @@ namespace Encog.Neural.Data.Buffer
                 double[] ideal = new double[idealCount];
 
                 this.stream = new FileStream(this.file, FileMode.CreateNew, FileAccess.ReadWrite);
-                this.binaryReader = new BinaryReader(this.stream);
-                this.binaryWriter = null;
+                this.binaryWriter = new BinaryWriter(this.stream);
+                this.binaryReader = null;
 
                 this.binaryWriter.Write((byte)'E');
                 this.binaryWriter.Write((byte)'N');
@@ -152,8 +152,8 @@ namespace Encog.Neural.Data.Buffer
             try
             {
                 this.stream = new FileStream(this.file, FileMode.Open, FileAccess.Read);
-                this.binaryReader = null;
-                this.binaryWriter = new BinaryWriter(this.stream);
+                this.binaryReader = new BinaryReader(this.stream);
+                this.binaryWriter = null;
 
                 bool isEncogFile = true;
 
