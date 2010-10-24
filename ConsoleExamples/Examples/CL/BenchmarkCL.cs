@@ -49,7 +49,6 @@ namespace Encog.Examples.CL
 {
     public class BenchmarkCL : IExample
     {
-
         public const int GLOBAL_SIZE = 200;
         public const int BENCHMARK_ITERATIONS = 100;
         public const double OPENCL_RATIO = 1.0;

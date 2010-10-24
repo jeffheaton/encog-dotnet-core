@@ -13,11 +13,14 @@ using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Networks.Training.Strategy;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.CL
 {
     public class XOROpenCL : IExample
     {
+        public const int ITERATIONS = 10;
+
         /// <summary>
         /// Input for the XOR function.
         /// </summary>
@@ -58,7 +61,6 @@ namespace Encog.Examples.CL
         public void Execute(IExampleInterface app)
         {
             Logging.StopConsoleLogging();
-
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 4, 0, 1, false);
             network.Reset();
 

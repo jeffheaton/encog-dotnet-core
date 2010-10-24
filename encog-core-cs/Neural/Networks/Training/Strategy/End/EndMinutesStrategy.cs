@@ -6,13 +6,35 @@ using System.Diagnostics;
 
 namespace Encog.Neural.Networks.Training.Strategy.End
 {
+    /// <summary>
+    /// Strategy that ends after a number of minutes.
+    /// </summary>
     public class EndMinutesStrategy : IEndTrainingStrategy
     {
+        /// <summary>
+        /// The number of minutes to run for.
+        /// </summary>
         private int minutes;
+
+        /// <summary>
+        /// Has the countdown started?
+        /// </summary>
         private bool started;
+
+        /// <summary>
+        /// How many minutes are left.
+        /// </summary>
         private int minutesLeft;
+
+        /// <summary>
+        /// The watch used for the countdown.
+        /// </summary>
         private Stopwatch watch;
 
+        /// <summary>
+        /// Construct a countdown strategy.
+        /// </summary>
+        /// <param name="minutes">The number of minutes to run for.</param>
         public EndMinutesStrategy(int minutes)
         {
             this.minutes = minutes;
@@ -21,9 +43,7 @@ namespace Encog.Neural.Networks.Training.Strategy.End
             this.watch = new Stopwatch();
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /// <inheritdoc/>
         public bool ShouldStop()
         {
             lock (this)
@@ -32,34 +52,28 @@ namespace Encog.Neural.Networks.Training.Strategy.End
             }
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /// <inheritdoc/>
         public void Init(ITrain train)
         {
             this.started = true;
             this.watch.Start();
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /// <inheritdoc/>
         public void PostIteration()
         {
             long elapsed = watch.ElapsedMilliseconds / 60000;
             this.minutesLeft = (int)(elapsed - this.minutes);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /// <inheritdoc/>
         public void PreIteration()
         {
         }
 
-        /**
-         * @return the minutesLeft
-         */
+        /// <summary>
+        /// The number of minutes left.
+        /// </summary>
         public int MinutesLeft
         {
             get
@@ -71,9 +85,9 @@ namespace Encog.Neural.Networks.Training.Strategy.End
             }
         }
 
-        /**
-         * @return the minutes
-         */
+        /// <summary>
+        /// The number of mintues to run for.
+        /// </summary>
         public int Minutes
         {
             get

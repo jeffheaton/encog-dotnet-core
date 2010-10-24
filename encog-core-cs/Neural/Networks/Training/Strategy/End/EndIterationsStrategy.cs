@@ -5,43 +5,58 @@ using System.Text;
 
 namespace Encog.Neural.Networks.Training.Strategy.End
 {
-    public class EndIterationsStrategy:IEndTrainingStrategy 
+    /// <summary>
+    /// End after a number of iterations.
+    /// </summary>
+    public class EndIterationsStrategy : IEndTrainingStrategy
     {
-        	private int maxIterations;
-	private int currentIteration;
-	private ITrain train;
-	
-	public EndIterationsStrategy(int maxIterations) {
-		this.maxIterations = maxIterations;
-		this.currentIteration = 0;
-	}
-	
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public bool ShouldStop() {
-		return (this.currentIteration>=this.maxIterations);
-	}
+        /// <summary>
+        /// The number of iterations to end after.
+        /// </summary>
+        private int maxIterations;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void Init(ITrain train) {
-		this.train = train;
-	}
+        /// <summary>
+        /// The current iteration.
+        /// </summary>
+        private int currentIteration;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void PostIteration() {
-		this.currentIteration = this.train.CurrentIteration;
-	}
+        /// <summary>
+        /// The trainer to use.
+        /// </summary>
+        private ITrain train;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void PreIteration() {
-	}
+        /// <summary>
+        /// Construct a strategy.
+        /// </summary>
+        /// <param name="maxIterations">The number of iterations.</param>
+        public EndIterationsStrategy(int maxIterations)
+        {
+            this.maxIterations = maxIterations;
+            this.currentIteration = 0;
+        }
+
+
+        /// <inheritdoc/>
+        public bool ShouldStop()
+        {
+            return (this.currentIteration >= this.maxIterations);
+        }
+
+        /// <inheritdoc/>
+        public void Init(ITrain train)
+        {
+            this.train = train;
+        }
+
+        /// <inheritdoc/>
+        public void PostIteration()
+        {
+            this.currentIteration = this.train.CurrentIteration;
+        }
+
+        /// <inheritdoc/>
+        public void PreIteration()
+        {
+        }
     }
 }

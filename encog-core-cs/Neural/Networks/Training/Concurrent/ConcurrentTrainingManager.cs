@@ -248,8 +248,7 @@ namespace Encog.Neural.Networks.Training.Concurrent
             foreach (TrainingJob job in this.queue)
             {
                 // find a performer
-                IConcurrentTrainingPerformer perform = WaitForFreePerformer();
-                perform.Perform(job);
+                WaitForFreePerformer(job);                
                 count++;
                 ReportErrors();
             }
@@ -323,11 +322,8 @@ namespace Encog.Neural.Networks.Training.Concurrent
         /// Wait for a free performer. 
         /// </summary>
         /// <returns>The free performer.</returns>
-        public IConcurrentTrainingPerformer WaitForFreePerformer()
+        public IConcurrentTrainingPerformer WaitForFreePerformer(TrainingJob job)
         {
-
-            lock (this.accessLock)
-            {
                 IConcurrentTrainingPerformer result = null;
 
                 while (result == null)
@@ -336,7 +332,11 @@ namespace Encog.Neural.Networks.Training.Concurrent
                     {
                         if (performer.Ready)
                         {
-                            result = performer;
+                            lock (this.accessLock)
+                            {
+                                performer.Perform(job);
+                                result = performer;
+                            }
                         }
                     }
 
@@ -347,8 +347,6 @@ namespace Encog.Neural.Networks.Training.Concurrent
                 }
 
                 return result;
-            }
-
         }
 
         /// <summary>
@@ -363,7 +361,6 @@ namespace Encog.Neural.Networks.Training.Concurrent
                 this.jobNumber++;
                 this.ReportStatus("Job finished in " + time + "ms, on " + perf.ToString());
                 this.mightBeDone.Set();
-                this.mightBeDone.Reset();
             }
         }
 

@@ -51,7 +51,10 @@
     <Compile Include="Examples\Benchmark\ThreadCount.cs" />
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
     <Compile Include="Examples\CL\BenchmarkCL.cs" />
+    <Compile Include="Examples\CL\BenchmarkConcurrent.cs" />
     <Compile Include="Examples\CL\CLInfo.cs" />
+    <Compile Include="Examples\CL\CompareCL.cs" />
+    <Compile Include="Examples\CL\PredictSunspotCL.cs" />
     <Compile Include="Examples\CL\TuneCL.cs" />
     <Compile Include="Examples\CL\SimpleCL.cs" />
     <Compile Include="Examples\CL\XOROpenCL.cs" />

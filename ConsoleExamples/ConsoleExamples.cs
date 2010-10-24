@@ -88,6 +88,9 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.CL.BenchmarkCL.Info);
             examples.Add(Encog.Examples.CL.XOROpenCL.Info);
             examples.Add(Encog.Examples.CL.CLInfo.Info);
+            examples.Add(Encog.Examples.CL.BenchmarkConcurrent.Info);
+            examples.Add(Encog.Examples.CL.CompareCL.Info);
+            examples.Add(Encog.Examples.CL.PredictSunspotCL.Info);
         }
 
         public void ListCommands()
