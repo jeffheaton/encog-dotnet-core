@@ -151,7 +151,7 @@ namespace Encog.Neural.Data.Buffer.CODEC
             {
                 this.inputCount = inputSize;
                 this.idealCount = idealSize;
-                this.output = new StreamWriter(new FileStream(file, FileMode.CreateNew));
+                this.output = new StreamWriter(new FileStream(file, FileMode.Create));
             }
             catch (IOException ex)
             {

@@ -36,7 +36,7 @@ namespace Encog.Neural.Data.Buffer
         /// <param name="owner">The object that created this enumeration.</param>
         public BufferedNeuralDataSetEnumerator(BufferedNeuralDataSet owner)
         {
-            this.data = data;
+            this.data = owner;
             this.current = 0;
         }
 

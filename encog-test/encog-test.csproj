@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C49ABF17-FDD3-4D06-9CB4-7963C3CB98DB}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,6 +54,8 @@
     <Compile Include="Encog\Bot\Browse\TestWebPageData.cs" />
     <Compile Include="Encog\Bot\HTML\TestParseHTML.cs" />
     <Compile Include="Encog\Bot\TestBotUtil.cs" />
+    <Compile Include="Encog\Data\Buffer\TestBinaryData.cs" />
+    <Compile Include="Encog\Data\Buffer\TestBufferedNeuralDataSet.cs" />
     <Compile Include="Encog\Data\Market\TestYahooLoader.cs" />
     <Compile Include="Encog\Data\SQL\TestSQLDataSet.cs" />
     <Compile Include="Encog\Data\Temporal\TestTemporal.cs" />

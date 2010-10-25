@@ -120,7 +120,7 @@ namespace Encog.Neural.Data.Buffer
             if (this.loading)
             {
                 throw new NeuralDataError(
-                        "Can't create enumerator while loading, call endLoad first.");
+                        "Can't create enumerator while loading, call EndLoad first.");
             }
             BufferedNeuralDataSetEnumerator result = new BufferedNeuralDataSetEnumerator(this);
             return result;
@@ -348,6 +348,7 @@ namespace Encog.Neural.Data.Buffer
             }
 
             this.egb.Close();
+            this.loading = false;
 
             Open();
 

@@ -118,7 +118,7 @@ namespace Encog.Neural.Data.Buffer
                 double[] input = new double[inputCount];
                 double[] ideal = new double[idealCount];
 
-                this.stream = new FileStream(this.file, FileMode.CreateNew, FileAccess.ReadWrite);
+                this.stream = new FileStream(this.file, FileMode.Create, FileAccess.ReadWrite);
                 this.binaryWriter = new BinaryWriter(this.stream);
                 this.binaryReader = null;
 
