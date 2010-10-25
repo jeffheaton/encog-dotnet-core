@@ -48,7 +48,7 @@
 		/// Construct a message exception.
 		/// </summary>
 		///
-		/// <param name="msg"/>The exception message.</param>
+		/// <param name="msg">The exception message.</param>
 		public EncogEngineError(String msg) : base(msg) {
 		}
 	
@@ -56,8 +56,8 @@
 		/// Construct an exception that holds another exception.
 		/// </summary>
 		///
-		/// <param name="msg"/>A message.</param>
-		/// <param name="t"/>The other exception.</param>
+		/// <param name="msg">A message.</param>
+		/// <param name="t">The other exception.</param>
 		public EncogEngineError(String msg, Exception t) : base(msg, t) {
 		}
 	
@@ -65,7 +65,7 @@
 		/// Construct an exception that holds another exception.
 		/// </summary>
 		///
-		/// <param name="t"/>The other exception.</param>
+		/// <param name="t">The other exception.</param>
 		public EncogEngineError(Exception t) : base(t.Message, t) {
 		}
 	}

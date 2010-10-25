@@ -217,7 +217,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// Should be called after training has completed and the iteration method
         /// will not be called any further.
         /// </summary>
-        public void FinishTraining()
+        public override void FinishTraining()
         {
             base.FinishTraining();
             this.network.Structure.UpdateFlatNetwork();
@@ -240,7 +240,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// training iterations.  This is particularly true if you are training with a GPU. 
         /// </summary>
         /// <param name="count">The number of training iterations.</param>
-        public void Iteration(int count)
+        public override void Iteration(int count)
         {
             try
             {

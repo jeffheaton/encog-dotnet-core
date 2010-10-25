@@ -400,33 +400,6 @@ namespace Encog.Neural.Networks.Synapse.NEAT
             }
         }
         
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-            }
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-            }
-        }
 
         /// <summary>
         /// Clear any context.

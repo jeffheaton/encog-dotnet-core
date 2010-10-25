@@ -283,7 +283,7 @@ namespace Encog.Neural.Networks.Layers
         /// Create a persistor for this layer.
         /// </summary>
         /// <returns>The new persistor.</returns>
-        public virtual IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new BasicLayerPersistor();
         }

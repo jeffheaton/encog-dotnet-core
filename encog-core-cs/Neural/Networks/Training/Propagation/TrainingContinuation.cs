@@ -50,7 +50,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// Obtain a persistor for this object.
         /// </summary>
         /// <returns>A persistor for this object.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new TrainingContinuationPersistor();
         }

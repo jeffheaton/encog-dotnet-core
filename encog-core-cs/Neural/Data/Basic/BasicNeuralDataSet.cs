@@ -322,7 +322,7 @@ namespace Encog.Neural.Data.Basic
         /// Create a persistor to load/save this object to XML.
         /// </summary>
         /// <returns>The persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new BasicNeuralDataSetPersistor();
         }

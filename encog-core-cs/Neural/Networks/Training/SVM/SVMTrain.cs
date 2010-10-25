@@ -334,8 +334,9 @@ namespace Encog.Neural.Networks.Training.SVM
         /// <summary>
         /// Called to finish training.
         /// </summary>
-        public void FinishTraining()
+        public override void FinishTraining()
         {
+            base.FinishTraining();
             for (int i = 0; i < network.getOutputCount(); i++)
             {
                 Train(i, this.bestGamma[i], this.bestConst[i]);

@@ -177,7 +177,7 @@ namespace Encog.Neural.Networks.Training
         /// Should be called after training has completed and the iteration method
         /// will not be called any further.
         /// </summary>
-        public void FinishTraining()
+        public virtual void FinishTraining()
         {
 #if !SILVERLIGHT
             if (this.statusUtil != null)

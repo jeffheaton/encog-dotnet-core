@@ -77,7 +77,7 @@ namespace Encog.Neural.Data
         /// Create a persistor to store this object.
         /// </summary>
         /// <returns>A persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new TextDataPersistor();
         }

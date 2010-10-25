@@ -484,7 +484,7 @@ namespace Encog.Neural.Data.XML
         /// Create a persistor to load/save Encog objects.
         /// </summary>
         /// <returns>The persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return null;
         }

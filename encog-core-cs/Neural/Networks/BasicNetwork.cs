@@ -49,6 +49,7 @@ using log4net;
 using Encog.Engine;
 using Encog.Neural.Data.Basic;
 using Encog.Engine.Util;
+using Encog.Util.CSV;
 #endif
 
 namespace Encog.Neural.Networks
@@ -266,7 +267,7 @@ namespace Encog.Neural.Networks
         /// Create a persistor for this object.
         /// </summary>
         /// <returns>The newly created persistor.</returns>
-        public virtual IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new BasicNetworkPersistor();
         }
@@ -413,8 +414,8 @@ namespace Encog.Neural.Networks
             ILayer inputLayer = GetLayer(BasicNetwork.TAG_INPUT);
             ILayer outputLayer = GetLayer(BasicNetwork.TAG_OUTPUT);
 
-            if ( this.structure.Layers.Count<3 
-                || inputLayer == null 
+            if (this.structure.Layers.Count < 3
+                || inputLayer == null
                 || outputLayer == null)
                 (new RangeRandomizer(-1, 1)).Randomize(this);
             else
@@ -716,44 +717,51 @@ namespace Encog.Neural.Networks
             }
         }
 
-        /**
-	 * {@inheritDoc}
-	 */
-	public void Compute(double[] input, double[] output) {
-		BasicNeuralData input2 = new BasicNeuralData(input);
-		INeuralData output2 = this.Compute(input2);
-		EngineArray.ArrayCopy(output2.Data, output);
-	}
-
-    /**
-* {@inheritDoc}
-*/
-    public int InputCount
-    {
-        get
+        /// <inheritdoc/>
+        public void Compute(double[] input, double[] output)
         {
-            ILayer layer = this.layerTags[BasicNetwork.TAG_INPUT];
-            if (layer == null)
-                return 0;
-            else
-                return layer.NeuronCount;
+            BasicNeuralData input2 = new BasicNeuralData(input);
+            INeuralData output2 = this.Compute(input2);
+            EngineArray.ArrayCopy(output2.Data, output);
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int OutputCount
-    {
-        get
+        /// <inheritdoc/>
+        public int InputCount
         {
-            ILayer layer = this.layerTags[BasicNetwork.TAG_OUTPUT];
-            if (layer == null)
-                return 0;
-            else
-                return layer.NeuronCount;
+            get
+            {
+                ILayer layer = this.layerTags[BasicNetwork.TAG_INPUT];
+                if (layer == null)
+                    return 0;
+                else
+                    return layer.NeuronCount;
+            }
         }
-    }
+
+        /// <inheritdoc/>
+        public int OutputCount
+        {
+            get
+            {
+                ILayer layer = this.layerTags[BasicNetwork.TAG_OUTPUT];
+                if (layer == null)
+                    return 0;
+                else
+                    return layer.NeuronCount;
+            }
+        }
+
+        /// <summary>
+        /// Return the weights as a comma separated list.
+        /// </summary>
+        /// <returns>The weights as a comma separated list.</returns>
+        public String DumpWeights()
+        {
+            this.structure.UpdateFlatNetwork();
+            StringBuilder result = new StringBuilder();
+            NumberList.ToList(CSVFormat.EG_FORMAT, result, this.structure.Flat.Weights);
+            return result.ToString();
+        }
 
     }
 }

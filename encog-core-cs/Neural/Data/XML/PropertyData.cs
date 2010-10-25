@@ -68,7 +68,7 @@ namespace Encog.Neural.Data.XML
         /// A persistor for the property data.
         /// </summary>
         /// <returns>The persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new PropertyDataPersistor();
         }

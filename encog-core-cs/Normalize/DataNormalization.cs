@@ -345,7 +345,7 @@ namespace Encog.Normalize
         /// A persistor to persist this DataNormalization object. 
         /// </summary>
         /// <returns>The persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new GenericPersistor(typeof(DataNormalization));
         }
@@ -501,20 +501,6 @@ namespace Encog.Normalize
             }
         }
 
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        public String Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
 
         /// <summary>
         /// The object groups.
@@ -535,21 +521,6 @@ namespace Encog.Normalize
             get
             {
                 return this.inputFields;
-            }
-        }
-
-        /// <summary>
-        /// The name of this object.
-        /// </summary>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                this.name = value;
             }
         }
 

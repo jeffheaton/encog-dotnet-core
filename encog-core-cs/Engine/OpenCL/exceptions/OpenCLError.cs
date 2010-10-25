@@ -42,7 +42,7 @@ namespace Encog.Engine.Opencl.Exceptions
         /// Construct a message exception.
         /// </summary>
         ///
-        /// <param name="msg"/>The exception message.</param>
+        /// <param name="msg">The exception message.</param>
         public OpenCLError(String msg)
             : base(msg)
         {
