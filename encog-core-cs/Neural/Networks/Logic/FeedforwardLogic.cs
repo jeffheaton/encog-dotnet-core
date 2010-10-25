@@ -91,6 +91,14 @@ namespace Encog.Neural.Networks.Logic
             }
 #endif
 
+            if (useHolder == null && this.network.Structure.Flat != null)
+            {
+                this.network.Structure.UpdateFlatNetwork();
+                INeuralData result = new BasicNeuralData(this.network.Structure.Flat.OutputCount);
+                this.network.Structure.Flat.Compute(input.Data, result.Data);
+                return result;
+            }
+
             if (useHolder == null)
             {
                 holder = new NeuralOutputHolder();
@@ -98,14 +106,6 @@ namespace Encog.Neural.Networks.Logic
             else
             {
                 holder = useHolder;
-            }
-
-            if (holder == null && this.network.Structure.Flat != null)
-            {
-                this.network.Structure.UpdateFlatNetwork();
-                INeuralData result = new BasicNeuralData(this.network.Structure.Flat.OutputCount);
-                this.network.Structure.Flat.Compute(input.Data, result.Data);
-                return result;
             }
 
             Compute(holder, inputLayer, input, null);

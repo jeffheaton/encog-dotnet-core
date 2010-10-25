@@ -528,7 +528,7 @@ namespace Encog.Neural.NeuralData.Temporal
         private double GetDataRAW(TemporalDataDescription desc,
                  int index)
         {
-            TemporalPoint point = this.points[index];
+            TemporalPoint point = this.points[index-1];
             return point[desc.Index];
         }
 
