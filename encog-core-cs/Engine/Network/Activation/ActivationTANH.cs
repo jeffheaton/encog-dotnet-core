@@ -42,13 +42,6 @@ namespace Encog.Engine.Network.Activation
     [Serializable]
     public class ActivationTANH : IActivationFunction
     {
-
-        /// <summary>
-        /// The offset to the parameter that holds the tanh slope.
-        /// </summary>
-        ///
-        public const int PARAM_TANH_SLOPE = 0;
-
         /// <summary>
         /// The parameters.
         /// </summary>
@@ -61,8 +54,7 @@ namespace Encog.Engine.Network.Activation
         ///
         public ActivationTANH()
         {
-            this.paras = new double[1];
-            this.paras[ActivationTANH.PARAM_TANH_SLOPE] = 1;
+            this.paras = new double[0];
         }
 
         /// <summary>
@@ -90,35 +82,21 @@ namespace Encog.Engine.Network.Activation
         {
             return true;
         }
-
-
-        /// <returns>Get the slope of the activation function.</returns>
-        public double Slope
-        {
-
-            /// <returns>Get the slope of the activation function.</returns>
-            get
-            {
-                return this.paras[ActivationTANH.PARAM_TANH_SLOPE];
-            }
-        }
-
-
+        
         /// <inheritdoc />
         public virtual void ActivationFunction(double[] x, int start,
                 int size)
         {
             for (int i = start; i < start + size; i++)
             {
-                double z = BoundMath.Exp(-paras[0] * x[i]);
-                x[i] = (1.0d - z) / (1.0d + z);
+                x[i] = Math.Tanh(x[i]);
             }
         }
 
         /// <inheritdoc />
         public virtual double DerivativeFunction(double x)
         {
-            return (paras[0] * (1.0d - x * x));
+            return (1.0d - x * x);
         }
 
         /// <inheritdoc />
@@ -126,7 +104,7 @@ namespace Encog.Engine.Network.Activation
         {
             get
             {
-                String[] result = { "slope" };
+                String[] result = { };
                 return result;
             }
         }
@@ -149,24 +127,16 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative,
-                bool allSlopeOne)
+        public virtual String GetOpenCLExpression(bool derivative)
         {
 
             if (derivative)
             {
-                return "(slope * (1.0f - x * x))";
+                return "(1.0f - x * x)";
             }
             else
             {
-                if (allSlopeOne)
-                {
-                    return "tanh(x)";
-                }
-                else
-                {
-                    return "tanh(x)";
-                }
+                return "tanh(x)";
             }
         }
     }

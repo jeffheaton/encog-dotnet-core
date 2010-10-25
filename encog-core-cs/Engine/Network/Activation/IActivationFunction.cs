@@ -117,10 +117,8 @@ namespace Encog.Engine.Network.Activation
         /// Returns the OpenCL expression for this activation function.
         /// </summary>
         ///
-        /// <param name="allSlopeOne"/>True if all activation functions have a slope of 1.</param>
         /// <param name="derivative"/>True if we want the derivative, false otherwise.</param>
         /// <returns>The OpenCL expression for this activation function.</returns>
-        String GetOpenCLExpression(bool derivative,
-                bool allSlopeOne);
+        String GetOpenCLExpression(bool derivative);
     }
 }

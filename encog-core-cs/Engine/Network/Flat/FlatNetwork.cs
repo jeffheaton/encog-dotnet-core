@@ -826,33 +826,6 @@ namespace Encog.Engine.Network.Flat
             this.isLimited = false;
         }
 
-        /// <summary>
-        /// Determine if the hidden or output layers have a slope other than 1.0.
-        /// Only counts sigmoid, linear and tanh. Other activation types will cause
-        /// this method to return false.
-        /// </summary>
-        ///
-        /// <returns>True if there is a slope other than 1.0, false otherwise.</returns>
-        public bool AnySlopeNotOne()
-        {
-            /* foreach */
-            foreach (IActivationFunction activation in this.activationFunctions)
-            {
-                if (!(activation is ActivationLinear)
-                        && !(activation is ActivationSigmoid)
-                        && !(activation is ActivationTANH))
-                {
-                    return true;
-                }
-
-                if (Math.Abs(activation.Params[0] - 1.0d) > EncogEngine.DEFAULT_ZERO_TOLERANCE)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
 
         /// <returns>The activation functions.</returns>
         public IActivationFunction[] ActivationFunctions

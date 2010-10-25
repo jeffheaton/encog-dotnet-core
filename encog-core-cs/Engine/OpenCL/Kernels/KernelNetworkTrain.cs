@@ -446,15 +446,14 @@ namespace Encog.Engine.Opencl.Kernels
         {
 
             IActivationFunction activation = network.ActivationFunctions[0];
-            bool allSlopeOne = !network.AnySlopeNotOne();
             StringBuilder source = new StringBuilder();
 
             source.Append("#define ACTIVATION(x,slope)");
-            source.Append(activation.GetOpenCLExpression(false, allSlopeOne));
+            source.Append(activation.GetOpenCLExpression(false));
             source.Append("\r\n");
 
             source.Append("#define DERIVATIVE(x,slope)");
-            source.Append(activation.GetOpenCLExpression(true, allSlopeOne));
+            source.Append(activation.GetOpenCLExpression(true));
             source.Append("\r\n");
 
             source.Append(ResourceLoader.LoadString(SourceName));

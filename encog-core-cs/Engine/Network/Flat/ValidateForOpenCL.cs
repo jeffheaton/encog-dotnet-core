@@ -60,7 +60,7 @@ namespace Encog.Engine.Network.Flat
             /* foreach */
             foreach (IActivationFunction activation in flat.ActivationFunctions)
             {
-                if (activation.GetOpenCLExpression(true, true) == null)
+                if (activation.GetOpenCLExpression(true) == null)
                 {
                     return "Can't use OpenCL if activation function does not have an OpenCL expression.";
                 }

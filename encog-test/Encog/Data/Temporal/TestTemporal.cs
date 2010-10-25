@@ -68,6 +68,23 @@ namespace encog_test.Data.Temporal
             INeuralDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
+            Assert.AreEqual(1.0, pair.Input.Data[0]);
+            Assert.AreEqual(2.0, pair.Input.Data[1]);
+            Assert.AreEqual(4.0, pair.Input.Data[2]);
+            Assert.AreEqual(5.0, pair.Input.Data[3]);
+            Assert.AreEqual(7.0, pair.Input.Data[4]);
+            Assert.AreEqual(8.0, pair.Input.Data[5]);
+            Assert.AreEqual(10.0, pair.Input.Data[6]);
+            Assert.AreEqual(11.0, pair.Input.Data[7]);
+            Assert.AreEqual(13.0, pair.Input.Data[8]);
+            Assert.AreEqual(14.0, pair.Input.Data[9]);
+            Assert.AreEqual(18.0, pair.Ideal[0]);
+
+            // set 1
+            itr.MoveNext();
+            pair = itr.Current;
+            Assert.AreEqual(10, pair.Input.Count);
+            Assert.AreEqual(1, pair.Ideal.Count);
             Assert.AreEqual(4.0, pair.Input.Data[0]);
             Assert.AreEqual(5.0, pair.Input.Data[1]);
             Assert.AreEqual(7.0, pair.Input.Data[2]);
@@ -78,9 +95,9 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(14.0, pair.Input.Data[7]);
             Assert.AreEqual(16.0, pair.Input.Data[8]);
             Assert.AreEqual(17.0, pair.Input.Data[9]);
-            Assert.AreEqual(21.0, pair.Ideal[0]);
+            Assert.AreEqual(21.0, pair.Ideal.Data[0]);
 
-            // set 1
+            // set 2
             itr.MoveNext();
             pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
@@ -97,7 +114,7 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(20.0, pair.Input.Data[9]);
             Assert.AreEqual(24.0, pair.Ideal.Data[0]);
 
-            // set 2
+            // set 3
             itr.MoveNext();
             pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
@@ -113,23 +130,6 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(22.0, pair.Input.Data[8]);
             Assert.AreEqual(23.0, pair.Input.Data[9]);
             Assert.AreEqual(27.0, pair.Ideal.Data[0]);
-
-            // set 3
-            itr.MoveNext();
-            pair = itr.Current;
-            Assert.AreEqual(10, pair.Input.Count);
-            Assert.AreEqual(1, pair.Ideal.Count);
-            Assert.AreEqual(13.0, pair.Input.Data[0]);
-            Assert.AreEqual(14.0, pair.Input.Data[1]);
-            Assert.AreEqual(16.0, pair.Input.Data[2]);
-            Assert.AreEqual(17.0, pair.Input.Data[3]);
-            Assert.AreEqual(19.0, pair.Input.Data[4]);
-            Assert.AreEqual(20.0, pair.Input.Data[5]);
-            Assert.AreEqual(22.0, pair.Input.Data[6]);
-            Assert.AreEqual(23.0, pair.Input.Data[7]);
-            Assert.AreEqual(25.0, pair.Input.Data[8]);
-            Assert.AreEqual(26.0, pair.Input.Data[9]);
-            Assert.AreEqual(30.0, pair.Ideal.Data[0]);
 
         }
 
@@ -162,17 +162,17 @@ namespace encog_test.Data.Temporal
             INeuralDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
-            Assert.AreEqual(10.0, pair.Input.Data[0]);
-            Assert.AreEqual(11.0, pair.Input.Data[1]);
-            Assert.AreEqual(13.0, pair.Input.Data[2]);
-            Assert.AreEqual(14.0, pair.Input.Data[3]);
-            Assert.AreEqual(16.0, pair.Input.Data[4]);
-            Assert.AreEqual(17.0, pair.Input.Data[5]);
-            Assert.AreEqual(19.0, pair.Input.Data[6]);
-            Assert.AreEqual(20.0, pair.Input.Data[7]);
-            Assert.AreEqual(22.0, pair.Input.Data[8]);
-            Assert.AreEqual(23.0, pair.Input.Data[9]);
-            Assert.AreEqual(27.0, pair.Ideal.Data[0]);
+            Assert.AreEqual(7.0, pair.Input.Data[0]);
+            Assert.AreEqual(8.0, pair.Input.Data[1]);
+            Assert.AreEqual(10.0, pair.Input.Data[2]);
+            Assert.AreEqual(11.0, pair.Input.Data[3]);
+            Assert.AreEqual(13.0, pair.Input.Data[4]);
+            Assert.AreEqual(14.0, pair.Input.Data[5]);
+            Assert.AreEqual(16.0, pair.Input.Data[6]);
+            Assert.AreEqual(17.0, pair.Input.Data[7]);
+            Assert.AreEqual(19.0, pair.Input.Data[8]);
+            Assert.AreEqual(20.0, pair.Input.Data[9]);
+            Assert.AreEqual(24.0, pair.Ideal.Data[0]);
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(0.25, Math.Round(pair.Input.Data[7] * 4.0) / 4.0);
             Assert.AreEqual(3.0, pair.Input.Data[8]);
             Assert.AreEqual(0.25, Math.Round(pair.Input.Data[9] * 4.0) / 4.0);
-            Assert.AreEqual(21.0, pair.Ideal[0]);
+            Assert.AreEqual(18.0, pair.Ideal[0]);
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace encog_test.Data.Temporal
             INeuralDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
-            Assert.AreEqual(1.0, Math.Round(pair.Input.Data[0] * 4.0) / 4.0);
+            Assert.AreEqual(0.75, Math.Round(pair.Input.Data[0] * 4.0) / 4.0);
             Assert.AreEqual(1.0, Math.Round(pair.Input.Data[1] * 4.0) / 4.0);
             Assert.AreEqual(1.0, Math.Round(pair.Input.Data[2] * 4.0) / 4.0);
             Assert.AreEqual(1.0, Math.Round(pair.Input.Data[3] * 4.0) / 4.0);

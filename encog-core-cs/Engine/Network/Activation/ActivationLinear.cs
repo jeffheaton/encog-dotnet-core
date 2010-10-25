@@ -40,13 +40,6 @@ namespace Encog.Engine.Network.Activation
     [Serializable]
     public class ActivationLinear : IActivationFunction
     {
-
-        /// <summary>
-        /// The offset to the parameter that holds the linear slope.
-        /// </summary>
-        ///
-        public const int PARAM_LINEAR_SLOPE = 0;
-
         /// <summary>
         /// The parameters.
         /// </summary>
@@ -59,8 +52,7 @@ namespace Encog.Engine.Network.Activation
         ///
         public ActivationLinear()
         {
-            this.paras = new double[1];
-            this.paras[ActivationLinear.PARAM_LINEAR_SLOPE] = 1;
+            this.paras = new double[0];
         }
 
         /// <summary>
@@ -89,26 +81,13 @@ namespace Encog.Engine.Network.Activation
             return true;
         }
 
-
-        /// <returns>The slope of the activation function.</returns>
-        public double Slope
-        {
-
-            /// <returns>The slope of the activation function.</returns>
-            get
-            {
-                return this.paras[ActivationLinear.PARAM_LINEAR_SLOPE];
-            }
-        }
-
-
         /// <inheritdoc />
         public virtual void ActivationFunction(double[] x, int start,
                 int size)
         {
             for (int i = start; i < start + size; i++)
             {
-                x[i] = x[i] * paras[0];
+                x[i] = x[i];
             }
         }
 
@@ -123,7 +102,7 @@ namespace Encog.Engine.Network.Activation
         {
             get
             {
-                String[] result = { "slope" };
+                String[] result = { };
                 return result;
             }
         }
@@ -146,8 +125,7 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative,
-                bool allSlopeOne)
+        public virtual String GetOpenCLExpression(bool derivative)
         {
             if (derivative)
             {
@@ -155,7 +133,7 @@ namespace Encog.Engine.Network.Activation
             }
             else
             {
-                return "(slope * x)";
+                return "(x)";
             }
         }
     }

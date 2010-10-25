@@ -129,8 +129,7 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative,
-                bool allSlopeOne)
+        public virtual String GetOpenCLExpression(bool derivative)
         {
             return null;
         }

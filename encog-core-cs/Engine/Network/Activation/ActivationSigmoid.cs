@@ -41,13 +41,6 @@ namespace Encog.Engine.Network.Activation
     [Serializable]
     public class ActivationSigmoid : IActivationFunction
     {
-
-        /// <summary>
-        /// The offset to the parameter that holds the sigmoid slope.
-        /// </summary>
-        ///
-        public const int PARAM_SIGMOID_SLOPE = 0;
-
         /// <summary>
         /// The parameters.
         /// </summary>
@@ -60,8 +53,7 @@ namespace Encog.Engine.Network.Activation
         ///
         public ActivationSigmoid()
         {
-            this.paras = new double[1];
-            this.paras[ActivationSigmoid.PARAM_SIGMOID_SLOPE] = 1;
+            this.paras = new double[0];
         }
 
         /// <summary>
@@ -83,20 +75,6 @@ namespace Encog.Engine.Network.Activation
             return new ActivationSigmoid();
         }
 
-
-        /// <returns>Get the slope of the activation function.</returns>
-        public double Slope
-        {
-
-            /// <returns>Get the slope of the activation function.</returns>
-            get
-            {
-                return this.paras[ActivationSigmoid.PARAM_SIGMOID_SLOPE];
-            }
-        }
-
-
-
         /// <returns>True, sigmoid has a derivative.</returns>
         public virtual bool HasDerivative()
         {
@@ -109,14 +87,14 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
-                x[i] = 1.0d / (1.0d + BoundMath.Exp(-paras[0] * x[i]));
+                x[i] = 1.0d / (1.0d + BoundMath.Exp(-1 * x[i]));
             }
         }
 
         /// <inheritdoc />
         public virtual double DerivativeFunction(double x)
         {
-            return paras[0] * x * (1.0d - x);
+            return x * (1.0d - x);
         }
 
         /// <inheritdoc />
@@ -124,7 +102,7 @@ namespace Encog.Engine.Network.Activation
         {
             get
             {
-                String[] results = { "slope" };
+                String[] results = { };
                 return results;
             }
         }
@@ -147,16 +125,15 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative,
-                bool allSlopeOne)
+        public virtual String GetOpenCLExpression(bool derivative)
         {
             if (derivative)
             {
-                return "(slope * x * (1.0f - x))";
+                return "(x * (1.0f - x))";
             }
             else
             {
-                return "(1.0f / (1.0f + exp(-slope * x)))";
+                return "(1.0f / (1.0f + exp(-1 * x)))";
             }
         }
     }
