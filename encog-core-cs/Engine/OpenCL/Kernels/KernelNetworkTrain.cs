@@ -131,12 +131,6 @@ namespace Encog.Engine.Opencl.Kernels
         private ComputeBuffer<int> activationTypeBuffer;
 
         /// <summary>
-        /// A buffer to hold the slope for the activation of each of the layers.
-        /// </summary>
-        ///
-        private ComputeBuffer<float> slopeBuffer;
-
-        /// <summary>
         /// The temp data in buffer. Temp data that is used while training.
         /// </summary>
         ///
@@ -171,12 +165,6 @@ namespace Encog.Engine.Opencl.Kernels
         /// </summary>
         ///
         private int layerDeltaSize;
-
-        /// <summary>
-        /// The slopes.
-        /// </summary>
-        ///
-        private readonly float[] slopeArray;
 
         /// <summary>
         /// An array to hold the input to the neural network.
@@ -288,19 +276,12 @@ namespace Encog.Engine.Opencl.Kernels
             this.weightInArray = new float[flat.Weights.Length];
             this.weightOutArray = new float[flat.Weights.Length];
             this.tempDataArray = new float[tempDataSize];
-            this.slopeArray = new float[flat.LayerFeedCounts.Length];
             this.gradients = new float[flat.Weights.Length];
 
             this.layerDeltaSize = 0;
             for (int i = 0; i < flat.LayerCounts.Length; i++)
             {
                 this.layerDeltaSize += flat.LayerCounts[i];
-            }
-
-            int index = 0;
-            for (int i = 0; i < flat.ActivationFunctions.Length; i++)
-            {
-                this.slopeArray[index++] = (float)flat.ActivationFunctions[i].Params[0];
             }
 
             int inputSize = flat.InputCount;
@@ -379,10 +360,9 @@ namespace Encog.Engine.Opencl.Kernels
             this.Kernel.SetMemoryArgument(9, this.weightOutArrayBuffer);
             this.Kernel.SetMemoryArgument(10, this.gradientOutBuffer);
             this.Kernel.SetMemoryArgument(11, this.activationTypeBuffer);
-            this.Kernel.SetMemoryArgument(12, this.slopeBuffer);
-            this.Kernel.SetMemoryArgument(13, this.tempDataInBuffer);
-            this.Kernel.SetMemoryArgument(14, this.tempDataOutBuffer);
-            this.Kernel.SetMemoryArgument(15, this.gradientInBuffer);
+            this.Kernel.SetMemoryArgument(12, this.tempDataInBuffer);
+            this.Kernel.SetMemoryArgument(13, this.tempDataOutBuffer);
+            this.Kernel.SetMemoryArgument(14, this.gradientInBuffer);
 
             try
             {
@@ -540,7 +520,6 @@ namespace Encog.Engine.Opencl.Kernels
             this.weightOutArrayBuffer = CreateFloatArrayWriteOnly(this.weightInArray.Length);
             this.weightIndexBuffer = CreateArrayReadOnly(this.flat.WeightIndex);
             this.activationTypeBuffer = CreateArrayReadOnly(this.flat.LayerCounts);
-            this.slopeBuffer = CreateArrayReadOnly(this.slopeArray);
             this.tempDataInBuffer = CreateArrayReadOnly(this.tempDataArray);
             this.tempDataOutBuffer = CreateFloatArrayWriteOnly(this.tempDataArray.Length);
         }
@@ -562,7 +541,6 @@ namespace Encog.Engine.Opencl.Kernels
             this.layerFeedCountBuffer.Dispose();
             this.layerIndexBuffer.Dispose();
             this.paramBuffer.Dispose();
-            this.slopeBuffer.Dispose();
             this.tempDataInBuffer.Dispose();
             this.tempDataOutBuffer.Dispose();
             this.weightInArrayBuffer.Dispose();

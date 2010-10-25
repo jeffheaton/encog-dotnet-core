@@ -19,6 +19,7 @@ using Encog.Engine.Util;
 using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Propagation;
+using Encog.Util.Logging;
 
 namespace Encog.Examples.CL
 {
@@ -39,7 +40,7 @@ namespace Encog.Examples.CL
             }
         }
 
-        public double[] SUNSPOTS = {
+        public readonly static double[] SUNSPOTS = {
             0.0262,  0.0575,  0.0837,  0.1203,  0.1883,  0.3033,  
             0.1517,  0.1046,  0.0523,  0.0418,  0.0157,  0.0000,  
             0.0000,  0.0105,  0.0575,  0.1412,  0.2458,  0.3295,  
@@ -89,30 +90,27 @@ namespace Encog.Examples.CL
             0.0659,  0.1428,  0.4838,  0.8127 
           };
 
-        public const int STARTING_YEAR = 1700;
-        public const int WINDOW_SIZE = 30;
-        public const int TRAIN_START = WINDOW_SIZE;
-        public const int TRAIN_END = 259;
-        public const int EVALUATE_START = 260;
-        public int EVALUATE_END;
+
+        public readonly static int STARTING_YEAR = 1700;
+        public readonly static int WINDOW_SIZE = 30;
+        public readonly static int TRAIN_START = WINDOW_SIZE;
+        public readonly static int TRAIN_END = 259;
+        public readonly static int EVALUATE_START = 260;
+        public readonly static int EVALUATE_END = SUNSPOTS.Length - 1;
 
         /// <summary>
         /// This really should be lowered, I am setting it to a level here that will
         /// train in under a minute.
         /// </summary>
-        public const double MAX_ERROR = 0.05;
+        public readonly static double MAX_ERROR = 0.05;
 
         private double[] normalizedSunspots;
         private double[] closedLoopSunspots;
 
-        public PredictSunspotCL()
-        {
-            this.EVALUATE_END = SUNSPOTS.Length - 1;
-        }
 
         public void NormalizeSunspots(double lo, double hi)
         {
-            IInputField inField;
+            IInputField ifield;
 
             // create arrays to hold the normalized sunspots
             normalizedSunspots = new double[SUNSPOTS.Length];
@@ -121,14 +119,11 @@ namespace Encog.Examples.CL
             // normalize the sunspots
             DataNormalization norm = new DataNormalization();
             norm.Report = new NullStatusReportable();
-            norm.AddInputField(inField = new InputFieldArray1D(true, SUNSPOTS));
-            norm.AddOutputField(new OutputFieldRangeMapped(inField, lo, hi));
+            norm.AddInputField(ifield = new InputFieldArray1D(true, SUNSPOTS));
+            norm.AddOutputField(new OutputFieldRangeMapped(ifield, lo, hi));
             norm.Storage = new NormalizationStorageArray1D(normalizedSunspots);
             norm.Process();
-
-            for (int i = 0; i < SUNSPOTS.Length; i++)
-                this.closedLoopSunspots[i] = this.normalizedSunspots[i];
-
+            EngineArray.ArrayCopy(normalizedSunspots, closedLoopSunspots);
         }
 
         public INeuralDataSet GenerateTraining()
@@ -152,7 +147,7 @@ namespace Encog.Examples.CL
             return result;
         }
 
-        public BasicNetwork CreateNetwork()
+        public BasicNetwork createNetwork()
         {
             BasicNetwork network = new BasicNetwork();
             network.AddLayer(new BasicLayer(WINDOW_SIZE));
@@ -169,43 +164,43 @@ namespace Encog.Examples.CL
             EncogCLDevice device = EncogFramework.Instance.CL.ChooseDevice();
             OpenCLTrainingProfile profile = new OpenCLTrainingProfile(device);
             Propagation train = new ResilientPropagation(network, training, profile);
-            app.WriteLine("Training with device: " + device.ToString());
-
+            
             int epoch = 1;
 
             do
             {
                 train.Iteration();
-                app.WriteLine("Epoch #" + epoch + " Error:" + train.Error);
+                app.WriteLine("Epoch #" + epoch + " Error:" + train.Error);               
                 epoch++;
             } while (train.Error > MAX_ERROR);
+            train.FinishTraining();
+            
+            app.WriteLine("Trained with device: " + device.ToString());
         }
 
-        public void Predict(BasicNetwork network)
+        public void predict(BasicNetwork network)
         {
-
-
             app.WriteLine("Year\tActual\tPredict\tClosed Loop Predict");
 
             for (int year = EVALUATE_START; year < EVALUATE_END; year++)
             {
                 // calculate based on actual data
                 INeuralData input = new BasicNeuralData(WINDOW_SIZE);
-                for (int i = 0; i < input.Count; i++)
+                for (int i = 0; i < input.Data.Length; i++)
                 {
-                    input[i] = this.normalizedSunspots[(year - WINDOW_SIZE) + i];
+                    input.Data[i] = this.normalizedSunspots[(year - WINDOW_SIZE) + i];
                 }
                 INeuralData output = network.Compute(input);
-                double prediction = output[0];
+                double prediction = output.Data[0];
                 this.closedLoopSunspots[year] = prediction;
 
                 // calculate "closed loop", based on predicted data
                 for (int i = 0; i < input.Count; i++)
                 {
-                    input[i] = this.closedLoopSunspots[(year - WINDOW_SIZE) + i];
+                    input.Data[i] = this.closedLoopSunspots[(year - WINDOW_SIZE) + i];
                 }
                 output = network.Compute(input);
-                double closedLoopPrediction = output[0];
+                double closedLoopPrediction = output.Data[0];
 
                 // display
                 app.WriteLine((STARTING_YEAR + year)
@@ -221,12 +216,13 @@ namespace Encog.Examples.CL
         public void Execute(IExampleInterface app)
         {
             this.app = app;
-            ErrorCalculation.Mode = ErrorCalculationMode.RMS;
+
+            Logging.StopConsoleLogging();
             NormalizeSunspots(0.1, 0.9);
-            BasicNetwork network = CreateNetwork();
+            BasicNetwork network = createNetwork();
             INeuralDataSet training = GenerateTraining();
             Train(network, training);
-            Predict(network);
+            predict(network);
         }
 
     }
