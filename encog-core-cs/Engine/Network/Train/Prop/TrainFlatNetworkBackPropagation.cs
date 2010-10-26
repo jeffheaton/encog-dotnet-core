@@ -62,17 +62,17 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a backprop trainer for flat networks.
         /// </summary>
         ///
-        /// <param name="network"/>The network to train.</param>
-        /// <param name="training"/>The training data.</param>
-        /// <param name="learningRate_0"/>The learning rate.</param>
-        /// <param name="momentum_1"/>The momentum.</param>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data.</param>
+        /// <param name="learningRate">The learning rate.</param>
+        /// <param name="momentum">The momentum.</param>
         public TrainFlatNetworkBackPropagation(FlatNetwork network,
-                IEngineDataSet training, double learningRate_0,
-                double momentum_1)
+                IEngineDataSet training, double learningRate,
+                double momentum)
             : base(network, training)
         {
-            this.momentum = momentum_1;
-            this.learningRate = learningRate_0;
+            this.momentum = momentum;
+            this.learningRate = learningRate;
             this.lastDelta = new double[network.Weights.Length];
         }
 
@@ -112,9 +112,9 @@ namespace Encog.Engine.Network.Train.Prop
         /// Update a weight.
         /// </summary>
         ///
-        /// <param name="gradients"/>The gradients.</param>
-        /// <param name="lastGradient"/>The last gradients.</param>
-        /// <param name="index"/>The index.</param>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
         /// <returns>The weight delta.</returns>
         public override double UpdateWeight(double[] gradients,
                 double[] lastGradient, int index)
@@ -130,8 +130,6 @@ namespace Encog.Engine.Network.Train.Prop
         /// </summary>
         public double[] LastDelta
         {
-
-            /// <returns>The last deltas.</returns>
             get
             {
                 return lastDelta;

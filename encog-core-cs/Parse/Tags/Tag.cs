@@ -105,7 +105,7 @@ namespace Encog.Parse.Tags
         /// Clone this object.
         /// </summary>
         /// <returns>A cloned copy of the object.</returns>
-        public Tag Clone()
+        public virtual object Clone()
         {
             Tag result = new Tag();
             result.Name = this.Name;

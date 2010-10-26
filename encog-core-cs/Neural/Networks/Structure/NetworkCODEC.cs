@@ -77,7 +77,12 @@ namespace Encog.Neural.Networks.Structure
             network.Structure.FlatUpdate = FlatUpdateNeeded.Flatten;
         }
 
-        public static int networkSize(BasicNetwork network)
+        /// <summary>
+        /// Determine the network size.
+        /// </summary>
+        /// <param name="network">The network to check.</param>
+        /// <returns>The size of the network.</returns>
+        public static int NetworkSize(BasicNetwork network)
         {
 
             // see if there is already an up to date flat network
@@ -267,7 +272,7 @@ namespace Encog.Neural.Networks.Structure
         /// <returns>The memory of the neuron.</returns>
         public static double[] NetworkToArray(BasicNetwork network)
         {
-            int size = networkSize(network);
+            int size = NetworkSize(network);
 
             // see if there is already an up to date flat network
             if (network.Structure.Flat != null

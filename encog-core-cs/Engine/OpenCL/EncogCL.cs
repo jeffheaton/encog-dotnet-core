@@ -117,7 +117,7 @@ namespace Encog.Engine.Opencl
         /// Choose a device. Simply returns the first device detected.
         /// </summary>
         ///
-        /// <param name="useGPU"/>Do we prefer to use the GPU?</param>
+        /// <param name="useGPU">Do we prefer to use the GPU?</param>
         /// <returns>The first device detected.</returns>
         public EncogCLDevice ChooseDevice(bool useGPU)
         {
@@ -174,12 +174,12 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The devices used by EncogCL, this spans over platform boundaries.</returns>
+        /// <summary>
+        /// The devices used by EncogCL, this spans over platform boundaries.
+        /// </summary>
         public IList<EncogCLDevice> Devices
         {
-
-            /// <returns>The devices used by EncogCL, this spans over platform boundaries.</returns>
-            get
+           get
             {
                 return this.devices;
             }
@@ -187,16 +187,15 @@ namespace Encog.Engine.Opencl
 
 
 
-        /// <returns>The devices used by EncogCL, this spans over platform boundaries.Does not include disabled devices or devices from disabledplatforms.</returns>
+        /// <summary>
+        /// The devices used by EncogCL, this spans over platform boundaries.Does not include disabled devices or devices from disabled platforms.
+        /// </summary>
         public IList<EncogCLDevice> EnabledDevices
         {
-
-            /// <returns>The devices used by EncogCL, this spans over platform boundaries.Does not include disabled devices or devices from disabledplatforms.</returns>
             get
             {
-
                 IList<EncogCLDevice> result = new List<EncogCLDevice>();
-                /* foreach */
+
                 foreach (EncogCLDevice device in this.devices)
                 {
                     if (device.Enabled && device.Platform.Enabled)
@@ -209,13 +208,11 @@ namespace Encog.Engine.Opencl
             }
         }
 
-
-
-        /// <returns>All platforms detected.</returns>
+        /// <summary>
+        /// All platforms detected.
+        /// </summary>
         public IList<EncogCLPlatform> Platforms
         {
-
-            /// <returns>All platforms detected.</returns>
             get
             {
                 return this.platforms;
@@ -223,11 +220,14 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <inheritdoc />
+        /// <summary>
+        /// All platforms detected.
+        /// </summary>
+        /// <returns>A list of all platforms.</returns>
         public override System.String ToString()
         {
             StringBuilder result = new StringBuilder();
-            /* foreach */
+            
             foreach (EncogCLDevice device in this.devices)
             {
                 result.Append(((String)device.ToString()));

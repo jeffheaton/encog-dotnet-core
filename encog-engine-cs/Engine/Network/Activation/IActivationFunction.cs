@@ -108,11 +108,6 @@ namespace Encog.Engine.Network.Activation
             get;
         }
 
-
-
-        /// <returns>A cloned copy of this activation function.</returns>
-        IActivationFunction Clone();
-
         /// <summary>
         /// Returns the OpenCL expression for this activation function.
         /// </summary>

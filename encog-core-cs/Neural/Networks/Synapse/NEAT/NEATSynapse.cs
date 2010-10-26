@@ -145,7 +145,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// A clone of this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             return null;
         }

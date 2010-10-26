@@ -56,14 +56,14 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a trainer for flat networks to use the Manhattan update rule.
         /// </summary>
         ///
-        /// <param name="network"/>The network to train.</param>
-        /// <param name="training"/>The training data to use.</param>
-        /// <param name="learningRate_0"/>The learning rate to use.</param>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="learningRate">The learning rate to use.</param>
         public TrainFlatNetworkManhattan(FlatNetwork network,
-                IEngineDataSet training, double learningRate_0)
+                IEngineDataSet training, double learningRate)
             : base(network, training)
         {
-            this.learningRate = learningRate_0;
+            this.learningRate = learningRate;
             this.zeroTolerance = RPROPConst.DEFAULT_ZERO_TOLERANCE;
         }
 
@@ -71,9 +71,9 @@ namespace Encog.Engine.Network.Train.Prop
         /// Calculate the amount to change the weight by.
         /// </summary>
         ///
-        /// <param name="gradients"/>The gradients.</param>
-        /// <param name="lastGradient"/>The last gradients.</param>
-        /// <param name="index"/>The index to update.</param>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index to update.</param>
         /// <returns>The amount to change the weight by.</returns>
         public override double UpdateWeight(double[] gradients,
                 double[] lastGradient, int index)

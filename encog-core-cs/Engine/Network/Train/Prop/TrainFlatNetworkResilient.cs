@@ -60,19 +60,19 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a resilient trainer for flat networks.
         /// </summary>
         ///
-        /// <param name="network"/>The network to train.</param>
-        /// <param name="training"/>The training data to use.</param>
-        /// <param name="zeroTolerance_0"/>How close a number should be to zero to be counted as zero.</param>
-        /// <param name="initialUpdate"/>The initial update value.</param>
-        /// <param name="maxStep_1"/>The maximum step value.</param>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="zeroTolerance">How close a number should be to zero to be counted as zero.</param>
+        /// <param name="initialUpdate">The initial update value.</param>
+        /// <param name="maxStep">The maximum step value.</param>
         public TrainFlatNetworkResilient(FlatNetwork network,
-                IEngineDataSet training, double zeroTolerance_0,
-                double initialUpdate, double maxStep_1)
+                IEngineDataSet training, double zeroTolerance,
+                double initialUpdate, double maxStep)
             : base(network, training)
         {
             this.updateValues = new double[network.Weights.Length];
-            this.zeroTolerance = zeroTolerance_0;
-            this.maxStep = maxStep_1;
+            this.zeroTolerance = zeroTolerance;
+            this.maxStep = maxStep;
 
             for (int i = 0; i < this.updateValues.Length; i++)
             {
@@ -84,8 +84,8 @@ namespace Encog.Engine.Network.Train.Prop
         /// Tran a network using RPROP.
         /// </summary>
         ///
-        /// <param name="flat"/>The network to train.</param>
-        /// <param name="trainingSet"/>The training data to use.</param>
+        /// <param name="flat">The network to train.</param>
+        /// <param name="trainingSet">The training data to use.</param>
         public TrainFlatNetworkResilient(FlatNetwork flat,
                 IEngineDataSet trainingSet)
             : this(flat, trainingSet, RPROPConst.DEFAULT_ZERO_TOLERANCE, RPROPConst.DEFAULT_INITIAL_UPDATE, RPROPConst.DEFAULT_MAX_STEP)
@@ -96,15 +96,15 @@ namespace Encog.Engine.Network.Train.Prop
         /// Determine the sign of the value.
         /// </summary>
         ///
-        /// <param name="value"/>The value to check.</param>
+        /// <param name="value">The value to check.</param>
         /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
-        private int Sign(double value_ren)
+        private int Sign(double value)
         {
-            if (Math.Abs(value_ren) < this.zeroTolerance)
+            if (Math.Abs(value) < this.zeroTolerance)
             {
                 return 0;
             }
-            else if (value_ren > 0)
+            else if (value > 0)
             {
                 return 1;
             }
@@ -118,9 +118,9 @@ namespace Encog.Engine.Network.Train.Prop
         /// Calculate the amount to change the weight by.
         /// </summary>
         ///
-        /// <param name="gradients"/>The gradients.</param>
-        /// <param name="lastGradient"/>The last gradients.</param>
-        /// <param name="index"/>The index to update.</param>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index to update.</param>
         /// <returns>The amount to change the weight by.</returns>
         public override double UpdateWeight(double[] gradients,
                 double[] lastGradient, int index)
@@ -164,11 +164,11 @@ namespace Encog.Engine.Network.Train.Prop
         }
 
 
-        /// <returns>The RPROP update values.</returns>
+        /// <summary>
+        /// The RPROP update values.
+        /// </summary>
         public double[] UpdateValues
         {
-
-            /// <returns>The RPROP update values.</returns>
             get
             {
                 return updateValues;

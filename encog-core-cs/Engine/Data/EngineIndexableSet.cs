@@ -57,8 +57,8 @@
 		/// Read an individual record, specified by index, in random order.
 		/// </summary>
 		///
-		/// <param name="index"/>The index to read.</param>
-		/// <param name="pair"/>The pair that the record will be copied into.</param>
+		/// <param name="index">The index to read.</param>
+		/// <param name="pair">The pair that the record will be copied into.</param>
 		void GetRecord(long index, IEngineData pair);
 	
 		/// <summary>

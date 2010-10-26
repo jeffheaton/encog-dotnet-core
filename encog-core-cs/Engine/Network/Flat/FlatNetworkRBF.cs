@@ -65,17 +65,17 @@ namespace Encog.Engine.Network.Flat
         /// Construct an RBF flat network.
         /// </summary>
         ///
-        /// <param name="inputCount"/>The number of input neurons. (also the number of dimensions)</param>
-        /// <param name="hiddenCount"/>The number of hidden neurons.</param>
-        /// <param name="outputCount"/>The number of output neurons.</param>
-        /// <param name="center_0"/>The centers.</param>
-        /// <param name="radius_1"/>The radii.</param>
+        /// <param name="inputCount">The number of input neurons. (also the number of dimensions)</param>
+        /// <param name="hiddenCount">The number of hidden neurons.</param>
+        /// <param name="outputCount">The number of output neurons.</param>
+        /// <param name="center">The centers.</param>
+        /// <param name="radius">The radii.</param>
         public FlatNetworkRBF(int inputCount, int hiddenCount,
-                int outputCount, double[][] center_0,
-                double[] radius_1)
+                int outputCount, double[][] center,
+                double[] radius)
         {
-            this.center = EngineArray.ArrayCopy(center_0);
-            this.radius = EngineArray.ArrayCopy(radius_1);
+            this.center = EngineArray.ArrayCopy(center);
+            this.radius = EngineArray.ArrayCopy(radius);
 
             FlatLayer[] layers = new FlatLayer[3];
 
@@ -97,7 +97,7 @@ namespace Encog.Engine.Network.Flat
         /// </summary>
         ///
         /// <returns>A clone of the network.</returns>
-        public override System.Object Clone()
+        public override Object Clone()
         {
             FlatNetworkRBF result = new FlatNetworkRBF();
             CloneFlatNetwork(result);
@@ -110,8 +110,8 @@ namespace Encog.Engine.Network.Flat
         /// Calculate the output for the given input.
         /// </summary>
         ///
-        /// <param name="x"/>The input.</param>
-        /// <param name="output"/>Output will be placed here.</param>
+        /// <param name="x">The input.</param>
+        /// <param name="output">Output will be placed here.</param>
         public override void Compute(double[] x, double[] output)
         {
 

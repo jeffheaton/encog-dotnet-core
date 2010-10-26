@@ -51,7 +51,7 @@ namespace Encog.Neural.Data.XML
         /// Clone this object.
         /// </summary>
         /// <returns>A clonned version of this object.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             PropertyData result = new PropertyData();
             result.Name = this.Name;

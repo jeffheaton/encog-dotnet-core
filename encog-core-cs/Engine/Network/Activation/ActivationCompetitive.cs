@@ -68,7 +68,7 @@ namespace Encog.Engine.Network.Activation
         /// number of winners.
         /// </summary>
         ///
-        /// <param name="winners"/>The maximum number of winners that this function supports.</param>
+        /// <param name="winners">The maximum number of winners that this function supports.</param>
         public ActivationCompetitive(int winners)
         {
             this.paras = new double[1];
@@ -120,16 +120,6 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationCompetitive(
-                    (int)this.paras[ActivationCompetitive.PARAM_COMPETITIVE_MAX_WINNERS]);
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
         object ICloneable.Clone()
         {
             return new ActivationCompetitive(
@@ -142,7 +132,7 @@ namespace Encog.Engine.Network.Activation
         /// specific information on this type of activation function.
         /// </summary>
         ///
-        /// <param name="d"/>The input array to the activation function.</param>
+        /// <param name="d">The input array to the activation function.</param>
         /// <returns>The derivative.</returns>
         public virtual double DerivativeFunction(double d)
         {
@@ -153,11 +143,11 @@ namespace Encog.Engine.Network.Activation
         }
 
 
-        /// <returns>The maximum number of winners this function supports.</returns>
+        /// <summary>
+        /// The maximum number of winners this function supports.
+        /// </summary>
         public int MaxWinners
         {
-
-            /// <returns>The maximum number of winners this function supports.</returns>
             get
             {
                 return (int)this.paras[ActivationCompetitive.PARAM_COMPETITIVE_MAX_WINNERS];

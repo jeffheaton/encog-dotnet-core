@@ -260,10 +260,10 @@ namespace Encog.Engine.Opencl.Kernels
         /// Construct a kernel to train the network.
         /// </summary>
         ///
-        /// <param name="device_0"/>The OpenCL device to use.</param>
-        /// <param name="flat"/>The network to train.</param>
-        /// <param name="training"/>The training data.</param>
-        /// <param name="tempDataSize"/>How much temp data.</param>
+        /// <param name="device">The OpenCL device to use.</param>
+        /// <param name="flat">The network to train.</param>
+        /// <param name="training">The training data.</param>
+        /// <param name="tempDataSize">How much temp data.</param>
         public KernelNetworkTrain(EncogCLDevice device,
                 FlatNetwork flat, IEngineIndexableSet training,
                 int tempDataSize)
@@ -317,8 +317,8 @@ namespace Encog.Engine.Opencl.Kernels
         /// Assign the workgroup sizes based on the training set size.
         /// </summary>
         ///
-        /// <param name="trainingSize"/>The training set size.</param>
-        /// <param name="requestedGlobalSize"/>The requested global size.</param>
+        /// <param name="trainingSize">The training set size.</param>
+        /// <param name="requestedGlobalSize">The requested global size.</param>
         public void AssignWorkgroupSizes(int trainingSize,
                 int requestedGlobalSize)
         {
@@ -332,10 +332,10 @@ namespace Encog.Engine.Opencl.Kernels
         /// Calculate one iteration over the specified range.
         /// </summary>
         ///
-        /// <param name="start"/>The starting position to calculate for.</param>
-        /// <param name="size"/>The ending position to calculate for.</param>
-        /// <param name="iterations"/>The number of iterations to execute.</param>
-        /// <param name="learn"/>True, if we should learn.</param>
+        /// <param name="start">The starting position to calculate for.</param>
+        /// <param name="size">The ending position to calculate for.</param>
+        /// <param name="iterations">The number of iterations to execute.</param>
+        /// <param name="learn">True, if we should learn.</param>
         public void Calculate(int start, int size, bool learn,
                 int iterations)
         {
@@ -418,9 +418,9 @@ namespace Encog.Engine.Opencl.Kernels
         /// Compile the kernel.
         /// </summary>
         ///
-        /// <param name="options"/>The options.</param>
-        /// <param name="network"/>The network to compile for.</param>
-        /// <param name="requestedGlobalSize"/>THe requested global workload size.</param>
+        /// <param name="options">The options.</param>
+        /// <param name="network">The network to compile for.</param>
+        /// <param name="profile">The OpenCL training profile to use.</param>
         public void Compile(IDictionary<String, String> options,
                 OpenCLTrainingProfile profile, FlatNetwork network)
         {
@@ -446,11 +446,11 @@ namespace Encog.Engine.Opencl.Kernels
         }
 
 
-        /// <returns>the errors</returns>
+        /// <summary>
+        /// The errors.
+        /// </summary>
         public float[] Errors
         {
-
-            /// <returns>the errors</returns>
             get
             {
                 return this.errors;
@@ -458,18 +458,15 @@ namespace Encog.Engine.Opencl.Kernels
         }
 
 
-
-        /// <param name="tempDataArray_0"/>the tempDataArray to set</param>
+        /// <summary>
+        /// The temp data array.
+        /// </summary>
         public float[] TempDataArray
         {
-
-            /// <returns>the tempDataArray</returns>
             get
             {
                 return this.tempDataArray;
             }
-
-            /// <param name="tempDataArray_0"/>the tempDataArray to set</param>
             set
             {
                 this.tempDataArray = value;
@@ -478,11 +475,11 @@ namespace Encog.Engine.Opencl.Kernels
 
 
 
-        /// <returns>the weightOutArray</returns>
+        /// <summary>
+        /// The weight output array.
+        /// </summary>
         public float[] WeightOutArray
         {
-
-            /// <returns>the weightOutArray</returns>
             get
             {
                 return this.weightOutArray;

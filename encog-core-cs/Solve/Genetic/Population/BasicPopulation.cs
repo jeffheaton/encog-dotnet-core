@@ -345,7 +345,7 @@ namespace Encog.Solve.Genetic.Population
         /// Create a persistor.
         /// </summary>
         /// <returns>The new persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new GenericPersistor(typeof(BasicPopulation));
         }
@@ -355,7 +355,7 @@ namespace Encog.Solve.Genetic.Population
         /// thrown.
         /// </summary>
         /// <returns></returns>
-        public object Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

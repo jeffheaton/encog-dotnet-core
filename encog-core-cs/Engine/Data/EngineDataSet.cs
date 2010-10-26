@@ -28,54 +28,59 @@
  * http://www.heatonresearch.com/copyright.html
  */
 
- namespace Encog.Engine.Data {
-	
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Runtime.CompilerServices;
-	
-	/// <summary>
-	/// An interface designed to abstract classes that store machine learning data.
-	/// This interface is designed to provide EngineDataSet objects. These can be
-	/// used to train neural networks using both supervised and unsupervised
-	/// training.
-	/// Some implementations of this interface are memory based. That is they store
-	/// the entire contents of the dataset in memory.
-	/// Other implementations of this interface are not memory based. These
-	/// implementations read in data as it is needed. This allows very large datasets
-	/// to be used. Typically the add methods are not supported on non-memory based
-	/// datasets.
-	/// </summary>
-	///
-	public interface IEngineDataSet {
-	
-		
-		/// <returns>The size of the input data.</returns>
-		int IdealSize {
-		
-		/// <returns>The size of the input data.</returns>
-		  get;
-		}
-		
-	
-		
-		/// <returns>The size of the input data.</returns>
-		int InputSize {
-		
-		/// <returns>The size of the input data.</returns>
-		  get;
-		}
-		
-	
-		
-		/// <returns>True if this is a supervised training set.</returns>
-		bool Supervised {
-		
-		/// <returns>True if this is a supervised training set.</returns>
-		  get;
-		}
-		
-	}
+namespace Encog.Engine.Data
+{
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+
+    /// <summary>
+    /// An interface designed to abstract classes that store machine learning data.
+    /// This interface is designed to provide EngineDataSet objects. These can be
+    /// used to train neural networks using both supervised and unsupervised
+    /// training.
+    /// Some implementations of this interface are memory based. That is they store
+    /// the entire contents of the dataset in memory.
+    /// Other implementations of this interface are not memory based. These
+    /// implementations read in data as it is needed. This allows very large datasets
+    /// to be used. Typically the add methods are not supported on non-memory based
+    /// datasets.
+    /// </summary>
+    ///
+    public interface IEngineDataSet
+    {
+
+
+        /// <summary>
+        /// The size of the input data.
+        /// </summary>
+        int IdealSize
+        {
+            get;
+        }
+
+
+
+        /// <summary>
+        /// The size of the input data.
+        /// </summary>
+        int InputSize
+        {
+            get;
+        }
+
+
+
+        /// <summary>
+        /// True if this is a supervised training set.
+        /// </summary>
+        bool Supervised
+        {
+            get;
+        }
+
+    }
 }

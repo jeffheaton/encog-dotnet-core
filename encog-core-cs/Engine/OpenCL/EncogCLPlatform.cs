@@ -47,7 +47,7 @@ namespace Encog.Engine.Opencl
 
         /// <summary>
         /// The OpenCL context for this platform. One context is created for each
-        /// platform.W
+        /// platform.
         /// </summary>
         ///
         private readonly ComputeContext context;
@@ -62,7 +62,7 @@ namespace Encog.Engine.Opencl
         /// Construct an OpenCL platform.
         /// </summary>
         ///
-        /// <param name="platform_0"/>The OpenCL platform.</param>
+        /// <param name="platform">The OpenCL platform.</param>
         public EncogCLPlatform(ComputePlatform platform)
         {
 
@@ -83,11 +83,11 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The context for this platform.</returns>
+        /// <summary>
+        /// The context for this platform.
+        /// </summary>
         public ComputeContext Context
         {
-
-            /// <returns>The context for this platform.</returns>
             get
             {
                 return this.context;
@@ -96,29 +96,26 @@ namespace Encog.Engine.Opencl
 
 
 
-        /// <returns>All devices on this platform.</returns>
+        /// <summary>
+        /// All devices on this platform.
+        /// </summary>
         public IList<EncogCLDevice> Devices
         {
-
-            /// <returns>All devices on this platform.</returns>
             get
             {
                 return this.devices;
             }
         }
 
-
-
-        /// <returns>The OpenCL platform.</returns>
+        /// <summary>
+        /// The OpenCL platform.
+        /// </summary>
         public ComputePlatform Platform
         {
-
-            /// <returns>The OpenCL platform.</returns>
             get
             {
                 return this.platform;
             }
         }
-
     }
 }

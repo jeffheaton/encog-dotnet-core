@@ -79,7 +79,7 @@ namespace Encog.MathUtil.LIBSVM
 				return base.MemberwiseClone();
 			}
 			//UPGRADE_NOTE: Exception 'java.lang.CloneNotSupportedException' was converted to 'System.Exception' which has different behavior. 'ms-help://MS.VSCC.2003/commoner/redir/redirect.htm?keyword="jlca1100_3"'
-			catch (System.Exception e)
+			catch (System.Exception)
 			{
 				return null;
 			}

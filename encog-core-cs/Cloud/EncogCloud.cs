@@ -147,6 +147,11 @@ namespace Encog.Cloud
             this.session = null;
         }
 
+        /// <summary>
+        /// Publish the specified file.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="publishedPath">Where to publish the file.</param>
         public void PublishFile(Stream stream, String publishedPath)
         {
             String uri = this.session + "publish" + publishedPath;
@@ -155,6 +160,11 @@ namespace Encog.Cloud
 
         }
 
+        /// <summary>
+        /// Publixh a file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="publishedPath">The path to publish to.</param>
         public void PublishFile(String file, String publishedPath)
         {
             Stream stream = new FileStream(file, FileMode.Open);
@@ -162,6 +172,11 @@ namespace Encog.Cloud
             stream.Close();
         }
 
+        /// <summary>
+        /// Get a published text file.
+        /// </summary>
+        /// <param name="publishedPath">The path.</param>
+        /// <returns>The file.</returns>
         public String GetPublishedTextFile(String publishedPath)
         {
             String uri = this.server + "published" + publishedPath;

@@ -493,21 +493,12 @@ namespace Encog.Neural.Data.XML
         /// Clone this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             return null;
         }
 
         IPersistor IEncogPersistedObject.CreatePersistor()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Clone this object.
-        /// </summary>
-        /// <returns>A clone of this object.</returns>
-        object ICloneable.Clone()
         {
             throw new NotImplementedException();
         }

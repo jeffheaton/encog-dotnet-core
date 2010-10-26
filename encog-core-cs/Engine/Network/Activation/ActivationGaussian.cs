@@ -68,9 +68,9 @@ namespace Encog.Engine.Network.Activation
         /// Create a gaussian activation function.
         /// </summary>
         ///
-        /// <param name="center"/>The center of the curve.</param>
-        /// <param name="peak"/>The peak of the curve.</param>
-        /// <param name="width"/>The width of the curve.</param>
+        /// <param name="center">The center of the curve.</param>
+        /// <param name="peak">The peak of the curve.</param>
+        /// <param name="width">The width of the curve.</param>
         public ActivationGaussian(double center, double peak,
                 double width)
         {
@@ -84,31 +84,20 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
+        public object Clone()
         {
             return new ActivationGaussian(this.Center, this.Peak,
         this.Width);
 
         }
+
+
 
         /// <summary>
-        /// Clone the object.
+        /// The width of the function.
         /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
-        {
-            return new ActivationGaussian(this.Center, this.Peak,
-        this.Width);
-
-        }
-
-
-
-        /// <returns>The width of the function.</returns>
         private double Width
         {
-
-            /// <returns>The width of the function.</returns>
             get
             {
                 return this.Params[ActivationGaussian.PARAM_GAUSSIAN_WIDTH];
@@ -117,11 +106,11 @@ namespace Encog.Engine.Network.Activation
 
 
 
-        /// <returns>The center of the function.</returns>
+        /// <summary>
+        /// The center of the function.
+        /// </summary>
         private double Center
         {
-
-            /// <returns>The center of the function.</returns>
             get
             {
                 return this.Params[ActivationGaussian.PARAM_GAUSSIAN_CENTER];
@@ -130,11 +119,11 @@ namespace Encog.Engine.Network.Activation
 
 
 
-        /// <returns>The peak of the function.</returns>
+        /// <summary>
+        /// The peak of the function.
+        /// </summary>
         private double Peak
         {
-
-            /// <returns>The peak of the function.</returns>
             get
             {
                 return this.Params[ActivationGaussian.PARAM_GAUSSIAN_PEAK];
@@ -143,6 +132,9 @@ namespace Encog.Engine.Network.Activation
 
 
 
+        /// <summary>
+        /// Return true, gaussian has a derivative.
+        /// </summary>
         /// <returns>Return true, gaussian has a derivative.</returns>
         public virtual bool HasDerivative()
         {

@@ -128,16 +128,16 @@ namespace Encog.Engine.Network.Train.Prop
         /// Train a flat network multithreaded.
         /// </summary>
         ///
-        /// <param name="network_0"/>The network to train.</param>
-        /// <param name="training_1"/>The training data to use.</param>
-        /// <param name="profile_2"/>The OpenCL training profile.</param>
-        public TrainFlatNetworkOpenCL(FlatNetwork network_0,
-                IEngineDataSet training_1, OpenCLTrainingProfile profile_2)
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="profile">The OpenCL training profile.</param>
+        public TrainFlatNetworkOpenCL(FlatNetwork network,
+                IEngineDataSet training, OpenCLTrainingProfile profile)
         {
 
-            (new ValidateForOpenCL()).Validate(network_0);
+            (new ValidateForOpenCL()).Validate(network);
 
-            if (!(training_1 is IEngineIndexableSet))
+            if (!(training is IEngineIndexableSet))
             {
                 throw new EncogEngineError(
                         "Training data must be Indexable for this training type.");
@@ -150,19 +150,19 @@ namespace Encog.Engine.Network.Train.Prop
 
             }
 
-            this.profile = profile_2;
-            this.network = network_0;
-            this.training = (IEngineIndexableSet)training_1;
+            this.profile = profile;
+            this.network = network;
+            this.training = (IEngineIndexableSet)training;
         }
 
         /// <summary>
         /// Call the kernel.
         /// </summary>
         ///
-        /// <param name="start"/>The starting training element.</param>
-        /// <param name="size"/>The number of training elements.</param>
-        /// <param name="learn"/>Should we learn?</param>
-        /// <param name="iterations"/>The number of iterations.</param>
+        /// <param name="start">The starting training element.</param>
+        /// <param name="size">The number of training elements.</param>
+        /// <param name="learn">Should we learn?</param>
+        /// <param name="iterations">The number of iterations.</param>
         private void CallKernel(int start, int size,
                 bool learn, int iterations)
         {
@@ -200,11 +200,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The last gradients.</returns>
+        /// <summary>
+        /// The last gradients.
+        /// </summary>
         public double[] LastGradient
         {
-
-            /// <returns>The last gradients.</returns>
             get
             {
                 double[] result = new double[this.network.Weights.Length];
@@ -218,11 +218,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>the learningRate</returns>
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
         public double LearningRate
         {
-
-            /// <returns>the learningRate</returns>
             get
             {
                 return this.learningRate;
@@ -231,11 +231,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>the learningType</returns>
+        /// <summary>
+        /// The learning type.
+        /// </summary>
         public int LearningType
         {
-
-            /// <returns>the learningType</returns>
             get
             {
                 return this.learningType;
@@ -244,11 +244,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>the maxStep</returns>
+        /// <summary>
+        /// The max step.
+        /// </summary>
         public double MaxStep
         {
-
-            /// <returns>the maxStep</returns>
             get
             {
                 return this.maxStep;
@@ -257,11 +257,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>the momentum</returns>
+        /// <summary>
+        /// The momentum.
+        /// </summary>
         public double Momentum
         {
-
-            /// <returns>the momentum</returns>
             get
             {
                 return this.momentum;
@@ -297,37 +297,37 @@ namespace Encog.Engine.Network.Train.Prop
         /// Get the learning properties.
         /// </summary>
         ///
-        /// <param name="learningType_0"/>The learning type.</param>
+        /// <param name="learningType">The learning type.</param>
         /// <returns>The options.</returns>
-        private IDictionary<String, String> GetOptions(String learningType_0)
+        private IDictionary<String, String> GetOptions(String learningType)
         {
             IDictionary<String, String> options = new Dictionary<String, String>();
             options["NEURON_COUNT"] = "" + this.network.NeuronCount;
             options["WEIGHT_COUNT"] = "" + this.network.Weights.Length;
-            options[learningType_0] = null;
+            options[learningType] = null;
 
             return options;
         }
 
 
-        /// <returns>The training data to use.</returns>
+        /// <summary>
+        /// The training data to use.
+        /// </summary>
         public virtual IEngineDataSet Training
         {
-            /// <returns>The training data to use.</returns>
             get
-            {
-                // TODO Auto-generated method stub
+            {         
                 return null;
             }
         }
 
 
 
-        /// <returns>The update values.</returns>
+        /// <summary>
+        /// The update values.
+        /// </summary>
         public double[] UpdateValues
         {
-
-            /// <returns>The update values.</returns>
             get
             {
                 double[] result = new double[this.network.Weights.Length];
@@ -340,16 +340,15 @@ namespace Encog.Engine.Network.Train.Prop
             }
         }
 
-
+        /// <summary>
+        /// Perform a single iteration.
+        /// </summary>
         public virtual void Iteration()
         {
             Iteration(1);
         }
 
-        /// <summary>
-        /// {@inheritDoc}
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void Iteration(int iterations)
         {
 
@@ -411,13 +410,13 @@ namespace Encog.Engine.Network.Train.Prop
         /// Learn using backpropagation.
         /// </summary>
         ///
-        /// <param name="learningRate_0"/>The learning rate.</param>
-        /// <param name="momentum_1"/>The momentum.</param>
-        public void LearnBPROP(double learningRate_0, double momentum_1)
+        /// <param name="learningRate">The learning rate.</param>
+        /// <param name="momentum">The momentum.</param>
+        public void LearnBPROP(double learningRate, double momentum)
         {
             this.learningType = TrainFlatNetworkOpenCL.LEARN_BPROP;
-            this.momentum = momentum_1;
-            this.learningRate = learningRate_0;
+            this.momentum = momentum;
+            this.learningRate = learningRate;
 
             this.learningType = TrainFlatNetworkOpenCL.LEARN_BPROP;
 
@@ -428,19 +427,19 @@ namespace Encog.Engine.Network.Train.Prop
                     this.network.Weights.Length + 2);
             this.kernel.Compile(options, profile, this.network);
 
-            this.kernel.TempDataArray[0] = (float)learningRate_0;
-            this.kernel.TempDataArray[1] = (float)momentum_1;
+            this.kernel.TempDataArray[0] = (float)learningRate;
+            this.kernel.TempDataArray[1] = (float)momentum;
         }
 
         /// <summary>
         /// Learn using the Manhattan update rule.
         /// </summary>
         ///
-        /// <param name="learningRate_0"/>The learning rate.</param>
-        public void LearnManhattan(double learningRate_0)
+        /// <param name="learningRate">The learning rate.</param>
+        public void LearnManhattan(double learningRate)
         {
             this.learningType = TrainFlatNetworkOpenCL.LEARN_MANHATTAN;
-            this.learningRate = learningRate_0;
+            this.learningRate = learningRate;
 
             IDictionary<String, String> options = GetOptions("LEARN_MANHATTAN");
 
@@ -448,7 +447,7 @@ namespace Encog.Engine.Network.Train.Prop
                     this.network, this.training, 1);
             this.kernel.Compile(options, profile, this.network);
 
-            this.kernel.TempDataArray[0] = (float)learningRate_0;
+            this.kernel.TempDataArray[0] = (float)learningRate;
         }
 
         /// <summary>
@@ -465,13 +464,13 @@ namespace Encog.Engine.Network.Train.Prop
         /// Learn using RPROP with a custom initial update and max step.
         /// </summary>
         ///
-        /// <param name="initialUpdate_0"/>The initial update value.</param>
-        /// <param name="maxStep_1"/>The max step.</param>
-        public void LearnRPROP(double initialUpdate_0, double maxStep_1)
+        /// <param name="initialUpdate">The initial update value.</param>
+        /// <param name="maxStep">The max step.</param>
+        public void LearnRPROP(double initialUpdate, double maxStep)
         {
             this.learningType = TrainFlatNetworkOpenCL.LEARN_RPROP;
-            this.initialUpdate = initialUpdate_0;
-            this.maxStep = maxStep_1;
+            this.initialUpdate = initialUpdate;
+            this.maxStep = maxStep;
 
             IDictionary<String, String> options = GetOptions("LEARN_RPROP");
 

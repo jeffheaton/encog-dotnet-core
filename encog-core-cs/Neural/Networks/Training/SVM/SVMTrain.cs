@@ -146,9 +146,9 @@ namespace Encog.Neural.Networks.Training.SVM
             this.GammaEnd = DEFAULT_GAMMA_END;
             this.GammaStep = DEFAULT_GAMMA_STEP;
 
-            this.problem = new svm_problem[this.network.getOutputCount()];
+            this.problem = new svm_problem[this.network.OutputCount];
 
-            for (int i = 0; i < this.network.getOutputCount(); i++)
+            for (int i = 0; i < this.network.OutputCount; i++)
             {                
                 this.problem[i] = EncodeSVMProblem.Encode(training, i);
             }
@@ -159,10 +159,10 @@ namespace Encog.Neural.Networks.Training.SVM
         /// </summary>
         public void Train()
         {
-            double gamma = 1.0 / this.network.getInputCount();
+            double gamma = 1.0 / this.network.InputCount;
             double c = 1.0;
 
-            for (int i = 0; i < network.getOutputCount(); i++)
+            for (int i = 0; i < network.OutputCount; i++)
                 Train(i, gamma, c);
         }
 
@@ -174,19 +174,19 @@ namespace Encog.Neural.Networks.Training.SVM
         /// <param name="c">The C to train with.</param>
         public void Train(int index, double gamma, double c)
         {
-            network.getParams()[index].C = c;
+            network.Params[index].C = c;
 
             if (gamma > EncogFramework.DEFAULT_DOUBLE_EQUAL)
             {
-                network.getParams()[index].gamma = 1.0 / this.network.getInputCount();
+                network.Params[index].gamma = 1.0 / this.network.InputCount;
             }
             else
             {
-                network.getParams()[index].gamma = gamma;
+                network.Params[index].gamma = gamma;
             }
 
-            network.getModels()[index] = svm.svm_train(problem[index], network
-                    .getParams()[index]);
+            network.Models[index] = svm.svm_train(problem[index], network
+                    .Params[index]);
         }
 
 
@@ -202,11 +202,11 @@ namespace Encog.Neural.Networks.Training.SVM
 
             double[] target = new double[this.problem[0].l];
 
-            network.getParams()[index].C = c;
-            network.getParams()[index].gamma = gamma;
-            svm.svm_cross_validation(problem[index], network.getParams()[index], Fold,
+            network.Params[index].C = c;
+            network.Params[index].gamma = gamma;
+            svm.svm_cross_validation(problem[index], network.Params[index], Fold,
                     target);
-            return Evaluate(network.getParams()[index], problem[index], target);
+            return Evaluate(network.Params[index], problem[index], target);
         }
 
 
@@ -250,14 +250,14 @@ namespace Encog.Neural.Networks.Training.SVM
         /// </summary>
         private void Setup()
         {
-            this.currentConst = new double[this.network.getOutputCount()];
-            this.currentGamma = new double[this.network.getOutputCount()];
-            this.bestConst = new double[this.network.getOutputCount()];
-            this.bestGamma = new double[this.network.getOutputCount()];
-            this.bestError = new double[this.network.getOutputCount()];
+            this.currentConst = new double[this.network.OutputCount];
+            this.currentGamma = new double[this.network.OutputCount];
+            this.bestConst = new double[this.network.OutputCount];
+            this.bestGamma = new double[this.network.OutputCount];
+            this.bestError = new double[this.network.OutputCount];
 
 
-            for (int i = 0; i < this.network.getOutputCount(); i++)
+            for (int i = 0; i < this.network.OutputCount; i++)
             {
                 this.currentConst[i] = this.ConstBegin;
                 this.currentGamma[i] = this.GammaBegin;
@@ -284,7 +284,7 @@ namespace Encog.Neural.Networks.Training.SVM
 
                     double totalError = 0;
 
-                    for (int i = 0; i < this.network.getOutputCount(); i++)
+                    for (int i = 0; i < this.network.OutputCount; i++)
                     {
                         double e = this.CrossValidate(i, this.currentGamma[i],
                                 currentConst[i]);
@@ -308,7 +308,7 @@ namespace Encog.Neural.Networks.Training.SVM
                         totalError += this.bestError[i];
                     }
 
-                    this.Error = (totalError / this.network.getOutputCount());
+                    this.Error = (totalError / this.network.OutputCount);
                 }
                 else
                 {
@@ -337,7 +337,7 @@ namespace Encog.Neural.Networks.Training.SVM
         public override void FinishTraining()
         {
             base.FinishTraining();
-            for (int i = 0; i < network.getOutputCount(); i++)
+            for (int i = 0; i < network.OutputCount; i++)
             {
                 Train(i, this.bestGamma[i], this.bestConst[i]);
             }
@@ -373,7 +373,7 @@ namespace Encog.Neural.Networks.Training.SVM
         /// <param name="c">The C to use.</param>
         public void Train(double gamma, double c)
         {
-            for (int i = 0; i < this.network.getOutputCount(); i++)
+            for (int i = 0; i < this.network.OutputCount; i++)
             {
                 Train(i, gamma, c);
             }

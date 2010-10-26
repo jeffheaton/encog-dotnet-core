@@ -184,7 +184,7 @@ namespace Encog.Neural.Data.Buffer
                                 "File is from a newer version of Encog than is currently in use.");
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new BufferedDataError("File has invalid version number.");
                 }

@@ -62,10 +62,6 @@ namespace Encog.Neural.Networks.Layers
     public class RadialBasisFunctionLayer : BasicLayer
     {
 
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-
 #if logging
         /// <summary>
         /// The logging object.
@@ -179,12 +175,26 @@ namespace Encog.Neural.Networks.Layers
             }
         }
 
+        /// <summary>
+        /// Set the RBF centers and widths.
+        /// </summary>
+        /// <param name="centers">The centers.</param>
+        /// <param name="widths">The widths.</param>
+        /// <param name="RBFType">The types of functions.</param>
         public void SetRBFCentersAndWidths(double[] centers, double[] widths, RBFEnum RBFType)
         {
             for (int i = 0; i < this.NeuronCount; i++)
                 SetRBFFunction(i, RBFType, centers[i], RangeRandomizer.Randomize(0, 1), widths[i]);
         }
 
+        /// <summary>
+        /// Set the type of RBF function.
+        /// </summary>
+        /// <param name="RBFIndex">The RBF index.</param>
+        /// <param name="RBFType">The RBF type.</param>
+        /// <param name="center">The centers.</param>
+        /// <param name="peak">The peaks.</param>
+        /// <param name="width">The widths.</param>
         private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double center, double peak, double width)
         {
             if (RBFType == RBFEnum.Gaussian)

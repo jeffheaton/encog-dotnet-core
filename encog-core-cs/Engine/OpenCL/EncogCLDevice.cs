@@ -74,8 +74,8 @@ namespace Encog.Engine.Opencl
         /// Construct an OpenCL device.
         /// </summary>
         ///
-        /// <param name="platform_0"/>The platform.</param>
-        /// <param name="device_1"/>The device.</param>
+        /// <param name="platform">The platform.</param>
+        /// <param name="device">The device.</param>
         public EncogCLDevice(EncogCLPlatform platform,
                 ComputeDevice device)
         {
@@ -90,11 +90,11 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The OpenCL device.</returns>
+        /// <summary>
+        /// The OpenCL device.
+        /// </summary>
         public ComputeDevice Device
         {
-
-            /// <returns>The OpenCL device.</returns>
             get
             {
                 return this.device;
@@ -102,11 +102,11 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The size of the global memory.</returns>
+        /// <summary>
+        /// The size of the global memory.
+        /// </summary>
         public long GlobalMemorySize
         {
-
-            /// <returns>The size of the global memory.</returns>
             get
             {
                 return this.device.GlobalMemorySize;
@@ -115,37 +115,33 @@ namespace Encog.Engine.Opencl
 
 
 
-        /// <returns>The size of the local memory.</returns>
+        /// <summary>
+        /// The size of the local memory.
+        /// </summary>
         public long LocalMemorySize
         {
-
-            /// <returns>The size of the local memory.</returns>
             get
             {
                 return this.device.LocalMemorySize;
             }
         }
 
-
-
-        /// <returns>The max clock frequency.</returns>
+        /// <summary>
+        /// The max clock frequency.
+        /// </summary>
         public long MaxClockFrequency
         {
-
-            /// <returns>The max clock frequency.</returns>
             get
             {
                 return this.device.MaxClockFrequency;
             }
         }
 
-
-
-        /// <returns>The number of compute units.</returns>
+        /// <summary>
+        /// The number of compute units.
+        /// </summary>
         public long MaxComputeUnits
         {
-
-            /// <returns>The number of compute units.</returns>
             get
             {
                 return this.device.MaxComputeUnits;
@@ -153,26 +149,22 @@ namespace Encog.Engine.Opencl
         }
 
 
-
-        /// <returns>The max workgroup size.</returns>
+        /// <summary>
+        /// The max workgroup size.
+        /// </summary>
         public long MaxWorkGroupSize
         {
-
-            /// <returns>The max workgroup size.</returns>
             get
             {
                 return this.device.MaxWorkGroupSize;
-
             }
         }
 
-
-
-        /// <returns>The OpenCL platform.</returns>
+        /// <summary>
+        /// The OpenCL platform.
+        /// </summary>
         public EncogCLPlatform Platform
         {
-
-            /// <returns>The OpenCL platform.</returns>
             get
             {
                 return this.platform;
@@ -181,11 +173,11 @@ namespace Encog.Engine.Opencl
 
 
 
-        /// <returns>the queue</returns>
+        /// <summary>
+        /// The queue.
+        /// </summary>
         public EncogCLQueue Queue
         {
-
-            /// <returns>the queue</returns>
             get
             {
                 return this.queue;
@@ -194,11 +186,11 @@ namespace Encog.Engine.Opencl
 
 
 
-        /// <returns>Determine if this device is a CPU.</returns>
+        /// <summary>
+        /// Determine if this device is a CPU.
+        /// </summary>
         public bool CPU
         {
-
-            /// <returns>Determine if this device is a CPU.</returns>
             get
             {
                 return this.cpu;
@@ -206,10 +198,7 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <summary>
-        /// {@inheritDoc}
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override System.String ToString()
         {
             StringBuilder builder = new StringBuilder();

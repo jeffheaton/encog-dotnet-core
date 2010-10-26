@@ -51,7 +51,7 @@ namespace Encog.Engine.Opencl.Exceptions
         /// Construct the exception.
         /// </summary>
         ///
-        /// <param name="t"/>The wrapped exception.</param>
+        /// <param name="t">The wrapped exception.</param>
         public OutOfOpenCLResources(Exception t)
             : base("Out of OpenCL resources or hit OS-imposed timeout. (see: http://www.heatonresearch.com/encog/troubleshooting/ooresource.html)", t)
         {

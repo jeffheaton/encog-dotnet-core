@@ -56,9 +56,9 @@ namespace Encog.Engine.Network.Activation
         /// specific information on this type of activation function.
         /// </summary>
         ///
-        /// <param name="d"/>The input array to the activation function.</param>
-        /// <param name="start"/>The starting index.</param>
-        /// <param name="size"/>The number of values to calculate.</param>
+        /// <param name="d">The input array to the activation function.</param>
+        /// <param name="start">The starting index.</param>
+        /// <param name="size">The number of values to calculate.</param>
         void ActivationFunction(double[] d, int start, int size);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Encog.Engine.Network.Activation
         /// will throw an error.
         /// </summary>
         ///
-        /// <param name="d"/>The input array to the activation function.</param>
+        /// <param name="d">The input array to the activation function.</param>
         /// <returns>The derivative.</returns>
         double DerivativeFunction(double d);
 
@@ -85,8 +85,6 @@ namespace Encog.Engine.Network.Activation
         /// <returns>The params for this activation function.</returns>
         double[] Params
         {
-
-            /// <returns>The params for this activation function.</returns>
             get;
         }
 
@@ -95,29 +93,23 @@ namespace Encog.Engine.Network.Activation
         /// Set one of the params for this activation function.
         /// </summary>
         ///
-        /// <param name="index"/>The index of the param to set.</param>
-        /// <param name="value"/>The value to set.</param>
-        void SetParam(int index, double value_ren);
+        /// <param name="index">The index of the param to set.</param>
+        /// <param name="value">The value to set.</param>
+        void SetParam(int index, double value);
 
 
         /// <returns>The names of the parameters.</returns>
         String[] ParamNames
         {
 
-            /// <returns>The names of the parameters.</returns>
             get;
         }
-
-
-
-        /// <returns>A cloned copy of this activation function.</returns>
-        IActivationFunction Clone();
 
         /// <summary>
         /// Returns the OpenCL expression for this activation function.
         /// </summary>
         ///
-        /// <param name="derivative"/>True if we want the derivative, false otherwise.</param>
+        /// <param name="derivative">True if we want the derivative, false otherwise.</param>
         /// <returns>The OpenCL expression for this activation function.</returns>
         String GetOpenCLExpression(bool derivative);
     }

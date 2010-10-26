@@ -64,7 +64,7 @@ namespace Encog.Neural.Data
         /// Clone this object.
         /// </summary>
         /// <returns>A cloned version of this object.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             TextData result = new TextData();
             result.Name = this.Name;

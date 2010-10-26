@@ -50,7 +50,7 @@ namespace Encog.Engine.Validate
         /// Construct a message exception.
         /// </summary>
         ///
-        /// <param name="msg"/>The exception message.</param>
+        /// <param name="msg">The exception message.</param>
         public ValidateMachineLearningError(String msg)
             : base(msg)
         {
@@ -60,8 +60,8 @@ namespace Encog.Engine.Validate
         /// Construct an exception that holds another exception.
         /// </summary>
         ///
-        /// <param name="msg"/>A message.</param>
-        /// <param name="t"/>The other exception.</param>
+        /// <param name="msg">A message.</param>
+        /// <param name="t">The other exception.</param>
         public ValidateMachineLearningError(String msg, Exception t)
             : base(msg, t)
         {
@@ -71,7 +71,7 @@ namespace Encog.Engine.Validate
         /// Construct an exception that holds another exception.
         /// </summary>
         ///
-        /// <param name="t"/>The other exception.</param>
+        /// <param name="t">The other exception.</param>
         public ValidateMachineLearningError(Exception t)
             : base(t)
         {

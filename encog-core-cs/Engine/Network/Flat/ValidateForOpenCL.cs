@@ -45,7 +45,7 @@ namespace Encog.Engine.Network.Flat
         /// Determine if the network is valid for OpenCL.
         /// </summary>
         ///
-        /// <param name="network"/>The network to check.</param>
+        /// <param name="network">The network to check.</param>
         /// <returns>The string indicating the error that prevents OpenCL from usingthe network, or null if the network is fine for OpenCL.</returns>
         public override String IsValid(IEngineMachineLearning network)
         {

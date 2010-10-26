@@ -83,7 +83,7 @@ namespace Encog.Neural.Networks.Synapse
         /// Clone this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public override Object Clone()
+        public override object Clone()
         {
             WeightedSynapse result = new WeightedSynapse();
             result.WeightMatrix = (Matrix)this.WeightMatrix.Clone();

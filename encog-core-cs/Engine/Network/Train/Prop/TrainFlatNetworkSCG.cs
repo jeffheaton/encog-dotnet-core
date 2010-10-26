@@ -140,8 +140,8 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct the training object.
         /// </summary>
         ///
-        /// <param name="network"/>The network to train.</param>
-        /// <param name="training"/>The training data to use.</param>
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkSCG(FlatNetwork network,
                 IEngineDataSet training)
             : base(network, training)
@@ -371,6 +371,13 @@ namespace Encog.Engine.Network.Train.Prop
             EngineArray.ArrayCopy(this.weights, this.network.Weights);
         }
 
+        /// <summary>
+        /// Update the weights.
+        /// </summary>
+        /// <param name="gradients">The current gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>The new weight.</returns>
         public override double UpdateWeight(double[] gradients,
                 double[] lastGradient, int index)
         {

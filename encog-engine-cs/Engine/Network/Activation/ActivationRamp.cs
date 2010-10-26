@@ -97,26 +97,12 @@ namespace Encog.Engine.Network.Activation
             : this(1, 0, 1, 0)
         {
         }
-
+        
         /// <summary>
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationRamp(
-                    this.paras[ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD],
-                    this.paras[ActivationRamp.PARAM_RAMP_LOW_THRESHOLD],
-                    this.paras[ActivationRamp.PARAM_RAMP_HIGH],
-                    this.paras[ActivationRamp.PARAM_RAMP_LOW]);
-
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public virtual object Clone()
         {
             return new ActivationRamp(
                     this.paras[ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD],

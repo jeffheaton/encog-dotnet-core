@@ -71,12 +71,6 @@ namespace Encog.Neural.Networks.Synapse
         private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
 #endif
 
-        /// <summary>
-        /// Clone this object.
-        /// </summary>
-        /// <returns>A clone of this object.</returns>
-        public abstract Object Clone();
-
 
         /// <summary>
         /// The from layer.

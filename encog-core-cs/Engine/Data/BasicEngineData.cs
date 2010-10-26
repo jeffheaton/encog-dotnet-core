@@ -57,8 +57,8 @@ namespace Encog.Engine.Data
         /// method to allow the neural data pair objects to be copied to it.
         /// </summary>
         ///
-        /// <param name="inputSize"/>The size of the input data.</param>
-        /// <param name="idealSize"/>The size of the ideal data.</param>
+        /// <param name="inputSize">The size of the input data.</param>
+        /// <param name="idealSize">The size of the ideal data.</param>
         /// <returns>A new neural data pair object.</returns>
         public static IEngineData CreatePair(int inputSize, int idealSize)
         {
@@ -95,10 +95,10 @@ namespace Encog.Engine.Data
         /// unsupervised training is being used.
         /// </summary>
         ///
-        /// <param name="input_0"/>The input to the neural network.</param>
-        public BasicEngineData(double[] input_0)
+        /// <param name="input">The input to the neural network.</param>
+        public BasicEngineData(double[] input)
         {
-            this.input = input_0;
+            this.input = input;
             this.ideal = null;
         }
 
@@ -107,35 +107,23 @@ namespace Encog.Engine.Data
         /// values.
         /// </summary>
         ///
-        /// <param name="input_0"/>The input to the neural network.</param>
-        /// <param name="ideal_1"/>The expected results from the neural network.</param>
-        public BasicEngineData(double[] input_0, double[] ideal_1)
+        /// <param name="input">The input to the neural network.</param>
+        /// <param name="ideal">The expected results from the neural network.</param>
+        public BasicEngineData(double[] input, double[] ideal)
         {
-            this.input = input_0;
-            this.ideal = ideal_1;
+            this.input = input;
+            this.ideal = ideal;
         }
 
         /// <summary>
-        /// Set the ideal array.
+        /// The ideal array.
         /// </summary>
-        ///
-        /// <param name="data"/>The ideal array.</param>
         public virtual double[] IdealArray
         {
-            /// <summary>
-            /// Get the expected results. Returns null if this is unsupervised training.
-            /// </summary>
-            ///
-            /// <returns>Returns the expected results, or null if unsupervised training.</returns>
             get
             {
                 return this.ideal;
             }
-            /// <summary>
-            /// Set the ideal array.
-            /// </summary>
-            ///
-            /// <param name="data"/>The ideal array.</param>
             set
             {
                 this.ideal = value;
@@ -145,26 +133,14 @@ namespace Encog.Engine.Data
 
 
         /// <summary>
-        /// Set the input array.
+        /// The input array.
         /// </summary>
-        ///
-        /// <param name="data"/>The input array.</param>
         public virtual double[] InputArray
         {
-            /// <summary>
-            /// Get the input data.
-            /// </summary>
-            ///
-            /// <returns>The input data.</returns>
             get
             {
                 return this.input;
             }
-            /// <summary>
-            /// Set the input array.
-            /// </summary>
-            ///
-            /// <param name="data"/>The input array.</param>
             set
             {
                 this.input = value;
@@ -175,15 +151,8 @@ namespace Encog.Engine.Data
         /// <summary>
         /// Determine if this data pair is supervised.
         /// </summary>
-        ///
-        /// <returns>True if this data pair is supervised.</returns>
         public virtual bool Supervised
         {
-            /// <summary>
-            /// Determine if this data pair is supervised.
-            /// </summary>
-            ///
-            /// <returns>True if this data pair is supervised.</returns>
             get
             {
                 return this.ideal != null;

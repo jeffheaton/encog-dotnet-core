@@ -54,21 +54,12 @@ namespace Encog.Engine.Network.Activation
         ///
         private double[] paras;
 
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationSIN();
-
-        }
 
         /// <summary>
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public virtual object Clone()
         {
             return new ActivationSIN();
         }

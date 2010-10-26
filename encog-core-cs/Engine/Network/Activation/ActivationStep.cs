@@ -74,11 +74,10 @@ namespace Encog.Engine.Network.Activation
         /// Construct a step activation function.
         /// </summary>
         ///
-        /// <param name="low"/>The low of the function.</param>
-        /// <param name="center"/>The center of the function.</param>
-        /// <param name="high"/>The high of the function.</param>
-        public ActivationStep(double low, double center,
-                double high)
+        /// <param name="low">The low of the function.</param>
+        /// <param name="center">The center of the function.</param>
+        /// <param name="high">The high of the function.</param>
+        public ActivationStep(double low, double center, double high)
         {
             this.paras = new double[3];
             this.paras[ActivationStep.PARAM_STEP_CENTER] = center;
@@ -98,21 +97,12 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// Set the center of this function.
         /// </summary>
-        ///
-        /// <param name="d"/>The center of this function.</param>
         public double Center
         {
-
-            /// <returns>The center.</returns>
             get
             {
                 return this.paras[ActivationStep.PARAM_STEP_CENTER];
             }
-            /// <summary>
-            /// Set the center of this function.
-            /// </summary>
-            ///
-            /// <param name="d"/>The center of this function.</param>
             set
             {
                 this.SetParam(ActivationStep.PARAM_STEP_CENTER, value);
@@ -123,21 +113,12 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// Set the low of this function.
         /// </summary>
-        ///
-        /// <param name="d"/>The low of this function.</param>
         public double Low
         {
-
-            /// <returns>The low value.</returns>
             get
             {
                 return this.paras[ActivationStep.PARAM_STEP_LOW];
             }
-            /// <summary>
-            /// Set the low of this function.
-            /// </summary>
-            ///
-            /// <param name="d"/>The low of this function.</param>
             set
             {
                 this.SetParam(ActivationStep.PARAM_STEP_LOW, value);
@@ -148,21 +129,12 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// Set the high of this function.
         /// </summary>
-        ///
-        /// <param name="d"/>The high of this function.</param>
         public double High
         {
-
-            /// <returns>The high value.</returns>
             get
             {
                 return this.paras[ActivationStep.PARAM_STEP_HIGH];
             }
-            /// <summary>
-            /// Set the high of this function.
-            /// </summary>
-            ///
-            /// <param name="d"/>The high of this function.</param>
             set
             {
                 this.SetParam(ActivationStep.PARAM_STEP_HIGH, value);
@@ -173,25 +145,13 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
+        public object Clone()
         {
             ActivationStep result = new ActivationStep(Low, Center,
                     High);
             return result;
 
         }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
-        {
-            ActivationStep result = new ActivationStep(Low, Center,
-                    High);
-            return result;
-        }
-
 
         /// <returns>Returns true, this activation function has a derivative.</returns>
         public virtual bool HasDerivative()

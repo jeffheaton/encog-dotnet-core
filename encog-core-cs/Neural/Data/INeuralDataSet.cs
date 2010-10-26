@@ -53,23 +53,6 @@ namespace Encog.Neural.NeuralData
     public interface INeuralDataSet: IEngineDataSet
     {
         /// <summary>
-        /// The size of the ideal data.  Zero if unsupervised.
-        /// </summary>
-        int IdealSize
-        {
-            get;
-        }
-
-        /// <summary>
-        /// The size of the input data.
-        /// </summary>
-        int InputSize
-        {
-            get;
-        }
-
-
-        /// <summary>
         /// Add a NeuralData object to the dataset. This is used with unsupervised
         /// training, as no ideal output is provided. Note: not all implemenations
         /// support the add methods. 

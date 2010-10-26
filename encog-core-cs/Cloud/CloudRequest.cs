@@ -244,6 +244,11 @@ namespace Encog.Cloud
         }
 
 
+        /// <summary>
+        /// Perform a post.
+        /// </summary>
+        /// <param name="service">The URL to post to.</param>
+        /// <param name="stream">The stream to post.</param>
         public void PerformURLPOST(string service, Stream stream)
         {
             try

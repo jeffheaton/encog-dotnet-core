@@ -33,6 +33,9 @@ namespace Encog.Engine.Network.Train
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// Train a flat network.
+    /// </summary>
     public interface ITrainFlatNetwork
     {
         /// <returns>The error from the neural network.</returns>

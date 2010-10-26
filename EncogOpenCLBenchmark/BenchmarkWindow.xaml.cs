@@ -364,7 +364,7 @@ namespace EncogOpenCLBenchmark
                     this.sendStats = this.TextStats.Text;
                 }));
             }
-            catch (OutOfOpenCLResources ex)
+            catch (OutOfOpenCLResources)
             {
                 MessageBox.Show("Your GPU is out of resources.\nThis could also mean that your OS is timing your GPU out.  See\n http://www.heatonresearch.com/encog/troubleshooting");
             }

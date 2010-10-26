@@ -103,9 +103,9 @@ namespace Encog.Engine.Opencl.Kernels
         /// resource.
         /// </summary>
         ///
-        /// <param name="device"/>The OpenCL device to use.</param>
-        /// <param name="sourceName"/>The name of the kernel, from an embedded resource.</param>
-        /// <param name="kernelName"/>The name of the function, in the kernel, called to start thekernel.</param>
+        /// <param name="device">The OpenCL device to use.</param>
+        /// <param name="sourceName">The name of the kernel, from an embedded resource.</param>
+        /// <param name="kernelName">The name of the function, in the kernel, called to start thekernel.</param>
         public EncogKernel(EncogCLDevice device, String sourceName,
                 String kernelName)
         {
@@ -131,7 +131,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// name-value pairs.
         /// </summary>
         ///
-        /// <param name="options"/>A map of preprocessor defines.</param>
+        /// <param name="options">A map of preprocessor defines.</param>
         public void Compile(IDictionary<String, String> options)
         {
             // clear out any old program
@@ -177,7 +177,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// Create an array buffer that is read only for floats.
         /// </summary>
         ///
-        /// <param name="array"/>The array to base on.</param>
+        /// <param name="array">The array to base on.</param>
         /// <returns>The memory buffer.</returns>
         public ComputeBuffer<float> CreateArrayReadOnly(float[] array)
         {
@@ -189,7 +189,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// Create an array buffer that is read only for ints.
         /// </summary>
         ///
-        /// <param name="array"/>The array to base on.</param>
+        /// <param name="array">The array to base on.</param>
         /// <returns>The memory buffer.</returns>
         public ComputeBuffer<int> CreateArrayReadOnly(int[] array)
         {
@@ -200,7 +200,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// Create an array buffer that is write only.
         /// </summary>
         ///
-        /// <param name="length"/>The length of the buffer.</param>
+        /// <param name="length">The length of the buffer.</param>
         /// <returns>The memory buffer.</returns>
         public ComputeBuffer<float> CreateFloatArrayWriteOnly(int length)
         {
@@ -209,43 +209,37 @@ namespace Encog.Engine.Opencl.Kernels
         }
 
 
-        /// <param name="cl_0"/>the cl to set</param>
+        /// <summary>
+        /// The OpenCL source code.
+        /// </summary>
         public String CLSource
         {
-
-            /// <returns>the cl</returns>
             get
             {
                 return this.cl;
             }
-
-            /// <param name="cl_0"/>the cl to set</param>
             set
             {
                 this.cl = value;
             }
         }
 
-
-
-        /// <returns>The OpenCL context that this kernel belongs to.</returns>
+        /// <summary>
+        /// The OpenCL context that this kernel belongs to.
+        /// </summary>
         public ComputeContext Context
         {
-
-            /// <returns>The OpenCL context that this kernel belongs to.</returns>
             get
             {
                 return this.context;
             }
         }
 
-
-
-        /// <returns>the device</returns>
+        /// <summary>
+        /// The device.
+        /// </summary>
         public EncogCLDevice Device
         {
-
-            /// <returns>the device</returns>
             get
             {
                 return this.device;
@@ -256,21 +250,12 @@ namespace Encog.Engine.Opencl.Kernels
         /// <summary>
         /// Set the size of the global work group.
         /// </summary>
-        ///
-        /// <param name="globalWork_0"/>The size of the global work group.</param>
         public long GlobalWork
         {
-
-            /// <returns>The size of the global work buffer.</returns>
             get
             {
                 return this.globalWork;
             }
-            /// <summary>
-            /// Set the size of the global work group.
-            /// </summary>
-            ///
-            /// <param name="globalWork_0"/>The size of the global work group.</param>
             set
             {
                 this.globalWork = value;
@@ -279,11 +264,11 @@ namespace Encog.Engine.Opencl.Kernels
 
 
 
-        /// <returns>The OpenCL kernel.</returns>
+        /// <summary>
+        /// The OpenCL kernel.
+        /// </summary>
         public ComputeKernel Kernel
         {
-
-            /// <returns>The OpenCL kernel.</returns>
             get
             {
                 return this.kernel;
@@ -294,34 +279,23 @@ namespace Encog.Engine.Opencl.Kernels
         /// <summary>
         /// Set the size of the local work group.
         /// </summary>
-        ///
-        /// <param name="localWork_0"/>The size of the local work group.</param>
         public long LocalWork
         {
-
-            /// <returns>The size of the local work group.</returns>
             get
             {
                 return this.localWork;
             }
-            /// <summary>
-            /// Set the size of the local work group.
-            /// </summary>
-            ///
-            /// <param name="localWork_0"/>The size of the local work group.</param>
             set
             {
                 this.localWork = value;
             }
         }
 
-
-
-        /// <returns>Suggested max workgroup size. You will very likely crash the GPUif you go above this.</returns>
+        /// <summary>
+        /// Suggested max workgroup size. You will very likely crash the GPUif you go above this.
+        /// </summary>
         public long MaxWorkGroupSize
         {
-
-            /// <returns>Suggested max workgroup size. You will very likely crash the GPUif you go above this.</returns>
             get
             {
                 return this.kernel.GetWorkGroupSize(this.device.Device);
@@ -330,11 +304,11 @@ namespace Encog.Engine.Opencl.Kernels
 
 
 
-        /// <returns>The OpenCL program that the kernel belongs to.</returns>
+        /// <summary>
+        /// The OpenCL program that the kernel belongs to.
+        /// </summary>
         public ComputeProgram Program
         {
-
-            /// <returns>The OpenCL program that the kernel belongs to.</returns>
             get
             {
                 return this.program;
@@ -342,12 +316,11 @@ namespace Encog.Engine.Opencl.Kernels
         }
 
 
-
-        /// <returns>the sourceName</returns>
+        /// <summary>
+        /// The source name.
+        /// </summary>
         public String SourceName
         {
-
-            /// <returns>the sourceName</returns>
             get
             {
                 return this.sourceName;

@@ -197,6 +197,7 @@ namespace Encog.Bot
         /// </summary>
         /// <param name="uri">The URI to post to.</param>
         /// <param name="bytes">The bytes to post.</param>
+        /// <param name="length">The length of the posted data.</param>
         /// <returns>The HTTP response.</returns>
         public static String POSTPage(Uri uri, byte[] bytes, int length)
         {
@@ -291,6 +292,12 @@ namespace Encog.Bot
 
         }
 
+        /// <summary>
+        /// Post to a page.
+        /// </summary>
+        /// <param name="uri">The URI to post to.</param>
+        /// <param name="stream">The stream.</param>
+        /// <returns>The page returned.</returns>
         public static string POSTPage(Uri uri, Stream stream)
         {
             WebRequest req = WebRequest.Create(uri);

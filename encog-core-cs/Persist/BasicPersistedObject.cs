@@ -55,7 +55,7 @@ namespace Encog.Persist
         /// Clone this object.
         /// </summary>
         /// <returns>A cloned object.</returns>
-        object ICloneable.Clone()
+        public virtual object Clone()
         {
             throw new NotImplementedException();
         }

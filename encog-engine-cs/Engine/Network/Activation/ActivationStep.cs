@@ -173,25 +173,13 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
+        public virtual object Clone()
         {
             ActivationStep result = new ActivationStep(Low, Center,
                     High);
             return result;
 
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
-        {
-            ActivationStep result = new ActivationStep(Low, Center,
-                    High);
-            return result;
-        }
-
+        }        
 
         /// <returns>Returns true, this activation function has a derivative.</returns>
         public virtual bool HasDerivative()

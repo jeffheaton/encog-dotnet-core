@@ -54,18 +54,9 @@ namespace Encog.Engine.Data
         /// <summary>
         /// Set the ideal data, the desired output.
         /// </summary>
-        ///
-        /// <param name="data"/>The ideal data.</param>
         double[] IdealArray
         {
-
-            /// <returns>The ideal data that the neural network should produce for thespecified input.</returns>
             get;
-            /// <summary>
-            /// Set the ideal data, the desired output.
-            /// </summary>
-            ///
-            /// <param name="data"/>The ideal data.</param>
             set;
         }
 
@@ -73,26 +64,17 @@ namespace Encog.Engine.Data
         /// <summary>
         /// Set the input.
         /// </summary>
-        ///
-        /// <param name="data"/>The input.</param>
         double[] InputArray
         {
-
-            /// <returns>The input that the neural network</returns>
             get;
-            /// <summary>
-            /// Set the input.
-            /// </summary>
-            ///
-            /// <param name="data"/>The input.</param>
             set;
         }
 
-        /// <returns>True if this training pair is supervised. That is, it has bothinput and ideal data.</returns>
+        /// <summary>
+        /// True if this training pair is supervised. That is, it has bothinput and ideal data.
+        /// </summary>
         bool Supervised
         {
-
-            /// <returns>True if this training pair is supervised. That is, it has bothinput and ideal data.</returns>
             get;
         }
     }

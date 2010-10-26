@@ -177,8 +177,8 @@ namespace Encog.Persist.Persistors
                     svm_parameter param = new svm_parameter();
                     svm_model model = new svm_model();
                     model.param = param;
-                    network.getModels()[index] = model;
-                    HandleModel(xmlin, network.getModels()[index]);
+                    network.Models[index] = model;
+                    HandleModel(xmlin, network.Models[index]);
                     index++;
                 }
                 else if (xmlin.IsIt(SVMNetworkPersistor.TAG_MODELS, false))
@@ -417,12 +417,12 @@ namespace Encog.Persist.Persistors
                     obj, true);
             SVMNetwork net = (SVMNetwork)obj;
 
-            xmlout.AddProperty(SVMNetworkPersistor.TAG_INPUT, net.getInputCount());
-            xmlout.AddProperty(SVMNetworkPersistor.TAG_OUTPUT, net.getOutputCount());
+            xmlout.AddProperty(SVMNetworkPersistor.TAG_INPUT, net.InputCount);
+            xmlout.AddProperty(SVMNetworkPersistor.TAG_OUTPUT, net.OutputCount);
             xmlout.BeginTag(SVMNetworkPersistor.TAG_MODELS);
-            for (int i = 0; i < net.getModels().Length; i++)
+            for (int i = 0; i < net.Models.Length; i++)
             {
-                SaveModel(xmlout, net.getModels()[i]);
+                SaveModel(xmlout, net.Models[i]);
             }
             xmlout.EndTag();
             xmlout.EndTag();

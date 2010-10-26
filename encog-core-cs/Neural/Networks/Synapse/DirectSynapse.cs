@@ -74,7 +74,7 @@ namespace Encog.Neural.Networks.Synapse
         /// Clone this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public override Object Clone()
+        public override object Clone()
         {
             DirectSynapse result = new DirectSynapse(this.FromLayer,
                    this.ToLayer);

@@ -57,7 +57,7 @@ namespace Encog.Engine.Opencl
         /// Construct a device.
         /// </summary>
         ///
-        /// <param name="device_0"/>The OpenCL device to base on.</param>
+        /// <param name="device">The OpenCL device to base on.</param>
         public EncogCLQueue(EncogCLDevice device)
         {
             EncogCLPlatform platform = device.Platform;
@@ -69,8 +69,8 @@ namespace Encog.Engine.Opencl
         /// Copy a float array to a buffer.
         /// </summary>
         ///
-        /// <param name="source"/>The array.</param>
-        /// <param name="targetBuffer"/>The buffer.</param>
+        /// <param name="source">The array.</param>
+        /// <param name="targetBuffer">The buffer.</param>
         public void Array2Buffer(float[] source, ComputeBuffer<float> targetBuffer)
         {
             GCHandle arrCHandle = GCHandle.Alloc(source, GCHandleType.Pinned);            
@@ -82,8 +82,8 @@ namespace Encog.Engine.Opencl
         /// Copy an int array to a buffer.
         /// </summary>
         ///
-        /// <param name="source"/>The source array.</param>
-        /// <param name="targetBuffer"/>The buffer.</param>
+        /// <param name="source">The source array.</param>
+        /// <param name="targetBuffer">The buffer.</param>
         public void Array2Buffer(int[] source, ComputeBuffer<int> targetBuffer)
         {
             GCHandle arrCHandle = GCHandle.Alloc(source, GCHandleType.Pinned);
@@ -95,8 +95,8 @@ namespace Encog.Engine.Opencl
         /// Copy a buffer to a float array.
         /// </summary>
         ///
-        /// <param name="sourceBuffer"/>The source buffer.</param>
-        /// <param name="target"/>The target array.</param>
+        /// <param name="sourceBuffer">The source buffer.</param>
+        /// <param name="target">The target array.</param>
         public void Buffer2Array(ComputeBuffer<float> sourceBuffer, float[] target)
         {
             GCHandle arrCHandle = GCHandle.Alloc(target, GCHandleType.Pinned);
@@ -108,8 +108,8 @@ namespace Encog.Engine.Opencl
         /// Copy a buffer to an int array.
         /// </summary>
         ///
-        /// <param name="sourceBuffer"/>The source buffer.</param>
-        /// <param name="target"/>The target array.</param>
+        /// <param name="sourceBuffer">The source buffer.</param>
+        /// <param name="target">The target array.</param>
         public void Buffer2Array(ComputeBuffer<int> sourceBuffer, int[] target)
         {
             GCHandle arrCHandle = GCHandle.Alloc(target, GCHandleType.Pinned);
@@ -121,7 +121,7 @@ namespace Encog.Engine.Opencl
         /// Execute the specified kernel.  
         /// </summary>
         ///
-        /// <param name="kernel"/>The kernel to execute.</param>
+        /// <param name="kernel">The kernel to execute.</param>
         public void Execute(EncogKernel kernel)
         {
             long[] globalWorkSize = new long[] { kernel.GlobalWork };
@@ -132,11 +132,11 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The OpenCL command queue.</returns>
+        /// <summary>
+        /// The OpenCL command queue.
+        /// </summary>
         public ComputeCommandQueue Commands
         {
-
-            /// <returns>The OpenCL command queue.</returns>
             get
             {
                 return this.commands;
@@ -154,11 +154,11 @@ namespace Encog.Engine.Opencl
         }
 
 
-        /// <returns>The device to use.</returns>
+        /// <summary>
+        /// The device to use.
+        /// </summary>
         public EncogCLDevice Device
         {
-
-            /// <returns>The device to use.</returns>
             get
             {
                 return device;

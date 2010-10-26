@@ -137,10 +137,10 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a training profile.
         /// </summary>
         ///
-        /// <param name="device"/>The device to use.</param>
-        /// <param name="localRatio"/>The local ratio.</param>
-        /// <param name="globalRatio"/>The global ratio.</param>
-        /// <param name="segmentationRatio"/>The segmentation ratio.</param>
+        /// <param name="device">The device to use.</param>
+        /// <param name="localRatio">The local ratio.</param>
+        /// <param name="globalRatio">The global ratio.</param>
+        /// <param name="segmentationRatio">The segmentation ratio.</param>
         public OpenCLTrainingProfile(EncogCLDevice device, double localRatio,
                 int globalRatio, double segmentationRatio)
             : base()
@@ -179,7 +179,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// Construct a training profile with the specified device and the value of one for all ratios.
         /// </summary>
         ///
-        /// <param name="device"/>The device to use.</param>
+        /// <param name="device">The device to use.</param>
         public OpenCLTrainingProfile(EncogCLDevice device)
             : this(device, 1.0d, 1, 1.0d)
         {
@@ -189,8 +189,8 @@ namespace Encog.Engine.Network.Train.Prop
         /// Calculate the kernel values.
         /// </summary>
         ///
-        /// <param name="kernel"/>The kernel to calculate for.</param>
-        /// <param name="training"/>The training params to use.</param>
+        /// <param name="kernel">The kernel to calculate for.</param>
+        /// <param name="training">The training params to use.</param>
         public void CalculateKernelParams(EncogKernel kernel,
                 IEngineIndexableSet training)
         {
@@ -271,23 +271,14 @@ namespace Encog.Engine.Network.Train.Prop
         }
 
         /// <summary>
-        /// Set the device to use.
+        /// The device to use.
         /// </summary>
-        ///
-        /// <param name="device"/>The device to use.</param>
         public EncogCLDevice Device
         {
-
-            /// <returns>The device to use.</returns>
             get
             {
                 return device;
             }
-            /// <summary>
-            /// Set the device to use.
-            /// </summary>
-            ///
-            /// <param name="device"/>The device to use.</param>
             set
             {
                 this.device = value;
@@ -296,24 +287,22 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The local ratio.</returns>
+        /// <summary>
+        /// The local ratio.
+        /// </summary>
         public double LocalRatio
         {
-
-            /// <returns>The local ratio.</returns>
             get
             {
                 return localRatio;
             }
         }
 
-
-
-        /// <returns>The global ratio.</returns>
+        /// <summary>
+        /// The global ratio.
+        /// </summary>
         public int GlobalRatio
         {
-
-            /// <returns>The global ratio.</returns>
             get
             {
                 return globalRatio;
@@ -322,24 +311,22 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The segmentation ratio.</returns>
+        /// <summary>
+        /// The segmentation ratio.
+        /// </summary>
         public double SegmentationRatio
         {
-
-            /// <returns>The segmentation ratio.</returns>
             get
             {
                 return segmentationRatio;
             }
         }
 
-
-
-        /// <returns>The calculated size of the global workgroup.</returns>
+        /// <summary>
+        /// The calculated size of the global workgroup.
+        /// </summary>
         public int KernelGlobalWorkgroup
         {
-
-            /// <returns>The calculated size of the global workgroup.</returns>
             get
             {
                 return kernelGlobalWorkgroup;
@@ -348,11 +335,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The calculated size of the local workgroup.</returns>
+        /// <summary>
+        /// The calculated size of the local workgroup.
+        /// </summary>
         public int KernelLocalWorkgroup
         {
-
-            /// <returns>The calculated size of the local workgroup.</returns>
             get
             {
                 return kernelLocalWorkgroup;
@@ -361,11 +348,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The number of training items processed per call.</returns>
+        /// <summary>
+        /// The number of training items processed per call.
+        /// </summary>
         public int KernelWorkPerCall
         {
-
-            /// <returns>The number of training items processed per call.</returns>
             get
             {
                 return kernelWorkPerCall;
@@ -374,11 +361,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The number of calls to the kernel that will be made. The number of segments.</returns>
+        /// <summary>
+        /// The number of calls to the kernel that will be made. The number of segments.
+        /// </summary>
         public int KernelNumberOfCalls
         {
-
-            /// <returns>The number of calls to the kernel that will be made. The number of segments.</returns>
             get
             {
                 return kernelNumberOfCalls;
@@ -387,11 +374,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The number of items in the remainder.</returns>
+        /// <summary>
+        /// The number of items in the remainder.
+        /// </summary>
         public int KernelRemainder
         {
-
-            /// <returns>The number of items in the remainder.</returns>
             get
             {
                 return kernelRemainder;
@@ -400,11 +387,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The size of the global and local workgroups for the remainder.</returns>
+        /// <summary>
+        /// The size of the global and local workgroups for the remainder.
+        /// </summary>
         public int KernelRemainderGlobal
         {
-
-            /// <returns>The size of the global and local workgroups for the remainder.</returns>
             get
             {
                 return kernelRemainderGlobal;
@@ -413,11 +400,11 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>The number of training items processed per call in the remainder.</returns>
+        /// <summary>
+        /// The number of training items processed per call in the remainder.
+        /// </summary>
         public int KernelRemainderPer
         {
-
-            /// <returns>The number of training items processed per call in the remainder.</returns>
             get
             {
                 return kernelRemainderPer;
@@ -426,7 +413,10 @@ namespace Encog.Engine.Network.Train.Prop
 
 
 
-        /// <returns>All internal values as a string.</returns>
+        /// <summary>
+        /// All internal values as a string.
+        /// </summary>
+        /// <returns>The string.</returns>
         public override System.String ToString()
         {
             StringBuilder result = new StringBuilder();

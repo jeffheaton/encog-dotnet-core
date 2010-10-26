@@ -314,7 +314,7 @@ namespace Encog.Engine.Network.Flat
         /// </summary>
         ///
         /// <returns>A clone of the network.</returns>
-        public virtual System.Object Clone()
+        public virtual object Clone()
         {
             FlatNetwork result = new FlatNetwork();
             CloneFlatNetwork(result);
@@ -342,7 +342,7 @@ namespace Encog.Engine.Network.Flat
             result.activationFunctions = new IActivationFunction[this.activationFunctions.Length];
             for (int i = 0; i < result.activationFunctions.Length; i++)
             {
-                result.activationFunctions[i] = this.activationFunctions[i].Clone();
+                result.activationFunctions[i] = (IActivationFunction)this.activationFunctions[i].Clone();
             }
 
             result.beginTraining = this.beginTraining;

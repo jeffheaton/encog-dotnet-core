@@ -61,21 +61,12 @@ namespace Encog.Engine.Opencl
         /// <summary>
         /// Set the name of this platform or device.
         /// </summary>
-        ///
-        /// <param name="name_0"/>The name of this platform or device.</param>
         public String Name
         {
-
-            /// <returns>The name of this platform or device.</returns>
             get
             {
                 return this.name;
             }
-            /// <summary>
-            /// Set the name of this platform or device.
-            /// </summary>
-            ///
-            /// <param name="name_0"/>The name of this platform or device.</param>
             set
             {
                 this.name = value;
@@ -86,21 +77,12 @@ namespace Encog.Engine.Opencl
         /// <summary>
         /// Set the vender for this platform or device.
         /// </summary>
-        ///
-        /// <param name="vender_0"/>The vender.</param>
         public String Vender
         {
-
-            /// <returns>The vender for this platform or device.</returns>
             get
             {
                 return this.vender;
             }
-            /// <summary>
-            /// Set the vender for this platform or device.
-            /// </summary>
-            ///
-            /// <param name="vender_0"/>The vender.</param>
             set
             {
                 this.vender = value;
@@ -111,27 +93,16 @@ namespace Encog.Engine.Opencl
         /// <summary>
         /// Enable or disable this device or platform.
         /// </summary>
-        ///
-        /// <param name="enabled_0"/>True, if enabled.</param>
         public bool Enabled
         {
-
-            /// <returns>True if this device or platform is enabled.</returns>
             get
             {
                 return this.enabled;
             }
-            /// <summary>
-            /// Enable or disable this device or platform.
-            /// </summary>
-            ///
-            /// <param name="enabled_0"/>True, if enabled.</param>
             set
             {
                 this.enabled = value;
             }
         }
-
-
     }
 }

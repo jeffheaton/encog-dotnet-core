@@ -12,6 +12,9 @@ namespace Encog.Persist
     [Serializable]
     public abstract class BasicPersistedSubObject : IEncogPersistedObject
     {
+        /// <summary>
+        /// The description.
+        /// </summary>
         public string Description
         {
             get
@@ -24,6 +27,9 @@ namespace Encog.Persist
             }
         }
 
+        /// <summary>
+        /// The name of this object.
+        /// </summary>
         public string Name
         {
             get
@@ -36,6 +42,9 @@ namespace Encog.Persist
             }
         }
 
+        /// <summary>
+        /// The collection that this object belongs to.
+        /// </summary>
         public IEncogCollection Collection
         {
             get
@@ -54,7 +63,11 @@ namespace Encog.Persist
         /// <returns></returns>
         public abstract IPersistor CreatePersistor();
 
-        public object Clone()
+        /// <summary>
+        /// Clone the object.
+        /// </summary>
+        /// <returns>The cloned object.</returns>
+        public virtual object Clone()
         {
             throw new NotImplementedException();
         }

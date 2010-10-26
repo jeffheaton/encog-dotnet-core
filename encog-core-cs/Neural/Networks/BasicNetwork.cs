@@ -220,7 +220,7 @@ namespace Encog.Neural.Networks
         /// threshold values.
         /// </summary>
         /// <returns>A cloned copy of the neural network.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             return ObjectCloner.DeepCopy(this);
         }
@@ -231,7 +231,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
         /// <returns>The output from the neural network.</returns>
-        public INeuralData Compute(INeuralData input)
+        public virtual INeuralData Compute(INeuralData input)
         {
             return Compute(input, null);
         }
@@ -247,7 +247,7 @@ namespace Encog.Neural.Networks
         /// <param name="useHolder">Allows a holder to be specified, this allows
         /// propagation training to check the output of each layer.</param>
         /// <returns>The results from the output neurons.</returns>
-        public INeuralData Compute(INeuralData input,
+        public virtual INeuralData Compute(INeuralData input,
                  NeuralOutputHolder useHolder)
         {
             try
@@ -726,7 +726,7 @@ namespace Encog.Neural.Networks
         }
 
         /// <inheritdoc/>
-        public int InputCount
+        public virtual int InputCount
         {
             get
             {
@@ -739,7 +739,7 @@ namespace Encog.Neural.Networks
         }
 
         /// <inheritdoc/>
-        public int OutputCount
+        public virtual int OutputCount
         {
             get
             {

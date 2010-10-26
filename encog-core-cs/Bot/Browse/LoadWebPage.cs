@@ -126,7 +126,7 @@ namespace Encog.Bot.Browse
         private void CreateTagDataUnit(Tag tag)
         {
             TagDataUnit d = new TagDataUnit();
-            d.Tag = tag.Clone();
+            d.Tag = (Tag)tag.Clone();
 
             this.page.AddDataUnit(d);
         }

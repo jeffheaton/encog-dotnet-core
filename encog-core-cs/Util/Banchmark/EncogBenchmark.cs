@@ -203,7 +203,7 @@ namespace Encog.Util.Banchmark
 
                 }
             }
-            catch (Exception t)
+            catch (Exception)
             {
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "No OpenCL devices, result: 0");
@@ -219,7 +219,7 @@ namespace Encog.Util.Banchmark
                         "Evaluate OpenCL, tiny= "
                                 + Format.FormatInteger(small / 100));
             }
-            catch (Exception t)
+            catch (Exception)
             {
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, tiny FAILED");
@@ -232,7 +232,7 @@ namespace Encog.Util.Banchmark
                         "Evaluate OpenCL, small= "
                                 + Format.FormatInteger(medium / 30));
             }
-            catch (Exception t)
+            catch (Exception)
             {
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, small FAILED");
@@ -244,7 +244,7 @@ namespace Encog.Util.Banchmark
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, large= " + Format.FormatInteger(large));
             }
-            catch (Exception t)
+            catch (Exception)
             {
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, large FAILED");
@@ -256,7 +256,7 @@ namespace Encog.Util.Banchmark
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, huge= " + Format.FormatInteger(huge));
             }
-            catch (Exception t)
+            catch (Exception)
             {
                 this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                         "Evaluate OpenCL, huge FAILED");

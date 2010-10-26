@@ -209,16 +209,6 @@ namespace Encog.Normalize
         private int lastReport;
 
         /// <summary>
-        /// The name of this object.
-        /// </summary>
-        private String name;
-
-        /// <summary>
-        /// The description of this object.
-        /// </summary>
-        private String description;
-
-        /// <summary>
         /// Add an input field.
         /// </summary>
         /// <param name="f">The input field to add.</param>
@@ -890,7 +880,7 @@ namespace Encog.Normalize
         /// Not implemented.
         /// </summary>
         /// <returns>Not implemented.</returns>
-        public object Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

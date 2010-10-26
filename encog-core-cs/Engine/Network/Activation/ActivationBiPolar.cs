@@ -61,7 +61,7 @@ namespace Encog.Engine.Network.Activation
         /// functions do not support a derivative and will throw an error.
         /// </summary>
         ///
-        /// <param name="d"/>The input array to the activation function.</param>
+        /// <param name="d">The input array to the activation function.</param>
         /// <returns>The derivative.</returns>
         public virtual double DerivativeFunction(double d)
         {
@@ -130,18 +130,9 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
+        public object Clone()
         {
             return new ActivationBiPolar();
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
-        {
-            return Clone();
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Encog.Engine.Validate
         /// Determine if the network is valid. If invalid, throw an error.
         /// </summary>
         ///
-        /// <param name="network"/>The network to check.</param>
+        /// <param name="network">The network to check.</param>
         public virtual void Validate(IEngineMachineLearning network)
         {
             String msg = ((String)IsValid(network));

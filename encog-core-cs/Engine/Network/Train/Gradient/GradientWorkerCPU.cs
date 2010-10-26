@@ -156,45 +156,45 @@ namespace Encog.Engine.Network.Train.Gradient
         /// Construct a gradient worker.
         /// </summary>
         ///
-        /// <param name="network_0"/>The network to train.</param>
-        /// <param name="owner_1"/>The owner that is doing the training.</param>
-        /// <param name="training_2"/>The training data.</param>
-        /// <param name="low_3"/>The low index to use in the training data.</param>
-        /// <param name="high_4"/>The high index to use in the training data.</param>
-        public GradientWorkerCPU(FlatNetwork network_0,
-                TrainFlatNetworkProp owner_1,
-                IEngineIndexableSet training_2, int low_3, int high_4)
+        /// <param name="network">The network to train.</param>
+        /// <param name="owner">The owner that is doing the training.</param>
+        /// <param name="training">The training data.</param>
+        /// <param name="low">The low index to use in the training data.</param>
+        /// <param name="high">The high index to use in the training data.</param>
+        public GradientWorkerCPU(FlatNetwork network,
+                TrainFlatNetworkProp owner,
+                IEngineIndexableSet training, int low, int high)
         {
             this.errorCalculation = new ErrorCalculation();
-            this.network = network_0;
-            this.training = training_2;
-            this.low = low_3;
-            this.high = high_4;
-            this.owner = owner_1;
+            this.network = network;
+            this.training = training;
+            this.low = low;
+            this.high = high;
+            this.owner = owner;
 
             this.stopwatch = new Stopwatch();
 
-            this.layerDelta = new double[network_0.LayerOutput.Length];
-            this.gradients = new double[network_0.Weights.Length];
-            this.actual = new double[network_0.OutputCount];
+            this.layerDelta = new double[network.LayerOutput.Length];
+            this.gradients = new double[network.Weights.Length];
+            this.actual = new double[network.OutputCount];
 
-            this.weights = network_0.Weights;
-            this.layerIndex = network_0.LayerIndex;
-            this.layerCounts = network_0.LayerCounts;
-            this.weightIndex = network_0.WeightIndex;
-            this.layerOutput = network_0.LayerOutput;
-            this.layerFeedCounts = network_0.LayerFeedCounts;
+            this.weights = network.Weights;
+            this.layerIndex = network.LayerIndex;
+            this.layerCounts = network.LayerCounts;
+            this.weightIndex = network.WeightIndex;
+            this.layerOutput = network.LayerOutput;
+            this.layerFeedCounts = network.LayerFeedCounts;
 
-            this.pair = BasicEngineData.CreatePair(network_0.InputCount,
-                    network_0.OutputCount);
+            this.pair = BasicEngineData.CreatePair(network.InputCount,
+                    network.OutputCount);
         }
 
 
-        /// <returns>Elapsed time for the last iteration.</returns>
+        /// <summary>
+        /// Elapsed time for the last iteration.
+        /// </summary>
         public virtual long ElapsedTime
         {
-
-            /// <returns>Elapsed time for the last iteration.</returns>
             get
             {
                 return this.elapsedTime;
@@ -203,11 +203,11 @@ namespace Encog.Engine.Network.Train.Gradient
 
 
 
-        /// <returns>The weights for this network.</returns>
+        /// <summary>
+        /// The weights for this network.
+        /// </summary>
         public virtual double[] Weights
         {
-
-            /// <returns>The weights for this network.</returns>
             get
             {
                 return this.weights;
@@ -219,8 +219,8 @@ namespace Encog.Engine.Network.Train.Gradient
         /// Process one training set element.
         /// </summary>
         ///
-        /// <param name="input"/>The network input.</param>
-        /// <param name="ideal"/>The ideal values.</param>
+        /// <param name="input">The network input.</param>
+        /// <param name="ideal">The ideal values.</param>
         private void Process(double[] input, double[] ideal)
         {
             this.network.Compute(input, this.actual);
@@ -245,7 +245,7 @@ namespace Encog.Engine.Network.Train.Gradient
         /// Process one level.
         /// </summary>
         ///
-        /// <param name="currentLevel"/>The level.</param>
+        /// <param name="currentLevel">The level.</param>
         private void ProcessLevel(int currentLevel)
         {
             int fromLayerIndex = this.layerIndex[currentLevel + 1];
@@ -307,11 +307,11 @@ namespace Encog.Engine.Network.Train.Gradient
         }
 
 
-        /// <returns>The network training.</returns>
+        /// <summary>
+        /// The network training.
+        /// </summary>
         public virtual FlatNetwork Network
         {
-
-            /// <returns>The network training.</returns>
             get
             {
                 return this.network;

@@ -40,35 +40,30 @@ namespace Encog.Engine.Network.Train.Gradient
     ///
     public interface IFlatGradientWorker : IEngineTask
     {
-
-
-        /// <returns>The weights for this worker.</returns>
+        /// <summary>
+        /// The weights for this worker.
+        /// </summary>
         double[] Weights
         {
-
-            /// <returns>The weights for this worker.</returns>
             get;
         }
 
-
-
-        /// <returns>The network being trained by this thread.</returns>
+        /// <summary>
+        /// The network being trained by this thread.
+        /// </summary>
         FlatNetwork Network
         {
-
-            /// <returns>The network being trained by this thread.</returns>
             get;
         }
 
 
 
-        /// <returns>The elapsed time for the last iteration of this worker.</returns>
+        /// <summary>
+        /// The elapsed time for the last iteration of this worker.
+        /// </summary>
         long ElapsedTime
         {
-
-            /// <returns>The elapsed time for the last iteration of this worker.</returns>
             get;
         }
-
     }
 }

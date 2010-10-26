@@ -6,8 +6,17 @@ using System.IO;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// File utilities.
+    /// </summary>
     public static class FileUtil
     {
+        /// <summary>
+        /// Copy a stream from one 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public static int CopyStream(Stream input, Stream output)
         {
             int result = 0;
@@ -21,9 +30,6 @@ namespace Encog.Util
                 output.Write(buffer, 0, read);
                 result += read;
             }
-
-            return result;
         }
-
     }
 }

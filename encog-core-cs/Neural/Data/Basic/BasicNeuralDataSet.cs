@@ -152,9 +152,6 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         private IList<BasicNeuralEnumerator> enumerators =
             new List<BasicNeuralEnumerator>();
-
-        private String description;
-        private String name;
         	
         /// <summary>
         /// Construct a data set from an already created list. Mostly used to
@@ -308,7 +305,7 @@ namespace Encog.Neural.Data.Basic
         /// Clone this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             BasicNeuralDataSet result = new BasicNeuralDataSet();
             foreach(INeuralDataPair pair in this.Data )

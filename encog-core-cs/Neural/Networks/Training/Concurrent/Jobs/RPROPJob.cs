@@ -82,7 +82,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
             this.IterationsPer = iterationsPer;
         }
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override void CreateTrainer(OpenCLTrainingProfile profile, bool singleThreaded)
         {
             Propagation.Propagation train = new ResilientPropagation(Network,

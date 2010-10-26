@@ -45,7 +45,7 @@ namespace Encog.Engine.Opencl.Exceptions
         /// Construct the exception.
         /// </summary>
         ///
-        /// <param name="t"/>The wrapped exception.</param>
+        /// <param name="t">The wrapped exception.</param>
         public MissingOpenCLAdapterError(Exception t)
             : base("Can't find the JOCL native DLL or OpenCL system. (see: http://www.heatonresearch.com/encog/troubleshooting/nocl.html)", t)
         {

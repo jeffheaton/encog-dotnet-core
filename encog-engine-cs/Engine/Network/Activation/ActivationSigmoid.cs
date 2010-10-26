@@ -63,22 +63,13 @@ namespace Encog.Engine.Network.Activation
             this.paras = new double[1];
             this.paras[ActivationSigmoid.PARAM_SIGMOID_SLOPE] = 1;
         }
+        
 
         /// <summary>
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationSigmoid();
-
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public virtual object Clone()
         {
             return new ActivationSigmoid();
         }

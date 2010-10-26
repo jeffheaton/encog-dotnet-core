@@ -69,25 +69,25 @@ namespace Encog.Engine.Network.Flat
         /// Construct a flat layer.
         /// </summary>
         ///
-        /// <param name="activation_0"/>The activation function.</param>
-        /// <param name="count_1"/>The neuron count.</param>
-        /// <param name="biasActivation_2"/>The bias activation.</param>
-        /// <param name="params"/>The parameters.</param>
-        public FlatLayer(IActivationFunction activation_0, int count_1,
-                double biasActivation_2, double[] paras)
+        /// <param name="activation">The activation function.</param>
+        /// <param name="count">The neuron count.</param>
+        /// <param name="biasActivation">The bias activation.</param>
+        /// <param name="paras">The parameters.</param>
+        public FlatLayer(IActivationFunction activation, int count,
+                double biasActivation, double[] paras)
         {
-            this.activation = activation_0;
-            this.count = count_1;
-            this.biasActivation = biasActivation_2;
+            this.activation = activation;
+            this.count = count;
+            this.biasActivation = biasActivation;
             this.contextFedBy = null;
         }
 
 
-        /// <returns>the activation</returns>
+        /// <summary>
+        /// The activation.
+        /// </summary>
         public IActivationFunction Activation
         {
-
-            /// <returns>the activation</returns>
             get
             {
                 return this.activation;
@@ -96,11 +96,11 @@ namespace Encog.Engine.Network.Flat
 
 
 
-        /// <returns>Get the bias activation.</returns>
+        /// <summary>
+        /// Get the bias activation.
+        /// </summary>
         public double BiasActivation
         {
-
-            /// <returns>Get the bias activation.</returns>
             get
             {
                 return this.biasActivation;
@@ -109,11 +109,11 @@ namespace Encog.Engine.Network.Flat
 
 
 
-        /// <returns>The number of neurons our context is fed by.</returns>
+        /// <summary>
+        /// The number of neurons our context is fed by.
+        /// </summary>
         public int ContectCount
         {
-
-            /// <returns>The number of neurons our context is fed by.</returns>
             get
             {
                 if (this.contextFedBy == null)
@@ -131,21 +131,12 @@ namespace Encog.Engine.Network.Flat
         /// <summary>
         /// Set the layer that this layer's context is fed by.
         /// </summary>
-        ///
-        /// <param name="from"/>The layer feeding.</param>
         public FlatLayer ContextFedBy
         {
-
-            /// <returns>The layer that feeds this layer's context.</returns>
             get
             {
                 return this.contextFedBy;
             }
-            /// <summary>
-            /// Set the layer that this layer's context is fed by.
-            /// </summary>
-            ///
-            /// <param name="from"/>The layer feeding.</param>
             set
             {
                 this.contextFedBy = value;
@@ -154,11 +145,11 @@ namespace Encog.Engine.Network.Flat
 
 
 
-        /// <returns>the count</returns>
+        /// <summary>
+        /// The count.
+        /// </summary>
         public int Count
         {
-
-            /// <returns>the count</returns>
             get
             {
                 return this.count;
@@ -167,11 +158,11 @@ namespace Encog.Engine.Network.Flat
 
 
 
-        /// <returns>The total number of neurons on this layer, includes context, biasand regular.</returns>
+        /// <summary>
+        /// The total number of neurons on this layer, includes context, biasand regular.
+        /// </summary>
         public int TotalCount
         {
-
-            /// <returns>The total number of neurons on this layer, includes context, biasand regular.</returns>
             get
             {
                 if (this.contextFedBy == null)
@@ -188,11 +179,11 @@ namespace Encog.Engine.Network.Flat
 
 
 
-        /// <returns>the bias</returns>
+        /// <summary>
+        /// The bias.
+        /// </summary>
         public bool Bias
         {
-
-            /// <returns>the bias</returns>
             get
             {
                 return Math.Abs(this.biasActivation) > EncogEngine.DEFAULT_ZERO_TOLERANCE;
@@ -200,10 +191,7 @@ namespace Encog.Engine.Network.Flat
         }
 
 
-        /// <summary>
-        /// {@inheritDoc}
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override System.String ToString()
         {
             StringBuilder result = new StringBuilder();

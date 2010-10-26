@@ -157,7 +157,7 @@ namespace Encog.Neural.Networks.SVM
         /// </summary>
         /// <param name="input">The input to the SVM.</param>
         /// <returns>The results from the SVM.</returns>
-        public INeuralData Compute(INeuralData input)
+        public override INeuralData Compute(INeuralData input)
         {
             INeuralData result = new BasicNeuralData(this.outputCount);
 
@@ -177,7 +177,7 @@ namespace Encog.Neural.Networks.SVM
         /// <param name="input">The input to the SVM.</param>
         /// <param name="useHolder">The output holder to use.</param>
         /// <returns>The results from the SVM.</returns>
-        public INeuralData Compute(INeuralData input,
+        public override INeuralData Compute(INeuralData input,
                 NeuralOutputHolder useHolder)
         {
 
@@ -209,41 +209,53 @@ namespace Encog.Neural.Networks.SVM
         /// Create a persistor for this object.
         /// </summary>
         /// <returns>The newly created persistor.</returns>
-        public IPersistor CreatePersistor()
+        public override IPersistor CreatePersistor()
         {
             return new SVMNetworkPersistor();
         }
 
-        /**
-         * @return The input count.
-         */
-        public int getInputCount()
+        /// <summary>
+        /// The input count.
+        /// </summary>
+        public override int InputCount
         {
-            return this.inputCount;
+            get
+            {
+                return this.inputCount;
+            }
         }
 
-        /**
-         * @return The output count.
-         */
-        public int getOutputCount()
+        /// <summary>
+        /// The output count.
+        /// </summary>
+        public override int OutputCount
         {
-            return this.outputCount;
+            get
+            {
+                return this.outputCount;
+            }
         }
 
-        /**
-         * @return The SVM models for each output.
-         */
-        public svm_model[] getModels()
+        /// <summary>
+        /// The SVM models for each output.
+        /// </summary>
+        public svm_model[] Models
         {
-            return models;
+            get
+            {
+                return models;
+            }
         }
 
-        /**
-         * @return The SVM params for each of the outputs.
-         */
-        public svm_parameter[] getParams()
+        /// <summary>
+        /// The SVM params for each of the outputs.
+        /// </summary>
+        public svm_parameter[] Params
         {
-            return parameters;
+            get
+            {
+                return parameters;
+            }
         }
 
         /// <summary>

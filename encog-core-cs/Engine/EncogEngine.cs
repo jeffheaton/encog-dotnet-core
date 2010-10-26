@@ -72,11 +72,6 @@ namespace Encog.Engine
         /// <returns>The instance.</returns>
         public static EncogEngine Instance
         {
-            /// <summary>
-            /// Get the instance to the singleton.
-            /// </summary>
-            ///
-            /// <returns>The instance.</returns>
             get
             {
                 if (EncogEngine.instance == null)
@@ -117,15 +112,14 @@ namespace Encog.Engine
         ///
         public void Shutdown()
         {
-            //Org.Encog.Engine.Concurrency.EngineConcurrency.Instance.Shutdown(10000);
         }
 
 
-        /// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
+        /// <summary>
+        /// If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.
+        /// </summary>
         public EncogCL CL
         {
-
-            /// <returns>If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.</returns>
             get
             {
                 return this.cl;

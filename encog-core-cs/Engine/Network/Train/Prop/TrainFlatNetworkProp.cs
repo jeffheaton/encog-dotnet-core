@@ -119,29 +119,32 @@ namespace Encog.Engine.Network.Train.Prop
         /// Train a flat network multithreaded.
         /// </summary>
         ///
-        /// <param name="network_0"/>The network to train.</param>
-        /// <param name="training_1"/>The training data to use.</param>
-        public TrainFlatNetworkProp(FlatNetwork network_0,
-                IEngineDataSet training_1)
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        public TrainFlatNetworkProp(FlatNetwork network,
+                IEngineDataSet training)
         {
 
-            if (!(training_1 is IEngineIndexableSet))
+            if (!(training is IEngineIndexableSet))
             {
                 throw new EncogEngineError(
                         "Training data must be Indexable for this training type.");
             }
 
-            this.training = training_1;
-            this.network = network_0;
+            this.training = training;
+            this.network = network;
 
             this.gradients = new double[this.network.Weights.Length];
             this.lastGradient = new double[this.network.Weights.Length];
 
-            this.indexable = (IEngineIndexableSet)training_1;
+            this.indexable = (IEngineIndexableSet)training;
             this.numThreads = 0;
             this.reportedException = null;
         }
 
+        /// <summary>
+        /// Calculatee the gradients.
+        /// </summary>
         public virtual void CalculateGradients()
         {
             if (this.workers == null)
@@ -346,10 +349,10 @@ namespace Encog.Engine.Network.Train.Prop
         /// Called by the worker threads to report the progress at each step.
         /// </summary>
         ///
-        /// <param name="gradients_0"/>The gradients from that worker.</param>
-        /// <param name="error"/>The error for that worker.</param>
-        /// <param name="ex"/>The exception.</param>
-        public void Report(double[] gradients_0, double error,
+        /// <param name="gradients">The gradients from that worker.</param>
+        /// <param name="error">The error for that worker.</param>
+        /// <param name="ex">The exception.</param>
+        public void Report(double[] gradients, double error,
                 Exception ex)
         {
             lock (this)
@@ -357,9 +360,9 @@ namespace Encog.Engine.Network.Train.Prop
                 if (ex == null)
                 {
 
-                    for (int i = 0; i < gradients_0.Length; i++)
+                    for (int i = 0; i < gradients.Length; i++)
                     {
-                        this.gradients[i] += gradients_0[i];
+                        this.gradients[i] += gradients[i];
                     }
                     this.totalError += error;
                 }
@@ -375,12 +378,12 @@ namespace Encog.Engine.Network.Train.Prop
         /// the training.
         /// </summary>
         ///
-        /// <param name="gradients_0"/>The gradients.</param>
-        /// <param name="lastGradient_1"/>The last gradients.</param>
-        /// <param name="index"/>The index.</param>
+        /// <param name="gradient">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
         /// <returns>The update value.</returns>
-        public abstract double UpdateWeight(double[] gradients_0,
-                double[] lastGradient_1, int index);
+        public abstract double UpdateWeight(double[] gradient,
+                double[] lastGradient, int index);
 
         /// <summary>
         /// Perform the specified number of training iterations. This is a basic implementation 
@@ -388,7 +391,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// methods, particularly with the GPU, benefit greatly by calling with higher numbers than 1.
         /// </summary>
         ///
-        /// <param name="count"/>The number of training iterations.</param>
+        /// <param name="count">The number of training iterations.</param>
         public virtual void Iteration(int count)
         {
             for (int i = 0; i < count; i++)

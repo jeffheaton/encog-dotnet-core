@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// Not supported.
         /// </summary>
         /// <returns>Not supported.</returns>
-        public object Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

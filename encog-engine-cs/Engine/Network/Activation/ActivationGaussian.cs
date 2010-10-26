@@ -84,18 +84,7 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationGaussian(this.Center, this.Peak,
-        this.Width);
-
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public virtual object Clone()
         {
             return new ActivationGaussian(this.Center, this.Peak,
         this.Width);

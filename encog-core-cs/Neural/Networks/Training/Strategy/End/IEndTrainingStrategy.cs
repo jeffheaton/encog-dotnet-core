@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Encog.Neural.Networks.Training.Strategy.End
 {
+    /// <summary>
+    /// This is a training strategy that can be used to end training.
+    /// </summary>
     public interface IEndTrainingStrategy: IStrategy
     {
         /// <summary>

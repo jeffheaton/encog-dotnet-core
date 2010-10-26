@@ -72,11 +72,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         private BasicNetwork network;
 
         /// <summary>
-        /// The current flat network we are using for training, or null for none.
-        /// </summary>
-        private FlatNetwork currentFlatNetwork;
-
-        /// <summary>
         /// The current flat trainer we are using, or null for none.
         /// </summary>
         private ITrainFlatNetwork flatTraining;
@@ -104,16 +99,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
         }
 
-        /// <summary>
-        /// The flat network.
-        /// </summary>
-        public FlatNetwork CurrentFlatNetwork
-        {
-            get
-            {
-                return this.currentFlatNetwork;
-            }
-        }
 
         /// <summary>
         /// The flat training.

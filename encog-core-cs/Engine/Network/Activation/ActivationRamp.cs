@@ -74,10 +74,10 @@ namespace Encog.Engine.Network.Activation
         /// Construct a ramp activation function.
         /// </summary>
         ///
-        /// <param name="thresholdHigh"/>The high threshold value.</param>
-        /// <param name="thresholdLow"/>The low threshold value.</param>
-        /// <param name="high"/>The high value, replaced if the high threshold is exceeded.</param>
-        /// <param name="low"/>The low value, replaced if the low threshold is exceeded.</param>
+        /// <param name="thresholdHigh">The high threshold value.</param>
+        /// <param name="thresholdLow">The low threshold value.</param>
+        /// <param name="high">The high value, replaced if the high threshold is exceeded.</param>
+        /// <param name="low">The low value, replaced if the low threshold is exceeded.</param>
         public ActivationRamp(double thresholdHigh,
                 double thresholdLow, double high, double low)
         {
@@ -98,25 +98,12 @@ namespace Encog.Engine.Network.Activation
         {
         }
 
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationRamp(
-                    this.paras[ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD],
-                    this.paras[ActivationRamp.PARAM_RAMP_LOW_THRESHOLD],
-                    this.paras[ActivationRamp.PARAM_RAMP_HIGH],
-                    this.paras[ActivationRamp.PARAM_RAMP_LOW]);
-
-        }
 
         /// <summary>
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public object Clone()
         {
             return new ActivationRamp(
                     this.paras[ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD],
@@ -127,49 +114,30 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <summary>
-        /// Set the high value.
+        /// The high value.
         /// </summary>
-        ///
-        /// <param name="d"/>The high value.</param>
         public double High
         {
-
-            /// <returns>the high</returns>
             get
             {
                 return this.paras[ActivationRamp.PARAM_RAMP_HIGH];
             }
-            /// <summary>
-            /// Set the high value.
-            /// </summary>
-            ///
-            /// <param name="d"/>The high value.</param>
             set
             {
                 this.SetParam(ActivationRamp.PARAM_RAMP_HIGH, value);
-
             }
         }
 
 
         /// <summary>
-        /// Set the low value.
+        /// The low value.
         /// </summary>
-        ///
-        /// <param name="d"/>The low value.</param>
         public double Low
         {
-
-            /// <returns>the low</returns>
             get
             {
                 return this.paras[ActivationRamp.PARAM_RAMP_LOW];
             }
-            /// <summary>
-            /// Set the low value.
-            /// </summary>
-            ///
-            /// <param name="d"/>The low value.</param>
             set
             {
                 this.SetParam(ActivationRamp.PARAM_RAMP_LOW, value);
@@ -180,21 +148,12 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// Set the threshold high.
         /// </summary>
-        ///
-        /// <param name="d"/>The threshold high.</param>
         public double ThresholdHigh
         {
-
-            /// <returns>the thresholdHigh</returns>
             get
             {
                 return this.paras[ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD];
             }
-            /// <summary>
-            /// Set the threshold high.
-            /// </summary>
-            ///
-            /// <param name="d"/>The threshold high.</param>
             set
             {
                 this.SetParam(ActivationRamp.PARAM_RAMP_HIGH_THRESHOLD, value);
@@ -203,23 +162,14 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <summary>
-        /// Set the threshold low.
+        /// The threshold low.
         /// </summary>
-        ///
-        /// <param name="d"/>The threshold low.</param>
         public double ThresholdLow
         {
-
-            /// <returns>the thresholdLow</returns>
             get
             {
                 return this.paras[ActivationRamp.PARAM_RAMP_LOW_THRESHOLD];
             }
-            /// <summary>
-            /// Set the threshold low.
-            /// </summary>
-            ///
-            /// <param name="d"/>The threshold low.</param>
             set
             {
                 this.SetParam(ActivationRamp.PARAM_RAMP_LOW_THRESHOLD, value);
@@ -228,6 +178,9 @@ namespace Encog.Engine.Network.Activation
 
 
 
+        /// <summary>
+        /// True, as this function does have a derivative.
+        /// </summary>
         /// <returns>True, as this function does have a derivative.</returns>
         public virtual bool HasDerivative()
         {
@@ -269,7 +222,7 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public virtual String[] ParamNames
         {
-            /// <inheritdoc />
+            
             get
             {
                 String[] result = { "thresholdHigh", "thresholdLow", "high",

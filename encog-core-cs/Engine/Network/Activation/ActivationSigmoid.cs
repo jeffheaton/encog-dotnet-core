@@ -60,19 +60,10 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
+        public object Clone()
         {
             return new ActivationSigmoid();
 
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
-        {
-            return new ActivationSigmoid();
         }
 
         /// <returns>True, sigmoid has a derivative.</returns>

@@ -208,7 +208,7 @@ namespace Encog.MathUtil.Matrices
         /// Clone the matrix.
         /// </summary>
         /// <returns>A cloned copy of the matrix.</returns>
-        public Object Clone()
+        public override object Clone()
         {
             return new Matrix(this.matrix);
         }

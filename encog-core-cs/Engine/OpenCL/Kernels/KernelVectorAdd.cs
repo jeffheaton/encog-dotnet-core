@@ -80,8 +80,8 @@ namespace Encog.Engine.Opencl.Kernels
         /// Construct a simple kernel to add two vectors.
         /// </summary>
         ///
-        /// <param name="device"/>The device to use.</param>
-        /// <param name="length"/>The length of the vector.</param>
+        /// <param name="device">The device to use.</param>
+        /// <param name="length">The length of the vector.</param>
         public KernelVectorAdd(EncogCLDevice device, int length)
             : base(device, "Encog.Engine.Resources.KernelVectorAdd.txt", "VectorAdd")
         {
@@ -102,9 +102,9 @@ namespace Encog.Engine.Opencl.Kernels
         /// Perform the addition.
         /// </summary>
         ///
-        /// <param name="device"/>The OpenCL device to use.</param>
-        /// <param name="inputA"/>The first vector to add.</param>
-        /// <param name="inputB"/>The second vector to add.</param>
+        /// <param name="device">The OpenCL device to use.</param>
+        /// <param name="inputA">The first vector to add.</param>
+        /// <param name="inputB">The second vector to add.</param>
         /// <returns>The result of the addition.</returns>
         public double[] Add(EncogCLDevice device, double[] inputA,
                 double[] inputB)

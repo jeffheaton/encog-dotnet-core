@@ -50,7 +50,7 @@ namespace Encog.Engine.Validate
         /// Determine if the network is valid. Return null, if it is.
         /// </summary>
         ///
-        /// <param name="network"/>THe network to check.</param>
+        /// <param name="network">THe network to check.</param>
         /// <returns>Null if valid, or a string error, if invalid.</returns>
         String IsValid(IEngineMachineLearning network);
 
@@ -58,7 +58,7 @@ namespace Encog.Engine.Validate
         /// Determine if the network is valid. If invalid, throw an error.
         /// </summary>
         ///
-        /// <param name="network"/>The network to check.</param>
+        /// <param name="network">The network to check.</param>
         void Validate(IEngineMachineLearning network);
     }
 }

@@ -96,7 +96,7 @@ namespace Encog.Neural.Networks.Synapse
         /// Clone the object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public override Object Clone()
+        public override object Clone()
         {
             OneToOneSynapse result = new OneToOneSynapse(FromLayer,
                    ToLayer);

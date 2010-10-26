@@ -52,8 +52,8 @@ namespace Encog.Engine.Opencl.Exceptions
         /// Construct an exception that holds another exception.
         /// </summary>
         ///
-        /// <param name="msg"/>A message.</param>
-        /// <param name="t"/>The other exception.</param>
+        /// <param name="msg">A message.</param>
+        /// <param name="t">The other exception.</param>
         public OpenCLError(String msg, Exception t)
             : base(msg, t)
         {
@@ -63,7 +63,7 @@ namespace Encog.Engine.Opencl.Exceptions
         /// Construct an exception that holds another exception.
         /// </summary>
         ///
-        /// <param name="t"/>The other exception.</param>
+        /// <param name="t">The other exception.</param>
         public OpenCLError(Exception t)
             : base(t)
         {

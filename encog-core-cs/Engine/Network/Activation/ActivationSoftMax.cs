@@ -58,17 +58,7 @@ namespace Encog.Engine.Network.Activation
         /// Clone the object.
         /// </summary>
         /// <returns>The cloned object.</returns>
-        public IActivationFunction Clone()
-        {
-            return new ActivationSoftMax();
-
-        }
-
-        /// <summary>
-        /// Clone the object.
-        /// </summary>
-        /// <returns>The cloned object.</returns>
-        object ICloneable.Clone()
+        public object Clone()
         {
             return new ActivationSoftMax();
         }

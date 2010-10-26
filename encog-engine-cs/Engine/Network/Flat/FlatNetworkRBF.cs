@@ -97,7 +97,7 @@ namespace Encog.Engine.Network.Flat
         /// </summary>
         ///
         /// <returns>A clone of the network.</returns>
-        public override System.Object Clone()
+        public override object Clone()
         {
             FlatNetworkRBF result = new FlatNetworkRBF();
             CloneFlatNetwork(result);

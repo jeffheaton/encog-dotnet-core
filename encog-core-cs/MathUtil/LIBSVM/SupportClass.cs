@@ -239,7 +239,7 @@ namespace Encog.MathUtil.LIBSVM
             }
 
             /// <summary>
-            //  Performs the same action as HasMoreTokens.
+            ///  Performs the same action as HasMoreTokens.
             /// </summary>
             /// <returns>True or false, depending if there are more tokens</returns>
             public bool MoveNext()
