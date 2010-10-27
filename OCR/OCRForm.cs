@@ -401,13 +401,15 @@ namespace Chapter12OCR
 
         public void TrainNetwork()
         {
-            
-              CompetitiveTraining train = new CompetitiveTraining(this.network,
-					0.25, trainingSet, new NeighborhoodGaussian(
-							new GaussianFunction(0, 1, 2)));			
+
+            CompetitiveTraining train = new CompetitiveTraining(this.network,
+                  0.25, trainingSet, new NeighborhoodSingleRBF(
+                          new GaussianFunction(0, 1, 2)));
+            train.ForceWinner = true;
             int tries = 1;
-            
-			do {
+
+            do
+            {
                 try
                 {
                     train.Iteration();
@@ -416,12 +418,12 @@ namespace Chapter12OCR
                     tries++;
                     double e = train.Error;
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     // just exist if there is an error
                     break;
                 }
-			} while ((train.Error > MAX_ERROR) && this.training );
+            } while ((train.Error > MAX_ERROR) && this.training);
 
             MessageBox.Show("Training complete.");
         }

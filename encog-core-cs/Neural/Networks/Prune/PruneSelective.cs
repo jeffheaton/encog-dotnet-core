@@ -40,6 +40,7 @@ using log4net;
 using Encog.MathUtil.RBF;
 using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
+using Encog.Engine.Network.RBF;
 
 namespace Encog.Neural.Networks.Prune
 {

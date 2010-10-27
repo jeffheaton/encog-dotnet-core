@@ -15,25 +15,21 @@ namespace Encog.Neural.Networks.Layers
         /// Regular Gaussian function.
         /// </summary>
         Gaussian,
-        /// <summary>
-        /// Multi Gaussian function.
-        /// </summary>
-        GaussianMulti,
+        
         /// <summary>
         /// Multi quadric function.
         /// </summary>
         Multiquadric,
-        /// <summary>
-        /// Multi multi quadric function.
-        /// </summary>
-        MultiquadricMulti,
+        
         /// <summary>
         /// Inverse multi quadric function.
         /// </summary>
         InverseMultiquadric,
+
         /// <summary>
-        /// Inverse multi quadric function.
+        /// The Mexican hat function.
         /// </summary>
-        InverseMultiquadricMulti,
+        MexicanHat
+        
     }
 }

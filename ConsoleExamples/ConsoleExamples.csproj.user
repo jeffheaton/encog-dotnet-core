@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>-pause opencl-sunspots</StartArguments>
+    <StartArguments>-pause xor-radial</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause opencl-sunspots</StartArguments>
+    <StartArguments>-pause xor-radial</StartArguments>
   </PropertyGroup>
 </Project>

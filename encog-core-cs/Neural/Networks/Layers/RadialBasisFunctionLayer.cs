@@ -42,6 +42,7 @@ using Encog.Persist.Persistors;
 using log4net;
 using Encog.Engine.Network.Activation;
 using Encog.Engine.Util;
+using Encog.Engine.Network.RBF;
 #endif
 namespace Encog.Neural.Networks.Layers
 {
@@ -123,12 +124,11 @@ namespace Encog.Neural.Networks.Layers
                 }
 
                 IRadialBasisFunction f = this.radialBasisFunction[i];
-                double total = 0;
-                for (int j = 0; j < pattern.Count; j++)
-                {
-                    double value = f.Calculate(pattern[j]);
-                    total += value * value;
-                }
+
+                if (pattern.Data.Length != f.Dimensions)
+                    throw new Exception("Inputs must equal the number of dimensions.");
+
+                double total = f.Calculate(pattern.Data);
 
                 result[i] = BoundMath.Sqrt(total);
 
@@ -143,7 +143,7 @@ namespace Encog.Neural.Networks.Layers
         /// <returns></returns>
         public override IPersistor CreatePersistor()
         {
-            return new RadialBasisFunctionLayerPersistor();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -164,51 +164,34 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// Set the gausian components to random values.
         /// </summary>
+        /// <param name="dimensions">The number of dimensions in the network.</param>
         /// <param name="min">The minimum value for the centers, widths and peaks.</param>
         /// <param name="max">The maximum value for the centers, widths and peaks.</param>
         /// <param name="RBFType">The RBF to use.</param>
-        public void RandomizeRBFCentersAndWidths(double min, double max, RBFEnum RBFType)
+        public void RandomizeRBFCentersAndWidths(int dimensions, double min, double max, RBFEnum t)
         {
+            double[] centers = new double[dimensions];
+            for (int i = 0; i < centers.Length; i++)
+            {
+                centers[i] = RangeRandomizer.Randomize(min, max);
+            }
+
             for (int i = 0; i < this.NeuronCount; i++)
             {
-                SetRBFFunction(i, RBFType, RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max));
+                SetRBFFunction(i, t, centers, 1.0, RangeRandomizer.Randomize(min, max));
             }
         }
 
-        /// <summary>
-        /// Set the RBF centers and widths.
-        /// </summary>
-        /// <param name="centers">The centers.</param>
-        /// <param name="widths">The widths.</param>
-        /// <param name="RBFType">The types of functions.</param>
-        public void SetRBFCentersAndWidths(double[] centers, double[] widths, RBFEnum RBFType)
-        {
-            for (int i = 0; i < this.NeuronCount; i++)
-                SetRBFFunction(i, RBFType, centers[i], RangeRandomizer.Randomize(0, 1), widths[i]);
-        }
-
-        /// <summary>
-        /// Set the type of RBF function.
-        /// </summary>
-        /// <param name="RBFIndex">The RBF index.</param>
-        /// <param name="RBFType">The RBF type.</param>
-        /// <param name="center">The centers.</param>
-        /// <param name="peak">The peaks.</param>
-        /// <param name="width">The widths.</param>
-        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double center, double peak, double width)
+        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double[] center, double peak, double width)
         {
             if (RBFType == RBFEnum.Gaussian)
-                this.radialBasisFunction[RBFIndex] = new GaussianFunction(center, peak, width);
-            else if (RBFType == RBFEnum.GaussianMulti)
-                throw new NotSupportedException();
+                this.radialBasisFunction[RBFIndex] = new GaussianFunction(peak, center, width);
             else if (RBFType == RBFEnum.Multiquadric)
-                this.radialBasisFunction[RBFIndex] = new MultiquadricFunction(center, peak, width);
-            else if (RBFType == RBFEnum.MultiquadricMulti)
-                throw new NotSupportedException();
+                this.radialBasisFunction[RBFIndex] = new MultiquadricFunction(peak, center, width);
             else if (RBFType == RBFEnum.InverseMultiquadric)
-                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunction(center, peak, width);
-            else if (RBFType == RBFEnum.InverseMultiquadricMulti)
-                throw new NotSupportedException();
+                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunction(peak, center, width);
+            else if (RBFType == RBFEnum.MexicanHat)
+                this.radialBasisFunction[RBFIndex] = new MexicanHatFunction(peak, center, width);
         }
     }
 

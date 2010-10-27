@@ -129,7 +129,7 @@
     <Compile Include="Engine\Network\Flat\FlatNetwork.cs" />
     <Compile Include="Engine\Network\Flat\FlatNetworkRBF.cs" />
     <Compile Include="Engine\Network\Flat\ValidateForOpenCL.cs" />
-    <Compile Include="Engine\Network\RBF\RadialBasisFunction.cs" />
+    <Compile Include="Engine\Network\RBF\IRadialBasisFunction.cs" />
     <Compile Include="Engine\Network\Train\Gradient\GradientWorkerCPU.cs" />
     <Compile Include="Engine\Network\Train\Gradient\IFlatGradientWorker.cs" />
     <Compile Include="Engine\Network\Train\ITrainFlatNetwork.cs" />
@@ -185,10 +185,10 @@
     <Compile Include="MathUtil\NumericRange.cs" />
     <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
+    <Compile Include="MathUtil\RBF\BasicRBF.cs" />
     <Compile Include="MathUtil\RBF\InverseMultiquadricFunction.cs" />
-    <Compile Include="MathUtil\RBF\InverseMultiquadricFunctionMulti.cs" />
+    <Compile Include="MathUtil\RBF\MexicanHatFunction.cs" />
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
-    <Compile Include="MathUtil\RBF\MultiquadricFunctionMulti.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralData.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
@@ -237,7 +237,6 @@
     <Compile Include="Neural\Networks\Layers\ILayer.cs" />
     <Compile Include="Neural\Networks\INetwork.cs" />
     <Compile Include="Neural\Networks\Layers\RadialBasisFunctionLayer.cs" />
-    <Compile Include="Neural\Networks\Layers\RadialBasisFunctionMultiLayer.cs" />
     <Compile Include="Neural\Networks\Logic\ART1Logic.cs" />
     <Compile Include="Neural\Networks\Logic\ARTLogic.cs" />
     <Compile Include="Neural\Networks\Logic\BAMLogic.cs" />
@@ -299,9 +298,9 @@
     <Compile Include="Neural\Networks\Training\Competitive\CompetitiveTraining.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\INeighborhoodFunction.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodBubble.cs" />
-    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussian.cs" />
-    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodGaussianMulti.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodRBF.cs" />
     <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodSingle.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\NeighborhoodSingleRBF.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\ConcurrentTrainingManager.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Jobs\BPROPJob.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Jobs\RPROPJob.cs" />
@@ -500,9 +499,6 @@
     <Compile Include="MathUtil\LinearCongruentialGenerator.cs" />
     <Compile Include="MathUtil\MathConst.cs" />
     <Compile Include="MathUtil\RBF\GaussianFunction.cs" />
-    <Compile Include="MathUtil\RBF\GaussianFunctionMulti.cs" />
-    <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
-    <Compile Include="MathUtil\RBF\IRadialBasisFunctionMulti.cs" />
     <Compile Include="MathUtil\ThreadSafeRandom.cs" />
     <Compile Include="Util\ObjectCloner.cs" />
     <Compile Include="MathUtil\Randomize\BasicRandomizer.cs" />

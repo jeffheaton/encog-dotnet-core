@@ -35,6 +35,7 @@ using System.Text;
 using log4net;
 using Encog.MathUtil;
 using Encog.Engine.Util;
+using Encog.Engine.Network.RBF;
 #endif
 
 namespace Encog.MathUtil.RBF
@@ -45,137 +46,72 @@ namespace Encog.MathUtil.RBF
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class MultiquadricFunction : IRadialBasisFunction
+    public class MultiquadricFunction : BasicRBF
     {
 
-        /// <summary>
-        /// The center of the RBF.
-        /// </summary>
-        private double center;
+        	/**
+	 * Create centered at zero, width 0, and peak 0.
+	 */
+	public MultiquadricFunction(int dimensions)
+	{
+		this.Centers = new double[dimensions];
+		this.Peak = 1.0;
+		this.Width = 1.0;		
+	}
+	
+	/**
+	 * Construct a multi-dimension Multiquadric function with the specified peak,
+	 * centers and widths.
+	 * 
+	 * @param peak
+	 *            The peak for all dimensions.
+	 * @param center
+	 *            The centers for each dimension.
+	 * @param width
+	 *            The widths for each dimension.
+	 */
+	public MultiquadricFunction(double peak, double[] center,
+			double width) {
+		this.Centers = center;
+		this.Peak = peak;
+		this.Width = width;
+	}
+	
+	/**
+	 * Construct a single-dimension Multiquadric function with the specified peak,
+	 * centers and widths.
+	 * 
+	 * @param peak
+	 *            The peak for all dimensions.
+	 * @param center
+	 *            The centers for each dimension.
+	 * @param width
+	 *            The widths for each dimension.
+	 */
+	public MultiquadricFunction(double center, double peak,
+			double width) {
+		this.Centers = new double[1];
+		this.Centers[0] = center;
+		this.Peak = peak;
+		this.Width = width;
+	}
 
-        /// <summary>
-        /// The peak of the RBF.
-        /// </summary>
-        private double peak;
 
-        /// <summary>
-        /// The width of the RBF.
-        /// </summary>
-        private double width;
+	/**
+	 * {@inheritDoc}
+	 */
+	public override double Calculate(double[] x) {
+		double value = 0;
+		double[] center = Centers;
+		double width = Width;
 
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly static ILog LOGGER = LogManager.GetLogger(typeof(MultiquadricFunction));
-#endif
+		for (int i = 0; i < center.Length; i++) {
+			value += Math.Pow(x[i] - center[i], 2)
+					+ (width * width);
+		}
+		return this.Peak * BoundMath.Sqrt(value);
+	}
 
-        /// <summary>
-        /// Construct a Multiquadric RBF with the specified center, peak and
-        /// width.
-        /// </summary>
-        /// <param name="center">The center.</param>
-        /// <param name="peak">The peak.</param>
-        /// <param name="width">The width.</param>
-        public MultiquadricFunction(double center, double peak,
-                 double width)
-        {
-            this.center = center;
-            this.peak = peak;
-            this.width = width;
-        }
-
-        /// <summary>
-        /// Calculate the value of the Multiquadric function for the specified
-        /// value.
-        /// </summary>
-        /// <param name="x">The value to calculate the Multiquadric function for.</param>
-        /// <returns>The return value for the Multiquadric function.</returns>
-        public double Calculate(double x)
-        {
-            return this.peak
-                    * BoundMath.Sqrt(BoundMath.Pow(x - this.center, 2)
-                            + (this.width * this.width));
-        }
-
-        /// <summary>
-        /// Calculate the value of the second derivative of the Multiquadric function 
-        /// for the specified value.
-        /// </summary>
-        /// <param name="x">The value to calculate the derivative Multiquadric 
-        /// function for.</param>
-        /// <returns>The return value for the derivative of the Multiquadric 
-        /// function.</returns>
-        public double CalculateFirstDerivative(double x)
-        {
-            return this.peak * (x - this.center)
-                    / BoundMath.Sqrt(BoundMath.Pow(x - this.center,2) + (this.width * this.width));
-        }
-
-        /// <summary>
-        /// Maintain implementation of first derivative calculation.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public double CalculateDerivative(double x)
-        {
-            return CalculateFirstDerivative(x);
-        }
-
-        /// <summary>
-        /// Calculate the value of the second derivative of the Multiquadric function 
-        /// for the specified value.
-        /// </summary>
-        /// <param name="x">The value to calculate the derivative Multiquadric 
-        /// function for.</param>
-        /// <returns>The return value for the derivative of the Multiquadric 
-        /// function.</returns>
-        public double CalculateSecondDerivative(double x)
-        {
-            return this.peak * this.width * this.width
-                / BoundMath.Pow(BoundMath.Pow(x - this.center, 2) + this.width * this.width, 1.5);
-        }
-
-        /// <summary>
-        /// The center of the RBF.
-        /// </summary>
-        public double Center
-        {
-            get
-            {
-                return this.center;
-            }
-            set
-            {
-                this.center = value;
-            }
-        }
-
-        /// <summary>
-        /// The peak of the RBF.
-        /// </summary>
-        public double Peak
-        {
-            get
-            {
-                return this.peak;
-            }
-        }
-
-        /// <summary>
-        /// The width of the RBF. 
-        /// </summary>
-        public double Width
-        {
-            get
-            {
-                return this.width;
-            }
-            set
-            {
-                this.width = value;
-            }
-        }
 
     }
 

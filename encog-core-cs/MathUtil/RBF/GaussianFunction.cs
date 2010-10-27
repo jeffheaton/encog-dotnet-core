@@ -35,6 +35,7 @@ using System.Text;
 using log4net;
 using Encog.MathUtil;
 using Encog.Engine.Util;
+using Encog.Engine.Network.RBF;
 #endif
 
 namespace Encog.MathUtil.RBF
@@ -45,111 +46,75 @@ namespace Encog.MathUtil.RBF
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class GaussianFunction : IRadialBasisFunction
+    public class GaussianFunction : BasicRBF
     {
+           	/**
+	 * Create centered at zero, width 0, and peak 0.
+	 */
+	public GaussianFunction(int dimensions)
+	{
+		this.Centers = new double[dimensions];
+		this.Peak = 1.0;
+		this.Width = 1.0;		
+	}
+	
+	/**
+	 * Construct a multi-dimension Gaussian function with the specified peak,
+	 * centers and widths.
+	 * 
+	 * @param peak
+	 *            The peak for all dimensions.
+	 * @param center
+	 *            The centers for each dimension.
+	 * @param width
+	 *            The widths for each dimension.
+	 */
+	public GaussianFunction( double peak,  double[] center,
+		 double width) {
+		this.Centers = center;
+		this.Peak = peak;
+		this.Width = width;
+	}
+	
+	/**
+	 * Construct a single-dimension Gaussian function with the specified peak,
+	 * centers and widths.
+	 * 
+	 * @param peak
+	 *            The peak for all dimensions.
+	 * @param center
+	 *            The centers for each dimension.
+	 * @param width
+	 *            The widths for each dimension.
+	 */
+	public GaussianFunction(double center, double peak,
+			double width) {
+		this.Centers = new double[1];
+		this.Centers[0] = center;
+		this.Peak = peak;
+		this.Width = width;
+	}
 
-        /// <summary>
-        /// The center of the RBF.
-        /// </summary>
-        private double center;
 
-        /// <summary>
-        /// The peak of the RBF.
-        /// </summary>
-        private double peak;
+	/**
+	 * Calculate the result from the function.
+	 * 
+	 * @param x
+	 *            The parameters for the function, one for each dimension.
+	 * @return The result of the function.
+	 */
+	public override double Calculate(double[] x) {
+		double value = 0;
+		double[] center = Centers;
+		double width = Width;
 
-        /// <summary>
-        /// The width of the RBF.
-        /// </summary>
-        private double width;
+		for (int i = 0; i < center.Length; i++) {
+			value += Math.Pow(x[i] - center[i], 2)
+					/ (2.0 * width * width);
+		}
+		return this.Peak * Math.Exp(-value);
+	}
 
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly static ILog LOGGER = LogManager.GetLogger(typeof(GaussianFunction));
-#endif
-
-        /// <summary>
-        /// Construct a Gaussian RBF with the specified center, peak and
-        /// width.
-        /// </summary>
-        /// <param name="center">The center.</param>
-        /// <param name="peak">The peak.</param>
-        /// <param name="width">The width.</param>
-        public GaussianFunction(double center, double peak,
-                 double width)
-        {
-            this.center = center;
-            this.peak = peak;
-            this.width = width;
-        }
-
-        /// <summary>
-        /// Calculate the value of the Gaussian function for the specified
-        /// value.
-        /// </summary>
-        /// <param name="x">The value to calculate the Gaussian function for.</param>
-        /// <returns>The return value for the Gaussian function.</returns>
-        public double Calculate(double x)
-        {
-            return this.peak
-                    * BoundMath.Exp(-BoundMath.Pow(x - this.center, 2)
-                            / (2.0 * this.width * this.width));
-        }
-
-        /// <summary>
-        /// Calculate the value of the derivative of the Gaussian function 
-        /// for the specified value.
-        /// </summary>
-        /// <param name="x">The value to calculate the derivative Gaussian 
-        /// function for.</param>
-        /// <returns>The return value for the derivative of the Gaussian 
-        /// function.</returns>
-        public double CalculateDerivative(double x)
-        {
-            return BoundMath.Exp(-0.5 * this.width * this.width * x * x) * this.peak
-                    * this.width * this.width
-                    * (this.width * this.width * x * x - 1);
-        }
-
-        /// <summary>
-        /// The center of the RBF.
-        /// </summary>
-        public double Center
-        {
-            get
-            {
-                return this.center;
-            }
-        }
-
-        /// <summary>
-        /// The peak of the RBF.
-        /// </summary>
-        public double Peak
-        {
-            get
-            {
-                return this.peak;
-            }
-        }
-
-        /// <summary>
-        /// The width of the RBF. 
-        /// </summary>
-        public double Width
-        {
-            get
-            {
-                return this.width;
-            }
-            set
-            {
-                this.width = value;
-            }
-        }
 
     }
-
 }

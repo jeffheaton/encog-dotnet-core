@@ -100,7 +100,7 @@ namespace Encog.Examples.XOR.Radial
             BasicNetwork network = pattern.Generate();
             RadialBasisFunctionLayer rbfLayer = (RadialBasisFunctionLayer)network.GetLayer(RadialBasisPattern.RBF_LAYER);
             network.Reset();
-            rbfLayer.RandomizeRBFCentersAndWidths(0, 1, RBFEnum.Gaussian);
+            rbfLayer.RandomizeRBFCentersAndWidths(2, -1, 1, RBFEnum.Gaussian);
 
 
             INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);

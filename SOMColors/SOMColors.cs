@@ -45,6 +45,7 @@ using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.MathUtil.Randomize;
 using Encog.MathUtil;
+using Encog.Neural.Networks.Layers;
 
 namespace SOMColors
 {
@@ -58,7 +59,7 @@ namespace SOMColors
 
         private BasicNetwork network;
         private CompetitiveTraining train;
-        private NeighborhoodGaussianMulti gaussian;
+        private INeighborhoodFunction gaussian;
         private IList<INeuralData> samples;
         private int iteration;
 
@@ -68,8 +69,9 @@ namespace SOMColors
 
             this.network = CreateNetwork();
             this.synapse = network.GetLayer(BasicNetwork.TAG_INPUT).Next[0];
-            this.gaussian = new NeighborhoodGaussianMulti(SOMColors.WIDTH, SOMColors.HEIGHT);
+            this.gaussian = new NeighborhoodRBF(RBFEnum.Gaussian ,SOMColors.WIDTH, SOMColors.HEIGHT);
             this.train = new CompetitiveTraining(this.network, 0.01, null, gaussian);
+
             train.ForceWinner = false;
 
             samples = new List<INeuralData>();

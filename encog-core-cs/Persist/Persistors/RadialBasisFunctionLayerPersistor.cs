@@ -38,6 +38,7 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 #if logging
 using log4net;
+using Encog.Engine.Network.RBF;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -213,8 +214,8 @@ namespace Encog.Persist.Persistors
                 IRadialBasisFunction rbf = layer.RadialBasisFunction[i];
                 xmlOut.BeginTag(
                 RadialBasisFunctionLayerPersistor.PROPERTY_RADIAL_FUNCTION);
-                xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_CENTER,
-                        rbf.Center);
+                //xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_CENTER,
+                //        rbf.Center);
                 xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_PEAK,
                         rbf.Peak);
                 xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_WIDTH,
