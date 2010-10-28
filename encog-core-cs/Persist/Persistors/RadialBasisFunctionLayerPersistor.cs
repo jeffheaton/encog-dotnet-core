@@ -39,6 +39,9 @@ using Encog.Neural.Networks.Layers;
 #if logging
 using log4net;
 using Encog.Engine.Network.RBF;
+using Encog.Util;
+using Encog.Neural;
+using Encog.Util.CSV;
 #endif
 
 namespace Encog.Persist.Persistors
@@ -48,185 +51,181 @@ namespace Encog.Persist.Persistors
     /// </summary>
     public class RadialBasisFunctionLayerPersistor : IPersistor
     {
-
         /// <summary>
         /// XML tag for the radial functions collection.
         /// </summary>
-        public const String PROPERTY_RADIAL_FUNCTIONS = "radialFunctions";
+        public static readonly String PROPERTY_RBF = "rbf";
 
         /// <summary>
-        /// XML tag for the radial functions collection.
+        /// The centers.
         /// </summary>
-        public const String PROPERTY_RADIAL_FUNCTION = "RadialFunction";
+        public static readonly String PROPERTY_CENTERS = "centers";
+
 
         /// <summary>
-        /// The center of the RBF. XML property.
+        /// The peak.
         /// </summary>
-        public const String PROPERTY_CENTER = "center";
+        public static readonly String PROPERTY_PEAK = "peak";
+
 
         /// <summary>
-        /// The peak of the RBF. XML property.
+        /// The width.
         /// </summary>
-        public const String PROPERTY_PEAK = "peak";
+        public static readonly String PROPERTY_WIDTH = "width";
 
+        
         /// <summary>
-        /// The width of the RBF. XML property.
+        /// Load a RBF layer. 
         /// </summary>
-        public const String PROPERTY_WIDTH = "width";
-
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(BasicNetwork));
-#endif
-
-        /// <summary>
-        /// Load a RBF layer.
-        /// </summary>
-        /// <param name="xmlIn">The XML to read from.</param>
+        /// <param name="xmlin">The XML to read from.</param>
         /// <returns>The object that was loaded.</returns>
-        public IEncogPersistedObject Load(ReadXML xmlIn)
+        public IEncogPersistedObject Load(ReadXML xmlin)
         {
-
-            IList<IRadialBasisFunction> radialFunctions =
-               new List<IRadialBasisFunction>();
             int neuronCount = 0;
             int x = 0;
             int y = 0;
+            int dimensions = 1;
+            IRadialBasisFunction[] rbfs = new IRadialBasisFunction[0];
 
-            String end = xmlIn.LastTag.Name;
+            String end = xmlin.LastTag.Name;
 
-            while (xmlIn.ReadToTag())
+            while (xmlin.ReadToTag())
             {
-                if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_NEURONS, true))
+                if (xmlin.IsIt(BasicLayerPersistor.PROPERTY_NEURONS, true))
                 {
-                    neuronCount = xmlIn.ReadIntToTag();
+                    neuronCount = xmlin.ReadIntToTag();
                 }
-                else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_X, true))
+                else if (xmlin.IsIt(BasicLayerPersistor.PROPERTY_X, true))
                 {
-                    x = xmlIn.ReadIntToTag();
+                    x = xmlin.ReadIntToTag();
                 }
-                else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_Y, true))
+                else if (xmlin.IsIt(BasicLayerPersistor.PROPERTY_Y, true))
                 {
-                    y = xmlIn.ReadIntToTag();
+                    y = xmlin.ReadIntToTag();
                 }
-                else if (xmlIn
-                  .IsIt(
-                  RadialBasisFunctionLayerPersistor.PROPERTY_RADIAL_FUNCTIONS,
-                              true))
+                else if (xmlin.IsIt(RadialBasisFunctionLayerPersistor.PROPERTY_RBF,
+                      true))
                 {
-                    LoadRadialFunctions(xmlIn, radialFunctions);
+                    rbfs = LoadAllRBF(xmlin);
                 }
-                if (xmlIn.IsIt(end, false))
+                else if (xmlin.IsIt(end, false))
                 {
                     break;
                 }
             }
 
-            if (neuronCount > 0)
-            {
-                RadialBasisFunctionLayer layer;
+            RadialBasisFunctionLayer layer = new RadialBasisFunctionLayer(neuronCount);
+            layer.RadialBasisFunction = rbfs;
+            layer.X = x;
+            layer.Y = y;
 
-                layer = new RadialBasisFunctionLayer(neuronCount);
-
-                layer.X = x;
-                layer.Y = y;
-
-                int i = 0;
-                foreach (IRadialBasisFunction rbf in radialFunctions)
-                {
-                    layer.RadialBasisFunction[i++] = rbf;
-                }
-
-                return layer;
-            }
-            return null;
+            return layer;
         }
 
-
-        /// <summary>
-        /// Load a RBF function.
-        /// </summary>
-        /// <param name="xmlIn">The XML reader.</param>
-        /// <returns>the RBF loaded.</returns>
-        private IRadialBasisFunction LoadRadialFunction(ReadXML xmlIn)
-        {
-            IDictionary<String, String> properties = xmlIn.ReadPropertyBlock();
-            double center = double.Parse(properties
-                   [RadialBasisFunctionLayerPersistor.PROPERTY_CENTER]);
-            double width = double.Parse(properties
-                   [RadialBasisFunctionLayerPersistor.PROPERTY_WIDTH]);
-            double peak = double.Parse(properties
-                   [RadialBasisFunctionLayerPersistor.PROPERTY_PEAK]);
-            return new GaussianFunction(center, peak, width);
-        }
-
-        /// <summary>
-        /// Load a list of radial functions.
-        /// </summary>
-        /// <param name="xmlIn">THe XML reader.</param>
-        /// <param name="radialFunctions">The radial functions.</param>
-        private void LoadRadialFunctions(ReadXML xmlIn,
-                 IList<IRadialBasisFunction> radialFunctions)
+        private IRadialBasisFunction[] LoadAllRBF(ReadXML xmlin)
         {
 
-            String end = xmlIn.LastTag.Name;
+            IList<IRadialBasisFunction> rbfs = new List<IRadialBasisFunction>();
 
-            while (xmlIn.ReadToTag())
+            while (xmlin.ReadToTag())
             {
-                if (xmlIn.IsIt(
-                        RadialBasisFunctionLayerPersistor.PROPERTY_RADIAL_FUNCTION,
-                        true))
-                {
-                    IRadialBasisFunction rbf = LoadRadialFunction(xmlIn);
-                    radialFunctions.Add(rbf);
-                }
-                if (xmlIn.IsIt(end, false))
+                if (xmlin.IsIt(PROPERTY_RBF, false))
                 {
                     break;
                 }
+                else
+                {
+                    String name = xmlin.LastTag.Name;
+                    IRadialBasisFunction rbf = LoadRBF(name, xmlin);
+                    rbfs.Add(rbf);
+                }
             }
 
+            IRadialBasisFunction[] result = new IRadialBasisFunction[rbfs.Count];
+
+            for (int i = 0; i < rbfs.Count; i++)
+                result[i] = rbfs[i];
+
+            return result;
         }
 
+        private IRadialBasisFunction LoadRBF(String name, ReadXML xmlin)
+        {
+
+            String clazz = ReflectionUtil.ResolveEncogClass(name);
+
+            if (clazz == null)
+            {
+                throw new NeuralNetworkError("Unknown RBF function type: " + name);
+            }
+
+            IRadialBasisFunction result = (IRadialBasisFunction)ReflectionUtil.LoadObject(clazz);
+
+            while (xmlin.ReadToTag())
+            {
+                if (xmlin.IsIt(name, false))
+                {
+                    break;
+                }
+                else if (xmlin.IsIt(PROPERTY_CENTERS, true))
+                {
+                    String str = xmlin.ReadTextToTag();
+                    double[] centers = NumberList.FromList(CSVFormat.EG_FORMAT, str);
+                    result.Centers = centers;
+                }
+                else if (xmlin.IsIt(PROPERTY_PEAK, true))
+                {
+                    String str = xmlin.ReadTextToTag();
+                    double d = Double.Parse(str);
+                    result.Peak = d;
+                }
+                else if (xmlin.IsIt(PROPERTY_WIDTH, true))
+                {
+                    String str = xmlin.ReadTextToTag();
+                    double d = Double.Parse(str);
+                    result.Width = d;
+                }
+            }
+
+            return result;
+        }
+
+        
         /// <summary>
-        /// Save a RBF layer.
+        /// Save a RBF layer. 
         /// </summary>
-        /// <param name="obj">Save a RBF layer.</param>
-        /// <param name="xmlOut">XML stream to write to.</param>
-        public void Save(IEncogPersistedObject obj, WriteXML xmlOut)
+        /// <param name="obj">The object to save.</param>
+        /// <param name="xmlout">XML stream to write to.</param>
+        public void Save(IEncogPersistedObject obj, WriteXML xmlout)
         {
             PersistorUtil.BeginEncogObject(
-                    EncogPersistedCollection.TYPE_RADIAL_BASIS_LAYER, xmlOut, obj,
+                    EncogPersistedCollection.TYPE_RADIAL_BASIS_LAYER, xmlout, obj,
                     false);
             RadialBasisFunctionLayer layer = (RadialBasisFunctionLayer)obj;
 
-            xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_NEURONS, layer
-                    .NeuronCount);
-            xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_X, layer.X);
-            xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_Y, layer.Y);
+            xmlout.AddProperty(BasicLayerPersistor.PROPERTY_NEURONS, layer.NeuronCount);
+            xmlout.AddProperty(BasicLayerPersistor.PROPERTY_X, layer.X);
+            xmlout.AddProperty(BasicLayerPersistor.PROPERTY_Y, layer.Y);
 
-            xmlOut.BeginTag(
-            RadialBasisFunctionLayerPersistor.PROPERTY_RADIAL_FUNCTIONS);
-            for (int i = 0; i < layer.NeuronCount; i++)
+            SaveRBF(xmlout, layer);
+
+            xmlout.EndTag();
+        }
+
+        private void SaveRBF(WriteXML xmlout, RadialBasisFunctionLayer layer)
+        {
+
+            xmlout.BeginTag(RadialBasisFunctionLayerPersistor.PROPERTY_RBF);
+            foreach (IRadialBasisFunction rbf in layer.RadialBasisFunction)
             {
-                IRadialBasisFunction rbf = layer.RadialBasisFunction[i];
-                xmlOut.BeginTag(
-                RadialBasisFunctionLayerPersistor.PROPERTY_RADIAL_FUNCTION);
-                //xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_CENTER,
-                //        rbf.Center);
-                xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_PEAK,
-                        rbf.Peak);
-                xmlOut.AddProperty(RadialBasisFunctionLayerPersistor.PROPERTY_WIDTH,
-                        rbf.Width);
-                xmlOut.EndTag();
+                xmlout.BeginTag(rbf.GetType().Name);
+                xmlout.AddProperty(PROPERTY_CENTERS, rbf.Centers, rbf.Centers.Length);
+                xmlout.AddProperty(PROPERTY_PEAK, rbf.Peak);
+                xmlout.AddProperty(PROPERTY_WIDTH, rbf.Width);
+                xmlout.EndTag();
             }
-            xmlOut.EndTag();
-
-            xmlOut.EndTag();
+            xmlout.EndTag();
         }
 
     }
-
 }

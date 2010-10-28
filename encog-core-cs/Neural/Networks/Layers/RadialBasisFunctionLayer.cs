@@ -159,7 +159,7 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// Set the gausian components to random values.
+        /// Set the RBF components to random values.
         /// </summary>
         /// <param name="dimensions">The number of dimensions in the network.</param>
         /// <param name="min">The minimum value for the centers, widths and peaks.</param>
@@ -175,11 +175,11 @@ namespace Encog.Neural.Networks.Layers
 
             for (int i = 0; i < this.NeuronCount; i++)
             {
-                SetRBFFunction(i, t, centers, 1.0, RangeRandomizer.Randomize(min, max));
+                SetRBFOptions(i, t, centers, RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max));
             }
         }
 
-        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double[] center, double peak, double width)
+        private void SetRBFOptions(int RBFIndex, RBFEnum RBFType, double[] center, double peak, double width)
         {
             if (RBFType == RBFEnum.Gaussian)
                 this.radialBasisFunction[RBFIndex] = new GaussianFunction(peak, center, width);
