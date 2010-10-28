@@ -277,7 +277,6 @@ namespace Encog.Engine.Network.Train.Prop
         /// <inheritdoc />
         public virtual void Iteration()
         {
-
             this.iteration++;
 
             CalculateGradients();

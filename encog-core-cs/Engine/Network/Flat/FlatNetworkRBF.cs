@@ -32,6 +32,7 @@ namespace Encog.Engine.Network.Flat
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Encog.Engine.Util;
+    using Encog.Engine.Network.RBF;
 
     /// <summary>
     /// A flat network designed to handle an RBF.
@@ -39,109 +40,77 @@ namespace Encog.Engine.Network.Flat
     ///
     public class FlatNetworkRBF : FlatNetwork
     {
-
         /// <summary>
-        /// The RBF centers.
+        /// The RBF's used.
         /// </summary>
-        ///
-        private double[][] center;
-
-        /// <summary>
-        /// The RBF radius.
-        /// </summary>
-        ///
-        private double[] radius;
+        private IRadialBasisFunction[] rbf;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        ///
         public FlatNetworkRBF()
         {
 
         }
 
+        
         /// <summary>
-        /// Construct an RBF flat network.
+        /// Construct an RBF flat network. 
         /// </summary>
-        ///
         /// <param name="inputCount">The number of input neurons. (also the number of dimensions)</param>
         /// <param name="hiddenCount">The number of hidden neurons.</param>
         /// <param name="outputCount">The number of output neurons.</param>
-        /// <param name="center">The centers.</param>
-        /// <param name="radius">The radii.</param>
+        /// <param name="rbf">The RBF's to use.</param>
         public FlatNetworkRBF(int inputCount, int hiddenCount,
-                int outputCount, double[][] center,
-                double[] radius)
+                 int outputCount, IRadialBasisFunction[] rbf)
         {
-            this.center = EngineArray.ArrayCopy(center);
-            this.radius = EngineArray.ArrayCopy(radius);
-
+            this.rbf = rbf;
             FlatLayer[] layers = new FlatLayer[3];
 
             double[] slope = new double[1];
-            slope[0] = 1.0d;
+            slope[0] = 1.0;
 
-            layers[0] = new FlatLayer(new ActivationLinear(), inputCount, 0.0d,
+            layers[0] = new FlatLayer(new ActivationLinear(), inputCount, 0.0,
                     slope);
-            layers[1] = new FlatLayer(new ActivationLinear(), hiddenCount, 1.0d,
+            layers[1] = new FlatLayer(new ActivationLinear(), hiddenCount, 1.0,
                     slope);
-            layers[2] = new FlatLayer(new ActivationLinear(), outputCount, 0.0d,
+            layers[2] = new FlatLayer(new ActivationLinear(), outputCount, 0.0,
                     slope);
 
             Init(layers);
         }
 
         /// <summary>
-        /// Clone the network.
+        /// Clone the network. 
         /// </summary>
-        ///
         /// <returns>A clone of the network.</returns>
-        public override Object Clone()
+        public override object Clone()
         {
             FlatNetworkRBF result = new FlatNetworkRBF();
             CloneFlatNetwork(result);
-            result.center = EngineArray.ArrayCopy(this.center);
-            result.radius = EngineArray.ArrayCopy(this.radius);
+            result.rbf = this.rbf;
             return result;
         }
 
         /// <summary>
-        /// Calculate the output for the given input.
+        /// Calculate the output for the given input. 
         /// </summary>
-        ///
         /// <param name="x">The input.</param>
         /// <param name="output">Output will be placed here.</param>
         public override void Compute(double[] x, double[] output)
         {
-
-            int dimensions = this.center[0].Length;
             int outputIndex = this.LayerIndex[1];
 
-            for (int i = 0; i < this.center.Length; i++)
+            for (int i = 0; i < rbf.Length; i++)
             {
-
-                // take the eucl distance
-                double sum = 0;
-                for (int j = 0; j < dimensions; j++)
-                {
-                    double v = (x[j] - center[i][j]);
-                    sum += v * v;
-                }
-
-                double norm = Math.Sqrt(sum);
-
-                double o = BoundMath.Exp(-this.radius[i] * norm * norm);
-
+                double o = this.rbf[i].Calculate(x);
                 this.LayerOutput[outputIndex + i] = o;
-
             }
 
             // now compute the output
             ComputeLayer(1);
-            EngineArray.ArrayCopy(this.LayerOutput, 0, output, 0,
-                    this.OutputCount);
+            EngineArray.ArrayCopy(this.LayerOutput, 0, output, 0, this
+                    .OutputCount);
         }
-
     }
 }

@@ -543,9 +543,9 @@ namespace Encog.Neural.Networks.Structure
                         && this.layers[1] is RadialBasisFunctionLayer)
                 {
                     RadialBasisFunctionLayer rbf = (RadialBasisFunctionLayer)this.layers[1];
-                    /*this.flat = new FlatNetworkRBF(this.network.InputCount,
+                    this.flat = new FlatNetworkRBF(this.network.InputCount,
                             rbf.NeuronCount, this.network.OutputCount,
-                            rbf.Center, rbf.Radius);*/
+                            rbf.RadialBasisFunction);
                     FlattenWeights();
                     this.flatUpdate = FlatUpdateNeeded.None;
                     return;
