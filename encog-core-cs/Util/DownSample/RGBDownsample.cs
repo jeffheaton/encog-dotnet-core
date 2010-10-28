@@ -360,6 +360,7 @@ namespace Encog.Util.DownSample
         /// <param name="image">The image to downsample.</param>
         public void ProcessImage(Bitmap image)
         {
+            this.Image = image;
             this.imageHeight = this.Image.Height;
             this.imageWidth = this.Image.Width;
             this.downSampleLeft = 0;
