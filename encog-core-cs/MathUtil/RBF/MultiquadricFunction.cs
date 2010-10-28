@@ -48,72 +48,68 @@ namespace Encog.MathUtil.RBF
 #endif
     public class MultiquadricFunction : BasicRBF
     {
+        /// <summary>
+        /// Create centered at zero, width 0, and peak 0.
+        /// </summary>
+        /// <param name="dimensions">The number of dimensions.</param>
+        public MultiquadricFunction(int dimensions)
+        {
+            this.Centers = new double[dimensions];
+            this.Peak = 1.0;
+            this.Width = 1.0;
+        }
 
-        	/**
-	 * Create centered at zero, width 0, and peak 0.
-	 */
-	public MultiquadricFunction(int dimensions)
-	{
-		this.Centers = new double[dimensions];
-		this.Peak = 1.0;
-		this.Width = 1.0;		
-	}
-	
-	/**
-	 * Construct a multi-dimension Multiquadric function with the specified peak,
-	 * centers and widths.
-	 * 
-	 * @param peak
-	 *            The peak for all dimensions.
-	 * @param center
-	 *            The centers for each dimension.
-	 * @param width
-	 *            The widths for each dimension.
-	 */
-	public MultiquadricFunction(double peak, double[] center,
-			double width) {
-		this.Centers = center;
-		this.Peak = peak;
-		this.Width = width;
-	}
-	
-	/**
-	 * Construct a single-dimension Multiquadric function with the specified peak,
-	 * centers and widths.
-	 * 
-	 * @param peak
-	 *            The peak for all dimensions.
-	 * @param center
-	 *            The centers for each dimension.
-	 * @param width
-	 *            The widths for each dimension.
-	 */
-	public MultiquadricFunction(double center, double peak,
-			double width) {
-		this.Centers = new double[1];
-		this.Centers[0] = center;
-		this.Peak = peak;
-		this.Width = width;
-	}
+        /// <summary>
+        /// Construct a multi-dimension Multiquadric function with the specified peak,
+        /// centers and widths. 
+        /// </summary>
+        /// <param name="peak">The peak for all dimensions.</param>
+        /// <param name="center">The centers for each dimension.</param>
+        /// <param name="width">The widths for each dimension.</param>
+        public MultiquadricFunction(double peak, double[] center,
+                double width)
+        {
+            this.Centers = center;
+            this.Peak = peak;
+            this.Width = width;
+        }
+
+        
+        /// <summary>
+        /// Construct a single-dimension Multiquadric function with the specified peak,
+        /// centers and widths. 
+        /// </summary>
+        /// <param name="center">The peak for all dimensions.</param>
+        /// <param name="peak">The centers for each dimension.</param>
+        /// <param name="width">The widths for each dimension.</param>
+        public MultiquadricFunction(double center, double peak,
+                double width)
+        {
+            this.Centers = new double[1];
+            this.Centers[0] = center;
+            this.Peak = peak;
+            this.Width = width;
+        }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public override double Calculate(double[] x) {
-		double value = 0;
-		double[] center = Centers;
-		double width = Width;
+        /// <summary>
+        /// Calculate the output.
+        /// </summary>
+        /// <param name="x">Input value.</param>
+        /// <returns>Output value.</returns>
+        public override double Calculate(double[] x)
+        {
+            double value = 0;
+            double[] center = Centers;
+            double width = Width;
 
-		for (int i = 0; i < center.Length; i++) {
-			value += Math.Pow(x[i] - center[i], 2)
-					+ (width * width);
-		}
-		return this.Peak * BoundMath.Sqrt(value);
-	}
-
-
+            for (int i = 0; i < center.Length; i++)
+            {
+                value += Math.Pow(x[i] - center[i], 2)
+                        + (width * width);
+            }
+            return this.Peak * BoundMath.Sqrt(value);
+        }
     }
-
 }
 

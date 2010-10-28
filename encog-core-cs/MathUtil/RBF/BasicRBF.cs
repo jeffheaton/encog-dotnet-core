@@ -6,85 +6,89 @@ using Encog.Engine.Network.RBF;
 
 namespace Encog.MathUtil.RBF
 {
+    /// <summary>
+    /// Implements the basic features needed for an RBF.
+    /// </summary>
     public abstract class BasicRBF : IRadialBasisFunction
     {
-        	/**
-	 * The center of the RBF.
-	 */
-	private double[] center;
+        /// <summary>
+        /// The centers.
+        /// </summary>
+        private double[] center;
 
-	/**
-	 * The peak of the RBF.
-	 */
-	private double peak;
+        /// <summary>
+        /// The peak.
+        /// </summary>
+        private double peak;
 
-	/**
-	 * The width of the RBF.
-	 */
-	private double width;
+        /// <summary>
+        /// The width.
+        /// </summary>
+        private double width;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public double GetCenter(int dimension) {
-		return this.center[dimension];
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public double[] Centers {
-        get
+        /// <summary>
+        /// The centers.
+        /// </summary>
+        public double[] Centers
         {
-		return this.center;
+            get
+            {
+                return this.center;
+            }
+            set
+            {
+                this.center = value;
+            }
         }
-        set
-        {
-            this.center = value;
-        }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int Dimensions {
-        get
+        /// <summary>
+        /// The number of dimensions.
+        /// </summary>
+        public int Dimensions
         {
-		return this.center.Length;
+            get
+            {
+                return this.center.Length;
+            }
         }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public double Peak {
-        get
+        /// <summary>
+        /// The peak.
+        /// </summary>
+        public double Peak
         {
-		return this.peak;
+            get
+            {
+                return this.peak;
+            }
+            set
+            {
+                this.peak = value;
+            }
         }
-        set
-        {
-            this.peak = value;
-        }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public double Width {
-        get
+        /// <summary>
+        /// The width.
+        /// </summary>
+        public double Width
         {
-		return this.width;
+            get
+            {
+                return this.width;
+            }
+            set
+            {
+                this.width = value;
+            }
         }
-        set
-        {
-            this.width = value;
-        }
-	}
 
-    
 
-    public abstract double Calculate(double[] x);
-    
+        /// <summary>
+        /// Calculate the output of the RBF.
+        /// </summary>
+        /// <param name="x">The input value.</param>
+        /// <returns>The output value.</returns>
+        public abstract double Calculate(double[] x);
+
     }
 }

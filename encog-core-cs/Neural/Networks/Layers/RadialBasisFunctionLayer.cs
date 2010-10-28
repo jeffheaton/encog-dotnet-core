@@ -128,10 +128,7 @@ namespace Encog.Neural.Networks.Layers
                 if (pattern.Data.Length != f.Dimensions)
                     throw new Exception("Inputs must equal the number of dimensions.");
 
-                double total = f.Calculate(pattern.Data);
-
-                result[i] = BoundMath.Sqrt(total);
-
+                result[i] = f.Calculate(pattern.Data);
             }
 
             return result;

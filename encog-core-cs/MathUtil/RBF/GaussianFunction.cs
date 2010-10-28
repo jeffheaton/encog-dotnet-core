@@ -48,72 +48,66 @@ namespace Encog.MathUtil.RBF
 #endif
     public class GaussianFunction : BasicRBF
     {
-           	/**
-	 * Create centered at zero, width 0, and peak 0.
-	 */
-	public GaussianFunction(int dimensions)
-	{
-		this.Centers = new double[dimensions];
-		this.Peak = 1.0;
-		this.Width = 1.0;		
-	}
-	
-	/**
-	 * Construct a multi-dimension Gaussian function with the specified peak,
-	 * centers and widths.
-	 * 
-	 * @param peak
-	 *            The peak for all dimensions.
-	 * @param center
-	 *            The centers for each dimension.
-	 * @param width
-	 *            The widths for each dimension.
-	 */
-	public GaussianFunction( double peak,  double[] center,
-		 double width) {
-		this.Centers = center;
-		this.Peak = peak;
-		this.Width = width;
-	}
-	
-	/**
-	 * Construct a single-dimension Gaussian function with the specified peak,
-	 * centers and widths.
-	 * 
-	 * @param peak
-	 *            The peak for all dimensions.
-	 * @param center
-	 *            The centers for each dimension.
-	 * @param width
-	 *            The widths for each dimension.
-	 */
-	public GaussianFunction(double center, double peak,
-			double width) {
-		this.Centers = new double[1];
-		this.Centers[0] = center;
-		this.Peak = peak;
-		this.Width = width;
-	}
+        /// <summary>
+        /// Create centered at zero, width 0, and peak 0.
+        /// </summary>
+        /// <param name="dimensions">The number of dimensions.</param>
+        public GaussianFunction(int dimensions)
+        {
+            this.Centers = new double[dimensions];
+            this.Peak = 1.0;
+            this.Width = 1.0;
+        }
+        
+        /// <summary>
+        /// Construct a multi-dimension Gaussian function with the specified peak,
+        /// centers and widths.
+        /// </summary>
+        /// <param name="peak">The peak for all dimensions.</param>
+        /// <param name="center">The centers for each dimension.</param>
+        /// <param name="width">The widths for each dimension.</param>
+        public GaussianFunction(double peak, double[] center,
+             double width)
+        {
+            this.Centers = center;
+            this.Peak = peak;
+            this.Width = width;
+        }
+        
+        /// <summary>
+        /// Construct a single-dimension Gaussian function with the specified peak,
+        /// centers and widths. 
+        /// </summary>
+        /// <param name="center">The peak for all dimensions.</param>
+        /// <param name="peak">The centers for each dimension.</param>
+        /// <param name="width">The widths for each dimension.</param>
+        public GaussianFunction(double center, double peak,
+                double width)
+        {
+            this.Centers = new double[1];
+            this.Centers[0] = center;
+            this.Peak = peak;
+            this.Width = width;
+        }
 
+        /// <summary>
+        /// Calculate the result from the function. 
+        /// </summary>
+        /// <param name="x">The parameters for the function, one for each dimension.</param>
+        /// <returns>The result of the function.</returns>
+        public override double Calculate(double[] x)
+        {
+            double value = 0;
+            double[] center = Centers;
+            double width = Width;
 
-	/**
-	 * Calculate the result from the function.
-	 * 
-	 * @param x
-	 *            The parameters for the function, one for each dimension.
-	 * @return The result of the function.
-	 */
-	public override double Calculate(double[] x) {
-		double value = 0;
-		double[] center = Centers;
-		double width = Width;
-
-		for (int i = 0; i < center.Length; i++) {
-			value += Math.Pow(x[i] - center[i], 2)
-					/ (2.0 * width * width);
-		}
-		return this.Peak * Math.Exp(-value);
-	}
+            for (int i = 0; i < center.Length; i++)
+            {
+                value += Math.Pow(x[i] - center[i], 2)
+                        / (2.0 * width * width);
+            }
+            return this.Peak * Math.Exp(-value);
+        }
 
 
     }

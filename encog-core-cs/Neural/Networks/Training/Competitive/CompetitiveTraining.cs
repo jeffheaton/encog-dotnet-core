@@ -44,6 +44,7 @@ using Encog.MathUtil;
 using Encog.MathUtil.Matrices;
 using Encog.Util;
 using Encog.Engine.Util;
+using Encog.Neural.Networks.Structure;
 
 
 namespace Encog.Neural.Networks.Training.Competitive
@@ -469,6 +470,8 @@ namespace Encog.Neural.Networks.Training.Competitive
                     ApplyCorrection();
                 }
             }
+
+            this.network.Structure.FlatUpdate = FlatUpdateNeeded.Flatten;
 
             // update the error
             Error = this.bmuUtil.WorstDistance;
