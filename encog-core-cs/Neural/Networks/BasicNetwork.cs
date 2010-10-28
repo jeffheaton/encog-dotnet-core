@@ -72,7 +72,7 @@ namespace Encog.Neural.Networks
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNetwork : BasicPersistedObject, INetwork, IContextClearable, IEngineMachineLearning
+    public class BasicNetwork : BasicPersistedObject, ISerializable, INetwork, IContextClearable, IEngineMachineLearning
     {
 
         /// <summary>
@@ -134,6 +134,17 @@ namespace Encog.Neural.Networks
             this.structure = new NeuralStructure(this);
             this.logic = new SimpleRecurrentLogic();
         }
+
+        /// <summary>
+        /// Serialization constructor.  Make sure the structure is updated.
+        /// </summary>
+        /// <param name="info">Serialization info.</param>
+        /// <param name="ctxt">The context.</param>
+        public BasicNetwork(SerializationInfo info, StreamingContext ctxt)
+        {
+            //this.structure.FinalizeStructure();
+        }
+
 
         /// <summary>
         /// Construct a basic network with the specified logic.
@@ -763,5 +774,14 @@ namespace Encog.Neural.Networks
             return result.ToString();
         }
 
+        /// <summary>
+        /// Make sure that the network has been flattened before being serialized.
+        /// </summary>
+        /// <param name="info">Serialization info.</param>
+        /// <param name="context">The context.</param>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            this.structure.UpdateFlatNetwork();
+        }
     }
 }
