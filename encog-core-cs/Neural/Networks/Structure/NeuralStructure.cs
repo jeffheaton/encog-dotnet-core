@@ -532,7 +532,8 @@ namespace Encog.Neural.Networks.Structure
         {
             bool isRBF = false;
             IDictionary<ILayer, FlatLayer> regular2flat = new Dictionary<ILayer, FlatLayer>();
-            IList<ObjectPair<ILayer, ILayer>> contexts = new List<ObjectPair<ILayer, ILayer>>();
+            IDictionary<FlatLayer, ILayer> flat2regular = new Dictionary<FlatLayer, ILayer>();            
+            IList<ObjectPair<ILayer, ILayer>> contexts = new List<ObjectPair<ILayer, ILayer>>();            
             this.flat = null;
 
             ValidateForFlat val = new ValidateForFlat();
@@ -551,7 +552,8 @@ namespace Encog.Neural.Networks.Structure
                     return;
                 }
 
-                FlatLayer[] flatLayers = new FlatLayer[CountNonContext()];
+                int flatLayerCount = CountNonContext();
+                FlatLayer[] flatLayers = new FlatLayer[flatLayerCount];                
 
                 int index = flatLayers.Length - 1;
                 foreach (ILayer layer in this.layers)
@@ -603,6 +605,7 @@ namespace Encog.Neural.Networks.Structure
                                 .NeuronCount, bias, param);
 
                         regular2flat[layer] = flatLayer;
+                        flat2regular[flatLayer] = layer;
                         flatLayers[index--] = flatLayer;
                     }
                 }
@@ -610,6 +613,7 @@ namespace Encog.Neural.Networks.Structure
                 // now link up the context layers
                 foreach (ObjectPair<ILayer, ILayer> context in contexts)
                 {
+                    // link the context layer on the FlatLayer
                     ILayer layer = context.B;
                     ISynapse synapse = this.network
                             .Structure
@@ -621,6 +625,37 @@ namespace Encog.Neural.Networks.Structure
 
                 this.flat = new FlatNetwork(flatLayers);
 
+                // update the context indexes on the non-flat network
+                for (int i = 0; i < flatLayerCount; i++)
+                {
+                    FlatLayer fedBy = flatLayers[i].ContextFedBy;
+                    if (fedBy != null)
+                    {
+                        ILayer fedBy2 = flat2regular[fedBy];
+                        ISynapse synapse = FindPreviousSynapseByLayerType(fedBy2, typeof(ContextLayer));
+                        if (synapse == null)
+                            throw new NeuralNetworkError("Can't find parent synapse to context layer.");
+                        ContextLayer context = (ContextLayer)synapse.FromLayer;
+
+                        // find fedby index
+                        int fedByIndex = -1;
+                        for(int j=0;j<flatLayerCount;j++)
+                        {
+                            if( flatLayers[j]==fedBy )
+                            {
+                                fedByIndex = j;
+                                break;
+                            }
+                        }
+
+                        if (fedByIndex == -1)
+                            throw new NeuralNetworkError("Can't find layer feeding context.");
+
+                        context.FlatContextIndex = this.flat.ContextTargetOffset[fedByIndex];
+                    }
+                }
+
+                // RBF networks will not train every layer
                 if (isRBF)
                 {
                     this.flat.EndTraining = flatLayers.Length - 1;
@@ -653,6 +688,25 @@ namespace Encog.Neural.Networks.Structure
 
                 EngineArray.ArrayCopy(sourceWeights, targetWeights);
                 this.flatUpdate = FlatUpdateNeeded.None;
+
+                // update context layers
+                foreach( ILayer layer in this.layers )
+                {
+                    if( layer is ContextLayer )
+                    {
+                        ContextLayer context = (ContextLayer)layer;
+                        if (context.FlatContextIndex != -1)
+                        {
+                            EngineArray.ArrayCopy(
+                                context.Context.Data, 
+                                0, 
+                                this.flat.LayerOutput, 
+                                context.FlatContextIndex, 
+                                context.Context.Count);
+                        }
+                    }
+                }
+                
 
                 // handle limited connection networks
                 if (this.connectionLimited)
@@ -753,9 +807,32 @@ namespace Encog.Neural.Networks.Structure
         /// </summary>
         public void UnflattenWeights()
         {
-            double[] sourceWeights = flat.Weights;
-            NetworkCODEC.ArrayToNetwork(sourceWeights, network);
-            this.flatUpdate = FlatUpdateNeeded.None;
+            if (flat != null)
+            {
+                double[] sourceWeights = flat.Weights;
+                NetworkCODEC.ArrayToNetwork(sourceWeights, network);
+                this.flatUpdate = FlatUpdateNeeded.None;
+
+                // update context layers
+                foreach (ILayer layer in this.layers)
+                {
+                    if (layer is ContextLayer)
+                    {
+                        ContextLayer context = (ContextLayer)layer;
+                        if (context.FlatContextIndex != -1)
+                        {
+
+                            EngineArray.ArrayCopy(
+                                this.flat.LayerOutput, 
+                                context.FlatContextIndex, 
+                                context.Context.Data, 
+                                0, 
+                                context.Context.Count);
+                        }
+                    }
+                }
+
+            }
         }
 
         /// <summary>

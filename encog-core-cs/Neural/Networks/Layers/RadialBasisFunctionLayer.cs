@@ -140,7 +140,7 @@ namespace Encog.Neural.Networks.Layers
         /// <returns></returns>
         public override IPersistor CreatePersistor()
         {
-            throw new NotImplementedException();
+            return new RadialBasisFunctionLayerPersistor();
         }
 
         /// <summary>

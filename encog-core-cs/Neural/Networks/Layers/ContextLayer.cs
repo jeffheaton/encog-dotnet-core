@@ -52,7 +52,13 @@ namespace Encog.Neural.Networks.Layers
     [Serializable]
 #endif
     public class ContextLayer : BasicLayer, IContextClearable
-    {
+    {       
+        /// <summary>
+        /// If this layer is part of a network that has been flattened, 
+        /// this attribute holds the index to the context values.  Otherwise, 
+        /// this property holds the value of -1.
+        /// </summary>
+        public int FlatContextIndex { get; set; }
 
         /// <summary>
         /// The context data that this layer will store.
@@ -87,7 +93,7 @@ namespace Encog.Neural.Networks.Layers
                  bool hasThreshold, int neuronCount)
             : base(thresholdFunction, hasThreshold, neuronCount)
         {
-
+            this.FlatContextIndex = -1;
             this.context = new BasicNeuralData(neuronCount);
         }
 

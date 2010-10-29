@@ -50,6 +50,8 @@ namespace Encog.Persist.Persistors
     /// </summary>
     public class ContextLayerPersistor : IPersistor
     {
+        public const String PROPERTY_CONTEXT = "context";
+
 #if logging
         /// <summary>
         /// The logging object.
@@ -64,7 +66,6 @@ namespace Encog.Persist.Persistors
         /// <returns>The loaded object.</returns>
         public IEncogPersistedObject Load(ReadXML xmlIn)
         {
-
             int neuronCount = 0;
             int x = 0;
             int y = 0;
@@ -72,6 +73,7 @@ namespace Encog.Persist.Persistors
             String threshold = null;
             IActivationFunction activation = null;
             String end = xmlIn.LastTag.Name;
+            String context = null;
 
             while (xmlIn.ReadToTag())
             {
@@ -96,6 +98,10 @@ namespace Encog.Persist.Persistors
                 else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_THRESHOLD, true))
                 {
                     threshold = xmlIn.ReadTextToTag();
+                }
+                else if (xmlIn.IsIt(PROPERTY_CONTEXT, true))
+                {
+                    context = xmlIn.ReadTextToTag();
                 }
                 else if (xmlIn.IsIt(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, true))
                 {
@@ -125,6 +131,16 @@ namespace Encog.Persist.Persistors
                     }
                 }
 
+                if (context != null)
+                {
+                    double[] c = NumberList.FromList(CSVFormat.EG_FORMAT, threshold);
+
+                    for (int i = 0; i < c.Length; i++)
+                    {
+                        layer.Context[i] = c[i];
+                    }
+                }
+
                 layer.X = x;
                 layer.Y = y;
                 layer.BiasActivation = biasActivation;
@@ -143,7 +159,7 @@ namespace Encog.Persist.Persistors
         {
             PersistorUtil.BeginEncogObject(
                     EncogPersistedCollection.TYPE_CONTEXT_LAYER, xmlOut, obj, false);
-            BasicLayer layer = (BasicLayer)obj;
+            ContextLayer layer = (ContextLayer)obj;
 
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_NEURONS, layer
                     .NeuronCount);
@@ -157,6 +173,10 @@ namespace Encog.Persist.Persistors
                 xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_THRESHOLD, result
                         .ToString());
             }
+
+            StringBuilder ctx = new StringBuilder();
+            NumberList.ToList(CSVFormat.EG_FORMAT, ctx, layer.Context.Data);
+            xmlOut.AddProperty(PROPERTY_CONTEXT, ctx.ToString());
 
 
             xmlOut.AddProperty(BasicLayerPersistor.PROPERTY_BIAS_ACTIVATION, layer.BiasActivation );

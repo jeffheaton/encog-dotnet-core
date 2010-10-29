@@ -186,6 +186,7 @@ namespace Encog.Neural.Networks.Training
                 this.statusUtil = null;
             }
 #endif
+            Network.Structure.UpdateFlatNetwork();
         }
 
         /// <summary>

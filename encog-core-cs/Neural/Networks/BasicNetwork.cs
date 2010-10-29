@@ -647,6 +647,11 @@ namespace Encog.Neural.Networks
                 }
             }
 
+            if (this.structure.Flat != null)
+            {
+                this.structure.UpdateFlatNetwork();
+                this.structure.Flat.ClearContext();
+            }
         }
 
         /// <summary>
@@ -763,17 +768,11 @@ namespace Encog.Neural.Networks
             return result.ToString();
         }
 
+        
         [OnSerializing()]
         internal void OnSerializingMethod(StreamingContext context)
         {
             this.structure.UpdateFlatNetwork();
-        }
-
-        [OnDeserialized()]
-        internal void OnDeserializedMethod(StreamingContext context)
-        {
-            this.structure.FinalizeStructure();
-        }
-
+        }        
     }
 }

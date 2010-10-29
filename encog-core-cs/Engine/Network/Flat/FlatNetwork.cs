@@ -274,7 +274,7 @@ namespace Encog.Engine.Network.Flat
                 }
 
                 // fill in context
-                for (int j_0 = 0; j_0 < this.layerContextCount[i]; j_0++)
+                for (int j = 0; j < this.layerContextCount[i]; j++)
                 {
                     this.layerOutput[index++] = 0;
                 }

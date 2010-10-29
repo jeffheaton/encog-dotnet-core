@@ -49,6 +49,16 @@ namespace Encog.MathUtil.RBF
     public class GaussianFunction : BasicRBF
     {
         /// <summary>
+        /// Default constructor for persistance.
+        /// </summary>
+        public GaussianFunction()
+        {
+            this.Centers = new double[1];
+            this.Peak = 1;
+            this.Width = 1;
+        }
+
+        /// <summary>
         /// Create centered at zero, width 0, and peak 0.
         /// </summary>
         /// <param name="dimensions">The number of dimensions.</param>

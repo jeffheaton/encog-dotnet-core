@@ -35,6 +35,7 @@ using Encog.Persist.Location;
 using System.IO;
 #if logging
 using log4net;
+using Encog.Neural.Networks;
 #endif
 
 
@@ -250,6 +251,11 @@ namespace Encog.Persist
         /// <param name="obj">The object to add.</param>
         public void Add(String name, IEncogPersistedObject obj)
         {
+            if (obj is BasicNetwork)
+            {
+                ((BasicNetwork)obj).Structure.UpdateFlatNetwork();
+            }
+
             obj.Name = name;
             PersistWriter writer = new PersistWriter(this.fileTemp);
             writer.Begin();

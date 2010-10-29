@@ -184,12 +184,18 @@ namespace Encog.Engine.Network.Train.Prop
         ///
         private void CopyContexts()
         {
+            // copy the contexts(layer outputO from each group to the next group
             for (int i = 0; i < (this.workers.Length - 1); i++)
             {
                 double[] src = this.workers[i].Network.LayerOutput;
                 double[] dst = this.workers[i + 1].Network.LayerOutput;
                 EngineArray.ArrayCopy(src, dst);
             }
+
+            // copy the contexts from the final group to the real network
+            EngineArray.ArrayCopy(
+                this.workers[this.workers.Length - 1].Network.LayerOutput, 
+                this.network.LayerOutput);
         }
 
         /// <inheritdoc />
