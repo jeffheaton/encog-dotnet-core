@@ -133,7 +133,7 @@ namespace Encog.Persist.Persistors
 
                 if (context != null)
                 {
-                    double[] c = NumberList.FromList(CSVFormat.EG_FORMAT, threshold);
+                    double[] c = NumberList.FromList(CSVFormat.EG_FORMAT, context);
 
                     for (int i = 0; i < c.Length; i++)
                     {

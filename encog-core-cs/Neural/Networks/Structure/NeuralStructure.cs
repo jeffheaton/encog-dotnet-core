@@ -631,7 +631,7 @@ namespace Encog.Neural.Networks.Structure
                     FlatLayer fedBy = flatLayers[i].ContextFedBy;
                     if (fedBy != null)
                     {
-                        ILayer fedBy2 = flat2regular[fedBy];
+                        ILayer fedBy2 = flat2regular[flatLayers[i + 1]];
                         ISynapse synapse = FindPreviousSynapseByLayerType(fedBy2, typeof(ContextLayer));
                         if (synapse == null)
                             throw new NeuralNetworkError("Can't find parent synapse to context layer.");
