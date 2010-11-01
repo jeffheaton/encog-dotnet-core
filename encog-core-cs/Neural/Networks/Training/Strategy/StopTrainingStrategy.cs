@@ -76,6 +76,11 @@ namespace Encog.Neural.Networks.Training.Strategy
         private double lastError;
 
         /// <summary>
+        /// The best error rate so far.
+        /// </summary>
+        private double bestError;
+
+        /// <summary>
         /// The number of cycles to tolerate the minimum improvement.
         /// </summary>
         private double minImprovement;
@@ -118,6 +123,7 @@ namespace Encog.Neural.Networks.Training.Strategy
             this.minImprovement = minImprovement;
             this.toleratedCycles = toleratedCycles;
             this.badCycles = 0;
+            this.bestError = double.MaxValue;
         }
 
         /// <summary>
@@ -139,7 +145,7 @@ namespace Encog.Neural.Networks.Training.Strategy
 
             if (this.ready)
             {
-                if (Math.Abs(this.lastError
+                if (Math.Abs(this.bestError
                         - this.train.Error) < this.minImprovement)
                 {
                     this.badCycles++;
@@ -159,6 +165,7 @@ namespace Encog.Neural.Networks.Training.Strategy
             }
 
             this.lastError = this.train.Error;
+            this.bestError = Math.Min(this.lastError, this.bestError);
 
         }
 

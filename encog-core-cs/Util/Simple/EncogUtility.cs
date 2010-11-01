@@ -216,7 +216,7 @@ namespace Encog.Util.Simple
                         + " time left = "
                         + Format.FormatTimeSpan((int)remaining * 60));
                 epoch++;
-            } while (remaining > 0);
+            } while (remaining > 0 && !train.TrainingDone);
             train.FinishTraining();
         }
 
@@ -292,7 +292,7 @@ namespace Encog.Util.Simple
                         + " Error:" + Format.FormatPercent(train.Error)
                         + " Target Error: " + Format.FormatPercent(error));
                 epoch++;
-            } while (train.Error > error);
+            } while (train.Error > error && !train.TrainingDone);
             train.FinishTraining();
         }
     }

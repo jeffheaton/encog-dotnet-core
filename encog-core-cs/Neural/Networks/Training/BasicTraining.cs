@@ -33,6 +33,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
 using Encog.Cloud;
+using Encog.Neural.Networks.Training.Strategy.End;
 
 namespace Encog.Neural.Networks.Training
 {
@@ -197,12 +198,25 @@ namespace Encog.Neural.Networks.Training
 
         /// <summary>
         /// True if training can progress no further.  Not all training methods use this, as not all can tell when they are done.          
+        /// Some IStrategy derived objects will report done.
         /// </summary>
         public bool TrainingDone
         {
             get
             {
-                return false;
+                foreach (IStrategy strategy in this.strategies)
+                {
+                    if (strategy is IEndTrainingStrategy)
+                    {
+                        IEndTrainingStrategy end = (IEndTrainingStrategy)strategy;
+                        if (end.ShouldStop())
+                        {
+                            return true;
+                        }
+                    }
+                }
+		
+		        return false;
             }
         }
         
