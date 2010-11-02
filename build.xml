@@ -62,7 +62,7 @@
 
 	<target name="msbuild" depends="init" description="generate the distribution">
 
-		<loadfile srcfile="${path.src}\Encog.cs" property="build.version">
+		<loadfile srcfile="${path.src}\EncogFramework.cs" property="build.version">
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern='^.*String VERSION = ".*";.*$' />

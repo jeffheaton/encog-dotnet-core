@@ -108,6 +108,12 @@ namespace Encog.Examples.XOR.Resilient
                 epoch++;
             } while ((epoch < 5000) && (train.Error > 0.001));
 
+            double[] inputArray = { 0.0, 1.1 };
+            INeuralData inputData = new BasicNeuralData(inputArray);
+            INeuralData outputData = network.Compute(inputData);
+            Console.WriteLine("Network output: " + outputData.ToString());
+
+
             // test the neural network
             Console.WriteLine("Neural Network Results:");
             foreach (INeuralDataPair pair in trainingSet)

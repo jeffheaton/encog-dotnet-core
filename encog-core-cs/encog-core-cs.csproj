@@ -93,7 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>encog-core-cs.resx</DependentUpon>
     </Compile>
-    <Compile Include="Encog.cs" />
+    <Compile Include="EncogFramework.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="Engine\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Engine\Concurrency\EngineConcurrency.cs" />
