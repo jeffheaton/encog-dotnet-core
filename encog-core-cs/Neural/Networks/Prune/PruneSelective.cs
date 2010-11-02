@@ -137,9 +137,12 @@ namespace Encog.Neural.Networks.Prune
             // calculate the outbound significance
             foreach (ISynapse synapse in layer.Next)
             {
-                for (int i = 0; i < synapse.ToNeuronCount; i++)
+                if (synapse.WeightMatrix != null)
                 {
-                    result += synapse.WeightMatrix[neuron, i];
+                    for (int i = 0; i < synapse.ToNeuronCount; i++)
+                    {
+                        result += synapse.WeightMatrix[neuron, i];
+                    }
                 }
             }
 
@@ -149,9 +152,12 @@ namespace Encog.Neural.Networks.Prune
 
             foreach (ISynapse synapse in inboundSynapses)
             {
-                for (int i = 0; i < synapse.FromNeuronCount; i++)
+                if (synapse.WeightMatrix != null)
                 {
-                    result += synapse.WeightMatrix[i, neuron];
+                    for (int i = 0; i < synapse.FromNeuronCount; i++)
+                    {
+                        result += synapse.WeightMatrix[i, neuron];
+                    }
                 }
             }
 
@@ -235,17 +241,20 @@ namespace Encog.Neural.Networks.Prune
             // adjust the outbound weight matrixes
             foreach (ISynapse synapse in layer.Next)
             {
-                Matrix newMatrix = new Matrix(neuronCount, synapse
-                        .ToNeuronCount);
-                // copy existing matrix to new matrix
-                for (int row = 0; row < layer.NeuronCount; row++)
+                if (synapse.WeightMatrix != null)
                 {
-                    for (int col = 0; col < synapse.ToNeuronCount; col++)
+                    Matrix newMatrix = new Matrix(neuronCount, synapse
+                            .ToNeuronCount);
+                    // copy existing matrix to new matrix
+                    for (int row = 0; row < layer.NeuronCount; row++)
                     {
-                        newMatrix[row, col] = synapse.WeightMatrix[row, col];
+                        for (int col = 0; col < synapse.ToNeuronCount; col++)
+                        {
+                            newMatrix[row, col] = synapse.WeightMatrix[row, col];
+                        }
                     }
+                    synapse.WeightMatrix = newMatrix;
                 }
-                synapse.WeightMatrix = newMatrix;
             }
 
             // adjust the inbound weight matrixes
@@ -254,17 +263,20 @@ namespace Encog.Neural.Networks.Prune
 
             foreach (ISynapse synapse in inboundSynapses)
             {
-                Matrix newMatrix = new Matrix(synapse.FromNeuronCount,
-                        neuronCount);
-                // copy existing matrix to new matrix
-                for (int row = 0; row < synapse.FromNeuronCount; row++)
+                if (synapse.WeightMatrix != null)
                 {
-                    for (int col = 0; col < synapse.ToNeuronCount; col++)
+                    Matrix newMatrix = new Matrix(synapse.FromNeuronCount,
+                            neuronCount);
+                    // copy existing matrix to new matrix
+                    for (int row = 0; row < synapse.FromNeuronCount; row++)
                     {
-                        newMatrix[row, col] = synapse.WeightMatrix[row, col];
+                        for (int col = 0; col < synapse.ToNeuronCount; col++)
+                        {
+                            newMatrix[row, col] = synapse.WeightMatrix[row, col];
+                        }
                     }
+                    synapse.WeightMatrix = newMatrix;
                 }
-                synapse.WeightMatrix = newMatrix;
             }
 
             // adjust the bias
@@ -315,8 +327,11 @@ namespace Encog.Neural.Networks.Prune
             // delete a row on this matrix
             foreach (ISynapse synapse in targetLayer.Next)
             {
-                synapse.WeightMatrix =
-                    MatrixMath.DeleteRow(synapse.WeightMatrix, neuron);
+                if (synapse.WeightMatrix != null)
+                {
+                    synapse.WeightMatrix =
+                        MatrixMath.DeleteRow(synapse.WeightMatrix, neuron);
+                }
             }
 
             // delete a column on the previous
@@ -329,9 +344,12 @@ namespace Encog.Neural.Networks.Prune
                 {
                     foreach (ISynapse synapse in prevLayer.Next)
                     {
-                        synapse.WeightMatrix =
-                            MatrixMath.DeleteCol(synapse.WeightMatrix,
-                                neuron);
+                        if (synapse.WeightMatrix != null)
+                        {
+                            synapse.WeightMatrix =
+                                MatrixMath.DeleteCol(synapse.WeightMatrix,
+                                    neuron);
+                        }
                     }
                 }
             }
