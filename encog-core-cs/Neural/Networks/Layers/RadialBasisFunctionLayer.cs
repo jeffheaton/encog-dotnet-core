@@ -56,6 +56,9 @@ namespace Encog.Neural.Networks.Layers
     /// Radial basis function layers have neither thresholds nor a regular activation
     /// function. Calling any methods that deal with the activation function or
     /// thresholds will result in an error.
+    /// 
+    /// Contributed to Encog By M.Dean and M.Fletcher
+    /// University of Cambridge, Dept. of Physics, UK
     /// </summary>
 #if !SILVERLIGHT
     [Serializable]
@@ -159,37 +162,133 @@ namespace Encog.Neural.Networks.Layers
         }
 
         /// <summary>
-        /// Set the RBF components to random values.
+        /// Set the gausian components to random values.
         /// </summary>
         /// <param name="dimensions">The number of dimensions in the network.</param>
         /// <param name="min">The minimum value for the centers, widths and peaks.</param>
         /// <param name="max">The maximum value for the centers, widths and peaks.</param>
-        /// <param name="RBFType">The RBF to use.</param>
+        /// <param name="t">The RBF to use.</param>
         public void RandomizeRBFCentersAndWidths(int dimensions, double min, double max, RBFEnum t)
         {
             double[] centers = new double[dimensions];
-            for (int i = 0; i < centers.Length; i++)
+
+            for (int i = 0; i < dimensions; i++)
             {
                 centers[i] = RangeRandomizer.Randomize(min, max);
             }
 
             for (int i = 0; i < this.NeuronCount; i++)
             {
-                SetRBFOptions(i, t, centers, RangeRandomizer.Randomize(min, max), RangeRandomizer.Randomize(min, max));
+                SetRBFFunction(i, t, centers, RangeRandomizer.Randomize(min, max));
             }
         }
 
-        private void SetRBFOptions(int RBFIndex, RBFEnum RBFType, double[] center, double peak, double width)
+        /// <summary>
+        /// Specify specific centers and widths for the provided RBFType
+        /// </summary>
+        /// <param name="centers">Array containing center position. Row n contains centers for neuron n. Row n contains x elements for x number of dimensions.</param>
+        /// <param name="widths">Array containing widths. Row n contains widths for neuron n. Row n contains x elements for x number of dimensions.</param>
+        /// <param name="RBFType">The RBF Function to use for this layer.</param>
+        public void SetRBFCentersAndWidths(double[][] centers, double[] widths, RBFEnum RBFType)
+        {
+            for (int i = 0; i < this.NeuronCount; i++)
+            {
+                SetRBFFunction(i, RBFType, centers[i], widths[i]);
+            }
+        }
+
+        private void SetRBFFunction(int RBFIndex, RBFEnum RBFType, double[] centers, double width)
         {
             if (RBFType == RBFEnum.Gaussian)
-                this.radialBasisFunction[RBFIndex] = new GaussianFunction(peak, center, width);
+                this.radialBasisFunction[RBFIndex] = new GaussianFunction(0.5, centers, width);
             else if (RBFType == RBFEnum.Multiquadric)
-                this.radialBasisFunction[RBFIndex] = new MultiquadricFunction(peak, center, width);
+                this.radialBasisFunction[RBFIndex] = new MultiquadricFunction(0.5, centers, width);
             else if (RBFType == RBFEnum.InverseMultiquadric)
-                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunction(peak, center, width);
-            else if (RBFType == RBFEnum.MexicanHat)
-                this.radialBasisFunction[RBFIndex] = new MexicanHatFunction(peak, center, width);
+                this.radialBasisFunction[RBFIndex] = new InverseMultiquadricFunction(0.5, centers, width);
+        }
+
+        /// <summary>
+        /// Equally spaces all hidden neurons within the n dimensional variable space.
+        /// </summary>
+        /// <param name="minPosition">The minimum position neurons should be centered. Typically 0.</param>
+        /// <param name="maxPosition">The maximum position neurons should be centered. Typically 1</param>
+        /// <param name="RBFType">The RBF type to use.</param>
+        /// <param name="dimensions">The number of dimensions.</param>
+        /// <param name="volumeNeuronRBFWidth">The neuron width of neurons within the mesh.</param>
+        /// <param name="useWideEdgeRBFs">Enables wider RBF's around the boundary of the neuron mesh.</param>
+        public void SetRBFCentersAndWidthsEqualSpacing(double minPosition, double maxPosition, RBFEnum RBFType, int dimensions, double volumeNeuronRBFWidth, bool useWideEdgeRBFs)
+        {
+            int totalNumHiddenNeurons = NeuronCount;
+
+            double disMinMaxPosition = Math.Abs(maxPosition - minPosition);
+
+            //Check to make sure we have the correct number of neurons for the provided dimensions
+            int expectedSideLength = (int)Math.Pow(totalNumHiddenNeurons, 1.0 / dimensions);
+            if ((double)expectedSideLength != Math.Pow(totalNumHiddenNeurons, 1.0 / dimensions))
+                throw new Exception("Total number of RBF neurons must be some integer to the power of 'dimensions'.");
+
+            double edgeNeuronRBFWidth = 2.5 * volumeNeuronRBFWidth;
+
+            double[][] centers = new double[totalNumHiddenNeurons][];
+            double[] widths = new double[totalNumHiddenNeurons];
+
+            #region buildCentersAndWidths Volume Neurons
+            for (int i = 0; i < totalNumHiddenNeurons; i++)
+            {
+                centers[i] = new double[dimensions];
+
+                int sideLength = expectedSideLength;
+
+                //Evenly distribute the volume neurons.
+                int temp = i;
+
+                //First determine the centers
+                for (int j = dimensions; j > 0; j--)
+                {
+                    //i + j * sidelength + k * sidelength ^2 + ... l * sidelength ^ n
+                    //i - neuron number in x direction, i.e. 0,1,2,3
+                    //j - neuron number in y direction, i.e. 0,1,2,3
+                    //Following example assumes sidelength of 4
+                    //e.g Neuron 5 - x position is (int)5/4 * 0.33 = 0.33
+                    //then take modulus of 5%4 = 1
+                    //Neuron 5 - y position is (int)1/1 * 0.33 = 0.33
+                    centers[i][j - 1] = ((int)(temp / Math.Pow(sideLength, j - 1)) * (disMinMaxPosition / (sideLength - 1))) + minPosition;
+                    temp = temp % (int)(Math.Pow(sideLength, j - 1));
+                }
+
+                //Now set the widths
+                if ((centers[i].Contains(1) || centers[i].Contains(0)) && useWideEdgeRBFs)
+                {
+                    widths[i] = edgeNeuronRBFWidth;
+                }
+                else
+                {
+                    widths[i] = volumeNeuronRBFWidth;
+                }
+
+                //centers[i] = (double)(1 / (double)(neuronCount - 1)) * (double)i;
+            }
+            #endregion
+
+            SetRBFCentersAndWidths(centers, widths, RBFType);
+            //SaveOutNeuronCentersAndWeights(centers, widths);
+        }
+
+        public void SaveOutNeuronCentersAndWeights(double[][] centers, double[][] widths)
+        {
+            using (var sw = new System.IO.StreamWriter("neuronCentersWeights.csv", false))
+            {
+                for (int i = 0; i < centers.Length; i++)
+                {
+                    foreach (double value in centers[i])
+                        sw.Write(value + ",");
+
+                    foreach (double value in widths[i])
+                        sw.Write(value + ",");
+
+                    sw.WriteLine();
+                }
+            }
         }
     }
-
 }

@@ -42,6 +42,9 @@ namespace Encog.MathUtil.RBF
 {
     /// <summary>
     /// Implements a radial function based on the multiquadric function.
+    /// 
+    /// Contributed to Encog By M.Dean and M.Fletcher
+    /// University of Cambridge, Dept. of Physics, UK
     /// </summary>
 #if !SILVERLIGHT
     [Serializable]

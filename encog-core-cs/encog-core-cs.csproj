@@ -350,6 +350,8 @@
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\StopTrainingStrategy.cs" />
+    <Compile Include="Neural\Networks\Training\SVD\SVD.cs" />
+    <Compile Include="Neural\Networks\Training\SVD\SVDTraining.cs" />
     <Compile Include="Neural\Networks\Training\SVM\EncodeSVMProblem.cs" />
     <Compile Include="Neural\Networks\Training\SVM\SVMTrain.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
