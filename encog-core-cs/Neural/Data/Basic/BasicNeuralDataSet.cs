@@ -58,7 +58,14 @@ namespace Encog.Neural.Data.Basic
 #endif
         public class BasicNeuralEnumerator : IEnumerator<INeuralDataPair>
         {
+            /// <summary>
+            /// The current index.
+            /// </summary>
             private int current;
+
+            /// <summary>
+            /// The owner.
+            /// </summary>
             private BasicNeuralDataSet owner;
 
             /// <summary>
