@@ -88,6 +88,11 @@ namespace Encog.Neural.Data.Folded
         /// </summary>
         private int currentFoldSize;
 
+ 		/// <summary>
+        /// The owner object(from openAdditional)
+ 		/// </summary>
+        public FoldedDataSet Owner { get; set; }
+
         /// <summary>
         /// Create a folded dataset. 
         /// </summary>
@@ -157,10 +162,22 @@ namespace Encog.Neural.Data.Folded
         {
             get
             {
-                return this.currentFold;
+                if (Owner != null)
+                {
+                    return Owner.CurrentFold;
+                }
+                else
+                {
+                    return this.currentFold;
+                }
             }
             set
             {
+                if( Owner!=null ) 
+                {
+ 				    throw new TrainingError("Can't set the fold on a non-top-level set."); 
+ 			    }
+
                 if (value >= this.numFolds)
                 {
                     throw new TrainingError(
@@ -188,7 +205,14 @@ namespace Encog.Neural.Data.Folded
         {
             get
             {
-                return this.currentFoldOffset;
+                if (Owner != null)
+                {
+                    return Owner.CurrentFoldOffset;
+                }
+                else
+                {
+                    return this.currentFoldOffset;
+                }
             }
         }
 
@@ -199,7 +223,14 @@ namespace Encog.Neural.Data.Folded
         {
             get
             {
-                return this.currentFoldSize;
+                if (Owner != null)
+                {
+                    return Owner.CurrentFoldSize;
+                }
+                else
+                {
+                    return this.currentFoldSize;
+                }
             }
         }
 
@@ -244,7 +275,7 @@ namespace Encog.Neural.Data.Folded
         /// <param name="pair">The record.</param>
         public void GetRecord(long index, IEngineData pair)
         {
-            this.underlying.GetRecord(this.currentFoldOffset + index, pair);
+            this.underlying.GetRecord(this.CurrentFoldOffset + index, pair);
         }
 
         /// <summary>
@@ -289,6 +320,7 @@ namespace Encog.Neural.Data.Folded
         {
             FoldedDataSet folded = new FoldedDataSet(
                     (IIndexable)this.underlying.OpenAdditional());
+            folded.Owner = this;
             return folded;
         }
 
