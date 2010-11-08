@@ -237,9 +237,17 @@ namespace Encog.Engine.Network.Train.Prop
                 // second special case, if the segmentation ratio is zero, then just
                 // do one item per OpenCL call
                 if (this.segmentationRatio < EncogEngine.DEFAULT_ZERO_TOLERANCE)
+                {
                     this.kernelWorkPerCall = 1;
+                }
                 else
+                {
                     this.kernelWorkPerCall = (int)((training.Count / this.kernelGlobalWorkgroup) * this.segmentationRatio);
+                    if (this.kernelWorkPerCall == 0)
+                    {
+                        this.kernelWorkPerCall = 1;
+                    }
+                }
             }
 
             workPerIteration = this.kernelGlobalWorkgroup * this.kernelWorkPerCall;
