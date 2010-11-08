@@ -314,6 +314,9 @@
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainInstar.cs" />
     <Compile Include="Neural\Networks\Training\CPN\TrainOutstar.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\CrossTraining.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\CrossValidationKFold.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\NetworkFold.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\GeneticScoreAdapter.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGenome.cs" />
