@@ -159,6 +159,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             try
             {
+                this.network.Structure.UpdateFlatNetwork();
                 PreIteration();
 
                 this.flatTraining.Iteration();
