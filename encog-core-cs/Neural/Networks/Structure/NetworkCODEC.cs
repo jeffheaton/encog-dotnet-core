@@ -133,7 +133,7 @@ namespace Encog.Neural.Networks.Structure
 
                         if (contextSynapse != null)
                         {
-                            index += synapse.FromNeuronCount;
+                            index += contextSynapse.FromNeuronCount;
                         }
                     }
                 }
@@ -189,11 +189,9 @@ namespace Encog.Neural.Networks.Structure
 
                     if (contextSynapse != null)
                     {
-                        for (int z = 0; z < synapse.FromNeuronCount; z++)
+                        for (int z = 0; z < contextSynapse.FromNeuronCount; z++)
                         {
-
                             double value = array[result++];
-
                             double oldValue = synapse.WeightMatrix[z, x];
 
                             // if this connection is limited, do not update it to anything but zero
@@ -326,7 +324,7 @@ namespace Encog.Neural.Networks.Structure
 
                         if (contextSynapse != null)
                         {
-                            for (int z = 0; z < synapse.FromNeuronCount; z++)
+                            for (int z = 0; z < contextSynapse.FromNeuronCount; z++)
                             {
                                 result[index++] = contextSynapse.WeightMatrix[z, x];
                             }

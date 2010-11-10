@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks.Pattern
             ILayer context = new ContextLayer(this.hiddenNeurons);
             BasicNetwork network = new BasicNetwork();
 
-            ILayer input = new BasicLayer(this.activation, true,
+            ILayer input = new BasicLayer(this.activation, false,
                    this.inputNeurons);
             network.AddLayer(input);
             input.X = PatternConst.START_X;

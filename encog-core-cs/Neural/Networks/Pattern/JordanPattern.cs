@@ -121,7 +121,7 @@ namespace Encog.Neural.Networks.Pattern
         public BasicNetwork Generate()
         {
             // construct an Jordan type network
-            ILayer input = new BasicLayer(this.activation, true,
+            ILayer input = new BasicLayer(this.activation, false,
                    this.inputNeurons);
             ILayer hidden = new BasicLayer(this.activation, true,
                    this.hiddenNeurons);
