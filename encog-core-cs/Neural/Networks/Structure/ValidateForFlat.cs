@@ -6,6 +6,8 @@ using Encog.Engine.Validate;
 using Encog.Engine;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Logic;
+using Encog.Neural.Networks.Synapse;
+using Encog.Neural.Networks.Synapse.NEAT;
 
 namespace Encog.Neural.Networks.Structure
 {
@@ -13,7 +15,7 @@ namespace Encog.Neural.Networks.Structure
     /// Validate to determine if this network can be flattened.
     /// </summary>
     public class ValidateForFlat : BasicMachineLearningValidate
-    {      
+    {
         /// <summary>
         /// Determine if the specified neural network can be flat. If it can a null
         /// is returned, otherwise, an error is returned to show why the network
@@ -65,8 +67,16 @@ namespace Encog.Neural.Networks.Structure
                     return "To convert to flat a network must have only BasicLayer and ContextLayer layers.";
                 }
             }
+
+            foreach (ISynapse synapse in network.Structure.Synapses)
+            {
+                if (synapse is NEATSynapse)
+                {
+                    return "A NEAT synapse cannot be flattened.";
+                }
+            }
+
             return null;
         }
-
     }
 }
