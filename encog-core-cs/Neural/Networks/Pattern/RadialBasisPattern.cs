@@ -110,7 +110,7 @@ namespace Encog.Neural.Networks.Pattern
         {
             ILayer input = new BasicLayer(new ActivationLinear(), false,
                     this.inputNeurons);
-            ILayer output = new BasicLayer(new ActivationLinear(), true, this.outputNeurons);
+            ILayer output = new BasicLayer(new ActivationLinear(), false, this.outputNeurons);
             BasicNetwork network = new BasicNetwork();
             RadialBasisFunctionLayer rbfLayer = new RadialBasisFunctionLayer(
                    this.hiddenNeurons);
