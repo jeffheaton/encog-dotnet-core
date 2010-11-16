@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 namespace Encog.Engine.Opencl.Kernels
 {
 
@@ -30,7 +30,9 @@ namespace Encog.Engine.Opencl.Kernels
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+#if !SILVERLIGHT
     using Cloo;
+#endif
 
     /// <summary>
     /// A very simple kernel, used to add a vector. Not actually used by Encog, it is
@@ -142,3 +144,4 @@ namespace Encog.Engine.Opencl.Kernels
 
     }
 }
+#endif

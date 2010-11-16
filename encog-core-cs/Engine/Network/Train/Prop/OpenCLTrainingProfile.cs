@@ -21,20 +21,20 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
 namespace Encog.Engine.Network.Train.Prop
 {
-
+#if !SILVERLIGHT
     using Encog.Engine.Data;
     using Encog.Engine.Opencl;
     using Encog.Engine.Opencl.Exceptions;
-    using Encog.Engine.Opencl.Kernels;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Text;
+    using Encog.Engine.Opencl.Kernels;
+#endif
 
     /// <summary>
     /// Specifies a training profile for an OpenCL training session. Includes the
@@ -66,7 +66,7 @@ namespace Encog.Engine.Network.Train.Prop
     ///
     public class OpenCLTrainingProfile
     {
-
+#if !SILVERLIGHT
         /// <summary>
         /// The OpenCL device to use.
         /// </summary>
@@ -472,5 +472,6 @@ namespace Encog.Engine.Network.Train.Prop
 
             return result.ToString();
         }
+#endif
     }
 }

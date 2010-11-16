@@ -34,8 +34,9 @@ namespace Encog.Engine.Opencl.Exceptions
     /// <summary>
     /// Thrown when an OpenCL error occurs.
     /// </summary>
-    ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class OpenCLError : EncogEngineError
     {
         /// <summary>

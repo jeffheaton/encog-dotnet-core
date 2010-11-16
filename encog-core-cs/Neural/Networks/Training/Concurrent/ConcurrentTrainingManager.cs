@@ -168,6 +168,7 @@ namespace Encog.Neural.Networks.Training.Concurrent
 
                 this.SingleThreaded = splitCores;
 
+#if !SILVERLIGHT
                 // handle OpenCL mode
                 if (EncogFramework.Instance.CL != null)
                 {
@@ -185,6 +186,7 @@ namespace Encog.Neural.Networks.Training.Concurrent
                         AddPerformer(new ConcurrentTrainingPerformerOpenCL(clCount++, device));
                     }
                 }
+#endif
 
                 // now create CPU performers
                 if (useCPU && forceCoreCount >= 0)

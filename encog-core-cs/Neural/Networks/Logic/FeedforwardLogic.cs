@@ -34,10 +34,10 @@ using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Layers;
+using Encog.Neural.Data.Basic;
 
 #if logging
 using log4net;
-using Encog.Neural.Data.Basic;
 #endif
 
 namespace Encog.Neural.Networks.Logic

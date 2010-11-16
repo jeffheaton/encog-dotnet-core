@@ -42,7 +42,9 @@ namespace Encog.Engine.Network.Activation
     /// activation function does not have a derivative, and can not be used with
     /// propagation training, or any other training that requires a derivative.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationStep : IActivationFunction
     {
 

@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 namespace Encog.Engine.Opencl.Kernels
 {
     using System;
@@ -30,13 +30,13 @@ namespace Encog.Engine.Opencl.Kernels
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Text;
-    using Cloo;
     using Encog.Engine.Data;
     using Encog.Engine.Network.Train.Prop;
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Util;
     using Encog.Engine.Opencl.Exceptions;
     using Encog.Engine.Network.Activation;
+    using Cloo;
 
     /// <summary>
     /// An OpenCL kernel that is designed to calculate gradients and help train a
@@ -546,3 +546,4 @@ namespace Encog.Engine.Opencl.Kernels
         }
     }
 }
+#endif

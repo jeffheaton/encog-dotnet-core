@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 namespace Encog.Engine.Network.Train.Prop
 {
 
@@ -505,3 +505,4 @@ namespace Encog.Engine.Network.Train.Prop
 
     }
 }
+#endif

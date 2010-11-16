@@ -38,7 +38,9 @@ namespace Encog.Engine.Network.Activation
     /// numbers are generated. Do not use this activation function if negative number
     /// output is desired.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationSigmoid : IActivationFunction
     {
         /// <summary>

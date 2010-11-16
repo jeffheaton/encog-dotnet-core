@@ -36,12 +36,13 @@ using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags.Read;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-#if logging
-using log4net;
 using Encog.Engine.Network.RBF;
 using Encog.Util;
 using Encog.Neural;
 using Encog.Util.CSV;
+
+#if logging
+using log4net;
 #endif
 
 namespace Encog.Persist.Persistors

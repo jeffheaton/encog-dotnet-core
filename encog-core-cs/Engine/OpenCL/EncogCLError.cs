@@ -35,8 +35,9 @@ namespace Encog.Engine.Opencl
     /// <summary>
     /// An OpenCL error.
     /// </summary>
-    ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class EncogCLError : EncogEngineError
     {
         /// <summary>

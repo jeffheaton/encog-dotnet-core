@@ -36,6 +36,7 @@ namespace Encog.Engine.Network.Train.Gradient
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Diagnostics;
+    using Encog.Util.Time;
 
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.

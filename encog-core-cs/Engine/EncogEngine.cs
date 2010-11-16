@@ -58,12 +58,14 @@ namespace Encog.Engine
         ///
         private static EncogEngine instance;
 
+#if !SILVERLIGHT
         /// <summary>
         /// If Encog is not using GPU/CL processing this attribute will be null.
         /// Otherwise it holds the Encog CL object.
         /// </summary>
         ///
         private EncogCL cl;
+#endif
 
         /// <summary>
         /// Get the instance to the singleton.
@@ -82,7 +84,7 @@ namespace Encog.Engine
             }
         }
 
-
+#if !SILVERLIGHT
         /// <summary>
         /// Enable OpenCL processing. OpenCL processing allows Encog to use GPU
         /// devices to speed calculations. Not all areas of Encog can use this,
@@ -104,6 +106,7 @@ namespace Encog.Engine
                 throw new EncogEngineError(e);
             }
         }
+#endif
 
         /// <summary>
         /// Provides any shutdown that Encog may need. Currently this shuts down the
@@ -114,7 +117,7 @@ namespace Encog.Engine
         {
         }
 
-
+#if !SILVERLIGHT
         /// <summary>
         /// If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.
         /// </summary>
@@ -125,7 +128,7 @@ namespace Encog.Engine
                 return this.cl;
             }
         }
-
+#endif
 
     }
 }

@@ -9,7 +9,9 @@ namespace Encog.Persist
     /// An object that is not stored at the top level of an EG file.  Therefore the name 
     /// and description attributes are not needed.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class BasicPersistedSubObject : IEncogPersistedObject
     {
         /// <summary>

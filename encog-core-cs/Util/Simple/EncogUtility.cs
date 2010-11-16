@@ -41,11 +41,11 @@ using Encog.Neural.NeuralData.CSV;
 using Encog.Neural.Data.Buffer;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Engine.Network.Activation;
+using Encog.Engine.Util;
 
 #if !SILVERLIGHT
 using System.Windows.Forms;
-using Encog.Engine.Network.Activation;
-using Encog.Engine.Util;
 #endif
 
 namespace Encog.Util.Simple

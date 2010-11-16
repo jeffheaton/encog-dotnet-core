@@ -14,7 +14,9 @@ namespace Encog.Engine.Data
     /// class.
     /// </summary>
     ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicEngineDataSet : IEngineIndexableSet
     {
 

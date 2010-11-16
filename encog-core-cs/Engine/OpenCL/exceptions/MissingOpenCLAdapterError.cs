@@ -38,7 +38,9 @@ namespace Encog.Engine.Opencl.Exceptions
     /// http://www.heatonresearch.com/encog/troubleshooting/nonative.html
     /// </summary>
     ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class MissingOpenCLAdapterError : OpenCLError
     {
         /// <summary>

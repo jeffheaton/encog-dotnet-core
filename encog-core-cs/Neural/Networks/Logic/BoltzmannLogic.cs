@@ -35,9 +35,10 @@ using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Data;
+using Encog.Engine.Util;
+
 #if logging
 using log4net;
-using Encog.Engine.Util;
 #endif
 
 namespace Encog.Neural.Networks.Logic

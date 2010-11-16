@@ -42,6 +42,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Neural.Data.Buffer;
 using System.Diagnostics;
 using System.IO;
+using Encog.Util.Time;
 
 namespace Encog.Util.Banchmark
 {
@@ -124,14 +125,19 @@ namespace Encog.Util.Banchmark
             this.report.Report(EncogBenchmark.STEPS, 0, "Beginning benchmark");
 
             EvalCPU();
+#if !SILVERLIGHT
             EvalOpenCL();
+#endif
             EvalMemory();
+#if !SILVERLIGHT
             EvalBinary();
+#endif
 
             StringBuilder result = new StringBuilder();
 
             result.Append("Encog Benchmark: CPU:");
             result.Append(Format.FormatInteger(this.cpuScore));
+#if !SILVERLIGHT
             result.Append(", OpenCL");
             if (this.device == null)
                 result.Append("(none)");
@@ -142,6 +148,7 @@ namespace Encog.Util.Banchmark
 
             result.Append(":");
             result.Append(Format.FormatInteger(this.clScore));
+#endif
             result.Append(", Memory:");
             result.Append(Format.FormatInteger(this.memoryScore));
             result.Append(", Disk:");
@@ -182,6 +189,7 @@ namespace Encog.Util.Banchmark
             this.cpuScore = result;
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Evaluate the OpenCL device.
         /// </summary>
@@ -267,8 +275,8 @@ namespace Encog.Util.Banchmark
             this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
                     "OpenCL result: " + result);
             this.clScore = result;
-
         }
+#endif
 
         /// <summary>
         /// Evaluate memory.

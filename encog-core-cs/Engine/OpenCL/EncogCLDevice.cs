@@ -21,7 +21,6 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
 namespace Encog.Engine.Opencl
 {
 
@@ -31,8 +30,10 @@ namespace Encog.Engine.Opencl
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Text;
-    using Cloo;
     using Encog.Engine.Util;
+#if !SILVERLIGHT
+    using Cloo;
+#endif
 
     /// <summary>
     /// An OpenCL compute device. One of these will be created for each GPU on your
@@ -45,7 +46,7 @@ namespace Encog.Engine.Opencl
     ///
     public class EncogCLDevice : EncogCLItem
     {
-
+#if !SILVERLIGHT
         /// <summary>
         /// The OpenCL compute device.
         /// </summary>
@@ -224,6 +225,6 @@ namespace Encog.Engine.Opencl
 
             return builder.ToString();
         }
-
+#endif
     }
 }

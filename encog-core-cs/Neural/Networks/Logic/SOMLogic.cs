@@ -40,7 +40,9 @@ namespace Encog.Neural.Networks.Logic
     /// Encog SOM logic to be expanded in the future, and allows SOM specific
     /// trainers to exclude this logic type.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class SOMLogic: SimpleRecurrentLogic
     {
 

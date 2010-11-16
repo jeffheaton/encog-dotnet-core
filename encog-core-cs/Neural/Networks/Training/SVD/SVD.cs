@@ -289,7 +289,9 @@ namespace Encog.Neural.Networks.Training.SVD
                         }
                         break;
                     }
+#if !SILVERLIGHT
                     if (its == 29) Debug.Print("no convergence in 30 svdcmp iterations");
+#endif
                     x = w[l];
                     nm = k - 1;
                     y = w[nm];

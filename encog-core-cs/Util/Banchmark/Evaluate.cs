@@ -39,6 +39,7 @@ using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Util.Simple;
 using System.Diagnostics;
+using Encog.Util.Time;
 
 namespace Encog.Util.Banchmark
 {
@@ -85,8 +86,10 @@ namespace Encog.Util.Banchmark
 
             OpenCLTrainingProfile profile = null;
 
+#if !SILVERLIGHT
             if (device != null)
                 profile = new OpenCLTrainingProfile(device);
+#endif
 
             return EvaluateTrain(profile, network, training);
         }

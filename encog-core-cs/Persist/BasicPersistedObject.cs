@@ -10,7 +10,9 @@ namespace Encog.Persist
     /// A basic Encog persisted object. Provides the name, description and collection
     /// attributes. Also provides a generic persistor.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class BasicPersistedObject : IEncogPersistedObject
     {
         /// <summary>
@@ -26,9 +28,10 @@ namespace Encog.Persist
         /// <summary>
         /// The collection the object belongs to.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         public IEncogCollection collection;
-
 
         /// <summary>
         /// The collection the object belongs to.

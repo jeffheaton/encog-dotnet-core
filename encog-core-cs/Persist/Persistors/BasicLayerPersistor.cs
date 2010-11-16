@@ -236,7 +236,7 @@ namespace Encog.Persist.Persistors
 
                     for (int i = 0; i < result.ParamNames.Length; i++)
                     {
-                        if (String.Compare(key, result.ParamNames[i], true) == 0)
+                        if ( key.ToUpper().Equals(result.ParamNames[i].ToUpper()) )
                         {
                             index = i;
                             break;

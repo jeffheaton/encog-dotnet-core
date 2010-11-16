@@ -38,11 +38,12 @@ using Encog.Neural.Data;
 using Encog.Neural.Data.Basic;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-#if logging
-using log4net;
 using Encog.Engine.Network.Activation;
 using Encog.Engine.Util;
 using Encog.Engine.Network.RBF;
+
+#if logging
+using log4net;
 #endif
 namespace Encog.Neural.Networks.Layers
 {

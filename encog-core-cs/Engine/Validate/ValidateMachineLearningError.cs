@@ -41,8 +41,9 @@ namespace Encog.Engine.Validate
     /// <summary>
     /// Error from validation.
     /// </summary>
-    ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ValidateMachineLearningError : EncogEngineError
     {
 

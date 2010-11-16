@@ -168,10 +168,12 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 PostIteration();
 
+#if logging
                 if (LOGGER.IsInfoEnabled)
                 {
                     LOGGER.Info("Training iteration done, error: " + this.Error);
                 }
+#endif
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -239,10 +241,12 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 PostIteration();
 
+#if logging
                 if (LOGGER.IsInfoEnabled)
                 {
                     LOGGER.Info("Training iterations done, error: " + this.Error);
                 }
+#endif
             }
             catch (IndexOutOfRangeException ex)
             {

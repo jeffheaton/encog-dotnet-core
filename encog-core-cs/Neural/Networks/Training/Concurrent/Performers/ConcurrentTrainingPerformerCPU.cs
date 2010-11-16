@@ -7,6 +7,7 @@ using Encog.Engine.Concurrency.Job;
 using System.Diagnostics;
 using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
+using Encog.Util.Time;
 
 namespace Encog.Neural.Networks.Training.Concurrent.Performers
 {
@@ -85,6 +86,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Performers
             {
                 watch.Start();
                 OpenCLTrainingProfile profile = null;
+#if !SILVERLIGHT
                 if (this is ConcurrentTrainingPerformerOpenCL)
                 {
                     EncogCLDevice device = ((ConcurrentTrainingPerformerOpenCL)this).Device;
@@ -93,6 +95,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Performers
                             this.currentJob.GlobalRatio,
                             this.currentJob.SegmentationRatio);
                 }
+#endif
 
                 this.currentJob.CreateTrainer(profile, Manager.SingleThreaded);
                 ITrain train = this.currentJob.Train;

@@ -43,8 +43,9 @@ namespace Encog.Engine.Opencl.Exceptions
     /// See:
     /// http://www.heatonresearch.com/encog/troubleshooting/ooresource.html
     /// </summary>
-    ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class OutOfOpenCLResources : OpenCLError
     {
         /// <summary>

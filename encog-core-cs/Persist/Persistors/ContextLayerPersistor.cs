@@ -37,10 +37,10 @@ using Encog.Neural.Networks.Layers;
 using Encog.Parse.Tags.Write;
 using Encog.MathUtil;
 using Encog.Util.CSV;
+using Encog.Engine.Network.Activation;
 
 #if logging
 using log4net;
-using Encog.Engine.Network.Activation;
 #endif
 
 namespace Encog.Persist.Persistors

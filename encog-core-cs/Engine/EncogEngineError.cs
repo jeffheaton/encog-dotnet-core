@@ -39,8 +39,9 @@
 	/// <summary>
 	/// General error class for Encog Engine.
 	/// </summary>
-	///
+#if !SILVERLIGHT
 	[Serializable]
+#endif
 	public class EncogEngineError : Exception {
 	
 	

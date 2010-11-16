@@ -2398,7 +2398,8 @@ namespace Encog.MathUtil.LIBSVM
 		
 		//UPGRADE_NOTE: Final was removed from the declaration of 'kernel_type_table'. 'ms-help://MS.VSCC.2003/commoner/redir/redirect.htm?keyword="jlca1003_3"'
 		internal static readonly System.String[] kernel_type_table = new System.String[]{"linear", "polynomial", "rbf", "sigmoid"};
-		
+
+#if !SILVERLIGHT		
 		public static void  svm_save_model(System.String model_file_name, svm_model model)
 		{
 			//UPGRADE_TODO: Class 'java.io.DataOutputStream' was converted to 'System.IO.BinaryWriter' which has a different behavior. 'ms-help://MS.VSCC.2003/commoner/redir/redirect.htm?keyword="jlca1073_javaioDataOutputStream_3"'
@@ -2481,7 +2482,8 @@ namespace Encog.MathUtil.LIBSVM
 			
 			fp.Close();
 		}
-		
+#endif		
+
 		private static double atof(System.String s)
 		{
 			return System.Double.Parse(s);
@@ -2492,6 +2494,7 @@ namespace Encog.MathUtil.LIBSVM
 			return System.Int32.Parse(s);
 		}
 		
+#if !SILVERLIGHT
 		public static svm_model svm_load_model(System.String model_file_name)
 		{
 			//UPGRADE_TODO: The differences in the expected value  of parameters for constructor 'java.io.BufferedReader.BufferedReader'  may cause compilation errors.  'ms-help://MS.VSCC.2003/commoner/redir/redirect.htm?keyword="jlca1092_3"'
@@ -2642,6 +2645,7 @@ namespace Encog.MathUtil.LIBSVM
 			fp.Close();
 			return model;
 		}
+#endif 
 		
 		public static System.String svm_check_parameter(svm_problem prob, svm_parameter param)
 		{

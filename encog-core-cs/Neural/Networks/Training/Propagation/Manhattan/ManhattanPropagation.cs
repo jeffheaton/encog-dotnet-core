@@ -32,10 +32,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-
+using Encog.Engine.Network.Train.Prop;
 #if logging
 using log4net;
-using Encog.Engine.Network.Train.Prop;
 #endif
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
@@ -75,6 +74,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
                         this.Training,
                         learnRate);
             }
+#if !SILVERLIGHT
             else
             {
                 TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
@@ -83,6 +83,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
                 rpropFlat.LearnManhattan(learnRate);
                 this.FlatTraining = rpropFlat;
             }
+#endif
         }
 
         /// <summary>

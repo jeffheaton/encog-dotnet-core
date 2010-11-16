@@ -43,13 +43,13 @@ using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Structure;
 using Encog.Util;
-
-#if logging
-using log4net;
 using Encog.Engine;
 using Encog.Neural.Data.Basic;
 using Encog.Engine.Util;
 using Encog.Util.CSV;
+
+#if logging
+using log4net;
 #endif
 
 namespace Encog.Neural.Networks

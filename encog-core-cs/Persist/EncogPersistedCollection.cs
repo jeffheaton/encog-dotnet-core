@@ -33,9 +33,9 @@ using System.Linq;
 using System.Text;
 using Encog.Persist.Location;
 using System.IO;
+using Encog.Neural.Networks;
 #if logging
 using log4net;
-using Encog.Neural.Networks;
 #endif
 
 

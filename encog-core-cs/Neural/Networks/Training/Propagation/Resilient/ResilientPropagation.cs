@@ -134,6 +134,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         network.Structure.Flat, this.Training);
                 this.FlatTraining = rpropFlat;
             }
+#if !SILVERLIGHT
             else
             {
                 TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
@@ -142,7 +143,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 rpropFlat.LearnRPROP(initialUpdate, maxStep);
                 this.FlatTraining = rpropFlat;
             }
-
+#endif
         }
 
         /// <summary>
@@ -194,6 +195,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         ((TrainFlatNetworkResilient)this.FlatTraining)
                                 .UpdateValues;
             }
+#if !SILVERLIGHT
             else
             {
                 result[ResilientPropagation.LAST_GRADIENTS] =
@@ -203,6 +205,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         ((TrainFlatNetworkOpenCL)this.FlatTraining)
                                 .UpdateValues;
             }
+#endif
 
             return result;
         }
@@ -231,6 +234,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         ((TrainFlatNetworkResilient)this.FlatTraining)
                                 .UpdateValues);
             }
+#if !SILVERLIGHT
             else if (this.FlatTraining is TrainFlatNetworkOpenCL)
             {
                 EngineArray.ArrayCopy(lastGradient, ((TrainFlatNetworkOpenCL)this
@@ -238,6 +242,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 EngineArray.ArrayCopy(updateValues, ((TrainFlatNetworkOpenCL)this
                         .FlatTraining).UpdateValues);
             }
+#endif
         }
     }
 }

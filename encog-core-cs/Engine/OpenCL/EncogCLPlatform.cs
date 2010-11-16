@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 namespace Encog.Engine.Opencl
 {
 
@@ -119,3 +119,4 @@ namespace Encog.Engine.Opencl
         }
     }
 }
+#endif

@@ -67,7 +67,9 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// True, if we are in the process of loading.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private bool loading;
 
         /// <summary>
@@ -78,19 +80,25 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// The EGB file we are working wtih.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private EncogEGBFile egb;
 
         /// <summary>
         /// Additional sets that were opened.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private IList<BufferedNeuralDataSet> additional = new List<BufferedNeuralDataSet>();
 
         /// <summary>
         /// The owner.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private BufferedNeuralDataSet owner;
 
 

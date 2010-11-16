@@ -39,7 +39,9 @@ namespace Encog.Engine.Network.Activation
     /// negative output. Use this activation function if both negative and positive
     /// output is desired.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationTANH : IActivationFunction
     {
         /// <summary>

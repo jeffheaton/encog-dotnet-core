@@ -32,10 +32,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
+using Encog.Engine.Network.Activation;
 
 #if logging
 using log4net;
-using Encog.Engine.Network.Activation;
 #endif
 
 namespace Encog.Neural.Networks.Pattern

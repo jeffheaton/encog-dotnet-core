@@ -248,6 +248,7 @@ namespace Encog.Util
         /// <returns>The created class.</returns>
         public static Object LoadObject(String name)
         {
+#if !SILVERLIGHT
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             Object result = null;
 
@@ -259,7 +260,10 @@ namespace Encog.Util
             }
 
             return result;
+#else
+            Assembly a = Assembly.GetExecutingAssembly();
+            return a.CreateInstance(name);
+#endif
         }
-
     }
 }

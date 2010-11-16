@@ -73,7 +73,11 @@ namespace Encog.Engine.Concurrency
             this.workloadSize = workloadSize;
             if (threads == 0)
             {
+#if !SILVERLIGHT
                 int num = (int)(Math.Log((double)((int)System.Diagnostics.Process.GetCurrentProcess().ProcessorAffinity + 1), 2));
+#else
+                int num = 4;
+#endif
 
                 // if there is more than one processor, use processor count +1
                 if (num != 1)

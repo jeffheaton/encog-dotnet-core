@@ -46,8 +46,9 @@ namespace Encog.Engine.Data
     /// For unsupervised training the input property should be valid, however the
     /// ideal property should contain null.
     /// </summary>
-    ///
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class BasicEngineData : IEngineData
     {
 

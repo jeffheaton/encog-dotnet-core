@@ -159,6 +159,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                         momentum);
                 this.FlatTraining = backFlat;
             }
+#if !SILVERLIGHT
             else
             {
                 TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
@@ -167,7 +168,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                 rpropFlat.LearnBPROP(learnRate, momentum);
                 this.FlatTraining = rpropFlat;
             }
-
+#endif
 
         }
 

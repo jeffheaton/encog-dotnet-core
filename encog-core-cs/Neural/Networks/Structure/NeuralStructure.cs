@@ -93,13 +93,17 @@ namespace Encog.Neural.Networks.Structure
         /// <summary>
         /// The flattened form of the network.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private FlatNetwork flat;
 
         /// <summary>
         /// What type of update is needed to the flat network.
         /// </summary>
+#if !SILVERLIGHT
         [NonSerialized]
+#endif
         private FlatUpdateNeeded flatUpdate;
 
 

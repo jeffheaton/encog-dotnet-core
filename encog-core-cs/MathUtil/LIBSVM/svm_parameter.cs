@@ -38,8 +38,13 @@ namespace Encog.MathUtil.LIBSVM
     // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
     // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#if !SILVERLIGHT
 	[Serializable]
-	public class svm_parameter : System.ICloneable
+#endif
+	public class svm_parameter 
+#if !SILVERLIGHT
+        : System.ICloneable
+#endif
 	{
 		/* svm_type */
 		public const int C_SVC = 0;

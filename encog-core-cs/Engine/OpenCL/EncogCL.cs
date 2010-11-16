@@ -21,10 +21,9 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 namespace Encog.Engine.Opencl
 {
-
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -238,3 +237,4 @@ namespace Encog.Engine.Opencl
 
     }
 }
+#endif

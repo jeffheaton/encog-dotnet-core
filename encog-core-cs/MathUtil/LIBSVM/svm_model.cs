@@ -41,7 +41,9 @@ namespace Encog.MathUtil.LIBSVM
     // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
     // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#if !SILVERLIGHT
 	[Serializable]
+#endif
 	public class svm_model
 	{
 		internal svm_parameter param; // parameter

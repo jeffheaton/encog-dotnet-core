@@ -26,8 +26,9 @@ namespace Encog.Engine.Util
         /// <returns>A stream.</returns>
         public static Stream CreateStream(String resource)
         {
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+#if !SILVERLIGHT
             Stream result = null;
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();          
 
             foreach (Assembly a in assemblies)
             {
@@ -37,6 +38,10 @@ namespace Encog.Engine.Util
             }
 
             return result;
+#else 
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetManifestResourceStream(resource); 
+#endif
         }
 
         /// <summary>

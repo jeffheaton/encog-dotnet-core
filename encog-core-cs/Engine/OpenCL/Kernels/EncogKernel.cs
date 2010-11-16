@@ -21,19 +21,18 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-
+#if !SILVERLIGHT
 
 namespace Encog.Engine.Opencl.Kernels
 {
-
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Text;
-    using Cloo;
     using Encog.Engine.Util;
+    using Cloo;
 
     /// <summary>
     /// Defines a basic OpenCL kernal, as used by Encog. Contains the kernal source
@@ -356,3 +355,4 @@ namespace Encog.Engine.Opencl.Kernels
         }
     }
 }
+#endif

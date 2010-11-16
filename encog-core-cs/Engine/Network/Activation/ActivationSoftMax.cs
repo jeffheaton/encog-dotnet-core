@@ -36,7 +36,9 @@ namespace Encog.Engine.Network.Activation
     /// <summary>
     /// The softmax activation function.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class ActivationSoftMax : IActivationFunction
     {
         /// <summary>
