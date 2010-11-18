@@ -51,10 +51,10 @@
 	</target>
 
 	<target name="doc" depends="msbuild" description="produce MSDN style CHM file ">
-		<copy todir="${path.stage}/src/encog-core-cs/bin/Release" file="${basedir}/log4net.dll" />
-		<copy todir="${path.stage}/src/encog-core-cs/bin/Release" file="${basedir}/cloo.dll" />
+		<copy todir="${basedir}\encog-core-cs\bin\Release" file="${basedir}/log4net.dll" />
+		<copy todir="${basedir}\encog-core-cs\bin\Release" file="${basedir}/cloo.dll" />
 		<exec executable="ndoc3console">
-			<arg value="C:\tools\CruiseControl\projects\cs-encog-core\stage\src\encog-core-cs\bin\Release\encog-core-cs.dll"/>
+			<arg value="C:\tools\CruiseControl\projects\cs-encog-core\encog-core-cs\bin\Release\encog-core-cs.dll"/>
 			<arg value='-HtmlHelpName=EncogDotNet'/>
 		 	<arg value='-Title=Documentation For Encog 2.x'/>
 		 	<arg value='-OutputTarget=HtmlHelp'/>
