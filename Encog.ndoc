@@ -1,6 +1,6 @@
 <project SchemaVersion="1.3">
     <assemblies>
-        <assembly location="..\tools\CruiseControl\projects\cs-encog-core\stage\src\bin\Release\encog-core-cs.dll" documentation="..\tools\CruiseControl\projects\cs-encog-core\stage\src\bin\Release\encog-core-cs.xml" />
+        <assembly location="C:\tools\CruiseControl\projects\cs-encog-core\stage\src\encog-core-cs\bin\Release\encog-core-cs.dll" documentation="C:\tools\CruiseControl\projects\cs-encog-core\stage\src\encog-core-cs\bin\Release\encog-core-cs.xml" />
     </assemblies>
     <documenters>
         <documenter name="MSDN">
