@@ -67,8 +67,8 @@ namespace Encog.Examples.Market
                     Config.INPUT_WINDOW,
                     Config.PREDICT_WINDOW);
             MarketDataDescription desc = new MarketDataDescription(
-                    new TickerSymbol(Config.TICKER),
-                    MarketDataType.ADJUSTED_CLOSE,
+                    Config.TICKER,
+                    MarketDataType.CLOSE,
                     true,
                     true);
             result.AddDescription(desc);

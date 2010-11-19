@@ -51,10 +51,10 @@ namespace Encog.Examples.Market
                     loader,
                     Config.INPUT_WINDOW,
                     Config.PREDICT_WINDOW);
-            TickerSymbol ticker = new TickerSymbol(Config.TICKER);
+            
             MarketDataDescription desc = new MarketDataDescription(
-                    ticker,
-                    MarketDataType.ADJUSTED_CLOSE,
+                    Config.TICKER,
+                    MarketDataType.CLOSE,
                     true,
                     true);
             market.AddDescription(desc);

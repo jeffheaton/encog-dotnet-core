@@ -34,6 +34,7 @@ using System.Text;
 using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.NeuralData.Market.Loader;
 using Encog.Util.Time;
+using Encog.Neural.NeuralData.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market
 {
@@ -141,7 +142,7 @@ namespace Encog.Neural.NeuralData.Market
             this.Points.Clear();
 
             // first obtain a collection of symbols that need to be looked up
-            IDictionary<TickerSymbol, object> set = new Dictionary<TickerSymbol, object>();
+            IDictionary<String, object> set = new Dictionary<String, object>();
             foreach (TemporalDataDescription desc in this.Descriptions)
             {
                 MarketDataDescription mdesc = (MarketDataDescription)desc;
@@ -149,7 +150,7 @@ namespace Encog.Neural.NeuralData.Market
             }
 
             // now loop over each symbol and load the data
-            foreach (TickerSymbol symbol in set.Keys)
+            foreach (String symbol in set.Keys)
             {
                 LoadSymbol(symbol, begin, end);
             }
@@ -165,16 +166,16 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="ticker">The ticker symbol to load.</param>
         /// <param name="point">The point to load at.</param>
         /// <param name="item">The item being loaded.</param>
-        private void LoadPointFromMarketData(TickerSymbol ticker,
-                 TemporalPoint point, LoadedMarketData item)
+        private void LoadPointFromMarketData(String ticker,
+                 TemporalPoint point, StoredMarketData item)
         {
             foreach (TemporalDataDescription desc in this.Descriptions)
             {
                 MarketDataDescription mdesc = (MarketDataDescription)desc;
 
                 if (mdesc.Ticker.Equals(ticker))
-                {
-                    point.Data[mdesc.Index] = item.Data[mdesc.DataType];
+                {                  
+                    point.Data[mdesc.Index] = item.GetDataDouble(mdesc.DataType);
                 }
             }
         }
@@ -185,14 +186,14 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="ticker">The ticker symbol to load.</param>
         /// <param name="from">Load data from this date.</param>
         /// <param name="to">Load data to this date.</param>
-        private void LoadSymbol(TickerSymbol ticker, DateTime from,
+        private void LoadSymbol(String ticker, DateTime from,
                  DateTime to)
         {
-            ICollection<LoadedMarketData> data = this.Loader.Load(ticker,
+            ICollection<StoredMarketData> data = this.Loader.Load(ticker,
                    null, from, to);
-            foreach (LoadedMarketData item in data)
+            foreach (StoredMarketData item in data)
             {
-                TemporalPoint point = this.CreatePoint(item.When);
+                TemporalPoint point = this.CreatePoint(item.Date);
 
                 LoadPointFromMarketData(ticker, point, item);
             }

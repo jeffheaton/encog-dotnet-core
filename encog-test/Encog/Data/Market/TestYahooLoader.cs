@@ -34,6 +34,7 @@ using System.Text;
 using NUnit.Framework;
 using Encog.Neural.NeuralData.Market.Loader;
 using Encog.Neural.NeuralData.Market;
+using Encog.Neural.NeuralData.Market.DB;
 
 namespace encog_test.Data.Market
 {
@@ -46,15 +47,15 @@ namespace encog_test.Data.Market
             IMarketLoader loader = new YahooFinanceLoader();
             DateTime from = new DateTime(2008, 8, 4);
             DateTime to = new DateTime(2008, 8, 5);
-            ICollection<LoadedMarketData> list = loader.Load(new TickerSymbol("aapl"), null, from, to);
+            ICollection<StoredMarketData> list = loader.Load("aapl", null, from, to);
 
-            IEnumerator<LoadedMarketData> itr = list.GetEnumerator();
+            IEnumerator<StoredMarketData> itr = list.GetEnumerator();
             itr.MoveNext();
-            LoadedMarketData data = itr.Current;
-            Assert.AreEqual(160, (int)data.GetData(MarketDataType.CLOSE));
+            StoredMarketData data = itr.Current;
+            Assert.AreEqual(160, (int)data.Close);
             itr.MoveNext();
             data = itr.Current;
-            Assert.AreEqual(153, (int)data.GetData(MarketDataType.CLOSE));
+            Assert.AreEqual(153, (int)data.Close);
         }
     }
 }

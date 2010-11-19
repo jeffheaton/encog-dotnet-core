@@ -48,7 +48,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <summary>
         /// The ticker symbol to be loaded.
         /// </summary>
-        private TickerSymbol ticker;
+        private String ticker;
 
         /// <summary>
         /// The type of data to be loaded from the specified ticker symbol.
@@ -64,7 +64,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="activationFunction"> The activation function to apply to this data, can be null.</param>
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
-        public MarketDataDescription(TickerSymbol ticker,
+        public MarketDataDescription(String ticker,
                 MarketDataType dataType, Type type,
                 IActivationFunction activationFunction, bool input,
                 bool predict)
@@ -83,7 +83,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="type">The normalization type.</param>
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
-        public MarketDataDescription(TickerSymbol ticker,
+        public MarketDataDescription(String ticker,
                 MarketDataType dataType, Type type, bool input,
                 bool predict)
             : this(ticker, dataType, type, null, input, predict)
@@ -98,7 +98,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <param name="dataType">The data type needed.</param>
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
-        public MarketDataDescription(TickerSymbol ticker,
+        public MarketDataDescription(String ticker,
                 MarketDataType dataType, bool input,
                 bool predict)
             : this(ticker, dataType, Type.PERCENT_CHANGE, null, input, predict)
@@ -109,7 +109,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <summary>
         /// The ticker symbol.
         /// </summary>
-        public TickerSymbol Ticker
+        public String Ticker
         {
             get
             {

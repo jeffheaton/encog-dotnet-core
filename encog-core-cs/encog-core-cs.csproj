@@ -216,10 +216,16 @@
     <Compile Include="Neural\Data\INeuralData.cs" />
     <Compile Include="Neural\Data\INeuralDataPair.cs" />
     <Compile Include="Neural\Data\INeuralDataSet.cs" />
+    <Compile Include="Neural\Data\Market\DB\DateUtil.cs" />
+    <Compile Include="Neural\Data\Market\DB\MarketDataStoreage.cs" />
+    <Compile Include="Neural\Data\Market\DB\SplitRateCollection.cs" />
+    <Compile Include="Neural\Data\Market\DB\SplitRatio.cs" />
+    <Compile Include="Neural\Data\Market\DB\StoredAdjustmentData.cs" />
+    <Compile Include="Neural\Data\Market\DB\StoredMarketData.cs" />
     <Compile Include="Neural\Data\Market\Loader\IMarketLoader.cs" />
-    <Compile Include="Neural\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="Neural\Data\Market\Loader\LoaderError.cs" />
     <Compile Include="Neural\Data\Market\Loader\YahooFinanceLoader.cs" />
+    <Compile Include="Neural\Data\Market\Loader\YahooFinance\YahooDownload.cs" />
     <Compile Include="Neural\Data\Market\MarketDataDescription.cs" />
     <Compile Include="Neural\Data\Market\MarketDataType.cs" />
     <Compile Include="Neural\Data\Market\MarketError.cs" />

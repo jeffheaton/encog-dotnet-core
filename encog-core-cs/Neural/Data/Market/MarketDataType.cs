@@ -56,11 +56,6 @@ namespace Encog.Neural.NeuralData.Market
             VOLUME,
 
             /// <summary>
-            /// The adjusted close.  Adjusted for splits and dividends.
-            /// </summary>
-            ADJUSTED_CLOSE,
-
-            /// <summary>
             /// The high for the day.
             /// </summary>
             HIGH,

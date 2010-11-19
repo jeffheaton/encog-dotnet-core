@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Neural.NeuralData.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
@@ -47,7 +48,7 @@ namespace Encog.Neural.NeuralData.Market.Loader
         /// <param name="from">Beginning date for load.</param>
         /// <param name="to">Ending date for load.</param>
         /// <returns>A collection of LoadedMarketData objects that was loaded.</returns>
-        ICollection<LoadedMarketData> Load(TickerSymbol ticker,
+        ICollection<StoredMarketData> Load(String ticker,
                 IList<MarketDataType> dataNeeded, DateTime from, DateTime to);
     }
 }

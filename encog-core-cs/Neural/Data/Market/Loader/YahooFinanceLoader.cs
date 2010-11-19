@@ -38,6 +38,7 @@ using Encog.MathUtil;
 using Encog.Util.HTTP;
 using Encog.Util;
 using Encog.Util.CSV;
+using Encog.Neural.NeuralData.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market.Loader
 {
@@ -55,7 +56,7 @@ namespace Encog.Neural.NeuralData.Market.Loader
         /// <param name="from">The beginning date.</param>
         /// <param name="to">The ending date.</param>
         /// <returns>The URL to read from</returns>
-        private Uri buildURL(TickerSymbol ticker, DateTime from,
+        private Uri buildURL(String ticker, DateTime from,
                  DateTime to)
         {
 
@@ -63,7 +64,7 @@ namespace Encog.Neural.NeuralData.Market.Loader
             MemoryStream mstream = new MemoryStream();
             FormUtility form = new FormUtility(mstream, null);
 
-            form.Add("s", ticker.Symbol.ToUpper());
+            form.Add("s", ticker);
             form.Add("a", "" + (from.Month-1));
             form.Add("b", "" + from.Day);
             form.Add("c", "" + from.Year);
@@ -90,13 +91,13 @@ namespace Encog.Neural.NeuralData.Market.Loader
         /// <param name="to">The ending date to load data to.</param>
         /// <returns>A collection of LoadedMarketData objects that represent the data
         /// loaded.</returns>
-        public ICollection<LoadedMarketData> Load(TickerSymbol ticker,
+        public ICollection<StoredMarketData> Load(String ticker,
                  IList<MarketDataType> dataNeeded, DateTime from,
                  DateTime to)
         {
 
-            ICollection<LoadedMarketData> result =
-               new List<LoadedMarketData>();
+            ICollection<StoredMarketData> result =
+               new List<StoredMarketData>();
             Uri url = buildURL(ticker, from, to);
             WebRequest http = HttpWebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)http.GetResponse();
@@ -115,9 +116,8 @@ namespace Encog.Neural.NeuralData.Market.Loader
                     double low = csv.GetDouble("low");
                     double volume = csv.GetDouble("volume");
 
-                    LoadedMarketData data =
-                       new LoadedMarketData(date, ticker);
-                    data.SetData(MarketDataType.ADJUSTED_CLOSE, adjClose);
+                    StoredMarketData data = new StoredMarketData();
+                    data.Date = date;
                     data.SetData(MarketDataType.OPEN, open);
                     data.SetData(MarketDataType.CLOSE, close);
                     data.SetData(MarketDataType.HIGH, high);

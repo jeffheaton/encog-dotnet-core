@@ -46,8 +46,8 @@ namespace encog_test.Data.Market
         public void MarketData()
         {
             IMarketLoader loader = new YahooFinanceLoader();
-            TickerSymbol tickerAAPL = new TickerSymbol("AAPL", null);
-            TickerSymbol tickerMSFT = new TickerSymbol("MSFT", null);
+            String tickerAAPL = "AAPL";
+            String tickerMSFT = "MSFT";
             MarketNeuralDataSet marketData = new MarketNeuralDataSet(loader, 5, 1);
             marketData.AddDescription(new MarketDataDescription(tickerAAPL, MarketDataType.CLOSE, true, true));
             marketData.AddDescription(new MarketDataDescription(tickerMSFT, MarketDataType.CLOSE, true, false));
