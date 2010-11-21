@@ -10,6 +10,7 @@ namespace Encog.Neural.NeuralData.Market.DB
     public class StoredAdjustmentData
     {
         private ulong date;
+        private uint time;
         private uint numerator;
         private uint denominator;
         private double div;
@@ -82,6 +83,18 @@ namespace Encog.Neural.NeuralData.Market.DB
             set
             {
                 this.date = value;
+            }
+        }
+
+        public uint EncodedTime
+        {
+            get
+            {
+                return this.time;
+            }
+            set
+            {
+                this.time = value;
             }
         }
 

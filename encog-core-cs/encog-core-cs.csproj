@@ -222,6 +222,9 @@
     <Compile Include="Neural\Data\Market\DB\SplitRatio.cs" />
     <Compile Include="Neural\Data\Market\DB\StoredAdjustmentData.cs" />
     <Compile Include="Neural\Data\Market\DB\StoredMarketData.cs" />
+    <Compile Include="Neural\Data\Market\Loader\BasicLoader.cs" />
+    <Compile Include="Neural\Data\Market\Loader\CSV\CSVDataItem.cs" />
+    <Compile Include="Neural\Data\Market\Loader\CSV\CSVLoad.cs" />
     <Compile Include="Neural\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="Neural\Data\Market\Loader\LoaderError.cs" />
     <Compile Include="Neural\Data\Market\Loader\YahooFinanceLoader.cs" />

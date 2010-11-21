@@ -10,6 +10,7 @@ namespace Encog.Neural.NeuralData.Market.DB
     public class StoredMarketData: IComparable<StoredMarketData>
     {
         private ulong date;
+        private uint time;
         private double high;
         private double low;
         private double open;
@@ -51,6 +52,21 @@ namespace Encog.Neural.NeuralData.Market.DB
             set
             {
                 this.date = DateUtil.DateTime2Long(value);
+            }
+        }
+
+        public DateTime Time
+        {
+            get
+            {
+                if (this.time == 0)
+                    return YahooDownload.EARLIEST_DATE;
+                else
+                    return DateUtil.Int2Time(this.Date, this.time);
+            }
+            set
+            {
+                this.time = DateUtil.Time2Int(value);
             }
         }
 
@@ -223,6 +239,18 @@ namespace Encog.Neural.NeuralData.Market.DB
         public int CompareTo(StoredMarketData other)
         {
             return this.Date.CompareTo(other.Date);
+        }
+
+        public uint EncodedTime
+        {
+            get
+            {
+                return this.time;
+            }
+            set
+            {
+                this.time = value;
+            }
         }
 
     }

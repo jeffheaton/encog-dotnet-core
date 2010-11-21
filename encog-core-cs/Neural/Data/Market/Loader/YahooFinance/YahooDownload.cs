@@ -8,10 +8,11 @@ using System.Net;
 using Encog.Util.CSV;
 using Encog.Util.HTTP;
 using Encog.Util;
+using Encog.Neural.Data.Market.Loader;
 
 namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 {
-    public class YahooDownload
+    public class YahooDownload: BasicLoader
     {
         public static readonly DateTime EARLIEST_DATE = new DateTime(1950, 1, 1);
 
@@ -20,27 +21,11 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
         public const String INDEX_NASDAQ = "^ixic";
 
         private bool noMoreDiv;
-        private BinaryWriter streamData;
-        private int lastYearWritten;
-        private MarketDataStoreage marketData;
 
-        public YahooDownload(MarketDataStoreage marketData)
+        public YahooDownload(MarketDataStoreage marketData): base (marketData)
         {
-            this.marketData = marketData;
         }
 
-        private void SelectFile(String ticker, int year)
-        {
-            if (streamData == null || lastYearWritten != year)
-            {
-                if (streamData != null)
-                    streamData.Close();
-
-                String filename = this.marketData.GetSecurityFile(ticker, year);
-                this.streamData = new BinaryWriter(new FileStream(this.marketData.GetSecurityFile(ticker, year), FileMode.Create, FileAccess.Write, FileShare.None));
-                this.lastYearWritten = year;
-            }
-        }
 
         /// <summary>
         /// This method builds a URL to load data from Yahoo Finance for a neural
@@ -50,7 +35,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
         /// <param name="from">The beginning date.</param>
         /// <param name="to">The ending date.</param>
         /// <returns>The URL to read from</returns>
-        private Uri buildURL(String ticker, bool div, DateTime from,
+        private Uri BuildURL(String ticker, bool div, DateTime from,
                  DateTime to)
         {
             // construct the URL
@@ -99,8 +84,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
             DateTime from = YahooDownload.EARLIEST_DATE;
             DateTime to = new DateTime(year, 12, 31);
             LoadData(ticker, from, to);
-            if (streamData != null)
-                streamData.Close(); 
+            Close(); 
         }
 
         private void LoadData(String ticker, DateTime from, DateTime to)
@@ -110,7 +94,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
             this.noMoreDiv = false;
            
             // build web info for data
-            Uri urlData = buildURL(ticker, false, from, to);
+            Uri urlData = BuildURL(ticker, false, from, to);
             WebRequest httpData = HttpWebRequest.Create(urlData);
             HttpWebResponse responseData = (HttpWebResponse)httpData.GetResponse();
 
@@ -118,7 +102,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
             ReadCSV csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
 
             // build web info for div
-            Uri urlDiv = buildURL(ticker, true, from, to);
+            Uri urlDiv = BuildURL(ticker, true, from, to);
             WebRequest httpDiv = HttpWebRequest.Create(urlDiv);
             HttpWebResponse responseDiv = (HttpWebResponse)httpDiv.GetResponse();
 
@@ -136,10 +120,10 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 
                 DateTime date = csvData.GetDate("date");
                 double adjustedClose = csvData.GetDouble("adj close");
-                data.Open = csvData.GetDouble("open");
-                data.Close = csvData.GetDouble("close");
-                data.High = csvData.GetDouble("high");
-                data.Low = csvData.GetDouble("low");
+                data.Open = (float)csvData.GetDouble("open");
+                data.Close = (float)csvData.GetDouble("close");
+                data.High = (float)csvData.GetDouble("high");
+                data.Low = (float)csvData.GetDouble("low");
                 data.Volume = (ulong)csvData.GetDouble("volume");
                 data.Date = date;
 
@@ -182,32 +166,6 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
             // close div
             csvDiv.Close();
             istreamDiv.Close();
-        }
-
-        private void WriteObject(object o)
-        {
-            if (o is StoredMarketData)
-            {
-                StoredMarketData data = (StoredMarketData)o;
-                this.streamData.Write((byte)0);
-                this.streamData.Write(data.EncodedDate);
-                this.streamData.Write(data.Volume);
-                this.streamData.Write(data.Open);
-                this.streamData.Write(data.Close);
-                this.streamData.Write(data.High);
-                this.streamData.Write(data.Low);
-            }
-            else if (o is StoredAdjustmentData)
-            {
-                StoredAdjustmentData adj = (StoredAdjustmentData)o;
-                this.streamData.Write((byte)1);
-                this.streamData.Write(adj.EncodedDate);
-                this.streamData.Write(adj.Adjustment);
-                this.streamData.Write(adj.Div);
-                this.streamData.Write(adj.Numerator);
-                this.streamData.Write(adj.Denominator);
-
-            }
         }
 
     }

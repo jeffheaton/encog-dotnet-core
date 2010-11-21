@@ -47,21 +47,16 @@ namespace Encog.Util.CSV
     {
 
         /// <summary>
-        /// The format that dates are expected to be in.
+        /// The format that dates are expected to be in. (i.e. "yyyy-MM-dd")
         /// </summary>
-        public const String dateFormat = "yyyy-MM-dd";
-
-        private CSVFormat format;
+        public String DateFormat { get; set; }
 
         /// <summary>
-        /// Format a date/time object to the same format that we parse in.
+        /// The format that times are expected to be in. (i.e. "hhmmss").
         /// </summary>
-        /// <param name="date">The date to format.</param>
-        /// <returns>A formatted date and time.</returns>
-        public static String DisplayDate(DateTime date)
-        {
-            return date.ToString(dateFormat);
-        }
+        public String TimeFormat { get; set; }
+
+        private CSVFormat format;
 
 
 
@@ -70,7 +65,7 @@ namespace Encog.Util.CSV
         /// </summary>
         /// <param name="when">A string that contains a date in the specified format.</param>
         /// <returns>A DateTime that was parsed.</returns>
-        public static DateTime ParseDate(String when)
+        public static DateTime ParseDate(String when, String dateFormat)
         {
             try
             {
@@ -185,6 +180,8 @@ namespace Encog.Util.CSV
         {
             try
             {
+                DateFormat = "yyyy-MM-dd";
+                TimeFormat = "hhmmss";
                 this.format = format;
                 // read the column heads
                 if (headers)
@@ -281,7 +278,40 @@ namespace Encog.Util.CSV
         public DateTime GetDate(String column)
         {
             String str = Get(column);
-            return DateTime.Parse(str);
+            return DateTime.ParseExact(str, DateFormat, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Read the specified column as a time.
+        /// </summary>
+        /// <param name="column">The specified column.</param>
+        /// <returns>The specified column as a DateTime.</returns>
+        public DateTime GetTime(String column)
+        {
+            String str = Get(column);
+            return DateTime.ParseExact(str, TimeFormat, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Read the specified column as a date.
+        /// </summary>
+        /// <param name="column">The specified column.</param>
+        /// <returns>The specified column as a DateTime.</returns>
+        public DateTime GetDate(int column)
+        {
+            String str = Get(column);
+            return DateTime.ParseExact(str, DateFormat, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Read the specified column as a time.
+        /// </summary>
+        /// <param name="column">The specified column.</param>
+        /// <returns>The specified column as a DateTime.</returns>
+        public DateTime GetTime(int column)
+        {
+            String str = Get(column);
+            return DateTime.ParseExact(str, TimeFormat, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -425,5 +455,18 @@ namespace Encog.Util.CSV
             return result;
         }
 
+
+        internal long GetLong(int col)
+        {
+            String str = Get(col);
+            try
+            {
+                return long.Parse(str);
+            }
+            catch (FormatException)
+            {
+                return 0;
+            }
+        }
     }
 }
