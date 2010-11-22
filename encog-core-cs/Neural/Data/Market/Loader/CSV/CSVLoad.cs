@@ -10,12 +10,22 @@ namespace Encog.Neural.Data.Market.Loader.CSV
 {
     public class CSVLoad: BasicLoader
     {
+        public static readonly CSVDataItem[] STANDARD_COLUMNS = { 
+                CSVDataItem.Ticker, 
+                CSVDataItem.DateOnly, 
+                CSVDataItem.TimeOnly, 
+                CSVDataItem.Open, 
+                CSVDataItem.High, 
+                CSVDataItem.Low, 
+                CSVDataItem.Close, 
+                CSVDataItem.Volume };
+
         private CSVFormat format;
         private CSVDataItem[] columns;
         private String dateFormat;
         private String timeFormat;
 
-        public CSVLoad(MarketDataStoreage marketData, CSVFormat format, String dateFormat, String timeFormat, CSVDataItem[] columns)
+        public CSVLoad(MarketDataStorage marketData, CSVFormat format, String dateFormat, String timeFormat, CSVDataItem[] columns)
             : base( marketData)
         {
             this.format = format;
@@ -72,7 +82,7 @@ namespace Encog.Neural.Data.Market.Loader.CSV
                 WriteObject(item);
             }
             csv.Close();
-
+            Close();
         }
 
 

@@ -6,10 +6,11 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Encog;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
+using Encog.Neural.Data.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market.DB
 {
-    public class MarketDataStoreage
+    public class MarketDataStorage
     {
         public const String EXTENSION_MARKET_DATA = ".dat";
         private String pathBase;
@@ -19,12 +20,18 @@ namespace Encog.Neural.NeuralData.Market.DB
         private int currentYear;
         private double adjust = 1;
 
-        public MarketDataStoreage(String pathBase)
+        public MarketDataStorage(String pathBase)
         {
             this.pathBase = pathBase;
             CreateDirectory(pathBase);
             this.pathMarket = PathAppend(pathBase, "marketdata");
             CreateDirectory(pathBase);
+        }
+
+        public void Reset()
+        {
+            adjust = 1;
+            currentYear = DateTime.Now.Year;
         }
 
         private String PathAppend(String b, String f)
@@ -56,7 +63,7 @@ namespace Encog.Neural.NeuralData.Market.DB
             String result = PathAppend(this.pathMarket, ""+letter);
             result = PathAppend(result, ticker2);
             CreateDirectory(result);
-            result = PathAppend(result, ticker2) + "_" + year + MarketDataStoreage.EXTENSION_MARKET_DATA;
+            result = PathAppend(result, ticker2) + "_" + year + MarketDataStorage.EXTENSION_MARKET_DATA;
             return result;
         }
 
@@ -100,7 +107,7 @@ namespace Encog.Neural.NeuralData.Market.DB
                 return streamData.Position < streamData.Length;
         }
 
-        private object LoadNextItem(String ticker)
+        public object LoadNextItem(String ticker)
         {
             object result = null;
 
@@ -252,6 +259,7 @@ namespace Encog.Neural.NeuralData.Market.DB
                 case 0:
                     StoredMarketData data = new StoredMarketData();
                     data.EncodedDate = (ulong)this.binaryReader.ReadInt64();
+                    data.EncodedTime = (uint)this.binaryReader.ReadInt32();
                     data.Volume = (ulong)this.binaryReader.ReadInt64();
                     data.Open = this.binaryReader.ReadDouble();
                     data.Close = this.binaryReader.ReadDouble();
@@ -270,6 +278,15 @@ namespace Encog.Neural.NeuralData.Market.DB
                     throw new EncogError("Invalid file");
             }
             return null;
+        }
+
+        public void Close()
+        {            
+            if (streamData != null)
+            {
+                streamData.Close();
+                this.streamData = null;
+            }
         }
     }
 }

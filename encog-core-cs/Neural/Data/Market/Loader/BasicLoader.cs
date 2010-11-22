@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Market.DB;
 using System.IO;
+using Encog.Neural.Data.Market.DB;
 
 namespace Encog.Neural.Data.Market.Loader
 {
@@ -11,9 +12,9 @@ namespace Encog.Neural.Data.Market.Loader
     {
         private BinaryWriter streamData;
         private int lastYearWritten;
-        private MarketDataStoreage marketData;
+        private MarketDataStorage marketData;
 
-        public BasicLoader(MarketDataStoreage marketData)
+        public BasicLoader(MarketDataStorage marketData)
         {
             this.marketData = marketData;
         }
@@ -39,11 +40,12 @@ namespace Encog.Neural.Data.Market.Loader
                 StoredMarketData data = (StoredMarketData)o;
                 this.streamData.Write((byte)0);
                 this.streamData.Write(data.EncodedDate);
+                this.streamData.Write(data.EncodedTime);
                 this.streamData.Write(data.Volume);
-                this.streamData.Write(data.Open);
-                this.streamData.Write(data.Close);
-                this.streamData.Write(data.High);
-                this.streamData.Write(data.Low);
+                this.streamData.Write((double)data.Open);
+                this.streamData.Write((double)data.Close);
+                this.streamData.Write((double)data.High);
+                this.streamData.Write((double)data.Low);
             }
             else if (o is StoredAdjustmentData)
             {
@@ -64,7 +66,7 @@ namespace Encog.Neural.Data.Market.Loader
             streamData = null;
         }
 
-        public MarketDataStoreage Storage
+        public MarketDataStorage Storage
         {
             get
             {

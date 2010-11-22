@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
+using Encog.Neural.NeuralData.Market.DB;
 
-namespace Encog.Neural.NeuralData.Market.DB
+namespace Encog.Neural.Data.Market.DB
 {
     [Serializable]
-    public class StoredAdjustmentData
+    public class StoredAdjustmentData: StoredData
     {
-        private ulong date;
-        private uint time;
         private uint numerator;
         private uint denominator;
         private double div;
@@ -34,7 +33,7 @@ namespace Encog.Neural.NeuralData.Market.DB
             if (numerator > 0 && denominator > 0)
             {
                 result.Append("Split: date=");
-                result.Append(date);
+                result.Append(Date);
                 result.Append(",num=");
                 result.Append(numerator);
                 result.Append(",den=");
@@ -45,7 +44,7 @@ namespace Encog.Neural.NeuralData.Market.DB
             else
             {
                 result.Append("Div: date=");
-                result.Append(date);
+                result.Append(Date);
                 result.Append(",amt=");
                 result.Append(div);
                 result.Append(",adj=");
@@ -57,45 +56,6 @@ namespace Encog.Neural.NeuralData.Market.DB
         public bool IsDividend()
         {
             return this.numerator == 0 && this.denominator == 0;
-        }
-
-        public DateTime Date
-        {
-            get
-            {
-                if (this.date == 0)
-                    return YahooDownload.EARLIEST_DATE;
-                else
-                    return DateUtil.Long2DateTime(this.date);
-            }
-            set
-            {
-                this.date = DateUtil.DateTime2Long(value);
-            }
-        }
-
-        public ulong EncodedDate
-        {
-            get
-            {
-                return this.date;
-            }
-            set
-            {
-                this.date = value;
-            }
-        }
-
-        public uint EncodedTime
-        {
-            get
-            {
-                return this.time;
-            }
-            set
-            {
-                this.time = value;
-            }
         }
 
         public uint Numerator

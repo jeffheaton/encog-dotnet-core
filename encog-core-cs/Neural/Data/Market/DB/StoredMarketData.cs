@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
+using Encog.Neural.Data.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market.DB
 {
     [Serializable]
-    public class StoredMarketData: IComparable<StoredMarketData>
+    public class StoredMarketData: StoredData
     {
-        private ulong date;
-        private uint time;
         private double high;
         private double low;
         private double open;
@@ -26,7 +25,7 @@ namespace Encog.Neural.NeuralData.Market.DB
         {
             StringBuilder result = new StringBuilder();
             result.Append("EndOfDay: date=");
-            result.Append(date);
+            result.Append(Date);
             result.Append(", Close=");
             result.Append(close);
             return result.ToString();
@@ -38,48 +37,6 @@ namespace Encog.Neural.NeuralData.Market.DB
             this.low *= adjust;
             this.open *= adjust;
             this.close *= adjust;
-        }
-
-        public DateTime Date
-        {
-            get
-            {
-                if (this.date == 0)
-                    return YahooDownload.EARLIEST_DATE;
-                else
-                    return DateUtil.Long2DateTime(this.date);
-            }
-            set
-            {
-                this.date = DateUtil.DateTime2Long(value);
-            }
-        }
-
-        public DateTime Time
-        {
-            get
-            {
-                if (this.time == 0)
-                    return YahooDownload.EARLIEST_DATE;
-                else
-                    return DateUtil.Int2Time(this.Date, this.time);
-            }
-            set
-            {
-                this.time = DateUtil.Time2Int(value);
-            }
-        }
-
-        public ulong EncodedDate
-        {
-            get
-            {
-                return this.date;
-            }
-            set
-            {
-                this.date = value;
-            }
         }
 
         public double High
@@ -230,28 +187,5 @@ namespace Encog.Neural.NeuralData.Market.DB
                     return (long)this.data[t];
             }
         }
-
-        /// <summary>
-        /// Compare this object with another of the same type.
-        /// </summary>
-        /// <param name="other">The other object to compare.</param>
-        /// <returns>Zero if equal, greater or less than zero to indicate order.</returns>
-        public int CompareTo(StoredMarketData other)
-        {
-            return this.Date.CompareTo(other.Date);
-        }
-
-        public uint EncodedTime
-        {
-            get
-            {
-                return this.time;
-            }
-            set
-            {
-                this.time = value;
-            }
-        }
-
     }
 }

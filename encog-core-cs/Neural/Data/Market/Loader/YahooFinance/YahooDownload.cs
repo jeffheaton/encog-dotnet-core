@@ -9,6 +9,7 @@ using Encog.Util.CSV;
 using Encog.Util.HTTP;
 using Encog.Util;
 using Encog.Neural.Data.Market.Loader;
+using Encog.Neural.Data.Market.DB;
 
 namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 {
@@ -22,7 +23,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 
         private bool noMoreDiv;
 
-        public YahooDownload(MarketDataStoreage marketData): base (marketData)
+        public YahooDownload(MarketDataStorage marketData): base (marketData)
         {
         }
 

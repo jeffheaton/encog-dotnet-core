@@ -7,6 +7,7 @@ namespace Encog.Neural.Data.Market.Loader.CSV
 {
     public enum CSVDataItem
     {
+        Ticker,
         Ignore,
         Open,
         Close,
