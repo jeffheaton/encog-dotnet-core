@@ -192,7 +192,7 @@ namespace Encog.Neural.Networks.Structure
                         for (int z = 0; z < contextSynapse.FromNeuronCount; z++)
                         {
                             double value = array[result++];
-                            double oldValue = synapse.WeightMatrix[z, x];
+                            double oldValue = contextSynapse.WeightMatrix[z, x];
 
                             // if this connection is limited, do not update it to anything but zero
                             if (Math.Abs(oldValue) < network.Structure
