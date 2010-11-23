@@ -70,7 +70,7 @@ namespace Encog.Neural.Networks.Training.LMA
     /// http://crsouza.blogspot.com/2009/11/neural-network-learning-by-levenberg_18.html
     /// 
     /// Portions of this class are under the following copyright/license.
-    /// Copyrigh 2009 by César Roberto de Souza, Released under the LGPL.
+    /// Copyright 2009 by César Roberto de Souza, Released under the LGPL.
     /// 
     /// </summary>
     public class LevenbergMarquardtTraining : BasicTraining
