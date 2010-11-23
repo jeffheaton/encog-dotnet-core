@@ -57,11 +57,21 @@ namespace Encog.Neural.Networks.Training.LMA
     /// Indexable training set must be used.
     /// 
     /// However, despite these limitations, the LMA training technique can be a very
-    /// effective training method.
+    /// effective training method.    
     /// 
     /// References: 
     /// - http://www-alg.ist.hokudai.ac.jp/~jan/alpha.pdf
     /// - http://www.inference.phy.cam.ac.uk/mackay/Bayes_FAQ.html
+    /// -------------------------------------------------------------------------------
+    /// This implementation of the Levenberg Marquardt algorithm is based heavily on code
+    /// published in an article by César Roberto de Souza.  The original article can be
+    /// found here:
+    /// 
+    /// http://crsouza.blogspot.com/2009/11/neural-network-learning-by-levenberg_18.html
+    /// 
+    /// Portions of this class are under the following copyright/license.
+    /// Copyrigh 2009 by César Roberto de Souza, Released under the LGPL.
+    /// 
     /// </summary>
     public class LevenbergMarquardtTraining : BasicTraining
     {
