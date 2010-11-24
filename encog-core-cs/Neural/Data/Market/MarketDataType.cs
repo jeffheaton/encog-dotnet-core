@@ -51,6 +51,16 @@ namespace Encog.Neural.NeuralData.Market
             CLOSE,
 
             /// <summary>
+            /// The adjusted market open for the day.
+            /// </summary>
+            ADJUSTED_OPEN,
+
+            /// <summary>
+            /// The adjusted market close for the day.
+            /// </summary>
+            ADJUSTED_CLOSE,
+
+            /// <summary>
             /// The volume for the day.
             /// </summary>
             VOLUME,
@@ -63,7 +73,17 @@ namespace Encog.Neural.NeuralData.Market
             /// <summary>
             /// The low for the day.
             /// </summary>
-            LOW
+            LOW,
+
+            /// <summary>
+            /// The high for the day.
+            /// </summary>
+            ADJUSTED_HIGH,
+
+            /// <summary>
+            /// The low for the day.
+            /// </summary>
+            ADJUSTED_LOW
 
         }
     

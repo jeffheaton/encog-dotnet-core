@@ -7,18 +7,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Encog;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
 using Encog.Neural.Data.Market.DB;
+using Encog.Bot;
 
 namespace Encog.Neural.NeuralData.Market.DB
 {
     public class MarketDataStorage
     {
         public const String EXTENSION_MARKET_DATA = ".dat";
+        public const String EXTENSION_ADJUSTMENT_DATA = ".adj";
         private String pathBase;
         private String pathMarket;
         private Stream streamData;
         private BinaryReader binaryReader;
         private int currentYear;
-        private double adjust = 1;
 
         public MarketDataStorage(String pathBase)
         {
@@ -28,10 +29,9 @@ namespace Encog.Neural.NeuralData.Market.DB
             CreateDirectory(pathBase);
         }
 
-        public void Reset()
+        public void Reset(String ticker)
         {
-            adjust = 1;
-            currentYear = DateTime.Now.Year;
+            currentYear = EarliestYear(ticker);
         }
 
         private String PathAppend(String b, String f)
@@ -44,20 +44,28 @@ namespace Encog.Neural.NeuralData.Market.DB
             return result.ToString();
         }
 
-        public String GetSecurityFile(String ticker, int year)
+        public String NormalizeTicker(String ticker)
         {
-            String ticker2 = "";
+            StringBuilder result = new StringBuilder();
+
             for (int i = 0; i < ticker.Length; i++)
             {
                 if (Char.IsLetterOrDigit(ticker[i]))
                 {
-                    ticker2 += Char.ToLower(ticker[i]);
+                    result.Append( Char.ToLower(ticker[i]) );
                 }
                 else
                 {
-                    ticker2 += "_";
+                    result.Append( "_" );
                 }
             }
+
+            return result.ToString();
+        }
+
+        public String GetSecurityFile(String ticker, int year)
+        {
+            String ticker2 = NormalizeTicker(ticker);
 
             char letter = ticker2.ToLower()[0];
             String result = PathAppend(this.pathMarket, ""+letter);
@@ -83,7 +91,7 @@ namespace Encog.Neural.NeuralData.Market.DB
                 {
                     this.streamData.Close();
                     this.streamData = null;
-                    this.currentYear--;
+                    this.currentYear++;
                 }
 
                 String filename = GetSecurityFile(ticker, this.currentYear);
@@ -95,9 +103,9 @@ namespace Encog.Neural.NeuralData.Market.DB
                 }
                 catch (FileNotFoundException ex)
                 {
-                    if (currentYear < YahooDownload.EARLIEST_DATE.Year)
+                    if (currentYear > DateTime.Now.Year)
                         break;
-                    this.currentYear--;
+                    this.currentYear++;
                 }
             }
 
@@ -117,8 +125,7 @@ namespace Encog.Neural.NeuralData.Market.DB
 
                 if (result is StoredAdjustmentData)
                 {
-                    StoredAdjustmentData adj = (StoredAdjustmentData)result;
-                    adjust *= adj.Adjustment;
+                    StoredAdjustmentData adj = (StoredAdjustmentData)result;                 
                 }
                 else if (result is StoredMarketData)
                 {
@@ -134,23 +141,23 @@ namespace Encog.Neural.NeuralData.Market.DB
             StreamWriter sw;
             sw = File.CreateText(filename);
 
-            this.adjust = 1;
-            this.currentYear = DateTime.Now.Year;
+            this.currentYear = EarliestYear(ticker);
 
             object obj;
+            sw.WriteLine("Adjustments:");
+            PriceAdjustments adjust = new PriceAdjustments(this, ticker);
+            adjust.Load();
+            foreach (StoredAdjustmentData adj in adjust.Data.Keys)
+            {
+                sw.WriteLine(adj);
+            }
 
+            sw.WriteLine("Market Data:");
             while ((obj = LoadNextItem(ticker)) != null)
             {
-                if (obj is StoredAdjustmentData)
-                {
-                    StoredAdjustmentData adj = (StoredAdjustmentData)obj;
-                    sw.WriteLine(obj.ToString() + "newadj=" + adjust);
-                }
-                else if (obj is StoredMarketData)
-                {
-                    StoredMarketData eod = (StoredMarketData)obj;
-                    sw.WriteLine(obj.ToString() + ",adjust=" + adjust + ",adj close=" + (eod.Close * adjust));
-                }
+                StoredMarketData eod = (StoredMarketData)obj;
+                double a = adjust.CalculateAdjustment(eod.Time);
+                sw.WriteLine(obj.ToString() + ",adjust=" + a + ",adj close=" + (eod.Close * a));                
             }
             sw.Close();
             if (streamData != null)
@@ -164,7 +171,6 @@ namespace Encog.Neural.NeuralData.Market.DB
         {
             IList<StoredMarketData> result = new List<StoredMarketData>();
 
-            this.adjust = 1;
             this.currentYear = toDate.Year;
 
             ulong from = DateUtil.DateTime2Long(fromDate);
@@ -214,7 +220,6 @@ namespace Encog.Neural.NeuralData.Market.DB
         {
             IList<object> result = new List<object>();
 
-            this.adjust = 1;
             this.currentYear = fromDate.Year;
 
             ulong from = DateUtil.DateTime2Long(fromDate);
@@ -252,32 +257,16 @@ namespace Encog.Neural.NeuralData.Market.DB
 
         private object ReadObject()
         {
-            byte b = this.binaryReader.ReadByte();
-
-            switch (b)
-            {
-                case 0:
-                    StoredMarketData data = new StoredMarketData();
-                    data.EncodedDate = (ulong)this.binaryReader.ReadInt64();
-                    data.EncodedTime = (uint)this.binaryReader.ReadInt32();
-                    data.Volume = (ulong)this.binaryReader.ReadInt64();
-                    data.Open = this.binaryReader.ReadDouble();
-                    data.Close = this.binaryReader.ReadDouble();
-                    data.High = this.binaryReader.ReadDouble();
-                    data.Low = this.binaryReader.ReadDouble();
-                    return data;
-                case 1:
-                    StoredAdjustmentData adj = new StoredAdjustmentData();
-                    adj.EncodedDate = (ulong)this.binaryReader.ReadInt64();
-                    adj.Adjustment = this.binaryReader.ReadDouble();
-                    adj.Div = this.binaryReader.ReadDouble();
-                    adj.Numerator = this.binaryReader.ReadUInt32();
-                    adj.Denominator = this.binaryReader.ReadUInt32();
-                    return adj;
-                default:
-                    throw new EncogError("Invalid file");
-            }
-            return null;
+            StoredMarketData data = new StoredMarketData();
+            data.EncodedDate = (ulong)this.binaryReader.ReadInt64();
+            data.EncodedTime = (uint)this.binaryReader.ReadInt32();
+            data.Volume = (ulong)this.binaryReader.ReadInt64();
+            data.Open = this.binaryReader.ReadDouble();
+            data.Close = this.binaryReader.ReadDouble();
+            data.High = this.binaryReader.ReadDouble();
+            data.Low = this.binaryReader.ReadDouble();
+            data.Adjust(1.0);
+            return data;
         }
 
         public void Close()
@@ -287,6 +276,50 @@ namespace Encog.Neural.NeuralData.Market.DB
                 streamData.Close();
                 this.streamData = null;
             }
+        }
+
+        public String ObtainBaseDirectory(String ticker)
+        {
+            String ticker2 = NormalizeTicker(ticker);
+
+            char letter = ticker2.ToLower()[0];
+            String result = PathAppend(this.pathMarket, "" + letter);
+            result = PathAppend(result, ticker2);
+            CreateDirectory(result);
+
+            return result;
+        }
+
+        public int EarliestYear(String ticker)
+        {
+            int result = DateTime.Now.Year;
+            DirectoryInfo di = new DirectoryInfo(ObtainBaseDirectory(ticker));
+
+            FileInfo[] rgFiles = di.GetFiles();
+            foreach (FileInfo fi in rgFiles)
+            {
+                int year;
+                String yr = BotUtil.Extract(fi.Name, "_", ".",0);
+                if (yr != null && int.TryParse(yr, out year) )
+                {
+                    result = Math.Min(result, year);
+                }
+            }
+
+            return result;
+        }
+
+        public string GetAdjustmentFile(string ticker)
+        {
+            String ticker2 = NormalizeTicker(ticker);
+
+            char letter = ticker2.ToLower()[0];
+            String result = PathAppend(this.pathMarket, "" + letter);
+            result = PathAppend(result, ticker2);
+            CreateDirectory(result);
+            result = PathAppend(result, ticker2) + MarketDataStorage.EXTENSION_ADJUSTMENT_DATA;
+            return result;
+
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Encog.Neural.Data.Market.Loader.CSV
             StreamWriter sw;
             sw = File.CreateText(filename);
 
-            this.storage.Reset();
+            this.storage.Reset(ticker);
             object obj;
 
             while ((obj = storage.LoadNextItem(ticker)) != null)

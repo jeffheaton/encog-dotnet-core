@@ -8,7 +8,7 @@ using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
 namespace Encog.Neural.Data.Market.DB
 {
     [Serializable]
-    public class StoredData
+    public class StoredData: IComparable<StoredData>
     {
         private ulong date;
         private uint time;
@@ -33,7 +33,7 @@ namespace Encog.Neural.Data.Market.DB
             get
             {
                 if (this.time == 0)
-                    return YahooDownload.EARLIEST_DATE;
+                    return Date;
                 else
                     return DateUtil.Int2Time(this.Date, this.time);
             }
@@ -64,6 +64,19 @@ namespace Encog.Neural.Data.Market.DB
             set
             {
                 this.time = value;
+            }
+        }
+
+        public int CompareTo(StoredData other)
+        {
+            int result = this.date.CompareTo(other.date);
+            if (result == 0)
+            {
+                return this.time.CompareTo(other.time);
+            }
+            else
+            {
+                return result;
             }
         }
     }

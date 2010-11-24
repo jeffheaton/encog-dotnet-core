@@ -14,6 +14,10 @@ namespace Encog.Neural.NeuralData.Market.DB
         private double low;
         private double open;
         private double close;
+        private double adjustedHigh;
+        private double adjustedLow;
+        private double adjustedOpen;
+        private double adjustedClose;
         private ulong volume;
 
         /// <summary>
@@ -33,10 +37,10 @@ namespace Encog.Neural.NeuralData.Market.DB
 
         public void Adjust(double adjust)
         {
-            this.high *= adjust;
-            this.low *= adjust;
-            this.open *= adjust;
-            this.close *= adjust;
+            this.adjustedHigh = this.high * adjust;
+            this.adjustedLow = this.low * adjust;
+            this.adjustedOpen = this.open * adjust;
+            this.adjustedClose = this.close * adjust;
         }
 
         public double High
@@ -84,6 +88,38 @@ namespace Encog.Neural.NeuralData.Market.DB
             set
             {
                 this.close = value;
+            }
+        }
+
+        public double AdjustedHigh
+        {
+            get
+            {
+                return this.adjustedHigh;
+            }
+        }
+
+        public double AdjustedLow
+        {
+            get
+            {
+                return this.adjustedLow;
+            }
+        }
+
+        public double AdjustedOpen
+        {
+            get
+            {
+                return this.open;
+            }
+        }
+
+        public double AdjustedClose
+        {
+            get
+            {
+                return this.close;
             }
         }
 
@@ -136,7 +172,28 @@ namespace Encog.Neural.NeuralData.Market.DB
         /// <param name="d">The value to set.</param>
         public void SetData(MarketDataType t, long d)
         {
-            this.data[t] = d;
+            switch (t)
+            {
+                case MarketDataType.OPEN:
+                    Open = d;
+                    break;
+                case MarketDataType.CLOSE:
+                    Close = d;
+                    break;
+                case MarketDataType.VOLUME:
+                    Volume = (ulong)d;
+                    break;
+                case MarketDataType.HIGH:
+                    High = d;
+                    break;
+                case MarketDataType.LOW:
+                    Low = d;
+                    break;
+                default:
+                    this.data[t] = d;
+                    break;
+            }
+
         }
 
         /// <summary>
@@ -146,22 +203,29 @@ namespace Encog.Neural.NeuralData.Market.DB
         /// <returns>The value.</returns>
         public double GetDataDouble(MarketDataType t)
         {
-            switch(t)
+            switch (t)
             {
                 case MarketDataType.OPEN:
-                    return Open;
+                    return (double)Open;
                 case MarketDataType.CLOSE:
-                    return Close;
+                    return (double)Close;
                 case MarketDataType.VOLUME:
                     return (double)Volume;
                 case MarketDataType.HIGH:
-                    return High;
+                    return (double)High;
                 case MarketDataType.LOW:
-                    return Low;
+                    return (double)Low;
+                case MarketDataType.ADJUSTED_OPEN:
+                    return (double)AdjustedOpen;
+                case MarketDataType.ADJUSTED_CLOSE:
+                    return (double)AdjustedClose;
+                case MarketDataType.ADJUSTED_HIGH:
+                    return (double)AdjustedHigh;
+                case MarketDataType.ADJUSTED_LOW:
+                    return (double)AdjustedLow;
                 default:
                     return (double)this.data[t];
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -183,6 +247,14 @@ namespace Encog.Neural.NeuralData.Market.DB
                     return (long)High;
                 case MarketDataType.LOW:
                     return (long)Low;
+                case MarketDataType.ADJUSTED_OPEN:
+                    return (long)AdjustedOpen;
+                case MarketDataType.ADJUSTED_CLOSE:
+                    return (long)AdjustedClose;
+                case MarketDataType.ADJUSTED_HIGH:
+                    return (long)AdjustedHigh;
+                case MarketDataType.ADJUSTED_LOW:
+                    return (long)AdjustedLow;
                 default:
                     return (long)this.data[t];
             }

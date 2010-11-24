@@ -22,9 +22,10 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
         public const String INDEX_NASDAQ = "^ixic";
 
         private bool noMoreDiv;
+        private PriceAdjustments adjustments;
 
         public YahooDownload(MarketDataStorage marketData): base (marketData)
-        {
+        {            
         }
 
 
@@ -81,11 +82,12 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 
         public void LoadAllData(String ticker)
         {
+            this.adjustments = new PriceAdjustments(this.Storage,ticker);
             int year = DateTime.Now.Year;
             DateTime from = YahooDownload.EARLIEST_DATE;
             DateTime to = new DateTime(year, 12, 31);
             LoadData(ticker, from, to);
-            Close(); 
+            this.adjustments.Save();
         }
 
         private void LoadData(String ticker, DateTime from, DateTime to)
@@ -121,10 +123,10 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
 
                 DateTime date = csvData.GetDate("date");
                 double adjustedClose = csvData.GetDouble("adj close");
-                data.Open = (float)csvData.GetDouble("open");
-                data.Close = (float)csvData.GetDouble("close");
-                data.High = (float)csvData.GetDouble("high");
-                data.Low = (float)csvData.GetDouble("low");
+                data.Open = csvData.GetDouble("open");
+                data.Close = csvData.GetDouble("close");
+                data.High = csvData.GetDouble("high");
+                data.Low = csvData.GetDouble("low");
                 data.Volume = (ulong)csvData.GetDouble("volume");
                 data.Date = date;
 
@@ -135,7 +137,7 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
                     if (nextDiv.Date > data.Date)
                     {
                         nextDiv.CalculateAdjustment(data.Close);
-                        WriteObject(nextDiv);
+                        this.adjustments.Add(nextDiv);
                         nextDiv = ReadNextDiv(csvDiv);
                         foundDiv = true;
                     }
@@ -151,16 +153,17 @@ namespace Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance
                     adj.Numerator = s.numerator;
                     adj.Denominator = s.denominator;
                     adj.CalculateAdjustment(data.Close);
-                    WriteObject(adj);
-                    Console.WriteLine("" + lastDate + " " + ratio + " " + lastRatio + " " + (lastRatio / ratio) + " " + s.ToString());
+                    this.adjustments.Add(adj);
                 }
 
-                WriteObject(data);
+                Loaded.Add(data,null);
+                //WriteObject(data);
 
                 lastRatio = ratio;
                 lastDate = data.EncodedDate;
             }
 
+            WriteLoaded(ticker);
             csvData.Close();
             istreamData.Close();
 

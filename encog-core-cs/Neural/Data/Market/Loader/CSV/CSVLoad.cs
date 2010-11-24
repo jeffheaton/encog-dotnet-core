@@ -79,12 +79,10 @@ namespace Encog.Neural.Data.Market.Loader.CSV
                     }
                 }
                 SelectFile(ticker, item.Date.Year);
-                WriteObject(item);
+                Loaded.Add(item,null);
             }
+            WriteLoaded(ticker);
             csv.Close();
-            Close();
         }
-
-
     }
 }

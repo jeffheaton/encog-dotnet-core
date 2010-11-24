@@ -10,60 +10,54 @@ namespace Encog.Neural.Data.Market.Loader
 {
     public class BasicLoader
     {
-        private BinaryWriter streamData;
         private int lastYearWritten;
         private MarketDataStorage marketData;
+        private SortedList<StoredMarketData, object> loaded = new SortedList<StoredMarketData, object>();
 
         public BasicLoader(MarketDataStorage marketData)
         {
             this.marketData = marketData;
         }
 
+        public SortedList<StoredMarketData, object> Loaded
+        {
+            get
+            {
+                return this.loaded;
+            }
+        }
+
         protected void SelectFile(String ticker, int year)
         {
-            if (streamData == null || lastYearWritten != year)
+            if ( lastYearWritten != year )
             {
-                if (streamData != null)
-                    streamData.Close();
-
-                String filename = this.marketData.GetSecurityFile(ticker, year);
-                this.streamData = new BinaryWriter(new FileStream(this.marketData.GetSecurityFile(ticker, year), FileMode.Create, FileAccess.Write, FileShare.None));
+                if (lastYearWritten > 0)
+                {
+                    WriteLoaded(ticker);
+                }
                 this.lastYearWritten = year;
             }
-        }
 
+            
+        }      
 
-        protected void WriteObject(object o)
+        protected void WriteLoaded(String ticker)
         {
-            if (o is StoredMarketData)
-            {
-                StoredMarketData data = (StoredMarketData)o;
-                this.streamData.Write((byte)0);
-                this.streamData.Write(data.EncodedDate);
-                this.streamData.Write(data.EncodedTime);
-                this.streamData.Write(data.Volume);
-                this.streamData.Write((double)data.Open);
-                this.streamData.Write((double)data.Close);
-                this.streamData.Write((double)data.High);
-                this.streamData.Write((double)data.Low);
-            }
-            else if (o is StoredAdjustmentData)
-            {
-                StoredAdjustmentData adj = (StoredAdjustmentData)o;
-                this.streamData.Write((byte)1);
-                this.streamData.Write(adj.EncodedDate);
-                this.streamData.Write(adj.Adjustment);
-                this.streamData.Write(adj.Div);
-                this.streamData.Write(adj.Numerator);
-                this.streamData.Write(adj.Denominator);
-            }
-        }
+            String filename = this.marketData.GetSecurityFile(ticker, this.lastYearWritten);
+            BinaryWriter stream = new BinaryWriter(new FileStream(this.marketData.GetSecurityFile(ticker, this.lastYearWritten), FileMode.Create, FileAccess.Write, FileShare.None));
 
-        public void Close()
-        {
-            if (streamData != null)
-                streamData.Close();
-            streamData = null;
+            foreach (StoredMarketData data in this.loaded.Keys)
+            {
+                stream.Write(data.EncodedDate);
+                stream.Write(data.EncodedTime);
+                stream.Write(data.Volume);
+                stream.Write((double)data.Open);
+                stream.Write((double)data.Close);
+                stream.Write((double)data.High);
+                stream.Write((double)data.Low);
+            }
+            stream.Close();    
+            this.loaded.Clear();
         }
 
         public MarketDataStorage Storage
