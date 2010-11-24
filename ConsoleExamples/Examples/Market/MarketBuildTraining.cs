@@ -38,6 +38,9 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using System.IO;
+using Encog.Neural.NeuralData.Market.DB;
+using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
+using Encog.Neural.Data.Market;
 
 namespace Encog.Examples.Market
 {
@@ -45,10 +48,15 @@ namespace Encog.Examples.Market
     {
         public void Run()
         {
+            Console.WriteLine("Downloading market data");
             Logging.StopConsoleLogging();
-            IMarketLoader loader = new YahooFinanceLoader();
+            MarketDataStorage store = new MarketDataStorage();
+            YahooDownload loader = new YahooDownload(store);
+            loader.LoadAllData("aapl");
+
+            Console.WriteLine("Building training data");
             MarketNeuralDataSet market = new MarketNeuralDataSet(
-                    loader,
+                    store,
                     Config.INPUT_WINDOW,
                     Config.PREDICT_WINDOW);
             

@@ -39,6 +39,9 @@ using Encog.Neural.NeuralData.Market;
 using Encog.Neural.Data;
 using Encog.Neural.NeuralData;
 using Encog.Neural.NeuralData.Market.Loader;
+using Encog.Neural.NeuralData.Market.DB;
+using Encog.Neural.Data.Market;
+using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
 
 namespace Encog.Examples.Market
 {
@@ -61,9 +64,12 @@ namespace Encog.Examples.Market
 
         public MarketNeuralDataSet grabData()
         {
-            IMarketLoader loader = new YahooFinanceLoader();
+            MarketDataStorage store = new MarketDataStorage("d:\\market");
+            YahooDownload loader = new YahooDownload(store);
+            loader.LoadAllData("aapl");
+            
             MarketNeuralDataSet result = new MarketNeuralDataSet(
-                    loader,
+                    store,
                     Config.INPUT_WINDOW,
                     Config.PREDICT_WINDOW);
             MarketDataDescription desc = new MarketDataDescription(

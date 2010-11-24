@@ -4,6 +4,6 @@
     <StartArguments>-pause persist-serial</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause persist-serial</StartArguments>
+    <StartArguments>-pause market train</StartArguments>
   </PropertyGroup>
 </Project>
