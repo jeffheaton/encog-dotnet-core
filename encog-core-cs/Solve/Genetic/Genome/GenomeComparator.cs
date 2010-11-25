@@ -153,7 +153,7 @@ namespace Encog.Solve.Genetic.Genome
             }
             else
             {
-                return d2 > d1;
+                return d1 > d2;
             }
         }
     }
