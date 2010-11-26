@@ -217,7 +217,7 @@
     <Compile Include="Neural\NeuralData\INeuralDataPair.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataSet.cs" />
     <Compile Include="Neural\NeuralData\Market\DB\BarPeriod.cs" />
-    <Compile Include="Neural\NeuralData\Market\DB\DateUtil.cs" />
+    <Compile Include="Util\Time\NumericDateUtil.cs" />
     <Compile Include="Neural\NeuralData\Market\DB\MarketDataStorage.cs" />
     <Compile Include="Neural\NeuralData\Market\DB\PriceAdjustments.cs" />
     <Compile Include="Neural\NeuralData\Market\DB\SplitRateCollection.cs" />

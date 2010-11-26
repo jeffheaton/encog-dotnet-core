@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.Neural.NeuralData.Market.DB
+namespace Encog.Util.Time
 {
-    public static class DateUtil
+    public static class NumericDateUtil
     {
         public const uint YEAR_OFFSET = 10000;
         public const uint MONTH_OFFSET = 100;

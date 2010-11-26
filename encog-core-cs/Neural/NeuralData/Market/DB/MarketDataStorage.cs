@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Encog;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
 using Encog.Bot;
+using Encog.Util.Time;
 
 namespace Encog.Neural.NeuralData.Market.DB
 {
@@ -168,8 +169,8 @@ namespace Encog.Neural.NeuralData.Market.DB
             if (currentTime == 0 || lastTime == 0)
                 return false;
 
-            int now = DateUtil.GetMinutePeriod(currentTime, period);
-            int last = DateUtil.GetMinutePeriod(lastTime, period);
+            int now = NumericDateUtil.GetMinutePeriod(currentTime, period);
+            int last = NumericDateUtil.GetMinutePeriod(lastTime, period);
             return now != last;
         }
 
@@ -206,18 +207,18 @@ namespace Encog.Neural.NeuralData.Market.DB
                 case BarPeriod.WEEKLY:
                     if (lastDate > 0)
                     {
-                        int prev = DateUtil.GetDayOfWeek(lastDate);
-                        int now = DateUtil.GetDayOfWeek(data.EncodedDate);
+                        int prev = NumericDateUtil.GetDayOfWeek(lastDate);
+                        int now = NumericDateUtil.GetDayOfWeek(data.EncodedDate);
                         if (prev != now && prev > now)
                             return true;
                     }
                     break;
                 case BarPeriod.MONTHLY:
-                    if (lastDate > 0 && ( DateUtil.GetMonth(lastDate) != DateUtil.GetMonth(data.EncodedDate) ))
+                    if (lastDate > 0 && ( NumericDateUtil.GetMonth(lastDate) != NumericDateUtil.GetMonth(data.EncodedDate) ))
                         return true;
                     break;
                 case BarPeriod.YEARLY:
-                    if (lastDate > 0 && ( DateUtil.GetYear(lastDate) != DateUtil.GetYear(data.EncodedDate) ))
+                    if (lastDate > 0 && ( NumericDateUtil.GetYear(lastDate) != NumericDateUtil.GetYear(data.EncodedDate) ))
                         return true;
                     break;
             }
@@ -236,8 +237,8 @@ namespace Encog.Neural.NeuralData.Market.DB
             uint lastTime = 0;
             this.currentYear = fromDate.Year;
 
-            ulong from = DateUtil.DateTime2Long(fromDate);
-            ulong to = DateUtil.DateTime2Long(toDate);
+            ulong from = NumericDateUtil.DateTime2Long(fromDate);
+            ulong to = NumericDateUtil.DateTime2Long(toDate);
 
             StoredMarketData data;
 

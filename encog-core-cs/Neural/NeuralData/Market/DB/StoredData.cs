@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData.Market.DB;
 using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
+using Encog.Util.Time;
 
 namespace Encog.Neural.NeuralData.Market.DB
 {
@@ -20,11 +21,11 @@ namespace Encog.Neural.NeuralData.Market.DB
                 if (this.date == 0)
                     return YahooDownload.EARLIEST_DATE;
                 else
-                    return DateUtil.Long2DateTime(this.date);
+                    return NumericDateUtil.Long2DateTime(this.date);
             }
             set
             {
-                this.date = DateUtil.DateTime2Long(value);
+                this.date = NumericDateUtil.DateTime2Long(value);
             }
         }
 
@@ -35,11 +36,11 @@ namespace Encog.Neural.NeuralData.Market.DB
                 if (this.time == 0)
                     return Date;
                 else
-                    return DateUtil.Int2Time(this.Date, this.time);
+                    return NumericDateUtil.Int2Time(this.Date, this.time);
             }
             set
             {
-                this.time = DateUtil.Time2Int(value);
+                this.time = NumericDateUtil.Time2Int(value);
             }
         }
 
