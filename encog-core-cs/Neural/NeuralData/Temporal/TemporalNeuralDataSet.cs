@@ -87,12 +87,12 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// The lowest sequence.
         /// </summary>
-        private int lowSequence;
+        private long lowSequence;
 
         /// <summary>
         /// The highest sequence.
         /// </summary>
-        private int highSequence;
+        private long highSequence;
 
         /// <summary>
         /// How big would we like the input size to be.
@@ -113,14 +113,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// What is the date for the first temporal point.
         /// </summary>
         private DateTime startingPoint = DateTime.MinValue;
-
-        /// <summary>
-        /// What is the granularity of the temporal points? Days, months, years,
-        /// etc?
-        /// </summary>
-        private TimeUnit sequenceGrandularity;
-
-
+        
         /// <summary>
         /// The data descriptions.
         /// </summary>
@@ -176,7 +169,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// The low value for the sequence.
         /// </summary>
-        public virtual int LowSequence
+        public virtual long LowSequence
         {
             get
             {
@@ -191,7 +184,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// The high value for the sequence.
         /// </summary>
-        public virtual int HighSequence
+        public virtual long HighSequence
         {
             get
             {
@@ -262,23 +255,7 @@ namespace Encog.Neural.NeuralData.Temporal
                 this.startingPoint = value;
             }
         }
-
-        /// <summary>
-        /// The size of the timeslices.
-        /// </summary>
-        public virtual TimeUnit SequenceGrandularity
-        {
-            get
-            {
-                return this.sequenceGrandularity;
-            }
-            set
-            {
-                this.sequenceGrandularity = value;
-            }
-        }
-
-
+        
         /// <summary>
         /// Error message: adds are not supported.
         /// </summary>
@@ -300,7 +277,6 @@ namespace Encog.Neural.NeuralData.Temporal
             this.highSequence = int.MaxValue;
             this.desiredSetSize = int.MaxValue;
             this.startingPoint = DateTime.MinValue;
-            this.sequenceGrandularity = TimeUnit.DAYS;
         }
 
         /// <summary>
@@ -385,14 +361,15 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="when">The date to generate the sequence number for.</param>
         /// <returns>A sequence number.</returns>
-        public virtual int GetSequenceFromDate(DateTime when)
+        public virtual long GetSequenceFromDate(DateTime when)
         {
-            int sequence;
+            long sequence;
 
             if (startingPoint != DateTime.MinValue)
             {
-                TimeSpanUtil span = new TimeSpanUtil(this.startingPoint, when);
-                sequence = (int)span.GetSpan(this.sequenceGrandularity);
+                ulong date = NumericDateUtil.DateTime2Long(when);
+                uint time = NumericDateUtil.Time2Int(when);
+                sequence = (long)NumericDateUtil.Combine(date, time);
             }
             else
             {
@@ -413,7 +390,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <returns>The point TemporalPoint created.</returns>
         public virtual TemporalPoint CreatePoint(DateTime when)
         {
-            int sequence = GetSequenceFromDate(when);
+            long sequence = GetSequenceFromDate(when);
             TemporalPoint point = new TemporalPoint(this.descriptions.Count);
             point.Sequence = sequence;
             this.points.Add(point);

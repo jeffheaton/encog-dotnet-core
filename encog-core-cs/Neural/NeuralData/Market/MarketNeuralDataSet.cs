@@ -55,8 +55,8 @@ namespace Encog.Neural.NeuralData.Market
         /// <summary>
         /// A map between the data points and actual data.
         /// </summary>
-        private IDictionary<int, TemporalPoint> pointIndex =
-            new Dictionary<int, TemporalPoint>();
+        private IDictionary<long, TemporalPoint> pointIndex =
+            new Dictionary<long, TemporalPoint>();
 
         /// <summary>
         /// Construct a market data set object.
@@ -70,7 +70,6 @@ namespace Encog.Neural.NeuralData.Market
         {
 
             this.storage = storage;
-            this.SequenceGrandularity = TimeUnit.DAYS;
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Encog.Neural.NeuralData.Market
         /// <returns>Returns the TemporalPoint created for the specified date.</returns>
         public override TemporalPoint CreatePoint(DateTime when)
         {
-            int sequence = GetSequenceFromDate(when);
+            long sequence = GetSequenceFromDate(when);
             TemporalPoint result = null;
 
             if (pointIndex.ContainsKey(sequence))

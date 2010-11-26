@@ -80,6 +80,11 @@ namespace Encog.Util.Time
 
         }
 
+        public static ulong Combine(ulong date, uint time)
+        {
+            return (date * 1000000) + time;
+        }
+
         public static int GetDayOfWeek(ulong p)
         {
             DateTime t = Long2DateTime(p);

@@ -43,7 +43,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// The sequence number for this point.
         /// </summary>
-        private int sequence;
+        private long sequence;
 
         /// <summary>
         /// The data for this point.
@@ -77,7 +77,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// <summary>
         /// The sequence number, used to sort.
         /// </summary>
-        public int Sequence
+        public long Sequence
         {
             get
             {
