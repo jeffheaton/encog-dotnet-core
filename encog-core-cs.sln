@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-engine-cs", "encog-en
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncogOpenCLBenchmark", "EncogOpenCLBenchmark\EncogOpenCLBenchmark.csproj", "{760B8696-4A3E-4E93-9D66-46BA4C53A0F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempProject", "TempProject\TempProject.csproj", "{04B320FA-076D-408F-BFBB-B57C4D61D4FD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,10 +49,6 @@ Global
 		{760B8696-4A3E-4E93-9D66-46BA4C53A0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760B8696-4A3E-4E93-9D66-46BA4C53A0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760B8696-4A3E-4E93-9D66-46BA4C53A0F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04B320FA-076D-408F-BFBB-B57C4D61D4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04B320FA-076D-408F-BFBB-B57C4D61D4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04B320FA-076D-408F-BFBB-B57C4D61D4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04B320FA-076D-408F-BFBB-B57C4D61D4FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
