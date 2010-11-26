@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.NeuralData.Market;
 
 namespace Encog.Examples.Market
 {

@@ -32,8 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Encog.Neural.NeuralData.Market.Loader;
-using Encog.Neural.NeuralData.Market;
 using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.NeuralData;
 

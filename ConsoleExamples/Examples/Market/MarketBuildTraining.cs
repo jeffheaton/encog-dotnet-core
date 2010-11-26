@@ -32,15 +32,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util.Logging;
-using Encog.Neural.NeuralData.Market;
-using Encog.Neural.NeuralData.Market.Loader;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using System.IO;
-using Encog.Neural.NeuralData.Market.DB;
-using Encog.Neural.NeuralData.Market.DB.Loader.YahooFinance;
-using Encog.Neural.Data.Market;
+using Encog.App.Quant.MarketDB;
+using Encog.App.Quant.Loader.YahooFinance;
+using Encog.App.Quant.Dataset;
 
 namespace Encog.Examples.Market
 {
@@ -58,7 +56,8 @@ namespace Encog.Examples.Market
             MarketNeuralDataSet market = new MarketNeuralDataSet(
                     store,
                     Config.INPUT_WINDOW,
-                    Config.PREDICT_WINDOW);
+                    Config.PREDICT_WINDOW,
+                    BarPeriod.EOD);
             
             MarketDataDescription desc = new MarketDataDescription(
                     Config.TICKER,
