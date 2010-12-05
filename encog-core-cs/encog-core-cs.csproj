@@ -45,6 +45,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -52,6 +54,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -60,8 +63,12 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml.cs">
+      <DependentUpon>SecurityChartWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />
@@ -567,6 +574,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
