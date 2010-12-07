@@ -69,6 +69,7 @@
     <Compile Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml.cs">
       <DependentUpon>SecurityChartWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />

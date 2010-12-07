@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Label>Hello world</Label>
+        <Canvas x:Name="ChartCanvas" Grid.Row="0" Grid.Column="0"/>
     </Grid>
 </UserControl>

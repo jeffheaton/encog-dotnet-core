@@ -4,6 +4,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <local:SecurityChartWPF></local:SecurityChartWPF>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="LightGray" BorderThickness="1" BorderBrush="Black" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <Label>Ticker:</Label>
+                <Border  BorderThickness="1" >
+                    <TextBox Name="Company" Width="64">aapl</TextBox>
+                </Border>
+                <Label>Start (mm/dd/yyyy):</Label>
+                <Border BorderThickness="1" >
+                    <DatePicker Name="Start" Width="128"></DatePicker>
+                </Border>
+                <Button Name="Chart" Click="Chart_Click">Chart/Predict</Button>
+            </StackPanel>
+        </Border>
+        <local:SecurityChartWPF Name="ChartControl" Grid.Row="1"></local:SecurityChartWPF>
     </Grid>
 </Window>
