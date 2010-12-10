@@ -287,6 +287,18 @@ namespace Encog.App.Quant.MarketDB
             this.represented++;
         }
 
+        public void Accumulate(StoredMarketData data)
+        {
+            this.high = Math.Max(data.high,this.high);
+            this.low = Math.Min(data.low, this.low);
+            this.close = data.close;
+            this.adjustedHigh = Math.Max(data.adjustedHigh, this.adjustedHigh);
+            this.adjustedLow = Math.Min(data.adjustedLow, this.adjustedLow);
+            this.adjustedClose = data.adjustedClose;
+            this.volume += data.volume;
+            this.represented++;
+        }
+
         public void Average()
         {
             this.high /= this.represented;

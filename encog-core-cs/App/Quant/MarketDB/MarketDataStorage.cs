@@ -245,9 +245,13 @@ namespace Encog.App.Quant.MarketDB
             {
                 if (data.EncodedDate >= from && data.EncodedDate <= to)
                 {
-                    if (reportedItem!=null && ShouldReport(data, lastDate, lastTime, period) )
+                    if ( ShouldReport(data, lastDate, lastTime, period) )
                     {
-                        reportedItem.Average();
+                        if (reportedItem == null)
+                        {
+                            reportedItem = data;
+                        }
+
                         result.Add(reportedItem);
                         reportedItem = null;
                     }
@@ -259,7 +263,7 @@ namespace Encog.App.Quant.MarketDB
                         }
                         else
                         {
-                            reportedItem.Add(data);
+                            reportedItem.Accumulate(data);
                         }
                     }
                     lastDate = data.EncodedDate;

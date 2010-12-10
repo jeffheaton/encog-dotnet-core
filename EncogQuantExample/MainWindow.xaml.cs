@@ -29,13 +29,32 @@ namespace EncogQuantExample
             this.storage = new MarketDataStorage();
             this.ChartControl.Storage = this.storage;
             this.Start.SelectedDate = DateTime.Now.AddYears(-1);
+            this.ComboBarPeriod.SelectedIndex = 3;
         }
 
         private void Chart_Click(object sender, RoutedEventArgs e)
         {
             YahooDownload yahoo = new YahooDownload(this.storage);
+            BarPeriod period = BarPeriod.EOD;
+
+            switch (this.ComboBarPeriod.SelectedIndex)
+            {
+                case 0:
+                    period = BarPeriod.YEARLY;
+                    break;
+                case 1:
+                    period = BarPeriod.MONTHLY;
+                    break;
+                case 2:
+                    period = BarPeriod.WEEKLY;
+                    break;
+                case 3:
+                    period = BarPeriod.EOD;
+                    break;
+            }
+
             this.ChartControl.Start = this.Start.DisplayDate;
-            this.ChartControl.Load(this.Company.Text);            
+            this.ChartControl.Load(this.Company.Text, period);            
         }
     }
 }

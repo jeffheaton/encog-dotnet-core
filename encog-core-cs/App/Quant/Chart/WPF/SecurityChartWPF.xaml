@@ -6,6 +6,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Canvas x:Name="ChartCanvas" Grid.Row="0" Grid.Column="0"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Canvas x:Name="ChartCanvas" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" SizeChanged="ChartCanvas_SizeChanged" MouseDown="ChartCanvas_MouseDown" MouseUp="ChartCanvas_MouseUp" MouseMove="ChartCanvas_MouseMove" Panel.ZIndex="10" Background="White" MouseLeave="ChartCanvas_MouseLeave" />
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="64"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Name="ButtonLeft" Click="ButtonLeft_Click">&lt;&lt;&lt;</Button>
+            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="DisplayLeftDate"></Label>
+            <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" Name="DisplayRightDate"></Label>
+            <Button Grid.Row="0" Grid.Column="3" Name="ButtonRight" Click="ButtonRight_Click">&gt;&gt;&gt;</Button>
+        </Grid>
     </Grid>
 </UserControl>

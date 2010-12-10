@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Encog.App.Quant.MarketDB;
+using System.Windows.Controls.Primitives;
+using Encog.Util.Time;
+using Encog.App.Quant.Stats;
 
 namespace Encog.App.Quant.Chart.WPF
 {
@@ -45,9 +48,9 @@ namespace Encog.App.Quant.Chart.WPF
         private IList<StoredMarketData> marketData;
 
         /// <summary>
-        /// The number of days currently displayed.
+        /// The number of bars currently displayed.
         /// </summary>
-        private int numberOfDays;
+        private int numberOfBars;
 
 
         /// <summary>
@@ -55,7 +58,19 @@ namespace Encog.App.Quant.Chart.WPF
         /// </summary>
         private bool chartActive;
 
-        public DateTime Start { get; set; }
+        public DateTime Start
+        {
+            get;
+            set;
+        }
+
+        public BarPeriod Period { get; set; }
+
+        private bool dragging;
+        private Point dragStart;
+        private DateTime dragDate;
+        private String ticker;
+        private MarketStats stats;
 
         public MarketDataStorage Storage
         {
@@ -104,17 +119,24 @@ namespace Encog.App.Quant.Chart.WPF
         /// <param name="close">The closing price.</param>
         /// <param name="dayHigh">The day high.</param>
         /// <param name="dayLow">The day low.</param>
-        private void DrawCandle(int dayIndex, double open, double close, double dayHigh, double dayLow)
+        private void DrawCandle(int index, StoredMarketData data)
         {
             double chartHeight = ChartCanvas.ActualHeight;
             double heightRatio = chartHeight / (priceMax - priceMin);
 
+            double low, high, open, close;
+
+            low = data.Low;
+            high = data.High;
+            open = data.Open;
+            close = data.Close;
+
             Line l = new Line();
-            double x = ConvertDay(dayIndex);
+            double x = ConvertDay(index);
             l.X1 = x;
             l.X2 = x;
-            l.Y1 = ConvertPrice(dayLow);
-            l.Y2 = ConvertPrice(dayHigh);
+            l.Y1 = ConvertPrice(low);
+            l.Y2 = ConvertPrice(high);
             l.Stroke = Brushes.Black;
             ChartCanvas.Children.Add(l);
 
@@ -141,13 +163,33 @@ namespace Encog.App.Quant.Chart.WPF
             ChartCanvas.Children.Add(r);
         }
 
+        private void DrawVolume(int index, StoredMarketData data)
+        {
+            double x = ConvertDay(index);
+            Rectangle r = new Rectangle();
+
+            double chartHeight = ChartCanvas.ActualHeight - marginBottom;
+            double percent = (double)data.Volume / (double)this.stats.HighVolume;
+            double max = chartHeight / 4;
+            double barHeight = max * percent;
+
+            r.Width = STICK_WIDTH;
+            r.Height = barHeight;
+            r.Stroke = Brushes.Black;
+            r.SetValue(Canvas.LeftProperty, x - (STICK_WIDTH / 2.0));
+            r.SetValue(Canvas.TopProperty,chartHeight-barHeight);
+            r.Fill = Brushes.Wheat;
+            r.Stroke = Brushes.Wheat;
+
+            ChartCanvas.Children.Add(r);
+        }
+
 
         /// <summary>
         /// Draw the guide, days and prices.
         /// </summary>
         private void DrawGuide()
         {
-
             // price guide
             double breakPoint = this.priceMax - this.priceMin;
             breakPoint /= 10;
@@ -166,23 +208,62 @@ namespace Encog.App.Quant.Chart.WPF
                 label.Content = "" + (int)price;
                 label.SetValue(Canvas.TopProperty, ConvertPrice(price) - 13);
                 label.SetValue(Canvas.LeftProperty, 0.0);
+                label.FontWeight = FontWeights.Bold;
                 ChartCanvas.Children.Add(label);
             }
 
             int lastMonth = this.marketData[0].Date.Month;
+            int lastYear = this.marketData[0].Date.Year;
 
             // day guide
             int count = 0;
             int index = 0;
+            int lastDayOfWeek = -1;
+
+            ulong encodedStart = NumericDateUtil.DateTime2Long(this.Start);
 
             foreach (StoredMarketData data in this.marketData)
             {
-                if (data.Date.CompareTo(this.Start) > 0)
+                double x = ConvertDay(count);
+
+                if (x > this.ActualWidth)
+                    break;
+
+                if (data.EncodedDate >= encodedStart)
                 {
-                    if (data.Date.Month != lastMonth)
+                    int wk = NumericDateUtil.GetDayOfWeek(data.EncodedDate);
+                    int yr = data.Date.Year;
+
+                    if (Period == BarPeriod.EOD)
                     {
-                        double x = ConvertDay(count);
-                        lastMonth = data.Date.Month;
+                        if (wk < lastDayOfWeek)
+                        {
+                            Line l = new Line();
+                            l.X1 = x;
+                            l.X2 = x;
+                            l.Y1 = 0;
+                            l.Y2 = ActualHeight;
+                            l.Stroke = Brushes.LightGray;
+                            ChartCanvas.Children.Add(l);
+
+                            if (data.Date.Month != lastMonth)
+                            {
+                                Label label = new Label();
+                                label.Content = data.Date.ToShortDateString();
+                                label.SetValue(Canvas.TopProperty, ChartCanvas.ActualHeight - marginBottom);
+                                label.SetValue(Canvas.LeftProperty, x - 25);
+                                label.FontWeight = FontWeights.Bold;
+                                ChartCanvas.Children.Add(label);
+                            }
+
+                            lastMonth = data.Date.Month;
+
+                        }
+                    }
+                    else if (Period == BarPeriod.MONTHLY || Period == BarPeriod.YEARLY || Period == BarPeriod.WEEKLY)
+                    {
+                        if( data.Date.Year!=lastYear )
+                        {
                         Line l = new Line();
                         l.X1 = x;
                         l.X2 = x;
@@ -191,15 +272,22 @@ namespace Encog.App.Quant.Chart.WPF
                         l.Stroke = Brushes.LightGray;
                         ChartCanvas.Children.Add(l);
 
-                        Label label = new Label();
-                        label.Content = "" + data.Date.Month + "/" + data.Date.Year;
-                        label.SetValue(Canvas.TopProperty, ChartCanvas.ActualHeight - marginBottom);
-                        label.SetValue(Canvas.LeftProperty, x - 25);
-                        ChartCanvas.Children.Add(label);
+                            Label label = new Label();
+                            label.Content = data.Date.Year;
+                            label.SetValue(Canvas.TopProperty, ChartCanvas.ActualHeight - marginBottom);
+                            label.SetValue(Canvas.LeftProperty, x - 25);
+                            label.FontWeight = FontWeights.Bold;
+                            ChartCanvas.Children.Add(label);
+                        }
+
+                        lastYear = data.Date.Year;
                     }
 
+                    lastDayOfWeek = wk;
+
+
                     count++;
-                    if (count > this.numberOfDays)
+                    if (count > this.numberOfBars)
                         break;
                 }
                 index++;
@@ -216,19 +304,26 @@ namespace Encog.App.Quant.Chart.WPF
             double max = double.MinValue;
 
             int count = 0;
+            ulong encodedStart = NumericDateUtil.DateTime2Long(this.Start);
 
             foreach (StoredMarketData data in this.marketData)
             {
-                if (data.Date.CompareTo(this.Start) > 0)
+                if (data.EncodedDate >= encodedStart)
                 {
                     double low = data.Low;
                     double high = data.High;
                     min = Math.Min(min, low);
                     max = Math.Max(max, high);
                     count++;
-                    if (count > numberOfDays)
+                    if (count > numberOfBars)
                         break;
                 }
+            }
+
+            if (count == 0)
+            {
+                this.chartActive = false;
+                return;
             }
 
             double range = max - min;
@@ -250,73 +345,162 @@ namespace Encog.App.Quant.Chart.WPF
         /// </summary>
         private void UpdateChart()
         {
+            StoredMarketData first = null, last = null;
+
             if (chartActive)
             {
-
                 CalculatePriceRange();
-                ChartCanvas.Children.Clear();
-                DrawGuide();
 
-                int count = 0;
-                int i = 0;
-                double lastRatio = 0;
-                bool lastRatioDefined = false;
-
-                foreach (StoredMarketData data in this.marketData)
+                // might have become inactive from calc price range.
+                if (chartActive)
                 {
+                    ChartCanvas.Children.Clear();
+                    DrawGuide();
 
-                    // draw the candle
-                    DrawCandle(count, data.Open,
-                        data.Close,
-                        data.High,
-                        data.Low);
+                    int count = 0;
+                    double lastRatio = 0;
+                    bool lastRatioDefined = false;
 
-                    // was this a stock split?
-                    double ratio = data.Close / data.AdjustedClose;
-                    if (!lastRatioDefined)
+                    ulong encodedStart = NumericDateUtil.DateTime2Long(this.Start);
+
+                    foreach (StoredMarketData data in this.marketData)
                     {
-                        lastRatioDefined = true;
-                        lastRatio = ratio;
-                    }
-                    else
-                    {
-                        if (Math.Abs(ratio - lastRatio) > 0.01)
+                        if (data.EncodedDate >= encodedStart)
                         {
-                            Line line = new Line();
-                            line.X1 = ConvertDay(count);
-                            line.X2 = line.X1;
-                            line.Y1 = 0;
-                            line.Y2 = ConvertPrice(this.priceMin);
-                            line.Stroke = Brushes.Yellow;
-                            ChartCanvas.Children.Add(line);
+                            last = data;
+                            if (first == null)
+                                first = data;
+
+                            // draw the candle
+                            DrawVolume(count, data);
+                            DrawCandle(count++, data);
+
+                            // was this a stock split?
+                            double ratio = data.Close / data.AdjustedClose;
+                            if (!lastRatioDefined)
+                            {
+                                lastRatioDefined = true;
+                                lastRatio = ratio;
+                            }
+                            else
+                            {
+                                if (Math.Abs(ratio - lastRatio) > 0.01)
+                                {
+                                    Line line = new Line();
+                                    line.X1 = ConvertDay(count);
+                                    line.X2 = line.X1;
+                                    line.Y1 = 0;
+                                    line.Y2 = ConvertPrice(this.priceMin);
+                                    line.Stroke = Brushes.Yellow;
+                                    ChartCanvas.Children.Add(line);
+                                }
+                                lastRatio = ratio;
+                            }
+
+                            if (count > numberOfBars)
+                                break;
                         }
-                        lastRatio = ratio;
                     }
-
-                    count++;
-
-                    if (count > numberOfDays)
-                        break;
                 }
-                i++;
             }
+
+            if (first != null)
+                this.DisplayLeftDate.Content = first.Date.ToShortDateString();
+            else
+                this.DisplayLeftDate.Content = "";
+
+            if (last != null)
+                this.DisplayRightDate.Content = last.Date.ToShortDateString();
+            else
+                this.DisplayRightDate.Content = "";
+
         }
 
-        public void Load(String ticker)
+        public void Load(String ticker, BarPeriod period)
+        {
+            this.Period = period;
+            this.ticker = ticker;
+            Load();
+        }
+
+        public void Load()
         {
             if (Storage == null)
             {
                 throw new QuantError("Must set the MarketStorage property before loading market data.");
             }
 
-            DateTime now = DateTime.Now;
-            this.marketData = this.Storage.LoadRange(ticker, this.Start, now, BarPeriod.EOD);
+            this.stats = new MarketStats(this.Storage);
+            this.stats.Calculate(ticker, this.Start, Period);
+            this.numberOfBars = (int)((ActualWidth - FIRST_DAY_OFFSET) / DAY_WIDTH);
 
-            this.numberOfDays = (int)((ActualWidth - FIRST_DAY_OFFSET) / DAY_WIDTH);
-            this.numberOfDays = Math.Min(numberOfDays, this.marketData.Count);
+            DateTime end = this.Start.AddHours((this.numberOfBars*2)*GetPeriodSpan()); 
+            this.marketData = this.Storage.LoadRange(ticker, this.Start, end, Period);
 
             this.chartActive = true;
             this.UpdateChart();
+        }
+
+        private void ChartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.UpdateChart();
+        }
+
+        private void ChartCanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.dragDate = this.Start;
+            this.dragStart = e.GetPosition(this);
+            this.dragging = true;
+        }
+
+        private void ChartCanvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.dragging = false;
+        }
+
+        private void ChartCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.dragging)
+            {
+                Point current = e.GetPosition(this);
+                double disp = (this.dragStart.X - current.X);
+                this.Start = this.dragDate.AddHours(disp*GetPeriodSpan()); ;
+                Load();
+            }
+        }
+
+        private void ChartCanvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.dragging = false;
+        }
+
+        private void ButtonLeft_Click(object sender, RoutedEventArgs e)
+        {
+            this.Start = this.Start.AddHours(-GetPeriodSpan());
+            Load();
+        }
+
+        private void ButtonRight_Click(object sender, RoutedEventArgs e)
+        {
+            this.Start = this.Start.AddHours(GetPeriodSpan());
+            Load();
+        }
+
+        private int GetPeriodSpan()
+        {
+            switch (Period)
+            {
+                case BarPeriod.EOD:
+                    return 24;
+                case BarPeriod.WEEKLY:
+                    return 7 * 24;
+                case BarPeriod.YEARLY:
+                    return 365 * 24;
+                case BarPeriod.MONTHLY:
+                    return 31 * 24;
+                default:
+                    return 1;
+            }
         }
     }
 }
