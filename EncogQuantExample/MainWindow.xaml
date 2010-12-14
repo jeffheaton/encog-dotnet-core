@@ -10,23 +10,28 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="Open..." Name="Open"></MenuItem>
-                <MenuItem Header="Save..." Name="Close"></MenuItem>
-                <MenuItem Header="Quit" Click="MenuFileQuit_Click"></MenuItem>
+                <MenuItem Header="Open..." Name="Open" Click="Open_Click"></MenuItem>
+                <MenuItem Header="Save As..." Name="SaveAs" Click="SaveAs_Click"></MenuItem>
+                <MenuItem Header="Save" Name="Save" Click="Save_Click"></MenuItem>
+                <MenuItem Header="Close" Name="Close" Click="Close_Click"></MenuItem>
+                <MenuItem Header="Print..." Name="Print" Click="Print_Click"></MenuItem>
+                <MenuItem Header="Quit" Name="Quit" Click="Quit_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Neural Network">
-                <MenuItem Header="Obtain Data" Click="MenuNetObtain_Click"></MenuItem>
-                <MenuItem Header="Train" Click="MenuNetTrain_Click"></MenuItem>
+            <MenuItem Header="Script">
+                <MenuItem Header="Run" Name="Run" Click="Run_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About Encog..." Click="MenuAbout_click"></MenuItem>
+                <MenuItem Header="About Encog..." ></MenuItem>
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1">
         <TabItem Header="Script">
-            <local:EditScript/>
+            <local:EditScript x:Name="ScriptEditor"/>
         </TabItem>
-        <TabItem Header="Chart">
+            <TabItem Header="Output" Name="TabOutput">
+                <local:ScriptOutput/>
+            </TabItem>
+            <TabItem Header="Chart">
             <local:ViewChart/>
         </TabItem>
     </TabControl>
