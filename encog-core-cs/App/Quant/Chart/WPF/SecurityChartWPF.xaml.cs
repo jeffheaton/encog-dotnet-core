@@ -58,6 +58,14 @@ namespace Encog.App.Quant.Chart.WPF
         /// </summary>
         private bool chartActive;
 
+        public bool IsActive
+        {
+            get
+            {
+                return this.chartActive;
+            }
+        }
+
         public DateTime Start
         {
             get;
@@ -165,23 +173,26 @@ namespace Encog.App.Quant.Chart.WPF
 
         private void DrawVolume(int index, StoredMarketData data)
         {
-            double x = ConvertDay(index);
-            Rectangle r = new Rectangle();
+            if (this.stats.HighVolume > 0)
+            {
+                double x = ConvertDay(index);
+                Rectangle r = new Rectangle();
 
-            double chartHeight = ChartCanvas.ActualHeight - marginBottom;
-            double percent = (double)data.Volume / (double)this.stats.HighVolume;
-            double max = chartHeight / 4;
-            double barHeight = max * percent;
+                double chartHeight = ChartCanvas.ActualHeight - marginBottom;
+                double percent = (double)data.Volume / (double)this.stats.HighVolume;
+                double max = chartHeight / 4;
+                double barHeight = max * percent;
 
-            r.Width = STICK_WIDTH;
-            r.Height = barHeight;
-            r.Stroke = Brushes.Black;
-            r.SetValue(Canvas.LeftProperty, x - (STICK_WIDTH / 2.0));
-            r.SetValue(Canvas.TopProperty,chartHeight-barHeight);
-            r.Fill = Brushes.Wheat;
-            r.Stroke = Brushes.Wheat;
+                r.Width = STICK_WIDTH;
+                r.Height = barHeight;
+                r.Stroke = Brushes.Black;
+                r.SetValue(Canvas.LeftProperty, x - (STICK_WIDTH / 2.0));
+                r.SetValue(Canvas.TopProperty, chartHeight - barHeight);
+                r.Fill = Brushes.Wheat;
+                r.Stroke = Brushes.Wheat;
 
-            ChartCanvas.Children.Add(r);
+                ChartCanvas.Children.Add(r);
+            }
         }
 
 
@@ -423,7 +434,7 @@ namespace Encog.App.Quant.Chart.WPF
             Load();
         }
 
-        public void Load()
+        public bool AttemptLoad(DateTime date)
         {
             if (Storage == null)
             {
@@ -431,14 +442,27 @@ namespace Encog.App.Quant.Chart.WPF
             }
 
             this.stats = new MarketStats(this.Storage);
-            this.stats.Calculate(ticker, this.Start, Period);
-            this.numberOfBars = (int)((ActualWidth - FIRST_DAY_OFFSET) / DAY_WIDTH);
+            this.stats.Calculate(ticker, date, Period);
 
-            DateTime end = this.Start.AddHours((this.numberOfBars*2)*GetPeriodSpan()); 
-            this.marketData = this.Storage.LoadRange(ticker, this.Start, end, Period);
+            if (this.stats.Count < 1)
+                return false;
+            else
+            {
+                this.Start = date;
+                this.numberOfBars = (int)((ActualWidth - FIRST_DAY_OFFSET) / DAY_WIDTH);
 
-            this.chartActive = true;
-            this.UpdateChart();
+                DateTime end = this.Start.AddHours((this.numberOfBars * 2) * GetPeriodSpan());
+                this.marketData = this.Storage.LoadRange(ticker, this.Start, end, Period);
+
+                this.chartActive = true;
+                this.UpdateChart();
+                return true;
+            }
+        }
+
+        public void Load()
+        {
+            AttemptLoad(Start);
         }
 
         private void ChartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -464,8 +488,8 @@ namespace Encog.App.Quant.Chart.WPF
             {
                 Point current = e.GetPosition(this);
                 double disp = (this.dragStart.X - current.X);
-                this.Start = this.dragDate.AddHours(disp*GetPeriodSpan()); ;
-                Load();
+                DateTime dt = this.dragDate.AddHours(disp*GetPeriodSpan()); ;
+                AttemptLoad(dt);
             }
         }
 

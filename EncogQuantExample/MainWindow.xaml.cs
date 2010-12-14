@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Encog.App.Quant.MarketDB;
 using Encog.App.Quant.Loader.YahooFinance;
+using Encog.App.Quant;
 
 namespace EncogQuantExample
 {
@@ -32,9 +33,8 @@ namespace EncogQuantExample
             this.ComboBarPeriod.SelectedIndex = 3;
         }
 
-        private void Chart_Click(object sender, RoutedEventArgs e)
+        private BarPeriod GetBarPeriod()
         {
-            YahooDownload yahoo = new YahooDownload(this.storage);
             BarPeriod period = BarPeriod.EOD;
 
             switch (this.ComboBarPeriod.SelectedIndex)
@@ -52,9 +52,58 @@ namespace EncogQuantExample
                     period = BarPeriod.EOD;
                     break;
             }
+            return period;
+        }
 
-            this.ChartControl.Start = this.Start.DisplayDate;
-            this.ChartControl.Load(this.Company.Text, period);            
+        private void Chart_Click(object sender, RoutedEventArgs e)
+        {
+            DownloadSecurity dialog = new DownloadSecurity(this.storage,this.Company.Text);
+            dialog.ShowDialog();
+
+            BarPeriod period = GetBarPeriod();
+
+            switch (dialog.Operation)
+            {
+                case DownloadOperation.Cancel:
+                    return;
+                case DownloadOperation.Existing:
+                    this.ChartControl.Start = this.Start.DisplayDate;
+                    this.ChartControl.Load(this.Company.Text, period);
+                    return;
+                case DownloadOperation.Yahoo:
+                    YahooDownload(period);
+                    return;
+                case DownloadOperation.Import:
+                    return;
+            }
+
+                        
+        }
+
+        private void YahooDownload(BarPeriod period)
+        {
+            try
+            {
+                YahooDownload yahoo = new YahooDownload(this.storage);
+                yahoo.LoadAllData(this.Company.Text);
+                this.ChartControl.Start = this.Start.DisplayDate;
+                this.ChartControl.Load(this.Company.Text, period);
+            }
+            catch (QuantError ex)
+            {
+                MessageBox.Show(ex.Message, "Yahoo Finance Error");
+            }
+
+        }
+
+        private void ComboBarPeriod_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.ChartControl.IsActive)
+            {
+                BarPeriod period = GetBarPeriod();
+                this.ChartControl.Start = this.Start.DisplayDate;
+                this.ChartControl.Load(this.Company.Text, period);
+            }
         }
     }
 }

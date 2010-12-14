@@ -16,6 +16,7 @@ namespace Encog.App.Quant.Stats
         public double AverageVolume { get; set; }
         public ulong LowVolume { get; set; }
         public ulong HighVolume { get; set; }
+        public ulong Count { get; set; }
 
         public MarketStats(MarketDataStorage storage)
         {
@@ -36,7 +37,7 @@ namespace Encog.App.Quant.Stats
             ulong vol = 0;
             double close = 0;
 
-            uint count = 0;
+            ulong count = 0;
             foreach( StoredMarketData data in list)
             {
                 this.High = Math.Max(this.High, data.Close);
@@ -58,6 +59,8 @@ namespace Encog.App.Quant.Stats
                 this.AverageVolume = vol / count;
                 this.AverageClose = close / count;
             }
+
+            this.Count = count;
 
         }
     }

@@ -21,6 +21,14 @@ namespace Encog.App.Quant.MarketDB
         private BinaryReader binaryReader;
         private int currentYear;
 
+        public String Path
+        {
+            get
+            {
+                return pathBase;
+            }
+        }
+
         public MarketDataStorage(String pathBase)
         {
             this.pathBase = pathBase;
@@ -338,6 +346,25 @@ namespace Encog.App.Quant.MarketDB
             return result;
         }
 
+        public int LatestYear(String ticker)
+        {
+            int result = 0;
+            DirectoryInfo di = new DirectoryInfo(ObtainBaseDirectory(ticker));
+
+            FileInfo[] rgFiles = di.GetFiles();
+            foreach (FileInfo fi in rgFiles)
+            {
+                int year;
+                String yr = BotUtil.Extract(fi.Name, "_", ".", 0);
+                if (yr != null && int.TryParse(yr, out year))
+                {
+                    result = Math.Max(result, year);
+                }
+            }
+
+            return result;
+        }
+
         public string GetAdjustmentFile(string ticker)
         {
             String ticker2 = NormalizeTicker(ticker);
@@ -349,6 +376,25 @@ namespace Encog.App.Quant.MarketDB
             result = PathAppend(result, ticker2) + MarketDataStorage.EXTENSION_ADJUSTMENT_DATA;
             return result;
 
+        }
+
+        public ulong GetSecurityLastLoaded(string ticker)
+        {
+            this.currentYear = LatestYear(ticker);
+
+            if (currentYear == 0)
+                return 0;
+
+            SelectFile(ticker);
+            StoredMarketData data;
+            ulong result = 0;
+
+            while ((data = LoadNextItem(ticker)) != null)
+            {
+                result = Math.Max(data.EncodedDate, result);
+            }
+
+            return result;
         }
     }
 }

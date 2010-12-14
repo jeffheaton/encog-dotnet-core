@@ -18,7 +18,7 @@
                 <Border BorderThickness="1" >
                     <DatePicker Name="Start" Width="128"></DatePicker>
                 </Border>
-                <ComboBox Width="64" Name="ComboBarPeriod">
+                <ComboBox Width="64" Name="ComboBarPeriod" SelectionChanged="ComboBarPeriod_SelectionChanged">
                     <ComboBoxItem Name="y">Year</ComboBoxItem>
                     <ComboBoxItem Name="m">Month</ComboBoxItem>
                     <ComboBoxItem Name="w">Week</ComboBoxItem>

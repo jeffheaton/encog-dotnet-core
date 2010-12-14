@@ -91,84 +91,91 @@ namespace Encog.App.Quant.Loader.YahooFinance
 
         private void LoadData(String ticker, DateTime from, DateTime to)
         {
-            ulong lastDate = 0;
-
-            this.noMoreDiv = false;
-           
-            // build web info for data
-            Uri urlData = BuildURL(ticker, false, from, to);
-            WebRequest httpData = HttpWebRequest.Create(urlData);
-            HttpWebResponse responseData = (HttpWebResponse)httpData.GetResponse();
-
-            Stream istreamData = responseData.GetResponseStream();
-            ReadCSV csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
-
-            // build web info for div
-            Uri urlDiv = BuildURL(ticker, true, from, to);
-            WebRequest httpDiv = HttpWebRequest.Create(urlDiv);
-            HttpWebResponse responseDiv = (HttpWebResponse)httpDiv.GetResponse();
-
-            Stream istreamDiv = responseDiv.GetResponseStream();
-            ReadCSV csvDiv = new ReadCSV(istreamDiv, true, CSVFormat.ENGLISH);
-
-            double lastRatio = 1;
-
-            StoredAdjustmentData nextDiv = ReadNextDiv(csvDiv);
-
-            while (csvData.Next())
+            try
             {
-                bool foundDiv = false;
-                StoredMarketData data = new StoredMarketData();
+                ulong lastDate = 0;
 
-                DateTime date = csvData.GetDate("date");
-                double adjustedClose = csvData.GetDouble("adj close");
-                data.Open = csvData.GetDouble("open");
-                data.Close = csvData.GetDouble("close");
-                data.High = csvData.GetDouble("high");
-                data.Low = csvData.GetDouble("low");
-                data.Volume = (ulong)csvData.GetDouble("volume");
-                data.Date = date;
+                this.noMoreDiv = false;
 
-                this.SelectFile(ticker, date.Year);
+                // build web info for data
+                Uri urlData = BuildURL(ticker, false, from, to);
+                WebRequest httpData = HttpWebRequest.Create(urlData);
+                HttpWebResponse responseData = (HttpWebResponse)httpData.GetResponse();
 
-                if (!noMoreDiv)
+                Stream istreamData = responseData.GetResponseStream();
+                ReadCSV csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
+
+                // build web info for div
+                Uri urlDiv = BuildURL(ticker, true, from, to);
+                WebRequest httpDiv = HttpWebRequest.Create(urlDiv);
+                HttpWebResponse responseDiv = (HttpWebResponse)httpDiv.GetResponse();
+
+                Stream istreamDiv = responseDiv.GetResponseStream();
+                ReadCSV csvDiv = new ReadCSV(istreamDiv, true, CSVFormat.ENGLISH);
+
+                double lastRatio = 1;
+
+                StoredAdjustmentData nextDiv = ReadNextDiv(csvDiv);
+
+                while (csvData.Next())
                 {
-                    if (nextDiv.Date > data.Date)
+                    bool foundDiv = false;
+                    StoredMarketData data = new StoredMarketData();
+
+                    DateTime date = csvData.GetDate("date");
+                    double adjustedClose = csvData.GetDouble("adj close");
+                    data.Open = csvData.GetDouble("open");
+                    data.Close = csvData.GetDouble("close");
+                    data.High = csvData.GetDouble("high");
+                    data.Low = csvData.GetDouble("low");
+                    data.Volume = (ulong)csvData.GetDouble("volume");
+                    data.Date = date;
+
+                    this.SelectFile(ticker, date.Year);
+
+                    if (!noMoreDiv)
                     {
-                        nextDiv.CalculateAdjustment(data.Close);
-                        this.adjustments.Add(nextDiv);
-                        nextDiv = ReadNextDiv(csvDiv);
-                        foundDiv = true;
+                        if (nextDiv.Date > data.Date)
+                        {
+                            nextDiv.CalculateAdjustment(data.Close);
+                            this.adjustments.Add(nextDiv);
+                            nextDiv = ReadNextDiv(csvDiv);
+                            foundDiv = true;
+                        }
                     }
+
+                    double ratio = adjustedClose / data.Close;
+                    if (Math.Abs(ratio - lastRatio) > 0.001 && !foundDiv)
+                    {
+                        double split = lastRatio / ratio;
+                        SplitRatio s = SplitRateCollection.Instance.FindClosest(split);
+                        StoredAdjustmentData adj = new StoredAdjustmentData();
+                        adj.EncodedDate = lastDate;
+                        adj.Numerator = s.numerator;
+                        adj.Denominator = s.denominator;
+                        adj.CalculateAdjustment(data.Close);
+                        this.adjustments.Add(adj);
+                    }
+
+                    Loaded.Add(data, null);
+                    //WriteObject(data);
+
+                    lastRatio = ratio;
+                    lastDate = data.EncodedDate;
                 }
 
-                double ratio = adjustedClose / data.Close;
-                if (Math.Abs(ratio - lastRatio) > 0.001 && !foundDiv)
-                {
-                    double split = lastRatio / ratio;
-                    SplitRatio s = SplitRateCollection.Instance.FindClosest(split);
-                    StoredAdjustmentData adj = new StoredAdjustmentData();
-                    adj.EncodedDate = lastDate;
-                    adj.Numerator = s.numerator;
-                    adj.Denominator = s.denominator;
-                    adj.CalculateAdjustment(data.Close);
-                    this.adjustments.Add(adj);
-                }
+                WriteLoaded(ticker);
+                csvData.Close();
+                istreamData.Close();
 
-                Loaded.Add(data,null);
-                //WriteObject(data);
-
-                lastRatio = ratio;
-                lastDate = data.EncodedDate;
+                // close div
+                csvDiv.Close();
+                istreamDiv.Close();
             }
-
-            WriteLoaded(ticker);
-            csvData.Close();
-            istreamData.Close();
-
-            // close div
-            csvDiv.Close();
-            istreamDiv.Close();
+            catch (WebException )
+            {
+                throw new QuantError("Service is down, or illegal ticker:" + ticker);
+            }
         }
 
     }
