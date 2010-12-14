@@ -1,0 +1,14 @@
+﻿<Window x:Class="EncogQuantExample.DownloadSecurity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Download Security" Height="210" Width="572">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Name="TextInformation"></TextBlock>
+            <Button Name="ButtonExisting" Click="ButtonExisting_Click">Use Already Downloaded Data</Button>
+            <Button Name="ButtonDownload" Click="ButtonDownload_Click">Download EOD from Yahoo Finance</Button>
+            <Button Name="ButtonImport" Click="ButtonImport_Click">Import from Text File</Button>
+            <Button Name="ButtonCancel" Click="ButtonCancel_Click">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

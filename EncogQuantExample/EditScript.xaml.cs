@@ -11,22 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Encog.App.Quant.MarketDB;
-using Encog.App.Quant.Loader.YahooFinance;
-using Encog.App.Quant;
 
 namespace EncogQuantExample
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EditScript.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditScript : UserControl
     {
-        public MainWindow()
+        public EditScript()
         {
             InitializeComponent();
         }
-
-        
     }
 }
