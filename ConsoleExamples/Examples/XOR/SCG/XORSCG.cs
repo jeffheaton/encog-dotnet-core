@@ -43,6 +43,7 @@ using Encog.Neural.Networks.Training.Propagation.SCG;
 using ConsoleExamples.Examples;
 using Encog.MathUtil.Randomize;
 using Encog.Engine.Network.Activation;
+using Encog.Neural.Networks.Training.Strategy;
 
 namespace Encog.Examples.XOR.SCG
 {
@@ -103,6 +104,8 @@ namespace Encog.Examples.XOR.SCG
 		    // train the neural network
 		    ScaledConjugateGradient train = new ScaledConjugateGradient(network, trainingSet);
 
+            // reset if improve is less than 1% over 5 cycles
+            train.AddStrategy(new RequiredImprovementStrategy(5));
 
             int epoch = 1;
 
