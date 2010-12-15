@@ -70,10 +70,18 @@
       <DependentUpon>SecurityChartWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="App\Quant\QuantError.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdDatasetEvaluate.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdTrain.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdDatasetAdd.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdDatasetCreate.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdDatasetDump.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdNetworkCreate.cs" />
+    <Compile Include="App\Quant\Script\Commands\CmdSet.cs" />
     <Compile Include="App\Quant\Script\Commands\CmdWriteLine.cs" />
     <Compile Include="App\Quant\Script\EncogQuantScript.cs" />
     <Compile Include="App\Quant\Script\IQuantCommand.cs" />
     <Compile Include="App\Quant\Script\ParseLine.cs" />
+    <Compile Include="App\Quant\Script\ScriptError.cs" />
     <Compile Include="App\Quant\Stats\MarketStats.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
@@ -230,6 +238,7 @@
     <Compile Include="Neural\NeuralData\INeuralDataPair.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataSet.cs" />
     <Compile Include="App\Quant\MarketDB\BarPeriod.cs" />
+    <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
     <Compile Include="App\Quant\MarketDB\MarketDataStorage.cs" />
     <Compile Include="App\Quant\MarketDB\PriceAdjustments.cs" />

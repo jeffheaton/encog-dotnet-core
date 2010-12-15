@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Util;
 
 namespace Encog.App.Quant.Script
 {
@@ -18,181 +19,80 @@ namespace Encog.App.Quant.Script
                 return this.parameters;
             }
         }
-
-        public String Line { get; set; }
-
+       
         private IDictionary<String, String> parameters = new Dictionary<string, string>();
-
-        private int currentPosition;
+        private SimpleParser parser;
+        
 
         public ParseLine(String line)
         {
             bool more = true;
 
-            this.Line = line.Trim();
-            this.currentPosition = 0;
+            this.parser = new SimpleParser(line);
 
-            if (IsComment())
+            if (this.parser.LookAhead("//",false) )
                 return;
 
             ParseCommand();
 
             // look for a "primary parameter"
-            EatWhiteSpace();
-            if (Peek() == '\"')
+            parser.EatWhiteSpace();
+            if (parser.Peek() == '\"')
             {
                 this.PrimaryParameter = ParseValue();
-                ParseThroughComma();
+                parser.ParseThroughComma();
             }
 
             if (more)
             {
-                while (!EOL())
+                while (!parser.EOL())
                 {
-                    if (IsComment())
+                    if (this.parser.LookAhead("//",false))
                         return;
                     
-                    String name = ParseName();
-                    Expect('=');
+                    String name = ParseName().ToLower();
+
+                    this.parser.EatWhiteSpace();
+                    if (!this.parser.LookAhead("=", false))
+                        ThrowParseError();
+                    else
+                        parser.Advance();
+
                     String Value = ParseValue();
 
                     this.parameters[name] = Value;
-                    if (!ParseThroughComma())
+                    if (!parser.ParseThroughComma())
                         break;
                 }
             }
 
-            if (IsComment())
+            if (parser.LookAhead("//",false))
                 return;
 
-            if (!EOL())
+            if (!parser.EOL())
             {
                 ThrowParseError();
             }
-        }
-
-        private bool IsComment()
-        {
-            EatWhiteSpace();
-
-            if (Remaining() < 2)
-                return false;
-
-            if (this.Line[this.currentPosition] == '/' && this.Line[this.currentPosition + 1] == '/')
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private int Remaining()
-        {
-            return Math.Max(this.Line.Length - this.currentPosition, 0);
-        }
-
-        private bool ParseThroughComma()
-        {
-            EatWhiteSpace();
-            if (!EOL())
-            {
-                if (Peek() == ',')
-                {
-                    Advance();
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private void Expect(char ch)
-        {
-            EatWhiteSpace();
-            if (ReadChar() != ch)
-                ThrowParseError();
-        }
-
-        private bool IsIdentifier()
-        {
-            if (EOL())
-                return false;
-
-            return char.IsLetterOrDigit(Peek()) || Peek() == '_';
-        }
+        }        
 
         private String ParseName()
         {
             StringBuilder result = new StringBuilder();
-            EatWhiteSpace();
-            while (IsIdentifier())
+            parser.EatWhiteSpace();
+            while (parser.IsIdentifier())
             {
-                result.Append(ReadChar());
+                result.Append(parser.ReadChar());
             }
             return result.ToString();
         }
 
-        private char Peek()
-        {
-            if (EOL())
-                return (char)0;
-            else if (currentPosition >= this.Line.Length)
-                return (char)0;
-            else
-                return this.Line[this.currentPosition];
-        }
-
-        private void Advance()
-        {
-            if (currentPosition < this.Line.Length)
-            {
-                currentPosition++;
-            }
-        }
-
-        private bool IsWhiteSpace()
-        {
-            return " \t\n\r".IndexOf(Peek()) != -1;
-        }
-
-        private bool EOL()
-        {
-            return(this.currentPosition>=this.Line.Length);
-        }
-
-        private void EatWhiteSpace()
-        {
-            while (!EOL() && IsWhiteSpace() )
-                Advance();
-        }
-
-        private char ReadChar()
-        {
-            if (EOL())
-                return (char)0;
-
-            char ch = Peek();
-            Advance();
-            return ch;
-        }
-
-        private String ReadToWhiteSpace()
-        {
-            StringBuilder result = new StringBuilder();
-
-            while (!IsWhiteSpace() && !EOL())
-            {
-                result.Append(ReadChar());
-            }
-
-            return result.ToString();
-        }
 
         private void ParseCommand()
         {
             StringBuilder str = new StringBuilder();
 
-            EatWhiteSpace();
-            this.Command = ReadToWhiteSpace();
+            this.parser.EatWhiteSpace();
+            this.Command = this.parser.ReadToWhiteSpace().ToLower();
         }
 
         private String ParseValue()
@@ -200,24 +100,24 @@ namespace Encog.App.Quant.Script
             bool quoted = false;
             StringBuilder str = new StringBuilder();
 
-            EatWhiteSpace();
+            this.parser.EatWhiteSpace();
 
-            if (Peek() == '\"')
+            if (this.parser.Peek() == '\"')
             {
                 quoted = true;
-                Advance();
+                this.parser.Advance();
             }
 
-            while (!EOL())
+            while (!this.parser.EOL())
             {
-                if (Peek() == '\"')
+                if (this.parser.Peek() == '\"')
                 {
                     if (quoted)
                     {
-                        Advance();
-                        if (Peek() == '\"')
+                        this.parser.Advance();
+                        if (this.parser.Peek() == '\"')
                         {
-                            str.Append(ReadChar());
+                            str.Append(this.parser.ReadChar());
                         }
                         else
                         {
@@ -226,16 +126,16 @@ namespace Encog.App.Quant.Script
                     }
                     else
                     {
-                        str.Append(ReadChar());
+                        str.Append(this.parser.ReadChar());
                     }
                 }
-                else if (!quoted && (IsWhiteSpace() || Peek() == ','))
+                else if (!quoted && (this.parser.IsWhiteSpace() || this.parser.Peek() == ','))
                 {
                     break;
                 }
                 else
                 {
-                    str.Append(ReadChar());
+                    str.Append(this.parser.ReadChar());
                 }
             }
             return str.ToString();
@@ -264,7 +164,34 @@ namespace Encog.App.Quant.Script
 
         private void ThrowParseError()
         {
-            throw new QuantError("Invalid command: " + Line);
+            throw new QuantError("Invalid command: " + this.parser.Line);
+        }
+
+        public String GetParameterString(String name, bool required)
+        {
+            if (!Parameters.ContainsKey(name) )
+            {
+                if (required)
+                    throw new ScriptError("Must define:" + name);
+                else
+                    return null;
+            }
+
+            return Parameters[name];
+        }
+
+        internal int GetParameterInt(string name, bool required)
+        {
+            int result;
+            String str = GetParameterString(name, required);
+
+            if (str == null)
+                return 0;
+
+            if (!int.TryParse(str, out result))
+                throw new ScriptError("Invalid number: " + str);
+
+            return result;
         }
     }
 }

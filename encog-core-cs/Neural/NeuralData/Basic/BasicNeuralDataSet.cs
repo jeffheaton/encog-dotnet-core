@@ -219,6 +219,8 @@ namespace Encog.Neural.Data.Basic
         {
             get
             {
+                if (this.data == null || this.data.Count == 0)
+                    return 0;
                 INeuralDataPair pair = this.data[0];
                 return pair.Ideal.Count;
             }
@@ -231,6 +233,8 @@ namespace Encog.Neural.Data.Basic
         {
             get
             {
+                if (this.data == null || this.data.Count == 0)
+                    return 0;
                 INeuralDataPair pair = this.data[0];
                 return pair.Input.Count;
             }

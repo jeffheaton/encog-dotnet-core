@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.Neural.Data.Basic;
 
 namespace Encog.App.Quant.Script.Commands
 {
-    public class CmdWriteLine: IQuantCommand
+    public class CmdDatasetCreate: IQuantCommand
     {
 
         public string CommandName
         {
-            get { return "writeline"; }
+            get { return "datasetcreate"; }
         }
 
         public void Execute(EncogQuantScript script, ParseLine line)
         {
-            String str = script.ResolveVariables(line.PrimaryParameter);
-            script.WriteLine(str);
+            String name = line.GetParameterString("name", true);
+
+            BasicNeuralDataSet set = new BasicNeuralDataSet();
+            script.Memory[name] = set;
         }
     }
 }
