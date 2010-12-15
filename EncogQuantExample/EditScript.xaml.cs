@@ -44,5 +44,10 @@ namespace EncogQuantExample
             this.TextArea.Text = str;
             tr.Close();
         }
+
+        public void Clear()
+        {
+            this.TextArea.Clear();
+        }
     }
 }

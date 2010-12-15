@@ -6,6 +6,7 @@ using Encog.Engine;
 using System.Diagnostics;
 using Encog.Engine.Util;
 using System.Text.RegularExpressions;
+using Encog.App.Quant.Script.Commands;
 
 namespace Encog.App.Quant.Script
 {
@@ -13,18 +14,20 @@ namespace Encog.App.Quant.Script
     {
         IStatusReportable report;
         String[] lines;
+        IDictionary<String,IQuantCommand> commands = new Dictionary<String,IQuantCommand>();
 
         public EncogQuantScript(IStatusReportable report)
         {
             this.report = report;
+            AddCommand(new CmdWriteLine());
         }
 
-        private void WriteLine(String str)
+        public void WriteLine(String str)
         {
             report.Report(0, 0, str);
         }
 
-        private void WriteLine()
+        public void WriteLine()
         {
             WriteLine("");
         }
@@ -54,7 +57,20 @@ namespace Encog.App.Quant.Script
 
         private void Execute(String line)
         {
-            WriteLine("Line:" + line);
+            ParseLine parse = new ParseLine(line);
+            if (this.commands.ContainsKey(parse.Command))
+            {
+                this.commands[parse.Command].Execute(this, parse);
+            }
+            else
+            {
+                WriteLine("Unknown command: " + parse.Command);
+            }
+        }
+
+        public void AddCommand(IQuantCommand command)
+        {
+            this.commands[command.CommandName] = command;
         }
     }
 }

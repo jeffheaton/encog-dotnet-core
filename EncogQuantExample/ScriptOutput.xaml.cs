@@ -29,5 +29,10 @@ namespace EncogQuantExample
         {
             TextOutput.AppendText(message + "\n");
         }
+
+        public void Clear()
+        {
+            this.TextOutput.Clear();
+        }
     }
 }

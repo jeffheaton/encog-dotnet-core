@@ -136,7 +136,8 @@ namespace EncogQuantExample
         private void Run_Click(object sender, RoutedEventArgs e)
         {
             TabOutput.IsSelected = true;
-            
+
+            ((ScriptOutput)this.TabOutput.Content).Clear();
             EncogQuantScript runner = new EncogQuantScript((IStatusReportable)this.TabOutput.Content);
             runner.run(this.ScriptEditor.TextArea.Text);
         }
