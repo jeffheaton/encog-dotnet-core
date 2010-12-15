@@ -154,8 +154,9 @@ namespace Encog.Engine.Network.Train.Prop
             else if (change == 0)
             {
                 // if change==0 then there is no change to the delta
-                double delta_1 = lastGradient[index];
-                weightChange = Sign(gradients[index]) * delta_1;
+                double delta = this.updateValues[index];
+
+                weightChange = Sign(gradients[index]) * delta;
                 lastGradient[index] = gradients[index];
             }
 
