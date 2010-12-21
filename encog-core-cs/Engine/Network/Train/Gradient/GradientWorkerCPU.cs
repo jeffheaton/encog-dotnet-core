@@ -142,18 +142,6 @@ namespace Encog.Engine.Network.Train.Gradient
         private readonly TrainFlatNetworkProp owner;
 
         /// <summary>
-        /// The elapsed time.
-        /// </summary>
-        ///
-        private long elapsedTime;
-
-        /// <summary>
-        /// The stopwatch, to evaluate performance.
-        /// </summary>
-        ///
-        private readonly Stopwatch stopwatch;
-
-        /// <summary>
         /// Construct a gradient worker.
         /// </summary>
         ///
@@ -173,8 +161,6 @@ namespace Encog.Engine.Network.Train.Gradient
             this.high = high;
             this.owner = owner;
 
-            this.stopwatch = new Stopwatch();
-
             this.layerDelta = new double[network.LayerOutput.Length];
             this.gradients = new double[network.Weights.Length];
             this.actual = new double[network.OutputCount];
@@ -189,20 +175,6 @@ namespace Encog.Engine.Network.Train.Gradient
             this.pair = BasicEngineData.CreatePair(network.InputCount,
                     network.OutputCount);
         }
-
-
-        /// <summary>
-        /// Elapsed time for the last iteration.
-        /// </summary>
-        public virtual long ElapsedTime
-        {
-            get
-            {
-                return this.elapsedTime;
-            }
-        }
-
-
 
         /// <summary>
         /// The weights for this network.
@@ -287,8 +259,6 @@ namespace Encog.Engine.Network.Train.Gradient
         {
             try
             {
-                this.stopwatch.Reset();
-                this.stopwatch.Start();
                 this.errorCalculation.Reset();
                 for (int i = this.low; i <= this.high; i++)
                 {
@@ -298,8 +268,6 @@ namespace Encog.Engine.Network.Train.Gradient
                 double error = this.errorCalculation.Calculate();
                 this.owner.Report(this.gradients, error, null);
                 EngineArray.Fill(this.gradients, 0);
-                this.stopwatch.Stop();
-                this.elapsedTime = this.stopwatch.ElapsedTicks;
             }
             catch (Exception ex)
             {

@@ -55,15 +55,5 @@ namespace Encog.Engine.Network.Train.Gradient
         {
             get;
         }
-
-
-
-        /// <summary>
-        /// The elapsed time for the last iteration of this worker.
-        /// </summary>
-        long ElapsedTime
-        {
-            get;
-        }
     }
 }

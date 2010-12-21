@@ -152,7 +152,9 @@ namespace Encog.Engine.Network.Train.Prop
                 Init();
             }
 
-            this.workers[0].Network.ClearContext();
+            if( this.network.HasContext )
+                this.workers[0].Network.ClearContext();
+
             this.totalError = 0;
 
             if (this.workers.Length > 1)
@@ -303,7 +305,8 @@ namespace Encog.Engine.Network.Train.Prop
                         worker.Weights, 0, this.network.Weights.Length);
             }
 
-            CopyContexts();
+            if( this.network.HasContext )
+                CopyContexts();
 
             if (this.reportedException != null)
             {
