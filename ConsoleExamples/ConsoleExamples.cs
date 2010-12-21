@@ -91,6 +91,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.CL.BenchmarkConcurrent.Info);
             examples.Add(Encog.Examples.CL.CompareCL.Info);
             examples.Add(Encog.Examples.CL.PredictSunspotCL.Info);
+            examples.Add(Encog.Examples.Benchmark.SimpleBenchmark.Info);
         }
 
         public void ListCommands()

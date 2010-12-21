@@ -4,6 +4,6 @@
     <StartArguments>-pause persist-serial</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause xor-rprop</StartArguments>
+    <StartArguments>-pause benchmark-simple</StartArguments>
   </PropertyGroup>
 </Project>
