@@ -25,42 +25,7 @@ namespace Encog.App.Quant.Indicators
             this.periods = periods;
             this.Output = output;
         }
-
-        
-   void TA_INT_SMA( int startIdx,
-      int endIdx,
-      double[] inReal,
-      int optInTimePeriod,
-      double[] outReal )
-   {
-      double periodTotal, tempReal;
-      int i, outIdx, trailingIdx, lookbackTotal;
-      lookbackTotal = (optInTimePeriod-1);
-      if( startIdx < lookbackTotal )
-         startIdx = lookbackTotal;
-      if( startIdx > endIdx )
-      {
-         return;
-      }
-      periodTotal = 0;
-      trailingIdx = startIdx-lookbackTotal;
-      i=trailingIdx;
-      if( optInTimePeriod > 1 )
-      {
-         while( i < startIdx )
-            periodTotal += inReal[i++];
-      }
-      outIdx = 0;
-      do
-      {
-         periodTotal += inReal[i++];
-         tempReal = periodTotal;
-         periodTotal -= inReal[trailingIdx++];
-         outReal[outIdx++] = tempReal / optInTimePeriod;
-      } while( i <= endIdx );
-
-   }
-        
+     
         public override void Calculate(IDictionary<string, BaseColumn> data, int length)
         {
             Require(data, FileData.CLOSE);
