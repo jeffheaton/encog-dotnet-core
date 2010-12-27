@@ -58,7 +58,16 @@ namespace Encog.Util.CSV
 
         private CSVFormat format;
 
-
+        /// <summary>
+        /// The names of the columns.
+        /// </summary>
+        public IList<String> ColumnNames
+        {
+            get
+            {
+                return this.columnNames;
+            }
+        }
 
         /// <summary>
         /// Parse a date using the specified format.
@@ -94,6 +103,11 @@ namespace Encog.Util.CSV
         /// The names of the columns.
         /// </summary>
         private IDictionary<String, int> columns = new Dictionary<String, int>();
+
+        /// <summary>
+        /// The names of the columns.
+        /// </summary>
+        private IList<String> columnNames = new List<String>();
 
         /// <summary>
         /// The data.
@@ -193,6 +207,7 @@ namespace Encog.Util.CSV
                     foreach (String header in tok)
                     {
                         this.columns.Add(header.ToLower(), i++);
+                        this.columnNames.Add(header);
                     }
                 }
 

@@ -69,6 +69,15 @@
     <Compile Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml.cs">
       <DependentUpon>SecurityChartWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="App\Quant\Indicators\BaseColumn.cs" />
+    <Compile Include="App\Quant\Indicators\Indicator.cs" />
+    <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
+    <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />
+    <Compile Include="App\Quant\Indicators\Predictive\BestReturn.cs" />
+    <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
+    <Compile Include="App\Quant\Normalize\EncogNormalize.cs" />
+    <Compile Include="App\Quant\Normalize\NormalizationDesired.cs" />
+    <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Script\Commands\CmdDatasetEvaluate.cs" />
     <Compile Include="App\Quant\Script\Commands\CmdTrain.cs" />
@@ -83,6 +92,10 @@
     <Compile Include="App\Quant\Script\ParseLine.cs" />
     <Compile Include="App\Quant\Script\ScriptError.cs" />
     <Compile Include="App\Quant\Stats\MarketStats.cs" />
+    <Compile Include="App\Quant\Temporal\TemporalWindow.cs" />
+    <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />
+    <Compile Include="App\Quant\Indicators\FileData.cs" />
+    <Compile Include="App\Quant\Util\BarBuffer.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />
@@ -590,12 +603,25 @@
   <ItemGroup>
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App\Quant\Normalize\.svn\all-wcprops" />
+    <None Include="App\Quant\Normalize\.svn\entries" />
+    <None Include="App\Quant\Normalize\.svn\text-base\EncogNormalize.cs.svn-base" />
+    <None Include="App\Quant\Normalize\.svn\text-base\NormalizationDesired.cs.svn-base" />
+    <None Include="App\Quant\Normalize\.svn\text-base\NormalizedFieldStats.cs.svn-base" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\Quant\Normalize\.svn\prop-base\" />
+    <Folder Include="App\Quant\Normalize\.svn\props\" />
+    <Folder Include="App\Quant\Normalize\.svn\tmp\prop-base\" />
+    <Folder Include="App\Quant\Normalize\.svn\tmp\props\" />
+    <Folder Include="App\Quant\Normalize\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

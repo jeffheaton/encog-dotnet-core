@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncogOpenCLBenchmark", "Enc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncogQuantExample", "EncogQuantExample\EncogQuantExample.csproj", "{5014A978-4D28-4ED7-8EB2-4880DC64CB00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,16 @@ Global
 		{5014A978-4D28-4ED7-8EB2-4880DC64CB00}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5014A978-4D28-4ED7-8EB2-4880DC64CB00}.Release|x86.ActiveCfg = Release|x86
 		{5014A978-4D28-4ED7-8EB2-4880DC64CB00}.Release|x86.Build.0 = Release|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Debug|x86.ActiveCfg = Debug|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Debug|x86.Build.0 = Debug|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Release|Any CPU.ActiveCfg = Release|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Release|x86.ActiveCfg = Release|x86
+		{9C2E39F1-C1D4-4DBE-B2F6-81B328ED1F29}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
