@@ -15,7 +15,13 @@ namespace Encog.App.Quant.Temporal
             }
         }
 
+        public TemporalWindowField(String name)
+        {
+            this.Name = name;
+        }
+
         public bool Input { get; set; }
         public bool Predict { get; set; }
+        public String Name { get; set; }
     }
 }

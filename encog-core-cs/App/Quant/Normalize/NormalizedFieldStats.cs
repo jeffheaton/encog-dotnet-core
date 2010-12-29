@@ -12,6 +12,7 @@ namespace Encog.App.Quant.Normalize
         public double NormalizedHigh { get; set; }
         public double NormalizedLow { get; set; }
         public NormalizationDesired Action { get; set; }
+        public String Name { get; set; }
 
 
         public NormalizedFieldStats(NormalizationDesired action) : this(action,0,0,0,0)

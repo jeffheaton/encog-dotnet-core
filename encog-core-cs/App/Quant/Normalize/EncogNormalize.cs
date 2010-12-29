@@ -46,6 +46,7 @@ namespace Encog.App.Quant.Normalize
                 for (int i = 0; i < fieldCount; i++)
                 {
                     stats[i] = new NormalizedFieldStats();
+                    stats[i].Name = csv.ColumnNames[i];
                 }
 
                 // Read entire file to analyze
@@ -98,6 +99,12 @@ namespace Encog.App.Quant.Normalize
                 throw new EncogError("The number of columns in the input file("+csv.GetColumnCount()+") and stats file("+this.stats.Length+") must match.");
             }
 
+            // write headers, if needed
+            if (headers)
+            {
+                WriteHeaders(tw);
+            }
+
             do
             {
                 StringBuilder line = new StringBuilder();
@@ -133,6 +140,20 @@ namespace Encog.App.Quant.Normalize
 
         }
 
+        private void WriteHeaders(TextWriter tw)
+        {
+            StringBuilder line = new StringBuilder();
+            foreach (NormalizedFieldStats stat in this.stats)
+            {
+                if (line.Length > 0)
+                    line.Append(this.sourceFormat.Separator);
+                line.Append("\"");
+                line.Append(stat.Name);
+                line.Append("\"");
+            }
+            tw.WriteLine(line.ToString());
+        }
+
         public void Normalize(String file)
         {
             if (this.sourceFile == null)
@@ -147,6 +168,14 @@ namespace Encog.App.Quant.Normalize
                 csv = new ReadCSV(this.sourceFile, this.sourceHeaders, this.sourceFormat);
 
                 tw = new StreamWriter(file);
+
+                // write headers, if needed
+                if (this.sourceHeaders)
+                {
+                    WriteHeaders(tw);
+                }
+
+                // write file contents
                 while (csv.Next())
                 {
                     StringBuilder line = new StringBuilder();

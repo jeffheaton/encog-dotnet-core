@@ -57,7 +57,7 @@ namespace Encog.App.Quant.Indicators
                 double t = periodTotal;
                 periodTotal -= close[trailingIdx++];
                 output[outIdx++] = t / Periods;
-            } while (i < Periods);
+            } while (i < close.Length);
         }
     }
 }

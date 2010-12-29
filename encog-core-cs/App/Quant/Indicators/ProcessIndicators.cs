@@ -143,6 +143,28 @@ namespace Encog.App.Quant.Indicators
             try
             {
                 tw = new StreamWriter(filename);
+
+                // write the headers
+                if (this.inputHeaders)
+                {
+                    StringBuilder line = new StringBuilder();
+
+                    foreach (BaseColumn column in columns)
+                    {
+                        if (column.Output)
+                        {
+                            if (line.Length > 0)
+                                line.Append(this.inputFormat.Separator);
+                            line.Append("\"");
+                            line.Append(column.Name);
+                            line.Append("\"");
+                        }
+                    }
+
+                    tw.WriteLine(line.ToString());
+                }
+
+                // write the file data
                 for (int row = 0; row < this.recordCount; row++)
                 {
                     StringBuilder line = new StringBuilder();

@@ -9,10 +9,11 @@ using Encog.Util.CSV;
 using Encog.Util.HTTP;
 using Encog.Util;
 using Encog.App.Quant.MarketDB;
+using Encog.Util.Time;
 
 namespace Encog.App.Quant.Loader.YahooFinance
 {
-    public class YahooDownload: BasicLoader
+    public class YahooDownload
     {
         public static readonly DateTime EARLIEST_DATE = new DateTime(1950, 1, 1);
 
@@ -20,11 +21,11 @@ namespace Encog.App.Quant.Loader.YahooFinance
         public const String INDEX_SP500 = "^gspc";
         public const String INDEX_NASDAQ = "^ixic";
 
-        private bool noMoreDiv;
-        private PriceAdjustments adjustments;
+        public int Percision { get; set; }
 
-        public YahooDownload(MarketDataStorage marketData): base (marketData)
-        {            
+        public YahooDownload()
+        {
+            Percision = 10;
         }
 
 
@@ -36,7 +37,7 @@ namespace Encog.App.Quant.Loader.YahooFinance
         /// <param name="from">The beginning date.</param>
         /// <param name="to">The ending date.</param>
         /// <returns>The URL to read from</returns>
-        private Uri BuildURL(String ticker, bool div, DateTime from,
+        private Uri BuildURL(String ticker, DateTime from,
                  DateTime to)
         {
             // construct the URL
@@ -50,7 +51,7 @@ namespace Encog.App.Quant.Loader.YahooFinance
             form.Add("d", "" + (to.Month - 1));
             form.Add("e", "" + to.Day);
             form.Add("f", "" + to.Year);
-            form.Add("g", div ? "v" : "d");
+            form.Add("g", "d");
             form.Add("ignore", ".csv");
             mstream.Close();
             byte[] b = mstream.GetBuffer();
@@ -60,123 +61,49 @@ namespace Encog.App.Quant.Loader.YahooFinance
             return new Uri(str);
         }
 
-        private StoredAdjustmentData ReadNextDiv(ReadCSV csvDiv)
+        public void LoadAllData(String ticker, String output, CSVFormat outputFormat, DateTime from,
+                 DateTime to)
         {
-            StoredAdjustmentData result = new StoredAdjustmentData();
+            Uri urlData = BuildURL(ticker, from, to);
+            WebRequest httpData = HttpWebRequest.Create(urlData);
+            HttpWebResponse responseData = (HttpWebResponse)httpData.GetResponse();
 
-            if (csvDiv.Next())
+            Stream istreamData = responseData.GetResponseStream();
+            ReadCSV csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
+
+            TextWriter tw = new StreamWriter(output);
+            tw.WriteLine("date,time,open price,high price,low price,close price,volume,adjusted price");
+
+            while (csvData.Next())
             {
-                DateTime dateDiv = csvDiv.GetDate("date");
-                result.Date = dateDiv;
-                result.Div = csvDiv.GetDouble("dividends");
-                return result;
-            }
-            else
-            {
-                this.noMoreDiv = false;
+                DateTime date = csvData.GetDate("date");
+                double adjustedClose = csvData.GetDouble("adj close");
+                double open = csvData.GetDouble("open");
+                double close = csvData.GetDouble("close");
+                double high = csvData.GetDouble("high");
+                double low = csvData.GetDouble("low");
+                long volume = (long)csvData.GetDouble("volume");
+
+                StringBuilder line = new StringBuilder();
+                line.Append(NumericDateUtil.DateTime2Long(date));
+                line.Append(outputFormat.Separator);
+                line.Append(NumericDateUtil.Time2Int(date));
+                line.Append(outputFormat.Separator);
+                line.Append(outputFormat.Format(open,Percision));
+                line.Append(outputFormat.Separator);
+                line.Append(outputFormat.Format(high, Percision));
+                line.Append(outputFormat.Separator);
+                line.Append(outputFormat.Format(low, Percision));
+                line.Append(outputFormat.Separator);
+                line.Append(outputFormat.Format(close, Percision));
+                line.Append(outputFormat.Separator);
+                line.Append(volume);
+                line.Append(outputFormat.Separator);
+                line.Append(outputFormat.Format(adjustedClose, Percision));
+                tw.WriteLine(line.ToString());
             }
 
-            return result;
+            tw.Close();
         }
-
-        public void LoadAllData(String ticker)
-        {
-            this.adjustments = new PriceAdjustments(this.Storage,ticker);
-            int year = DateTime.Now.Year;
-            DateTime from = YahooDownload.EARLIEST_DATE;
-            DateTime to = new DateTime(year, 12, 31);
-            LoadData(ticker, from, to);
-            this.adjustments.Save();
-        }
-
-        private void LoadData(String ticker, DateTime from, DateTime to)
-        {
-            try
-            {
-                ulong lastDate = 0;
-
-                this.noMoreDiv = false;
-
-                // build web info for data
-                Uri urlData = BuildURL(ticker, false, from, to);
-                WebRequest httpData = HttpWebRequest.Create(urlData);
-                HttpWebResponse responseData = (HttpWebResponse)httpData.GetResponse();
-
-                Stream istreamData = responseData.GetResponseStream();
-                ReadCSV csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
-
-                // build web info for div
-                Uri urlDiv = BuildURL(ticker, true, from, to);
-                WebRequest httpDiv = HttpWebRequest.Create(urlDiv);
-                HttpWebResponse responseDiv = (HttpWebResponse)httpDiv.GetResponse();
-
-                Stream istreamDiv = responseDiv.GetResponseStream();
-                ReadCSV csvDiv = new ReadCSV(istreamDiv, true, CSVFormat.ENGLISH);
-
-                double lastRatio = 1;
-
-                StoredAdjustmentData nextDiv = ReadNextDiv(csvDiv);
-
-                while (csvData.Next())
-                {
-                    bool foundDiv = false;
-                    StoredMarketData data = new StoredMarketData();
-
-                    DateTime date = csvData.GetDate("date");
-                    double adjustedClose = csvData.GetDouble("adj close");
-                    data.Open = csvData.GetDouble("open");
-                    data.Close = csvData.GetDouble("close");
-                    data.High = csvData.GetDouble("high");
-                    data.Low = csvData.GetDouble("low");
-                    data.Volume = (ulong)csvData.GetDouble("volume");
-                    data.Date = date;
-
-                    this.SelectFile(ticker, date.Year);
-
-                    if (!noMoreDiv)
-                    {
-                        if (nextDiv.Date > data.Date)
-                        {
-                            nextDiv.CalculateAdjustment(data.Close);
-                            this.adjustments.Add(nextDiv);
-                            nextDiv = ReadNextDiv(csvDiv);
-                            foundDiv = true;
-                        }
-                    }
-
-                    double ratio = adjustedClose / data.Close;
-                    if (Math.Abs(ratio - lastRatio) > 0.001 && !foundDiv)
-                    {
-                        double split = lastRatio / ratio;
-                        SplitRatio s = SplitRateCollection.Instance.FindClosest(split);
-                        StoredAdjustmentData adj = new StoredAdjustmentData();
-                        adj.EncodedDate = lastDate;
-                        adj.Numerator = s.numerator;
-                        adj.Denominator = s.denominator;
-                        adj.CalculateAdjustment(data.Close);
-                        this.adjustments.Add(adj);
-                    }
-
-                    Loaded.Add(data, null);
-                    //WriteObject(data);
-
-                    lastRatio = ratio;
-                    lastDate = data.EncodedDate;
-                }
-
-                WriteLoaded(ticker);
-                csvData.Close();
-                istreamData.Close();
-
-                // close div
-                csvDiv.Close();
-                istreamDiv.Close();
-            }
-            catch (WebException )
-            {
-                throw new QuantError("Service is down, or illegal ticker:" + ticker);
-            }
-        }
-
     }
 }

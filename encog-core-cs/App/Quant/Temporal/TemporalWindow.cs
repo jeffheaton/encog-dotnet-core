@@ -25,7 +25,7 @@ namespace Encog.App.Quant.Temporal
         private String sourceFile;
         private bool sourceHeaders;
         private CSVFormat sourceFormat;
-        private BarBuffer buffer;        
+        private BarBuffer buffer;
 
         public TemporalWindow()
         {
@@ -49,19 +49,19 @@ namespace Encog.App.Quant.Temporal
             int inputFieldCount = CountInputFields();
             int predictFieldCount = CountPredictFields();
 
-            if( inputFieldCount<1 )
+            if (inputFieldCount < 1)
             {
                 throw new EncogError("There must be at least 1 input field.");
             }
 
-            if( predictFieldCount<1 )
+            if (predictFieldCount < 1)
             {
                 throw new EncogError("There must be at least 1 input field.");
             }
 
             int barSize = inputFieldCount + predictFieldCount;
 
-            buffer = new BarBuffer(InputWindow+PredictWindow);
+            buffer = new BarBuffer(InputWindow + PredictWindow);
 
             ReadCSV csv = null;
             TextWriter tw = null;
@@ -71,6 +71,67 @@ namespace Encog.App.Quant.Temporal
                 csv = new ReadCSV(this.sourceFile, this.sourceHeaders, this.sourceFormat);
 
                 tw = new StreamWriter(outputFile);
+
+                // write headers, if needed
+                if (this.sourceHeaders)
+                {
+                    StringBuilder line = new StringBuilder();
+
+                    for (int i = 0; i < this.InputWindow; i++)
+                    {
+                        int index = 0;
+                        foreach (TemporalWindowField field in this.fields)
+                        {
+                            if (field.Input)
+                            {
+                                if (line.Length > 0)
+                                {
+                                    line.Append(",");
+                                }
+
+                                line.Append("Input:");
+                                line.Append(field.Name);
+
+                                if (i > 0)
+                                {
+                                    line.Append("(t-");
+                                    line.Append(i);
+                                    line.Append(")");
+                                }
+                                else
+                                {
+                                    line.Append("(t)");
+                                }
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < this.PredictWindow; i++)
+                    {
+                        int index = 0;
+                        foreach (TemporalWindowField field in this.fields)
+                        {
+                            if (field.Predict)
+                            {
+                                if (line.Length > 0)
+                                {
+                                    line.Append(",");
+                                }
+
+                                line.Append("Predict:");
+                                line.Append(field.Name);
+
+                                line.Append("(t+");
+                                line.Append(i + 1);
+                                line.Append(")");
+                            }
+
+                        }
+                    }
+
+                    tw.WriteLine(line.ToString());
+                }
+
                 while (csv.Next())
                 {
                     // begin to populate the bar
@@ -84,7 +145,7 @@ namespace Encog.App.Quant.Temporal
 
                         if (!field.Ignore)
                         {
-                            bar[barIndex++] = this.sourceFormat.Parse(str);                            
+                            bar[barIndex++] = this.sourceFormat.Parse(str);
                         }
                     }
                     buffer.Add(bar);
@@ -95,9 +156,9 @@ namespace Encog.App.Quant.Temporal
                         StringBuilder line = new StringBuilder();
 
                         // write input
-                        for( int i=0;i<this.InputWindow;i++)
+                        for (int i = 0; i < this.InputWindow; i++)
                         {
-                            bar = buffer.Data[buffer.Data.Count-1 - i];
+                            bar = buffer.Data[buffer.Data.Count - 1 - i];
 
                             int index = 0;
                             foreach (TemporalWindowField field in this.fields)
@@ -106,7 +167,7 @@ namespace Encog.App.Quant.Temporal
                                 {
                                     if (line.Length > 0)
                                         line.Append(',');
-                                    line.Append(this.sourceFormat.Format(bar[index],Precision));
+                                    line.Append(this.sourceFormat.Format(bar[index], Precision));
                                 }
                                 index++;
                             }
@@ -180,7 +241,7 @@ namespace Encog.App.Quant.Temporal
         {
             int result = 0;
 
-            foreach( TemporalWindowField field in this.fields)
+            foreach (TemporalWindowField field in this.fields)
             {
                 if (field.Input)
                     result++;
@@ -211,12 +272,23 @@ namespace Encog.App.Quant.Temporal
                 for (int i = 0; i < csv.GetColumnCount(); i++)
                 {
                     String str = csv.Get(i);
-                    this.fields[i] = new TemporalWindowField();
+                    String fieldname;
+
+                    if (this.sourceHeaders)
+                    {
+                        fieldname = csv.ColumnNames[i];
+                    }
+                    else
+                    {
+                        fieldname = "Column-" + i;
+                    }
+
+                    this.fields[i] = new TemporalWindowField(fieldname);
                     if (!Double.TryParse(str, out d))
                     {
                         this.fields[i].Input = true;
                         this.fields[i].Predict = false;
-                    }                    
+                    }
                 }
             }
             finally

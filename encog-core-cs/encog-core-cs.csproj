@@ -91,6 +91,11 @@
     <Compile Include="App\Quant\Script\IQuantCommand.cs" />
     <Compile Include="App\Quant\Script\ParseLine.cs" />
     <Compile Include="App\Quant\Script\ScriptError.cs" />
+    <Compile Include="App\Quant\Sort\LoadedRow.cs" />
+    <Compile Include="App\Quant\Sort\RowComparitor.cs" />
+    <Compile Include="App\Quant\Sort\SortCSV.cs" />
+    <Compile Include="App\Quant\Sort\SortedField.cs" />
+    <Compile Include="App\Quant\Sort\SortType.cs" />
     <Compile Include="App\Quant\Stats\MarketStats.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindow.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />

@@ -39,6 +39,11 @@ using System.IO;
 using Encog.App.Quant.MarketDB;
 using Encog.App.Quant.Loader.YahooFinance;
 using Encog.App.Quant.Dataset;
+using Encog.Util.CSV;
+using Encog.App.Quant.Sort;
+using Encog.App.Quant.Indicators;
+using Encog.App.Quant.Normalize;
+using Encog.App.Quant.Temporal;
 
 namespace Encog.Examples.Market
 {
@@ -48,23 +53,6 @@ namespace Encog.Examples.Market
         {
             Console.WriteLine("Downloading market data");
             Logging.StopConsoleLogging();
-            MarketDataStorage store = new MarketDataStorage();
-            YahooDownload loader = new YahooDownload(store);
-            loader.LoadAllData("aapl");
-
-            Console.WriteLine("Building training data");
-            MarketNeuralDataSet market = new MarketNeuralDataSet(
-                    store,
-                    Config.INPUT_WINDOW,
-                    Config.PREDICT_WINDOW,
-                    BarPeriod.EOD);
-            
-            MarketDataDescription desc = new MarketDataDescription(
-                    Config.TICKER,
-                    MarketDataType.CLOSE,
-                    true,
-                    true);
-            market.AddDescription(desc);
 
             DateTime begin = new DateTime(
                 Config.TRAIN_BEGIN_YEAR, 
@@ -76,25 +64,39 @@ namespace Encog.Examples.Market
                 Config.TRAIN_END_MONTH,
                 Config.TRAIN_END_DAY);
 
-            market.Load(begin, end);
-            market.Generate();
-            market.Description = "Market data for: " + Config.TICKER;
+            YahooDownload loader = new YahooDownload();
+            //loader.LoadAllData("aapl","d:\\data\\aapl.csv",CSVFormat.ENGLISH,begin,end);
+            SortCSV sort = new SortCSV();
+            sort.SortOrder.Add(new SortedField(0,SortType.SortInteger,true));
+            sort.Process("d:\\data\\aapl.csv","d:\\data\\aapl2.csv",true,CSVFormat.ENGLISH);
+            ProcessIndicators indicators = new ProcessIndicators();
+            indicators.Analyze("d:\\data\\aapl2.csv", true, CSVFormat.ENGLISH);
+            indicators.Columns[0].Output = false;
+            indicators.Columns[1].Output = false;
+            indicators.Columns[2].Output = false;
+            indicators.Columns[3].Output = false;
+            indicators.Columns[4].Output = false;
+            indicators.Columns[5].Output = false;
+            indicators.Columns[6].Output = false;
+            indicators.Columns[7].Output = false;
+            indicators.RenameColumn(5, FileData.CLOSE);
+            indicators.AddColumn(new MovingAverage(30, true));
+            indicators.Process("d:\\data\\aapl3.csv");
 
-            // create a network
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(market.InputSize));
-            network.AddLayer(new BasicLayer(Config.HIDDEN1_COUNT));
-            if (Config.HIDDEN2_COUNT != 0)
-                network.AddLayer(new BasicLayer(Config.HIDDEN2_COUNT));
-            network.AddLayer(new BasicLayer(market.IdealSize));
-            network.Structure.FinalizeStructure();
-            network.Reset();
+            EncogNormalize normalize = new EncogNormalize();
+            normalize.Analyze("d:\\data\\aapl3.csv", true, CSVFormat.ENGLISH);
+            normalize.Normalize("d:\\data\\aapl4.csv");
+            normalize.WriteStatsFile("d:\\data\\aapl.norm");
 
-            // save the network and the training
-            EncogPersistedCollection encog = new EncogPersistedCollection(Config.FILENAME,FileMode.Create);
-            encog.Create();
-            encog.Add(Config.MARKET_TRAIN, market);
-            encog.Add(Config.MARKET_NETWORK, network);
+            TemporalWindow window = new TemporalWindow();
+            window.Analyze("d:\\data\\aapl4.csv", true, CSVFormat.ENGLISH);
+            window.InputWindow = 30;
+            window.PredictWindow = 1;
+            window.Fields[0].Input = true;
+            window.Fields[0].Predict = true;
+            window.Process("d:\\data\\aapl5.csv");
+
+            Console.WriteLine("Building training data");
         }
     }
 }
