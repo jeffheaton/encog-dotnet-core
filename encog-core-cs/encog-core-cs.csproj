@@ -66,9 +66,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml.cs">
-      <DependentUpon>SecurityChartWPF.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App\Quant\Indicators\BaseColumn.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -96,7 +93,6 @@
     <Compile Include="App\Quant\Sort\SortCSV.cs" />
     <Compile Include="App\Quant\Sort\SortedField.cs" />
     <Compile Include="App\Quant\Sort\SortType.cs" />
-    <Compile Include="App\Quant\Stats\MarketStats.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindow.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />
     <Compile Include="App\Quant\Indicators\FileData.cs" />
@@ -256,28 +252,11 @@
     <Compile Include="Neural\NeuralData\INeuralData.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataPair.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataSet.cs" />
-    <Compile Include="App\Quant\MarketDB\BarPeriod.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
-    <Compile Include="App\Quant\MarketDB\MarketDataStorage.cs" />
-    <Compile Include="App\Quant\MarketDB\PriceAdjustments.cs" />
-    <Compile Include="App\Quant\Loader\SplitRateCollection.cs" />
-    <Compile Include="App\Quant\Loader\SplitRatio.cs" />
-    <Compile Include="App\Quant\MarketDB\StoredAdjustmentData.cs" />
-    <Compile Include="App\Quant\MarketDB\StoredData.cs" />
-    <Compile Include="App\Quant\MarketDB\StoredMarketData.cs" />
-    <Compile Include="App\Quant\Loader\BasicLoader.cs" />
-    <Compile Include="App\Quant\Loader\CSV\CSVDataItem.cs" />
-    <Compile Include="App\Quant\Loader\CSV\CSVLoad.cs" />
-    <Compile Include="App\Quant\Loader\CSV\CSVSave.cs" />
     <Compile Include="App\Quant\Loader\IMarketLoader.cs" />
     <Compile Include="App\Quant\Loader\LoaderError.cs" />
     <Compile Include="App\Quant\Loader\YahooFinance\YahooDownload.cs" />
-    <Compile Include="App\Quant\Dataset\MarketDataDescription.cs" />
-    <Compile Include="App\Quant\Dataset\MarketDataType.cs" />
-    <Compile Include="App\Quant\Dataset\MarketError.cs" />
-    <Compile Include="App\Quant\Dataset\MarketNeuralDataSet.cs" />
-    <Compile Include="App\Quant\Dataset\MarketPoint.cs" />
     <Compile Include="Neural\NeuralData\NeuralDataError.cs" />
     <Compile Include="Neural\NeuralData\SQL\SQLNeuralDataSet.cs" />
     <Compile Include="Neural\NeuralData\Temporal\TemporalDataDescription.cs" />
@@ -615,12 +594,6 @@
     <None Include="App\Quant\Normalize\.svn\text-base\EncogNormalize.cs.svn-base" />
     <None Include="App\Quant\Normalize\.svn\text-base\NormalizationDesired.cs.svn-base" />
     <None Include="App\Quant\Normalize\.svn\text-base\NormalizedFieldStats.cs.svn-base" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="App\Quant\Chart\WPF\SecurityChartWPF.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Quant\Normalize\.svn\prop-base\" />

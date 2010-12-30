@@ -31,14 +31,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.App.Quant.Dataset;
 
 namespace Encog.App.Quant.Loader
 {
     /// <summary>
     /// The base error for when market data is loaded.
     /// </summary>
-    public class LoaderError : MarketError
+    public class LoaderError : QuantError
     {
         /// <summary>
         /// Construct a message exception.

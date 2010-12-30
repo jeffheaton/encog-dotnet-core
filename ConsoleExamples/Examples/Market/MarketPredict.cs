@@ -37,9 +37,7 @@ using Encog.Persist;
 using Encog.Neural.Networks;
 using Encog.Neural.Data;
 using Encog.Neural.NeuralData;
-using Encog.App.Quant.Dataset;
 using Encog.App.Quant.Loader.YahooFinance;
-using Encog.App.Quant.MarketDB;
 
 namespace Encog.Examples.Market
 {

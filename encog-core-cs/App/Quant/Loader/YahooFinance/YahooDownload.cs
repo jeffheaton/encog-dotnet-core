@@ -8,7 +8,6 @@ using System.Net;
 using Encog.Util.CSV;
 using Encog.Util.HTTP;
 using Encog.Util;
-using Encog.App.Quant.MarketDB;
 using Encog.Util.Time;
 
 namespace Encog.App.Quant.Loader.YahooFinance
