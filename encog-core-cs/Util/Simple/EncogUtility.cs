@@ -46,6 +46,8 @@ using Encog.Engine.Util;
 
 #if !SILVERLIGHT
 using System.Windows.Forms;
+using Encog.Neural.Data.Buffer.CODEC;
+using Encog.Util.CSV;
 #endif
 
 namespace Encog.Util.Simple
@@ -85,6 +87,23 @@ namespace Encog.Util.Simple
                 buffer.Add(pair);
             }
             buffer.EndLoad();
+        }
+
+        /// <summary>
+        /// Load CSV to memory.
+        /// </summary>
+        /// <param name="filename">The CSV file to load.</param>
+        /// <param name="input">The input count.</param>
+        /// <param name="ideal">The ideal count.</param>
+        /// <param name="headers">True, if headers are present.</param>
+        /// <param name="format">The loaded dataset.</param>
+        /// <returns></returns>
+        public static INeuralDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
+        {
+            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, input, ideal);
+            MemoryDataLoader load = new MemoryDataLoader(codec);
+            INeuralDataSet dataset = load.External2Memory();
+            return dataset;
         }
 
         /// <summary>

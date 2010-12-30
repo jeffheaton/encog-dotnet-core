@@ -163,6 +163,7 @@ namespace Encog.Persist
         /// <inheritdoc/>
         public void Add(string name, IEncogPersistedObject obj)
         {
+            obj.Name = name;
             this.Contents[name] = obj;
             BuildDirectory();
         }

@@ -38,6 +38,7 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Util.Simple;
 
 namespace Encog.Examples.Market
 {
@@ -62,24 +63,8 @@ namespace Encog.Examples.Market
 
             // train the neural network
             ITrain train = new ResilientPropagation(network, trainingSet);
-            //final Train train = new Backpropagation(network, trainingSet, 0.0001, 0.0);
-
-
-
-            int epoch = 1;
-            long startTime = DateTime.Now.Ticks;
-            int left = 0;
-
-            do
-            {
-                int running = (int)((DateTime.Now.Ticks - startTime) / (60000*tickCount) );
-                left = Config.TRAINING_MINUTES - running;
-                train.Iteration();
-                Market.app.WriteLine("Epoch #" + epoch + " Error:" + (train.Error * 100.0) + "%,"
-                                + " Time Left: " + left + " Minutes");
-                epoch++;
-            } while ((left >= 0) && (train.Error > 0.001));
-
+            EncogUtility.TrainConsole(network, trainingSet, Config.TRAINING_MINUTES);
+            
             network.Description = "Trained neural network";
             encog.Add(Config.MARKET_NETWORK, network);
         }
