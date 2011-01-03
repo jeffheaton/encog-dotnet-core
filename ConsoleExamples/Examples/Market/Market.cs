@@ -79,6 +79,10 @@ namespace Encog.Examples.Market
                 MarketPrune m = new MarketPrune();
                 m.Run();
             }
+            else
+            {
+                Console.WriteLine("Must be generate, train, predict, or prune.");
+            }
         }
     }
 }

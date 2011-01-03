@@ -4,6 +4,6 @@
     <StartArguments>-pause market train</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause benchmark-simple</StartArguments>
+    <StartArguments>-pause market predict</StartArguments>
   </PropertyGroup>
 </Project>

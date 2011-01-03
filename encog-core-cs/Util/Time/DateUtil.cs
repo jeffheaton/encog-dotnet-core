@@ -48,5 +48,15 @@ namespace Encog.Util.Time
             DateTime result = new DateTime(year, month, day); 
             return result;
         }
+
+        /// <summary>
+        /// Truncate a date, remove the time.
+        /// </summary>
+        /// <param name="date">The date to truncate.</param>
+        /// <returns>The date without the time.</returns>
+        public static DateTime TruncateDate(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day);
+        }
     }
 }

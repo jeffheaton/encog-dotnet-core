@@ -9,10 +9,9 @@ namespace Encog.App.Quant.Indicators
 {
     public class ProcessIndicators
     {
-        
         public IDictionary<String, BaseColumn> ColumnMapping { get { return columnMapping; } }
         public IList<BaseColumn> Columns { get { return columns; } }
-        public int Percision { get; set; }
+        public int Precision { get; set; }
         public bool Analyzed { get { return analyzed; } }
 
         private IDictionary<String, BaseColumn> columnMapping = new Dictionary<String, BaseColumn>();
@@ -22,7 +21,11 @@ namespace Encog.App.Quant.Indicators
         private bool inputHeaders;
         private CSVFormat inputFormat;
         private bool analyzed;
-       
+
+        public ProcessIndicators()
+        {
+            this.Precision = 10;
+        }
 
         public int RecordCount
         {
@@ -176,7 +179,7 @@ namespace Encog.App.Quant.Indicators
                             if (line.Length > 0)
                                 line.Append(this.inputFormat.Separator);
                             double d = column.Data[row];
-                            line.Append(this.inputFormat.Format(d, Percision));
+                            line.Append(this.inputFormat.Format(d, Precision));
                         }
                     }
 
@@ -231,6 +234,11 @@ namespace Encog.App.Quant.Indicators
             ReadCSV();
             CalculateIndicators();
             WriteCSV(output);
+        }
+
+        public bool Calculate(double[] inputData, double[] outputData)
+        {
+            return false;
         }
     }
 }

@@ -38,6 +38,9 @@ using Encog.Neural.Networks;
 using Encog.Neural.Data;
 using Encog.Neural.NeuralData;
 using Encog.App.Quant.Loader.YahooFinance;
+using Encog.Util.CSV;
+using Encog.App.Quant.Sort;
+using Encog.App.Quant.Indicators;
 
 namespace Encog.Examples.Market
 {
@@ -60,10 +63,24 @@ namespace Encog.Examples.Market
 
 
         public void Run()
-        {
+        {            
+            DateTime end = DateTime.Now;
+            DateTime begin = end.AddYears(-1);
+            Console.WriteLine("Downloading data to predict from");
+            YahooDownload loader = new YahooDownload();
+            loader.LoadAllData(Config.TICKER, Config.FILENAME_PREDICT, CSVFormat.ENGLISH, begin, end);
+            
+            Console.WriteLine("Sorting downloaded data");
+            SortCSV sort = new SortCSV();
+            sort.SortOrder.Add(new SortedField(0, SortType.SortInteger, true));
+            sort.Process(Config.FILENAME_PREDICT, Config.FILENAME_PREDICT, true, CSVFormat.ENGLISH);
 
+            Console.WriteLine("Processing prediction data");
+            ReadCSV csv = new ReadCSV(Config.FILENAME_PREDICT, true, CSVFormat.ENGLISH);
+            while (csv.Next())
+            {
+                double priceClose = csv.GetDouble("adjusted price");
+            }
         }
-
     }
-
 }

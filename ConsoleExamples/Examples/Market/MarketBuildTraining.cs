@@ -53,7 +53,7 @@ namespace Encog.Examples.Market
 {
     public class MarketBuildTraining
     {
-        public static INeuralDataSet Generate(DateTime begin, DateTime end)
+        public static INeuralDataSet Generate(DateTime begin, DateTime end, bool forTraining)
         {
             Console.WriteLine("Downloading market data");
             Logging.StopConsoleLogging();
@@ -84,10 +84,19 @@ namespace Encog.Examples.Market
             indicators.Process(Config.STEP3);
 
             // normalize
-            EncogNormalize normalize = new EncogNormalize();
-            normalize.Analyze(Config.STEP3, true, CSVFormat.ENGLISH);
-            normalize.Normalize(Config.STEP4);
-            normalize.WriteStatsFile(Config.STEP4STATS);
+            if (forTraining)
+            {
+                EncogNormalize normalize = new EncogNormalize();
+                normalize.Analyze(Config.STEP3, true, CSVFormat.ENGLISH);
+                normalize.Normalize(Config.STEP4);
+                normalize.WriteStatsFile(Config.STEP4STATS);
+            }
+            else
+            {
+                EncogNormalize normalize = new EncogNormalize();
+                normalize.ReadStatsFile(Config.STEP4STATS);
+                normalize.Normalize(Config.STEP4);
+            }
 
             // build temporal training data
             TemporalWindow window = new TemporalWindow();
@@ -96,7 +105,18 @@ namespace Encog.Examples.Market
             window.PredictWindow = Config.PREDICT_WINDOW;
             window.Fields[0].Input = true;
             window.Fields[0].Predict = true;
-            window.Process(Config.STEP5);
+
+            if (forTraining)
+            {
+                Console.WriteLine("Generating training data");
+                window.Process(Config.STEP5);
+            }
+            else
+            {
+                Console.WriteLine("Generating prediction data");
+                window.Process(Config.FILENAME_PREDICT);
+            }
+            
 
             INeuralDataSet training = (BasicNeuralDataSet)EncogUtility.LoadCSV2Memory(Config.STEP5, Config.INPUT_WINDOW, Config.PREDICT_WINDOW, true, CSVFormat.ENGLISH);
 
@@ -116,7 +136,7 @@ namespace Encog.Examples.Market
                 Config.TRAIN_END_MONTH,
                 Config.TRAIN_END_DAY);
 
-            INeuralDataSet training = Generate(begin, end);
+            INeuralDataSet training = Generate(begin, end, true);
 
             // build a neural network
             BasicNetwork network = EncogUtility.SimpleFeedForward(Config.INPUT_WINDOW, Config.HIDDEN1_COUNT, Config.HIDDEN2_COUNT, Config.PREDICT_WINDOW, true);

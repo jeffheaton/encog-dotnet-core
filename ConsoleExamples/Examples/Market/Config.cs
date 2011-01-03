@@ -43,11 +43,12 @@ namespace Encog.Examples.Market
         public const String STEP4 = Config.DIRECTORY + "step4_norm.csv";
         public const String STEP4STATS = Config.DIRECTORY + "step4_stats.csv";
         public const String STEP5 = Config.DIRECTORY + "step5_training.csv";
+        public const String FILENAME_PREDICT = Config.DIRECTORY + "predict.csv";
         public const String FILENAME = Config.DIRECTORY + "marketdata.eg";
         public const String MARKET_NETWORK = "market-network";
         public const String MARKET_TRAIN = "market-train";
 
-        public const int TRAINING_MINUTES = 5;
+        public const int TRAINING_MINUTES = 1;
         public const int HIDDEN1_COUNT = 20;
         public const int HIDDEN2_COUNT = 0;
 
