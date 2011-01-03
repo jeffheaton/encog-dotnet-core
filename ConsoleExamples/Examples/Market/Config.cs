@@ -36,14 +36,14 @@ namespace Encog.Examples.Market
 {
     public class Config
     {
-        public const String DIRECTORY = "d:\\data\\";
+        public const String DIRECTORY = "c:\\data\\";
         public const String STEP1 = Config.DIRECTORY + "step1_yahoo.csv";
         public const String STEP2 = Config.DIRECTORY + "step2_sort.csv";
         public const String STEP3 = Config.DIRECTORY + "step3_ind.csv";
         public const String STEP4 = Config.DIRECTORY + "step4_norm.csv";
         public const String STEP4STATS = Config.DIRECTORY + "step4_stats.csv";
         public const String STEP5 = Config.DIRECTORY + "step5_training.csv";
-        public const String FILENAME_PREDICT = Config.DIRECTORY + "predict.csv";
+        public const String FILENAME_PREDICT = Config.DIRECTORY + "step5_predict.csv";
         public const String FILENAME = Config.DIRECTORY + "marketdata.eg";
         public const String MARKET_NETWORK = "market-network";
         public const String MARKET_TRAIN = "market-train";

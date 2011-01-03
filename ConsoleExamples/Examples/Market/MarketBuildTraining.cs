@@ -53,7 +53,7 @@ namespace Encog.Examples.Market
 {
     public class MarketBuildTraining
     {
-        public static INeuralDataSet Generate(DateTime begin, DateTime end, bool forTraining)
+        public static void Generate(DateTime begin, DateTime end, bool forTraining)
         {
             Console.WriteLine("Downloading market data");
             Logging.StopConsoleLogging();
@@ -61,7 +61,14 @@ namespace Encog.Examples.Market
             YahooDownload loader = new YahooDownload();
             loader.LoadAllData(Config.TICKER,Config.STEP1,CSVFormat.ENGLISH,begin,end);
 
-            Console.WriteLine("Building training data");
+            if (forTraining)
+            {
+                Console.WriteLine("Building training data");
+            }
+            else
+            {
+                Console.WriteLine("Building evaluation data");
+            }
 
             // sort the downloaded market data
             SortCSV sort = new SortCSV();
@@ -71,7 +78,7 @@ namespace Encog.Examples.Market
             // calculate moving average
             ProcessIndicators indicators = new ProcessIndicators();
             indicators.Analyze(Config.STEP2, true, CSVFormat.ENGLISH);
-            indicators.Columns[0].Output = false;
+            indicators.Columns[0].Output = true;
             indicators.Columns[1].Output = false;
             indicators.Columns[2].Output = false;
             indicators.Columns[3].Output = false;
@@ -88,12 +95,14 @@ namespace Encog.Examples.Market
             {
                 EncogNormalize normalize = new EncogNormalize();
                 normalize.Analyze(Config.STEP3, true, CSVFormat.ENGLISH);
+                normalize.Stats[0].Action = NormalizationDesired.PassThrough;
                 normalize.Normalize(Config.STEP4);
                 normalize.WriteStatsFile(Config.STEP4STATS);
             }
             else
             {
                 EncogNormalize normalize = new EncogNormalize();
+                normalize.SetSourceFile(Config.STEP3, true, CSVFormat.ENGLISH);
                 normalize.ReadStatsFile(Config.STEP4STATS);
                 normalize.Normalize(Config.STEP4);
             }
@@ -103,8 +112,8 @@ namespace Encog.Examples.Market
             window.Analyze(Config.STEP4, true, CSVFormat.ENGLISH);
             window.InputWindow = Config.INPUT_WINDOW;
             window.PredictWindow = Config.PREDICT_WINDOW;
-            window.Fields[0].Input = true;
-            window.Fields[0].Predict = true;
+            window.Fields[0].Action = forTraining ? TemporalType.Ignore : TemporalType.PassThrough;
+            window.Fields[1].Action = TemporalType.InputAndPredict;
 
             if (forTraining)
             {
@@ -116,12 +125,9 @@ namespace Encog.Examples.Market
                 Console.WriteLine("Generating prediction data");
                 window.Process(Config.FILENAME_PREDICT);
             }
-            
-
-            INeuralDataSet training = (BasicNeuralDataSet)EncogUtility.LoadCSV2Memory(Config.STEP5, Config.INPUT_WINDOW, Config.PREDICT_WINDOW, true, CSVFormat.ENGLISH);
 
             Console.WriteLine("Done processing data.");
-            return training;
+
         }
 
         public void Run()
@@ -136,7 +142,9 @@ namespace Encog.Examples.Market
                 Config.TRAIN_END_MONTH,
                 Config.TRAIN_END_DAY);
 
-            INeuralDataSet training = Generate(begin, end, true);
+            Generate(begin, end, true);
+
+            INeuralDataSet training = (BasicNeuralDataSet)EncogUtility.LoadCSV2Memory(Config.STEP5, Config.INPUT_WINDOW, Config.PREDICT_WINDOW, true, CSVFormat.ENGLISH);
 
             // build a neural network
             BasicNetwork network = EncogUtility.SimpleFeedForward(Config.INPUT_WINDOW, Config.HIDDEN1_COUNT, Config.HIDDEN2_COUNT, Config.PREDICT_WINDOW, true);

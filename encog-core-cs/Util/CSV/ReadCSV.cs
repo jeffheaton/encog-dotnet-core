@@ -448,14 +448,14 @@ namespace Encog.Util.CSV
                     item.Length = 0;
                     quoted = false;
                 }
-                else if ((ch == '\"') && (item.Length == 0))
-                {
-                    quoted = true;
-                }
                 else if ((ch == '\"') && quoted)
                 {
                     quoted = false;
                 }
+                else if ((ch == '\"') && (item.Length == 0))
+                {
+                    quoted = true;
+                }                
                 else
                 {
                     item.Append(ch);

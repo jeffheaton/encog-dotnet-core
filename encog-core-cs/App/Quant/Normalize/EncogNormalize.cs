@@ -11,6 +11,14 @@ namespace Encog.App.Quant.Normalize
     {
         public int Precision { get; set; }
 
+        public NormalizedFieldStats[] Stats
+        {
+            get
+            {
+                return this.stats;
+            }
+        }
+
         private NormalizedFieldStats[] stats;
         private String sourceFile;
         private String targetFile;
@@ -20,6 +28,13 @@ namespace Encog.App.Quant.Normalize
         public EncogNormalize()
         {
             Precision = 10;
+        }
+
+        public void SetSourceFile(String file, bool headers, CSVFormat format)
+        {
+            this.sourceFile = file;
+            this.sourceHeaders = headers;
+            this.sourceFormat = format;
         }
 
         public void Analyze(String file, bool headers, CSVFormat format )
@@ -156,7 +171,7 @@ namespace Encog.App.Quant.Normalize
 
         public void Normalize(String file)
         {
-            if (this.sourceFile == null)
+            if (this.stats.Length<1 )
                 throw new EncogError("Can't normalize yet, file has not been analyzed.");
 
 
@@ -245,19 +260,22 @@ namespace Encog.App.Quant.Normalize
                     String type = csv.Get(0);
                     if (type.Equals("Normalize"))
                     {
-                        double ahigh = csv.GetDouble(1);
-                        double alow = csv.GetDouble(2);
-                        double nhigh = csv.GetDouble(3);
-                        double nlow = csv.GetDouble(4);
-                        list.Add(new NormalizedFieldStats(NormalizationDesired.Normalize, ahigh, alow, nhigh, nlow));
+                        String name = csv.Get(1);
+                        double ahigh = csv.GetDouble(2);
+                        double alow = csv.GetDouble(3);
+                        double nhigh = csv.GetDouble(4);
+                        double nlow = csv.GetDouble(5);
+                        list.Add(new NormalizedFieldStats(NormalizationDesired.Normalize, name, ahigh, alow, nhigh, nlow));
                     }
                     else if (type.Equals("PassThrough"))
                     {
-                        list.Add(new NormalizedFieldStats(NormalizationDesired.PassThrough));
+                        String name = csv.Get(1);
+                        list.Add(new NormalizedFieldStats(NormalizationDesired.PassThrough,name));
                     }
                     else if (type.Equals("Ignore"))
                     {
-                        list.Add(new NormalizedFieldStats(NormalizationDesired.Ignore));
+                        String name = csv.Get(1);
+                        list.Add(new NormalizedFieldStats(NormalizationDesired.Ignore,name));
                     }
                 }
                 csv.Close();
@@ -279,7 +297,7 @@ namespace Encog.App.Quant.Normalize
             {
                 tw = new StreamWriter(filename);
 
-                tw.WriteLine("type,ahigh,alow,nhigh,nlow");
+                tw.WriteLine("type,name,ahigh,alow,nhigh,nlow");
 
                 foreach (NormalizedFieldStats stat in this.stats)
                 {
@@ -287,17 +305,24 @@ namespace Encog.App.Quant.Normalize
                     switch (stat.Action)
                     {
                         case NormalizationDesired.Ignore:
-                            line.Append("Ignore,0,0,0,0");
+                            line.Append("Ignore,\"");
+                            line.Append(stat.Name);
+                            line.Append("\",0,0,0,0");
                             break;
                         case NormalizationDesired.Normalize:
                             line.Append("Normalize,");
+                            line.Append("\"");
+                            line.Append(stat.Name);
+                            line.Append("\",");
                             double[] d = new double[4] { stat.ActualHigh, stat.ActualLow, stat.NormalizedHigh, stat.NormalizedLow };
                             StringBuilder temp = new StringBuilder();
                             NumberList.ToList(CSVFormat.EG_FORMAT, temp, d);
                             line.Append(temp);
                             break;
                         case NormalizationDesired.PassThrough:
-                            line.Append("PassThrough,0,0,0,0");
+                            line.Append("PassThrough,\"");
+                            line.Append(stat.Name);
+                            line.Append("\",0,0,0,0");
                             break;
 
                     }

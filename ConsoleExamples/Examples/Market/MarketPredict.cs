@@ -41,6 +41,7 @@ using Encog.App.Quant.Loader.YahooFinance;
 using Encog.Util.CSV;
 using Encog.App.Quant.Sort;
 using Encog.App.Quant.Indicators;
+using Encog.App.Quant.Normalize;
 
 namespace Encog.Examples.Market
 {
@@ -66,21 +67,17 @@ namespace Encog.Examples.Market
         {            
             DateTime end = DateTime.Now;
             DateTime begin = end.AddYears(-1);
-            Console.WriteLine("Downloading data to predict from");
-            YahooDownload loader = new YahooDownload();
-            loader.LoadAllData(Config.TICKER, Config.FILENAME_PREDICT, CSVFormat.ENGLISH, begin, end);
-            
-            Console.WriteLine("Sorting downloaded data");
-            SortCSV sort = new SortCSV();
-            sort.SortOrder.Add(new SortedField(0, SortType.SortInteger, true));
-            sort.Process(Config.FILENAME_PREDICT, Config.FILENAME_PREDICT, true, CSVFormat.ENGLISH);
 
-            Console.WriteLine("Processing prediction data");
-            ReadCSV csv = new ReadCSV(Config.FILENAME_PREDICT, true, CSVFormat.ENGLISH);
-            while (csv.Next())
-            {
-                double priceClose = csv.GetDouble("adjusted price");
-            }
+            MarketBuildTraining.Generate(begin, end, false);
+
+            EncogPersistedCollection encog = new EncogPersistedCollection(Config.FILENAME, FileMode.Open);
+            BasicNetwork network = (BasicNetwork)encog.Find(Config.MARKET_NETWORK);
+
+            EncogNormalize norm = new EncogNormalize();
+            norm.ReadStatsFile(Config.STEP4STATS);
+
+            NormalizedFieldStats n = norm.Stats[0];
+
         }
     }
 }

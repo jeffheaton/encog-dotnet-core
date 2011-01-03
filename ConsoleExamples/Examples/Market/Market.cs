@@ -81,7 +81,7 @@ namespace Encog.Examples.Market
             }
             else
             {
-                Console.WriteLine("Must be generate, train, predict, or prune.");
+                Console.WriteLine("Must be build, train, predict, or prune.");
             }
         }
     }

@@ -15,17 +15,18 @@ namespace Encog.App.Quant.Normalize
         public String Name { get; set; }
 
 
-        public NormalizedFieldStats(NormalizationDesired action) : this(action,0,0,0,0)
+        public NormalizedFieldStats(NormalizationDesired action, String name) : this(action,name,0,0,0,0)
         {
         }
 
-        public NormalizedFieldStats(NormalizationDesired action, double ahigh, double alow, double nhigh, double nlow)
+        public NormalizedFieldStats(NormalizationDesired action, String name, double ahigh, double alow, double nhigh, double nlow)
         {
             this.Action = action;
             this.ActualHigh = ahigh;
             this.ActualLow = alow;
             this.NormalizedHigh = nhigh;
             this.NormalizedLow = nlow;
+            this.Name = name;
         }
 
         public NormalizedFieldStats(double normalizedHigh, double normalizedLow)

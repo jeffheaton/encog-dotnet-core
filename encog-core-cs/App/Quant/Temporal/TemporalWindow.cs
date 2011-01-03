@@ -34,6 +34,79 @@ namespace Encog.App.Quant.Temporal
             Precision = 10;
         }
 
+        private String WriteHeaders()
+        {
+            StringBuilder line = new StringBuilder();
+
+            // write any passthrough fields
+            foreach (TemporalWindowField field in this.fields)
+            {
+                if (field.Action == TemporalType.PassThrough)
+                {
+                    if (line.Length > 0)
+                    {
+                        line.Append(",");
+                    }
+
+                    line.Append(field.Name);
+                }
+            }
+
+            // write any input fields
+            for (int i = 0; i < this.InputWindow; i++)
+            {
+                foreach (TemporalWindowField field in this.fields)
+                {
+                    if (field.Input)
+                    {
+                        if (line.Length > 0)
+                        {
+                            line.Append(",");
+                        }
+
+                        line.Append("Input:");
+                        line.Append(field.Name);
+
+                        if (i > 0)
+                        {
+                            line.Append("(t-");
+                            line.Append(i);
+                            line.Append(")");
+                        }
+                        else
+                        {
+                            line.Append("(t)");
+                        }
+                    }
+                }
+            }
+
+            // write any output fields
+            for (int i = 0; i < this.PredictWindow; i++)
+            {
+                foreach (TemporalWindowField field in this.fields)
+                {
+                    if (field.Predict)
+                    {
+                        if (line.Length > 0)
+                        {
+                            line.Append(",");
+                        }
+
+                        line.Append("Predict:");
+                        line.Append(field.Name);
+
+                        line.Append("(t+");
+                        line.Append(i + 1);
+                        line.Append(")");
+                    }
+
+                }
+            }
+
+            return line.ToString();
+        }
+
         public void Process(String outputFile)
         {
             if (InputWindow < 1)
@@ -75,61 +148,7 @@ namespace Encog.App.Quant.Temporal
                 // write headers, if needed
                 if (this.sourceHeaders)
                 {
-                    StringBuilder line = new StringBuilder();
-
-                    for (int i = 0; i < this.InputWindow; i++)
-                    {
-                        int index = 0;
-                        foreach (TemporalWindowField field in this.fields)
-                        {
-                            if (field.Input)
-                            {
-                                if (line.Length > 0)
-                                {
-                                    line.Append(",");
-                                }
-
-                                line.Append("Input:");
-                                line.Append(field.Name);
-
-                                if (i > 0)
-                                {
-                                    line.Append("(t-");
-                                    line.Append(i);
-                                    line.Append(")");
-                                }
-                                else
-                                {
-                                    line.Append("(t)");
-                                }
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < this.PredictWindow; i++)
-                    {
-                        int index = 0;
-                        foreach (TemporalWindowField field in this.fields)
-                        {
-                            if (field.Predict)
-                            {
-                                if (line.Length > 0)
-                                {
-                                    line.Append(",");
-                                }
-
-                                line.Append("Predict:");
-                                line.Append(field.Name);
-
-                                line.Append("(t+");
-                                line.Append(i + 1);
-                                line.Append(")");
-                            }
-
-                        }
-                    }
-
-                    tw.WriteLine(line.ToString());
+                    tw.WriteLine(WriteHeaders());
                 }
 
                 while (csv.Next())
@@ -143,10 +162,11 @@ namespace Encog.App.Quant.Temporal
                     {
                         String str = csv.Get(fieldIndex++);
 
-                        if (!field.Ignore)
+                        if (field.Action != TemporalType.Ignore && field.Action!=TemporalType.PassThrough)
                         {
                             bar[barIndex++] = this.sourceFormat.Parse(str);
                         }
+                        field.LastValue = str;
                     }
                     buffer.Add(bar);
 
@@ -154,6 +174,22 @@ namespace Encog.App.Quant.Temporal
                     if (buffer.Full)
                     {
                         StringBuilder line = new StringBuilder();
+                        
+                        // write passthroughs
+                        foreach (TemporalWindowField field in this.fields)
+                        {
+                            if (field.Action == TemporalType.PassThrough)
+                            {
+                                if (line.Length > 0)
+                                {
+                                    line.Append(",");
+                                }
+
+                                line.Append("\"");
+                                line.Append(field.LastValue);
+                                line.Append("\"");
+                            }
+                        }
 
                         // write input
                         for (int i = 0; i < this.InputWindow; i++)
@@ -168,8 +204,8 @@ namespace Encog.App.Quant.Temporal
                                     if (line.Length > 0)
                                         line.Append(',');
                                     line.Append(this.sourceFormat.Format(bar[index], Precision));
+                                    index++;
                                 }
-                                index++;
                             }
                         }
 
@@ -186,8 +222,8 @@ namespace Encog.App.Quant.Temporal
                                     if (line.Length > 0)
                                         line.Append(',');
                                     line.Append(this.sourceFormat.Format(bar[index], Precision));
+                                    index++;
                                 }
-                                index++;
                             }
                         }
 
@@ -286,8 +322,7 @@ namespace Encog.App.Quant.Temporal
                     this.fields[i] = new TemporalWindowField(fieldname);
                     if (!Double.TryParse(str, out d))
                     {
-                        this.fields[i].Input = true;
-                        this.fields[i].Predict = false;
+                        this.fields[i].Action = TemporalType.Input;
                     }
                 }
             }
