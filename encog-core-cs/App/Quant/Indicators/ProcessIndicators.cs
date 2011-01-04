@@ -4,105 +4,15 @@ using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 using System.IO;
+using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators
 {
-    public class ProcessIndicators
-    {
-        public IDictionary<String, BaseColumn> ColumnMapping { get { return columnMapping; } }
-        public IList<BaseColumn> Columns { get { return columns; } }
-        public int Precision { get; set; }
-        public bool Analyzed { get { return analyzed; } }
-
-        private IDictionary<String, BaseColumn> columnMapping = new Dictionary<String, BaseColumn>();
-        private IList<BaseColumn> columns = new List<BaseColumn>();
-        private int recordCount;
-        private String inputFilename;
-        private bool inputHeaders;
-        private CSVFormat inputFormat;
-        private bool analyzed;
-
+    public class ProcessIndicators : BasicFinancialFile
+    {        
         public ProcessIndicators()
         {
             this.Precision = 10;
-        }
-
-        public int RecordCount
-        {
-            get
-            {
-                if (!Analyzed)
-                {
-                    throw new QuantError("Must analyze file first.");
-                }
-                return this.recordCount;
-            }
-        }
-
-        public void Analyze(String input, bool headers, CSVFormat format)
-        {
-            this.columnMapping.Clear();
-            this.columns.Clear();
-
-            // first count the rows
-            TextReader reader = null;
-            try
-            {                
-                this.recordCount = 0;
-                reader = new StreamReader(input);
-                while (reader.ReadLine() != null)
-                    this.recordCount++;
-
-                if (headers)
-                    this.recordCount--;
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-                this.inputFilename = input;
-                this.inputHeaders = headers;
-                this.inputFormat = format;
-            }
-
-            // now analyze columns
-            ReadCSV csv = null;
-            try
-            {
-                csv = new ReadCSV(input, headers, format);
-                if (!csv.Next())
-                {
-                    throw new QuantError("File is empty");
-                }
-
-                for (int i = 0; i < csv.GetColumnCount(); i++)
-                {
-                    String name;
-
-                    if (headers)
-                        name = csv.ColumnNames[i];
-                    else
-                        name = "Column-" + (i + 1);
-
-                    // determine if it should be an input/output field                    
-                    double d;
-                    String str = csv.Get(i);
-                    bool io = double.TryParse(str,out d);
-
-                    AddColumn(new FileData(name, i, io, io));
-                }
-            }
-            finally
-            {
-                csv.Close();
-                this.analyzed = true;
-            }
-        }
-
-        public void AddColumn(BaseColumn column)
-        {
-            this.columns.Add(column);
-            this.columnMapping[column.Name] = column;
         }
 
         private void ReadCSV()
@@ -111,12 +21,12 @@ namespace Encog.App.Quant.Indicators
 
             try
             {
-                csv = new ReadCSV(inputFilename, this.inputHeaders, this.inputFormat);
+                csv = new ReadCSV(InputFilename, InputHeaders, InputFormat);
 
                 int row = 0;
                 while (csv.Next())
                 {
-                    foreach( BaseColumn column in this.columns )
+                    foreach( BaseColumn column in this.Columns )
                     {
                         if (column is FileData)
                         {
@@ -124,7 +34,7 @@ namespace Encog.App.Quant.Indicators
                             {
                                 FileData fd = (FileData)column;
                                 String str = csv.Get(fd.Index);
-                                double d = this.inputFormat.Parse(str);
+                                double d = this.InputFormat.Parse(str);
                                 fd.Data[row] = d;
                             }
                         }
@@ -143,7 +53,7 @@ namespace Encog.App.Quant.Indicators
         {
             int result = 0;
 
-            foreach (BaseColumn column in columns)
+            foreach (BaseColumn column in Columns)
             {
                 if (column is Indicator)
                 {
@@ -157,9 +67,9 @@ namespace Encog.App.Quant.Indicators
 
         private int GetEndingIndex()
         {
-            int result = this.recordCount;
+            int result = this.RecordCount;
 
-            foreach (BaseColumn column in columns)
+            foreach (BaseColumn column in Columns)
             {
                 if (column is Indicator)
                 {
@@ -180,16 +90,16 @@ namespace Encog.App.Quant.Indicators
                 tw = new StreamWriter(filename);
 
                 // write the headers
-                if (this.inputHeaders)
+                if (this.InputHeaders)
                 {
                     StringBuilder line = new StringBuilder();
 
-                    foreach (BaseColumn column in columns)
+                    foreach (BaseColumn column in Columns)
                     {
                         if (column.Output)
                         {
                             if (line.Length > 0)
-                                line.Append(this.inputFormat.Separator);
+                                line.Append(this.InputFormat.Separator);
                             line.Append("\"");
                             line.Append(column.Name);
                             line.Append("\"");
@@ -208,14 +118,14 @@ namespace Encog.App.Quant.Indicators
                 {
                     StringBuilder line = new StringBuilder();
 
-                    foreach( BaseColumn column in columns)
+                    foreach( BaseColumn column in Columns)
                     {
                         if (column.Output)
                         {
                             if (line.Length > 0)
-                                line.Append(this.inputFormat.Separator);
+                                line.Append(this.InputFormat.Separator);
                             double d = column.Data[row];
-                            line.Append(this.inputFormat.Format(d, Precision));
+                            line.Append(this.InputFormat.Format(d, Precision));
                         }
                     }
 
@@ -231,22 +141,22 @@ namespace Encog.App.Quant.Indicators
 
         private void AllocateStorage()
         {
-            foreach (BaseColumn column in this.columns)
+            foreach (BaseColumn column in this.Columns)
             {
-                column.Allocate(this.recordCount);
+                column.Allocate(this.RecordCount);
             }
         }
 
         private void CalculateIndicators()
         {
-            foreach (BaseColumn column in this.columns)
+            foreach (BaseColumn column in this.Columns)
             {
                 if (column.Output)
                 {
                     if (column is Indicator)
                     {
                         Indicator indicator = (Indicator)column;
-                        indicator.Calculate(this.columnMapping, this.recordCount);
+                        indicator.Calculate(this.ColumnMapping, this.RecordCount);
                     }
                 }
             }
@@ -254,14 +164,14 @@ namespace Encog.App.Quant.Indicators
 
         public void RenameColumn(int index, String newName)
         {
-            this.columnMapping.Remove(columns[index].Name);
-            this.columns[index].Name = newName;
-            this.columnMapping.Add(newName, this.columns[index]);
+            this.ColumnMapping.Remove(Columns[index].Name);
+            this.Columns[index].Name = newName;
+            this.ColumnMapping.Add(newName, this.Columns[index]);
         }
 
         public void Process(String output)
         {
-            if (!analyzed)
+            if (!Analyzed)
             {
                 throw new QuantError("File must be analyzed first.");
             }

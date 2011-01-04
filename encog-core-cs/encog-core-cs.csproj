@@ -66,19 +66,22 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Quant\Indicators\BaseColumn.cs" />
+    <Compile Include="App\Quant\Basic\BasicFinancialFile.cs" />
+    <Compile Include="App\Quant\Basic\BaseColumn.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\ML\BasicMLIndicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
     <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />
     <Compile Include="App\Quant\Indicators\Predictive\BestReturn.cs" />
     <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
+    <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Normalize\EncogNormalize.cs" />
     <Compile Include="App\Quant\Normalize\NormalizationDesired.cs" />
     <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Temporal\TemporalType.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetEvaluate.cs" />
+    <Compile Include="App\Script\Commands\CmdNinjaConvert.cs" />
     <Compile Include="App\Script\Commands\CmdTrain.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetAdd.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetCreate.cs" />
@@ -97,7 +100,7 @@
     <Compile Include="App\Quant\Sort\SortType.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindow.cs" />
     <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />
-    <Compile Include="App\Quant\Indicators\FileData.cs" />
+    <Compile Include="App\Quant\Basic\FileData.cs" />
     <Compile Include="App\Quant\Util\BarBuffer.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />

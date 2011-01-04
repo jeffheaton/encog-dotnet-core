@@ -10,6 +10,7 @@ using Encog.App.Script.Commands;
 using Encog.Util;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
+using System.IO;
 
 namespace Encog.App.Script
 {
@@ -31,6 +32,7 @@ namespace Encog.App.Script
             AddCommand(new CmdNetworkCreate());
             AddCommand(new CmdTrain());
             AddCommand(new CmdDatasetEvaluate());
+            AddCommand(new CmdNinjaConvert());
         }
 
         public IDictionary<String, object> Memory
@@ -51,7 +53,7 @@ namespace Encog.App.Script
             WriteLine("");
         }
 
-        public void run(String script)
+        public void ExecuteScript(String script)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -70,11 +72,11 @@ namespace Encog.App.Script
         {
             for (int i = 0; i < lines.Length; i++)
             {
-                Execute(this.lines[i]);
+                ExecuteLine(this.lines[i]);
             }
         }
 
-        private void Execute(String line)
+        public void ExecuteLine(String line)
         {
             ParseLine parse = new ParseLine(line);
             if( parse.Command.Length == 0)
@@ -170,6 +172,21 @@ namespace Encog.App.Script
             }
 
             return result.ToString();
+        }
+
+        public void ExecuteFile(String filename)
+        {
+            try
+            {
+                TextReader tr = new StreamReader(filename);
+                String script = tr.ReadToEnd();
+                tr.Close();
+                ExecuteScript(script);
+            }
+            catch (IOException ex)
+            {
+                throw new EncogError(ex);
+            }
         }
     }
 }

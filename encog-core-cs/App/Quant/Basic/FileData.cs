@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Encog.App.Quant.Indicators
+namespace Encog.App.Quant.Basic
 {
     public class FileData: BaseColumn
     {
+        public const String DATE = "date";
+        public const String TIME = "time";
         public const String HIGH = "high";
         public const String LOW = "low";
         public const String OPEN = "open";

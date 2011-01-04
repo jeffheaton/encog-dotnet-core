@@ -49,6 +49,7 @@ using Encog.Util.Simple;
 using Encog.Neural.Data.Basic;
 using Encog.Persist.Location;
 using Encog.Engine.Network.Activation;
+using Encog.App.Quant.Basic;
 
 namespace Encog.Examples.Market
 {
