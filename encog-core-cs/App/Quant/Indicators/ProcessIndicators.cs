@@ -139,6 +139,38 @@ namespace Encog.App.Quant.Indicators
             }
         }
 
+        private int GetBeginningIndex()
+        {
+            int result = 0;
+
+            foreach (BaseColumn column in columns)
+            {
+                if (column is Indicator)
+                {
+                    Indicator ind = (Indicator)column;
+                    result = Math.Max(ind.BeginningIndex, result);
+                }
+            }
+
+            return result;
+        }
+
+        private int GetEndingIndex()
+        {
+            int result = this.recordCount;
+
+            foreach (BaseColumn column in columns)
+            {
+                if (column is Indicator)
+                {
+                    Indicator ind = (Indicator)column;
+                    result = Math.Min(ind.EndingIndex, result);
+                }
+            }
+
+            return result;
+        }
+
         private void WriteCSV(String filename)
         {
             TextWriter tw = null;
@@ -167,8 +199,12 @@ namespace Encog.App.Quant.Indicators
                     tw.WriteLine(line.ToString());
                 }
 
+                // starting and ending index
+                int beginningIndex = GetBeginningIndex();
+                int endingIndex = GetEndingIndex();
+
                 // write the file data
-                for (int row = 0; row < this.recordCount; row++)
+                for (int row = beginningIndex; row <= endingIndex; row++)
                 {
                     StringBuilder line = new StringBuilder();
 

@@ -56,7 +56,8 @@ namespace Encog.Examples.Market
                 return;
             }
 
-            EncogPersistedCollection encog = new EncogPersistedCollection(Config.FILENAME, FileMode.Open);
+            EncogMemoryCollection encog = new EncogMemoryCollection();
+            encog.Load(Config.FILENAME);
             INeuralDataSet trainingSet = (INeuralDataSet)encog.Find(Config.MARKET_TRAIN);
 
             BasicNetwork network = (BasicNetwork)encog.Find(Config.MARKET_NETWORK);
@@ -67,6 +68,8 @@ namespace Encog.Examples.Market
             
             network.Description = "Trained neural network";
             encog.Add(Config.MARKET_NETWORK, network);
+
+            encog.Save(Config.FILENAME);
         }
     }
 }

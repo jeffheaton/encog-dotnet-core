@@ -42,6 +42,9 @@ using Encog.Util.CSV;
 using Encog.App.Quant.Sort;
 using Encog.App.Quant.Indicators;
 using Encog.App.Quant.Normalize;
+using Encog.Neural.Data.Basic;
+using Encog.Util.Time;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.Market
 {
@@ -70,14 +73,45 @@ namespace Encog.Examples.Market
 
             MarketBuildTraining.Generate(begin, end, false);
 
-            EncogPersistedCollection encog = new EncogPersistedCollection(Config.FILENAME, FileMode.Open);
+            EncogMemoryCollection encog = new EncogMemoryCollection();
+            encog.Load(Config.FILENAME);
             BasicNetwork network = (BasicNetwork)encog.Find(Config.MARKET_NETWORK);
 
             EncogNormalize norm = new EncogNormalize();
             norm.ReadStatsFile(Config.STEP4STATS);
 
-            NormalizedFieldStats n = norm.Stats[0];
+            NormalizedFieldStats n = norm.Stats[1];
 
+            BasicNeuralData input = new BasicNeuralData(Config.INPUT_WINDOW);
+
+            ReadCSV csv = new ReadCSV(Config.FILENAME_PREDICT, true, CSVFormat.ENGLISH);
+            while (csv.Next())
+            {
+                StringBuilder line = new StringBuilder();
+                int index = 0;
+                ulong d = ulong.Parse( csv.Get(index++) );
+                DateTime dt = NumericDateUtil.Long2DateTime(d);
+                line.Append(String.Format("{0:d}", dt));
+
+                // prepare input
+                for (int i = 0; i < input.Count; i++)
+                {
+                    input.Data[i] = csv.GetDouble(index++);
+                }
+
+                // query neural network
+                INeuralData actualData = network.Compute(input);
+                double prediction = actualData[0];
+                double ideal = csv.GetDouble(index++);
+
+                // 
+                line.Append(" Prediction=");
+                line.Append(Format.FormatDouble(n.DeNormalize(prediction),2));
+                line.Append(", Actual= ");
+                line.Append(Format.FormatDouble(n.DeNormalize(ideal),2));
+
+                Console.WriteLine(line.ToString());
+            }
         }
     }
 }

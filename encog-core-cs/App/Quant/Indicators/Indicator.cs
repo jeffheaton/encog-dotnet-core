@@ -22,6 +22,9 @@ namespace Encog.App.Quant.Indicators
 
         public abstract int Periods { get; }
 
+        public int BeginningIndex { get; set; }
+        public int EndingIndex { get; set; }
+
         public abstract void Calculate(IDictionary<String,BaseColumn> data, int length);
     }
 }

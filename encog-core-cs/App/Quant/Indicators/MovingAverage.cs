@@ -50,7 +50,7 @@ namespace Encog.App.Quant.Indicators
                     periodTotal += close[i++];
             }
 
-            int outIdx = 0;
+            int outIdx = Periods-1;
             do
             {
                 periodTotal += close[i++];
@@ -58,6 +58,14 @@ namespace Encog.App.Quant.Indicators
                 periodTotal -= close[trailingIdx++];
                 output[outIdx++] = t / Periods;
             } while (i < close.Length);
+
+            BeginningIndex = Periods - 1;
+            EndingIndex = output.Length - 1;
+
+            for ( i = 0; i < Periods-1; i++)
+            {
+                output[i] = 0;
+            }
         }
     }
 }

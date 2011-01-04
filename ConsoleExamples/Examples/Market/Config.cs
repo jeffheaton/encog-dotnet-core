@@ -36,7 +36,7 @@ namespace Encog.Examples.Market
 {
     public class Config
     {
-        public const String DIRECTORY = "c:\\data\\";
+        public const String DIRECTORY = "d:\\data\\";
         public const String STEP1 = Config.DIRECTORY + "step1_yahoo.csv";
         public const String STEP2 = Config.DIRECTORY + "step2_sort.csv";
         public const String STEP3 = Config.DIRECTORY + "step3_ind.csv";
@@ -62,6 +62,6 @@ namespace Encog.Examples.Market
 
         public const int INPUT_WINDOW = 10;
         public const int PREDICT_WINDOW = 1;
-        public const String TICKER = "AAPL";
+        public const String TICKER = "GE";
     }
 }

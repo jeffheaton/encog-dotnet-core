@@ -247,5 +247,15 @@ namespace Encog.Persist
                 return this.location ;
             }
         }
+
+        public void Load(String p)
+        {
+            Load(new FilePersistence(p));
+        }
+
+        public void Save(String p)
+        {
+            Save(new FilePersistence(p));
+        }
     }
 }

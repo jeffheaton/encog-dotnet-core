@@ -48,6 +48,7 @@ using Encog.Neural.NeuralData;
 using Encog.Util.Simple;
 using Encog.Neural.Data.Basic;
 using Encog.Persist.Location;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Examples.Market
 {
@@ -147,12 +148,18 @@ namespace Encog.Examples.Market
             INeuralDataSet training = (BasicNeuralDataSet)EncogUtility.LoadCSV2Memory(Config.STEP5, Config.INPUT_WINDOW, Config.PREDICT_WINDOW, true, CSVFormat.ENGLISH);
 
             // build a neural network
-            BasicNetwork network = EncogUtility.SimpleFeedForward(Config.INPUT_WINDOW, Config.HIDDEN1_COUNT, Config.HIDDEN2_COUNT, Config.PREDICT_WINDOW, true);
+            BasicNetwork network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, Config.INPUT_WINDOW));
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, Config.HIDDEN1_COUNT));
+            network.AddLayer(new BasicLayer(new ActivationLinear(), true, Config.PREDICT_WINDOW));
+            network.Structure.FinalizeStructure();
+            network.Reset();
+
             EncogMemoryCollection encog = new EncogMemoryCollection();
             encog.Add(Config.MARKET_NETWORK, network);
             
             encog.Add(Config.MARKET_TRAIN, (IEncogPersistedObject)training);
-            encog.Save(new FilePersistence(Config.FILENAME));
+            encog.Save(Config.FILENAME);
         }
     }
 }
