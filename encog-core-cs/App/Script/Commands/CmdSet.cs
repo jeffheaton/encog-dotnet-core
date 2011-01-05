@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.App.Script.Objects;
 
 namespace Encog.App.Script.Commands
 {
@@ -19,7 +20,7 @@ namespace Encog.App.Script.Commands
         {
             foreach (String key in line.Parameters.Keys)
             {
-                object value = line.Parameters[key];
+                IScriptedObject value = new ScriptVariable(line.Parameters[key]);
                 script.Memory[key.ToLower()] = value;
             }
         }

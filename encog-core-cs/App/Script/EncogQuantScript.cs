@@ -11,6 +11,7 @@ using Encog.Util;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
 using System.IO;
+using Encog.App.Script.Util;
 
 namespace Encog.App.Script
 {
@@ -19,7 +20,7 @@ namespace Encog.App.Script
         private IStatusReportable report;
         private String[] lines;
         private IDictionary<String, IQuantCommand> commands = new Dictionary<String, IQuantCommand>();
-        private IDictionary<String, object> memory = new Dictionary<String, object>();
+        private IDictionary<String, IScriptedObject> memory = new Dictionary<String, IScriptedObject>();
 
         public EncogQuantScript(IStatusReportable report)
         {
@@ -33,9 +34,16 @@ namespace Encog.App.Script
             AddCommand(new CmdTrain());
             AddCommand(new CmdDatasetEvaluate());
             AddCommand(new CmdNinjaConvert());
+            AddCommand(new CmdNetworkLayer());
+            AddCommand(new CmdFinalize());
+            AddCommand(new CmdFileAdd());
+            AddCommand(new CmdFileFind());
+            AddCommand(new CmdFileLoad());
+            AddCommand(new CmdFileRemove());
+            AddCommand(new CmdFileSave());
         }
 
-        public IDictionary<String, object> Memory
+        public IDictionary<String, IScriptedObject> Memory
         {
             get
             {
@@ -61,7 +69,15 @@ namespace Encog.App.Script
             this.lines = lines = Regex.Split(script, "\r\n");
             WriteLine("Script beginning: " + DateTime.Now);
             WriteLine();
-            Execute();
+            try
+            {
+                Execute();
+            }
+            catch (ScriptError ex)
+            {
+                WriteLine("Script ended in an error:");
+                WriteLine(ex.Message);
+            }
             WriteLine();
             sw.Stop();
             WriteLine("Script has ended: " + DateTime.Now);
@@ -70,14 +86,19 @@ namespace Encog.App.Script
 
         private void Execute()
         {
-            for (int i = 0; i < lines.Length; i++)
-            {
-                ExecuteLine(this.lines[i]);
-            }
+               for (int i = 0; i < lines.Length; i++)
+                {
+                    ExecuteLine(this.lines[i]);
+                }
         }
 
         public void ExecuteLine(String line)
         {
+            // ignore remarks
+            if (line.Trim().StartsWith("//"))
+                return;
+
+            // parse the line
             ParseLine parse = new ParseLine(line);
             if( parse.Command.Length == 0)
             {
@@ -89,8 +110,9 @@ namespace Encog.App.Script
             }
             else
             {
-                WriteLine("Unknown command: " + parse.Command);
+                throw new ScriptError( "Unknown command: " + parse.Command);
             }
+
         }
 
         public void AddCommand(IQuantCommand command)
@@ -119,7 +141,7 @@ namespace Encog.App.Script
                             if (parse.LookAhead("}",false))
                             {
                                 parse.Advance();
-                                result.Append( ConvertToString(this.memory[key]) );
+                                result.Append( this.memory[key].ToString() );
                                 success = true;
                             }
                         }
@@ -141,39 +163,6 @@ namespace Encog.App.Script
             return result.ToString();
         }
 
-
-        public String ConvertToString(object o)
-        {
-            StringBuilder result = new StringBuilder();
-
-            if (o is BasicNeuralDataSet)
-            {
-                BasicNeuralDataSet set = (BasicNeuralDataSet)o;
-                result.Append("[Dataset: records=");
-                result.Append(set.Count);
-                result.Append(",inputs=");
-                result.Append(set.InputSize);
-                result.Append(",ideals=");
-                result.Append(set.IdealSize);
-                result.Append("]");
-            }
-            else if (o is BasicNetwork)
-            {
-                BasicNetwork network = (BasicNetwork)o;
-                    result.Append("[NeuralNetwork: input=");
-                    result.Append(network.InputCount);
-                    result.Append(",output=");
-                    result.Append(network.OutputCount);
-                    result.Append("]");
-            }
-            else
-            {
-                result.Append(o.ToString());
-            }
-
-            return result.ToString();
-        }
-
         public void ExecuteFile(String filename)
         {
             try
@@ -187,6 +176,40 @@ namespace Encog.App.Script
             {
                 throw new EncogError(ex);
             }
+        }
+
+        public  IScriptedObject RequireObject(string name, Type t, bool requireFinal)
+        {
+            if (!Memory.ContainsKey(name))
+            {
+                throw new ScriptError("Undefined variable: " + name);
+            }
+
+            IScriptedObject result = Memory[name];
+
+            if( t!=null && result.GetType() != t)
+            {
+                throw new ScriptError("Type mismatch: expected " 
+                    + ScriptedObjects.FormatName(t.Name) + " but got " 
+                    + ScriptedObjects.FormatName(Memory[name].GetType().Name) );
+            }
+
+            if (requireFinal && !result.IsFinal())
+            {
+                throw new ScriptError("Variable " + name + ", must be finalized.");
+            }
+
+            return result;
+        }
+
+        internal bool IsDefined(string name)
+        {
+            return this.memory.ContainsKey(name);
+        }
+
+        internal void SetVariable(string name, IScriptedObject obj)
+        {
+            this.memory[name] = obj;
         }
     }
 }

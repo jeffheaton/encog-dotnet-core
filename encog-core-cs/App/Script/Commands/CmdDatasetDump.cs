@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Basic;
 using Encog.Engine.Util;
+using Encog.App.Script.Objects;
 
 namespace Encog.App.Script.Commands
 {
@@ -17,7 +18,7 @@ namespace Encog.App.Script.Commands
         public void Execute(EncogQuantScript script, ParseLine line)
         {
             String name = line.GetParameterString("name", true);
-            BasicNeuralDataSet set = (BasicNeuralDataSet)script.Memory[name];
+            BasicNeuralDataSet set = ((ScriptDataSet)script.RequireObject(name, typeof(ScriptDataSet), true)).Dataset;
 
             foreach (BasicNeuralDataPair pair in set)
             {

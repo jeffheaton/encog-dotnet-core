@@ -82,6 +82,13 @@
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Temporal\TemporalType.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetEvaluate.cs" />
+    <Compile Include="App\Script\Commands\CmdFileAdd.cs" />
+    <Compile Include="App\Script\Commands\CmdFileFind.cs" />
+    <Compile Include="App\Script\Commands\CmdFileLoad.cs" />
+    <Compile Include="App\Script\Commands\CmdFileRemove.cs" />
+    <Compile Include="App\Script\Commands\CmdFileSave.cs" />
+    <Compile Include="App\Script\Commands\CmdFinalize.cs" />
+    <Compile Include="App\Script\Commands\CmdNetworkLayer.cs" />
     <Compile Include="App\Script\Commands\CmdNinjaConvert.cs" />
     <Compile Include="App\Script\Commands\CmdTrain.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetAdd.cs" />
@@ -92,6 +99,12 @@
     <Compile Include="App\Script\Commands\CmdWriteLine.cs" />
     <Compile Include="App\Script\EncogQuantScript.cs" />
     <Compile Include="App\Script\IQuantCommand.cs" />
+    <Compile Include="App\Script\IScriptedObject.cs" />
+    <Compile Include="App\Script\Objects\ScriptEGFile.cs" />
+    <Compile Include="App\Script\Objects\ScriptVariable.cs" />
+    <Compile Include="App\Script\Objects\ScriptDataSet.cs" />
+    <Compile Include="App\Script\Objects\ScriptLayer.cs" />
+    <Compile Include="App\Script\Objects\ScriptNetwork.cs" />
     <Compile Include="App\Script\ParseLine.cs" />
     <Compile Include="App\Script\ScriptError.cs" />
     <Compile Include="App\Quant\Sort\LoadedRow.cs" />
@@ -103,6 +116,7 @@
     <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />
     <Compile Include="App\Quant\Basic\FileData.cs" />
     <Compile Include="App\Quant\Util\BarBuffer.cs" />
+    <Compile Include="App\Script\Util\ScriptedObjects.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />

@@ -194,5 +194,19 @@ namespace Encog.App.Script
 
             return result;
         }
+
+        public bool GetParameterBoolean(string name, bool required, bool defaultValue)
+        {
+            bool result;
+            String str = GetParameterString(name, required);
+
+            if (str == null)
+                return defaultValue;
+
+            if (!bool.TryParse(str, out result))
+                throw new ScriptError("Invalid boolean: " + str);
+
+            return result;
+        }
     }
 }

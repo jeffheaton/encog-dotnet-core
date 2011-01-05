@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncogOpenCLBenchmark", "Enc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-script", "encog-script\encog-script.csproj", "{47BBF72A-C5D7-44AC-89D9-7DD9363C400F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,16 @@ Global
 		{47BBF72A-C5D7-44AC-89D9-7DD9363C400F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{47BBF72A-C5D7-44AC-89D9-7DD9363C400F}.Release|x86.ActiveCfg = Release|x86
 		{47BBF72A-C5D7-44AC-89D9-7DD9363C400F}.Release|x86.Build.0 = Release|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Debug|x86.ActiveCfg = Debug|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Debug|x86.Build.0 = Debug|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Release|Any CPU.ActiveCfg = Release|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Release|Mixed Platforms.Build.0 = Release|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Release|x86.ActiveCfg = Release|x86
+		{81148B1E-9100-4618-81F7-EDE3E4FD0BDD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

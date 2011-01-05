@@ -30,6 +30,8 @@ namespace Encog.App.Quant.Ninja
         public void Open(String filename, bool headers, CSVFormat format)
         {
             tw = new StreamWriter(filename);
+            this.format = format;
+            this.headers = headers;
         }
 
         private void WriteHeaders()
@@ -71,9 +73,10 @@ namespace Encog.App.Quant.Ninja
 
             if (line != null)
             {
-                throw new EncogError("Must call begin bar");
+                throw new EncogError("Must call end bar");
             }
 
+            line = new StringBuilder();
             line.Append(NumericDateUtil.DateTime2Long(dt));
             line.Append(this.format.Separator);
             line.Append(NumericDateUtil.Time2Int(dt));

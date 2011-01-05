@@ -7,6 +7,7 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Engine.Util;
 using Encog.Neural.Networks.Training.Strategy;
+using Encog.App.Script.Objects;
 
 namespace Encog.App.Script.Commands
 {
@@ -27,10 +28,10 @@ namespace Encog.App.Script.Commands
             this.script = script;
 
             String networkName = line.GetParameterString("network", true);
-            this.network = (BasicNetwork)script.Memory[networkName];
+            this.network = ((ScriptNetwork)script.RequireObject(networkName, typeof(ScriptNetwork), true)).Network;
 
             String name = line.GetParameterString("training", true);
-            this.training = (BasicNeuralDataSet)script.Memory[name];
+            this.training = ((ScriptDataSet)script.RequireObject(name, typeof(ScriptDataSet), true)).Dataset;
 
             this.maxIterations = line.GetParameterInt("maxiterations", false);
             if (this.maxIterations == 0)
