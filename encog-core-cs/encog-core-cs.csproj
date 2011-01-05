@@ -261,6 +261,7 @@
     <Compile Include="Neural\NeuralData\Buffer\CODEC\CSVDataCODEC.cs" />
     <Compile Include="Neural\NeuralData\Buffer\CODEC\IDataSetCODEC.cs" />
     <Compile Include="Neural\NeuralData\Buffer\CODEC\NeuralDataSetCODEC.cs" />
+    <Compile Include="Neural\NeuralData\Buffer\CODEC\SQLCODEC.cs" />
     <Compile Include="Neural\NeuralData\Buffer\EncogEGBFile.cs" />
     <Compile Include="Neural\NeuralData\Buffer\MemoryDataLoader.cs" />
     <Compile Include="Neural\NeuralData\CSV\CSVNeuralDataSet.cs" />

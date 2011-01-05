@@ -36,6 +36,9 @@ using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
 using System.Data.Common;
 using System.Data.OleDb;
+using Encog.Neural.Data.Buffer.CODEC;
+using Encog.Neural.Data.Buffer;
+using Encog.Neural.NeuralData.Buffer.CODEC;
 
 namespace Encog.Neural.NeuralData.SQL
 {
@@ -44,115 +47,8 @@ namespace Encog.Neural.NeuralData.SQL
     /// handle very large datasets without a memory issue. and can handle very large
     /// datasets.
     /// </summary>
-    public class SQLNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
+    public class SQLNeuralDataSet : BasicNeuralDataSet
     {
-        /// <summary>
-        /// Enumerator for the SQLNeuralDataSet.
-        /// </summary>
-        public class SQLNeuralEnumerator : IEnumerator<INeuralDataPair>
-        {
-            private SQLNeuralDataSet owner;
-
-
-            private INeuralDataPair current;
-
-            /// <summary>
-            /// Holds results from the SQL query.
-            /// </summary>
-            private DbDataReader results;
-
-
-            /// <summary>
-            /// Construct the SQLNeuralEnumerator.
-            /// </summary>
-            /// <param name="owner">The owner of the enumerator.</param>
-            public SQLNeuralEnumerator(SQLNeuralDataSet owner)
-            {
-                this.owner = owner;
-                this.results = owner.Statement.ExecuteReader();
-            }
-
-            /// <summary>
-            /// The current data item.
-            /// </summary>
-            public INeuralDataPair Current
-            {
-                get
-                {
-                    if (this.current == null)
-                    {
-                        MoveNext();
-                    }
-                    return this.current;
-                }
-            }
-
-            /// <summary>
-            /// Dispose of this object.
-            /// </summary>
-            public void Dispose()
-            {
-                this.results.Close();
-            }
-
-            /// <summary>
-            /// Obtain the current item.
-            /// </summary>
-            object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    if (this.current == null)
-                    {
-                        MoveNext();
-                    }
-                    return this.current;
-                }
-            }
-
-            /// <summary>
-            /// Move to the next object.
-            /// </summary>
-            /// <returns>True if there is a next object.</returns>
-            public bool MoveNext()
-            {
-                if (!this.results.NextResult())
-                    return false;
-                INeuralData input = new BasicNeuralData(owner.inputSize);
-                INeuralData ideal = null;
-
-                for (int i = 1; i <= owner.inputSize; i++)
-                {
-                    input[i - 1] = this.results.GetDouble(i);
-                }
-
-                if (owner.idealSize > 0)
-                {
-                    ideal =
-                    new BasicNeuralData(owner.idealSize);
-                    for (int i = 1; i <= owner.idealSize; i++)
-                    {
-                        ideal[i - 1] =
-                            this.results.GetDouble(i + owner.inputSize);
-                    }
-
-                }
-
-                this.current = new BasicNeuralDataPair(input, ideal);
-                return true;
-            }
-
-            /// <summary>
-            /// Not supported.
-            /// </summary>
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
-
-
-        }
-
         /// <summary>
         /// What is the size of the input data?
         /// </summary>
@@ -183,119 +79,11 @@ namespace Encog.Neural.NeuralData.SQL
         public SQLNeuralDataSet(String sql, int inputSize,
                  int idealSize, String connectString)
         {
-            this.inputSize = inputSize;
-            this.idealSize = idealSize;
-            this.connection = new OleDbConnection(connectString);
-            this.connection.Open();
-            this.statement = connection.CreateCommand();
-            this.statement.CommandText = sql;
-            this.statement.Prepare();
-            this.statement.Connection = this.connection;
+            IDataSetCODEC codec = new SQLCODEC(sql, inputSize, idealSize, connectString);
+            MemoryDataLoader load = new MemoryDataLoader(codec);
+            load.Result = this;
+            load.External2Memory();
         }
-
-        /// <summary>
-        /// The statement being used.
-        /// </summary>
-        public DbCommand Statement
-        {
-            get
-            {
-                return this.statement;
-            }
-        }
-
-
-        /// <summary>
-        /// The size of the ideal data, zero if unsupervised.
-        /// </summary>
-        public int IdealSize
-        {
-            get
-            {
-                return this.idealSize;
-            }
-        }
-
-        /// <summary>
-        /// The size of the input data.
-        /// </summary>
-        public int InputSize
-        {
-            get
-            {
-                return this.inputSize;
-            }
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="data1">Not used.</param>
-        public void Add(INeuralData data1)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        /// <param name="idealData">Not used.</param>
-        public void Add(INeuralData inputData, INeuralData idealData)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        public void Add(INeuralDataPair inputData)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public void Close()
-        {
-        }
-
-        /// <summary>
-        /// Get an enumerator.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<INeuralDataPair> GetEnumerator()
-        {
-            return new SQLNeuralEnumerator(this);
-        }
-
-        /// <summary>
-        /// Get an enumerator.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new SQLNeuralEnumerator(this);
-        }
-
-
-        #region IEngineDataSet Members
-
-
-        /// <summary>
-        /// Return true if this dataset is supervised.
-        /// </summary>
-        public bool Supervised
-        {
-            get
-            { 
-                return this.idealSize > 0; 
-            }
-        }
-
-        #endregion
     }
 }
 #endif
