@@ -285,8 +285,7 @@
     <Compile Include="Neural\NeuralData\Temporal\TemporalPoint.cs" />
     <Compile Include="Neural\NeuralData\TextData.cs" />
     <Compile Include="Neural\NeuralData\Union\UnionNeuralDataSet.cs" />
-    <Compile Include="Neural\NeuralData\XML\PropertyData.cs" />
-    <Compile Include="Neural\NeuralData\XML\XMLNeuralDataSet.cs" />
+    <Compile Include="Neural\NeuralData\PropertyData.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />

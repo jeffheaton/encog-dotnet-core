@@ -34,7 +34,7 @@ using System.Text;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 
-namespace Encog.Neural.Data.XML
+namespace Encog.Neural.Data
 {
     /// <summary>
     /// An Encog data object that can be used to hold property data. This is a

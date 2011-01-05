@@ -31,9 +31,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.XML;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
+using Encog.Neural.Data;
 
 namespace Encog.Persist.Persistors
 {

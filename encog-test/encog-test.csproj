@@ -65,7 +65,6 @@
     <Compile Include="Encog\Data\Temporal\TestTemporal.cs" />
     <Compile Include="Encog\Data\CSV\TestCSVNeuralData.cs" />
     <Compile Include="Encog\Data\Market\TestMarketData.cs" />
-    <Compile Include="Encog\Data\XML\TestXMLNeuralData.cs" />
     <Compile Include="Encog\Matrix\TestBiPolarUtil.cs" />
     <Compile Include="Encog\Matrix\TestMatrix.cs" />
     <Compile Include="Encog\Matrix\TestMatrixMath.cs" />
