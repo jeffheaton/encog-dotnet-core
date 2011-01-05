@@ -10,10 +10,8 @@ using Encog.Neural.Data.Basic;
 namespace Encog.Neural.Data.Buffer
 {
     /// <summary>
-    /// This class is used, together with a CODEC, to move data to/from the Encog
-    /// binary training file format. The same Encog binary files can be used on all
-    /// Encog platforms. CODEC's are used to import/export with other formats, such
-    /// as CSV.
+    /// This class is used, together with a CODEC, load training data from some 
+    /// external file into an Encog memory-based training set.  
     /// </summary>
     public class MemoryDataLoader
     {
@@ -28,6 +26,11 @@ namespace Encog.Neural.Data.Buffer
         private IStatusReportable Status { get; set; }
 
         /// <summary>
+        /// The dataset to load to.
+        /// </summary>
+        public BasicNeuralDataSet Result { get; set; }
+
+        /// <summary>
         /// Construct a loader with the specified CODEC. 
         /// </summary>
         /// <param name="codec">The codec to use.</param>
@@ -38,8 +41,7 @@ namespace Encog.Neural.Data.Buffer
         }
 
         /// <summary>
-        /// Convert an external file format, such as CSV, to the Encog binary
-        /// training format. 
+        /// Convert an external file format, such as CSV, to an Encog memory training set. 
         /// </summary>
         /// <param name="binaryFile">The binary file to create.</param>
         public INeuralDataSet External2Memory()
@@ -47,7 +49,10 @@ namespace Encog.Neural.Data.Buffer
 
             Status.Report(0, 0, "Importing to memory");
 
-            BasicNeuralDataSet result = new BasicNeuralDataSet();
+            if (this.Result == null)
+            {
+                Result = new BasicNeuralDataSet();
+            }
 
             double[] input = new double[this.codec.InputSize];
             double[] ideal = new double[this.codec.IdealSize];
@@ -67,7 +72,7 @@ namespace Encog.Neural.Data.Buffer
                     b = new BasicNeuralData(ideal);
 
                 INeuralDataPair pair = new BasicNeuralDataPair(a,b);
-                result.Add(pair);
+                Result.Add(pair);
 
                 currentRecord++;
                 lastUpdate++;
@@ -80,7 +85,7 @@ namespace Encog.Neural.Data.Buffer
 
             this.codec.Close();
             Status.Report(0, 0, "Done importing to memory");
-            return result;
+            return Result;
         }
 
         /// <summary>

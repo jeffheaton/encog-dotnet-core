@@ -35,6 +35,8 @@ using Encog.MathUtil;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
 using Encog.Util.CSV;
+using Encog.Neural.Data.Buffer.CODEC;
+using Encog.Neural.Data.Buffer;
 
 namespace Encog.Neural.NeuralData.CSV
 {
@@ -48,98 +50,9 @@ namespace Encog.Neural.NeuralData.CSV
     /// This class is not memory based, so very long files can be used, 
     /// without running out of memory.
     /// </summary>
-    public class CSVNeuralDataSet : INeuralDataSet, IEnumerable<INeuralDataPair>
+    public class CSVNeuralDataSet : BasicNeuralDataSet
     {
-        /// <summary>
-        /// The enumerator for the CSVNeuralDataSet.
-        /// </summary>
-        public class CSVNeuralEnumerator : IEnumerator<INeuralDataPair>
-        {
-            private CSVNeuralDataSet owner;
 
-            /// <summary>
-            /// A ReadCSV object used to parse the CSV file.
-            /// </summary>
-            private ReadCSV reader;
-
-            /// <summary>
-            /// The enumerator for the CSV set.
-            /// </summary>
-            /// <param name="owner">The owner of this enumerator.</param>
-            public CSVNeuralEnumerator(CSVNeuralDataSet owner)
-            {
-                this.owner = owner;
-                this.reader = null;
-                this.reader = new ReadCSV(this.owner.Filename,
-                        this.owner.Headers,
-                        this.owner.Format);
-            }
-
-            /// <summary>
-            /// The current item.
-            /// </summary>
-            public INeuralDataPair Current
-            {
-                get
-                {
-                    INeuralData input = new BasicNeuralData(this.owner.InputSize);
-                    INeuralData ideal = null;
-
-                    for (int i = 0; i < this.owner.InputSize; i++)
-                    {
-                        input[i] = double.Parse(this.reader.Get(i));
-                    }
-
-                    if (this.owner.IdealSize > 0)
-                    {
-                        ideal = new BasicNeuralData(this.owner.IdealSize);
-                        for (int i = 0; i < this.owner.IdealSize; i++)
-                        {
-                            ideal[i] = double.Parse(this.reader.Get(i
-                                    + this.owner.InputSize));
-                        }
-                    }
-
-                    return new BasicNeuralDataPair(input, ideal);
-                }
-            }
-
-            /// <summary>
-            /// Dispose of this object.
-            /// </summary>
-            public void Dispose()
-            {
-                this.reader.Close();
-            }
-
-            /// <summary>
-            /// Get the current item.
-            /// </summary>
-            object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    return this.Current;
-                }
-            }
-
-            /// <summary>
-            /// Move to the next item.
-            /// </summary>
-            /// <returns>True if there is a next item.</returns>
-            public bool MoveNext()
-            {
-                return this.reader.Next();
-            }
-
-            /// <summary>
-            /// Not supported.
-            /// </summary>
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         /// <summary>
         /// The CSV filename to read from.
@@ -250,71 +163,11 @@ namespace Encog.Neural.NeuralData.CSV
             this.idealSize = idealSize;
             this.format = format;
             this.headers = headers;
-        }
 
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="data1">Not used.</param>
-        public void Add(INeuralData data1)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        /// <param name="idealData">Not used.</param>
-        public void Add(INeuralData inputData, INeuralData idealData)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        public void Add(INeuralDataPair inputData)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public void Close()
-        {
-            // not needed
-        }
-
-        /// <summary>
-        /// Get an enumerator.
-        /// </summary>
-        /// <returns>The enumerator to use.</returns>
-        public IEnumerator<INeuralDataPair> GetEnumerator()
-        {
-            return new CSVNeuralEnumerator(this);
-        }
-
-        /// <summary>
-        /// Get an enumerator.
-        /// </summary>
-        /// <returns>The enumerator to use.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Return true if this dataset is supervised.
-        /// </summary>
-        public bool Supervised
-        {
-            get
-            {
-                return this.idealSize > 0;
-            }
+            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, inputSize, idealSize);
+            MemoryDataLoader load = new MemoryDataLoader(codec);
+            load.Result = this;
+            load.External2Memory();
         }
     }
 }
