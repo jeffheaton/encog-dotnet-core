@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Encog.App.Quant.Ninja;
 using Encog.Util.CSV;
+using Encog.App.Quant.Indicators;
+using Encog.App.Quant.Basic;
+using Encog.App.Quant.Indicators.Predictive;
 
 namespace TestApp
 {
@@ -14,16 +17,12 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            NinjaStreamWriter nsw = new NinjaStreamWriter();
-            nsw.Open("c:\\temp\\output.txt",true,CSVFormat.ENGLISH);
-            for (int i = 0; i < 10; i++)
-            {
-                nsw.BeginBar(DateTime.Now.AddDays(i));
-                nsw.StoreColumn("open", i);
-                nsw.StoreColumn("close", i);
-                nsw.EndBar();
-            }
-            nsw.Close();
+            ProcessIndicators indicators = new ProcessIndicators();
+            indicators.Analyze("d:\\data\\test.csv", true, CSVFormat.ENGLISH);
+            indicators.Columns[1].Output = false;
+            indicators.AddColumn(new MovingAverage(3, true));
+            indicators.AddColumn(new BestReturn(3, true));
+            indicators.Process("d:\\data\\test2.csv");
         }
     }
 }

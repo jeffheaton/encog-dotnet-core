@@ -17,7 +17,7 @@ namespace Encog.App.Quant.Indicators.Predictive
         {
             get
             {
-                return Periods;
+                return periods;
             }
         }
 
@@ -36,7 +36,27 @@ namespace Encog.App.Quant.Indicators.Predictive
 
         public override void Calculate(IDictionary<string, BaseColumn> data, int length)
         {
-            throw new NotImplementedException();
+            double[] close = data[FileData.CLOSE].Data;
+            double[] output = this.Data;
+
+            int stop = length - Periods;
+            for (int i = 0; i < stop; i++)
+            {
+                double bestClose = Double.MinValue;
+                for (int j = 1; j <= Periods; j++)
+                {
+                    bestClose = Math.Max(close[i + j], bestClose);
+                }
+                output[i] = bestClose;
+            }
+
+            for (int i = length - Periods; i < length; i++)
+            {
+                output[i] = 0;
+            }
+
+            this.BeginningIndex = 0;
+            this.EndingIndex = length - Periods-1;
         }
     }
 }
