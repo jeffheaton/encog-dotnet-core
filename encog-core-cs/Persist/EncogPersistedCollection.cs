@@ -130,6 +130,11 @@ namespace Encog.Persist
         public const String TYPE_SVM = "SVM";
 
         /// <summary>
+        /// A Support Vector Machine.
+        /// </summary>
+        public const String TYPE_NORM = "NormalizationStats";
+
+        /// <summary>
         /// The name attribute.
         /// </summary>
         public const String ATTRIBUTE_NAME = "name";

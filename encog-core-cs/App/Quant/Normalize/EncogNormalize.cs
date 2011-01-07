@@ -10,16 +10,8 @@ namespace Encog.App.Quant.Normalize
     public class EncogNormalize
     {
         public int Precision { get; set; }
-
-        public NormalizedFieldStats[] Stats
-        {
-            get
-            {
-                return this.stats;
-            }
-        }
-
-        private NormalizedFieldStats[] stats;
+        public NormalizationStats Stats { get; set; }
+        
         private String sourceFile;
         private String targetFile;
         private CSVFormat sourceFormat;
@@ -56,12 +48,12 @@ namespace Encog.App.Quant.Normalize
 
                 // analyze first row
                 int fieldCount = csv.GetColumnCount();
-                this.stats = new NormalizedFieldStats[fieldCount];
+                this.Stats = new NormalizationStats(fieldCount);
 
                 for (int i = 0; i < fieldCount; i++)
                 {
-                    stats[i] = new NormalizedFieldStats();
-                    stats[i].Name = csv.ColumnNames[i];
+                    Stats[i] = new NormalizedFieldStats();
+                    Stats[i].Name = csv.ColumnNames[i];
                 }
 
                 // Read entire file to analyze
@@ -69,17 +61,17 @@ namespace Encog.App.Quant.Normalize
                 {
                     for (int i = 0; i < fieldCount; i++)
                     {
-                        if (stats[i].Action == NormalizationDesired.Normalize)
+                        if (Stats[i].Action == NormalizationDesired.Normalize)
                         {
                             String str = csv.Get(i);
                             double d;
                             if (Double.TryParse(str, out d))
                             {
-                                stats[i].Analyze(d);
+                                Stats[i].Analyze(d);
                             }
                             else
                             {
-                                stats[i].MakePassThrough();
+                                Stats[i].MakePassThrough();
                             }
                         }
                     }
@@ -96,7 +88,7 @@ namespace Encog.App.Quant.Normalize
 
         public void DeNormalize(String sourceFile, String targetFile, bool headers, CSVFormat format)
         {
-            if (this.stats.Length == 0)
+            if (this.Stats.Count == 0)
             {
                 throw new EncogError("Can't denormalize, there are no stats loaded.");
             }
@@ -109,9 +101,9 @@ namespace Encog.App.Quant.Normalize
                 throw new EncogError("The source file " + sourceFile + " is empty.");
             }
 
-            if (csv.GetColumnCount() != this.stats.Length)
+            if (csv.GetColumnCount() != this.Stats.Count)
             {
-                throw new EncogError("The number of columns in the input file("+csv.GetColumnCount()+") and stats file("+this.stats.Length+") must match.");
+                throw new EncogError("The number of columns in the input file("+csv.GetColumnCount()+") and stats file("+this.Stats.Count+") must match.");
             }
 
             // write headers, if needed
@@ -125,7 +117,7 @@ namespace Encog.App.Quant.Normalize
                 StringBuilder line = new StringBuilder();
 
                 int index = 0;
-                foreach (NormalizedFieldStats stat in this.stats)
+                foreach (NormalizedFieldStats stat in this.Stats.Data)
                 {
                     String str = csv.Get(index++);
                     if (line.Length > 0)
@@ -158,7 +150,7 @@ namespace Encog.App.Quant.Normalize
         private void WriteHeaders(TextWriter tw)
         {
             StringBuilder line = new StringBuilder();
-            foreach (NormalizedFieldStats stat in this.stats)
+            foreach (NormalizedFieldStats stat in this.Stats.Data)
             {
                 if (line.Length > 0)
                     line.Append(this.sourceFormat.Separator);
@@ -171,7 +163,7 @@ namespace Encog.App.Quant.Normalize
 
         public void Normalize(String file)
         {
-            if (this.stats.Length<1 )
+            if (this.Stats.Count<1 )
                 throw new EncogError("Can't normalize yet, file has not been analyzed.");
 
 
@@ -195,7 +187,7 @@ namespace Encog.App.Quant.Normalize
                 {
                     StringBuilder line = new StringBuilder();
                     int index = 0;
-                    foreach (NormalizedFieldStats stat in this.stats)
+                    foreach (NormalizedFieldStats stat in this.Stats.Data)
                     {
                         String str = csv.Get(index++);
                         if (line.Length > 0)
@@ -280,7 +272,7 @@ namespace Encog.App.Quant.Normalize
                 }
                 csv.Close();
 
-                this.stats = list.ToArray<NormalizedFieldStats>();
+                this.Stats.Data = list.ToArray<NormalizedFieldStats>();
             }
             finally
             {
@@ -299,7 +291,7 @@ namespace Encog.App.Quant.Normalize
 
                 tw.WriteLine("type,name,ahigh,alow,nhigh,nlow");
 
-                foreach (NormalizedFieldStats stat in this.stats)
+                foreach (NormalizedFieldStats stat in this.Stats.Data)
                 {
                     StringBuilder line = new StringBuilder();
                     switch (stat.Action)
