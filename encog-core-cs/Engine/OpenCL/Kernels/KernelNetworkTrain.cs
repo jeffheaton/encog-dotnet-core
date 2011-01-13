@@ -242,7 +242,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// The training data to use.
         /// </summary>
         ///
-        private readonly IEngineIndexableSet training;
+        private readonly IEngineDataSet training;
 
         /// <summary>
         /// The device to train with.
@@ -265,7 +265,7 @@ namespace Encog.Engine.Opencl.Kernels
         /// <param name="training">The training data.</param>
         /// <param name="tempDataSize">How much temp data.</param>
         public KernelNetworkTrain(EncogCLDevice device,
-                FlatNetwork flat, IEngineIndexableSet training,
+                FlatNetwork flat, IEngineDataSet training,
                 int tempDataSize)
             : base(device, "Encog.Engine.Resources.KernelNetTrain.txt", "NetworkTrain")
         {

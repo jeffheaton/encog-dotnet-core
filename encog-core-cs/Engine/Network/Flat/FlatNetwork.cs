@@ -236,7 +236,7 @@ namespace Encog.Engine.Network.Flat
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(IEngineIndexableSet data)
+        public double CalculateError(IEngineDataSet data)
         {
             ErrorCalculation errorCalculation = new ErrorCalculation();
 

@@ -48,7 +48,7 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralDataSet : BasicPersistedObject, INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject, IIndexable
+    public class BasicNeuralDataSet : BasicPersistedObject, INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
     {      
         /// <summary>
         /// The enumerator for the basic neural data set.
@@ -365,7 +365,7 @@ namespace Encog.Neural.Data.Basic
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
-        public IEngineIndexableSet OpenAdditional()
+        public IEngineDataSet OpenAdditional()
         {
             return new BasicNeuralDataSet(this.Data);
         }

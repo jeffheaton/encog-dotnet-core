@@ -57,7 +57,7 @@ namespace Encog.Neural.Data.Buffer
     /// format, and can be used with any Encog platform. Encog binary files are
     /// stored using "little endian" numbers.
     /// </summary>
-    public class BufferedNeuralDataSet : INeuralDataSet, IIndexable
+    public class BufferedNeuralDataSet : INeuralDataSet
     {
         /// <summary>
         /// Error message for ADD.
@@ -182,7 +182,7 @@ namespace Encog.Neural.Data.Buffer
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>
-        public IEngineIndexableSet OpenAdditional()
+        public IEngineDataSet OpenAdditional()
         {
 
             BufferedNeuralDataSet result = new BufferedNeuralDataSet(this.file);

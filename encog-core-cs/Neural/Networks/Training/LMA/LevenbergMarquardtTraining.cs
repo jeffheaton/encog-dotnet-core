@@ -93,7 +93,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// The training set that we are using to train.
         /// </summary>
-        private IIndexable indexableTraining;
+        private INeuralDataSet indexableTraining;
 
         /// <summary>
         /// The training set length.
@@ -172,13 +172,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <param name="network">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
         public LevenbergMarquardtTraining(BasicNetwork network,
-                INeuralDataSet training)
-        {
-            if (!(training is IIndexable))
-            {
-                throw new TrainingError(
-                        "Levenberg Marquardt requires an indexable training set.");
-            }
+                INeuralDataSet training) {
 
             ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
@@ -195,7 +189,7 @@ namespace Encog.Neural.Networks.Training.LMA
             }
 
             this.Training = training;
-            this.indexableTraining = (IIndexable)Training;
+            this.indexableTraining = Training;
             this.network = network;
             this.trainingLength = (int)this.indexableTraining.Count;
             this.parametersLength = this.network.Structure.CalculateSize();

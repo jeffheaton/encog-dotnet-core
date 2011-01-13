@@ -121,7 +121,7 @@ namespace Encog.Engine.Network.Train.Gradient
         /// The training data.
         /// </summary>
         ///
-        private readonly IEngineIndexableSet training;
+        private readonly IEngineDataSet training;
 
         /// <summary>
         /// The high end of the training data.
@@ -152,7 +152,7 @@ namespace Encog.Engine.Network.Train.Gradient
         /// <param name="high">The high index to use in the training data.</param>
         public GradientWorkerCPU(FlatNetwork network,
                 TrainFlatNetworkProp owner,
-                IEngineIndexableSet training, int low, int high)
+                IEngineDataSet training, int low, int high)
         {
             this.errorCalculation = new ErrorCalculation();
             this.network = network;

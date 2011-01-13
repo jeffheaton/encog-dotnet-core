@@ -64,7 +64,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// The training set to use. Must be indexable.
         /// </summary>
-        private IIndexable indexableTraining;
+        private INeuralDataSet indexableTraining;
 
         /// <summary>
         /// The number of training set elements.
@@ -108,7 +108,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <param name="network">The network to use.</param>
         /// <param name="indexableTraining">The training set to use.</param>
         public JacobianChainRule(BasicNetwork network,
-                 IIndexable indexableTraining)
+                 INeuralDataSet indexableTraining)
         {
             this.indexableTraining = indexableTraining;
             this.network = network;

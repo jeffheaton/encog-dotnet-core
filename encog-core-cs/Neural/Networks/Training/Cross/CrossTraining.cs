@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Folded;
+using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Cross
 {
@@ -59,7 +60,7 @@ namespace Encog.Neural.Networks.Training.Cross
                  FoldedDataSet training)
         {
             this.network = network;
-            Training = training;
+            Training = (INeuralDataSet)training;
             this.folded = training;
         }
 

@@ -22,28 +22,6 @@ namespace Encog.Neural.Networks.Training.SVM
 
         }
 
-
-        /// <summary>
-        /// Obtain the length of the training data. 
-        /// </summary>
-        /// <param name="training">The training date to check.</param>
-        /// <returns>The length of the training data.</returns>
-        private static long ObtainTrainingLength(INeuralDataSet training)
-        {
-            if (training is IIndexable)
-            {
-                return ((IIndexable)training).Count;
-            }
-
-            long result = 0;
-            IEnumerator<INeuralDataPair> itr = training.GetEnumerator();
-
-            while (itr.MoveNext())
-                result++;
-
-            return result;
-        }
-
         /// <summary>
         /// Encode the Encog dataset.
         /// </summary>
@@ -55,7 +33,7 @@ namespace Encog.Neural.Networks.Training.SVM
         {
             svm_problem result = new svm_problem();
 
-            result.l = (int)ObtainTrainingLength(training);
+            result.l = (int)training.Count;
 
             result.y = new double[result.l];
             result.x = new svm_node[result.l][];

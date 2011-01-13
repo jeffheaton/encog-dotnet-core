@@ -45,7 +45,7 @@ namespace Encog.Neural.Data.Folded
     /// This dataset works off of an underlying dataset. By default there are no
     /// folds (fold size 1). Call the fold method to create more folds. 
     /// </summary>
-    public class FoldedDataSet : IIndexable
+    public class FoldedDataSet : IEngineDataSet
     {
         /// <summary>
         /// Error message: adds are not supported.
@@ -55,7 +55,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        private IIndexable underlying;
+        private INeuralDataSet underlying;
 
         /// <summary>
         /// The fold that we are currently on.
@@ -97,7 +97,7 @@ namespace Encog.Neural.Data.Folded
         /// Create a folded dataset. 
         /// </summary>
         /// <param name="underlying">The underlying folded dataset.</param>
-        public FoldedDataSet(IIndexable underlying)
+        public FoldedDataSet(INeuralDataSet underlying)
         {
             this.underlying = underlying;
             Fold(1);
@@ -292,7 +292,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        public IIndexable Underlying
+        public INeuralDataSet Underlying
         {
             get
             {
@@ -316,10 +316,9 @@ namespace Encog.Neural.Data.Folded
         /// Open an additional dataset.
         /// </summary>
         /// <returns>The dataset.</returns>
-        public IEngineIndexableSet OpenAdditional()
+        public IEngineDataSet OpenAdditional()
         {
-            FoldedDataSet folded = new FoldedDataSet(
-                    (IIndexable)this.underlying.OpenAdditional());
+            FoldedDataSet folded = new FoldedDataSet((INeuralDataSet)this.underlying.OpenAdditional());
             folded.Owner = this;
             return folded;
         }

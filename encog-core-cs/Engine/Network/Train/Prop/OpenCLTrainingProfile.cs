@@ -192,7 +192,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="kernel">The kernel to calculate for.</param>
         /// <param name="training">The training params to use.</param>
         public void CalculateKernelParams(EncogKernel kernel,
-                IEngineIndexableSet training)
+                IEngineDataSet training)
         {
             bool globalValuesAssigned = false;
             int workPerIteration;

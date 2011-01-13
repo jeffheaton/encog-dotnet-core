@@ -82,5 +82,31 @@ namespace Encog.Engine.Data
             get;
         }
 
+        /// <summary>
+        /// Determine the total number of records in the set.
+        /// </summary>
+        ///
+        /// <returns>The total number of records in the set.</returns>
+        long Count
+        {
+            get;
+        }
+
+
+        /// <summary>
+        /// Read an individual record, specified by index, in random order.
+        /// </summary>
+        ///
+        /// <param name="index">The index to read.</param>
+        /// <param name="pair">The pair that the record will be copied into.</param>
+        void GetRecord(long index, IEngineData pair);
+
+        /// <summary>
+        /// Opens an additional instance of this dataset.
+        /// </summary>
+        ///
+        /// <returns>The new instance.</returns>
+        IEngineDataSet OpenAdditional();
+
     }
 }

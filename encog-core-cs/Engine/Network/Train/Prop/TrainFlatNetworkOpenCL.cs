@@ -36,6 +36,7 @@ namespace Encog.Engine.Network.Train.Prop
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Encog.Engine.Util;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network using OpenCL.
@@ -78,7 +79,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// The training data.
         /// </summary>
         ///
-        private readonly IEngineIndexableSet training;
+        private readonly IEngineDataSet training;
 
         /// <summary>
         /// Training type.
@@ -137,12 +138,6 @@ namespace Encog.Engine.Network.Train.Prop
 
             (new ValidateForOpenCL()).Validate(network);
 
-            if (!(training is IEngineIndexableSet))
-            {
-                throw new EncogEngineError(
-                        "Training data must be Indexable for this training type.");
-            }
-
             if (EncogEngine.Instance.CL == null)
             {
                 throw new EncogEngineError(
@@ -152,7 +147,7 @@ namespace Encog.Engine.Network.Train.Prop
 
             this.profile = profile;
             this.network = network;
-            this.training = (IEngineIndexableSet)training;
+            this.training = training;
         }
 
         /// <summary>

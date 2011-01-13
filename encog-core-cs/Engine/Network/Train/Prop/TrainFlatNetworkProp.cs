@@ -83,7 +83,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// The network in indexable form.
         /// </summary>
         ///
-        protected internal readonly IEngineIndexableSet indexable;
+        protected internal readonly IEngineDataSet indexable;
 
         /// <summary>
         /// The workers.
@@ -124,20 +124,13 @@ namespace Encog.Engine.Network.Train.Prop
         public TrainFlatNetworkProp(FlatNetwork network,
                 IEngineDataSet training)
         {
-
-            if (!(training is IEngineIndexableSet))
-            {
-                throw new EncogEngineError(
-                        "Training data must be Indexable for this training type.");
-            }
-
             this.training = training;
             this.network = network;
 
             this.gradients = new double[this.network.Weights.Length];
             this.lastGradient = new double[this.network.Weights.Length];
 
-            this.indexable = (IEngineIndexableSet)training;
+            this.indexable = training;
             this.numThreads = 0;
             this.reportedException = null;
         }

@@ -90,29 +90,6 @@ namespace Encog.Neural.Networks.Training.Strategy
 #endif
 
         /// <summary>
-        /// Determine the training size.
-        /// </summary>
-        /// <returns>The training size.</returns>
-        private long DetermineTrainingSize()
-        {
-            long result = 0;
-
-            if (this.train is IIndexable)
-            {
-                result = ((IIndexable)this.train).Count;
-            }
-            else
-            {
-                foreach (
-                 INeuralDataPair pair in this.train.Training)
-                {
-                    result++;
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
         /// Initialize this strategy.
         /// </summary>
         /// <param name="train">The training algorithm.</param>
@@ -121,7 +98,7 @@ namespace Encog.Neural.Networks.Training.Strategy
             this.train = train;
             this.ready = false;
             this.setter = (ILearningRate)train;
-            this.trainingSize = DetermineTrainingSize();
+            this.trainingSize = train.Training.Count;
             this.currentLearningRate = 1.0 / this.trainingSize;
 #if logging
             if (this.logger.IsInfoEnabled)

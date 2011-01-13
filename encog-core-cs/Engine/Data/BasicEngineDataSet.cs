@@ -17,7 +17,7 @@ namespace Encog.Engine.Data
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicEngineDataSet : IEngineIndexableSet
+    public class BasicEngineDataSet : IEngineDataSet
     {
 
 
@@ -224,7 +224,7 @@ namespace Encog.Engine.Data
         /// </summary>
         ///
         /// <returns>The additional data set.</returns>
-        public virtual IEngineIndexableSet OpenAdditional()
+        public virtual IEngineDataSet OpenAdditional()
         {
             return new BasicEngineDataSet(this.data);
         }
