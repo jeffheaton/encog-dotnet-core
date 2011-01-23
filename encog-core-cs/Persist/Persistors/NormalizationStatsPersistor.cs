@@ -18,6 +18,7 @@ namespace Encog.Persist.Persistors
         public const String TYPE_IGNORE = "IGNORE";
         public const String TYPE_PASS = "PASS";
         public const String TYPE_NORMALIZE = "NORMALIZE";
+        public const String PROPERTY_NAME = "Name";
 
         private NormalizationStats norm;
 
@@ -35,28 +36,39 @@ namespace Encog.Persist.Persistors
             {
                 if (xmlIn.IsIt(NormalizationStatsPersistor.TAG_FIELDS, true))
                 {
-                    IDictionary<string,string> properties = xmlIn.ReadPropertyBlock();
-                    NormalizedFieldStats stat = new NormalizedFieldStats();
-                    stat.ActualHigh = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_AHIGH]);
-                    stat.ActualLow = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_ALOW]);
-                    stat.NormalizedHigh = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_HIGH]);
-                    stat.NormalizedLow = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_LOW]);
-                    String type = properties[NormalizationStatsPersistor.PROPERTY_TYPE];
+                    String end2 = xmlIn.LastTag.Name;
+                    while (xmlIn.ReadToTag())
+                    {
+                        if (xmlIn.IsIt(NormalizationStatsPersistor.TAG_STAT, true))
+                        {
+                            IDictionary<string, string> properties = xmlIn.ReadPropertyBlock();
+                            NormalizedFieldStats stat = new NormalizedFieldStats();
+                            stat.ActualHigh = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_AHIGH]);
+                            stat.ActualLow = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_ALOW]);
+                            stat.NormalizedHigh = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_HIGH]);
+                            stat.NormalizedLow = double.Parse(properties[NormalizationStatsPersistor.PROPERTY_LOW]);
+                            stat.Name = properties[NormalizationStatsPersistor.PROPERTY_NAME];
+                            String type = properties[NormalizationStatsPersistor.PROPERTY_TYPE];
 
-                    if (string.Compare(type, NormalizationStatsPersistor.TYPE_IGNORE,true)==0)
-                    {
-                        stat.Action = NormalizationDesired.Ignore;
+                            if (string.Compare(type, NormalizationStatsPersistor.TYPE_IGNORE, true) == 0)
+                            {
+                                stat.Action = NormalizationDesired.Ignore;
+                            }
+                            else if (string.Compare(type, NormalizationStatsPersistor.TYPE_NORMALIZE, true) == 0)
+                            {
+                                stat.Action = NormalizationDesired.Ignore;
+                            }
+                            else if (string.Compare(type, NormalizationStatsPersistor.TYPE_PASS, true) == 0)
+                            {
+                                stat.Action = NormalizationDesired.Ignore;
+                            }
+                            list.Add(stat);
+                        }
+                        else if (xmlIn.IsIt(end2, false))
+                        {
+                            break;
+                        }
                     }
-                    else if (string.Compare(type, NormalizationStatsPersistor.TYPE_NORMALIZE, true) == 0)
-                    {
-                        stat.Action = NormalizationDesired.Ignore;
-                    }
-                    else if (string.Compare(type, NormalizationStatsPersistor.TYPE_PASS, true) == 0)
-                    {
-                        stat.Action = NormalizationDesired.Ignore;
-                    }
-                    list.Add(stat);
-                    xmlIn.ReadToTag();
                 }
                 else if (xmlIn.IsIt(end, false))
                 {
@@ -68,7 +80,7 @@ namespace Encog.Persist.Persistors
             this.norm.Data = list.ToArray();
             this.norm.Name = name;
             this.norm.Description = description;
-            xmlIn.ReadToTag();
+
             return this.norm;
         }
 
@@ -86,6 +98,7 @@ namespace Encog.Persist.Persistors
                 xmlOut.AddProperty(NormalizationStatsPersistor.PROPERTY_ALOW, field.ActualLow);
                 xmlOut.AddProperty(NormalizationStatsPersistor.PROPERTY_HIGH, field.NormalizedHigh);
                 xmlOut.AddProperty(NormalizationStatsPersistor.PROPERTY_LOW, field.NormalizedLow);
+                xmlOut.AddProperty(NormalizationStatsPersistor.PROPERTY_NAME, field.Name);
                 switch (field.Action)
                 {
                     case NormalizationDesired.Ignore:
@@ -101,6 +114,7 @@ namespace Encog.Persist.Persistors
 
                 xmlOut.EndTag();
             }
+            xmlOut.EndTag();
             xmlOut.EndTag();
         }
     }

@@ -8,7 +8,7 @@ namespace Encog.App.Quant.Indicators.Predictive
 {
     public class BestReturn: Indicator
     {
-        public static readonly String NAME = "PredictBestClose";
+        public static readonly String NAME = "PredictBestReturn";
 
         private int periods;
 
