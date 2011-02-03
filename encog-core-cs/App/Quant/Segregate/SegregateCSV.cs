@@ -108,26 +108,8 @@ namespace Encog.App.Quant.Segregate
 
             this.Analyzed = true;
 
-            int recordCount = 0;
-            ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
-            while (csv.Next())
-            {
-                recordCount++;
-            }
+            PerformBasicCounts();
 
-            this.ColumnCount = csv.GetColumnCount();
-
-            if (this.ExpectInputHeaders)
-            {
-                this.InputHeadings = new String[csv.ColumnNames.Count];
-                for (int i = 0; i < csv.ColumnNames.Count; i++)
-                {
-                    this.InputHeadings[i] = csv.ColumnNames[i];
-                }
-            }
-            csv.Close();
-
-            this.RecordCount = recordCount;
             BalanceTargets();
         }
 

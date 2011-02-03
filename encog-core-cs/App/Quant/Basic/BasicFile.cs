@@ -96,5 +96,32 @@ namespace Encog.App.Quant.Basic
             tw.WriteLine(line.ToString());
         }
 
+        public void PerformBasicCounts()
+        {
+            int recordCount = 0;
+            ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
+            while (csv.Next())
+            {
+                recordCount++;
+            }
+            this.RecordCount = recordCount;
+            this.ColumnCount = csv.GetColumnCount();
+
+            ReadHeaders(csv);
+            csv.Close();
+        }
+
+        public void ReadHeaders(ReadCSV csv)
+        {
+            if (this.ExpectInputHeaders)
+            {
+                this.InputHeadings = new String[csv.ColumnNames.Count];
+                for (int i = 0; i < csv.ColumnNames.Count; i++)
+                {
+                    this.InputHeadings[i] = csv.ColumnNames[i];
+                }
+            }
+        }
+
     }
 }

@@ -67,6 +67,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Quant\Balance\BalanceCSV.cs" />
     <Compile Include="App\Quant\Basic\BasicFile.cs" />
     <Compile Include="App\Quant\Basic\BasicCachedFile.cs" />
     <Compile Include="App\Quant\Basic\BaseCachedColumn.cs" />

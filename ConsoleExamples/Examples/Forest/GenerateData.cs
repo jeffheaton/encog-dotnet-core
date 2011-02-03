@@ -41,6 +41,7 @@ using Encog.Normalize.Segregate;
 using Encog.Engine;
 using Encog.App.Quant.Segregate;
 using Encog.Util.CSV;
+using Encog.App.Quant.Balance;
 
 namespace Encog.Examples.Forest
 {
@@ -79,47 +80,24 @@ namespace Encog.Examples.Forest
             norm.AddOutputField(outType, true);
         }
 
-        
-
-        public void Narrow(String source, String target, int field, int count)
-        {
-            IInputField[] inputField = new IInputField[55];
-
-            DataNormalization norm = new DataNormalization();
-            norm.Report = this;
-            norm.Storage = new NormalizationStorageCSV(target);
-            for (int i = 0; i < 55; i++)
-            {
-                inputField[i] = new InputFieldCSV(true, source, i);
-                norm.AddInputField(inputField[i]);
-                IOutputField outputField = new OutputFieldDirect(inputField[i]);
-                norm.AddOutputField(outputField);
-            }
-
-            IntegerBalanceSegregator segregator = new IntegerBalanceSegregator(inputField[field], count);
-            norm.AddSegregator(segregator);
-
-            norm.Process();
-            app.WriteLine("Samples per tree type:");
-            app.WriteLine(segregator.DumpCounts());
-        }
-
         public void Step1()
         {
             SegregateCSV seg = new SegregateCSV();
             seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
             seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
-            seg.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);
-            seg.Process();
             app.WriteLine("Step 1: Generate training and evaluation files");
-            app.WriteLine("Generate training file");
-            app.WriteLine("Generate evaluation file");
+            seg.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);            
+            seg.Process();            
         }
 
         public void Step2()
         {
             app.WriteLine("Step 2: Balance training to have the same number of each tree");
-            Narrow(Constant.TRAINING_FILE, Constant.BALANCE_FILE, 54, 3000);
+            BalanceCSV balance = new BalanceCSV();
+            balance.Analyze(Constant.TRAINING_FILE, false, CSVFormat.ENGLISH);
+            balance.Process(Constant.BALANCE_FILE, 54, 3000);
+            app.WriteLine("Count per Tree:");
+            app.WriteLine(balance.DumpCounts());
         }
 
         public DataNormalization Step3(bool useOneOf)
