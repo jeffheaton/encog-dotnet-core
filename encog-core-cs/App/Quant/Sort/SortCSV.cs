@@ -5,13 +5,13 @@ using System.Text;
 using Encog.Util.CSV;
 using System.Collections;
 using System.IO;
+using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Sort
 {
-    public class SortCSV
+    public class SortCSV: BasicFile
     {
-        public CSVFormat Format { get; set; }
-        
+       
         public IList<SortedField> SortOrder
         {
             get
@@ -22,7 +22,6 @@ namespace Encog.App.Quant.Sort
 
         private List<LoadedRow> data = new List<LoadedRow>();
         private IList<SortedField> sortOrder = new List<SortedField>();
-        private String[] headings;
 
         private void ReadInputFile(String inputFile, bool headers, CSVFormat format)
         {
@@ -35,7 +34,7 @@ namespace Encog.App.Quant.Sort
 
             if (headers)
             {
-                this.headings = csv.ColumnNames.ToArray<String>();
+                this.InputHeadings = csv.ColumnNames.ToArray<String>();
             }
 
             csv.Close();            
@@ -49,27 +48,9 @@ namespace Encog.App.Quant.Sort
 
         private void WriteOutputFile(String outputFile, bool headers, CSVFormat format)
         {
-            TextWriter tw = new StreamWriter(outputFile);
-             
-            // write headers, if needed
-            if (headers)
-            {
-                int index = 0;
-                StringBuilder line = new StringBuilder();
-                foreach (String str in this.headings)
-                {
-                    if (line.Length > 0)
-                    {
-                        line.Append(",");
-                    }
-                    line.Append("\"");
-                    line.Append(this.headings[index++]);
-                    line.Append("\"");
-                }
-                tw.WriteLine(line.ToString());
-            }
+            TextWriter tw = this.PrepareOutputFile(outputFile);
 
-            bool[] nonNumeric = new bool[this.headings.Length];
+            bool[] nonNumeric = new bool[this.InputHeadings.Length];
             bool first = true;
 
             // write the file
@@ -78,7 +59,7 @@ namespace Encog.App.Quant.Sort
                 // for the first row, determine types
                 if (first)
                 {
-                    for (int i = 0; i < this.headings.Length; i++)
+                    for (int i = 0; i < this.InputHeadings.Length; i++)
                     {
                         double d;
                         String str = row.Data[i];
@@ -90,7 +71,7 @@ namespace Encog.App.Quant.Sort
                 // write the row
                 StringBuilder line = new StringBuilder();
 
-                for (int i = 0; i < this.headings.Length; i++)
+                for (int i = 0; i < this.InputHeadings.Length; i++)
                 {
                     if (i > 0)
                     {

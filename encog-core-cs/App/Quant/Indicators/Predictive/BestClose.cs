@@ -34,7 +34,7 @@ namespace Encog.App.Quant.Indicators.Predictive
             get { return NAME; }
         }
 
-        public override void Calculate(IDictionary<string, BaseColumn> data, int length)
+        public override void Calculate(IDictionary<string, BaseCachedColumn> data, int length)
         {
             double[] close = data[FileData.CLOSE].Data;
             double[] output = this.Data;

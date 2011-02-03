@@ -26,8 +26,8 @@ namespace Encog.App.Quant.Indicators
             this.periods = periods;
             this.Output = output;
         }
-     
-        public override void Calculate(IDictionary<string, BaseColumn> data, int length)
+
+        public override void Calculate(IDictionary<string, BaseCachedColumn> data, int length)
         {
             Require(data, FileData.CLOSE);
             

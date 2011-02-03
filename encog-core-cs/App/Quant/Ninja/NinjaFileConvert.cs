@@ -8,11 +8,11 @@ using System.IO;
 
 namespace Encog.App.Quant.Ninja
 {
-    public class NinjaFileConvert: BasicFinancialFile
+    public class NinjaFileConvert: BasicCachedFile
     {
         public void Process(string target)
         {
-            ReadCSV csv = new ReadCSV(this.InputFilename,this.InputHeaders,this.InputFormat);
+            ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             TextWriter tw = new StreamWriter(target);
 
             while (csv.Next())

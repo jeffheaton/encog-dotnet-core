@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Encog.App.Quant.Basic
 {
-    public class BaseColumn
+    public class BaseCachedColumn
     {
         private double[] data;
 
         public String Name { get; set; }
         public double[] Data { get { return data; } }
 
-        public BaseColumn(String name, bool input, bool output)
+        public BaseCachedColumn(String name, bool input, bool output)
         {
             this.Name = name;
             this.Input = input;

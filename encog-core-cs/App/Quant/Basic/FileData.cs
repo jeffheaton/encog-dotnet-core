@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Encog.App.Quant.Basic
 {
-    public class FileData: BaseColumn
+    public class FileData : BaseCachedColumn
     {
         public const String DATE = "date";
         public const String TIME = "time";

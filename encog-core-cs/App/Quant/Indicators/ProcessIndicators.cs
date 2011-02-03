@@ -8,7 +8,7 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators
 {
-    public class ProcessIndicators : BasicFinancialFile
+    public class ProcessIndicators : BasicCachedFile
     {        
         public ProcessIndicators()
         {
@@ -21,12 +21,12 @@ namespace Encog.App.Quant.Indicators
 
             try
             {
-                csv = new ReadCSV(InputFilename, InputHeaders, InputFormat);
+                csv = new ReadCSV(InputFilename, ExpectInputHeaders, InputFormat);
 
                 int row = 0;
                 while (csv.Next())
                 {
-                    foreach( BaseColumn column in this.Columns )
+                    foreach (BaseCachedColumn column in this.Columns)
                     {
                         if (column is FileData)
                         {
@@ -53,7 +53,7 @@ namespace Encog.App.Quant.Indicators
         {
             int result = 0;
 
-            foreach (BaseColumn column in Columns)
+            foreach (BaseCachedColumn column in Columns)
             {
                 if (column is Indicator)
                 {
@@ -69,7 +69,7 @@ namespace Encog.App.Quant.Indicators
         {
             int result = this.RecordCount;
 
-            foreach (BaseColumn column in Columns)
+            foreach (BaseCachedColumn column in Columns)
             {
                 if (column is Indicator)
                 {
@@ -90,11 +90,11 @@ namespace Encog.App.Quant.Indicators
                 tw = new StreamWriter(filename);
 
                 // write the headers
-                if (this.InputHeaders)
+                if (this.ExpectInputHeaders)
                 {
                     StringBuilder line = new StringBuilder();
 
-                    foreach (BaseColumn column in Columns)
+                    foreach (BaseCachedColumn column in Columns)
                     {
                         if (column.Output)
                         {
@@ -118,7 +118,7 @@ namespace Encog.App.Quant.Indicators
                 {
                     StringBuilder line = new StringBuilder();
 
-                    foreach( BaseColumn column in Columns)
+                    foreach (BaseCachedColumn column in Columns)
                     {
                         if (column.Output)
                         {
@@ -141,7 +141,7 @@ namespace Encog.App.Quant.Indicators
 
         private void AllocateStorage()
         {
-            foreach (BaseColumn column in this.Columns)
+            foreach (BaseCachedColumn column in this.Columns)
             {
                 column.Allocate(this.RecordCount);
             }
@@ -149,7 +149,7 @@ namespace Encog.App.Quant.Indicators
 
         private void CalculateIndicators()
         {
-            foreach (BaseColumn column in this.Columns)
+            foreach (BaseCachedColumn column in this.Columns)
             {
                 if (column.Output)
                 {
@@ -171,10 +171,7 @@ namespace Encog.App.Quant.Indicators
 
         public void Process(String output)
         {
-            if (!Analyzed)
-            {
-                throw new QuantError("File must be analyzed first.");
-            }
+            ValidateAnalyzed();
 
             AllocateStorage();
             ReadCSV();

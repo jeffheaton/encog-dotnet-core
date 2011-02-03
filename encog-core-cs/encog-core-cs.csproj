@@ -67,8 +67,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Quant\Basic\BasicFinancialFile.cs" />
-    <Compile Include="App\Quant\Basic\BaseColumn.cs" />
+    <Compile Include="App\Quant\Basic\BasicFile.cs" />
+    <Compile Include="App\Quant\Basic\BasicCachedFile.cs" />
+    <Compile Include="App\Quant\Basic\BaseCachedColumn.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\ML\BasicMLIndicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="App\Quant\Normalize\NormalizationStats.cs" />
     <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
     <Compile Include="App\Quant\QuantError.cs" />
+    <Compile Include="App\Quant\Segregate\SegregateCSV.cs" />
+    <Compile Include="App\Quant\Segregate\SegregateTargetPercent.cs" />
     <Compile Include="App\Quant\Temporal\TemporalType.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetEvaluate.cs" />
     <Compile Include="App\Script\Commands\CmdFileAdd.cs" />

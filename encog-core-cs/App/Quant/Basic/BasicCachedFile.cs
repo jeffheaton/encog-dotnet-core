@@ -8,31 +8,14 @@ using System.IO;
 
 namespace Encog.App.Quant.Basic
 {
-    public class BasicFinancialFile
+    public class BasicCachedFile: BasicFile
     {
-        public IDictionary<String, BaseColumn> ColumnMapping { get { return columnMapping; } }
-        public IList<BaseColumn> Columns { get { return columns; } }
-        public int Precision { get; set; }
-        public bool Analyzed { get; set; }
-        public String InputFilename { get; set; }
-        public bool InputHeaders { get; set; }
-        public CSVFormat InputFormat { get; set; }
+        public IDictionary<String, BaseCachedColumn> ColumnMapping { get { return columnMapping; } }
+        public IList<BaseCachedColumn> Columns { get { return columns; } }
 
-        private IDictionary<String, BaseColumn> columnMapping = new Dictionary<String, BaseColumn>();
-        private IList<BaseColumn> columns = new List<BaseColumn>();
-        private int recordCount;
+        private IDictionary<String, BaseCachedColumn> columnMapping = new Dictionary<String, BaseCachedColumn>();
+        private IList<BaseCachedColumn> columns = new List<BaseCachedColumn>();
 
-        public int RecordCount
-        {
-            get
-            {
-                if (!Analyzed)
-                {
-                    throw new QuantError("Must analyze file first.");
-                }
-                return this.recordCount;
-            }
-        }
 
         public virtual void Analyze(String input, bool headers, CSVFormat format)
         {
@@ -43,20 +26,21 @@ namespace Encog.App.Quant.Basic
             TextReader reader = null;
             try
             {
-                this.recordCount = 0;
+                int recordCount = 0;
                 reader = new StreamReader(input);
                 while (reader.ReadLine() != null)
-                    this.recordCount++;
+                    recordCount++;
 
                 if (headers)
-                    this.recordCount--;
+                    recordCount--;
+                this.RecordCount = recordCount;
             }
             finally
             {
                 if (reader != null)
                     reader.Close();
                 this.InputFilename = input;
-                this.InputHeaders = headers;
+                this.ExpectInputHeaders = headers;
                 this.InputFormat = format;
             }
 
@@ -130,7 +114,7 @@ namespace Encog.App.Quant.Basic
             return name;
         }
 
-        public void AddColumn(BaseColumn column)
+        public void AddColumn(BaseCachedColumn column)
         {
             this.Columns.Add(column);
             this.ColumnMapping[column.Name] = column;
@@ -141,7 +125,7 @@ namespace Encog.App.Quant.Basic
             if (!this.ColumnMapping.ContainsKey(name))
                 return null;
 
-            BaseColumn column = this.ColumnMapping[name];
+            BaseCachedColumn column = this.ColumnMapping[name];
 
             if (!(column is FileData))
                 return null;

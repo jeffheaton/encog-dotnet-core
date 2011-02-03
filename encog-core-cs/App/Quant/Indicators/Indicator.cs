@@ -6,14 +6,14 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators
 {
-    public abstract class Indicator: BaseColumn
+    public abstract class Indicator : BaseCachedColumn
     {
         public Indicator(String name, bool input, bool output)
             :base(name,input,output)
         {
         }
 
-        public void Require(IDictionary<string, BaseColumn> data, String item)
+        public void Require(IDictionary<string, BaseCachedColumn> data, String item)
         {
             if (!data.ContainsKey(item))
             {
@@ -26,6 +26,6 @@ namespace Encog.App.Quant.Indicators
         public int BeginningIndex { get; set; }
         public int EndingIndex { get; set; }
 
-        public abstract void Calculate(IDictionary<String,BaseColumn> data, int length);
+        public abstract void Calculate(IDictionary<String, BaseCachedColumn> data, int length);
     }
 }
