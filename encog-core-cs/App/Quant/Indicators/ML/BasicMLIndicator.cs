@@ -10,7 +10,7 @@ namespace Encog.App.Quant.Indicators.ML
     public class BasicMLIndicator
     {
         private BasicNetwork method;
-        private EncogNormalize norm;
+        private NormalizeCSV norm;
         private ProcessIndicators indicators;
 
         public ProcessIndicators IndicatorsUsed
@@ -29,7 +29,7 @@ namespace Encog.App.Quant.Indicators.ML
             }
         }
 
-        public EncogNormalize Norm
+        public NormalizeCSV Norm
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Encog.App.Quant.Indicators.ML
             }
         }
 
-        public BasicMLIndicator(BasicNetwork method, EncogNormalize norm, ProcessIndicators indicators)
+        public BasicMLIndicator(BasicNetwork method, NormalizeCSV norm, ProcessIndicators indicators)
         {
             this.method = method;
             this.norm = norm;

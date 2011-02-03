@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Encog.App.Quant.Normalize
 {
-    public class EncogNormalize
+    public class NormalizeCSV
     {
         public int Precision { get; set; }
         public NormalizationStats Stats { get; set; }
@@ -17,7 +17,7 @@ namespace Encog.App.Quant.Normalize
         private CSVFormat sourceFormat;
         private bool sourceHeaders;
 
-        public EncogNormalize()
+        public NormalizeCSV()
         {
             Precision = 10;
         }

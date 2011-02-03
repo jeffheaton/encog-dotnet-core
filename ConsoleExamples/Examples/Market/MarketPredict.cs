@@ -77,7 +77,7 @@ namespace Encog.Examples.Market
             encog.Load(Config.FILENAME);
             BasicNetwork network = (BasicNetwork)encog.Find(Config.MARKET_NETWORK);
 
-            EncogNormalize norm = new EncogNormalize();
+            NormalizeCSV norm = new NormalizeCSV();
             norm.ReadStatsFile(Config.STEP4STATS);
 
             NormalizedFieldStats n = norm.Stats[1];

@@ -95,7 +95,7 @@ namespace Encog.Examples.Market
             // normalize
             if (forTraining)
             {
-                EncogNormalize normalize = new EncogNormalize();
+                NormalizeCSV normalize = new NormalizeCSV();
                 normalize.Analyze(Config.STEP3, true, CSVFormat.ENGLISH);
                 normalize.Stats[0].Action = NormalizationDesired.PassThrough;
                 normalize.Normalize(Config.STEP4);
@@ -103,7 +103,7 @@ namespace Encog.Examples.Market
             }
             else
             {
-                EncogNormalize normalize = new EncogNormalize();
+                NormalizeCSV normalize = new NormalizeCSV();
                 normalize.SetSourceFile(Config.STEP3, true, CSVFormat.ENGLISH);
                 normalize.ReadStatsFile(Config.STEP4STATS);
                 normalize.Normalize(Config.STEP4);

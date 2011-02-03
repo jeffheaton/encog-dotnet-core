@@ -79,9 +79,10 @@
     <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
-    <Compile Include="App\Quant\Normalize\EncogNormalize.cs" />
+    <Compile Include="App\Quant\Normalize\NormalizeCSV.cs" />
     <Compile Include="App\Quant\Normalize\NormalizationDesired.cs" />
     <Compile Include="App\Quant\Normalize\NormalizationStats.cs" />
+    <Compile Include="App\Quant\Normalize\NormalizeArray.cs" />
     <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Segregate\SegregateCSV.cs" />

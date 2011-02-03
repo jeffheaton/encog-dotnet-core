@@ -42,7 +42,7 @@ namespace Encog.Examples.Forest
         /// <summary>
         /// The base directory that all of the data for this example is stored in.
         /// </summary>
-        public const String BASE_DIRECTORY = "d:\\data\\";
+        public const String BASE_DIRECTORY = "c:\\data\\";
 
         /// <summary>
         /// The source data file from which all others are built.  This file can

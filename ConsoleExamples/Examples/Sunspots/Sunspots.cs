@@ -48,6 +48,7 @@ using Encog.Util;
 using Encog.Engine.Util;
 using Encog.Util.Logging;
 using Encog.Util.Simple;
+using Encog.App.Quant.Normalize;
 
 namespace Encog.Examples.Sunspots
 {
@@ -137,21 +138,15 @@ namespace Encog.Examples.Sunspots
 
 
         public void NormalizeSunspots(double lo, double hi)
-        {
-            IInputField ifield;
+        {            
+            NormalizeArray norm = new NormalizeArray();
+            norm.NormalizedHigh = hi;
+            norm.NormalizedLow = lo;
 
             // create arrays to hold the normalized sunspots
-            normalizedSunspots = new double[SUNSPOTS.Length];
-            closedLoopSunspots = new double[SUNSPOTS.Length];
-
-            // normalize the sunspots
-            DataNormalization norm = new DataNormalization();
-            norm.Report = new NullStatusReportable();
-            norm.AddInputField(ifield = new InputFieldArray1D(true, SUNSPOTS));
-            norm.AddOutputField(new OutputFieldRangeMapped(ifield, lo, hi));
-            norm.Storage = new NormalizationStorageArray1D(normalizedSunspots);
-            norm.Process();
-            EngineArray.ArrayCopy(normalizedSunspots, closedLoopSunspots);
+            normalizedSunspots = norm.Process(SUNSPOTS);
+            double[] test = norm.Process(SUNSPOTS);
+            closedLoopSunspots = EngineArray.ArrayCopy(normalizedSunspots);
         }
 
         public INeuralDataSet GenerateTraining()
