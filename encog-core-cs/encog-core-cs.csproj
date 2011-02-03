@@ -86,6 +86,7 @@
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Segregate\SegregateCSV.cs" />
     <Compile Include="App\Quant\Segregate\SegregateTargetPercent.cs" />
+    <Compile Include="App\Quant\Shuffle\ShuffleCSV.cs" />
     <Compile Include="App\Quant\Temporal\TemporalType.cs" />
     <Compile Include="App\Script\Commands\CmdDatasetEvaluate.cs" />
     <Compile Include="App\Script\Commands\CmdFileAdd.cs" />

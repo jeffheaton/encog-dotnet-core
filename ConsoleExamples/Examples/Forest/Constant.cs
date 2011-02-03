@@ -53,6 +53,11 @@ namespace Encog.Examples.Forest
         public const String COVER_TYPE_FILE = BASE_DIRECTORY + "covtype.data";
 
         /// <summary>
+        /// The source file in random order.
+        /// </summary>
+        public const String RANDOM_FILE = BASE_DIRECTORY + "random.csv";
+
+        /// <summary>
         /// 75% of the data will be moved into this file to be used as training data.  The 
         /// data is still in "raw form" in this file.
         /// </summary>

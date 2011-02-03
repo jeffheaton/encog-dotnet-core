@@ -42,6 +42,7 @@ using Encog.Engine;
 using Encog.App.Quant.Segregate;
 using Encog.Util.CSV;
 using Encog.App.Quant.Balance;
+using Encog.App.Quant.Shuffle;
 
 namespace Encog.Examples.Forest
 {
@@ -82,17 +83,25 @@ namespace Encog.Examples.Forest
 
         public void Step1()
         {
-            SegregateCSV seg = new SegregateCSV();
-            seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
-            seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
-            app.WriteLine("Step 1: Generate training and evaluation files");
-            seg.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);            
-            seg.Process();            
+            app.WriteLine("Step 1: Shuffle source file");
+            ShuffleCSV shuffle = new ShuffleCSV();
+            shuffle.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);
+            shuffle.Process(Constant.RANDOM_FILE);
         }
 
         public void Step2()
         {
-            app.WriteLine("Step 2: Balance training to have the same number of each tree");
+            SegregateCSV seg = new SegregateCSV();
+            seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
+            seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
+            app.WriteLine("Step 2: Generate training and evaluation files");
+            seg.Analyze(Constant.RANDOM_FILE, false, CSVFormat.ENGLISH);            
+            seg.Process();            
+        }
+
+        public void Step3()
+        {
+            app.WriteLine("Step 3: Balance training to have the same number of each tree");
             BalanceCSV balance = new BalanceCSV();
             balance.Analyze(Constant.TRAINING_FILE, false, CSVFormat.ENGLISH);
             balance.Process(Constant.BALANCE_FILE, 54, 3000);
@@ -100,9 +109,9 @@ namespace Encog.Examples.Forest
             app.WriteLine(balance.DumpCounts());
         }
 
-        public DataNormalization Step3(bool useOneOf)
+        public DataNormalization Step4(bool useOneOf)
         {
-            app.WriteLine("Step 3: Normalize training data");
+            app.WriteLine("Step 4: Normalize training data");
             IInputField inputElevation;
             IInputField inputAspect;
             IInputField inputSlope;

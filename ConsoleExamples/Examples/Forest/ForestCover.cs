@@ -144,7 +144,8 @@ namespace Encog.Examples.Forest
             GenerateData generate = new GenerateData(this.app);
             generate.Step1();
             generate.Step2();
-            DataNormalization norm = generate.Step3(useOneOf);
+            generate.Step3();
+            DataNormalization norm = generate.Step4(useOneOf);
 
             EncogPersistedCollection encog = new EncogPersistedCollection(
                     Constant.TRAINED_NETWORK_FILE, FileMode.CreateNew);
