@@ -17,6 +17,7 @@ namespace Encog.App.Quant.Basic
         public String InputFilename { get; set; }
         public bool ExpectInputHeaders { get; set; }
         public CSVFormat InputFormat { get; set; }
+        public int ColumnCount { get; set; }
 
         private int recordCount;
 
@@ -67,6 +68,32 @@ namespace Encog.App.Quant.Basic
             {
                 throw new QuantError("File must be analyzed first.");
             }
+        }
+
+        public void WriteRow(TextWriter tw, LoadedRow row)
+        {
+            StringBuilder line = new StringBuilder();
+
+            for (int i = 0; i < this.ColumnCount; i++)
+            {
+                if (i > 0)
+                {
+                    line.Append(",");
+                }
+
+                /*if (nonNumeric[i])
+                {
+                    line.Append("\"");
+                    line.Append(row.Data[i]);
+                    line.Append("\"");
+                }
+                else*/
+                {
+                    line.Append(row.Data[i]);
+                }
+            }
+
+            tw.WriteLine(line.ToString());
         }
 
     }

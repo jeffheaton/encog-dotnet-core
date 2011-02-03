@@ -7,6 +7,8 @@ using Encog.Util.CSV;
 using Encog.App.Quant.Indicators;
 using Encog.App.Quant.Basic;
 using Encog.App.Quant.Indicators.Predictive;
+using Encog.App.Quant.Normalize;
+using Encog.Persist;
 
 namespace TestApp
 {
@@ -17,12 +19,15 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            ProcessIndicators indicators = new ProcessIndicators();
-            indicators.Analyze("d:\\data\\test.csv", true, CSVFormat.ENGLISH);
-            indicators.Columns[1].Output = false;
-            indicators.AddColumn(new MovingAverage(3, true));
-            indicators.AddColumn(new BestReturn(3, true));
-            indicators.Process("d:\\data\\test2.csv");
+            /*EncogNormalize norm = new EncogNormalize();
+            norm.Analyze("d:\\data\\ge.csv",true,CSVFormat.ENGLISH);
+            norm.Normalize("d:\\data\\ge.norm");*/
+            EncogMemoryCollection encog = new EncogMemoryCollection();
+            //encog.Add("stats", norm.Stats);
+            encog.Load("c:\\temp\\step5_network.eg");
+            NormalizationStats stats = (NormalizationStats)encog.Find("stat");
+            Console.WriteLine(stats);
+
         }
     }
 }

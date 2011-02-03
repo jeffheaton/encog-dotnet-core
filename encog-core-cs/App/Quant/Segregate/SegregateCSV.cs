@@ -6,13 +6,38 @@ using Encog.Util.CSV;
 using System.Collections;
 using System.IO;
 using Encog.App.Quant.Basic;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.App.Quant.Segregate
 {
-    public class SortCSV : BasicFile
+    public class SegregateCSV : BasicFile
     {
         public IList<SegregateTargetPercent> Targets { get { return this.targets; } }
+        public bool RandomOrder { get; set; }
         private IList<SegregateTargetPercent> targets = new List<SegregateTargetPercent>();
+        private int bufferSize;
+        private LoadedRow[] buffer;
+        private int remaining;
+
+        private int BufferSize
+        {
+            get
+            {
+                return this.bufferSize;
+            }
+            set
+            {
+                this.bufferSize = value;
+                this.buffer = new LoadedRow[this.bufferSize];
+            }
+        }
+
+        public SegregateCSV()
+        {
+            this.BufferSize = 500;
+            this.RandomOrder = true;
+        }
+
 
         private void Validate()
         {
@@ -38,22 +63,6 @@ namespace Encog.App.Quant.Segregate
             {
                 throw new QuantError("Target percents must equal 100.");
             }            
-        }
-
-        private void OpenTargetFiles()
-        {
-            foreach (SegregateTargetPercent p in this.targets)
-            {
-                p.TargetFile = this.PrepareOutputFile(p.Filename);
-            }
-        }
-
-        private void CloseTargetFiles()
-        {
-            foreach (SegregateTargetPercent p in this.targets)
-            {
-                p.TargetFile.Close();
-            }
         }
 
         private void BalanceTargets()
@@ -91,7 +100,7 @@ namespace Encog.App.Quant.Segregate
 
         }
 
-        public void Analyze(String inputFile, String outputFile, bool headers, CSVFormat format)
+        public void Analyze(String inputFile, bool headers, CSVFormat format)
         {
             this.InputFilename = inputFile;
             this.ExpectInputHeaders = headers;
@@ -106,6 +115,8 @@ namespace Encog.App.Quant.Segregate
                 recordCount++;
             }
 
+            this.ColumnCount = csv.GetColumnCount();
+
             if (this.ExpectInputHeaders)
             {
                 this.InputHeadings = new String[csv.ColumnNames.Count];
@@ -117,24 +128,67 @@ namespace Encog.App.Quant.Segregate
             csv.Close();
 
             this.RecordCount = recordCount;
-
+            BalanceTargets();
         }
 
-        public void Process(String outputFile)
+        private void LoadBuffer(ReadCSV csv)
+        {
+            for (int i = 0; i < this.buffer.Length; i++)
+                this.buffer[i] = null;
+
+            int index = 0;
+            while ( csv.Next() && (index<this.bufferSize) )
+            {
+                LoadedRow row = new LoadedRow(csv);
+                buffer[index++] = row;
+            }
+
+            this.remaining = index;
+        }
+
+        private LoadedRow GetNextRow(ReadCSV csv)
+        {
+            if( remaining==0 )
+            {
+                LoadBuffer(csv);
+            }
+
+            while (remaining > 0)
+            {
+                int index = RangeRandomizer.RandomInt(0, this.bufferSize-1);
+                if (this.buffer[index]!=null)
+                {
+                    LoadedRow result = this.buffer[index];
+                    this.buffer[index] = null;
+                    this.remaining--;
+                    return result;
+                }
+            }
+            return null;            
+        }
+
+        
+        public void Process()
         {            
             Validate();
-            OpenTargetFiles();
+
+            IList<LoadedRow> result = new List<LoadedRow>();
 
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
-            while (csv.Next())
-            {
-                
-                
+            
+            foreach(SegregateTargetPercent target in this.targets) {
+                TextWriter tw = this.PrepareOutputFile(target.Filename);
+                LoadedRow row;
+                while (target.NumberRemaining > 0 && (row = GetNextRow(csv)) != null)
+                {
+                    WriteRow(tw, row);
+                    target.NumberRemaining--;
+                }
+
+                tw.Close();
             }
          
             csv.Close();
-
-            CloseTargetFiles();
         }
     }
 }

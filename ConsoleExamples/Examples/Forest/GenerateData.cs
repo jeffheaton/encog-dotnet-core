@@ -39,6 +39,8 @@ using Encog.Normalize.Output;
 using Encog.Normalize.Segregate.Index;
 using Encog.Normalize.Segregate;
 using Encog.Engine;
+using Encog.App.Quant.Segregate;
+using Encog.Util.CSV;
 
 namespace Encog.Examples.Forest
 {
@@ -77,27 +79,7 @@ namespace Encog.Examples.Forest
             norm.AddOutputField(outType, true);
         }
 
-        public void Copy(String source, String target, int start, int stop, int size)
-        {
-            IInputField[] inputField = new IInputField[55];
-
-            DataNormalization norm = new DataNormalization();
-            norm.Report = this;
-            norm.Storage = new NormalizationStorageCSV(target);
-            for (int i = 0; i < 55; i++)
-            {
-                inputField[i] = new InputFieldCSV(true, source, i);
-                norm.AddInputField(inputField[i]);
-                IOutputField outputField = new OutputFieldDirect(inputField[i]);
-                norm.AddOutputField(outputField);
-            }
-
-            // load only the part we actually want, i.e. training or eval
-            IndexSampleSegregator segregator2 = new IndexSampleSegregator(start, stop, size);
-            norm.AddSegregator(segregator2);
-
-            norm.Process();
-        }
+        
 
         public void Narrow(String source, String target, int field, int count)
         {
@@ -124,11 +106,14 @@ namespace Encog.Examples.Forest
 
         public void Step1()
         {
+            SegregateCSV seg = new SegregateCSV();
+            seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
+            seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
+            seg.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);
+            seg.Process();
             app.WriteLine("Step 1: Generate training and evaluation files");
             app.WriteLine("Generate training file");
-            Copy(Constant.COVER_TYPE_FILE, Constant.TRAINING_FILE, 0, 2, 4); // take 3/4
             app.WriteLine("Generate evaluation file");
-            Copy(Constant.COVER_TYPE_FILE, Constant.EVALUATE_FILE, 3, 3, 4); // take 1/4
         }
 
         public void Step2()

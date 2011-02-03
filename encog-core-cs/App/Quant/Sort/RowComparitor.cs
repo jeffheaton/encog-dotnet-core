@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Sort
 {

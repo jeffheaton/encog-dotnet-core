@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 
-namespace Encog.App.Quant.Sort
+namespace Encog.App.Quant.Basic
 {
     public class LoadedRow
     {

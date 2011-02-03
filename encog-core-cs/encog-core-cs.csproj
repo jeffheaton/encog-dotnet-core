@@ -112,7 +112,7 @@
     <Compile Include="App\Script\Objects\ScriptNetwork.cs" />
     <Compile Include="App\Script\ParseLine.cs" />
     <Compile Include="App\Script\ScriptError.cs" />
-    <Compile Include="App\Quant\Sort\LoadedRow.cs" />
+    <Compile Include="App\Quant\Basic\LoadedRow.cs" />
     <Compile Include="App\Quant\Sort\RowComparitor.cs" />
     <Compile Include="App\Quant\Sort\SortCSV.cs" />
     <Compile Include="App\Quant\Sort\SortedField.cs" />

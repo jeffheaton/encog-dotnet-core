@@ -4,6 +4,6 @@
     <StartArguments>-pause xor-rprop</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause market predict</StartArguments>
+    <StartArguments>-pause forest generate o</StartArguments>
   </PropertyGroup>
 </Project>
