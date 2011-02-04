@@ -42,7 +42,7 @@ namespace Encog.Examples.Forest
         /// <summary>
         /// The base directory that all of the data for this example is stored in.
         /// </summary>
-        public const String BASE_DIRECTORY = "c:\\data\\";
+        public const String BASE_DIRECTORY = "d:\\data\\";
 
         /// <summary>
         /// The source data file from which all others are built.  This file can
@@ -56,6 +56,9 @@ namespace Encog.Examples.Forest
         /// The source file in random order.
         /// </summary>
         public const String RANDOM_FILE = BASE_DIRECTORY + "random.csv";
+
+
+        public const String CLASSIFY_FILE = BASE_DIRECTORY + "classify.csv";
 
         /// <summary>
         /// 75% of the data will be moved into this file to be used as training data.  The 

@@ -71,6 +71,9 @@
     <Compile Include="App\Quant\Basic\BasicFile.cs" />
     <Compile Include="App\Quant\Basic\BasicCachedFile.cs" />
     <Compile Include="App\Quant\Basic\BaseCachedColumn.cs" />
+    <Compile Include="App\Quant\Classify\ClassifyCSV.cs" />
+    <Compile Include="App\Quant\Classify\ClassifyMethod.cs" />
+    <Compile Include="App\Quant\Classify\ClassItem.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\ML\BasicMLIndicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -622,6 +625,7 @@
     <None Include="App\Quant\Normalize\.svn\text-base\NormalizedFieldStats.cs.svn-base" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Quant\NewFolder1\" />
     <Folder Include="App\Quant\Normalize\.svn\prop-base\" />
     <Folder Include="App\Quant\Normalize\.svn\props\" />
     <Folder Include="App\Quant\Normalize\.svn\tmp\prop-base\" />

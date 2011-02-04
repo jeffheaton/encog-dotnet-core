@@ -43,6 +43,7 @@ using Encog.App.Quant.Segregate;
 using Encog.Util.CSV;
 using Encog.App.Quant.Balance;
 using Encog.App.Quant.Shuffle;
+using Encog.App.Quant.Classify;
 
 namespace Encog.Examples.Forest
 {
@@ -109,9 +110,17 @@ namespace Encog.Examples.Forest
             app.WriteLine(balance.DumpCounts());
         }
 
-        public DataNormalization Step4(bool useOneOf)
+        public void Step4()
         {
-            app.WriteLine("Step 4: Normalize training data");
+            app.WriteLine("Step 4: Classify training data");
+            ClassifyCSV cls = new ClassifyCSV();
+            cls.Analyze(Constant.BALANCE_FILE, false, CSVFormat.ENGLISH, 54);
+            cls.Process(Constant.CLASSIFY_FILE, ClassifyMethod.Equilateral, -1, false);
+        }
+
+        public DataNormalization Step5(bool useOneOf)
+        {
+            app.WriteLine("Step 5: Normalize training data");
             IInputField inputElevation;
             IInputField inputAspect;
             IInputField inputSlope;
