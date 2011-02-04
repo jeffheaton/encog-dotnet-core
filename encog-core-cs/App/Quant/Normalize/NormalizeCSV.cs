@@ -120,7 +120,7 @@ namespace Encog.App.Quant.Normalize
                 foreach (NormalizedFieldStats stat in this.Stats.Data)
                 {
                     String str = csv.Get(index++);
-                    if (line.Length > 0)
+                    if (line.Length > 0 && stat.Action != NormalizationDesired.Ignore)
                         line.Append(this.sourceFormat.Separator);
                     switch (stat.Action)
                     {
@@ -152,11 +152,15 @@ namespace Encog.App.Quant.Normalize
             StringBuilder line = new StringBuilder();
             foreach (NormalizedFieldStats stat in this.Stats.Data)
             {
-                if (line.Length > 0)
+                if (line.Length > 0 && stat.Action != NormalizationDesired.Ignore)
                     line.Append(this.sourceFormat.Separator);
-                line.Append("\"");
-                line.Append(stat.Name);
-                line.Append("\"");
+
+                if (stat.Action != NormalizationDesired.Ignore)
+                {
+                    line.Append("\"");
+                    line.Append(stat.Name);
+                    line.Append("\"");
+                }
             }
             tw.WriteLine(line.ToString());
         }
@@ -190,7 +194,7 @@ namespace Encog.App.Quant.Normalize
                     foreach (NormalizedFieldStats stat in this.Stats.Data)
                     {
                         String str = csv.Get(index++);
-                        if (line.Length > 0)
+                        if (line.Length > 0 && stat.Action!=NormalizationDesired.Ignore)
                             line.Append(this.sourceFormat.Separator);
                         switch (stat.Action)
                         {

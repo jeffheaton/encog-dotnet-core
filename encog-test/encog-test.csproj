@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encog\App\Quant\TestNormalizeArray.cs" />
     <Compile Include="Encog\Bot\Browse\TestAddress.cs" />
     <Compile Include="Encog\Bot\Browse\TestBrowse.cs" />
     <Compile Include="Encog\Bot\Browse\TestWebPageData.cs" />
