@@ -32,8 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks;
-using Encog.Normalize;
-using Encog.Normalize.Output.Nominal;
 using Encog.Neural.Data;
 using System.IO;
 using Encog.Persist;
@@ -84,59 +82,22 @@ namespace Encog.Examples.Forest
             return network;
         }
 
-
-
-        public DataNormalization LoadNormalization()
+        public INeuralData BuildForNetworkInput(double[] input)
         {
-            String file = Constant.TRAINED_NETWORK_FILE;
-
-            EncogPersistedCollection encog = new EncogPersistedCollection(file, FileMode.Open);
-
-            DataNormalization norm = (DataNormalization)encog.Find(Constant.NORMALIZATION_NAME);
-            if (norm == null)
-            {
-                app.WriteLine("Can't find normalization resource: " + Constant.NORMALIZATION_NAME);
-                return null;
-            }
-
-            return norm;
+            return null;
         }
 
-        public int DetermineTreeType(OutputEquilateral eqField, INeuralData output)
+        public int DetermineTreeType(INeuralData output)
         {
-            int result = 0;
-
-            if (eqField != null)
-            {
-                result = eqField.Equilateral.Decode(output.Data);
-            }
-            else
-            {
-                double maxOutput = double.NegativeInfinity;
-                result = -1;
-
-                for (int i = 0; i < output.Count; i++)
-                {
-                    if (output.Data[i] > maxOutput)
-                    {
-                        maxOutput = output.Data[i];
-                        result = i;
-                    }
-                }
-            }
-
-            return result;
+            return 0;
         }
-
 
         public void PerformEvaluate()
         {
             BasicNetwork network = LoadNetwork();
-            DataNormalization norm = LoadNormalization();
-
+          
             ReadCSV csv = new ReadCSV(Constant.EVALUATE_FILE.ToString(), false, ',');
-            double[] input = new double[norm.InputFields.Count];
-            OutputEquilateral eqField = (OutputEquilateral)norm.FindOutputField(typeof(OutputEquilateral), 0);
+            double[] input = new double[Constant.INPUT_COUNT];
 
             int correct = 0;
             int total = 0;
@@ -147,9 +108,10 @@ namespace Encog.Examples.Forest
                 {
                     input[i] = csv.GetDouble(i);
                 }
-                INeuralData inputData = norm.BuildForNetworkInput(input);
+
+                INeuralData inputData = BuildForNetworkInput(input);
                 INeuralData output = network.Compute(inputData);
-                int coverTypeActual = DetermineTreeType(eqField, output);
+                int coverTypeActual = DetermineTreeType(output);
                 int coverTypeIdeal = (int)csv.GetDouble(54) - 1;
 
                 KeepScore(coverTypeActual, coverTypeIdeal);
