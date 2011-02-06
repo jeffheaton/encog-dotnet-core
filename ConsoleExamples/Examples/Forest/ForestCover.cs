@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util.Logging;
-using Encog.Normalize;
 using Encog.Persist;
 using System.IO;
 using ConsoleExamples.Examples;

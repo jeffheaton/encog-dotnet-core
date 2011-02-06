@@ -36,7 +36,6 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Logic;
 using Encog.Persist;
-using Encog.Normalize;
 using Encog.Neural.Data.Buffer;
 using Encog.Util.Simple;
 using System.IO;

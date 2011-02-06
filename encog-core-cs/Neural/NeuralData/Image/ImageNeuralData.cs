@@ -34,7 +34,6 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Data.Basic;
 using System.Drawing;
-using Encog.Normalize.Output;
 using Encog.Util.DownSample;
 
 namespace Encog.Neural.NeuralData.Image
@@ -92,8 +91,8 @@ namespace Encog.Neural.NeuralData.Image
 
             for (int i = 0; i < sample.Length; i++)
             {
-                sample[i] = OutputFieldRangeMapped.Calculate(sample[i], 0,
-                        255, hi, lo);
+                //sample[i] = OutputFieldRangeMapped.Calculate(sample[i], 0,
+                  //      255, hi, lo);
             }
 
             this.Data = sample;

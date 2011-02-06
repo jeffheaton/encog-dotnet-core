@@ -5,10 +5,6 @@ using System.Text;
 using ConsoleExamples.Examples;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks;
-using Encog.Normalize.Input;
-using Encog.Normalize;
-using Encog.Normalize.Output;
-using Encog.Normalize.Target;
 using Encog.Neural.NeuralData.Temporal;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
@@ -20,6 +16,7 @@ using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Util.Logging;
+using Encog.App.Quant.Normalize;
 
 namespace Encog.Examples.CL
 {
@@ -110,19 +107,11 @@ namespace Encog.Examples.CL
 
         public void NormalizeSunspots(double lo, double hi)
         {
-            IInputField ifield;
-
+            NormalizeArray norm = new NormalizeArray();
+            
             // create arrays to hold the normalized sunspots
-            normalizedSunspots = new double[SUNSPOTS.Length];
-            closedLoopSunspots = new double[SUNSPOTS.Length];
-
-            // normalize the sunspots
-            DataNormalization norm = new DataNormalization();
-            norm.Report = new NullStatusReportable();
-            norm.AddInputField(ifield = new InputFieldArray1D(true, SUNSPOTS));
-            norm.AddOutputField(new OutputFieldRangeMapped(ifield, lo, hi));
-            norm.Storage = new NormalizationStorageArray1D(normalizedSunspots);
-            norm.Process();
+            normalizedSunspots = norm.Process(SUNSPOTS);
+            closedLoopSunspots = EngineArray.ArrayCopy(normalizedSunspots);
             EngineArray.ArrayCopy(normalizedSunspots, closedLoopSunspots);
         }
 
