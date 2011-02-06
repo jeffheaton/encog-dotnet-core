@@ -73,7 +73,9 @@
     <Compile Include="App\Quant\Basic\BaseCachedColumn.cs" />
     <Compile Include="App\Quant\Classify\ClassifyCSV.cs" />
     <Compile Include="App\Quant\Classify\ClassifyMethod.cs" />
+    <Compile Include="App\Quant\Classify\ClassifyStats.cs" />
     <Compile Include="App\Quant\Classify\ClassItem.cs" />
+    <Compile Include="App\Quant\Filter\FilterCSV.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\ML\BasicMLIndicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\Segregate\SegregateCSV.cs" />
+    <Compile Include="App\Quant\Segregate\SegregateFieldCompare.cs" />
+    <Compile Include="App\Quant\Filter\ExcludedField.cs" />
     <Compile Include="App\Quant\Segregate\SegregateTargetPercent.cs" />
     <Compile Include="App\Quant\Shuffle\ShuffleCSV.cs" />
     <Compile Include="App\Quant\Temporal\TemporalType.cs" />
@@ -625,7 +629,6 @@
     <None Include="App\Quant\Normalize\.svn\text-base\NormalizedFieldStats.cs.svn-base" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Quant\NewFolder1\" />
     <Folder Include="App\Quant\Normalize\.svn\prop-base\" />
     <Folder Include="App\Quant\Normalize\.svn\props\" />
     <Folder Include="App\Quant\Normalize\.svn\tmp\prop-base\" />

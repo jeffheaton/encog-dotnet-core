@@ -106,5 +106,17 @@ namespace Encog.App.Quant.Normalize
             return result;
         }
 
+        public void FixSingleValue()
+        {
+            if (Action == NormalizationDesired.Normalize)
+            {
+                if (Math.Abs(ActualHigh - ActualLow) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                {
+                    ActualHigh += 1;
+                    ActualLow -= 1;
+                }
+            }
+        }
+
     }
 }

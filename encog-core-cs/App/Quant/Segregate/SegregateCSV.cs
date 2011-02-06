@@ -38,7 +38,7 @@ namespace Encog.App.Quant.Segregate
             if (total != 100)
             {
                 throw new QuantError("Target percents must equal 100.");
-            }            
+            }
         }
 
         private void BalanceTargets()
@@ -49,18 +49,21 @@ namespace Encog.App.Quant.Segregate
             // first try to assign as many as can be assigned
             foreach (SegregateTargetPercent p in this.targets)
             {
-                // assign a number of records to this 
-                double percent = p.Percent / 100.0;
-                int c = (int)(this.RecordCount * percent);
-                p.NumberRemaining = c;
+                    SegregateTargetPercent stp = (SegregateTargetPercent)p;
 
-                // track the smallest group
-                if (smallestItem == null || smallestItem.Percent > p.Percent)
-                {
-                    smallestItem = p;
-                }             
+                    // assign a number of records to this 
+                    double percent = stp.Percent / 100.0;
+                    int c = (int)(this.RecordCount * percent);
+                    stp.NumberRemaining = c;
 
-                numberAssigned+=c;
+                    // track the smallest group
+                    if (smallestItem == null || smallestItem.Percent > stp.Percent)
+                    {
+                        smallestItem = stp;
+                    }
+
+                    numberAssigned += c;
+                
             }
 
             // see if there are any remaining items
@@ -71,9 +74,6 @@ namespace Encog.App.Quant.Segregate
             {
                 smallestItem.NumberRemaining += remain;
             }
-
-
-
         }
 
         public void Analyze(String inputFile, bool headers, CSVFormat format)
@@ -89,26 +89,27 @@ namespace Encog.App.Quant.Segregate
             BalanceTargets();
         }
 
-        
+
         public void Process()
-        {            
+        {
             Validate();
 
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
-            
-            foreach(SegregateTargetPercent target in this.targets) {
-                TextWriter tw = this.PrepareOutputFile(target.Filename);
 
-                while (target.NumberRemaining > 0 && csv.Next())
-                {
-                    LoadedRow row = new LoadedRow(csv);
-                    WriteRow(tw, row);
-                    target.NumberRemaining--;
-                }
+            foreach (SegregateTargetPercent target in this.targets)
+            {
+                    TextWriter tw = this.PrepareOutputFile(target.Filename);
 
-                tw.Close();
+                    while (target.NumberRemaining > 0 && csv.Next())
+                    {
+                        LoadedRow row = new LoadedRow(csv);
+                        WriteRow(tw, row);
+                        target.NumberRemaining--;
+                    }
+
+                    tw.Close();                
             }
-         
+
             csv.Close();
         }
     }

@@ -75,5 +75,13 @@ namespace Encog.App.Quant.Normalize
         {
             return new NormalizationStatsPersistor();
         }
+
+        public void FixSingleValue()
+        {
+            foreach (NormalizedFieldStats stat in this.stats)
+            {
+                stat.FixSingleValue();
+            }
+        }
     }
 }

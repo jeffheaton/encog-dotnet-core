@@ -12,26 +12,26 @@ namespace Encog.App.Quant.Classify
 {
     public class ClassifyCSV: BasicFile
     {
+        private ClassifyStats classify;
+
+        public ClassifyStats Stats
+        {
+            get
+            {
+                return this.classify;
+            }
+        }
 
         public bool KeyIsNumeric
         {
             get { return this.KeyIsNumeric; }            
         }
 
-        public IList<ClassItem> Classes { get { return this.Classes; } }
-        public int ClassField { get; set; }
-        public double High { get; set; }
-        public double Low { get; set; }
-
-        private bool keyIsNumeric;
-        private IList<ClassItem> classes = new List<ClassItem>();
-        private Equilateral eq;
-        private IDictionary<String, int> lookup = new Dictionary<String, int>();
-
         public ClassifyCSV()
         {
-            High = 1;
-            Low = -1;
+            this.classify = new ClassifyStats();
+            this.classify.High = 1;
+            this.classify.Low = -1;
         }
 
         public void Analyze(String inputFile, bool headers, CSVFormat format,int classField)
@@ -40,7 +40,7 @@ namespace Encog.App.Quant.Classify
             this.InputFilename = inputFile;
             this.ExpectInputHeaders = headers;
             this.InputFormat = format;
-            this.ClassField = classField;
+            this.classify.ClassField = classField;
 
             this.Analyzed = true;
 
@@ -60,30 +60,31 @@ namespace Encog.App.Quant.Classify
             csv.Close();
 
             // determine if class is numeric
-            this.keyIsNumeric = true;
+            this.classify.IsNumeric = true;
             foreach (String key in classesFound)
             {
                 int d;
                 if (!int.TryParse(key, out d))
                 {
-                    this.keyIsNumeric = false;
+                    this.classify.IsNumeric = false;
                     break;
                 }
             }
 
             // sort either by string or numeric
-            if (keyIsNumeric)
+            this.classify.Classes.Clear();
+            if (this.classify.IsNumeric)
             {
                 // sort numeric
                 int[] temp = new int[classesFound.Count];
                 for (int i = 0; i < classesFound.Count; i++)
                     temp[i] = int.Parse(classesFound[i]);
                 Array.Sort(temp);
-
+                
                 // create classes
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    this.classes.Add(new ClassItem(""+temp[i],i));
+                    this.classify.Classes.Add(new ClassItem(""+temp[i],i));
                 }
             }
             else
@@ -97,21 +98,17 @@ namespace Encog.App.Quant.Classify
                 // create classes
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    this.classes.Add(new ClassItem(temp[i], i));
+                    this.classify.Classes.Add(new ClassItem(temp[i], i));
                 }
             }
 
-            // build lookup map
-            for (int i = 0; i < classes.Count; i++)
-            {
-                this.lookup[classes[i].Name] = this.lookup.Count;
-            }
+            this.classify.Init();
         }
 
         private String EncodeOneOf(int classNumber)
         {
             StringBuilder result = new StringBuilder();
-            for (int i = 0; i < this.classes.Count; i++)
+            for (int i = 0; i < this.classify.Classes.Count; i++)
             {
                 if (i > 0)
                 {
@@ -120,11 +117,11 @@ namespace Encog.App.Quant.Classify
 
                 if (i == classNumber)
                 {
-                    result.Append(High);
+                    result.Append(this.classify.High);
                 }
                 else
                 {
-                    result.Append(Low);
+                    result.Append(this.classify.Low);
                 }
             }
             return result.ToString();
@@ -133,7 +130,7 @@ namespace Encog.App.Quant.Classify
         private String EncodeEquilateral(int classNumber)
         {
             StringBuilder result = new StringBuilder();
-            double[] d = this.eq.Encode(classNumber);
+            double[] d = this.classify.EquilateralEncode.Encode(classNumber);
             NumberList.ToList(this.InputFormat, result, d);
             return result.ToString();
         }
@@ -164,14 +161,15 @@ namespace Encog.App.Quant.Classify
         {
             ValidateAnalyzed();
 
+            this.Stats.Method = method;
             TextWriter tw = this.PrepareOutputFile(outputFile);
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
-            this.eq = new Equilateral(this.classes.Count, High, Low);
+            this.classify.Init();
 
             while (csv.Next())
             {
                 StringBuilder line = new StringBuilder();
-                int classNumber = this.lookup[csv.Get(this.ClassField)];
+                int classNumber = this.classify.Lookup( csv.Get(this.classify.ClassField) );
                 bool inserted = false;
 
                 for (int i = 0; i < this.ColumnCount; i++)
@@ -188,7 +186,7 @@ namespace Encog.App.Quant.Classify
                         inserted = true;
                     }
 
-                    if (!includeOrigional && i == this.ClassField)
+                    if (!includeOrigional && i == this.classify.ClassField)
                     {
                         continue;
                     }
@@ -209,6 +207,8 @@ namespace Encog.App.Quant.Classify
 
             csv.Close();
             tw.Close();
+
+            this.classify.Init();
         }
     }
 }

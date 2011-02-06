@@ -55,10 +55,17 @@ namespace Encog.Examples.Forest
         /// <summary>
         /// The source file in random order.
         /// </summary>
+        public const String FILTERED_FILE = BASE_DIRECTORY + "filtered.csv";
+
+        /// <summary>
+        /// The source file in random order.
+        /// </summary>
         public const String RANDOM_FILE = BASE_DIRECTORY + "random.csv";
 
 
         public const String CLASSIFY_FILE = BASE_DIRECTORY + "classify.csv";
+
+        public const String CLASSIFY_STATS_FILE = BASE_DIRECTORY + "classify-stats.csv";
 
         /// <summary>
         /// 75% of the data will be moved into this file to be used as training data.  The 
@@ -85,10 +92,15 @@ namespace Encog.Examples.Forest
         public const String NORMALIZED_FILE = BASE_DIRECTORY + "normalized.csv";
 
         /// <summary>
+        /// The training file is normalized and placed into this file.
+        /// </summary>
+        public const String NORMALIZED_STATS_FILE = BASE_DIRECTORY + "normalized-stats.csv";
+
+        /// <summary>
         /// CSV files are slow to parse with because the text must be converted into numbers.
         /// The balanced file will be converted to a binary file to be used for training.
         /// </summary>
-        public const String BINARY_FILE = BASE_DIRECTORY + "normalized.bin";
+        public const String BINARY_FILE = BASE_DIRECTORY + "normalized.egb";
 
         /// <summary>
         /// The trained network and normalizer will be saved into an Encog EG file.
@@ -109,6 +121,11 @@ namespace Encog.Examples.Forest
         /// How many minutes to train for (console mode only)
         /// </summary>
         public const int TRAINING_MINUTES = 10;
+
+        /// <summary>
+        /// How many input neurons to use.
+        /// </summary>
+        public const int INPUT_COUNT = 50;
 
         /// <summary>
         /// How many hidden neurons to use.

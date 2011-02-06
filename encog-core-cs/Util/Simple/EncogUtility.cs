@@ -81,7 +81,7 @@ namespace Encog.Util.Simple
             CSVNeuralDataSet csv = new CSVNeuralDataSet(csvFile.ToString(),
                    inputCount, outputCount, false);
             BufferedNeuralDataSet buffer = new BufferedNeuralDataSet(binFile);
-            buffer.BeginLoad(50, 6);
+            buffer.BeginLoad(inputCount, outputCount);
             foreach (INeuralDataPair pair in csv)
             {
                 buffer.Add(pair);

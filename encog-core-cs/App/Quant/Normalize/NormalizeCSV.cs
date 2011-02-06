@@ -53,7 +53,10 @@ namespace Encog.App.Quant.Normalize
                 for (int i = 0; i < fieldCount; i++)
                 {
                     Stats[i] = new NormalizedFieldStats();
-                    Stats[i].Name = csv.ColumnNames[i];
+                    if (headers)
+                        Stats[i].Name = csv.ColumnNames[i];
+                    else
+                        Stats[i].Name = "field-" + i;
                 }
 
                 // Read entire file to analyze
@@ -170,6 +173,7 @@ namespace Encog.App.Quant.Normalize
             if (this.Stats.Count<1 )
                 throw new EncogError("Can't normalize yet, file has not been analyzed.");
 
+            Stats.FixSingleValue();
 
             ReadCSV csv = null;
             TextWriter tw = null;

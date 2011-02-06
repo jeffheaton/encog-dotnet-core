@@ -44,6 +44,10 @@ using Encog.Util.CSV;
 using Encog.App.Quant.Balance;
 using Encog.App.Quant.Shuffle;
 using Encog.App.Quant.Classify;
+using Encog.App.Quant.Normalize;
+using Encog.Util.Simple;
+using Encog.App.Quant.Filter;
+using Encog.Engine.Util;
 
 namespace Encog.Examples.Forest
 {
@@ -56,134 +60,107 @@ namespace Encog.Examples.Forest
             this.app = app;
         }
 
-        public void BuildOutputOneOf(DataNormalization norm, IInputField coverType)
-        {
-            OutputOneOf outType = new OutputOneOf(0.9, 0.1);
-            outType.AddItem(coverType, 1);
-            outType.AddItem(coverType, 2);
-            outType.AddItem(coverType, 3);
-            outType.AddItem(coverType, 4);
-            outType.AddItem(coverType, 5);
-            outType.AddItem(coverType, 6);
-            outType.AddItem(coverType, 7);
-            norm.AddOutputField(outType, true);
-        }
-
-        public void BuildOutputEquilateral(DataNormalization norm, IInputField coverType)
-        {
-            OutputEquilateral outType = new OutputEquilateral(0.9, 0.1);
-            outType.AddItem(coverType, 1);
-            outType.AddItem(coverType, 2);
-            outType.AddItem(coverType, 3);
-            outType.AddItem(coverType, 4);
-            outType.AddItem(coverType, 5);
-            outType.AddItem(coverType, 6);
-            outType.AddItem(coverType, 7);
-            norm.AddOutputField(outType, true);
-        }
-
         public void Step1()
         {
-            app.WriteLine("Step 1: Shuffle source file");
-            ShuffleCSV shuffle = new ShuffleCSV();
-            shuffle.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);
-            shuffle.Process(Constant.RANDOM_FILE);
+            app.WriteLine("Step 1: Filter to single wilderness area");
+            FilterCSV filter = new FilterCSV();
+            filter.Analyze(Constant.COVER_TYPE_FILE, false, CSVFormat.ENGLISH);
+            //filter.Exclude(10, "1");
+            filter.Exclude(11, "1");
+            filter.Exclude(12, "1");
+            filter.Exclude(13, "1");
+            filter.Process(Constant.FILTERED_FILE);
+            app.WriteLine("Origional row count: " + Format.FormatInteger(filter.RecordCount) + ", Filtered row count:" + Format.FormatInteger(filter.FilteredRowCount));
         }
 
         public void Step2()
         {
-            SegregateCSV seg = new SegregateCSV();
-            seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
-            seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
-            app.WriteLine("Step 2: Generate training and evaluation files");
-            seg.Analyze(Constant.RANDOM_FILE, false, CSVFormat.ENGLISH);            
-            seg.Process();            
+            app.WriteLine("Step 2: Shuffle source file");
+            ShuffleCSV shuffle = new ShuffleCSV();
+            shuffle.Analyze(Constant.FILTERED_FILE, false, CSVFormat.ENGLISH);
+            shuffle.Process(Constant.RANDOM_FILE);
         }
 
         public void Step3()
         {
-            app.WriteLine("Step 3: Balance training to have the same number of each tree");
-            BalanceCSV balance = new BalanceCSV();
-            balance.Analyze(Constant.TRAINING_FILE, false, CSVFormat.ENGLISH);
-            balance.Process(Constant.BALANCE_FILE, 54, 3000);
-            app.WriteLine("Count per Tree:");
-            app.WriteLine(balance.DumpCounts());
+            SegregateCSV seg = new SegregateCSV();
+            seg.Targets.Add(new SegregateTargetPercent(Constant.TRAINING_FILE, 75));
+            seg.Targets.Add(new SegregateTargetPercent(Constant.EVALUATE_FILE, 25));
+            app.WriteLine("Step 3: Generate training and evaluation files");
+            seg.Analyze(Constant.RANDOM_FILE, false, CSVFormat.ENGLISH);            
+            seg.Process();            
         }
 
         public void Step4()
         {
-            app.WriteLine("Step 4: Classify training data");
-            ClassifyCSV cls = new ClassifyCSV();
-            cls.Analyze(Constant.BALANCE_FILE, false, CSVFormat.ENGLISH, 54);
-            cls.Process(Constant.CLASSIFY_FILE, ClassifyMethod.Equilateral, -1, false);
+            app.WriteLine("Step 4: Balance training to have the same number of each tree");
+            BalanceCSV balance = new BalanceCSV();
+            balance.Analyze(Constant.TRAINING_FILE, false, CSVFormat.ENGLISH);
+            balance.Process(Constant.BALANCE_FILE, 54, 500);
+            app.WriteLine("Count per Tree:");
+            app.WriteLine(balance.DumpCounts());
         }
 
-        public DataNormalization Step5(bool useOneOf)
+        public int Step5(ClassifyMethod method)
         {
-            app.WriteLine("Step 5: Normalize training data");
-            IInputField inputElevation;
-            IInputField inputAspect;
-            IInputField inputSlope;
-            IInputField hWater;
-            IInputField vWater;
-            IInputField roadway;
-            IInputField shade9;
-            IInputField shade12;
-            IInputField shade3;
-            IInputField firepoint;
-            IInputField[] wilderness = new IInputField[4];
-            IInputField[] soilType = new IInputField[40];
-            IInputField coverType;
+            app.WriteLine("Step 5: Classify training data");
+            ClassifyCSV cls = new ClassifyCSV();
+            cls.Analyze(Constant.BALANCE_FILE, false, CSVFormat.ENGLISH, 54);
+            cls.Process(Constant.CLASSIFY_FILE, method, -1, false);
+            cls.Stats.WriteStatsFile(Constant.CLASSIFY_STATS_FILE);
+            return cls.Stats.ColumnsNeeded;
+        }
 
-            DataNormalization norm = new DataNormalization();
-            norm.Report = this;
-            norm.Storage = new NormalizationStorageCSV(Constant.NORMALIZED_FILE);
-            norm.AddInputField(inputElevation = new InputFieldCSV(true, Constant.BALANCE_FILE, 0));
-            norm.AddInputField(inputAspect = new InputFieldCSV(true, Constant.BALANCE_FILE, 1));
-            norm.AddInputField(inputSlope = new InputFieldCSV(true, Constant.BALANCE_FILE, 2));
-            norm.AddInputField(hWater = new InputFieldCSV(true, Constant.BALANCE_FILE, 3));
-            norm.AddInputField(vWater = new InputFieldCSV(true, Constant.BALANCE_FILE, 4));
-            norm.AddInputField(roadway = new InputFieldCSV(true, Constant.BALANCE_FILE, 5));
-            norm.AddInputField(shade9 = new InputFieldCSV(true, Constant.BALANCE_FILE, 6));
-            norm.AddInputField(shade12 = new InputFieldCSV(true, Constant.BALANCE_FILE, 7));
-            norm.AddInputField(shade3 = new InputFieldCSV(true, Constant.BALANCE_FILE, 8));
-            norm.AddInputField(firepoint = new InputFieldCSV(true, Constant.BALANCE_FILE, 9));
+        public void Step6(int outputColumns)
+        {
+            app.WriteLine("Step 6: Normalize training data");
+            NormalizeCSV norm = new NormalizeCSV();
+            norm.Analyze(Constant.CLASSIFY_FILE, false, CSVFormat.ENGLISH);
 
-            for (int i = 0; i < 4; i++)
-            {
-                norm.AddInputField(wilderness[i] = new InputFieldCSV(true, Constant.BALANCE_FILE, 10 + i));
-            }
+            int index = 0;
+            norm.Stats.Data[index++].Name = "elevation";
+            norm.Stats.Data[index++].Name = "aspect";
+            norm.Stats.Data[index++].Name = "slope";
+            norm.Stats.Data[index++].Name = "hydro_h";
+            norm.Stats.Data[index++].Name = "hydro_v";
+            norm.Stats.Data[index++].Name = "roadway";
+            norm.Stats.Data[index++].Name = "shade_9";
+            norm.Stats.Data[index++].Name = "shade_12";
+            norm.Stats.Data[index++].Name = "shade_3";
+            norm.Stats.Data[index++].Name = "fire";
 
-            for (int i = 0; i < 40; i++)
-            {
-                norm.AddInputField(soilType[i] = new InputFieldCSV(true, Constant.BALANCE_FILE, 14 + i));
-            }
-
-            norm.AddInputField(coverType = new InputFieldCSV(false, Constant.BALANCE_FILE, 54));
-
-            norm.AddOutputField(new OutputFieldRangeMapped(inputElevation, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(inputAspect, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(inputSlope, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(hWater, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(vWater, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(roadway, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(shade9, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(shade12, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(shade3, 0.1, 0.9));
-            norm.AddOutputField(new OutputFieldRangeMapped(firepoint, 0.1, 0.9));
+            norm.Stats.Data[index].Name = "area1";
+            norm.Stats.Data[index++].Action = NormalizationDesired.Ignore;
+            norm.Stats.Data[index].Name = "area2";
+            norm.Stats.Data[index++].Action = NormalizationDesired.Ignore;
+            norm.Stats.Data[index].Name = "area3";
+            norm.Stats.Data[index++].Action = NormalizationDesired.Ignore;
+            norm.Stats.Data[index].Name = "area4";
+            norm.Stats.Data[index++].Action = NormalizationDesired.Ignore;
 
             for (int i = 0; i < 40; i++)
             {
-                norm.AddOutputField(new OutputFieldDirect(soilType[i]));
+                norm.Stats.Data[index].Name = "soil" + (i + 1);
+                norm.Stats.Data[index].ActualHigh = 1;
+                norm.Stats.Data[index++].ActualLow = 0;
             }
 
-            if (useOneOf)
-                BuildOutputOneOf(norm, coverType);
-            else
-                BuildOutputEquilateral(norm, coverType);
+            for (int i = 0; i < outputColumns; i++)
+            {
+                norm.Stats.Data[index].Name = "covertype" + (i - 54);
+                norm.Stats.Data[index++].MakePassThrough();
+            }
 
-            norm.Process();
-            return norm;
+            norm.Normalize(Constant.NORMALIZED_FILE);
+            norm.WriteStatsFile(Constant.NORMALIZED_STATS_FILE);
+        }
+
+        public void Step7(int outputCount)
+        {
+            app.WriteLine("Step 7: Converting training file to binary");
+            int inputCount = Constant.INPUT_COUNT;
+            EncogUtility.ConvertCSV2Binary(Constant.NORMALIZED_FILE, Constant.BINARY_FILE, inputCount, outputCount, true);
+
         }
 
         public void Report(int total, int current, String message)

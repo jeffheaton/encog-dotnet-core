@@ -41,6 +41,7 @@ using Encog.Neural.Data.Buffer;
 using Encog.Util.Simple;
 using System.IO;
 using Encog.Engine.Network.Activation;
+using Encog.Neural.Data.Basic;
 
 namespace Encog.Examples.Forest
 {
@@ -53,30 +54,14 @@ namespace Encog.Examples.Forest
             this.app = app;
         }
 
-        public BasicNetwork GenerateNetwork(INeuralDataSet trainingSet)
-        {
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, trainingSet.InputSize));
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, Constant.HIDDEN_COUNT));
-            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, trainingSet.IdealSize));
-            network.Logic = new FeedforwardLogic();
-            network.Structure.FinalizeStructure();
-            network.Reset();
-            return network;
-        }
-
         public void Train(bool useGUI)
         {
-            app.WriteLine("Converting training file to binary");
-            EncogPersistedCollection encog = new EncogPersistedCollection(Constant.TRAINED_NETWORK_FILE, FileMode.Open);
-            DataNormalization norm = (DataNormalization)encog.Find(Constant.NORMALIZATION_NAME);
+            BufferedNeuralDataSet dataFile = new BufferedNeuralDataSet(Constant.BINARY_FILE);
+            INeuralDataSet trainingSet = dataFile.LoadToMemory();
+            int inputSize = trainingSet.InputSize;
+            int idealSize = trainingSet.IdealSize;
 
-            EncogUtility.ConvertCSV2Binary(Constant.NORMALIZED_FILE, Constant.BINARY_FILE, norm.GetNetworkInputLayerSize(), norm.GetNetworkOutputLayerSize(), false);
-            BufferedNeuralDataSet trainingSet = new BufferedNeuralDataSet(Constant.BINARY_FILE);
-
-            BasicNetwork network = (BasicNetwork)encog.Find(Constant.TRAINED_NETWORK_NAME);
-            if (network == null)
-                network = EncogUtility.SimpleFeedForward(norm.GetNetworkInputLayerSize(), Constant.HIDDEN_COUNT, 0, norm.GetNetworkOutputLayerSize(), false);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(inputSize, Constant.HIDDEN_COUNT, 0, idealSize, true);
 
             if (useGUI)
             {
@@ -87,9 +72,12 @@ namespace Encog.Examples.Forest
                 EncogUtility.TrainConsole(network, trainingSet, Constant.TRAINING_MINUTES);
             }
 
-            app.WriteLine("Training complete, saving network...");
+            EncogMemoryCollection encog = new EncogMemoryCollection();
+            if (File.Exists(Constant.TRAINED_NETWORK_FILE))
+                encog.Load(Constant.TRAINED_NETWORK_FILE);
             encog.Add(Constant.TRAINED_NETWORK_NAME, network);
-        }
 
+            app.WriteLine("Training complete, saving network...");
+        }
     }
 }

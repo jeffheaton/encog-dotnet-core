@@ -37,6 +37,7 @@ using Encog.Persist;
 using System.IO;
 using ConsoleExamples.Examples;
 using Encog.Examples.Adaline;
+using Encog.App.Quant.Classify;
 
 namespace Encog.Examples.Forest
 {
@@ -141,16 +142,33 @@ namespace Encog.Examples.Forest
 
         public void Generate(bool useOneOf)
         {
+            ClassifyMethod method;
+            int inputCount = Constant.INPUT_COUNT;
+            int outputCount;
+
+            if (useOneOf)
+            {
+                method = ClassifyMethod.OneOf;
+                outputCount = 7;
+            }
+            else
+            {
+                method = ClassifyMethod.Equilateral;
+                outputCount = 6;
+            }
+
             GenerateData generate = new GenerateData(this.app);
             generate.Step1();
             generate.Step2();
             generate.Step3();
-            generate.Step4();
-            DataNormalization norm = generate.Step5(useOneOf);
+            generate.Step4();            
+            int outputColumns = generate.Step5(method);
+            generate.Step6(outputColumns);
+            generate.Step7(outputColumns);
 
             EncogPersistedCollection encog = new EncogPersistedCollection(
                     Constant.TRAINED_NETWORK_FILE, FileMode.CreateNew);
-            encog.Add(Constant.NORMALIZATION_NAME, norm);
+            //encog.Add(Constant.NORMALIZATION_NAME, norm);
         }
 
         public void Train(bool useGUI)
