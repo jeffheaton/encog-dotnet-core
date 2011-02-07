@@ -8,12 +8,36 @@ using System.IO;
 
 namespace Encog.App.Quant.Balance
 {
+    /// <summary>
+    /// Balance a CSV file.  This utility is useful when you have several an unbalanced
+    /// training set.  You may have a large number of one particular class, and many fewer
+    /// elements of other classes.  This can hinder many Machine Learning methods.  This
+    /// class can be used to balance the data.
+    /// 
+    /// Obviously this class cannot generate data.  You must request how many items you
+    /// want per class.  Some classes will have lower than this number if they were already
+    /// below the specified amount.  Any class above this amount will be trimmed to that
+    /// amount.
+    /// </summary>
     public class BalanceCSV : BasicFile
     {
+        /// <summary>
+        /// Tracks the counts of each class.
+        /// </summary>
         private IDictionary<String, int> counts;
 
+        /// <summary>
+        /// Tracks the counts of each class.
+        /// </summary>
         public IDictionary<String, int> Counts { get { return this.counts; } }
 
+        /// <summary>
+        /// Analyze the data.  This counts the records and prepares the data to be
+        /// processed.
+        /// </summary>
+        /// <param name="inputFile">The input file to process.</param>
+        /// <param name="headers">True, if headers are present.</param>
+        /// <param name="format">The format of the CSV file.</param>
         public void Analyze(String inputFile, bool headers, CSVFormat format)
         {
             this.InputFilename = inputFile;
@@ -25,6 +49,13 @@ namespace Encog.App.Quant.Balance
             PerformBasicCounts();
         }
 
+        /// <summary>
+        /// Process and balance the data.
+        /// </summary>
+        /// <param name="outputFile">The output file to write data to.</param>
+        /// <param name="targetField">The field that is being balanced, 
+        /// this field determines the classes.</param>
+        /// <param name="countPer">The desired count per class.</param>
         public void Process(String outputFile, int targetField, int countPer)
         {
             ValidateAnalyzed();
@@ -63,6 +94,10 @@ namespace Encog.App.Quant.Balance
             tw.Close();
         }
 
+        /// <summary>
+        /// Return a string that lists the counts per class.  
+        /// </summary>
+        /// <returns>The counts per class.</returns>
         public String DumpCounts()
         {
             StringBuilder result = new StringBuilder();
@@ -75,6 +110,5 @@ namespace Encog.App.Quant.Balance
             }
             return result.ToString();
         }
-
     }
 }

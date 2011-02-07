@@ -10,10 +10,22 @@ using Encog.MathUtil;
 
 namespace Encog.App.Quant.Classify
 {
+    /// <summary>
+    /// Used to classify a CSV file.  Often a CSV file will contain a field that 
+    /// specifies a class that a row belongs two.  This "class code"/"class number" must 
+    /// be formatted to be processed by a neural network or other machine 
+    /// learning construct.  
+    /// </summary>
     public class ClassifyCSV: BasicFile
     {
+        /// <summary>
+        /// Holds stats on the field that is to be classified.
+        /// </summary>
         private ClassifyStats classify;
 
+        /// <summary>
+        /// The stats on a field that is to be classified.
+        /// </summary>
         public ClassifyStats Stats
         {
             get
@@ -22,11 +34,17 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// True, if this field is numeric.
+        /// </summary>
         public bool KeyIsNumeric
         {
             get { return this.KeyIsNumeric; }            
         }
 
+        /// <summary>
+        /// Construct the object and set the defaults.
+        /// </summary>
         public ClassifyCSV()
         {
             this.classify = new ClassifyStats();
@@ -34,6 +52,13 @@ namespace Encog.App.Quant.Classify
             this.classify.Low = -1;
         }
 
+        /// <summary>
+        /// Analyze the file.
+        /// </summary>
+        /// <param name="inputFile">The input file to analyze.</param>
+        /// <param name="headers">True, if the input file has headers.</param>
+        /// <param name="format">The format of the input file.</param>
+        /// <param name="classField">The field to be classified.</param>
         public void Analyze(String inputFile, bool headers, CSVFormat format,int classField)
         {
             IList<String> classesFound = new List<String>();
@@ -108,6 +133,11 @@ namespace Encog.App.Quant.Classify
             ReportDone(true);
         }
 
+        /// <summary>
+        /// Perform the encoding for "one of".
+        /// </summary>
+        /// <param name="classNumber">The class number.</param>
+        /// <returns>The encoded columns.</returns>
         private String EncodeOneOf(int classNumber)
         {
             StringBuilder result = new StringBuilder();
@@ -130,6 +160,11 @@ namespace Encog.App.Quant.Classify
             return result.ToString();
         }
 
+        /// <summary>
+        /// Perform an equilateral encode.
+        /// </summary>
+        /// <param name="classNumber">The class number.</param>
+        /// <returns>The class to encode.</returns>
         private String EncodeEquilateral(int classNumber)
         {
             StringBuilder result = new StringBuilder();
@@ -138,6 +173,11 @@ namespace Encog.App.Quant.Classify
             return result.ToString();
         }
 
+        /// <summary>
+        /// Encode a single field.
+        /// </summary>
+        /// <param name="classNumber">The class number to encode.</param>
+        /// <returns>The encoded columns.</returns>
         private String EncodeSingleField(int classNumber)
         {
             StringBuilder result = new StringBuilder();
@@ -145,6 +185,12 @@ namespace Encog.App.Quant.Classify
             return result.ToString();
         }
 
+        /// <summary>
+        /// Encode the class.
+        /// </summary>
+        /// <param name="method">The encoding method.</param>
+        /// <param name="classNumber">The class number.</param>
+        /// <returns>The encoded class.</returns>
         private String Encode(ClassifyMethod method, int classNumber)
         {
             switch (method)
@@ -160,6 +206,15 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// Process the file.
+        /// </summary>
+        /// <param name="outputFile">The output file.</param>
+        /// <param name="method">The classification method.</param>
+        /// <param name="insertAt">The column to insert the classified columns at, 
+        /// or -1 for the end.</param>
+        /// <param name="includeOrigional">True, if the original classification column 
+        /// is to be included, usually it is not.</param>
         public void Process(String outputFile, ClassifyMethod method, int insertAt, bool includeOrigional)
         {
             ValidateAnalyzed();

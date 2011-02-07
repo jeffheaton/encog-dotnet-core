@@ -19,6 +19,7 @@ namespace Encog.App.Quant.Basic
 
         public virtual void Analyze(String input, bool headers, CSVFormat format)
         {
+            ResetStatus();
             this.ColumnMapping.Clear();
             this.Columns.Clear();
 
@@ -29,7 +30,10 @@ namespace Encog.App.Quant.Basic
                 int recordCount = 0;
                 reader = new StreamReader(input);
                 while (reader.ReadLine() != null)
+                {
+                    UpdateStatus(true);
                     recordCount++;
+                }
 
                 if (headers)
                     recordCount--;
@@ -37,6 +41,7 @@ namespace Encog.App.Quant.Basic
             }
             finally
             {
+                ReportDone(true);
                 if (reader != null)
                     reader.Close();
                 this.InputFilename = input;

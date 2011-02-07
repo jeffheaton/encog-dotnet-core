@@ -26,8 +26,8 @@ namespace Encog.App.Quant.Sort
                 switch (t.SortType)
                 {
                     case SortType.SortDecimal:
-                        double xDouble = this.sort.Format.Parse(xStr);
-                        double yDouble = this.sort.Format.Parse(yStr);
+                        double xDouble = this.sort.InputFormat.Parse(xStr);
+                        double yDouble = this.sort.InputFormat.Parse(yStr);
                         int c = xDouble.CompareTo(yDouble);
                         if (c != 0)
                         {

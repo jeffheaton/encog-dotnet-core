@@ -8,24 +8,78 @@ using Encog.Engine;
 
 namespace Encog.App.Quant.Basic
 {
-    public class BasicFile
+    /// <summary>
+    /// Many of the Encog quant CSV processors are based upon this class.  This class
+    /// is not useful on its own. However, it does form the foundation for most Encog
+    /// CSV file processing.
+    /// </summary>
+    public abstract class BasicFile
     {
-        public CSVFormat Format { get; set; }
+        /// <summary>
+        /// The column headings from the input file.
+        /// </summary>
         public String[] InputHeadings { get; set; }
 
+        /// <summary>
+        /// The desired precision when numbers must be written.  Defaults to 10 decimal places.
+        /// </summary>
         public int Precision { get; set; }
+
+        /// <summary>
+        /// Most Encog CSV classes must analyze a CSV file before actually processing it.  
+        /// This property specifies if the file has been analyzed yet.
+        /// </summary>
         public bool Analyzed { get; set; }
+
+        /// <summary>
+        /// The input filename.  This is the file being analyzed/processed.
+        /// </summary>
         public String InputFilename { get; set; }
+
+        /// <summary>
+        /// True, if input headers should be expected.
+        /// </summary>
         public bool ExpectInputHeaders { get; set; }
+
+        /// <summary>
+        /// The format of the input file.
+        /// </summary>
         public CSVFormat InputFormat { get; set; }
+
+        /// <summary>
+        /// The number of columns in the input file.
+        /// </summary>
         public int ColumnCount { get; set; }
+
+        /// <summary>
+        /// Allows status to be reported.  Defaults to no status reported.
+        /// </summary>
         public IStatusReportable Report { get; set; }
+
+        /// <summary>
+        /// The number of records to process before status is updated.  Defaults to 10k.
+        /// </summary>
         public int ReportInterval { get; set; }
 
+        /// <summary>
+        /// The number of records to process.  This is determined when the file is analyzed.
+        /// </summary>
         private int recordCount;
+
+        /// <summary>
+        /// The last time status was updated.
+        /// </summary>
         private int lastUpdate;
+
+        /// <summary>
+        /// The current record.
+        /// </summary>
         private int currentRecord;
 
+
+        /// <summary>
+        /// Construct the object, and set the defaults.
+        /// </summary>
         public BasicFile()
         {
             this.Report = new NullStatusReportable();
@@ -33,6 +87,11 @@ namespace Encog.App.Quant.Basic
             ResetStatus();
         }
 
+        /// <summary>
+        /// Prepare the output file, write headers if needed.
+        /// </summary>
+        /// <param name="outputFile">The name of the output file.</param>
+        /// <returns>The output stream for the text file.</returns>
         public TextWriter PrepareOutputFile(String outputFile)
         {
             TextWriter tw = new StreamWriter(outputFile);
@@ -58,6 +117,9 @@ namespace Encog.App.Quant.Basic
             return tw;
         }
 
+        /// <summary>
+        /// Get the record count.  File must have been analyzed first to read the record count.
+        /// </summary>
         public int RecordCount
         {
             get
@@ -74,6 +136,9 @@ namespace Encog.App.Quant.Basic
             }
         }
 
+        /// <summary>
+        /// Validate that the file has been analyzed.  Throw an error, if it has not.
+        /// </summary>
         public void ValidateAnalyzed()
         {
             if (!Analyzed)
@@ -82,6 +147,11 @@ namespace Encog.App.Quant.Basic
             }
         }
 
+        /// <summary>
+        /// Write a row to the output file.
+        /// </summary>
+        /// <param name="tw">The output stream.</param>
+        /// <param name="row">The row to write out.</param>
         public void WriteRow(TextWriter tw, LoadedRow row)
         {
             StringBuilder line = new StringBuilder();
@@ -108,6 +178,9 @@ namespace Encog.App.Quant.Basic
             tw.WriteLine(line.ToString());
         }
 
+        /// <summary>
+        /// Perform a basic analyze of the file.  This method is used mostly internally.
+        /// </summary>
         public void PerformBasicCounts()
         {
             ResetStatus();
@@ -126,6 +199,10 @@ namespace Encog.App.Quant.Basic
             ReportDone(true);
         }
 
+        /// <summary>
+        /// Read the headers from a CSV file.  Used mostly internally.
+        /// </summary>
+        /// <param name="csv">The CSV file to read from.</param>
         public void ReadHeaders(ReadCSV csv)
         {
             if (this.ExpectInputHeaders)
@@ -138,13 +215,61 @@ namespace Encog.App.Quant.Basic
             }
         }
 
+        /// <summary>
+        /// Reset the reporting stats.  Used internally.
+        /// </summary>
         public void ResetStatus()
         {
             this.lastUpdate = 0;
             this.currentRecord = 0;
         }
 
+        /// <summary>
+        /// Update the status.  Used internally.
+        /// </summary>
+        /// <param name="isAnalyzing">True if we are in the process of analyzing.</param>
         public void UpdateStatus(bool isAnalyzing)
+        {
+            if (isAnalyzing)
+            {
+                UpdateStatus("Analyzing");
+            }
+            else
+            {
+                UpdateStatus("Processing");
+            }
+        }
+
+        /// <summary>
+        /// Report that we are done.  Used internally.
+        /// </summary>
+        /// <param name="isAnalyzing">True if we are analyzing.</param>
+        public void ReportDone(bool isAnalyzing)
+        {
+            if (isAnalyzing)
+            {
+                this.Report.Report(this.recordCount, this.recordCount, "Done analyzing");
+            }
+            else
+            {
+                this.Report.Report(this.recordCount, this.recordCount, "Done processing");
+            }
+        }
+
+        /// <summary>
+        /// Report that we are done.  Used internally.
+        /// </summary>
+        /// <param name="task">The message.</param>
+        public void ReportDone(String task)
+        {
+            this.Report.Report(this.recordCount, this.recordCount, task);
+        }
+
+        /// <summary>
+        /// Report the current status.
+        /// </summary>
+        /// <param name="task">The string to report.</param>
+        public void UpdateStatus(String task)
         {
             bool shouldDisplay = false;
 
@@ -165,27 +290,8 @@ namespace Encog.App.Quant.Basic
 
             if (shouldDisplay)
             {
-                if (isAnalyzing)
-                {
-                    this.Report.Report(this.recordCount, this.currentRecord, "Analyzing");
-                }
-                else
-                {
-                    this.Report.Report(this.recordCount, this.currentRecord, "Processing");
-                }
+                this.Report.Report(this.recordCount, this.currentRecord, task);
             }
         }
-
-        public void ReportDone(bool isAnalyzing)
-        {
-                if (isAnalyzing)
-                {
-                    this.Report.Report(this.recordCount, this.recordCount, "Done analyzing");
-                }
-                else
-                {
-                    this.Report.Report(this.recordCount, this.recordCount, "Done processing");
-                }
-            }
     }
 }

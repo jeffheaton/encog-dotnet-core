@@ -5,14 +5,29 @@ using System.Text;
 using Encog.Util.CSV;
 using System.IO;
 using Encog.App.Quant.Util;
+using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Temporal
 {
-    public class TemporalWindow
+    /// <summary>
+    /// This class is used to break a CSV file into temporal windows.  This is used for 
+    /// predictive neural networks.
+    /// </summary>
+    public class TemporalWindowCSV: BasicFile
     {
+        /// <summary>
+        /// The size of the input window.
+        /// </summary>
         public int InputWindow { get; set; }
+
+        /// <summary>
+        /// The size of the prediction window.
+        /// </summary>
         public int PredictWindow { get; set; }
-        public int Precision { get; set; }
+
+        /// <summary>
+        /// The fields that are to be processed.
+        /// </summary>
         public TemporalWindowField[] Fields
         {
             get
@@ -21,19 +36,31 @@ namespace Encog.App.Quant.Temporal
             }
         }
 
+        /// <summary>
+        /// The fields that are to be processed.
+        /// </summary>
         private TemporalWindowField[] fields;
-        private String sourceFile;
-        private bool sourceHeaders;
-        private CSVFormat sourceFormat;
+
+        /// <summary>
+        /// A buffer to hold the data.
+        /// </summary>
         private BarBuffer buffer;
 
-        public TemporalWindow()
+
+        /// <summary>
+        /// Construct the object and set the defaults.
+        /// </summary>
+        public TemporalWindowCSV()
+            :base()
         {
             InputWindow = 10;
             PredictWindow = 1;
-            Precision = 10;
         }
 
+        /// <summary>
+        /// Format the headings to a string.
+        /// </summary>
+        /// <returns>The a string holding the headers, ready to be written.</returns>
         private String WriteHeaders()
         {
             StringBuilder line = new StringBuilder();
@@ -107,6 +134,10 @@ namespace Encog.App.Quant.Temporal
             return line.ToString();
         }
 
+        /// <summary>
+        /// Process the input file, and write to the output file.
+        /// </summary>
+        /// <param name="outputFile">The output file.</param>
         public void Process(String outputFile)
         {
             if (InputWindow < 1)
@@ -141,12 +172,12 @@ namespace Encog.App.Quant.Temporal
 
             try
             {
-                csv = new ReadCSV(this.sourceFile, this.sourceHeaders, this.sourceFormat);
+                csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
 
                 tw = new StreamWriter(outputFile);
 
                 // write headers, if needed
-                if (this.sourceHeaders)
+                if (this.ExpectInputHeaders)
                 {
                     tw.WriteLine(WriteHeaders());
                 }
@@ -164,7 +195,7 @@ namespace Encog.App.Quant.Temporal
 
                         if (field.Action != TemporalType.Ignore && field.Action!=TemporalType.PassThrough)
                         {
-                            bar[barIndex++] = this.sourceFormat.Parse(str);
+                            bar[barIndex++] = this.InputFormat.Parse(str);
                         }
                         field.LastValue = str;
                     }
@@ -203,7 +234,7 @@ namespace Encog.App.Quant.Temporal
                                 {
                                     if (line.Length > 0)
                                         line.Append(',');
-                                    line.Append(this.sourceFormat.Format(bar[index], Precision));
+                                    line.Append(this.InputFormat.Format(bar[index], Precision));
                                     index++;
                                 }
                             }
@@ -221,7 +252,7 @@ namespace Encog.App.Quant.Temporal
                                 {
                                     if (line.Length > 0)
                                         line.Append(',');
-                                    line.Append(this.sourceFormat.Format(bar[index], Precision));
+                                    line.Append(this.InputFormat.Format(bar[index], Precision));
                                     index++;
                                 }
                             }
@@ -260,6 +291,10 @@ namespace Encog.App.Quant.Temporal
 
         }
 
+        /// <summary>
+        /// Count the number of fields that are that are in the prediction.
+        /// </summary>
+        /// <returns>The number of fields predicted.</returns>
         public int CountPredictFields()
         {
             int result = 0;
@@ -273,6 +308,10 @@ namespace Encog.App.Quant.Temporal
             return result;
         }
 
+        /// <summary>
+        /// Count the number of input fields, or fields used to predict.
+        /// </summary>
+        /// <returns>The number of input fields.</returns>
         public int CountInputFields()
         {
             int result = 0;
@@ -286,6 +325,12 @@ namespace Encog.App.Quant.Temporal
             return result;
         }
 
+        /// <summary>
+        /// Analyze the input file, prior to processing.
+        /// </summary>
+        /// <param name="filename">The filename to process.</param>
+        /// <param name="headers">True, if the input file has headers.</param>
+        /// <param name="format">The format of the input file.</param>
         public void Analyze(String filename, bool headers, CSVFormat format)
         {
             ReadCSV csv = null;
@@ -298,9 +343,9 @@ namespace Encog.App.Quant.Temporal
                     throw new EncogError("Empty file");
                 }
 
-                this.sourceFile = filename;
-                this.sourceHeaders = headers;
-                this.sourceFormat = format;
+                this.InputFilename = filename;
+                this.ExpectInputHeaders = headers;
+                this.InputFormat = format;
 
                 this.fields = new TemporalWindowField[csv.GetColumnCount()];
                 double d;
@@ -310,7 +355,7 @@ namespace Encog.App.Quant.Temporal
                     String str = csv.Get(i);
                     String fieldname;
 
-                    if (this.sourceHeaders)
+                    if (this.ExpectInputHeaders)
                     {
                         fieldname = csv.ColumnNames[i];
                     }

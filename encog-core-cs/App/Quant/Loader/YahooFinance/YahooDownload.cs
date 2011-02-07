@@ -12,10 +12,11 @@ using Encog.Util.Time;
 
 namespace Encog.App.Quant.Loader.YahooFinance
 {
+    /// <summary>
+    /// A loader, that will pull basic EOD data from YahooFinance.
+    /// </summary>
     public class YahooDownload
     {
-        public static readonly DateTime EARLIEST_DATE = new DateTime(1950, 1, 1);
-
         public const String INDEX_DJIA = "^dji";
         public const String INDEX_SP500 = "^gspc";
         public const String INDEX_NASDAQ = "^ixic";

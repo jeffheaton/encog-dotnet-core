@@ -8,8 +8,15 @@ using System.IO;
 
 namespace Encog.App.Quant.Filter
 {
+    /// <summary>
+    /// This class can be used to remove certian rows from a CSV.  You can remove rows
+    /// where a specific field has a specific value.
+    /// </summary>
     public class FilterCSV : BasicFile
     {
+        /// <summary>
+        /// A list of the fields and their values, that should be excluded.
+        /// </summary>
         public IList<ExcludedField> Excluded
         {
             get
@@ -18,6 +25,9 @@ namespace Encog.App.Quant.Filter
             }
         }
 
+        /// <summary>
+        /// A count of the filtered rows.  This is the resulting line count for the output CSV.
+        /// </summary>
         public int FilteredRowCount
         {
             get
@@ -26,14 +36,32 @@ namespace Encog.App.Quant.Filter
             }
         }
 
+        /// <summary>
+        /// The excluded fields.
+        /// </summary>
         private IList<ExcludedField> excludedFields = new List<ExcludedField>();
+
+        /// <summary>
+        /// A count of the filtered rows.
+        /// </summary>
         private int filteredCount;
 
+        /// <summary>
+        /// Exclude rows where the specified field has the specified value.
+        /// </summary>
+        /// <param name="fieldNumber">The field number.</param>
+        /// <param name="fieldValue">The field value.</param>
         public void Exclude(int fieldNumber, String fieldValue)
         {
             this.excludedFields.Add(new ExcludedField(fieldNumber, fieldValue));
         }
 
+        /// <summary>
+        /// Analyze the file.
+        /// </summary>
+        /// <param name="inputFile">The name of the input file.</param>
+        /// <param name="headers">True, if headers are expected.</param>
+        /// <param name="format">The format.</param>
         public void Analyze(String inputFile, bool headers, CSVFormat format)
         {
             this.InputFilename = inputFile;
@@ -45,6 +73,11 @@ namespace Encog.App.Quant.Filter
             PerformBasicCounts();
         }
 
+        /// <summary>
+        /// Determine if the specified row should be processed, or not.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <returns>True, if the row should be processed.</returns>
         private bool ShouldProcess(LoadedRow row)
         {
             foreach(ExcludedField field in this.excludedFields)
@@ -58,6 +91,10 @@ namespace Encog.App.Quant.Filter
             return true;
         }
 
+        /// <summary>
+        /// Process the input file.
+        /// </summary>
+        /// <param name="outputFile">The output file to write to.</param>
         public void Process(String outputFile)
         {
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);

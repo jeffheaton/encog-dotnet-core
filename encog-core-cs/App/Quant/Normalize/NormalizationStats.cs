@@ -76,6 +76,10 @@ namespace Encog.App.Quant.Normalize
             return new NormalizationStatsPersistor();
         }
 
+        /// <summary>
+        /// Scan all columns and fix any columns where the min/max are the same value.
+        /// You cannot normalize when the min/max are the same values.
+        /// </summary>
         public void FixSingleValue()
         {
             foreach (NormalizedFieldStats stat in this.stats)

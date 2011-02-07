@@ -9,20 +9,65 @@ using Encog.Engine.Util;
 
 namespace Encog.App.Quant.Classify
 {
+    /// <summary>
+    /// Holds stats about a field that has been classified.
+    /// </summary>
     public class ClassifyStats
     {
+        /// <summary>
+        /// The classes that this field can hold.
+        /// </summary>
         public IList<ClassItem> Classes { get { return this.classes; } }
+
+        /// <summary>
+        /// The index of this field.
+        /// </summary>
         public int ClassField { get; set; }
+
+        /// <summary>
+        /// The high-value that this field is normalized into.
+        /// </summary>
         public double High { get; set; }
+
+        /// <summary>
+        /// The low value that this field is normalized into.
+        /// </summary>
         public double Low { get; set; }
+
+        /// <summary>
+        /// True, if this field is numeric.
+        /// </summary>
         public bool IsNumeric { get; set; }
+
+        /// <summary>
+        /// If equilateral classification is used, this is the Equilateral object.
+        /// </summary>
         public Equilateral EquilateralEncode { get { return this.eq; } }
+
+        /// <summary>
+        /// The classification method to use.
+        /// </summary>
         public ClassifyMethod Method { get; set; }
 
+        /// <summary>
+        /// The list of classes.
+        /// </summary>
         private IList<ClassItem> classes = new List<ClassItem>();
+
+        /// <summary>
+        /// If equilateral classification is used, this is the Equilateral object.
+        /// </summary>
         private Equilateral eq;
+
+        /// <summary>
+        /// Allows the index of a field to be looked up.
+        /// </summary>
         private IDictionary<String, int> lookup = new Dictionary<String, int>();
 
+        /// <summary>
+        /// Returns the number of columns needed for this classification.  The number
+        /// of columns needed will vary, depending on the classification method used.
+        /// </summary>
         public int ColumnsNeeded
         {
             get
@@ -41,6 +86,9 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// Init any internal structures.
+        /// </summary>
         public void Init()
         {
             this.eq = new Equilateral(this.classes.Count, High, Low);
@@ -52,6 +100,11 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// Lookup the specified field.
+        /// </summary>
+        /// <param name="str">The name of the field to lookup.</param>
+        /// <returns>The index of the field, or -1 if not found.</returns>
         public int Lookup(String str)
         {
             if (!this.lookup.ContainsKey(str))
@@ -59,6 +112,10 @@ namespace Encog.App.Quant.Classify
             return this.lookup[str];
         }
 
+        /// <summary>
+        /// Read the stats file from a CSV.
+        /// </summary>
+        /// <param name="filename">The filename to read.</param>
         public void ReadStatsFile(String filename)
         {
             IList<ClassItem> list = new List<ClassItem>();
@@ -106,6 +163,10 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// Write the stats file.
+        /// </summary>
+        /// <param name="filename">The filename to write.</param>
         public void WriteStatsFile(String filename)
         {
             TextWriter tw = null;
@@ -157,6 +218,11 @@ namespace Encog.App.Quant.Classify
             }
         }
 
+        /// <summary>
+        /// Determine what class the specified data belongs to.
+        /// </summary>
+        /// <param name="data">The data to analyze.</param>
+        /// <returns>The class the data belongs to.</returns>
         public ClassItem DetermineClass(double[] data)
         {
             int resultIndex = 0;

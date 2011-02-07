@@ -110,7 +110,7 @@ namespace Encog.Examples.Market
             }
 
             // build temporal training data
-            TemporalWindow window = new TemporalWindow();
+            TemporalWindowCSV window = new TemporalWindowCSV();
             window.Analyze(Config.STEP4, true, CSVFormat.ENGLISH);
             window.InputWindow = Config.INPUT_WINDOW;
             window.PredictWindow = Config.PREDICT_WINDOW;

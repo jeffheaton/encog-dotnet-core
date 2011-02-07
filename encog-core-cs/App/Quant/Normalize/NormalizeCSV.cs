@@ -4,37 +4,52 @@ using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 using System.IO;
+using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Normalize
 {
-    public class NormalizeCSV
+    /// <summary>
+    /// Normalize, or denormalize, a CSV file.
+    /// </summary>
+    public class NormalizeCSV: BasicFile
     {
-        public int Precision { get; set; }
+        /// <summary>
+        /// The stats for the fields that were normalized.
+        /// </summary>
         public NormalizationStats Stats { get; set; }
-        
-        private String sourceFile;
+     
+        /// <summary>
+        /// The file to 
+        /// </summary>
         private String targetFile;
-        private CSVFormat sourceFormat;
-        private bool sourceHeaders;
 
-        public NormalizeCSV()
-        {
-            Precision = 10;
-        }
-
+        /// <summary>
+        /// Set the source file.  This is useful if you want to use pre-existing stats 
+        /// to normalize something and skip the analyze step.
+        /// </summary>
+        /// <param name="file">The file to use.</param>
+        /// <param name="headers">True, if headers are to be expected.</param>
+        /// <param name="format">The format of the CSV file.</param>
         public void SetSourceFile(String file, bool headers, CSVFormat format)
         {
-            this.sourceFile = file;
-            this.sourceHeaders = headers;
-            this.sourceFormat = format;
+            this.InputFilename = file;
+            this.ExpectInputHeaders = headers;
+            this.InputFormat = format;
         }
 
+        /// <summary>
+        /// Analyze the file.
+        /// </summary>
+        /// <param name="file">The file to analyze.</param>
+        /// <param name="headers">True, if the file has headers.</param>
+        /// <param name="format">The format of the CSV file.</param>
         public void Analyze(String file, bool headers, CSVFormat format )
         {
             ReadCSV csv = null;
 
             try
             {
+                ResetStatus();
                 csv = new ReadCSV(file, headers, format);
 
                 if (!csv.Next())
@@ -42,9 +57,9 @@ namespace Encog.App.Quant.Normalize
                     throw new EncogError("File is empty");
                 }
 
-                this.sourceFile = file;
-                this.sourceHeaders = headers;
-                this.sourceFormat = format;
+                this.InputFilename = file;
+                this.ExpectInputHeaders = headers;
+                this.InputFormat = format;
 
                 // analyze first row
                 int fieldCount = csv.GetColumnCount();
@@ -78,10 +93,12 @@ namespace Encog.App.Quant.Normalize
                             }
                         }
                     }
+                    UpdateStatus(true);
                 } while (csv.Next());
             }
             finally
             {
+                ReportDone(true);
                 // Close the CSV file
                 if( csv!=null )
                     csv.Close();
@@ -89,19 +106,23 @@ namespace Encog.App.Quant.Normalize
 
         }
 
-        public void DeNormalize(String sourceFile, String targetFile, bool headers, CSVFormat format)
+        /// <summary>
+        /// Denormalize the input file.
+        /// </summary>
+        /// <param name="targetFile"></param>
+        public void DeNormalize(String targetFile)
         {
             if (this.Stats.Count == 0)
             {
                 throw new EncogError("Can't denormalize, there are no stats loaded.");
             }
 
-            ReadCSV csv = new ReadCSV(sourceFile, headers, format);
+            ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             TextWriter tw = new StreamWriter(targetFile);
 
             if( !csv.Next() )
             {
-                throw new EncogError("The source file " + sourceFile + " is empty.");
+                throw new EncogError("The source file " + this.InputFilename + " is empty.");
             }
 
             if (csv.GetColumnCount() != this.Stats.Count)
@@ -110,21 +131,24 @@ namespace Encog.App.Quant.Normalize
             }
 
             // write headers, if needed
-            if (headers)
+            if (this.ExpectInputHeaders)
             {
                 WriteHeaders(tw);
             }
 
+            ResetStatus();
+
             do
             {
                 StringBuilder line = new StringBuilder();
+                UpdateStatus(false);
 
                 int index = 0;
                 foreach (NormalizedFieldStats stat in this.Stats.Data)
                 {
                     String str = csv.Get(index++);
                     if (line.Length > 0 && stat.Action != NormalizationDesired.Ignore)
-                        line.Append(this.sourceFormat.Separator);
+                        line.Append(this.InputFormat.Separator);
                     switch (stat.Action)
                     {
                         case NormalizationDesired.PassThrough:
@@ -137,7 +161,7 @@ namespace Encog.App.Quant.Normalize
                             if (Double.TryParse(str, out d))
                             {
                                 d = stat.DeNormalize(d);
-                                line.Append(this.sourceFormat.Format(d, 10));
+                                line.Append(this.InputFormat.Format(d, 10));
                             }
                             break;
                     }
@@ -145,18 +169,23 @@ namespace Encog.App.Quant.Normalize
                 tw.WriteLine(line.ToString());
             } while (csv.Next());
 
+            ReportDone(false);
             tw.Close();
             csv.Close();
 
         }
 
+        /// <summary>
+        /// Write the headers.
+        /// </summary>
+        /// <param name="tw">The output stream.</param>
         private void WriteHeaders(TextWriter tw)
         {
             StringBuilder line = new StringBuilder();
             foreach (NormalizedFieldStats stat in this.Stats.Data)
             {
                 if (line.Length > 0 && stat.Action != NormalizationDesired.Ignore)
-                    line.Append(this.sourceFormat.Separator);
+                    line.Append(this.InputFormat.Separator);
 
                 if (stat.Action != NormalizationDesired.Ignore)
                 {
@@ -168,6 +197,10 @@ namespace Encog.App.Quant.Normalize
             tw.WriteLine(line.ToString());
         }
 
+        /// <summary>
+        /// Normalize the input file.  Write to the specified file.
+        /// </summary>
+        /// <param name="file">The file to write to.</param>
         public void Normalize(String file)
         {
             if (this.Stats.Count<1 )
@@ -180,26 +213,28 @@ namespace Encog.App.Quant.Normalize
 
             try
             {
-                csv = new ReadCSV(this.sourceFile, this.sourceHeaders, this.sourceFormat);
+                csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
 
                 tw = new StreamWriter(file);
 
                 // write headers, if needed
-                if (this.sourceHeaders)
+                if (this.ExpectInputHeaders)
                 {
                     WriteHeaders(tw);
                 }
 
+                ResetStatus();
                 // write file contents
                 while (csv.Next())
                 {
                     StringBuilder line = new StringBuilder();
+                    UpdateStatus(false);
                     int index = 0;
                     foreach (NormalizedFieldStats stat in this.Stats.Data)
                     {
                         String str = csv.Get(index++);
                         if (line.Length > 0 && stat.Action!=NormalizationDesired.Ignore)
-                            line.Append(this.sourceFormat.Separator);
+                            line.Append(this.InputFormat.Separator);
                         switch (stat.Action)
                         {
                             case NormalizationDesired.PassThrough:
@@ -212,7 +247,7 @@ namespace Encog.App.Quant.Normalize
                                 if (Double.TryParse(str, out d))
                                 {
                                     d = stat.Normalize(d);
-                                    line.Append(this.sourceFormat.Format(d, 10));
+                                    line.Append(this.InputFormat.Format(d, 10));
                                 }
                                 break;
                         }
@@ -222,6 +257,7 @@ namespace Encog.App.Quant.Normalize
             }
             finally
             {
+                ReportDone(false);
                 if (csv != null)
                 {
                     try
@@ -246,6 +282,10 @@ namespace Encog.App.Quant.Normalize
             }
         }
 
+        /// <summary>
+        /// Read the stats file.
+        /// </summary>
+        /// <param name="filename">The file to read from.</param>
         public void ReadStatsFile(String filename)
         {
             IList<NormalizedFieldStats> list = new List<NormalizedFieldStats>();
@@ -290,6 +330,10 @@ namespace Encog.App.Quant.Normalize
             }
         }
 
+        /// <summary>
+        /// Write the stats file.
+        /// </summary>
+        /// <param name="filename">The file to write to.</param>
         public void WriteStatsFile(String filename)
         {
             TextWriter tw = null;
