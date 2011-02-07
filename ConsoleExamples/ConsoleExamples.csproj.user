@@ -4,6 +4,6 @@
     <StartArguments>-pause sunspots</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>-pause forest evaluate</StartArguments>
+    <StartArguments>-pause iris evaluate</StartArguments>
   </PropertyGroup>
 </Project>

@@ -75,6 +75,7 @@ namespace Encog.Examples.Forest
             if (File.Exists(Constant.TRAINED_NETWORK_FILE))
                 encog.Load(Constant.TRAINED_NETWORK_FILE);
             encog.Add(Constant.TRAINED_NETWORK_NAME, network);
+            encog.Save(Constant.TRAINED_NETWORK_FILE);
 
             app.WriteLine("Training complete, saving network...");
         }

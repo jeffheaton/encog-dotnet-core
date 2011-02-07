@@ -258,5 +258,38 @@ namespace Encog.Engine.Util
             for (int i = 0; i < target.Length; i++)
                 target[i] = value;
         }
+
+        public static int IndexOfLargest(double[] data)
+        {
+            int result = -1;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (result == -1 || data[i] > data[result])
+                    result = i;
+            }
+
+            return result;
+        }
+
+        public static double Min(double[] weights)
+        {
+            double result = double.MaxValue;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                result = Math.Min(result, weights[i]);
+            }
+            return result;
+        }
+
+        public static double Max(double[] weights)
+        {
+            double result = Double.MinValue;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                result = Math.Max(result, weights[i]);
+            }
+            return result;
+        }
     }
 }

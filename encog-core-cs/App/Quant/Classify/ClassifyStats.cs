@@ -5,6 +5,7 @@ using System.Text;
 using Encog.MathUtil;
 using Encog.Util.CSV;
 using System.IO;
+using Encog.Engine.Util;
 
 namespace Encog.App.Quant.Classify
 {
@@ -154,6 +155,26 @@ namespace Encog.App.Quant.Classify
                 if (tw != null)
                     tw.Close();
             }
+        }
+
+        public ClassItem DetermineClass(double[] data)
+        {
+            int resultIndex = 0;
+
+            switch (this.Method)
+            {
+                case ClassifyMethod.Equilateral:
+                    resultIndex = this.eq.GetSmallestDistance(data);
+                    break;
+                case ClassifyMethod.OneOf:
+                    resultIndex = EngineArray.IndexOfLargest(data);
+                    break;
+                case ClassifyMethod.SingleField:
+                    resultIndex = (int)data[0];
+                    break;
+            }
+
+            return this.classes[resultIndex];
         }
     }
 }

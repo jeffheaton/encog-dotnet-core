@@ -280,6 +280,7 @@ namespace Encog.App.Quant.Normalize
                 }
                 csv.Close();
 
+                this.Stats = new NormalizationStats(list.Count);
                 this.Stats.Data = list.ToArray<NormalizedFieldStats>();
             }
             finally

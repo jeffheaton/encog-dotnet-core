@@ -92,6 +92,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.CL.CompareCL.Info);
             examples.Add(Encog.Examples.CL.PredictSunspotCL.Info);
             examples.Add(Encog.Examples.Benchmark.SimpleBenchmark.Info);
+            examples.Add(Encog.Examples.Iris.IrisDataset.Info);
         }
 
         public void ListCommands()

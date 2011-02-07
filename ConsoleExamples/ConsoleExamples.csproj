@@ -75,6 +75,10 @@
     <Compile Include="Examples\Hopfield\Simple\HopfieldSimple.cs" />
     <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
     <Compile Include="Examples\Image\ImagePair.cs" />
+    <Compile Include="Examples\Iris\IrisConstant.cs" />
+    <Compile Include="Examples\Iris\IrisDataset.cs" />
+    <Compile Include="Examples\Iris\IrisEvaluate.cs" />
+    <Compile Include="Examples\Iris\IrisGenerate.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />
     <Compile Include="Examples\Lunar\LunarLander.cs" />

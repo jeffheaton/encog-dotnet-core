@@ -168,5 +168,23 @@ namespace Encog.MathUtil
             }
             return Math.Sqrt(result);
         }
+
+        public int GetSmallestDistance(double[] data)
+        {
+            int bestSet = -1;
+            double bestDistance = double.MaxValue;
+
+            for (int i = 0; i < this.matrix.Length; i++)
+            {
+                double d = GetDistance(data, i);
+                if (bestSet == -1 || d < bestDistance)
+                {
+                    bestSet = i;
+                    bestDistance = d;
+                }
+            }
+
+            return bestSet;
+        }
     }
 }
