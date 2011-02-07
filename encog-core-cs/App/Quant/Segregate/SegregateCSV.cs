@@ -95,13 +95,14 @@ namespace Encog.App.Quant.Segregate
             Validate();
 
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
-
+            ResetStatus();
             foreach (SegregateTargetPercent target in this.targets)
             {
                     TextWriter tw = this.PrepareOutputFile(target.Filename);
 
                     while (target.NumberRemaining > 0 && csv.Next())
                     {
+                        UpdateStatus(false);
                         LoadedRow row = new LoadedRow(csv);
                         WriteRow(tw, row);
                         target.NumberRemaining--;
@@ -109,7 +110,7 @@ namespace Encog.App.Quant.Segregate
 
                     tw.Close();                
             }
-
+            ReportDone(false);
             csv.Close();
         }
     }

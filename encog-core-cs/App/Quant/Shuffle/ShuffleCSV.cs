@@ -93,11 +93,13 @@ namespace Encog.App.Quant.Shuffle
 
             TextWriter tw = this.PrepareOutputFile(outputFile);
 
+            ResetStatus();
             while ((row = GetNextRow(csv)) != null)
             {
                 WriteRow(tw, row);
+                UpdateStatus(false);
             }
-
+            ReportDone(false);
             tw.Close();
             csv.Close();
         }

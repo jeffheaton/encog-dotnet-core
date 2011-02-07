@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 using System.IO;
+using Encog.Engine;
 
 namespace Encog.App.Quant.Basic
 {
@@ -18,8 +19,19 @@ namespace Encog.App.Quant.Basic
         public bool ExpectInputHeaders { get; set; }
         public CSVFormat InputFormat { get; set; }
         public int ColumnCount { get; set; }
+        public IStatusReportable Report { get; set; }
+        public int ReportInterval { get; set; }
 
         private int recordCount;
+        private int lastUpdate;
+        private int currentRecord;
+
+        public BasicFile()
+        {
+            this.Report = new NullStatusReportable();
+            this.ReportInterval = 10000;
+            ResetStatus();
+        }
 
         public TextWriter PrepareOutputFile(String outputFile)
         {
@@ -98,10 +110,12 @@ namespace Encog.App.Quant.Basic
 
         public void PerformBasicCounts()
         {
+            ResetStatus();
             int recordCount = 0;
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             while (csv.Next())
             {
+                UpdateStatus(true);
                 recordCount++;
             }
             this.RecordCount = recordCount;
@@ -109,6 +123,7 @@ namespace Encog.App.Quant.Basic
 
             ReadHeaders(csv);
             csv.Close();
+            ReportDone(true);
         }
 
         public void ReadHeaders(ReadCSV csv)
@@ -123,5 +138,54 @@ namespace Encog.App.Quant.Basic
             }
         }
 
+        public void ResetStatus()
+        {
+            this.lastUpdate = 0;
+            this.currentRecord = 0;
+        }
+
+        public void UpdateStatus(bool isAnalyzing)
+        {
+            bool shouldDisplay = false;
+
+            if (this.currentRecord == 0)
+            {
+                shouldDisplay = true;
+            }
+
+            this.currentRecord++;
+            this.lastUpdate++;
+
+            if (lastUpdate > this.ReportInterval)
+            {
+                lastUpdate = 0;
+                shouldDisplay = true;
+            }
+
+
+            if (shouldDisplay)
+            {
+                if (isAnalyzing)
+                {
+                    this.Report.Report(this.recordCount, this.currentRecord, "Analyzing");
+                }
+                else
+                {
+                    this.Report.Report(this.recordCount, this.currentRecord, "Processing");
+                }
+            }
+        }
+
+        public void ReportDone(bool isAnalyzing)
+        {
+                if (isAnalyzing)
+                {
+                    this.Report.Report(this.recordCount, this.recordCount, "Done analyzing");
+                }
+                else
+                {
+                    this.Report.Report(this.recordCount, this.recordCount, "Done processing");
+                }
+            }
     }
 }

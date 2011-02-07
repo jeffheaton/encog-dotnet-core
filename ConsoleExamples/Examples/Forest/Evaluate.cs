@@ -88,7 +88,7 @@ namespace Encog.Examples.Forest
 
         public INeuralData BuildForNetworkInput(NormalizationStats stats, double[] input)
         {
-            INeuralData neuralInput = new BasicNeuralData(4);
+            INeuralData neuralInput = new BasicNeuralData(input.Length);
             for (int i = 0; i < input.Length; i++)
             {
                 neuralInput[i] = stats[i].Normalize(input[i]);
@@ -129,7 +129,7 @@ namespace Encog.Examples.Forest
                 INeuralData inputData = BuildForNetworkInput(norm.Stats, input);
                 INeuralData output = network.Compute(inputData);
                 ClassItem coverTypeActual = DetermineType(stats, output);
-                String coverTypeIdealStr = csv.Get(4);
+                String coverTypeIdealStr = csv.Get(54);
                 int coverTypeIdeal = stats.Lookup(coverTypeIdealStr);
 
                 KeepScore(coverTypeActual.Index, coverTypeIdeal);
@@ -146,12 +146,15 @@ namespace Encog.Examples.Forest
             app.WriteLine("Correct percent:" + Format.FormatPercentWhole(percent));
             for (int i = 0; i < 7; i++)
             {
-                double p = ((double)this.treeCorrect[i] / (double)this.treeCount[i]);
-                app.WriteLine("Tree Type #"
-                        + i
-                        + " - Correct/total: "
-                        + this.treeCorrect[i]
-                        + "/" + treeCount[i] + "(" + Format.FormatPercentWhole(p) + ")");
+                if (this.treeCount[i] > 0)
+                {
+                    double p = ((double)this.treeCorrect[i] / (double)this.treeCount[i]);
+                    app.WriteLine("Tree Type #"
+                            + i
+                            + " - Correct/total: "
+                            + this.treeCorrect[i]
+                            + "/" + treeCount[i] + "(" + Format.FormatPercentWhole(p) + ")");
+                }
             }
         }
     }

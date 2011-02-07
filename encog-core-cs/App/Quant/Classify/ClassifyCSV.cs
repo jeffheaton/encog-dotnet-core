@@ -44,10 +44,12 @@ namespace Encog.App.Quant.Classify
 
             this.Analyzed = true;
 
+            ResetStatus();
             int recordCount = 0;
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             while (csv.Next())
             {
+                UpdateStatus(true);
                 String key = csv.Get(classField);
                 if (!classesFound.Contains(key))
                     classesFound.Add(key);
@@ -103,6 +105,7 @@ namespace Encog.App.Quant.Classify
             }
 
             this.classify.Init();
+            ReportDone(true);
         }
 
         private String EncodeOneOf(int classNumber)
@@ -166,8 +169,10 @@ namespace Encog.App.Quant.Classify
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             this.classify.Init();
 
+            ResetStatus();
             while (csv.Next())
             {
+                UpdateStatus(false);
                 StringBuilder line = new StringBuilder();
                 int classNumber = this.classify.Lookup( csv.Get(this.classify.ClassField) );
                 bool inserted = false;
@@ -207,7 +212,7 @@ namespace Encog.App.Quant.Classify
 
             csv.Close();
             tw.Close();
-
+            ReportDone(false);
             this.classify.Init();
         }
     }

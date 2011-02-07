@@ -65,8 +65,10 @@ namespace Encog.App.Quant.Filter
             TextWriter tw = this.PrepareOutputFile(outputFile);
             this.filteredCount = 0;
 
+            ResetStatus();
             while (csv.Next())
             {
+                UpdateStatus(false);
                 LoadedRow row = new LoadedRow(csv);
                 if (ShouldProcess(row))
                 {
@@ -74,6 +76,7 @@ namespace Encog.App.Quant.Filter
                     this.filteredCount++;
                 }
             }
+            ReportDone(false);
             tw.Close();
             csv.Close();
         }

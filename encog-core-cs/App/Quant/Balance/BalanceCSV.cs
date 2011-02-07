@@ -34,9 +34,11 @@ namespace Encog.App.Quant.Balance
 
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
 
+            ResetStatus();
             while (csv.Next())
             {
                 LoadedRow row = new LoadedRow(csv);
+                UpdateStatus(false);
                 String key = row.Data[targetField];
                 int count;
                 if (!counts.ContainsKey(key))
@@ -56,7 +58,7 @@ namespace Encog.App.Quant.Balance
 
                 counts[key] = count;
             }
-
+            ReportDone(false);
             csv.Close();
             tw.Close();
         }
