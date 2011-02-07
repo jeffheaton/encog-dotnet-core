@@ -8,13 +8,14 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators
 {
+    /// <summary>
+    /// Process indicators and generate output.
+    /// </summary>
     public class ProcessIndicators : BasicCachedFile
     {        
-        public ProcessIndicators()
-        {
-            this.Precision = 10;
-        }
-
+        /// <summary>
+        /// Read the CSV file.
+        /// </summary>
         private void ReadCSV()
         {
             ReadCSV csv = null;
@@ -23,9 +24,11 @@ namespace Encog.App.Quant.Indicators
             {
                 csv = new ReadCSV(InputFilename, ExpectInputHeaders, InputFormat);
 
+                ResetStatus();
                 int row = 0;
                 while (csv.Next())
                 {
+                    UpdateStatus("Reading data");
                     foreach (BaseCachedColumn column in this.Columns)
                     {
                         if (column is FileData)
@@ -44,11 +47,16 @@ namespace Encog.App.Quant.Indicators
             }
             finally
             {
+                ReportDone("Reading data");
                 if (csv != null)
                     csv.Close();
             }
         }
 
+        /// <summary>
+        /// Get the beginning index.
+        /// </summary>
+        /// <returns></returns>
         private int GetBeginningIndex()
         {
             int result = 0;
@@ -65,6 +73,10 @@ namespace Encog.App.Quant.Indicators
             return result;
         }
 
+        /// <summary>
+        /// Get the ending index.
+        /// </summary>
+        /// <returns>The ending index.</returns>
         private int GetEndingIndex()
         {
             int result = this.RecordCount;
@@ -81,12 +93,17 @@ namespace Encog.App.Quant.Indicators
             return result;
         }
 
+        /// <summary>
+        /// Write the CSV.
+        /// </summary>
+        /// <param name="filename">The target filename.</param>
         private void WriteCSV(String filename)
         {
             TextWriter tw = null;
 
             try
             {
+                ResetStatus();
                 tw = new StreamWriter(filename);
 
                 // write the headers
@@ -116,6 +133,7 @@ namespace Encog.App.Quant.Indicators
                 // write the file data
                 for (int row = beginningIndex; row <= endingIndex; row++)
                 {
+                    UpdateStatus("Writing data");
                     StringBuilder line = new StringBuilder();
 
                     foreach (BaseCachedColumn column in Columns)
@@ -139,6 +157,9 @@ namespace Encog.App.Quant.Indicators
             }
         }
 
+        /// <summary>
+        /// Allocate storage.
+        /// </summary>
         private void AllocateStorage()
         {
             foreach (BaseCachedColumn column in this.Columns)
@@ -147,6 +168,9 @@ namespace Encog.App.Quant.Indicators
             }
         }
 
+        /// <summary>
+        /// Calculate the indicators.
+        /// </summary>
         private void CalculateIndicators()
         {
             foreach (BaseCachedColumn column in this.Columns)
@@ -162,6 +186,11 @@ namespace Encog.App.Quant.Indicators
             }
         }
 
+        /// <summary>
+        /// Rename a column.
+        /// </summary>
+        /// <param name="index">The column index.</param>
+        /// <param name="newName">The new name.</param>
         public void RenameColumn(int index, String newName)
         {
             this.ColumnMapping.Remove(Columns[index].Name);
@@ -169,6 +198,10 @@ namespace Encog.App.Quant.Indicators
             this.ColumnMapping.Add(newName, this.Columns[index]);
         }
 
+        /// <summary>
+        /// Process and write the specified output file.
+        /// </summary>
+        /// <param name="output">The output file.</param>
         public void Process(String output)
         {
             ValidateAnalyzed();
@@ -177,11 +210,6 @@ namespace Encog.App.Quant.Indicators
             ReadCSV();
             CalculateIndicators();
             WriteCSV(output);
-        }
-
-        public bool Calculate(double[] inputData, double[] outputData)
-        {
-            return false;
         }
     }
 }

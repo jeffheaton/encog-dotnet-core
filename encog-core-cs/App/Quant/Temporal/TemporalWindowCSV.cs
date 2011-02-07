@@ -182,8 +182,10 @@ namespace Encog.App.Quant.Temporal
                     tw.WriteLine(WriteHeaders());
                 }
 
+                ResetStatus();
                 while (csv.Next())
                 {
+                    UpdateStatus(false);
                     // begin to populate the bar
                     double[] bar = new double[barSize];
 
@@ -265,6 +267,7 @@ namespace Encog.App.Quant.Temporal
             }
             finally
             {
+                ReportDone(false);
                 if (csv != null)
                 {
                     try

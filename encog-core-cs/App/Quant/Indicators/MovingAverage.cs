@@ -6,10 +6,19 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators
 {
+    /// <summary>
+    /// A simple moving average.
+    /// </summary>
     public class MovingAverage: Indicator
     {
+        /// <summary>
+        /// The name of this indicator.
+        /// </summary>
         public static readonly String NAME = "MovAvg";
 
+        /// <summary>
+        /// The number of periods in this indicator.
+        /// </summary>
         public override int Periods 
         {
             get
@@ -18,8 +27,16 @@ namespace Encog.App.Quant.Indicators
             }
         }
 
+        /// <summary>
+        /// The number of periods in this indicator.
+        /// </summary>
         private int periods;
 
+        /// <summary>
+        /// Construct this object.
+        /// </summary>
+        /// <param name="periods">The number of periods in this indicator.</param>
+        /// <param name="output">True, if this indicator is predicted.</param>
         public MovingAverage(int periods, bool output) :
             base( NAME , false, output )
         {
@@ -27,6 +44,11 @@ namespace Encog.App.Quant.Indicators
             this.Output = output;
         }
 
+        /// <summary>
+        /// Calculate this indicator.
+        /// </summary>
+        /// <param name="data">The data to use.</param>
+        /// <param name="length">The length to calculate over.</param>
         public override void Calculate(IDictionary<string, BaseCachedColumn> data, int length)
         {
             Require(data, FileData.CLOSE);

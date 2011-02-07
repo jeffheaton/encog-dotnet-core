@@ -10,11 +10,25 @@ using Encog.MathUtil.Randomize;
 
 namespace Encog.App.Quant.Segregate
 {
+    /// <summary>
+    /// This class is used to segregate a CSV file into several sub-files.  This can
+    /// be used to create training and evaluation datasets.
+    /// </summary>
     public class SegregateCSV : BasicFile
     {
+        /// <summary>
+        /// The segregation targets.
+        /// </summary>
         public IList<SegregateTargetPercent> Targets { get { return this.targets; } }
+
+        /// <summary>
+        /// The segregation targets.
+        /// </summary>
         private IList<SegregateTargetPercent> targets = new List<SegregateTargetPercent>();
 
+        /// <summary>
+        /// Validate that the data is correct.
+        /// </summary>
         private void Validate()
         {
             ValidateAnalyzed();
@@ -41,6 +55,9 @@ namespace Encog.App.Quant.Segregate
             }
         }
 
+        /// <summary>
+        /// Balance the targets.
+        /// </summary>
         private void BalanceTargets()
         {
             SegregateTargetPercent smallestItem = null;
@@ -76,6 +93,12 @@ namespace Encog.App.Quant.Segregate
             }
         }
 
+        /// <summary>
+        /// Analyze the input file.
+        /// </summary>
+        /// <param name="inputFile">The input file.</param>
+        /// <param name="headers">The headers.</param>
+        /// <param name="format">The format of the input file.</param>
         public void Analyze(String inputFile, bool headers, CSVFormat format)
         {
             this.InputFilename = inputFile;
@@ -90,6 +113,9 @@ namespace Encog.App.Quant.Segregate
         }
 
 
+        /// <summary>
+        /// Process the input file and segregate into the output files.
+        /// </summary>
         public void Process()
         {
             Validate();

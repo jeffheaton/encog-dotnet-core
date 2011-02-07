@@ -6,12 +6,24 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Indicators.Predictive
 {
+    /// <summary>
+    /// Get the best return.
+    /// </summary>
     public class BestReturn: Indicator
     {
+        /// <summary>
+        /// The name of this indicator.
+        /// </summary>
         public static readonly String NAME = "PredictBestReturn";
 
+        /// <summary>
+        /// The number of periods this indicator is for.
+        /// </summary>
         private int periods;
 
+        /// <summary>
+        /// The number of periods.
+        /// </summary>
         public override int Periods
         {
             get
@@ -20,6 +32,11 @@ namespace Encog.App.Quant.Indicators.Predictive
             }
         }
 
+        /// <summary>
+        /// Construct the object. 
+        /// </summary>
+        /// <param name="periods">The number of periods.</param>
+        /// <param name="output">True, if this indicator is to be predicted.</param>
         public BestReturn(int periods, bool output)
             :base(NAME,false,output)
         {
@@ -27,12 +44,19 @@ namespace Encog.App.Quant.Indicators.Predictive
             Output = output;
         }
 
-
+        /// <summary>
+        /// The name of this indicator.
+        /// </summary>
         public string Name
         {
             get { return NAME; }
         }
 
+        /// <summary>
+        /// Calculate the indicator.
+        /// </summary>
+        /// <param name="data">The data available to the indicator.</param>
+        /// <param name="length">The length of the data to calculate.</param>
         public override void Calculate(IDictionary<string, BaseCachedColumn> data, int length)
         {
             double[] close = data[FileData.CLOSE].Data;

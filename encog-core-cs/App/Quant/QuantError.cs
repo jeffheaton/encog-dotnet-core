@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Encog.App.Quant
 {
-    public class QuantError: EncogError
+    /// <summary>
+    /// An error has occured in one of the quant classes.
+    /// </summary>
+    public class QuantError : EncogError
     {
-                /// <summary>
+        /// <summary>
         /// Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
@@ -31,7 +34,7 @@ namespace Encog.App.Quant
         /// <param name="msg">The message.</param>
         /// <param name="e">The exception.</param>
         public QuantError(String msg, Exception e)
-            : base(msg,e)
+            : base(msg, e)
         {
         }
     }

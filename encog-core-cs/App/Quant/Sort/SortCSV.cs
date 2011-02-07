@@ -43,9 +43,12 @@ namespace Encog.App.Quant.Sort
         /// <param name="format">The format of the input file.</param>
         private void ReadInputFile()
         {
+            ResetStatus();
+
             ReadCSV csv = new ReadCSV(InputFilename, ExpectInputHeaders, InputFormat);
             while (csv.Next())
             {
+                UpdateStatus("Reading input file");
                 LoadedRow row = new LoadedRow(csv);
                 this.data.Add(row);
             }
@@ -80,9 +83,12 @@ namespace Encog.App.Quant.Sort
             bool[] nonNumeric = new bool[this.InputHeadings.Length];
             bool first = true;
 
+            ResetStatus();
+
             // write the file
             foreach (LoadedRow row in this.data)
             {
+                UpdateStatus("Writing output");
                 // for the first row, determine types
                 if (first)
                 {
@@ -119,6 +125,8 @@ namespace Encog.App.Quant.Sort
 
                 tw.WriteLine(line.ToString());
             }
+
+            ReportDone("Writing output");
 
             // close the file
             tw.Close();

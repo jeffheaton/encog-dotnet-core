@@ -6,15 +6,31 @@ using Encog.App.Quant.Basic;
 
 namespace Encog.App.Quant.Sort
 {
+    /// <summary>
+    /// Used, internally, to compare two rows when sorting a CSV file.
+    /// </summary>
     public class RowComparitor: IComparer<LoadedRow>
     {
+        /// <summary>
+        /// The owner object.
+        /// </summary>
         private SortCSV sort;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
+        /// <param name="sort">The owner file.</param>
         public RowComparitor(SortCSV sort)
         {
             this.sort = sort;
         }
 
+        /// <summary>
+        /// Compare two rows.
+        /// </summary>
+        /// <param name="x">The first row.</param>
+        /// <param name="y">The second row.</param>
+        /// <returns>0 if the same, <0 x is less, >0 y is less.</returns>
         public int Compare(LoadedRow x, LoadedRow y)
         {
             foreach (SortedField t in this.sort.SortOrder)
