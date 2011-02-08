@@ -169,7 +169,7 @@ namespace Encog.App.Quant.Classify
         {
             StringBuilder result = new StringBuilder();
             double[] d = this.classify.EquilateralEncode.Encode(classNumber);
-            NumberList.ToList(this.InputFormat, result, d);
+            NumberList.ToList(this.InputFormat, this.Precision, result, d);
             return result.ToString();
         }
 
@@ -207,6 +207,49 @@ namespace Encog.App.Quant.Classify
         }
 
         /// <summary>
+        /// Prepare the output file, write headers if needed.
+        /// </summary>
+        /// <param name="outputFile">The name of the output file.</param>
+        /// <param name="orig">The name of original field.</param>
+        /// <returns>The output stream for the text file.</returns>
+        public TextWriter PrepareOutputFile(String outputFile, String originalName, int idx)
+        {
+            TextWriter tw = new StreamWriter(outputFile);
+
+            // write headers, if needed
+            if (ExpectInputHeaders)
+            {
+                int index = 0;
+                StringBuilder line = new StringBuilder();
+                foreach (String str in this.InputHeadings)
+                {
+                    if (index == idx)
+                    {
+                        if (line.Length > 0)
+                        {
+                            line.Append(",");
+                        }
+
+                        line.Append("\"");
+                        line.Append(originalName);
+                        line.Append("\"");
+                    }
+
+                    if (line.Length > 0)
+                    {
+                        line.Append(",");
+                    }
+                    line.Append("\"");
+                    line.Append(this.InputHeadings[index++]);
+                    line.Append("\"");
+                }
+                tw.WriteLine(line.ToString());
+            }
+
+            return tw;
+        }
+
+        /// <summary>
         /// Process the file.
         /// </summary>
         /// <param name="outputFile">The output file.</param>
@@ -214,12 +257,19 @@ namespace Encog.App.Quant.Classify
         /// <param name="insertAt">The column to insert the classified columns at, 
         /// or -1 for the end.</param>
         /// <param name="origionalName">If not null, include original column and name it this.  Usually null.</param>
-        public void Process(String outputFile, ClassifyMethod method, int insertAt, String origionalName)
+        public void Process(String outputFile, ClassifyMethod method, int insertAt, String originalName)
         {
+            TextWriter tw;
+
             ValidateAnalyzed();
 
             this.Stats.Method = method;
-            TextWriter tw = this.PrepareOutputFile(outputFile);
+            
+            if( originalName==null )
+                tw = this.PrepareOutputFile(outputFile);
+            else
+                tw = this.PrepareOutputFile(outputFile, originalName, this.classify.ClassField);
+
             ReadCSV csv = new ReadCSV(this.InputFilename, this.ExpectInputHeaders, this.InputFormat);
             this.classify.Init();
 
@@ -245,7 +295,7 @@ namespace Encog.App.Quant.Classify
                         inserted = true;
                     }
 
-                    if (origionalName!=null && i == this.classify.ClassField)
+                    if (originalName==null && i == this.classify.ClassField)
                     {
                         continue;
                     }

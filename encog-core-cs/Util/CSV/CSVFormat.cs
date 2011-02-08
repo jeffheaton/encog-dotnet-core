@@ -176,7 +176,7 @@ namespace Encog.Util.CSV
         /// <returns>The formatted number.</returns>
         public String Format(double d, int digits)
         {
-            return d.ToString(this.numberFormat);
+            return d.ToString("F" + digits, this.numberFormat);
         }
 
         /// <summary>

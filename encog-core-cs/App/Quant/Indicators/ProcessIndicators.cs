@@ -79,7 +79,7 @@ namespace Encog.App.Quant.Indicators
         /// <returns>The ending index.</returns>
         private int GetEndingIndex()
         {
-            int result = this.RecordCount;
+            int result = this.RecordCount-1;
 
             foreach (BaseCachedColumn column in Columns)
             {

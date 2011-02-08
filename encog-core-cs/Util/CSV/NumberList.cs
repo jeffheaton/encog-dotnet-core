@@ -88,6 +88,19 @@ namespace Encog.Util.CSV
         public static void ToList(CSVFormat format, StringBuilder result,
                  double[] data)
         {
+            ToList(format, 20, result, data);
+        }
+
+        /// <summary>
+        /// Convert an array of doubles to a comma separated list.
+        /// </summary>
+        /// <param name="format">The way to format this list.</param>
+        /// <param name="precision">The precision.</param>
+        /// <param name="result">This string will have the values appended to it.</param>
+        /// <param name="data">The array of doubles to use.</param>
+        public static void ToList(CSVFormat format, int precision, StringBuilder result,
+                 double[] data)
+        {
             result.Length = 0;
             for (int i = 0; i < data.Length; i++)
             {
@@ -95,7 +108,7 @@ namespace Encog.Util.CSV
                 {
                     result.Append(format.Separator);
                 }
-                result.Append(format.Format(data[i],20));
+                result.Append(format.Format(data[i], precision));
             }
         }
     }

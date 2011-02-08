@@ -36,8 +36,9 @@ namespace encog_test.Encog.App.Quant
         [Test]
         public void TestTheClassifyCSV()
         {
-            InternalTest(true);
-            InternalTest(false);
+            InternalTest(true, ClassifyMethod.SingleField);
+            InternalTest(false, ClassifyMethod.OneOf);
+            InternalTest(false, ClassifyMethod.Equilateral);
         }
 
         [Test]
@@ -50,32 +51,50 @@ namespace encog_test.Encog.App.Quant
 
             TextReader tr = new StreamReader(OUTPUT_NAME);
 
-            Console.WriteLine(tr.ReadLine());
-            Console.WriteLine(tr.ReadLine());
-            Console.WriteLine(tr.ReadLine());
-            Console.WriteLine(tr.ReadLine());
-
+            Assert.AreEqual("\"a\",\"org\",\"b\"",tr.ReadLine());
+            Assert.AreEqual("one,1,0",tr.ReadLine());
+            Assert.AreEqual("two,2,1",tr.ReadLine());
+            Assert.AreEqual("three,3,2", tr.ReadLine());
             tr.Close();
 
             File.Delete(INPUT_NAME);
             File.Delete(OUTPUT_NAME);
         }
 
-        public void InternalTest(bool headers)
+        public void InternalTest(bool headers, ClassifyMethod method)
         {
             GenerateTestFile(headers);
             ClassifyCSV norm = new ClassifyCSV();
+            norm.Precision = 4;
             norm.Analyze(INPUT_NAME, headers, CSVFormat.ENGLISH, 1);
-            norm.Process(OUTPUT_NAME,ClassifyMethod.SingleField,-1,null);
+            norm.Process(OUTPUT_NAME,method,-1,null);
 
             TextReader tr = new StreamReader(OUTPUT_NAME);
 
             if( headers )
                 Assert.AreEqual("\"a\",\"b\"",tr.ReadLine());
-            Assert.AreEqual("one,0", tr.ReadLine());
-            Assert.AreEqual("two,1",tr.ReadLine());
-            Assert.AreEqual("three,2",tr.ReadLine());
-            Assert.AreEqual("four,3",tr.ReadLine());
+
+            switch( method )
+            {
+                case ClassifyMethod.SingleField:
+                    Assert.AreEqual("one,0", tr.ReadLine());
+                    Assert.AreEqual("two,1",tr.ReadLine());
+                    Assert.AreEqual("three,2",tr.ReadLine());
+                    Assert.AreEqual("four,3",tr.ReadLine());
+                    break;
+                case ClassifyMethod.Equilateral:
+                    Assert.AreEqual("one,-0.8165,-0.4714,-0.3333",tr.ReadLine());
+                    Assert.AreEqual("two,0.8165,-0.4714,-0.3333",tr.ReadLine());
+                    Assert.AreEqual("three,0.0000,0.9428,-0.3333",tr.ReadLine());
+                    Assert.AreEqual("four,0.0000,0.0000,1.0000", tr.ReadLine());
+                    break;
+                case ClassifyMethod.OneOf:
+                    Assert.AreEqual("one,1,-1,-1,-1", tr.ReadLine());
+                    Assert.AreEqual("two,-1,1,-1,-1", tr.ReadLine());
+                    Assert.AreEqual("three,-1,-1,1,-1", tr.ReadLine());
+                    Assert.AreEqual("four,-1,-1,-1,1", tr.ReadLine());
+                    break;
+            }
 
             tr.Close();
 

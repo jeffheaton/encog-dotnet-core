@@ -22,8 +22,8 @@ namespace TestApp
 
         static void Main(string[] args)
         {
-            TestClassifyCSV t = new TestClassifyCSV();
-            t.TestKeepOrig();
+            TestYahooDownload t = new TestYahooDownload();
+            t.TestYahooDownloadCSV();
             Console.WriteLine("Done");
 
         }
