@@ -19,55 +19,11 @@ namespace TestApp
     /// </summary>
     public class Program
     {
-        public void TestNormalizeCSV()
-        {
-            NormalizeArray norm = new NormalizeArray();
-            norm.NormalizedHigh = 1;
-            norm.NormalizedLow = 0;
-            double[] input = { 1, 5, 10 };
-            double[] output = norm.Process(input);
-            Console.WriteLine(output[0]);// 0
-            Console.WriteLine(output[2]);// 1
-            Console.WriteLine(norm.Stats.ActualHigh);//10
-            Console.WriteLine(norm.Stats.ActualLow);//1
-        }
-
-        public void TestNormalizeArray()
-        {
-            GenerateTestFileHeadings();
-            NormalizeCSV norm = new NormalizeCSV();
-            norm.Analyze("test.csv", true, CSVFormat.ENGLISH);
-            norm.Stats.Data[2].MakePassThrough();
-            norm.Stats.Data[3].Action = NormalizationDesired.Ignore;
-            norm.Stats.Data[4].Action = NormalizationDesired.Ignore;
-            norm.Normalize("test2.csv");
-
-            TextReader tr = new StreamReader("test2.csv");
-            Console.WriteLine(tr.ReadLine());
-            Console.WriteLine(tr.ReadLine());
-            Console.WriteLine(tr.ReadLine());
-            tr.Close();
-
-        }
-
-        public void GenerateTestFileHeadings()
-        {
-            TextWriter tw = new StreamWriter("test.csv");
-            
-            tw.WriteLine("a,b,c,d,e");
-            tw.WriteLine("one,1,1,2,3");
-            tw.WriteLine("two,1,2,3,4");
-            tw.WriteLine("three,2,3,4,5");
-            tw.WriteLine("four,2,4,5,6");
-
-            // close the stream
-            tw.Close();
-        }
 
         static void Main(string[] args)
         {
-            TestNormalizeArray t = new TestNormalizeArray();
-            t.TestNormalize();
+            TestClassifyCSV t = new TestClassifyCSV();
+            t.TestKeepOrig();
             Console.WriteLine("Done");
 
         }

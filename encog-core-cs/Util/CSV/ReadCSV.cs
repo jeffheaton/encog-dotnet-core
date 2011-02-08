@@ -206,6 +206,8 @@ namespace Encog.Util.CSV
                     int i = 0;
                     foreach (String header in tok)
                     {
+                        if( this.columns.ContainsKey(header.ToLower()))
+                            throw new EncogError("Two columns cannot have the same name");
                         this.columns.Add(header.ToLower(), i++);
                         this.columnNames.Add(header);
                     }

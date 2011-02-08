@@ -99,7 +99,7 @@ namespace Encog.Examples.Forest
             app.WriteLine("Step 5: Classify training data");
             ClassifyCSV cls = new ClassifyCSV();
             cls.Analyze(Constant.BALANCE_FILE, false, CSVFormat.ENGLISH, 54);
-            cls.Process(Constant.CLASSIFY_FILE, method, -1, false);
+            cls.Process(Constant.CLASSIFY_FILE, method, -1, null);
             cls.Stats.WriteStatsFile(Constant.CLASSIFY_STATS_FILE);
             return cls.Stats.ColumnsNeeded;
         }

@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encog\App\Quant\TestBalanceCSV.cs" />
+    <Compile Include="Encog\App\Quant\TestClassifyCSV.cs" />
     <Compile Include="Encog\App\Quant\TestNormalizeArray.cs" />
     <Compile Include="Encog\App\Quant\TestNormalizeCSV.cs" />
     <Compile Include="Encog\Bot\Browse\TestAddress.cs" />

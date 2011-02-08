@@ -213,9 +213,8 @@ namespace Encog.App.Quant.Classify
         /// <param name="method">The classification method.</param>
         /// <param name="insertAt">The column to insert the classified columns at, 
         /// or -1 for the end.</param>
-        /// <param name="includeOrigional">True, if the original classification column 
-        /// is to be included, usually it is not.</param>
-        public void Process(String outputFile, ClassifyMethod method, int insertAt, bool includeOrigional)
+        /// <param name="origionalName">If not null, include original column and name it this.  Usually null.</param>
+        public void Process(String outputFile, ClassifyMethod method, int insertAt, String origionalName)
         {
             ValidateAnalyzed();
 
@@ -246,7 +245,7 @@ namespace Encog.App.Quant.Classify
                         inserted = true;
                     }
 
-                    if (!includeOrigional && i == this.classify.ClassField)
+                    if (origionalName!=null && i == this.classify.ClassField)
                     {
                         continue;
                     }

@@ -43,7 +43,7 @@ namespace Encog.Examples.Iris
             app.WriteLine("Step 3: Classify training data");
             ClassifyCSV cls = new ClassifyCSV();
             cls.Analyze(IrisConstant.RANDOM_FILE, false, CSVFormat.ENGLISH, 4);
-            cls.Process(IrisConstant.CLASSIFY_FILE, method, -1, false);
+            cls.Process(IrisConstant.CLASSIFY_FILE, method, -1, null);
             cls.Stats.WriteStatsFile(IrisConstant.CLASSIFY_STATS_FILE);
             return cls.Stats.ColumnsNeeded;
         }

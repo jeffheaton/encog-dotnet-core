@@ -74,7 +74,7 @@ namespace Encog.App.Quant.Balance
                 int count;
                 if (!counts.ContainsKey(key))
                 {
-                    count = 1;
+                    count = 0;
                 }
                 else
                 {
