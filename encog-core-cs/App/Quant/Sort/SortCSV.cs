@@ -53,6 +53,8 @@ namespace Encog.App.Quant.Sort
                 this.data.Add(row);
             }
 
+            this.ColumnCount = csv.GetColumnCount();
+
             if (this.ExpectInputHeaders)
             {
                 this.InputHeadings = csv.ColumnNames.ToArray<String>();
@@ -80,7 +82,7 @@ namespace Encog.App.Quant.Sort
         {
             TextWriter tw = this.PrepareOutputFile(outputFile);
 
-            bool[] nonNumeric = new bool[this.InputHeadings.Length];
+            bool[] nonNumeric = new bool[this.ColumnCount];
             bool first = true;
 
             ResetStatus();
@@ -92,7 +94,7 @@ namespace Encog.App.Quant.Sort
                 // for the first row, determine types
                 if (first)
                 {
-                    for (int i = 0; i < this.InputHeadings.Length; i++)
+                    for (int i = 0; i < this.ColumnCount; i++)
                     {
                         double d;
                         String str = row.Data[i];
@@ -104,7 +106,7 @@ namespace Encog.App.Quant.Sort
                 // write the row
                 StringBuilder line = new StringBuilder();
 
-                for (int i = 0; i < this.InputHeadings.Length; i++)
+                for (int i = 0; i < this.ColumnCount; i++)
                 {
                     if (i > 0)
                     {

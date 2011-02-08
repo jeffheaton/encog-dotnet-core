@@ -22,8 +22,8 @@ namespace TestApp
 
         static void Main(string[] args)
         {
-            TestYahooDownload t = new TestYahooDownload();
-            t.TestYahooDownloadCSV();
+            TestTemporalWindowCSV t = new TestTemporalWindowCSV();
+            t.TestTempNoHeaders();
             Console.WriteLine("Done");
 
         }

@@ -10,7 +10,8 @@ using Encog.App.Quant.Basic;
 namespace Encog.App.Quant.Ninja
 {
     /// <summary>
-    /// Used internally to write to a Ninja trader import file.
+    /// Can be used from within NinjaTrader to export data.  This class is usually placed 
+    /// inside of a NinjaTrader indicator to export NinjaTrader indicators and data.
     /// </summary>
     public class NinjaStreamWriter
     {
