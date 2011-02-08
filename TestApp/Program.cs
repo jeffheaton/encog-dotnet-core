@@ -10,6 +10,7 @@ using Encog.App.Quant.Indicators.Predictive;
 using Encog.App.Quant.Normalize;
 using Encog.Persist;
 using System.IO;
+using encog_test.Encog.App.Quant;
 
 namespace TestApp
 {
@@ -65,8 +66,8 @@ namespace TestApp
 
         static void Main(string[] args)
         {
-            Program program = new Program();
-            program.TestNormalizeArray();
+            TestNormalizeArray t = new TestNormalizeArray();
+            t.TestNormalize();
             Console.WriteLine("Done");
 
         }
