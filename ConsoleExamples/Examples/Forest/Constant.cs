@@ -62,9 +62,14 @@ namespace Encog.Examples.Forest
         /// </summary>
         public const String RANDOM_FILE = BASE_DIRECTORY + "random.csv";
 
-
+        /// <summary>
+        /// The classified file.
+        /// </summary>
         public const String CLASSIFY_FILE = BASE_DIRECTORY + "classify.csv";
 
+        /// <summary>
+        /// The classified stats file.
+        /// </summary>
         public const String CLASSIFY_STATS_FILE = BASE_DIRECTORY + "classify-stats.csv";
 
         /// <summary>
@@ -111,11 +116,6 @@ namespace Encog.Examples.Forest
         /// The name of the network inside of the EG file.
         /// </summary>
         public const String TRAINED_NETWORK_NAME = "forest-network";
-
-        /// <summary>
-        /// The name of the normalization object inside of the EG file.
-        /// </summary>
-        public const String NORMALIZATION_NAME = "forest-norm";
 
         /// <summary>
         /// How many minutes to train for (console mode only)

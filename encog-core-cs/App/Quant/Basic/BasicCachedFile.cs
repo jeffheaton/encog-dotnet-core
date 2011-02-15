@@ -8,15 +8,38 @@ using System.IO;
 
 namespace Encog.App.Quant.Basic
 {
+    /// <summary>
+    /// Forms the foundation of all of the cached files in Encog Quant.
+    /// </summary>
     public class BasicCachedFile: BasicFile
     {
+        /// <summary>
+        /// The column mappings.
+        /// </summary>
         public IDictionary<String, BaseCachedColumn> ColumnMapping { get { return columnMapping; } }
+
+        /// <summary>
+        /// The columns.
+        /// </summary>
         public IList<BaseCachedColumn> Columns { get { return columns; } }
 
+        /// <summary>
+        /// The column mapping.
+        /// </summary>
         private IDictionary<String, BaseCachedColumn> columnMapping = new Dictionary<String, BaseCachedColumn>();
+
+        /// <summary>
+        /// The columns.
+        /// </summary>
         private IList<BaseCachedColumn> columns = new List<BaseCachedColumn>();
 
 
+        /// <summary>
+        /// Analyze the input file.
+        /// </summary>
+        /// <param name="input">The input file.</param>
+        /// <param name="headers">True, if there are headers.</param>
+        /// <param name="format">The format of the CSV data.</param>
         public virtual void Analyze(String input, bool headers, CSVFormat format)
         {
             ResetStatus();
@@ -83,6 +106,11 @@ namespace Encog.App.Quant.Basic
             }
         }
 
+        /// <summary>
+        /// Attempt to resolve a column name.
+        /// </summary>
+        /// <param name="name">The unknown column name.</param>
+        /// <returns>The known column name.</returns>
         private String AttemptResolveName(String name)
         {
             name = name.ToLower();
@@ -119,12 +147,22 @@ namespace Encog.App.Quant.Basic
             return name;
         }
 
+        /// <summary>
+        /// Add a new column.
+        /// </summary>
+        /// <param name="column">The column to add.</param>
         public void AddColumn(BaseCachedColumn column)
         {
             this.Columns.Add(column);
             this.ColumnMapping[column.Name] = column;
         }
 
+        /// <summary>
+        /// Get the data for a specific column.
+        /// </summary>
+        /// <param name="name">The column to read.</param>
+        /// <param name="csv">The CSV file to read from.</param>
+        /// <returns>The column data.</returns>
         public String GetColumnData(String name, ReadCSV csv)
         {
             if (!this.ColumnMapping.ContainsKey(name))

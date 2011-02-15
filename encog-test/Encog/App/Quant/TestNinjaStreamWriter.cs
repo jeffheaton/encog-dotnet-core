@@ -29,9 +29,9 @@ namespace encog_test.Encog.App.Quant
 
             TextReader tr = new StreamReader("test.txt");
 
-            Assert.AreEqual("date,time,open price,high price,low price,close price,volume,adjusted price",tr.ReadLine());
-            Assert.AreEqual("20000110,0,432.50,451.25,420.00,436.06,61022400,109.01",tr.ReadLine());
-            Assert.AreEqual("20000107,0,366.75,408.00,363.00,407.25,48999600,101.81", tr.ReadLine());
+            Assert.AreEqual("date,time,\"close\"",tr.ReadLine());
+            Assert.AreEqual("20100101,0,10",tr.ReadLine());
+            Assert.AreEqual("20100102,0,11", tr.ReadLine());
 
             tr.Close();
         }

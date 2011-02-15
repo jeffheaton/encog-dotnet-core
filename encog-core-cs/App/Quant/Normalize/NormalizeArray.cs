@@ -6,15 +6,7 @@ using System.Text;
 namespace Encog.App.Quant.Normalize
 {
     /// <summary>
-    /// Normalization is the process where data is adjusted to be inside a range.  This
-    /// range is typically -1 to 1.  For more information about normalization, refer to 
-    /// the following page.
     /// 
-    /// http://www.heatonresearch.com/content/really-simple-introduction-normalization
-    /// 
-    /// This class is used to normalize an array.  Sometimes you would like to normalize
-    /// an array, rather than an entire CSV file.  If you would like to normalize an entire
-    /// CSV file, you should make use of the class NormalizeCSV.
     /// </summary>
     public class NormalizeArray
     {

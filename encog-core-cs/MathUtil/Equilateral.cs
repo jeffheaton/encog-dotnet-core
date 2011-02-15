@@ -169,6 +169,11 @@ namespace Encog.MathUtil
             return Math.Sqrt(result);
         }
 
+        /// <summary>
+        /// Get the smallest distance.
+        /// </summary>
+        /// <param name="data">The data to check.</param>
+        /// <returns>The set with the smallest distance.</returns>
         public int GetSmallestDistance(double[] data)
         {
             int bestSet = -1;
