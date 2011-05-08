@@ -23,14 +23,13 @@
  */
 namespace Encog.Engine.Network.Train.Prop
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network using RPROP.
@@ -66,7 +65,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="initialUpdate">The initial update value.</param>
         /// <param name="maxStep">The maximum step value.</param>
         public TrainFlatNetworkResilient(FlatNetwork network,
-                IEngineDataSet training, double zeroTolerance,
+                INeuralDataSet training, double zeroTolerance,
                 double initialUpdate, double maxStep)
             : base(network, training)
         {
@@ -87,7 +86,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="flat">The network to train.</param>
         /// <param name="trainingSet">The training data to use.</param>
         public TrainFlatNetworkResilient(FlatNetwork flat,
-                IEngineDataSet trainingSet)
+                INeuralDataSet trainingSet)
             : this(flat, trainingSet, RPROPConst.DEFAULT_ZERO_TOLERANCE, RPROPConst.DEFAULT_INITIAL_UPDATE, RPROPConst.DEFAULT_MAX_STEP)
         {
         }

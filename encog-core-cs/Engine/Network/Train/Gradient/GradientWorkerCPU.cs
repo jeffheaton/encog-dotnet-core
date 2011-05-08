@@ -24,8 +24,6 @@
 
 namespace Encog.Engine.Network.Train.Gradient
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Activation;
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train.Prop;
@@ -37,6 +35,8 @@ namespace Encog.Engine.Network.Train.Gradient
     using System.Runtime.CompilerServices;
     using System.Diagnostics;
     using Encog.Util.Time;
+    using Encog.Neural.Data.Basic;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.
@@ -115,13 +115,13 @@ namespace Encog.Engine.Network.Train.Gradient
         /// The pair to use for training.
         /// </summary>
         ///
-        private readonly IEngineData pair;
+        private readonly INeuralDataPair pair;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly IEngineDataSet training;
+        private readonly INeuralDataSet training;
 
         /// <summary>
         /// The high end of the training data.
@@ -152,7 +152,7 @@ namespace Encog.Engine.Network.Train.Gradient
         /// <param name="high">The high index to use in the training data.</param>
         public GradientWorkerCPU(FlatNetwork network,
                 TrainFlatNetworkProp owner,
-                IEngineDataSet training, int low, int high)
+                INeuralDataSet training, int low, int high)
         {
             this.errorCalculation = new ErrorCalculation();
             this.network = network;
@@ -172,7 +172,7 @@ namespace Encog.Engine.Network.Train.Gradient
             this.layerOutput = network.LayerOutput;
             this.layerFeedCounts = network.LayerFeedCounts;
 
-            this.pair = BasicEngineData.CreatePair(network.InputCount,
+            this.pair = BasicNeuralDataPair.CreatePair(network.InputCount,
                     network.OutputCount);
         }
 

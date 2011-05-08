@@ -62,7 +62,6 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Hopfield.Simple.HopfieldSimple.Info);
             examples.Add(Encog.Examples.Hopfield.Associate.HopfieldAssociate.Info);
             examples.Add(Encog.Examples.JordanNetwork.JordanExample.Info);
-            examples.Add(Encog.Examples.Market.Market.Info);
             examples.Add(Encog.Examples.MultiBench.MultiThreadBenchmark.Info);
             examples.Add(Encog.Examples.XOR.Anneal.XorAnneal.Info);
             examples.Add(Encog.Examples.XOR.Backprop.XorBackprop.Info);
@@ -73,18 +72,14 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.XOR.Resilient.XORResilient.Info);
             examples.Add(Encog.Examples.XOR.SCG.XORSCG.Info);
             examples.Add(Encog.Examples.XOR.Thresholdless.XorThresholdless.Info);
-            examples.Add(Encog.Examples.Forest.ForestCover.Info);
-            examples.Add(Encog.Examples.Lunar.LunarLander.Info);
             examples.Add(Encog.Examples.Image.ImageNeuralNetwork.Info);
             examples.Add(Encog.Examples.Persist.PersistEncog.Info);
             examples.Add(Encog.Examples.Persist.PersistSerial.Info);
-            examples.Add(Encog.Examples.Sunspots.Sunspots.Info);
             examples.Add(Encog.Examples.XOR.NEAT.XORNEAT.Info);
             examples.Add(Encog.Examples.Benchmark.WeightInitialization.Info);
             examples.Add(Encog.Examples.Benchmark.ThreadCount.Info);
             examples.Add(Encog.Examples.XOR.LMA.XORLMA.Info);
             examples.Add(Encog.Examples.Benchmark.SimpleBenchmark.Info);
-            examples.Add(Encog.Examples.Iris.IrisDataset.Info);
         }
 
         public void ListCommands()

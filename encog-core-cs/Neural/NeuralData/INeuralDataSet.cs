@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using Encog.Neural.Data;
-using Encog.Engine.Data;
 
 namespace Encog.Neural.NeuralData
 {
@@ -50,7 +49,7 @@ namespace Encog.Neural.NeuralData
     /// to be used. Typically the add methods are not supported on non-memory based
     /// datasets.
     /// </summary>
-    public interface INeuralDataSet: IEngineDataSet
+    public interface INeuralDataSet
     {
         /// <summary>
         /// Add a NeuralData object to the dataset. This is used with unsupervised
@@ -90,6 +89,39 @@ namespace Encog.Neural.NeuralData
         /// </summary>
         /// <returns></returns>
         IEnumerator<INeuralDataPair> GetEnumerator();
+
+        /// <summary>
+        /// The size of the ideal data, 0 if no ideal data.
+        /// </summary>
+        int IdealSize { get; }
+
+        /// <summary>
+        /// The size of the input data.
+        /// </summary>
+        int InputSize { get; }
+
+        /// <summary>
+        /// The number of records in the data set.
+        /// </summary>
+        long Count { get; }
+
+        /// <summary>
+        /// Get one record from the data set.
+        /// </summary>
+        /// <param name="index">The index to read.</param>
+        /// <param name="pair">The pair to read into.</param>
+        void GetRecord(long index, INeuralDataPair pair);
+
+        /// <summary>
+        /// Open an additional instance of this dataset.
+        /// </summary>
+        /// <returns>The new instance of this dataset.</returns>
+        INeuralDataSet OpenAdditional();       
+
+        /// <summary>
+        /// Return true if supervised.
+        /// </summary>
+        bool Supervised { get; }
 
     }
 }

@@ -2,7 +2,6 @@ namespace Encog.Engine.Network.Flat
 {
 
     using Encog.Engine;
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Activation;
     using Encog.Engine.Util;
     using System;
@@ -10,6 +9,8 @@ namespace Encog.Engine.Network.Flat
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using Encog.Neural.Data.Basic;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Implements a flat (vector based) neural network in the Encog Engine. This is
@@ -236,12 +237,12 @@ namespace Encog.Engine.Network.Flat
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(IEngineDataSet data)
+        public double CalculateError(INeuralDataSet data)
         {
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
             double[] actual = new double[this.outputCount];
-            IEngineData pair = BasicEngineData.CreatePair(data.InputSize,
+            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(data.InputSize,
                     data.IdealSize);
 
             for (int i = 0; i < data.Count; i++)

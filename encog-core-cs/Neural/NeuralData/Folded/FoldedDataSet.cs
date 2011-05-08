@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-using Encog.Engine.Data;
 using Encog.Neural.Networks.Training;
 
 namespace Encog.Neural.Data.Folded
@@ -45,7 +44,7 @@ namespace Encog.Neural.Data.Folded
     /// This dataset works off of an underlying dataset. By default there are no
     /// folds (fold size 1). Call the fold method to create more folds. 
     /// </summary>
-    public class FoldedDataSet : IEngineDataSet
+    public class FoldedDataSet : INeuralDataSet
     {
         /// <summary>
         /// Error message: adds are not supported.
@@ -273,7 +272,7 @@ namespace Encog.Neural.Data.Folded
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="pair">The record.</param>
-        public void GetRecord(long index, IEngineData pair)
+        public void GetRecord(long index, INeuralDataPair pair)
         {
             this.underlying.GetRecord(this.CurrentFoldOffset + index, pair);
         }
@@ -316,7 +315,7 @@ namespace Encog.Neural.Data.Folded
         /// Open an additional dataset.
         /// </summary>
         /// <returns>The dataset.</returns>
-        public IEngineDataSet OpenAdditional()
+        public INeuralDataSet OpenAdditional()
         {
             FoldedDataSet folded = new FoldedDataSet((INeuralDataSet)this.underlying.OpenAdditional());
             folded.Owner = this;

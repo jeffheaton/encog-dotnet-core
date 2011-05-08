@@ -24,14 +24,13 @@
 
 namespace Encog.Engine.Network.Train.Prop
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network, using backpropagation.
@@ -67,7 +66,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="learningRate">The learning rate.</param>
         /// <param name="momentum">The momentum.</param>
         public TrainFlatNetworkBackPropagation(FlatNetwork network,
-                IEngineDataSet training, double learningRate,
+                INeuralDataSet training, double learningRate,
                 double momentum)
             : base(network, training)
         {

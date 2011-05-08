@@ -26,7 +26,6 @@ namespace Encog.Engine.Network.Train.Prop
 
     using Encog.Engine;
     using Encog.Engine.Concurrency;
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train;
     using Encog.Engine.Network.Train.Gradient;
@@ -37,6 +36,7 @@ namespace Encog.Engine.Network.Train.Prop
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Encog.Engine.Concurrency.Job;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network using multithreading, and GPU support.
@@ -77,13 +77,13 @@ namespace Encog.Engine.Network.Train.Prop
         /// The training data.
         /// </summary>
         ///
-        protected internal readonly IEngineDataSet training;
+        protected internal readonly INeuralDataSet training;
 
         /// <summary>
         /// The network in indexable form.
         /// </summary>
         ///
-        protected internal readonly IEngineDataSet indexable;
+        protected internal readonly INeuralDataSet indexable;
 
         /// <summary>
         /// The workers.
@@ -122,7 +122,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkProp(FlatNetwork network,
-                IEngineDataSet training)
+                INeuralDataSet training)
         {
             this.training = training;
             this.network = network;
@@ -245,7 +245,7 @@ namespace Encog.Engine.Network.Train.Prop
 
 
         /// <inheritdoc />
-        public virtual IEngineDataSet Training
+        public virtual INeuralDataSet Training
         {
             get
             {
@@ -413,6 +413,8 @@ namespace Encog.Engine.Network.Train.Prop
                 this.iteration = value;
             }
         }
+
+
 
     }
 }

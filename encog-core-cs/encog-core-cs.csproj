@@ -103,10 +103,6 @@
     <Compile Include="Engine\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Engine\Concurrency\PoolItem.cs" />
     <Compile Include="Engine\Concurrency\TaskGroup.cs" />
-    <Compile Include="Engine\Data\BasicEngineData.cs" />
-    <Compile Include="Engine\Data\BasicEngineDataSet.cs" />
-    <Compile Include="Engine\Data\EngineData.cs" />
-    <Compile Include="Engine\Data\EngineDataSet.cs" />
     <Compile Include="Engine\EncogEngine.cs" />
     <Compile Include="Engine\EncogEngineError.cs" />
     <Compile Include="Engine\IEngineMachineLearning.cs" />

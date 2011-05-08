@@ -24,14 +24,13 @@
 
 namespace Encog.Engine.Network.Train.Prop
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train the flat network using Manhattan update rule.
@@ -60,7 +59,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="training">The training data to use.</param>
         /// <param name="learningRate">The learning rate to use.</param>
         public TrainFlatNetworkManhattan(FlatNetwork network,
-                IEngineDataSet training, double learningRate)
+                INeuralDataSet training, double learningRate)
             : base(network, training)
         {
             this.learningRate = learningRate;

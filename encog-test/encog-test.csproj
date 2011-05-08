@@ -53,19 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encog\App\Quant\TestTemporalWindowCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestShuffleCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestBalanceCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestClassifyCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestFilter.cs" />
-    <Compile Include="Encog\App\Quant\TestNinjaFileConvert.cs" />
-    <Compile Include="Encog\App\Quant\TestNinjaStreamWriter.cs" />
-    <Compile Include="Encog\App\Quant\TestNormalizeArray.cs" />
-    <Compile Include="Encog\App\Quant\TestNormalizeCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestProcessIndicators.cs" />
-    <Compile Include="Encog\App\Quant\TestSegregateCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestSortCSV.cs" />
-    <Compile Include="Encog\App\Quant\TestYahooDownload.cs" />
     <Compile Include="Encog\Bot\Browse\TestAddress.cs" />
     <Compile Include="Encog\Bot\Browse\TestBrowse.cs" />
     <Compile Include="Encog\Bot\Browse\TestWebPageData.cs" />

@@ -23,8 +23,6 @@
  */
 namespace Encog.Engine.Network.Train.Prop
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
@@ -32,6 +30,7 @@ namespace Encog.Engine.Network.Train.Prop
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Encog.Engine.Util;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a network using scaled conjugate gradient.
@@ -143,7 +142,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkSCG(FlatNetwork network,
-                IEngineDataSet training)
+                INeuralDataSet training)
             : base(network, training)
         {
             this.success = true;

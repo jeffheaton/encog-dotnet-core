@@ -24,14 +24,13 @@
 
 namespace Encog.Engine.Network.Train
 {
-
-    using Encog.Engine.Data;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network.
@@ -55,7 +54,7 @@ namespace Encog.Engine.Network.Train
 
 
         /// <returns>The data we are training with.</returns>
-        IEngineDataSet Training
+        INeuralDataSet Training
         {
             get;
         }
