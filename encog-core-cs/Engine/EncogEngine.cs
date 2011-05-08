@@ -36,7 +36,6 @@ namespace Encog.Engine
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Encog.Engine.Opencl;
 
     /// <summary>
     /// The Encog Engine.
@@ -58,15 +57,6 @@ namespace Encog.Engine
         ///
         private static EncogEngine instance;
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// If Encog is not using GPU/CL processing this attribute will be null.
-        /// Otherwise it holds the Encog CL object.
-        /// </summary>
-        ///
-        private EncogCL cl;
-#endif
-
         /// <summary>
         /// Get the instance to the singleton.
         /// </summary>
@@ -84,30 +74,6 @@ namespace Encog.Engine
             }
         }
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// Enable OpenCL processing. OpenCL processing allows Encog to use GPU
-        /// devices to speed calculations. Not all areas of Encog can use this,
-        /// however, GPU's can currently accelerate the training of Feedforward
-        /// neural networks.
-        /// To make use of the GPU you must have OpenCL drivers installed. For more
-        /// information on getting OpenCL drivers, visit the following URL.
-        /// http://www.heatonresearch.com/encog/opencl
-        /// </summary>
-        ///
-        public void InitCL()
-        {
-            try
-            {
-                this.cl = new EncogCL();
-            }
-            catch (Exception e)
-            {
-                throw new EncogEngineError(e);
-            }
-        }
-#endif
-
         /// <summary>
         /// Provides any shutdown that Encog may need. Currently this shuts down the
         /// thread pool.
@@ -116,19 +82,5 @@ namespace Encog.Engine
         public void Shutdown()
         {
         }
-
-#if !SILVERLIGHT
-        /// <summary>
-        /// If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.
-        /// </summary>
-        public EncogCL CL
-        {
-            get
-            {
-                return this.cl;
-            }
-        }
-#endif
-
     }
 }

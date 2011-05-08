@@ -88,28 +88,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="training">The training set to use.</param>
         public ResilientPropagation(BasicNetwork network,
                  INeuralDataSet training)
-            : this(network, training, null, RPROPConst.DEFAULT_INITIAL_UPDATE,
+            : this(network, training, RPROPConst.DEFAULT_INITIAL_UPDATE,
                 RPROPConst.DEFAULT_MAX_STEP)
         {
 
         }
 
-        /// <summary>
-        /// Construct an RPROP trainer, allows an OpenCL device to be specified. Use
-        /// the defaults for all training parameters. Usually this is the constructor
-        /// to use as the resilient training algorithm is designed for the default
-        /// parameters to be acceptable for nearly all problems. 
-        /// </summary>
-        /// <param name="network">The network to train.</param>
-        /// <param name="training">The training data to use.</param>
-        /// <param name="profile">The profile to use.</param>
-        public ResilientPropagation(BasicNetwork network,
-                 INeuralDataSet training, OpenCLTrainingProfile profile)
-            : this(network, training, profile, RPROPConst.DEFAULT_INITIAL_UPDATE,
-                RPROPConst.DEFAULT_MAX_STEP)
-        {
-
-        }
 
         /// <summary>
         /// Construct a resilient training object, allow the training parameters to
@@ -124,26 +108,14 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// are all initially set to.</param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
         public ResilientPropagation(BasicNetwork network,
-                 INeuralDataSet training, OpenCLTrainingProfile profile,
+                 INeuralDataSet training, 
                  double initialUpdate, double maxStep)
             : base(network, training)
         {
-            if (profile == null)
-            {
-                TrainFlatNetworkResilient rpropFlat = new TrainFlatNetworkResilient(
-                        network.Structure.Flat, this.Training);
-                this.FlatTraining = rpropFlat;
-            }
-#if !SILVERLIGHT
-            else
-            {
-                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
-                        network.Structure.Flat, this.Training,
-                        profile);
-                rpropFlat.LearnRPROP(initialUpdate, maxStep);
-                this.FlatTraining = rpropFlat;
-            }
-#endif
+            TrainFlatNetworkResilient rpropFlat = new TrainFlatNetworkResilient(
+                    network.Structure.Flat, this.Training);
+            this.FlatTraining = rpropFlat;
+
         }
 
         /// <summary>
@@ -195,18 +167,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         ((TrainFlatNetworkResilient)this.FlatTraining)
                                 .UpdateValues;
             }
-#if !SILVERLIGHT
-            else
-            {
-                result[ResilientPropagation.LAST_GRADIENTS] =
-                        ((TrainFlatNetworkOpenCL)this.FlatTraining)
-                                .LastGradient;
-                result[ResilientPropagation.UPDATE_VALUES] =
-                        ((TrainFlatNetworkOpenCL)this.FlatTraining)
-                                .UpdateValues;
-            }
-#endif
-
             return result;
         }
 
@@ -234,15 +194,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                         ((TrainFlatNetworkResilient)this.FlatTraining)
                                 .UpdateValues);
             }
-#if !SILVERLIGHT
-            else if (this.FlatTraining is TrainFlatNetworkOpenCL)
-            {
-                EngineArray.ArrayCopy(lastGradient, ((TrainFlatNetworkOpenCL)this
-                        .FlatTraining).LastGradient);
-                EngineArray.ArrayCopy(updateValues, ((TrainFlatNetworkOpenCL)this
-                        .FlatTraining).UpdateValues);
-            }
-#endif
         }
     }
 }

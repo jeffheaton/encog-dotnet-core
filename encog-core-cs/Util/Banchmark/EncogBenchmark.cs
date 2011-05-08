@@ -36,7 +36,6 @@ using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Engine;
-using Encog.Engine.Opencl;
 using Encog.Engine.Util;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Data.Buffer;
@@ -100,12 +99,7 @@ namespace Encog.Util.Banchmark
         /// The binary score.
         /// </summary>
         private int binaryScore;
-
-        /// <summary>
-        /// The OpenCL device to use.
-        /// </summary>
-        private EncogCLDevice device;
-
+        
         /// <summary>
         /// Construct a benchmark object.
         /// </summary>
@@ -125,9 +119,6 @@ namespace Encog.Util.Banchmark
             this.report.Report(EncogBenchmark.STEPS, 0, "Beginning benchmark");
 
             EvalCPU();
-#if !SILVERLIGHT
-            EvalOpenCL();
-#endif
             EvalMemory();
 #if !SILVERLIGHT
             EvalBinary();
@@ -137,18 +128,7 @@ namespace Encog.Util.Banchmark
 
             result.Append("Encog Benchmark: CPU:");
             result.Append(Format.FormatInteger(this.cpuScore));
-#if !SILVERLIGHT
-            result.Append(", OpenCL");
-            if (this.device == null)
-                result.Append("(none)");
-            else if (this.device.CPU)
-                result.Append("(cpu)");
-            else
-                result.Append("(gpu)");
 
-            result.Append(":");
-            result.Append(Format.FormatInteger(this.clScore));
-#endif
             result.Append(", Memory:");
             result.Append(Format.FormatInteger(this.memoryScore));
             result.Append(", Disk:");
@@ -189,94 +169,6 @@ namespace Encog.Util.Banchmark
             this.cpuScore = result;
         }
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// Evaluate the OpenCL device.
-        /// </summary>
-        private void EvalOpenCL()
-        {
-
-            try
-            {
-                // did the caller assign a device? If not, use the first GPU,
-                // failing that,
-                // use the first CPU. Failing that, as well, don't test OpenCL.
-                if (this.device == null)
-                {
-
-                    if (EncogFramework.Instance.CL == null)
-                        EncogFramework.Instance.InitCL();
-
-                    this.device = EncogFramework.Instance.CL.ChooseDevice();
-
-                }
-            }
-            catch (Exception)
-            {
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "No OpenCL devices, result: 0");
-                this.clScore = 0;
-            }
-
-            int small = 0, medium = 0, large = 0, huge = 0;
-
-            try
-            {
-                small = Evaluate.EvaluateTrain(device, 2, 4, 0, 1);
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, tiny= "
-                                + Format.FormatInteger(small / 100));
-            }
-            catch (Exception)
-            {
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, tiny FAILED");
-            }
-
-            try
-            {
-                medium = Evaluate.EvaluateTrain(device, 10, 20, 0, 1);
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, small= "
-                                + Format.FormatInteger(medium / 30));
-            }
-            catch (Exception)
-            {
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, small FAILED");
-            }
-
-            try
-            {
-                large = Evaluate.EvaluateTrain(device, 100, 200, 40, 5);
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, large= " + Format.FormatInteger(large));
-            }
-            catch (Exception)
-            {
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, large FAILED");
-            }
-
-            try
-            {
-                huge = Evaluate.EvaluateTrain(device, 200, 300, 200, 50);
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, huge= " + Format.FormatInteger(huge));
-            }
-            catch (Exception)
-            {
-                this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                        "Evaluate OpenCL, huge FAILED");
-            }
-
-            int result = (small / 100) + (medium / 30) + large + huge;
-
-            this.report.Report(EncogBenchmark.STEPS, EncogBenchmark.STEP2,
-                    "OpenCL result: " + result);
-            this.clScore = result;
-        }
-#endif
 
         /// <summary>
         /// Evaluate memory.
@@ -397,21 +289,6 @@ namespace Encog.Util.Banchmark
             get
             {
                 return binaryScore;
-            }
-        }
-
-        /// <summary>
-        /// The device.
-        /// </summary>
-        public EncogCLDevice Device
-        {
-            get
-            {
-                return device;
-            }
-            set
-            {
-                this.device = value;
             }
         }
     }

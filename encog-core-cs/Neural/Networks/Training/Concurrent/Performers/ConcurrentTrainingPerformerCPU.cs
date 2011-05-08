@@ -5,7 +5,6 @@ using System.Text;
 using Encog.Neural.Networks.Training.Concurrent.Jobs;
 using Encog.Engine.Concurrency.Job;
 using System.Diagnostics;
-using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Util.Time;
 
@@ -85,19 +84,8 @@ namespace Encog.Neural.Networks.Training.Concurrent.Performers
             try
             {
                 watch.Start();
-                OpenCLTrainingProfile profile = null;
-#if !SILVERLIGHT
-                if (this is ConcurrentTrainingPerformerOpenCL)
-                {
-                    EncogCLDevice device = ((ConcurrentTrainingPerformerOpenCL)this).Device;
-                    profile = new OpenCLTrainingProfile(device,
-                            this.currentJob.LocalRatio,
-                            this.currentJob.GlobalRatio,
-                            this.currentJob.SegmentationRatio);
-                }
-#endif
 
-                this.currentJob.CreateTrainer(profile, Manager.SingleThreaded);
+                this.currentJob.CreateTrainer(Manager.SingleThreaded);
                 ITrain train = this.currentJob.Train;
                 int interation = 1;
 

@@ -112,28 +112,12 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="training">The training data to be used for backpropagation.</param>
         public Backpropagation(BasicNetwork network,
                 INeuralDataSet training)
-            : this(network, training, null, 0, 0)
+            : this(network, training, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
         }
 
-        /// <summary>
-        /// Train using the specified learning rate and momentum.  Use the CPU to train.
-        /// </summary>
-        /// <param name="network">The network that is to be trained</param>
-        /// <param name="training">The training set</param>
-        /// <param name="learnRate">The rate at which the weight matrix will be adjusted based on
-        /// learning.</param>
-        /// <param name="momentum">The influence that previous iteration's training deltas will
-        /// have on the current iteration.</param>
-        public Backpropagation(BasicNetwork network,
-                 INeuralDataSet training, double learnRate,
-                 double momentum)
-            : this(network, training, null, learnRate, momentum)
-        {
-        }
-        
         /// <summary>
         /// The network that is to be trained.
         /// </summary>
@@ -145,31 +129,16 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="momentum">The influence that previous iteration's training deltas will
         /// have on the current iteration.</param>
         public Backpropagation(BasicNetwork network,
-                 INeuralDataSet training, OpenCLTrainingProfile profile, double learnRate,
+                 INeuralDataSet training, double learnRate,
                  double momentum)
             : base(network, training)
         {
-
-            if (profile == null)
-            {
-                TrainFlatNetworkBackPropagation backFlat = new TrainFlatNetworkBackPropagation(
-                        network.Structure.Flat,
-                        this.Training,
-                        learnRate,
-                        momentum);
-                this.FlatTraining = backFlat;
-            }
-#if !SILVERLIGHT
-            else
-            {
-                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
-                        network.Structure.Flat, this.Training,
-                        profile);
-                rpropFlat.LearnBPROP(learnRate, momentum);
-                this.FlatTraining = rpropFlat;
-            }
-#endif
-
+            TrainFlatNetworkBackPropagation backFlat = new TrainFlatNetworkBackPropagation(
+                    network.Structure.Flat,
+                    this.Training,
+                    learnRate,
+                    momentum);
+            this.FlatTraining = backFlat;
         }
 
         /// <summary>

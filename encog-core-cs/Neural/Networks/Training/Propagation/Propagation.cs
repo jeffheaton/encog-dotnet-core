@@ -213,17 +213,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <summary>
-        /// The OpenCL device to use, or null for the CPU.
-        /// </summary>
-        public OpenCLTrainingProfile Profile
-        {
-            get
-            {
-                return null;
-            }
-        }
-        
-        /// <summary>
         /// Perform the specified number of training iterations. This can be more efficient than single 
         /// training iterations.  This is particularly true if you are training with a GPU. 
         /// </summary>

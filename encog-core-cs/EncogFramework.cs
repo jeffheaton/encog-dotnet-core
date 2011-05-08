@@ -36,7 +36,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Engine.Opencl;
 using Encog.Engine;
 
 
@@ -64,20 +63,6 @@ namespace Encog
 	    /// </summary>
 	    private static String FILE_VERSION = "1";
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// If Encog is not using GPU/CL processing this attribute will be null.  
-        /// Otherwise it holds the Encog CL object.
-        /// </summary>
-        public EncogCL CL 
-        {
-            get
-            {
-                return EncogEngine.Instance.CL;
-            }
-        }
-#endif
-		
 #if logging
         /// <summary>
         /// The logging object.
@@ -154,24 +139,6 @@ namespace Encog
             }
         }
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// Enable OpenCL processing.  OpenCL processing allows Encog to 
-        /// use GPU devices to speed calculations.  Not all areas of Encog 
-        /// can use this, however, GPU's can currently accelerate the 
-        /// training of Feedforward neural networks.
-        /// 
-        /// To make use of the GPU you must have OpenCL drivers installed.
-        /// For more information on getting OpenCL drivers, visit the following
-        /// URL.
-        /// 
-        /// http://www.heatonresearch.com/encog/opencl
-        /// </summary>
-        public void InitCL()
-        {
-            EncogEngine.Instance.InitCL();
-        }
-#endif
 
         /// <summary>
         /// Shutdown Encog.

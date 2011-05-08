@@ -95,7 +95,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
         /// </summary>
         /// <param name="profile">The OpenCL device to use, or null for the CPU.</param>
         /// <param name="singleThreaded">True, if single threaded.</param>
-        public abstract void CreateTrainer(OpenCLTrainingProfile profile, bool singleThreaded);
+        public abstract void CreateTrainer(bool singleThreaded);
 
         /// <summary>
         /// The strategies.

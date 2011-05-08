@@ -9,7 +9,6 @@ using Encog.Engine;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Strategy;
 using Encog.Engine.Network.Train.Prop;
-using Encog.Engine.Opencl;
 
 namespace Encog.Neural.Networks.Training.Concurrent
 {
@@ -168,25 +167,6 @@ namespace Encog.Neural.Networks.Training.Concurrent
 
                 this.SingleThreaded = splitCores;
 
-#if !SILVERLIGHT
-                // handle OpenCL mode
-                if (EncogFramework.Instance.CL != null)
-                {
-
-                    // should we let OpenCL run the CPU?
-                    if (EncogFramework.Instance.CL.AreCPUsPresent())
-                    {
-                        useCPU = false;
-                    }
-
-                    // add a performer for each OpenCL device.
-                    foreach (EncogCLDevice device in EncogFramework.Instance.CL
-                            .Devices)
-                    {
-                        AddPerformer(new ConcurrentTrainingPerformerOpenCL(clCount++, device));
-                    }
-                }
-#endif
 
                 // now create CPU performers
                 if (useCPU && forceCoreCount >= 0)

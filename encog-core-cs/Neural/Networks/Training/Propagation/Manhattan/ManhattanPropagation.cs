@@ -63,27 +63,13 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <param name="profile">The learning rate.</param>
         /// <param name="learnRate">The OpenCL profile to use, null for CPU.</param>
         public ManhattanPropagation(BasicNetwork network,
-                 INeuralDataSet training, OpenCLTrainingProfile profile, double learnRate)
+                 INeuralDataSet training, double learnRate)
             : base(network, training)
         {
-
-            if (profile == null)
-            {
-                FlatTraining = new TrainFlatNetworkManhattan(
+            FlatTraining = new TrainFlatNetworkManhattan(
                         network.Structure.Flat,
                         this.Training,
                         learnRate);
-            }
-#if !SILVERLIGHT
-            else
-            {
-                TrainFlatNetworkOpenCL rpropFlat = new TrainFlatNetworkOpenCL(
-                        network.Structure.Flat, this.Training,
-                        profile);
-                rpropFlat.LearnManhattan(learnRate);
-                this.FlatTraining = rpropFlat;
-            }
-#endif
         }
 
         /// <summary>
@@ -101,19 +87,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
             {
                 ((TrainFlatNetworkManhattan)this.FlatTraining).LearningRate = value;
             }
-        }
-
-        /// <summary>
-        /// Construct a Manhattan propagation training object.  Use the CPU to train. 
-        /// </summary>
-        /// <param name="network">The network to train.</param>
-        /// <param name="training">The training data to use.</param>
-        /// <param name="learnRate">The learning rate.</param>
-        public ManhattanPropagation(BasicNetwork network,
-                 INeuralDataSet training, double learnRate)
-            : this(network, training, null, learnRate)
-        {
-
         }
 
     }

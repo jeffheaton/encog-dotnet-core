@@ -83,10 +83,10 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
         }
 
         /// <inheritdoc/>
-        public override void CreateTrainer(OpenCLTrainingProfile profile, bool singleThreaded)
+        public override void CreateTrainer(bool singleThreaded)
         {
             Propagation.Propagation train = new ResilientPropagation(Network,
-                    Training, profile, InitialUpdate, MaxStep);
+                    Training, InitialUpdate, MaxStep);
 
             if (singleThreaded)
                 train.NumThreads = 1;

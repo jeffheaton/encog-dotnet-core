@@ -35,7 +35,6 @@ using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Engine.Opencl;
 using Encog.Engine.Network.Train.Prop;
 using Encog.Util.Simple;
 using System.Diagnostics;
@@ -54,8 +53,9 @@ namespace Encog.Util.Banchmark
         public const int MILIS = 1000;
 
         /// <summary>
-        /// Evaluate training, use CPU.
+        /// Evaluate training.
         /// </summary>
+        /// <param name="device">The OpenCL device, null for CPU.</param>
         /// <param name="input">Input neurons.</param>
         /// <param name="hidden1">Hidden 1 neurons.</param>
         /// <param name="hidden2">Hidden 2 neurons.</param>
@@ -64,34 +64,12 @@ namespace Encog.Util.Banchmark
         public static int EvaluateTrain(int input, int hidden1, int hidden2,
                 int output)
         {
-            return EvaluateTrain(null, input, hidden1, hidden2, output);
-        }
-
-        /// <summary>
-        /// Evaluate training, use OpenCL.
-        /// </summary>
-        /// <param name="device">The OpenCL device, null for CPU.</param>
-        /// <param name="input">Input neurons.</param>
-        /// <param name="hidden1">Hidden 1 neurons.</param>
-        /// <param name="hidden2">Hidden 2 neurons.</param>
-        /// <param name="output">Output neurons.</param>
-        /// <returns>The result of the evaluation.</returns>
-        public static int EvaluateTrain(EncogCLDevice device, int input, int hidden1, int hidden2,
-                int output)
-        {
             BasicNetwork network = EncogUtility.SimpleFeedForward(input,
                     hidden1, hidden2, output, true);
             INeuralDataSet training = RandomTrainingFactory.Generate(1000,
                     10000, input, output, -1, 1);
 
-            OpenCLTrainingProfile profile = null;
-
-#if !SILVERLIGHT
-            if (device != null)
-                profile = new OpenCLTrainingProfile(device);
-#endif
-
-            return EvaluateTrain(profile, network, training);
+            return EvaluateTrain(network, training);
         }
 
 
@@ -104,25 +82,10 @@ namespace Encog.Util.Banchmark
         /// <param name="network">The training data to use.</param>
         /// <param name="training">The number of seconds that it took.</param>
         /// <returns></returns>
-        public static int EvaluateTrain(OpenCLTrainingProfile profile,
-                BasicNetwork network, INeuralDataSet training)
+        public static int EvaluateTrain(BasicNetwork network, INeuralDataSet training)
         {
             // train the neural network
-            ITrain train;
-
-            if (profile == null)
-            {
-                train = new ResilientPropagation(network, training);
-            }
-            else
-            {
-                train = new ResilientPropagation(
-                        network,
-                        training,
-                        profile,
-                        RPROPConst.DEFAULT_INITIAL_UPDATE,
-                        RPROPConst.DEFAULT_MAX_STEP);
-            }
+            ITrain train = train = new ResilientPropagation(network, training); 
 
             int iterations = 0;
             Stopwatch watch = new Stopwatch();

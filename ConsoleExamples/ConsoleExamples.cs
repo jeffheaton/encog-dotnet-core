@@ -80,17 +80,9 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Persist.PersistSerial.Info);
             examples.Add(Encog.Examples.Sunspots.Sunspots.Info);
             examples.Add(Encog.Examples.XOR.NEAT.XORNEAT.Info);
-            examples.Add(Encog.Examples.CL.SimpleCL.Info);
             examples.Add(Encog.Examples.Benchmark.WeightInitialization.Info);
             examples.Add(Encog.Examples.Benchmark.ThreadCount.Info);
             examples.Add(Encog.Examples.XOR.LMA.XORLMA.Info);
-            examples.Add(Encog.Examples.CL.TuneCL.Info);
-            examples.Add(Encog.Examples.CL.BenchmarkCL.Info);
-            examples.Add(Encog.Examples.CL.XOROpenCL.Info);
-            examples.Add(Encog.Examples.CL.CLInfo.Info);
-            examples.Add(Encog.Examples.CL.BenchmarkConcurrent.Info);
-            examples.Add(Encog.Examples.CL.CompareCL.Info);
-            examples.Add(Encog.Examples.CL.PredictSunspotCL.Info);
             examples.Add(Encog.Examples.Benchmark.SimpleBenchmark.Info);
             examples.Add(Encog.Examples.Iris.IrisDataset.Info);
         }

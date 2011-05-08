@@ -38,10 +38,6 @@
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cloo, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Cloo.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\log4net.dll</HintPath>
@@ -204,26 +200,12 @@
     <Compile Include="Engine\Network\Train\Gradient\GradientWorkerCPU.cs" />
     <Compile Include="Engine\Network\Train\Gradient\IFlatGradientWorker.cs" />
     <Compile Include="Engine\Network\Train\ITrainFlatNetwork.cs" />
-    <Compile Include="Engine\Network\Train\Prop\OpenCLTrainingProfile.cs" />
     <Compile Include="Engine\Network\Train\Prop\RPROPConst.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkBackPropagation.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkManhattan.cs" />
-    <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkOpenCL.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkProp.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkResilient.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkSCG.cs" />
-    <Compile Include="Engine\OpenCL\EncogCL.cs" />
-    <Compile Include="Engine\OpenCL\EncogCLDevice.cs" />
-    <Compile Include="Engine\OpenCL\EncogCLError.cs" />
-    <Compile Include="Engine\OpenCL\EncogCLItem.cs" />
-    <Compile Include="Engine\OpenCL\EncogCLPlatform.cs" />
-    <Compile Include="Engine\OpenCL\EncogCLQueue.cs" />
-    <Compile Include="Engine\OpenCL\exceptions\MissingOpenCLAdapterError.cs" />
-    <Compile Include="Engine\OpenCL\exceptions\OpenCLError.cs" />
-    <Compile Include="Engine\OpenCL\exceptions\OutOfOpenCLResources.cs" />
-    <Compile Include="Engine\OpenCL\Kernels\EncogKernel.cs" />
-    <Compile Include="Engine\OpenCL\Kernels\KernelNetworkTrain.cs" />
-    <Compile Include="Engine\OpenCL\Kernels\KernelVectorAdd.cs" />
     <Compile Include="Engine\Util\BoundMath.cs" />
     <Compile Include="Engine\Util\BoundNumbers.cs" />
     <Compile Include="Engine\Util\EngineArray.cs" />
@@ -374,7 +356,6 @@
     <Compile Include="Neural\Networks\Training\Concurrent\Jobs\RPROPJob.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Jobs\TrainingJob.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Performers\ConcurrentTrainingPerformerCPU.cs" />
-    <Compile Include="Neural\Networks\Training\Concurrent\Performers\ConcurrentTrainingPerformerOpenCL.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Performers\IConcurrentTrainingPerformer.cs" />
     <Compile Include="Neural\Networks\Training\Concurrent\Performers\PerformerTask.cs" />
     <Compile Include="Neural\Networks\Training\CPN\FindCPN.cs" />
