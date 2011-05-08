@@ -171,9 +171,12 @@
     <Compile Include="MathUtil\RBF\MexicanHatFunction.cs" />
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
-    <Compile Include="Neural\NeuralData\Basic\BasicMLData.cs" />
-    <Compile Include="Neural\NeuralData\Basic\BasicMLDataPair.cs" />
-    <Compile Include="Neural\NeuralData\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLData.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\MLData.cs" />
+    <Compile Include="ML\Data\MLDataPair.cs" />
+    <Compile Include="ML\Data\MLDataSet.cs" />
     <Compile Include="Neural\NeuralData\Bipolar\BiPolarMlData.cs" />
     <Compile Include="Neural\NeuralData\Buffer\BinaryDataLoader.cs" />
     <Compile Include="Neural\NeuralData\Buffer\BufferedDataError.cs" />
@@ -191,9 +194,6 @@
     <Compile Include="Neural\NeuralData\Folded\FoldedEnumerator.cs" />
     <Compile Include="Neural\NeuralData\Image\ImageMlData.cs" />
     <Compile Include="Neural\NeuralData\Image\ImageMlDataSet.cs" />
-    <Compile Include="Neural\NeuralData\MLData.cs" />
-    <Compile Include="Neural\NeuralData\MLDataPair.cs" />
-    <Compile Include="Neural\NeuralData\MLDataSet.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
     <Compile Include="Neural\NeuralData\NeuralDataError.cs" />

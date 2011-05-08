@@ -31,13 +31,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.Neural.Networks;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.CPN;
-using Encog.Neural.Data.Basic;
 using ConsoleExamples.Examples;
 
 namespace Encog.Examples.CPN

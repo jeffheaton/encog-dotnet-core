@@ -22,6 +22,9 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
+
 namespace Encog.Engine.Network.Train.Gradient
 {
     using Encog.Engine.Network.Activation;
@@ -35,7 +38,6 @@ namespace Encog.Engine.Network.Train.Gradient
     using System.Runtime.CompilerServices;
     using System.Diagnostics;
     using Encog.Util.Time;
-    using Encog.Neural.Data.Basic;
     using Encog.Neural.NeuralData;
 
     /// <summary>

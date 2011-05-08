@@ -21,6 +21,8 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
+using Encog.ML.Data;
+
 namespace Encog.Engine.Network.Train.Prop
 {
 

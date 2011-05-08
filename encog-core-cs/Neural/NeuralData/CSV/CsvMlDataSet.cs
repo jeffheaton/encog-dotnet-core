@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.MathUtil;
-using Encog.Neural.Data.Basic;
+using Encog.ML.Data.Basic;
 using Encog.Neural.Data;
 using Encog.Util.CSV;
 using Encog.Neural.Data.Buffer.CODEC;

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using Encog.ML.Data;
 using Encog.Neural.Data;
 
 namespace Encog.Neural.Networks.Logic

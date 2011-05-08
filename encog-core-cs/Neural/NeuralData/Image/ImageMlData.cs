@@ -32,8 +32,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Basic;
 using System.Drawing;
+using Encog.ML.Data.Basic;
 using Encog.Util.DownSample;
 
 namespace Encog.Neural.NeuralData.Image

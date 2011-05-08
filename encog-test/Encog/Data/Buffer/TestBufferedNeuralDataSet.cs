@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data.Basic;
 using NUnit.Framework;
 using System.IO;
 using Encog.Neural.Data.Buffer;
-using Encog.Neural.Data.Basic;
 using encog_test.Neural.Networks;
 
 namespace encog_test.Encog.Data.Buffer

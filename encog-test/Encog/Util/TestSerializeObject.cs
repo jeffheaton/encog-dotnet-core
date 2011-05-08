@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Basic;
+using Encog.ML.Data.Basic;
 using NUnit.Framework;
 using encog_test.Neural.Networks;
 using Encog.Util;

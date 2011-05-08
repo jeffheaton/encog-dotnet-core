@@ -31,11 +31,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data.Basic;
 using Encog.Util.Banchmark;
 using ConsoleExamples.Examples;
 using Encog.Engine;
 using Encog.Engine.Network.Flat;
-using Encog.Neural.Data.Basic;
 using Encog.Engine.Network.Train.Prop;
 using System.Diagnostics;
 

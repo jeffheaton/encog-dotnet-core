@@ -31,6 +31,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Synapse;
 using Encog.MathUtil;
 using Encog.Neural.NeuralData;
@@ -44,7 +46,6 @@ using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Structure;
 using Encog.Util;
 using Encog.Engine;
-using Encog.Neural.Data.Basic;
 using Encog.Engine.Util;
 using Encog.Util.CSV;
 

@@ -22,6 +22,8 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.ML.Data;
+
 namespace Encog.Engine.Network.Train.Prop
 {
     using Encog.Engine.Network.Flat;

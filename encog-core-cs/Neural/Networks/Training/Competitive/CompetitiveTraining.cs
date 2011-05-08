@@ -28,6 +28,7 @@
 // http://www.heatonresearch.com/copyright.html
 
 #if logging
+using Encog.ML.Data;
 using log4net;
 #endif
 

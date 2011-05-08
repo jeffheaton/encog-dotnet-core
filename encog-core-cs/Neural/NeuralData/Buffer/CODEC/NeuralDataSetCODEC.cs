@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.Neural.NeuralData;
 using Encog.Util;
-using Encog.Neural.Data.Basic;
 using Encog.Engine.Util;
 
 namespace Encog.Neural.Data.Buffer.CODEC

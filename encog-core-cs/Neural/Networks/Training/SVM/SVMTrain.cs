@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
 using Encog.Neural.Networks.SVM;
 using Encog.MathUtil.LIBSVM;
 using Encog.Neural.NeuralData;

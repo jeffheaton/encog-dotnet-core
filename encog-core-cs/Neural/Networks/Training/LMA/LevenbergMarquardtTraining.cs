@@ -31,13 +31,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Data;
 using Encog.MathUtil.Matrices;
 using Encog.Neural.NeuralData;
 using Encog.MathUtil.Matrices.Decomposition;
-using Encog.Neural.Data.Basic;
 
 namespace Encog.Neural.Networks.Training.LMA
 {

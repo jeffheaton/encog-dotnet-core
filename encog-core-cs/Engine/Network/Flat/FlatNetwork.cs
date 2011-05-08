@@ -1,3 +1,6 @@
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
+
 namespace Encog.Engine.Network.Flat
 {
 
@@ -9,7 +12,6 @@ namespace Encog.Engine.Network.Flat
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Encog.Neural.Data.Basic;
     using Encog.Neural.NeuralData;
 
     /// <summary>

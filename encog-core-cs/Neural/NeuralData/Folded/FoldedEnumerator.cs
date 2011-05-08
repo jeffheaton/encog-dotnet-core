@@ -31,8 +31,9 @@ using System.Linq;
 // http://www.heatonresearch.com/copyright.html
 
 using System.Text;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.Neural.NeuralData;
-using Encog.Neural.Data.Basic;
 
 namespace Encog.Neural.Data.Folded
 {

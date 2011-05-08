@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.MathUtil.Matrices;
+using Encog.ML.Data;
 using Encog.Neural.Data;
 
 namespace Encog.Neural.NeuralData.Bipolar

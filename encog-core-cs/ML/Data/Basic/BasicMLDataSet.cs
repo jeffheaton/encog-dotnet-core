@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -29,14 +29,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Neural.NeuralData;
 using Encog.Persist;
 using Encog.Persist.Persistors;
-using System.Runtime.Serialization;
 
-namespace Encog.Neural.Data.Basic
+namespace Encog.ML.Data.Basic
 {
     /// <summary>
     /// Basic implementation of the NeuralDataSet class.  This class simply

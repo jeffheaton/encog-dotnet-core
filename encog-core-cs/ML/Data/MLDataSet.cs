@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -27,14 +27,11 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using Encog.Neural.Data;
+using Encog.Neural.NeuralData;
 
-namespace Encog.Neural.NeuralData
+namespace Encog.ML.Data
 {
     /// <summary>
     /// An interface designed to abstract classes that store neural data. This
