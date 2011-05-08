@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-using Encog.Cloud;
 
 namespace Encog.Neural.Networks.Training
 {
@@ -88,13 +87,6 @@ namespace Encog.Neural.Networks.Training
         /// Perform one iteration of training.
         /// </summary>
         void Iteration();
-
-#if !SILVERLIGHT
-        /// <summary>
-        /// The Encog cloud to use.
-        /// </summary>
-        EncogCloud Cloud { get; set; }
-#endif
 
         /// <summary>
         /// Should be called once training is complete and no more iterations are

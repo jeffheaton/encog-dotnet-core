@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.NeuralData;
-using Encog.Cloud;
 using Encog.Neural.Networks.Training.Strategy.End;
 
 namespace Encog.Neural.Networks.Training
@@ -63,15 +62,6 @@ namespace Encog.Neural.Networks.Training
         /// The current iteration.
         /// </summary>
         private int iteration;
-
-#if !SILVERLIGHT
-        /// <summary>
-        /// The Encog cloud to use.
-        /// </summary>
-        public EncogCloud Cloud { get; set; }
-
-        private TrainingStatusUtility statusUtil;
-#endif
 
         /// <summary>
         /// Training strategies can be added to improve the training results. There
@@ -142,21 +132,6 @@ namespace Encog.Neural.Networks.Training
         public void PreIteration()
         {
             this.iteration++;
-#if !SILVERLIGHT
-            if (this.statusUtil != null)
-            {
-                this.statusUtil.Update();
-            }
-            else
-            {
-                if (this.Cloud != null)
-                {
-                    this.statusUtil = new TrainingStatusUtility(this.Cloud, this);
-                    this.statusUtil.Update();
-                }
-            }
-#endif
-
 
             foreach (IStrategy strategy in this.strategies)
             {
@@ -180,13 +155,6 @@ namespace Encog.Neural.Networks.Training
         /// </summary>
         public virtual void FinishTraining()
         {
-#if !SILVERLIGHT
-            if (this.statusUtil != null)
-            {
-                this.statusUtil.Finish();
-                this.statusUtil = null;
-            }
-#endif
             Network.Structure.UpdateFlatNetwork();
         }
 
