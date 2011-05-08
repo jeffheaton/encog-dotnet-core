@@ -95,7 +95,7 @@ namespace Encog.Examples.XOR.Resilient
             network.Structure.FinalizeStructure();
             network.Reset();
 
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 
             // train the neural network
             ITrain train = new ResilientPropagation(network, trainingSet);
@@ -113,16 +113,16 @@ namespace Encog.Examples.XOR.Resilient
             } while ((epoch < 5000) && (train.Error > 0.001));
 
             double[] inputArray = { 0.0, 1.1 };
-            INeuralData inputData = new BasicNeuralData(inputArray);
-            INeuralData outputData = network.Compute(inputData);
+            MLData inputData = new BasicMLData(inputArray);
+            MLData outputData = network.Compute(inputData);
             Console.WriteLine("Network output: " + outputData.ToString());
 
 
             // test the neural network
             Console.WriteLine("Neural Network Results:");
-            foreach (INeuralDataPair pair in trainingSet)
+            foreach (MLDataPair pair in trainingSet)
             {
-                INeuralData output = network.Compute(pair.Input);
+                MLData output = network.Compute(pair.Input);
                 Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                         + ", actual=" + output[0] + ",ideal=" + pair.Ideal[0]);
             }

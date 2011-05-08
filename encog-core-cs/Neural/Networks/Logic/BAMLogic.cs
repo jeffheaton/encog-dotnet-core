@@ -111,8 +111,8 @@ namespace Encog.Neural.Networks.Logic
         /// </summary>
         /// <param name="inputPattern">The input pattern.</param>
         /// <param name="outputPattern">The output pattern(for this input).</param>
-        public void AddPattern(INeuralData inputPattern,
-                 INeuralData outputPattern)
+        public void AddPattern(MLData inputPattern,
+                 MLData outputPattern)
         {
 
             int weight;
@@ -157,7 +157,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="x">The x matrix value. (could be row or column, depending on input)</param>
         /// <param name="y">The y matrix value. (could be row or column, depending on input)</param>
         /// <returns>The value from the matrix.</returns>
-        private double GetWeight(ISynapse synapse, INeuralData input, int x, int y)
+        private double GetWeight(ISynapse synapse, MLData input, int x, int y)
         {
             if (synapse.FromNeuronCount != input.Count)
                 return synapse.WeightMatrix[x, y];
@@ -172,8 +172,8 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">The input pattern.</param>
         /// <param name="output">The output pattern.</param>
         /// <returns>True if the network has become stable.</returns>
-        private bool PropagateLayer(ISynapse synapse, INeuralData input,
-                INeuralData output)
+        private bool PropagateLayer(ISynapse synapse, MLData input,
+                MLData output)
         {
             int i, j;
             int sum, outt = 0;
@@ -233,7 +233,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">The input to the layer.</param>
         /// <param name="useHolder">The holder to use.</param>
         /// <returns>The output from this layer.</returns>
-        public INeuralData Compute(INeuralData input, NeuralOutputHolder useHolder)
+        public MLData Compute(MLData input, NeuralOutputHolder useHolder)
         {
             String str = "Compute on BasicNetwork cannot be used, rather call" +
                     " the compute(NeuralData) method on the BAMLogic.";

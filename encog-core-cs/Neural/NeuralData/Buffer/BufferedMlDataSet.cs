@@ -56,7 +56,7 @@ namespace Encog.Neural.Data.Buffer
     /// format, and can be used with any Encog platform. Encog binary files are
     /// stored using "little endian" numbers.
     /// </summary>
-    public class BufferedNeuralDataSet : INeuralDataSet
+    public class BufferedMlDataSet : MLDataSet
     {
         /// <summary>
         /// Error message for ADD.
@@ -90,7 +90,7 @@ namespace Encog.Neural.Data.Buffer
 #if !SILVERLIGHT
         [NonSerialized]
 #endif
-        private IList<BufferedNeuralDataSet> additional = new List<BufferedNeuralDataSet>();
+        private IList<BufferedMlDataSet> additional = new List<BufferedMlDataSet>();
 
         /// <summary>
         /// The owner.
@@ -98,7 +98,7 @@ namespace Encog.Neural.Data.Buffer
 #if !SILVERLIGHT
         [NonSerialized]
 #endif
-        private BufferedNeuralDataSet owner;
+        private BufferedMlDataSet owner;
 
 
 
@@ -106,7 +106,7 @@ namespace Encog.Neural.Data.Buffer
         /// Construct a buffered dataset using the specified file. 
         /// </summary>
         /// <param name="binaryFile">The file to read/write binary data to/from.</param>
-        public BufferedNeuralDataSet(String binaryFile)
+        public BufferedMlDataSet(String binaryFile)
         {
             this.file = binaryFile;
             this.egb = new EncogEGBFile(binaryFile);
@@ -122,7 +122,7 @@ namespace Encog.Neural.Data.Buffer
         /// Create an enumerator.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<INeuralDataPair> GetEnumerator()
+        public IEnumerator<MLDataPair> GetEnumerator()
         {
             if (this.loading)
             {
@@ -167,7 +167,7 @@ namespace Encog.Neural.Data.Buffer
         /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
         /// the second, and so on.</param>
         /// <param name="pair">The data to read.</param>
-        public void GetRecord(long index, INeuralDataPair pair)
+        public void GetRecord(long index, MLDataPair pair)
         {
             double[] inputTarget = pair.InputArray;
             double[] idealTarget = pair.IdealArray;
@@ -181,10 +181,10 @@ namespace Encog.Neural.Data.Buffer
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>
-        public INeuralDataSet OpenAdditional()
+        public MLDataSet OpenAdditional()
         {
 
-            BufferedNeuralDataSet result = new BufferedNeuralDataSet(this.file);
+            BufferedMlDataSet result = new BufferedMlDataSet(this.file);
             result.owner = this;
             this.additional.Add(result);
             return result;
@@ -194,11 +194,11 @@ namespace Encog.Neural.Data.Buffer
         /// Add only input data, for an unsupervised dataset. 
         /// </summary>
         /// <param name="data1">The data to be added.</param>
-        public void Add(INeuralData data1)
+        public void Add(MLData data1)
         {
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedNeuralDataSet.ERROR_ADD);
+                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             egb.Write(data1.Data);
@@ -210,12 +210,12 @@ namespace Encog.Neural.Data.Buffer
         /// </summary>
         /// <param name="inputData">The input data.</param>
         /// <param name="idealData">The ideal data.</param>
-        public void Add(INeuralData inputData, INeuralData idealData)
+        public void Add(MLData inputData, MLData idealData)
         {
 
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedNeuralDataSet.ERROR_ADD);
+                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             this.egb.Write(inputData.Data);
@@ -226,11 +226,11 @@ namespace Encog.Neural.Data.Buffer
         /// Add a data pair of both input and ideal data. 
         /// </summary>
         /// <param name="pair">The pair to add.</param>
-        public void Add(INeuralDataPair pair)
+        public void Add(MLDataPair pair)
         {
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedNeuralDataSet.ERROR_ADD);
+                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             this.egb.Write(pair.Input.Data);
@@ -248,7 +248,7 @@ namespace Encog.Neural.Data.Buffer
 
             for (int i = 0; i < obj.Length; i++)
             {
-                BufferedNeuralDataSet set = (BufferedNeuralDataSet)obj[i];
+                BufferedMlDataSet set = (BufferedMlDataSet)obj[i];
                 set.Close();
             }
 
@@ -322,7 +322,7 @@ namespace Encog.Neural.Data.Buffer
         /// Remove an additional dataset that was created. 
         /// </summary>
         /// <param name="child">The additional dataset to remove.</param>
-        public void RemoveAdditional(BufferedNeuralDataSet child)
+        public void RemoveAdditional(BufferedMlDataSet child)
         {
             lock (this)
             {
@@ -397,11 +397,11 @@ namespace Encog.Neural.Data.Buffer
         /// Load the binary dataset to memory.  Memory access is faster. 
         /// </summary>
         /// <returns>A memory dataset.</returns>
-        public INeuralDataSet LoadToMemory()
+        public MLDataSet LoadToMemory()
         {
-            BasicNeuralDataSet result = new BasicNeuralDataSet();
+            BasicMLDataSet result = new BasicMLDataSet();
 
-            foreach (INeuralDataPair pair in this)
+            foreach (MLDataPair pair in this)
             {
                 result.Add(pair);
             }
@@ -413,10 +413,10 @@ namespace Encog.Neural.Data.Buffer
         /// Load the specified training set. 
         /// </summary>
         /// <param name="training">The training set to load.</param>
-        public void Load(INeuralDataSet training)
+        public void Load(MLDataSet training)
         {
             BeginLoad(training.InputSize, training.IdealSize);
-            foreach (INeuralDataPair pair in training)
+            foreach (MLDataPair pair in training)
             {
                 Add(pair);
             }
@@ -427,7 +427,7 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// The owner.  Set when create additional is used.
         /// </summary>
-        public BufferedNeuralDataSet Owner
+        public BufferedMlDataSet Owner
         {
             get
             {

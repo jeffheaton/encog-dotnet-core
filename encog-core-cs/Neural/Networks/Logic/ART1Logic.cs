@@ -127,12 +127,12 @@ namespace Encog.Neural.Networks.Logic
         /// <summary>
         /// The output from the F1 layer.
         /// </summary>
-        private BiPolarNeuralData outputF1;
+        private BiPolarMlData outputF1;
 
         /// <summary>
         /// The output from the F2 layer.
         /// </summary>
-        private BiPolarNeuralData outputF2;
+        private BiPolarMlData outputF2;
 
 
         /// <summary>
@@ -183,8 +183,8 @@ namespace Encog.Neural.Networks.Logic
         /// </summary>
         /// <param name="input">The input to the network.</param>
         /// <param name="output">The output from the network.</param>
-        public void Compute(BiPolarNeuralData input,
-                 BiPolarNeuralData output)
+        public void Compute(BiPolarMlData input,
+                 BiPolarMlData output)
         {
             int i;
             bool resonance, exhausted;
@@ -230,7 +230,7 @@ namespace Encog.Neural.Networks.Logic
         /// Compute the output from the F1 layer.
         /// </summary>
         /// <param name="input">The input to the F1 layer.</param>
-        private void ComputeF1(BiPolarNeuralData input)
+        private void ComputeF1(BiPolarMlData input)
         {
             double sum, activation;
 
@@ -284,7 +284,7 @@ namespace Encog.Neural.Networks.Logic
         /// Copy the output from the network to another object.
         /// </summary>
         /// <param name="output">The target object for the output from the network.</param>
-        private void GetOutput(BiPolarNeuralData output)
+        private void GetOutput(BiPolarMlData output)
         {
             for (int i = 0; i < this.layerF2.NeuronCount; i++)
             {
@@ -320,7 +320,7 @@ namespace Encog.Neural.Networks.Logic
         /// </summary>
         /// <param name="input">The input to calculate the magnitude for.</param>
         /// <returns>The magnitude of the specified pattern.</returns>
-        public double Magnitude(BiPolarNeuralData input)
+        public double Magnitude(BiPolarMlData input)
         {
             double result;
 
@@ -336,7 +336,7 @@ namespace Encog.Neural.Networks.Logic
         /// Set the input to the neural network.
         /// </summary>
         /// <param name="input">The input.</param>
-        private void SetInput(BiPolarNeuralData input)
+        private void SetInput(BiPolarMlData input)
         {
             double activation;
 
@@ -362,8 +362,8 @@ namespace Encog.Neural.Networks.Logic
             this.inhibitF2 = new bool[this.layerF2.NeuronCount];
             this.synapseF1toF2 = this.Network.Structure.FindSynapse(this.layerF1, this.layerF2, true);
             this.synapseF2toF1 = this.Network.Structure.FindSynapse(this.layerF2, this.layerF1, true);
-            this.outputF1 = new BiPolarNeuralData(this.layerF1.NeuronCount);
-            this.outputF2 = new BiPolarNeuralData(this.layerF2.NeuronCount);
+            this.outputF1 = new BiPolarMlData(this.layerF1.NeuronCount);
+            this.outputF2 = new BiPolarMlData(this.layerF2.NeuronCount);
 
             this.a1 = this.Network.GetPropertyDouble(ARTLogic.PROPERTY_A1);
             this.b1 = this.Network.GetPropertyDouble(ARTLogic.PROPERTY_B1);
@@ -383,11 +383,11 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">The input to the network.</param>
         /// <param name="useHolder">The NeuralOutputHolder to use.</param>
         /// <returns>The output from the network.</returns>
-        public override INeuralData Compute(INeuralData input, NeuralOutputHolder useHolder)
+        public override MLData Compute(MLData input, NeuralOutputHolder useHolder)
         {
-            if (!(input is BiPolarNeuralData))
+            if (!(input is BiPolarMlData))
             {
-                String str = "Input to ART1 logic network must be BiPolarNeuralData.";
+                String str = "Input to ART1 logic network must be BiPolarMlData.";
 #if logging  
                 if (logger.IsErrorEnabled)
                 {
@@ -397,8 +397,8 @@ namespace Encog.Neural.Networks.Logic
                 throw new NeuralNetworkError(str);
             }
 
-            BiPolarNeuralData output = new BiPolarNeuralData(this.layerF1.NeuronCount);
-            Compute((BiPolarNeuralData)input, output);
+            BiPolarMlData output = new BiPolarMlData(this.layerF1.NeuronCount);
+            Compute((BiPolarMlData)input, output);
             return output;
         }
 

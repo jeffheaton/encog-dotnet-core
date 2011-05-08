@@ -42,7 +42,7 @@ using Encog.Util.CSV;
 namespace Encog.Persist.Persistors
 {
     /// <summary>
-    /// The Encog persistor used to persist the BasicNeuralDataSet class.
+    /// The Encog persistor used to persist the BasicMLDataSet class.
     /// </summary>
     public class BasicNeuralDataSetPersistor : IPersistor
     {
@@ -65,7 +65,7 @@ namespace Encog.Persist.Persistors
         /// <summary>
         /// The current data set being loaded.
         /// </summary>
-        private BasicNeuralDataSet currentDataSet;
+        private BasicMLDataSet currentDataSet;
 
 
 
@@ -76,23 +76,23 @@ namespace Encog.Persist.Persistors
         private void HandleItem(ReadXML xmlIn)
         {
             IDictionary<String, String> properties = xmlIn.ReadPropertyBlock();
-            INeuralDataPair pair = null;
-            INeuralData input = new BasicNeuralData(NumberList
+            MLDataPair pair = null;
+            MLData input = new BasicMLData(NumberList
                    .FromList(CSVFormat.EG_FORMAT, properties
                            [BasicNeuralDataSetPersistor.TAG_INPUT]));
 
             if (properties.ContainsKey(BasicNeuralDataSetPersistor.TAG_IDEAL))
             {
                 // supervised
-                INeuralData ideal = new BasicNeuralData(NumberList
+                MLData ideal = new BasicMLData(NumberList
                        .FromList(CSVFormat.EG_FORMAT, properties
                                [BasicNeuralDataSetPersistor.TAG_IDEAL]));
-                pair = new BasicNeuralDataPair(input, ideal);
+                pair = new BasicMLDataPair(input, ideal);
             }
             else
             {
                 // unsupervised
-                pair = new BasicNeuralDataPair(input);
+                pair = new BasicMLDataPair(input);
             }
 
             this.currentDataSet.Add(pair);
@@ -111,7 +111,7 @@ namespace Encog.Persist.Persistors
             String description = xmlIn.LastTag.GetAttributeValue(
                    EncogPersistedCollection.ATTRIBUTE_DESCRIPTION);
 
-            this.currentDataSet = new BasicNeuralDataSet();
+            this.currentDataSet = new BasicMLDataSet();
             this.currentDataSet.Name = name;
             this.currentDataSet.Description = description;
 
@@ -140,10 +140,10 @@ namespace Encog.Persist.Persistors
         {
             PersistorUtil.BeginEncogObject(EncogPersistedCollection.TYPE_TRAINING,
                     xmlOut, obj, true);
-            INeuralDataSet set = (INeuralDataSet)obj;
+            MLDataSet set = (MLDataSet)obj;
             StringBuilder builder = new StringBuilder();
 
-            foreach (INeuralDataPair pair in set)
+            foreach (MLDataPair pair in set)
             {
                 xmlOut.BeginTag(BasicNeuralDataSetPersistor.TAG_ITEM);
 

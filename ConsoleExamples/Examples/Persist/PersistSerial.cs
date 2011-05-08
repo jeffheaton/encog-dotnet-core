@@ -81,7 +81,7 @@ namespace Encog.Examples.Persist
         {
             this.app = app;
             this.app = app;
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 6, 0, 1, false);
             EncogUtility.TrainToError(network, trainingSet, 0.01);
             double error = network.CalculateError(trainingSet);

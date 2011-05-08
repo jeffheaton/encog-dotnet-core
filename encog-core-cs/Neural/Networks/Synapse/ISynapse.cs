@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Synapse
         /// </summary>
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        INeuralData Compute(INeuralData input);
+        MLData Compute(MLData input);
 
 
         /// <summary>

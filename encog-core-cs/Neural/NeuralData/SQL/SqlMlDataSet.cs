@@ -27,75 +27,63 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+#if !SILVERLIGHT
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Networks.Synapse;
+using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
-#if logging
-using log4net;
-#endif
+using System.Data.Common;
+using System.Data.OleDb;
+using Encog.Neural.Data.Buffer.CODEC;
+using Encog.Neural.Data.Buffer;
+using Encog.Neural.NeuralData.Buffer.CODEC;
 
-namespace Encog.Neural.Networks
+namespace Encog.Neural.NeuralData.SQL
 {
     /// <summary>
-    /// Holds the output from each layer of the neural network. This is very useful
- /// for the propagation algorithms that need to examine the output of each
- /// individual layer.
+    /// A dataset based on a SQL query. This is not a memory based dataset, so it can
+    /// handle very large datasets without a memory issue. and can handle very large
+    /// datasets.
     /// </summary>
-    public class NeuralOutputHolder
+    public class SqlMlDataSet : BasicMLDataSet
     {
+        /// <summary>
+        /// What is the size of the input data?
+        /// </summary>
+        private int inputSize;
 
         /// <summary>
-        /// The results from each of the synapses.
+        /// What is the size of the ideal data?
         /// </summary>
-        private IDictionary<ISynapse, MLData> result;
+        private int idealSize;
 
         /// <summary>
-        /// The output from the entire neural network.
+        /// The database connection.
         /// </summary>
-        private MLData output;
-
-#if logging
-        /// <summary>
-        /// The logging object.
-        /// </summary>
-        private readonly ILog logger = LogManager.GetLogger(typeof(NeuralOutputHolder));
-#endif
+        private DbConnection connection;
 
         /// <summary>
-        /// Construct an empty holder.
+        /// The SQL statement being used.
         /// </summary>
-        public NeuralOutputHolder()
+        private DbCommand statement;
+
+        /// <summary>
+        /// Create a SQL neural data set.
+        /// </summary>
+        /// <param name="sql">The SQL to execute.</param>
+        /// <param name="inputSize">The size of the input data being read.</param>
+        /// <param name="idealSize">The size of the ideal output data being read.</param>
+        /// <param name="connectString">The connection string.</param>
+        public SqlMlDataSet(String sql, int inputSize,
+                 int idealSize, String connectString)
         {
-            this.result = new Dictionary<ISynapse, MLData>();
-        }
-
-        /// <summary>
-        /// The output from the neural network.
-        /// </summary>
-        public MLData Output
-        {
-            get
-            {
-                return this.output;
-            }
-            set
-            {
-                this.output = value;
-            }
-        }
-
-        /// <summary>
-        /// The result from the synapses in a map.
-        /// </summary>
-        public IDictionary<ISynapse, MLData> Result
-        {
-            get
-            {
-                return this.result;
-            }
+            IDataSetCODEC codec = new SQLCODEC(sql, inputSize, idealSize, connectString);
+            MemoryDataLoader load = new MemoryDataLoader(codec);
+            load.Result = this;
+            load.External2Memory();
         }
     }
 }
+#endif

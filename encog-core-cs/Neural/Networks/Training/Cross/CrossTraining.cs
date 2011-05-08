@@ -60,7 +60,7 @@ namespace Encog.Neural.Networks.Training.Cross
                  FoldedDataSet training)
         {
             this.network = network;
-            Training = (INeuralDataSet)training;
+            Training = (MLDataSet)training;
             this.folded = training;
         }
 

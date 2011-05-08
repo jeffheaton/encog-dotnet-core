@@ -157,7 +157,7 @@ namespace Encog.Neural.Networks.Synapse
         /// </summary>
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        public abstract INeuralData Compute(INeuralData input);
+        public abstract MLData Compute(MLData input);
 
         /// <summary>
         /// True if the weights for this synapse can be modified.

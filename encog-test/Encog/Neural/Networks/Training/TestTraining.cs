@@ -56,7 +56,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestRPROP()
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ITrain rprop = new ResilientPropagation(network, trainingData);
@@ -67,7 +67,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestBPROP() 
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ITrain bprop = new Backpropagation(network, trainingData, 0.7, 0.9);
@@ -78,7 +78,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestManhattan()
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ITrain bprop = new ManhattanPropagation(network, trainingData, 0.01);
@@ -89,7 +89,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestSCG() 
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ITrain bprop = new ScaledConjugateGradient(network, trainingData);
@@ -100,7 +100,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestAnneal()
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);		
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ICalculateScore score = new TrainingSetScore(trainingData);
 		NeuralSimulatedAnnealing anneal = new NeuralSimulatedAnnealing(network,score,10,2,100);
@@ -111,7 +111,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestGenetic()
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);		
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		ICalculateScore score = new TrainingSetScore(trainingData);
 		NeuralGeneticAlgorithm genetic = new NeuralGeneticAlgorithm(network, new RangeRandomizer(-1,1), score, 500,0.1,0.25);
@@ -122,7 +122,7 @@ namespace encog_test.Encog.Neural.Networks.Training
 	public void TestCont()
 	{
 		Logging.StopConsoleLogging();
-		INeuralDataSet trainingData = new BasicNeuralDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
+		MLDataSet trainingData = new BasicMLDataSet(XOR.XOR_INPUT,XOR.XOR_IDEAL);
 		
 		BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 		Propagation prop = new Backpropagation(network, trainingData, 0.7, 0.9);

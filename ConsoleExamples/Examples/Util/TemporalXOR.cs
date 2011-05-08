@@ -52,7 +52,7 @@ namespace Encog.Examples.Util
         private double[][] input;
         private double[][] ideal;
 
-        public INeuralDataSet Generate(int count)
+        public MLDataSet Generate(int count)
         {
             this.input = new double[count][];
             this.ideal = new double[count][];
@@ -65,7 +65,7 @@ namespace Encog.Examples.Util
                 this.ideal[i][0] = SEQUENCE[(i + 1) % SEQUENCE.Length];
             }
 
-            return new BasicNeuralDataSet(this.input, this.ideal);
+            return new BasicMLDataSet(this.input, this.ideal);
         }
     }
 }

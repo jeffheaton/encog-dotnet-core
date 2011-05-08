@@ -88,7 +88,7 @@ namespace Encog.Examples.JordanNetwork
             return network;
         }
 
-        private double TrainNetwork(String what, BasicNetwork network, INeuralDataSet trainingSet)
+        private double TrainNetwork(String what, BasicNetwork network, MLDataSet trainingSet)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
@@ -117,7 +117,7 @@ namespace Encog.Examples.JordanNetwork
             this.app = app;
             Logging.StopConsoleLogging();
             TemporalXOR temp = new TemporalXOR();
-            INeuralDataSet trainingSet = temp.Generate(100);
+            MLDataSet trainingSet = temp.Generate(100);
 
             BasicNetwork jordanNetwork = CreateJordanNetwork();
             BasicNetwork feedforwardNetwork = CreateFeedforwardNetwork();

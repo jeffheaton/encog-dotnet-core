@@ -48,7 +48,7 @@ namespace Encog.Util
         /// </summary>
         /// <param name="network">The neural network that is to be evaluated.</param>
         /// <param name="training">The training set that we should evaluate </param>
-        public static void ValidateNetworkForTraining(BasicNetwork network, INeuralDataSet training)
+        public static void ValidateNetworkForTraining(BasicNetwork network, MLDataSet training)
         {
             ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
             ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);

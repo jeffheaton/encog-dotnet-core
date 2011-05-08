@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set to use.</param>
         public ResilientPropagation(BasicNetwork network,
-                 INeuralDataSet training)
+                 MLDataSet training)
             : this(network, training, RPROPConst.DEFAULT_INITIAL_UPDATE,
                 RPROPConst.DEFAULT_MAX_STEP)
         {
@@ -108,7 +108,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// are all initially set to.</param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
         public ResilientPropagation(BasicNetwork network,
-                 INeuralDataSet training, 
+                 MLDataSet training, 
                  double initialUpdate, double maxStep)
             : base(network, training)
         {

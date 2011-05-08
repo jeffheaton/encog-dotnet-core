@@ -98,7 +98,7 @@ namespace Encog.Neural.Networks.Prune
         /**
          * The training set to use as different neural networks are evaluated.
          */
-        private INeuralDataSet training;
+        private MLDataSet training;
 
         /**
          * The pattern for which type of neural network we would like to create.
@@ -151,7 +151,7 @@ namespace Encog.Neural.Networks.Prune
          * @param report
          * 			  Object used to report status to.
          */
-        public PruneIncremental(INeuralDataSet training,
+        public PruneIncremental(MLDataSet training,
                  INeuralNetworkPattern pattern, int iterations,
                  IStatusReportable report)
             : base(report)
@@ -232,7 +232,7 @@ namespace Encog.Neural.Networks.Prune
         /**
          * @return The training set to use.
          */
-        public INeuralDataSet Training
+        public MLDataSet Training
         {
             get
             {

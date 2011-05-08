@@ -47,10 +47,10 @@ namespace encog_test.Util
         [Test]
         public void testSerializeXOR()
         {
-            BasicNeuralDataSet set = new BasicNeuralDataSet(XOR.XOR_INPUT,
+            BasicMLDataSet set = new BasicMLDataSet(XOR.XOR_INPUT,
                     XOR.XOR_IDEAL);
             SerializeObject.Save("encog1.ser", set);
-            set = (BasicNeuralDataSet)SerializeObject.Load("encog1.ser");
+            set = (BasicMLDataSet)SerializeObject.Load("encog1.ser");
             XOR.TestXORDataSet(set);
             File.Delete("encog1.ser");
         }

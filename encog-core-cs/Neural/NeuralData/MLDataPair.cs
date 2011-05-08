@@ -27,63 +27,54 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-#if !SILVERLIGHT
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Basic;
 using Encog.Neural.Data;
-using System.Data.Common;
-using System.Data.OleDb;
-using Encog.Neural.Data.Buffer.CODEC;
-using Encog.Neural.Data.Buffer;
-using Encog.Neural.NeuralData.Buffer.CODEC;
 
-namespace Encog.Neural.NeuralData.SQL
+namespace Encog.Neural.NeuralData
 {
     /// <summary>
-    /// A dataset based on a SQL query. This is not a memory based dataset, so it can
-    /// handle very large datasets without a memory issue. and can handle very large
-    /// datasets.
+    /// A neural data pair holds both the input and ideal data.  If this
+    /// is an unsupervised data element, then only input is provided.
     /// </summary>
-    public class SQLNeuralDataSet : BasicNeuralDataSet
+    public interface MLDataPair: ICloneable
     {
         /// <summary>
-        /// What is the size of the input data?
+        /// The input that the neural network.
         /// </summary>
-        private int inputSize;
-
-        /// <summary>
-        /// What is the size of the ideal data?
-        /// </summary>
-        private int idealSize;
-
-        /// <summary>
-        /// The database connection.
-        /// </summary>
-        private DbConnection connection;
-
-        /// <summary>
-        /// The SQL statement being used.
-        /// </summary>
-        private DbCommand statement;
-
-        /// <summary>
-        /// Create a SQL neural data set.
-        /// </summary>
-        /// <param name="sql">The SQL to execute.</param>
-        /// <param name="inputSize">The size of the input data being read.</param>
-        /// <param name="idealSize">The size of the ideal output data being read.</param>
-        /// <param name="connectString">The connection string.</param>
-        public SQLNeuralDataSet(String sql, int inputSize,
-                 int idealSize, String connectString)
+        MLData Input
         {
-            IDataSetCODEC codec = new SQLCODEC(sql, inputSize, idealSize, connectString);
-            MemoryDataLoader load = new MemoryDataLoader(codec);
-            load.Result = this;
-            load.External2Memory();
+            get;
         }
+
+        /// <summary>
+        /// The ideal data that the neural network should produce
+        /// for the specified input.
+        /// </summary>
+        MLData Ideal
+        {
+            get;
+        }
+
+        /// <summary>
+        /// True if this training pair is supervised.  That is, it has 
+	    /// both input and ideal data.
+        /// </summary>
+        bool Supervised
+        {
+            get;
+        }
+
+        /// <summary>
+        /// The supervised ideal data.
+        /// </summary>
+        double[] IdealArray { get; set; }
+
+        /// <summary>
+        /// The input array.
+        /// </summary>
+        double[] InputArray { get; set; }
     }
 }
-#endif

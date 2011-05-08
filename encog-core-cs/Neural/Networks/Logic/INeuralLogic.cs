@@ -48,7 +48,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">The input to the network.</param>
         /// <param name="useHolder">The NeuralOutputHolder to use.</param>
         /// <returns>The output from the network.</returns>
-        INeuralData Compute(INeuralData input,
+        MLData Compute(MLData input,
                 NeuralOutputHolder useHolder);
 
         /// <summary>

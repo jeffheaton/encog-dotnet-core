@@ -81,7 +81,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The input pattern.</param>
         /// <returns>The output from this layer.</returns>
-        INeuralData Compute(INeuralData pattern);
+        MLData Compute(MLData pattern);
 
         /// <summary>
         /// The activation function used for this layer.
@@ -181,7 +181,7 @@ namespace Encog.Neural.Networks.Layers
         /// it was presented with.
         /// </summary>
         /// <param name="pattern">The pattern.</param>
-        void Process(INeuralData pattern);
+        void Process(MLData pattern);
 
         /// <summary>
         /// Called on recurrent layers to provide recurrent output.  This
@@ -189,7 +189,7 @@ namespace Encog.Neural.Networks.Layers
         /// previously remembered.
         /// </summary>
         /// <returns>The recurrent output.</returns>
-        INeuralData Recur();
+        MLData Recur();
 
         /// <summary>
         /// Most layer types will default this value to one. However, it is possible

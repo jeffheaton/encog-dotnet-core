@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// The training data.
         /// </summary>
-        private INeuralDataSet training;
+        private MLDataSet training;
 
         /// <summary>
         /// The current error rate.
@@ -103,7 +103,7 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// The training data to use.
         /// </summary>
-        public INeuralDataSet Training
+        public MLDataSet Training
         {
             get
             {

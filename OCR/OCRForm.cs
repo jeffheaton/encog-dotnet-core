@@ -80,7 +80,7 @@ namespace Chapter12OCR
         private Pen blackPen;
         private bool[] downsampled;
         private Dictionary<char, bool[]> letterData = new Dictionary<char, bool[]>();
-        private INeuralDataSet trainingSet;
+        private MLDataSet trainingSet;
         private BasicNetwork network;
 
         public OCRForm()
@@ -191,11 +191,11 @@ namespace Chapter12OCR
             {
                 int inputCount = OCRForm.DOWNSAMPLE_HEIGHT * OCRForm.DOWNSAMPLE_WIDTH;
 
-                this.trainingSet = new BasicNeuralDataSet();
+                this.trainingSet = new BasicMLDataSet();
 
                 foreach (char ch in this.letterData.Keys)
                 {
-                    BasicNeuralData item = new BasicNeuralData(inputCount);
+                    BasicMLData item = new BasicMLData(inputCount);
 
                     bool[] data = this.letterData[ch];
                     for (int i = 0; i < inputCount; i++)
@@ -289,7 +289,7 @@ namespace Chapter12OCR
             }
 
             int sampleSize = OCRForm.DOWNSAMPLE_HEIGHT * OCRForm.DOWNSAMPLE_WIDTH;
-            INeuralData input = new BasicNeuralData(sampleSize);
+            MLData input = new BasicMLData(sampleSize);
 
             for (int i = 0; i < sampleSize; i++)
             {
@@ -448,7 +448,7 @@ namespace Chapter12OCR
             }
             for (int i = 0; i < this.letters.Items.Count; i++)
             {
-                BasicNeuralData input = new BasicNeuralData(OCRForm.DOWNSAMPLE_HEIGHT * OCRForm.DOWNSAMPLE_WIDTH);
+                BasicMLData input = new BasicMLData(OCRForm.DOWNSAMPLE_HEIGHT * OCRForm.DOWNSAMPLE_WIDTH);
                 char ch = ((string)(this.letters.Items[i]))[0];
                 bool[] data = this.letterData[ch];
                 for (int j = 0; j < input.Count; j++)

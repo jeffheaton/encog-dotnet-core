@@ -54,7 +54,7 @@ namespace Encog.Neural.Networks.Training.CPN
         /// The training data. This is unsupervised training, so only the input
         /// portion of the training data will be used.
         /// </summary>
-        private INeuralDataSet training;
+        private MLDataSet training;
 
         /// <summary>
         /// The learning rate.
@@ -78,7 +78,7 @@ namespace Encog.Neural.Networks.Training.CPN
         /// <param name="network">The network to be trained.</param>
         /// <param name="training">The training data.</param>
         /// <param name="learningRate">The learning rate.</param>
-        public TrainInstar(BasicNetwork network, INeuralDataSet training,
+        public TrainInstar(BasicNetwork network, MLDataSet training,
                 double learningRate)
         {
             this.network = network;
@@ -104,7 +104,7 @@ namespace Encog.Neural.Networks.Training.CPN
         private void InitWeights()
         {
             int i = 0;
-            foreach (INeuralDataPair pair in this.training)
+            foreach (MLDataPair pair in this.training)
             {
                 for (int j = 0; j < this.parts.InputLayer.NeuronCount; j++)
                 {
@@ -129,9 +129,9 @@ namespace Encog.Neural.Networks.Training.CPN
 
             double worstDistance = Double.NegativeInfinity;
 
-            foreach (INeuralDataPair pair in this.training)
+            foreach (MLDataPair pair in this.training)
             {
-                INeuralData output = this.parts.InstarSynapse.Compute(
+                MLData output = this.parts.InstarSynapse.Compute(
                         pair.Input);
 
                 // determine winner

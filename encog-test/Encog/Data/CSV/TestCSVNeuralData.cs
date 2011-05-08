@@ -75,7 +75,7 @@ namespace encog_test.Data.CSV
         {
             GenerateCSV();
 
-            CSVNeuralDataSet set = new CSVNeuralDataSet("xor.csv", 2, 1, false);
+            CsvMlDataSet set = new CsvMlDataSet("xor.csv", 2, 1, false);
 
             XOR.TestXORDataSet(set);
 

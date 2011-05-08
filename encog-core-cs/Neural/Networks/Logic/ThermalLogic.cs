@@ -63,7 +63,7 @@ namespace Encog.Neural.Networks.Logic
         /// <summary>
         /// The current state of the thermal network.
         /// </summary>
-        private BiPolarNeuralData currentState;
+        private BiPolarMlData currentState;
 
         /// <summary>
         /// Get the neuron count for the network.
@@ -136,7 +136,7 @@ namespace Encog.Neural.Networks.Logic
         /// <summary>
         /// The current state of the network.
         /// </summary>
-        public BiPolarNeuralData CurrentState
+        public BiPolarMlData CurrentState
         {
             get
             {
@@ -161,7 +161,7 @@ namespace Encog.Neural.Networks.Logic
             // hold references to parts of the network we will need later
             this.thermalLayer = this.Network.GetLayer(BasicNetwork.TAG_INPUT);
             this.thermalSynapse = this.Network.Structure.FindSynapse(this.thermalLayer, this.thermalLayer, true);
-            this.currentState = new BiPolarNeuralData(this.thermalLayer.NeuronCount);
+            this.currentState = new BiPolarMlData(this.thermalLayer.NeuronCount);
         }
     }
 }

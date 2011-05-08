@@ -115,13 +115,13 @@ namespace Encog.Engine.Network.Train.Gradient
         /// The pair to use for training.
         /// </summary>
         ///
-        private readonly INeuralDataPair pair;
+        private readonly MLDataPair pair;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly INeuralDataSet training;
+        private readonly MLDataSet training;
 
         /// <summary>
         /// The high end of the training data.
@@ -152,7 +152,7 @@ namespace Encog.Engine.Network.Train.Gradient
         /// <param name="high">The high index to use in the training data.</param>
         public GradientWorkerCPU(FlatNetwork network,
                 TrainFlatNetworkProp owner,
-                INeuralDataSet training, int low, int high)
+                MLDataSet training, int low, int high)
         {
             this.errorCalculation = new ErrorCalculation();
             this.network = network;
@@ -172,7 +172,7 @@ namespace Encog.Engine.Network.Train.Gradient
             this.layerOutput = network.LayerOutput;
             this.layerFeedCounts = network.LayerFeedCounts;
 
-            this.pair = BasicNeuralDataPair.CreatePair(network.InputCount,
+            this.pair = BasicMLDataPair.CreatePair(network.InputCount,
                     network.OutputCount);
         }
 

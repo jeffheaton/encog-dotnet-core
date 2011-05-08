@@ -28,7 +28,7 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// The dataset to load to.
         /// </summary>
-        public BasicNeuralDataSet Result { get; set; }
+        public BasicMLDataSet Result { get; set; }
 
         /// <summary>
         /// Construct a loader with the specified CODEC. 
@@ -44,14 +44,14 @@ namespace Encog.Neural.Data.Buffer
         /// Convert an external file format, such as CSV, to an Encog memory training set. 
         /// </summary>
         /// <param name="binaryFile">The binary file to create.</param>
-        public INeuralDataSet External2Memory()
+        public MLDataSet External2Memory()
         {
 
             Status.Report(0, 0, "Importing to memory");
 
             if (this.Result == null)
             {
-                Result = new BasicNeuralDataSet();
+                Result = new BasicMLDataSet();
             }
 
             double[] input = new double[this.codec.InputSize];
@@ -64,14 +64,14 @@ namespace Encog.Neural.Data.Buffer
 
             while (codec.Read(input, ideal))
             {
-                INeuralData a = null, b = null;
+                MLData a = null, b = null;
 
-                a = new BasicNeuralData(input);
+                a = new BasicMLData(input);
 
                 if( codec.IdealSize>0 )
-                    b = new BasicNeuralData(ideal);
+                    b = new BasicMLData(ideal);
 
-                INeuralDataPair pair = new BasicNeuralDataPair(a,b);
+                MLDataPair pair = new BasicMLDataPair(a,b);
                 Result.Add(pair);
 
                 currentRecord++;

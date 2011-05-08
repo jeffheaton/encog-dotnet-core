@@ -187,7 +187,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="training">The training set (unsupervised).</param>
         /// <param name="neighborhood">The neighborhood function to use.</param>
         public CompetitiveTraining(BasicNetwork network,
-                 double learningRate, INeuralDataSet training,
+                 double learningRate, MLDataSet training,
                  INeighborhoodFunction neighborhood)
         {
             this.neighborhood = neighborhood;
@@ -254,7 +254,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="outputNeuron">The output neuron to set.</param>
         /// <param name="input">The input pattern to copy.</param>
         private void CopyInputPattern(ISynapse synapse,
-                 int outputNeuron, INeuralData input)
+                 int outputNeuron, MLData input)
         {
             for (int inputNeuron = 0; inputNeuron < this.inputNeuronCount;
                 inputNeuron++)
@@ -315,13 +315,13 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="leastRepresented">The synapse to modify.</param>
         /// <returns>True if a winner was forced.</returns>
         private bool ForceWinners(ISynapse synapse, int[] won,
-                 INeuralData leastRepresented)
+                 MLData leastRepresented)
         {
 
             double maxActivation = double.MinValue;
             int maxActivationNeuron = -1;
 
-            INeuralData output = this.network.Compute(leastRepresented);
+            MLData output = this.network.Compute(leastRepresented);
 
             // Loop over all of the output neurons. Consider any neurons that were
             // not the BMU (winner) for any pattern. Track which of these
@@ -416,7 +416,7 @@ namespace Encog.Neural.Networks.Training.Competitive
             this.bmuUtil.Reset();
             int[] won = new int[this.outputNeuronCount];
             double leastRepresentedActivation = Double.MaxValue;
-            INeuralData leastRepresented = null;
+            MLData leastRepresented = null;
 
             // The synapses are processed parallel to each other.
             foreach (ISynapse synapse in this.synapses)
@@ -427,9 +427,9 @@ namespace Encog.Neural.Networks.Training.Competitive
                 correction.Clear();
 
                 // Determine the BMU for each training element.
-                foreach (INeuralDataPair pair in Training)
+                foreach (MLDataPair pair in Training)
                 {
-                    INeuralData input = pair.Input;
+                    MLData input = pair.Input;
 
                     int bmu = this.bmuUtil.CalculateBMU(synapse, input);
 
@@ -441,7 +441,7 @@ namespace Encog.Neural.Networks.Training.Competitive
 
                         // Get the "output" from the network for this pattern. This
                         // gets the activation level of the BMU.
-                        INeuralData output = this.network.Compute(pair
+                        MLData output = this.network.Compute(pair
                                .Input);
 
                         // Track which training entry produces the least BMU. This
@@ -535,7 +535,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="synapse">The synapse to train.</param>
         /// <param name="input">The input to train for.</param>
         private void Train(int bmu, ISynapse synapse,
-                 INeuralData input)
+                 MLData input)
         {
             // adjust the weight for the BMU and its neighborhood
             for (int outputNeuron = 0; outputNeuron < this.outputNeuronCount;
@@ -550,11 +550,11 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// neurons according to the neighborhood function.
         /// </summary>
         /// <param name="pattern">The pattern to train.</param>
-        public void TrainPattern(INeuralData pattern)
+        public void TrainPattern(MLData pattern)
         {
             foreach (ISynapse synapse in this.synapses)
             {
-                INeuralData input = pattern;
+                MLData input = pattern;
                 int bmu = this.bmuUtil.CalculateBMU(synapse, input);
                 Train(bmu, synapse, input);
             }
@@ -569,7 +569,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="input">The input pattern to train for.</param>
         /// <param name="current">The current output neuron being trained.</param>
         /// <param name="bmu">The best matching unit, or winning output neuron.</param>
-        private void TrainPattern(ISynapse synapse, INeuralData input,
+        private void TrainPattern(ISynapse synapse, MLData input,
                  int current, int bmu)
         {
             Matrix correction = this.correctionMatrix[synapse];

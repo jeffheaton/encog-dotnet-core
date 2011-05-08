@@ -52,7 +52,7 @@ namespace encog_test.Neural.Networks
         {
             for (int trainingSet = 0; trainingSet < XOR.XOR_IDEAL.Length; trainingSet++)
             {
-                INeuralData actual = network.Compute(new BasicNeuralData(XOR.XOR_INPUT[trainingSet]));
+                MLData actual = network.Compute(new BasicMLData(XOR.XOR_INPUT[trainingSet]));
 
                 for (int i = 0; i < XOR.XOR_IDEAL[0].Length; i++)
                 {
@@ -66,10 +66,10 @@ namespace encog_test.Neural.Networks
             return true;
         }
 
-        public static void TestXORDataSet(INeuralDataSet set)
+        public static void TestXORDataSet(MLDataSet set)
         {
             int row = 0;
-            foreach (INeuralDataPair item in set)
+            foreach (MLDataPair item in set)
             {
                 for (int i = 0; i < XOR.XOR_INPUT[0].Length; i++)
                 {

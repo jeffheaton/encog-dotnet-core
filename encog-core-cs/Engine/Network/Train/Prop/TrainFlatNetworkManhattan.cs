@@ -59,7 +59,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="training">The training data to use.</param>
         /// <param name="learningRate">The learning rate to use.</param>
         public TrainFlatNetworkManhattan(FlatNetwork network,
-                INeuralDataSet training, double learningRate)
+                MLDataSet training, double learningRate)
             : base(network, training)
         {
             this.learningRate = learningRate;

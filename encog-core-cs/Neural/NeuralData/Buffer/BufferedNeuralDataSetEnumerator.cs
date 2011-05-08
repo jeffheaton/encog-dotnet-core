@@ -11,13 +11,13 @@ namespace Encog.Neural.Data.Buffer
     /// <summary>
     /// An enumerator to move through the buffered data set.
     /// </summary>
-    public class BufferedNeuralDataSetEnumerator : IEnumerator<INeuralDataPair>
+    public class BufferedNeuralDataSetEnumerator : IEnumerator<MLDataPair>
     {
 
         /// <summary>
         /// The dataset being iterated over.
         /// </summary>
-        private BufferedNeuralDataSet data;
+        private BufferedMlDataSet data;
 
         /// <summary>
         /// The current record.
@@ -27,14 +27,14 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// The current record.
         /// </summary>
-        INeuralDataPair currentRecord;
+        MLDataPair currentRecord;
 
         /// <summary>
         /// Construct the buffered enumerator. This is where the file is actually
         /// opened.
         /// </summary>
         /// <param name="owner">The object that created this enumeration.</param>
-        public BufferedNeuralDataSetEnumerator(BufferedNeuralDataSet owner)
+        public BufferedNeuralDataSetEnumerator(BufferedMlDataSet owner)
         {
             this.data = owner;
             this.current = 0;
@@ -50,7 +50,7 @@ namespace Encog.Neural.Data.Buffer
         /// <summary>
         /// Get the current record
         /// </summary>
-        public INeuralDataPair Current
+        public MLDataPair Current
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Encog.Neural.Data.Buffer
                 if (this.current >= data.Count )
                     return false;
 
-                this.currentRecord = BasicNeuralDataPair.CreatePair(this.data
+                this.currentRecord = BasicMLDataPair.CreatePair(this.data
                         .InputSize, this.data.IdealSize);
                 this.data.GetRecord(this.current++, this.currentRecord);
                 return true;

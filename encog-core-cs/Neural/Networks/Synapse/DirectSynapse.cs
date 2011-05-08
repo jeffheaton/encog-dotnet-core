@@ -86,7 +86,7 @@ namespace Encog.Neural.Networks.Synapse
         /// </summary>
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output is the same as the input.</returns>
-        public override INeuralData Compute(INeuralData input)
+        public override MLData Compute(MLData input)
         {
             return input;
         }

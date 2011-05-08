@@ -89,7 +89,7 @@ namespace Encog.Examples.XOR.LMA
         public void Execute(IExampleInterface app)
         {
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 6, 0, 1, false);
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 
             ITrain train = new LevenbergMarquardtTraining(network, trainingSet);
 

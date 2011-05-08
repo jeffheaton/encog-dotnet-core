@@ -69,7 +69,7 @@ namespace Encog.Neural.Networks.Training.SVD
         /// <summary>
         /// The training elements.
         /// </summary>
-        private INeuralDataPair pair;
+        private MLDataPair pair;
 
         /// <summary>
         /// The RBF layer we want to solve.
@@ -81,7 +81,7 @@ namespace Encog.Neural.Networks.Training.SVD
         /// </summary>
         /// <param name="network">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
-        public SVDTraining(BasicNetwork network, INeuralDataSet training)
+        public SVDTraining(BasicNetwork network, MLDataSet training)
         {
             ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
@@ -104,9 +104,9 @@ namespace Encog.Neural.Networks.Training.SVD
             this.network = network;
             this.trainingLength = (int)this.Training.InputSize;
 
-            BasicNeuralData input = new BasicNeuralData(this.Training.InputSize);
-            BasicNeuralData ideal = new BasicNeuralData(this.Training.IdealSize);
-            this.pair = new BasicNeuralDataPair(input, ideal);
+            BasicMLData input = new BasicMLData(this.Training.InputSize);
+            BasicMLData ideal = new BasicMLData(this.Training.IdealSize);
+            this.pair = new BasicMLDataPair(input, ideal);
         }
 
         /// <summary>

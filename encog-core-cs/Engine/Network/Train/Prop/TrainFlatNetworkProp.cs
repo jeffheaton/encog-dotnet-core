@@ -77,13 +77,13 @@ namespace Encog.Engine.Network.Train.Prop
         /// The training data.
         /// </summary>
         ///
-        protected internal readonly INeuralDataSet training;
+        protected internal readonly MLDataSet training;
 
         /// <summary>
         /// The network in indexable form.
         /// </summary>
         ///
-        protected internal readonly INeuralDataSet indexable;
+        protected internal readonly MLDataSet indexable;
 
         /// <summary>
         /// The workers.
@@ -122,7 +122,7 @@ namespace Encog.Engine.Network.Train.Prop
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkProp(FlatNetwork network,
-                INeuralDataSet training)
+                MLDataSet training)
         {
             this.training = training;
             this.network = network;
@@ -245,7 +245,7 @@ namespace Encog.Engine.Network.Train.Prop
 
 
         /// <inheritdoc />
-        public virtual INeuralDataSet Training
+        public virtual MLDataSet Training
         {
             get
             {

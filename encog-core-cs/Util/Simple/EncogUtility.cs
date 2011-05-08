@@ -78,11 +78,11 @@ namespace Encog.Util.Simple
         {
 
             File.Delete(binFile);
-            CSVNeuralDataSet csv = new CSVNeuralDataSet(csvFile.ToString(),
+            CsvMlDataSet csv = new CsvMlDataSet(csvFile.ToString(),
                    inputCount, outputCount, false);
-            BufferedNeuralDataSet buffer = new BufferedNeuralDataSet(binFile);
+            BufferedMlDataSet buffer = new BufferedMlDataSet(binFile);
             buffer.BeginLoad(inputCount, outputCount);
-            foreach (INeuralDataPair pair in csv)
+            foreach (MLDataPair pair in csv)
             {
                 buffer.Add(pair);
             }
@@ -98,11 +98,11 @@ namespace Encog.Util.Simple
         /// <param name="headers">True, if headers are present.</param>
         /// <param name="format">The loaded dataset.</param>
         /// <returns></returns>
-        public static INeuralDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
+        public static MLDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
         {
             IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, input, ideal);
             MemoryDataLoader load = new MemoryDataLoader(codec);
-            INeuralDataSet dataset = load.External2Memory();
+            MLDataSet dataset = load.External2Memory();
             return dataset;
         }
 
@@ -113,11 +113,11 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to evaluate.</param>
         /// <param name="training">The training set to evaluate.</param>
         public static void Evaluate(BasicNetwork network,
-                 INeuralDataSet training)
+                 MLDataSet training)
         {
-            foreach (INeuralDataPair pair in training)
+            foreach (MLDataPair pair in training)
             {
-                INeuralData output = network.Compute(pair.Input);
+                MLData output = network.Compute(pair.Input);
                 Console.WriteLine("Input="
                         + EncogUtility.FormatNeuralData(pair.Input)
                         + ", Actual=" + EncogUtility.FormatNeuralData(output)
@@ -132,7 +132,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="data">The neural data to format.</param>
         /// <returns>The formatted neural data.</returns>
-        private static String FormatNeuralData(INeuralData data)
+        private static String FormatNeuralData(MLData data)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < data.Count; i++)
@@ -194,7 +194,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
         public static void TrainConsole(BasicNetwork network,
-                 INeuralDataSet trainingSet, int minutes)
+                 MLDataSet trainingSet, int minutes)
         {
             Propagation train = new ResilientPropagation(network,
                    trainingSet);
@@ -212,7 +212,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
         public static void TrainConsole(ITrain train,
-                 BasicNetwork network, INeuralDataSet trainingSet,
+                 BasicNetwork network, MLDataSet trainingSet,
                  int minutes)
         {
 
@@ -246,7 +246,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         public static void TrainDialog(BasicNetwork network,
-                 INeuralDataSet trainingSet)
+                 MLDataSet trainingSet)
         {
             Propagation train = new ResilientPropagation(network,
                    trainingSet);
@@ -264,7 +264,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         public static void TrainDialog(ITrain train,
-                BasicNetwork network, INeuralDataSet trainingSet)
+                BasicNetwork network, MLDataSet trainingSet)
         {
             TrainingDialog dialog = new TrainingDialog();
             dialog.Train = train;
@@ -279,7 +279,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The error level to train to.</param>
         public static void TrainToError(BasicNetwork network,
-                 INeuralDataSet trainingSet, double error)
+                 MLDataSet trainingSet, double error)
         {
             Propagation train = new ResilientPropagation(network,
                     trainingSet);
@@ -295,7 +295,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The desired error level.</param>
         public static void TrainToError(ITrain train,
-                INeuralDataSet trainingSet,
+                MLDataSet trainingSet,
                 double error)
         {
 

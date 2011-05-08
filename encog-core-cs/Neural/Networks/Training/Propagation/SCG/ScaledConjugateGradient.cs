@@ -53,7 +53,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data.</param>
         public ScaledConjugateGradient(BasicNetwork network,
-                INeuralDataSet training)
+                MLDataSet training)
             : base(network, training)
         {
             TrainFlatNetworkSCG rpropFlat = new TrainFlatNetworkSCG(

@@ -55,7 +55,7 @@ namespace Encog.Util.Banchmark
         /// <param name="min">The minimum random number.</param>
         /// <param name="max">The maximum random number.</param>
         /// <returns>The random training set.</returns>
-        public static BasicNeuralDataSet Generate(long seed,
+        public static BasicMLDataSet Generate(long seed,
                 int count, int inputCount,
                 int idealCount, double min, double max)
         {
@@ -63,24 +63,24 @@ namespace Encog.Util.Banchmark
             LinearCongruentialGenerator rand =
                 new LinearCongruentialGenerator(seed);
 
-            BasicNeuralDataSet result = new BasicNeuralDataSet();
+            BasicMLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < count; i++)
             {
-                INeuralData inputData = new BasicNeuralData(inputCount);
+                MLData inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData.Data[j] = rand.Range(min, max);
                 }
 
-                INeuralData idealData = new BasicNeuralData(idealCount);
+                MLData idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {
                     idealData[j] = rand.Range(min, max);
                 }
 
-                BasicNeuralDataPair pair = new BasicNeuralDataPair(inputData,
+                BasicMLDataPair pair = new BasicMLDataPair(inputData,
                         idealData);
                 result.Add(pair);
 
@@ -96,7 +96,7 @@ namespace Encog.Util.Banchmark
         /// <param name="count">How much data to generate.</param>
         /// <param name="min">The low random value.</param>
         /// <param name="max">The high random value.</param>
-        public static void Generate(INeuralDataSet training,
+        public static void Generate(MLDataSet training,
                 long seed,
                 int count,
                 double min, double max)
@@ -110,21 +110,21 @@ namespace Encog.Util.Banchmark
 
             for (int i = 0; i < count; i++)
             {
-                INeuralData inputData = new BasicNeuralData(inputCount);
+                MLData inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData[j] = rand.Range(min, max);
                 }
 
-                INeuralData idealData = new BasicNeuralData(idealCount);
+                MLData idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {
                     idealData[j] = rand.Range(min, max);
                 }
 
-                BasicNeuralDataPair pair = new BasicNeuralDataPair(inputData,
+                BasicMLDataPair pair = new BasicMLDataPair(inputData,
                         idealData);
                 training.Add(pair);
 

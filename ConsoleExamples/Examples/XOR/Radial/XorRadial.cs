@@ -103,7 +103,7 @@ namespace Encog.Examples.XOR.Radial
             rbfLayer.RandomizeRBFCentersAndWidths(2, -1, 1, RBFEnum.Gaussian);
 
 
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 
             // train the neural network
             ITrain train = new ResilientPropagation(network, trainingSet);

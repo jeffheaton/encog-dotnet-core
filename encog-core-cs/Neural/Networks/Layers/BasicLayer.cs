@@ -259,10 +259,10 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The input pattern.</param>
         /// <returns>The output from this layer.</returns>
-        public virtual INeuralData Compute(INeuralData pattern)
+        public virtual MLData Compute(MLData pattern)
         {
 
-            INeuralData result = (INeuralData)pattern.Clone();
+            MLData result = (MLData)pattern.Clone();
 
             if (this.HasBias)
             {
@@ -446,7 +446,7 @@ namespace Encog.Neural.Networks.Layers
         /// Other similar functions, where access is needed to the input.
         /// </summary>
         /// <param name="pattern">The input to this layer.</param>
-        public virtual void Process(INeuralData pattern)
+        public virtual void Process(MLData pattern)
         {
         }
 
@@ -455,7 +455,7 @@ namespace Encog.Neural.Networks.Layers
         /// For the BaiscLayer, this is not implemented.
         /// </summary>
         /// <returns>The output when called in a recurrent way.</returns>
-        public virtual INeuralData Recur()
+        public virtual MLData Recur()
         {
             return null;
         }

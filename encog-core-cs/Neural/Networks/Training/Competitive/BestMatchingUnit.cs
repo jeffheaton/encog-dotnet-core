@@ -78,7 +78,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="synapse">The synapse to calculate for.</param>
         /// <param name="input">The input vector.</param>
         /// <returns>The output neuron number that is the BMU.</returns>
-        public int CalculateBMU(ISynapse synapse, INeuralData input)
+        public int CalculateBMU(ISynapse synapse, MLData input)
         {
             int result = 0;
 
@@ -117,7 +117,7 @@ namespace Encog.Neural.Networks.Training.Competitive
         /// <param name="outputNeuron">The neuron we are calculating the distance for.</param>
         /// <returns>The Euclidean distance.</returns>
         public double CalculateEuclideanDistance(ISynapse synapse,
-                 INeuralData input, int outputNeuron)
+                 MLData input, int outputNeuron)
         {
             double result = 0;
 

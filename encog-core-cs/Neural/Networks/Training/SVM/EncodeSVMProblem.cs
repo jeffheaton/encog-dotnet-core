@@ -29,7 +29,7 @@ namespace Encog.Neural.Networks.Training.SVM
         /// <param name="outputIndex">The ideal element to use, this is necessary becase SVM's have
         /// only a single output.</param>
         /// <returns>The SVM problem.</returns>
-        public static svm_problem Encode(INeuralDataSet training, int outputIndex)
+        public static svm_problem Encode(MLDataSet training, int outputIndex)
         {
             svm_problem result = new svm_problem();
 
@@ -40,10 +40,10 @@ namespace Encog.Neural.Networks.Training.SVM
 
             int elementIndex = 0;
 
-            foreach (INeuralDataPair pair in training)
+            foreach (MLDataPair pair in training)
             {
-                INeuralData input = pair.Input;
-                INeuralData output = pair.Ideal;
+                MLData input = pair.Input;
+                MLData output = pair.Ideal;
                 result.x[elementIndex] = new svm_node[input.Count];
 
                 for (int i = 0; i < input.Count; i++)

@@ -200,10 +200,10 @@ namespace Encog.Examples.Hopfield.Associate
         "O        O",
         "OOOOOOOOOO"  } };
 
-        public BiPolarNeuralData ConvertPattern(String[][] data, int index)
+        public BiPolarMlData ConvertPattern(String[][] data, int index)
         {
             int resultIndex = 0;
-            BiPolarNeuralData result = new BiPolarNeuralData(WIDTH * HEIGHT);
+            BiPolarMlData result = new BiPolarMlData(WIDTH * HEIGHT);
             for (int row = 0; row < HEIGHT; row++)
             {
                 for (int col = 0; col < WIDTH; col++)
@@ -215,7 +215,7 @@ namespace Encog.Examples.Hopfield.Associate
             return result;
         }
 
-        public void Display(BiPolarNeuralData pattern1, BiPolarNeuralData pattern2)
+        public void Display(BiPolarMlData pattern1, BiPolarMlData pattern2)
         {
             int index1 = 0;
             int index2 = 0;
@@ -252,10 +252,10 @@ namespace Encog.Examples.Hopfield.Associate
             HopfieldLogic hopfieldLogic = (HopfieldLogic)hopfield.Logic;
             for (int i = 0; i < pattern.Length; i++)
             {
-                BiPolarNeuralData pattern1 = ConvertPattern(pattern, i);
+                BiPolarMlData pattern1 = ConvertPattern(pattern, i);
                 hopfieldLogic.CurrentState = pattern1;
                 int cycles = hopfieldLogic.RunUntilStable(100);
-                BiPolarNeuralData pattern2 = (BiPolarNeuralData)hopfieldLogic.CurrentState;
+                BiPolarMlData pattern2 = (BiPolarMlData)hopfieldLogic.CurrentState;
                 Console.WriteLine("Cycles until stable(max 100): " + cycles + ", result=");
                 Display(pattern1, pattern2);
                 Console.WriteLine("----------------------");

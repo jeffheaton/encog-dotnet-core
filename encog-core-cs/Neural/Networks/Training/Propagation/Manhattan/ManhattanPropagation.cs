@@ -63,7 +63,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <param name="profile">The learning rate.</param>
         /// <param name="learnRate">The OpenCL profile to use, null for CPU.</param>
         public ManhattanPropagation(BasicNetwork network,
-                 INeuralDataSet training, double learnRate)
+                 MLDataSet training, double learnRate)
             : base(network, training)
         {
             FlatTraining = new TrainFlatNetworkManhattan(

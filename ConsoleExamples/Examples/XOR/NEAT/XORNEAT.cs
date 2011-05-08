@@ -80,7 +80,7 @@ namespace Encog.Examples.XOR.NEAT
         /// <param name="args">Not used.</param>
         public void Execute(IExampleInterface app)
         {
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 
             ICalculateScore score = new TrainingSetScore(trainingSet);
             // train the neural network

@@ -49,7 +49,7 @@ namespace Encog.Neural.NeuralData
     /// to be used. Typically the add methods are not supported on non-memory based
     /// datasets.
     /// </summary>
-    public interface INeuralDataSet
+    public interface MLDataSet
     {
         /// <summary>
         /// Add a NeuralData object to the dataset. This is used with unsupervised
@@ -57,7 +57,7 @@ namespace Encog.Neural.NeuralData
         /// support the add methods. 
         /// </summary>
         /// <param name="data1">The data to add.</param>
-        void Add(INeuralData data1);
+        void Add(MLData data1);
 
         /// <summary>
         /// Add a set of input and ideal data to the dataset. This is used with
@@ -66,7 +66,7 @@ namespace Encog.Neural.NeuralData
         /// </summary>
         /// <param name="inputData">Input data.</param>
         /// <param name="idealData">Ideal data.</param>
-        void Add(INeuralData inputData, INeuralData idealData);
+        void Add(MLData inputData, MLData idealData);
 
         /// <summary>
         /// Add a NeuralData object to the dataset. This is used with unsupervised
@@ -75,7 +75,7 @@ namespace Encog.Neural.NeuralData
         /// </summary>
         /// <param name="inputData">A NeuralDataPair object that contains both input and ideal
         /// data.</param>
-        void Add(INeuralDataPair inputData);
+        void Add(MLDataPair inputData);
 
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Encog.Neural.NeuralData
         /// Get an enumerator to access the data.
         /// </summary>
         /// <returns></returns>
-        IEnumerator<INeuralDataPair> GetEnumerator();
+        IEnumerator<MLDataPair> GetEnumerator();
 
         /// <summary>
         /// The size of the ideal data, 0 if no ideal data.
@@ -110,13 +110,13 @@ namespace Encog.Neural.NeuralData
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        void GetRecord(long index, INeuralDataPair pair);
+        void GetRecord(long index, MLDataPair pair);
 
         /// <summary>
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
-        INeuralDataSet OpenAdditional();       
+        MLDataSet OpenAdditional();       
 
         /// <summary>
         /// Return true if supervised.

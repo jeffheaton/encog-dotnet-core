@@ -57,12 +57,12 @@ namespace encog_test.Neural.Persist
                 new EncogPersistedCollection("encogtest3.eg", FileMode.OpenOrCreate);
             encog.Create();
 
-            BasicNeuralDataSet data1 =
-                new BasicNeuralDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
-            BasicNeuralDataSet data2 =
-                new BasicNeuralDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
-            BasicNeuralDataSet data3 =
-                new BasicNeuralDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
+            BasicMLDataSet data1 =
+                new BasicMLDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
+            BasicMLDataSet data2 =
+                new BasicMLDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
+            BasicMLDataSet data3 =
+                new BasicMLDataSet(XOR.XOR_INPUT, XOR.XOR_IDEAL);
 
             BasicNetwork network1 = CreateNetwork.createXORNetworkUntrained();
             BasicNetwork network2 = CreateNetwork.createXORNetworkUntrained();

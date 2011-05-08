@@ -78,7 +78,7 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// The training data to use.
         /// </summary>
-        INeuralDataSet Training
+        MLDataSet Training
         {
             get;
         }

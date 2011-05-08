@@ -54,7 +54,7 @@ namespace Encog.Engine.Network.Train
 
 
         /// <returns>The data we are training with.</returns>
-        INeuralDataSet Training
+        MLDataSet Training
         {
             get;
         }

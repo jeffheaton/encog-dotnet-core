@@ -33,7 +33,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
         /// <param name="loadToMemory">Should binary data be loaded to memory?</param>
         /// <param name="learningRate">THe learning rate to use.</param>
         /// <param name="momentum">The momentum to use.</param>
-        public BPROPJob(BasicNetwork network, INeuralDataSet training,
+        public BPROPJob(BasicNetwork network, MLDataSet training,
                  bool loadToMemory, double learningRate,
                  double momentum)
             : base(network, training, loadToMemory)

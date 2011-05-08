@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Logic
         /// train method more than once.
         /// </summary>
         /// <param name="pattern">The pattern to train for.</param>
-        public void AddPattern(INeuralData pattern)
+        public void AddPattern(MLData pattern)
         {
 
             // Create a row matrix from the input, convert boolean to bipolar
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Logic
         /// </summary>
         public void Run()
         {
-            INeuralData temp = this.Compute(this.CurrentState, null);
+            MLData temp = this.Compute(this.CurrentState, null);
             for (int i = 0; i < temp.Count; i++)
             {
                 this.CurrentState.SetBoolean(i, temp[i] > 0);

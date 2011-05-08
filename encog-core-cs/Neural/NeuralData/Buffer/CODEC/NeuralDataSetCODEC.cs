@@ -27,18 +27,18 @@ namespace Encog.Neural.Data.Buffer.CODEC
         /// <summary>
         /// The dataset.
         /// </summary>
-        private INeuralDataSet dataset;
+        private MLDataSet dataset;
 
         /// <summary>
         /// The iterator used to read through the dataset.
         /// </summary>
-        private IEnumerator<INeuralDataPair> enumerator;
+        private IEnumerator<MLDataPair> enumerator;
 
         /// <summary>
         /// Construct a CODEC. 
         /// </summary>
         /// <param name="dataset">The dataset to use.</param>
-        public NeuralDataSetCODEC(INeuralDataSet dataset)
+        public NeuralDataSetCODEC(MLDataSet dataset)
         {
             this.dataset = dataset;
             this.inputSize = dataset.InputSize;
@@ -72,7 +72,7 @@ namespace Encog.Neural.Data.Buffer.CODEC
             }
             else
             {
-                INeuralDataPair pair = enumerator.Current;
+                MLDataPair pair = enumerator.Current;
                 EngineArray.ArrayCopy(pair.Input.Data, input);
                 EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
                 return true;
@@ -82,7 +82,7 @@ namespace Encog.Neural.Data.Buffer.CODEC
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal)
         {
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(inputSize,
+            MLDataPair pair = BasicMLDataPair.CreatePair(inputSize,
                     idealSize);
             EngineArray.ArrayCopy(input, pair.Input.Data);
             EngineArray.ArrayCopy(ideal, pair.Ideal.Data);

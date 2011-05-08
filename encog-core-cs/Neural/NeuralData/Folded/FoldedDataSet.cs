@@ -44,7 +44,7 @@ namespace Encog.Neural.Data.Folded
     /// This dataset works off of an underlying dataset. By default there are no
     /// folds (fold size 1). Call the fold method to create more folds. 
     /// </summary>
-    public class FoldedDataSet : INeuralDataSet
+    public class FoldedDataSet : MLDataSet
     {
         /// <summary>
         /// Error message: adds are not supported.
@@ -54,7 +54,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        private INeuralDataSet underlying;
+        private MLDataSet underlying;
 
         /// <summary>
         /// The fold that we are currently on.
@@ -96,7 +96,7 @@ namespace Encog.Neural.Data.Folded
         /// Create a folded dataset. 
         /// </summary>
         /// <param name="underlying">The underlying folded dataset.</param>
-        public FoldedDataSet(INeuralDataSet underlying)
+        public FoldedDataSet(MLDataSet underlying)
         {
             this.underlying = underlying;
             Fold(1);
@@ -106,7 +106,7 @@ namespace Encog.Neural.Data.Folded
         /// Not supported.
         /// </summary>
         /// <param name="data1">Not used.</param>
-        public void Add(INeuralData data1)
+        public void Add(MLData data1)
         {
             throw new TrainingError(FoldedDataSet.ADD_NOT_SUPPORTED);
 
@@ -117,7 +117,7 @@ namespace Encog.Neural.Data.Folded
         /// </summary>
         /// <param name="inputData">Not used.</param>
         /// <param name="idealData">Not used.</param>
-        public void Add(INeuralData inputData, INeuralData idealData)
+        public void Add(MLData inputData, MLData idealData)
         {
             throw new TrainingError(FoldedDataSet.ADD_NOT_SUPPORTED);
 
@@ -127,7 +127,7 @@ namespace Encog.Neural.Data.Folded
         /// Not supported.
         /// </summary>
         /// <param name="inputData">Not used.</param>
-        public void Add(INeuralDataPair inputData)
+        public void Add(MLDataPair inputData)
         {
             throw new TrainingError(FoldedDataSet.ADD_NOT_SUPPORTED);
 
@@ -272,7 +272,7 @@ namespace Encog.Neural.Data.Folded
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="pair">The record.</param>
-        public void GetRecord(long index, INeuralDataPair pair)
+        public void GetRecord(long index, MLDataPair pair)
         {
             this.underlying.GetRecord(this.CurrentFoldOffset + index, pair);
         }
@@ -291,7 +291,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        public INeuralDataSet Underlying
+        public MLDataSet Underlying
         {
             get
             {
@@ -315,9 +315,9 @@ namespace Encog.Neural.Data.Folded
         /// Open an additional dataset.
         /// </summary>
         /// <returns>The dataset.</returns>
-        public INeuralDataSet OpenAdditional()
+        public MLDataSet OpenAdditional()
         {
-            FoldedDataSet folded = new FoldedDataSet((INeuralDataSet)this.underlying.OpenAdditional());
+            FoldedDataSet folded = new FoldedDataSet((MLDataSet)this.underlying.OpenAdditional());
             folded.Owner = this;
             return folded;
         }
@@ -327,7 +327,7 @@ namespace Encog.Neural.Data.Folded
         /// Get an enumberator.
         /// </summary>
         /// <returns>The enumerator.</returns>
-        public IEnumerator<INeuralDataPair> GetEnumerator()
+        public IEnumerator<MLDataPair> GetEnumerator()
         {
             return new FoldedEnumerator(this);
         }

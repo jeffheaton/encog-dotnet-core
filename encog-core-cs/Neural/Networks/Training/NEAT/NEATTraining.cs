@@ -695,7 +695,7 @@ namespace Encog.Neural.Networks.Training.NEAT
         /// <summary>
         /// Returns null, does not use a training set, rather uses a score function.
         /// </summary>
-        public INeuralDataSet Training
+        public MLDataSet Training
         {
             get
             {

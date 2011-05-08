@@ -77,7 +77,7 @@ namespace Encog.Examples.Benchmark
 											 new double[] {0}
 										 };
 
-            BasicNeuralDataSet trainingSet = new BasicNeuralDataSet(input, output);
+            BasicMLDataSet trainingSet = new BasicMLDataSet(input, output);
 
             TrainFlatNetworkBackPropagation train = new TrainFlatNetworkBackPropagation(network, trainingSet, 0.7, 0.7);
 

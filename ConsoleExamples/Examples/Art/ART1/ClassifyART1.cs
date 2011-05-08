@@ -119,8 +119,8 @@ namespace Encog.Examples.Art.ART1
 
             for (int i = 0; i < PATTERN.Length; i++)
             {
-                BiPolarNeuralData dataIn = new BiPolarNeuralData(this.input[i]);
-                BiPolarNeuralData dataOut = new BiPolarNeuralData(OUTPUT_NEURONS);
+                BiPolarMlData dataIn = new BiPolarMlData(this.input[i]);
+                BiPolarMlData dataOut = new BiPolarMlData(OUTPUT_NEURONS);
                 logic.Compute(dataIn, dataOut);
                 if (logic.HasWinner)
                 {

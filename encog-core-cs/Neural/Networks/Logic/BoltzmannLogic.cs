@@ -143,7 +143,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">Not used</param>
         /// <param name="useHolder">Not used</param>
         /// <returns>Not used</returns>
-        public override INeuralData Compute(INeuralData input, NeuralOutputHolder useHolder)
+        public override MLData Compute(MLData input, NeuralOutputHolder useHolder)
         {
             String str = "Compute on BasicNetwork cannot be used, rather call" +
                     " the run method on the logic class.";

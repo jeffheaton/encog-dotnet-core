@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training.Simple
         /// <summary>
         /// The training data.
         /// </summary>
-        private INeuralDataSet training;
+        private MLDataSet training;
 
         /// <summary>
         /// The learning rate.
@@ -71,7 +71,7 @@ namespace Encog.Neural.Networks.Training.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training set.</param>
         /// <param name="learningRate">The learning rate.</param>
-        public TrainAdaline(BasicNetwork network, INeuralDataSet training,
+        public TrainAdaline(BasicNetwork network, MLDataSet training,
                 double learningRate)
         {
             if (network.Structure.Layers.Count > 2)
@@ -108,10 +108,10 @@ namespace Encog.Neural.Networks.Training.Simple
             ILayer inputLayer = network.GetLayer(BasicNetwork.TAG_INPUT);
             ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
-            foreach (INeuralDataPair pair in this.training)
+            foreach (MLDataPair pair in this.training)
             {
                 // calculate the error
-                INeuralData output = this.network.Compute(pair.Input);
+                MLData output = this.network.Compute(pair.Input);
 
                 for (int currentAdaline = 0; currentAdaline < output.Count; currentAdaline++)
                 {

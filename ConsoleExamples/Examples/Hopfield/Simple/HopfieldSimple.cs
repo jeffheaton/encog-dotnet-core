@@ -66,7 +66,7 @@ namespace Encog.Examples.Hopfield.Simple
         /// </summary>
         /// <param name="b">A boolen array.</param>
         /// <returns>The boolen array in string form.</returns>
-        public String FormatBoolean(INeuralData b)
+        public String FormatBoolean(MLData b)
         {
             StringBuilder result = new StringBuilder();
             result.Append('[');
@@ -104,11 +104,11 @@ namespace Encog.Examples.Hopfield.Simple
             bool[] pattern1 = { true, true, false, false };
             // This pattern will be presented
             bool[] pattern2 = { true, false, false, false };
-            INeuralData result;
+            MLData result;
 
-            BiPolarNeuralData data1 = new BiPolarNeuralData(pattern1);
-            BiPolarNeuralData data2 = new BiPolarNeuralData(pattern2);
-            BasicNeuralDataSet set = new BasicNeuralDataSet();
+            BiPolarMlData data1 = new BiPolarMlData(pattern1);
+            BiPolarMlData data2 = new BiPolarMlData(pattern2);
+            BasicMLDataSet set = new BasicMLDataSet();
             set.Add(data1);
             network.Structure.FinalizeStructure();
 

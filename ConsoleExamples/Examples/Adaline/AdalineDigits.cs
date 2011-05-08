@@ -154,15 +154,15 @@ namespace Encog.Examples.Adaline
         "O   O",
         " OOO "  } };
 
-        public static INeuralDataSet GenerateTraining()
+        public static MLDataSet GenerateTraining()
         {
-            INeuralDataSet result = new BasicNeuralDataSet();
+            MLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < DIGITS.Length; i++)
             {
-                BasicNeuralData ideal = new BasicNeuralData(DIGITS.Length);
+                BasicMLData ideal = new BasicMLData(DIGITS.Length);
 
                 // setup input
-                INeuralData input = Image2data(DIGITS[i]);
+                MLData input = Image2data(DIGITS[i]);
 
                 // setup ideal
                 for (int j = 0; j < DIGITS.Length; j++)
@@ -179,9 +179,9 @@ namespace Encog.Examples.Adaline
             return result;
         }
 
-        public static INeuralData Image2data(String[] image)
+        public static MLData Image2data(String[] image)
         {
-            INeuralData result = new BasicNeuralData(CHAR_WIDTH * CHAR_HEIGHT);
+            MLData result = new BasicMLData(CHAR_WIDTH * CHAR_HEIGHT);
 
             for (int row = 0; row < CHAR_HEIGHT; row++)
             {
@@ -213,7 +213,7 @@ namespace Encog.Examples.Adaline
             (new RangeRandomizer(-0.5, 0.5)).Randomize(network);
 
             // train it
-            INeuralDataSet training = GenerateTraining();
+            MLDataSet training = GenerateTraining();
             ITrain train = new TrainAdaline(network, training, 0.01);
 
             int epoch = 1;

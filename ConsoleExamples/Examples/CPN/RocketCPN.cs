@@ -361,7 +361,7 @@ namespace Encog.Examples.CPN
             return network;
         }
 
-        public void TrainInstar(BasicNetwork network, INeuralDataSet training)
+        public void TrainInstar(BasicNetwork network, MLDataSet training)
         {
             int epoch = 1;
 
@@ -374,7 +374,7 @@ namespace Encog.Examples.CPN
             }
         }
 
-        public void TrainOutstar(BasicNetwork network, INeuralDataSet training)
+        public void TrainOutstar(BasicNetwork network, MLDataSet training)
         {
             int epoch = 1;
 
@@ -387,13 +387,13 @@ namespace Encog.Examples.CPN
             }
         }
 
-        public INeuralDataSet GenerateTraining(double[][] input, double[][] ideal)
+        public MLDataSet GenerateTraining(double[][] input, double[][] ideal)
         {
-            INeuralDataSet result = new BasicNeuralDataSet(input, ideal);
+            MLDataSet result = new BasicMLDataSet(input, ideal);
             return result;
         }
 
-        public double DetermineAngle(INeuralData angle)
+        public double DetermineAngle(MLData angle)
         {
             double result;
 
@@ -408,8 +408,8 @@ namespace Encog.Examples.CPN
         {
             for (int i = 0; i < pattern.Length; i++)
             {
-                INeuralData inputData = new BasicNeuralData(input[i]);
-                INeuralData outputData = network.Compute(inputData);
+                MLData inputData = new BasicMLData(input[i]);
+                MLData outputData = network.Compute(inputData);
                 double angle = DetermineAngle(outputData);
 
                 // display image
@@ -431,7 +431,7 @@ namespace Encog.Examples.CPN
             PrepareInput();
             NormalizeInput();
             BasicNetwork network = CreateNetwork();
-            INeuralDataSet training = GenerateTraining(this.input1, this.ideal1);
+            MLDataSet training = GenerateTraining(this.input1, this.ideal1);
             TrainInstar(network, training);
             TrainOutstar(network, training);
             Test(network, PATTERN1, this.input1);

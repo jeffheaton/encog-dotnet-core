@@ -63,7 +63,7 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// The context data that this layer will store.
         /// </summary>
-        private INeuralData context;
+        private MLData context;
 
 #if logging
         /// <summary>
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Layers
             : base(thresholdFunction, hasThreshold, neuronCount)
         {
             this.FlatContextIndex = -1;
-            this.context = new BasicNeuralData(neuronCount);
+            this.context = new BasicMLData(neuronCount);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Encog.Neural.Networks.Layers
         /// The context, or memory of this layer. These will be the values
         /// that were just output.
         /// </summary>
-        public INeuralData Context
+        public MLData Context
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Encog.Neural.Networks.Layers
         /// in the context.
         /// </summary>
         /// <param name="pattern">The pattern to store in the context.</param>
-        public override void Process(INeuralData pattern)
+        public override void Process(MLData pattern)
         {
             double[] target = this.context.Data;
             double[] source = pattern.Data;
@@ -154,7 +154,7 @@ namespace Encog.Neural.Networks.Layers
         /// manor. Simply return the context that was kept from the last iteration.
         /// </summary>
         /// <returns></returns>
-        public override INeuralData Recur()
+        public override MLData Recur()
         {
             return this.context;
         }

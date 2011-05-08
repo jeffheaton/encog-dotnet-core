@@ -64,7 +64,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// The training set to use. Must be indexable.
         /// </summary>
-        private INeuralDataSet indexableTraining;
+        private MLDataSet indexableTraining;
 
         /// <summary>
         /// The number of training set elements.
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// Used to read the training data.
         /// </summary>
-        private INeuralDataPair pair;
+        private MLDataPair pair;
 
         /// <summary>
         /// The errors for each row in the Jacobian.
@@ -108,7 +108,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <param name="network">The network to use.</param>
         /// <param name="indexableTraining">The training set to use.</param>
         public JacobianChainRule(BasicNetwork network,
-                 INeuralDataSet indexableTraining)
+                 MLDataSet indexableTraining)
         {
             this.indexableTraining = indexableTraining;
             this.network = network;
@@ -117,11 +117,11 @@ namespace Encog.Neural.Networks.Training.LMA
             this.jacobian = EngineArray.AllocateDouble2D(this.inputLength, this.parameterSize);
             this.rowErrors = new double[this.inputLength];
 
-            BasicNeuralData input = new BasicNeuralData(
+            BasicMLData input = new BasicMLData(
                    this.indexableTraining.InputSize);
-            BasicNeuralData ideal = new BasicNeuralData(
+            BasicMLData ideal = new BasicMLData(
                    this.indexableTraining.IdealSize);
-            this.pair = new BasicNeuralDataPair(input, ideal);
+            this.pair = new BasicMLDataPair(input, ideal);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// </summary>
         /// <param name="pair">The training set element.</param>
         /// <returns>The sum squared of errors.</returns>
-        private double CalculateDerivatives(INeuralDataPair pair)
+        private double CalculateDerivatives(MLDataPair pair)
         {
             // error values
             double e = 0.0;
@@ -220,7 +220,7 @@ namespace Encog.Neural.Networks.Training.LMA
             {
                 lastSynapse = synapse;
                 synapse = synapses[synapseNumber++];
-                INeuralData outputData = holder.Result[lastSynapse];
+                MLData outputData = holder.Result[lastSynapse];
 
                 int biasCol = this.jacobianCol;
                 this.jacobianCol += synapse.ToLayer.NeuronCount;

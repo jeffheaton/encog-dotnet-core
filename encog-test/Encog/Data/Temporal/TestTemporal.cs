@@ -44,7 +44,7 @@ namespace encog_test.Data.Temporal
         [Test]
         public void BasicTemporal()
         {
-            TemporalNeuralDataSet temporal = new TemporalNeuralDataSet(5, 1);
+            TemporalMlDataSet temporal = new TemporalMlDataSet(5, 1);
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, false, true));
@@ -62,10 +62,10 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(1, temporal.OutputNeuronCount);
             Assert.AreEqual(10, temporal.CalculateActualSetSize());
 
-            IEnumerator<INeuralDataPair> itr = temporal.GetEnumerator();
+            IEnumerator<MLDataPair> itr = temporal.GetEnumerator();
             itr.MoveNext();
             // set 0
-            INeuralDataPair pair = itr.Current;
+            MLDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
             Assert.AreEqual(1.0, pair.Input.Data[0]);
@@ -136,7 +136,7 @@ namespace encog_test.Data.Temporal
         [Test]
         public void HiLowTemporal()
         {
-            TemporalNeuralDataSet temporal = new TemporalNeuralDataSet(5, 1);
+            TemporalMlDataSet temporal = new TemporalMlDataSet(5, 1);
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, false, true));
@@ -156,10 +156,10 @@ namespace encog_test.Data.Temporal
             Assert.AreEqual(1, temporal.OutputNeuronCount);
             Assert.AreEqual(7, temporal.CalculateActualSetSize());
 
-            IEnumerator<INeuralDataPair> itr = temporal.GetEnumerator();
+            IEnumerator<MLDataPair> itr = temporal.GetEnumerator();
             itr.MoveNext();
             // set 0
-            INeuralDataPair pair = itr.Current;
+            MLDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
             Assert.AreEqual(7.0, pair.Input.Data[0]);
@@ -178,7 +178,7 @@ namespace encog_test.Data.Temporal
         [Test]
         public void FormatTemporal()
         {
-            TemporalNeuralDataSet temporal = new TemporalNeuralDataSet(5, 1);
+            TemporalMlDataSet temporal = new TemporalMlDataSet(5, 1);
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.DELTA_CHANGE, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.PERCENT_CHANGE, true, false));
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.RAW, false, true));
@@ -192,10 +192,10 @@ namespace encog_test.Data.Temporal
 
             temporal.Generate();
 
-            IEnumerator<INeuralDataPair> itr = temporal.GetEnumerator();
+            IEnumerator<MLDataPair> itr = temporal.GetEnumerator();
             itr.MoveNext();
             // set 0
-            INeuralDataPair pair = itr.Current;
+            MLDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
             Assert.AreEqual(3.0, pair.Input.Data[0]);
@@ -214,7 +214,7 @@ namespace encog_test.Data.Temporal
         [Test]
         public void ActivationTemporal()
         {
-            TemporalNeuralDataSet temporal = new TemporalNeuralDataSet(5, 1);
+            TemporalMlDataSet temporal = new TemporalMlDataSet(5, 1);
             temporal.AddDescription(new TemporalDataDescription(new ActivationTANH(), TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(new ActivationTANH(), TemporalDataDescription.Type.RAW, true, false));
             temporal.AddDescription(new TemporalDataDescription(new ActivationTANH(), TemporalDataDescription.Type.RAW, false, true));
@@ -228,11 +228,11 @@ namespace encog_test.Data.Temporal
 
             temporal.Generate();
 
-            IEnumerator<INeuralDataPair> itr = temporal.GetEnumerator();
+            IEnumerator<MLDataPair> itr = temporal.GetEnumerator();
 
             // set 0
             itr.MoveNext();
-            INeuralDataPair pair = itr.Current;
+            MLDataPair pair = itr.Current;
             Assert.AreEqual(10, pair.Input.Count);
             Assert.AreEqual(1, pair.Ideal.Count);
             Assert.AreEqual(0.75, Math.Round(pair.Input.Data[0] * 4.0) / 4.0);

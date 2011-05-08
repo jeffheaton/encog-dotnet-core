@@ -59,7 +59,7 @@ namespace Encog.Neural.Networks.Training.CPN
         /// The training data.  Supervised training, so both input and ideal must
         /// be provided.
         /// </summary>
-        private INeuralDataSet training;
+        private MLDataSet training;
 
         /// <summary>
         /// If the weights have not been initialized, then they must be initialized
@@ -78,7 +78,7 @@ namespace Encog.Neural.Networks.Training.CPN
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data, must provide ideal outputs.</param>
         /// <param name="learningRate">The learning rate.</param>
-        public TrainOutstar(BasicNetwork network, INeuralDataSet training,
+        public TrainOutstar(BasicNetwork network, MLDataSet training,
                 double learningRate)
         {
             this.network = network;
@@ -121,7 +121,7 @@ namespace Encog.Neural.Networks.Training.CPN
             for (int i = 0; i < this.parts.OutstarLayer.NeuronCount; i++)
             {
                 int j = 0;
-                foreach (INeuralDataPair pair in this.training)
+                foreach (MLDataPair pair in this.training)
                 {
                     this.parts.OutstarSynapse.WeightMatrix[j++, i] =
                             pair.Ideal[i];
@@ -141,9 +141,9 @@ namespace Encog.Neural.Networks.Training.CPN
 
             ErrorCalculation error = new ErrorCalculation();
 
-            foreach (INeuralDataPair pair in this.training)
+            foreach (MLDataPair pair in this.training)
             {
-                INeuralData output = this.parts.InstarSynapse.Compute(
+                MLData output = this.parts.InstarSynapse.Compute(
                         pair.Input);
                 int j = this.parts.Winner(output);
                 for (int i = 0; i < this.parts.OutstarLayer.NeuronCount; i++)

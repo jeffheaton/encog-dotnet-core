@@ -45,14 +45,14 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// The training set.
         /// </summary>
-        private INeuralDataSet training;
+        private MLDataSet training;
 
  
         /// <summary>
         /// Construct a training set score calculation. 
         /// </summary>
         /// <param name="training">The training data to use.</param>
-        public TrainingSetScore(INeuralDataSet training)
+        public TrainingSetScore(MLDataSet training)
         {
             this.training = training;
         }

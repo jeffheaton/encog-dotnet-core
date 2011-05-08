@@ -73,7 +73,7 @@ namespace Encog.Neural.Networks.Training.Hopfield
         /// </summary>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="network">The network to train.</param>
-        public TrainHopfield(INeuralDataSet trainingSet,
+        public TrainHopfield(MLDataSet trainingSet,
                  BasicNetwork network)
         {
             this.network = network;
@@ -144,7 +144,7 @@ namespace Encog.Neural.Networks.Training.Hopfield
         /// <param name="recurrent">The hopfield layer.</param>
         private void TrainHopfieldSynapse(ISynapse recurrent)
         {
-            foreach (INeuralDataPair data in this.Training)
+            foreach (MLDataPair data in this.Training)
             {
                 TrainHopfieldSynapse(recurrent, data.Input);
             }
@@ -158,7 +158,7 @@ namespace Encog.Neural.Networks.Training.Hopfield
         /// <param name="synapse">The synapse to train.</param>
         /// <param name="pattern">The pattern to train for.</param>
         public void TrainHopfieldSynapse(ISynapse synapse,
-                 INeuralData pattern)
+                 MLData pattern)
         {
 
             // Create a row matrix from the input, convert boolean to bipolar

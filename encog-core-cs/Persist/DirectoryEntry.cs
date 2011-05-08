@@ -66,7 +66,7 @@ namespace Encog.Persist
         {
             String type = obj.GetType().Name;
 
-            if (type.Equals("BasicNeuralDataSet"))
+            if (type.Equals("BasicMLDataSet"))
                 type = EncogPersistedCollection.TYPE_TRAINING;
 
             this.type = type;

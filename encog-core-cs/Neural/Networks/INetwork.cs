@@ -69,7 +69,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        double CalculateError(INeuralDataSet data);
+        double CalculateError(MLDataSet data);
 
         /// <summary>
         /// Calculate the total number of neurons in the network across all layers.
@@ -82,7 +82,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
         /// <returns>The output from the neural network.</returns>
-        INeuralData Compute(INeuralData input);
+        MLData Compute(MLData input);
 
         /// <summary>
         /// Compute the output for a given input to the neural network. This method
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks
         /// <param name="useHolder">Allows a holder to be specified, this allows propagation
         /// training to check the output of each layer.</param>
         /// <returns>The results from the output neurons.</returns>
-        INeuralData Compute(INeuralData input,
+        MLData Compute(MLData input,
                  NeuralOutputHolder useHolder);
 
         /// <summary>
@@ -156,6 +156,6 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="input">The input patter to present to the neural network.</param>
         /// <returns>The winning neuron.</returns>
-        int Winner(INeuralData input);
+        int Winner(MLData input);
     }
 }

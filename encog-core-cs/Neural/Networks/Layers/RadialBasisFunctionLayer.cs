@@ -107,9 +107,9 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         /// <param name="pattern">The incoming Project.</param>
         /// <returns>The output from this layer.</returns>
-        public override INeuralData Compute(INeuralData pattern)
+        public override MLData Compute(MLData pattern)
         {
-            INeuralData result = new BasicNeuralData(NeuronCount);
+            MLData result = new BasicMLData(NeuronCount);
 
             for (int i = 0; i < NeuronCount; i++)
             {

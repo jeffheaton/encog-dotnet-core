@@ -47,7 +47,7 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralDataSet : BasicPersistedObject, INeuralDataSet, IEnumerable<INeuralDataPair>, IEncogPersistedObject
+    public class BasicMLDataSet : BasicPersistedObject, MLDataSet, IEnumerable<MLDataPair>, IEncogPersistedObject
     {      
         /// <summary>
         /// The enumerator for the basic neural data set.
@@ -55,7 +55,7 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-        public class BasicNeuralEnumerator : IEnumerator<INeuralDataPair>
+        public class BasicNeuralEnumerator : IEnumerator<MLDataPair>
         {
             /// <summary>
             /// The current index.
@@ -65,13 +65,13 @@ namespace Encog.Neural.Data.Basic
             /// <summary>
             /// The owner.
             /// </summary>
-            private BasicNeuralDataSet owner;
+            private BasicMLDataSet owner;
 
             /// <summary>
             /// Construct an enumerator.
             /// </summary>
             /// <param name="owner">The owner of the enumerator.</param>
-            public BasicNeuralEnumerator(BasicNeuralDataSet owner)
+            public BasicNeuralEnumerator(BasicMLDataSet owner)
             {
                 this.current = -1;
                 this.owner = owner;
@@ -80,7 +80,7 @@ namespace Encog.Neural.Data.Basic
             /// <summary>
             /// The current data item.
             /// </summary>
-            public INeuralDataPair Current
+            public MLDataPair Current
             {
                 get
                 {
@@ -135,7 +135,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// Access to the list of data items.
         /// </summary>
-        public virtual IList<INeuralDataPair> Data
+        public virtual IList<MLDataPair> Data
         {
             get
             {
@@ -151,7 +151,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The data held by this object.
         /// </summary>
-        private IList<INeuralDataPair> data = new List<INeuralDataPair>();
+        private IList<MLDataPair> data = new List<MLDataPair>();
 
         /// <summary>
         /// The enumerators created for this list.
@@ -164,7 +164,7 @@ namespace Encog.Neural.Data.Basic
 	    /// duplicate this class.
         /// </summary>
         /// <param name="data">The data to use.</param>
-        public BasicNeuralDataSet(IList<INeuralDataPair> data)
+        public BasicMLDataSet(IList<MLDataPair> data)
         {
             this.data = data;
         }
@@ -174,7 +174,7 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         /// <param name="input">The input into the neural network for training.</param>
         /// <param name="ideal">The idea into the neural network for training.</param>
-        public BasicNeuralDataSet(double[][] input, double[][] ideal)
+        public BasicMLDataSet(double[][] input, double[][] ideal)
         {
             for (int i = 0; i < input.Length; i++)
             {
@@ -186,7 +186,7 @@ namespace Encog.Neural.Data.Basic
                     tempInput[j] = input[i][j];
                 }
 
-                BasicNeuralData idealData = null;
+                BasicMLData idealData = null;
 
                 if (ideal != null)
                 {
@@ -195,10 +195,10 @@ namespace Encog.Neural.Data.Basic
                     {
                         tempIdeal[j] = ideal[i][j];
                     }
-                    idealData = new BasicNeuralData(tempIdeal);
+                    idealData = new BasicMLData(tempIdeal);
                 }
 
-                BasicNeuralData inputData = new BasicNeuralData(tempInput);
+                BasicMLData inputData = new BasicMLData(tempInput);
                 
                 this.Add(inputData, idealData);
             }
@@ -207,7 +207,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// Construct a basic neural data set.
         /// </summary>
-        public BasicNeuralDataSet()
+        public BasicMLDataSet()
         {
         }
 
@@ -220,7 +220,7 @@ namespace Encog.Neural.Data.Basic
             {
                 if (this.data == null || this.data.Count == 0)
                     return 0;
-                INeuralDataPair pair = this.data[0];
+                MLDataPair pair = this.data[0];
                 return pair.Ideal.Count;
             }
         }
@@ -234,7 +234,7 @@ namespace Encog.Neural.Data.Basic
             {
                 if (this.data == null || this.data.Count == 0)
                     return 0;
-                INeuralDataPair pair = this.data[0];
+                MLDataPair pair = this.data[0];
                 return pair.Input.Count;
             }
         }
@@ -243,9 +243,9 @@ namespace Encog.Neural.Data.Basic
         /// Add the specified data to the set.  Add unsupervised data.
         /// </summary>
         /// <param name="data1">The data to add to the set.</param>
-        public virtual void Add(INeuralData data1)
+        public virtual void Add(MLData data1)
         {
-            INeuralDataPair pair = new BasicNeuralDataPair(data1, null);
+            MLDataPair pair = new BasicMLDataPair(data1, null);
             this.data.Add(pair);
         }
 
@@ -254,9 +254,9 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         /// <param name="inputData">The input data.</param>
         /// <param name="idealData">The ideal data.</param>
-        public virtual void Add(INeuralData inputData, INeuralData idealData)
+        public virtual void Add(MLData inputData, MLData idealData)
         {
-            INeuralDataPair pair = new BasicNeuralDataPair(inputData, idealData);
+            MLDataPair pair = new BasicMLDataPair(inputData, idealData);
             this.data.Add(pair);
         }
 
@@ -264,7 +264,7 @@ namespace Encog.Neural.Data.Basic
         /// Add a pair to the set.
         /// </summary>
         /// <param name="inputData">The pair to add to the set.</param>
-        public virtual void Add(INeuralDataPair inputData)
+        public virtual void Add(MLDataPair inputData)
         {
             this.data.Add(inputData);
         }
@@ -281,7 +281,7 @@ namespace Encog.Neural.Data.Basic
         /// Get an enumerator to access the data with.
         /// </summary>
         /// <returns>An enumerator.</returns>
-        public IEnumerator<INeuralDataPair> GetEnumerator()
+        public IEnumerator<MLDataPair> GetEnumerator()
         {
             return new BasicNeuralEnumerator(this);
         }
@@ -317,10 +317,10 @@ namespace Encog.Neural.Data.Basic
         /// <returns>A clone of this object.</returns>
         public override object Clone()
         {
-            BasicNeuralDataSet result = new BasicNeuralDataSet();
-            foreach(INeuralDataPair pair in this.Data )
+            BasicMLDataSet result = new BasicMLDataSet();
+            foreach(MLDataPair pair in this.Data )
             {
-                result.Add((INeuralDataPair)pair.Clone());
+                result.Add((MLDataPair)pair.Clone());
             }
             return result;
         }
@@ -350,9 +350,9 @@ namespace Encog.Neural.Data.Basic
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        public void GetRecord(long index, INeuralDataPair pair)
+        public void GetRecord(long index, MLDataPair pair)
         {
-            INeuralDataPair source = this.data[(int)index];
+            MLDataPair source = this.data[(int)index];
             pair.InputArray = source.Input.Data;
             if (pair.IdealArray != null)
             {
@@ -364,9 +364,9 @@ namespace Encog.Neural.Data.Basic
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
-        public INeuralDataSet OpenAdditional()
+        public MLDataSet OpenAdditional()
         {
-            return new BasicNeuralDataSet(this.Data);
+            return new BasicMLDataSet(this.Data);
         }
 
 

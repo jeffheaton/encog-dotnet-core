@@ -19,12 +19,12 @@ namespace encog_test.Encog.Data.Buffer
         public void TestBufferData()
         {
             File.Delete(FILENAME);
-            BufferedNeuralDataSet set = new BufferedNeuralDataSet(FILENAME);
+            BufferedMlDataSet set = new BufferedMlDataSet(FILENAME);
             set.BeginLoad(2, 1);
             for (int i = 0; i < XOR.XOR_INPUT.Length; i++)
             {
-                BasicNeuralData input = new BasicNeuralData(XOR.XOR_INPUT[i]);
-                BasicNeuralData ideal = new BasicNeuralData(XOR.XOR_IDEAL[i]);
+                BasicMLData input = new BasicMLData(XOR.XOR_INPUT[i]);
+                BasicMLData ideal = new BasicMLData(XOR.XOR_IDEAL[i]);
                 set.Add(input, ideal);
             }
             set.EndLoad();

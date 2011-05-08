@@ -74,7 +74,7 @@ namespace encog_test.Neural.Networks.Training
             Logging.StopConsoleLogging();
 
             // create the training set
-            INeuralDataSet training = new BasicNeuralDataSet(
+            MLDataSet training = new BasicMLDataSet(
                    TestCompetitive.SOM_INPUT, null);
 
             // Create the neural network.
@@ -97,9 +97,9 @@ namespace encog_test.Neural.Networks.Training
                 train.Iteration();
             }
 
-            INeuralData data1 = new BasicNeuralData(
+            MLData data1 = new BasicMLData(
                    TestCompetitive.SOM_INPUT[0]);
-            INeuralData data2 = new BasicNeuralData(
+            MLData data2 = new BasicMLData(
                    TestCompetitive.SOM_INPUT[1]);
 
             int result1 = network.Winner(data1);

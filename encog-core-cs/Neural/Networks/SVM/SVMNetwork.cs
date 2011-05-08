@@ -157,9 +157,9 @@ namespace Encog.Neural.Networks.SVM
         /// </summary>
         /// <param name="input">The input to the SVM.</param>
         /// <returns>The results from the SVM.</returns>
-        public override INeuralData Compute(INeuralData input)
+        public override MLData Compute(MLData input)
         {
-            INeuralData result = new BasicNeuralData(this.outputCount);
+            MLData result = new BasicMLData(this.outputCount);
 
             svm_node[] formattedInput = MakeSparse(input);
 
@@ -177,7 +177,7 @@ namespace Encog.Neural.Networks.SVM
         /// <param name="input">The input to the SVM.</param>
         /// <param name="useHolder">The output holder to use.</param>
         /// <returns>The results from the SVM.</returns>
-        public override INeuralData Compute(INeuralData input,
+        public override MLData Compute(MLData input,
                 NeuralOutputHolder useHolder)
         {
 
@@ -191,7 +191,7 @@ namespace Encog.Neural.Networks.SVM
         /// </summary>
         /// <param name="data">The data to convert.</param>
         /// <returns>The SVM sparse data.</returns>
-        public svm_node[] MakeSparse(INeuralData data)
+        public svm_node[] MakeSparse(MLData data)
         {
             svm_node[] result = new svm_node[data.Count];
             for (int i = 0; i < data.Count; i++)

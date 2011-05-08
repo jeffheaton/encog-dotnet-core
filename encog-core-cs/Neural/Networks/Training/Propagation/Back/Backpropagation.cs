@@ -111,7 +111,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
         public Backpropagation(BasicNetwork network,
-                INeuralDataSet training)
+                MLDataSet training)
             : this(network, training, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
@@ -129,7 +129,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="momentum">The influence that previous iteration's training deltas will
         /// have on the current iteration.</param>
         public Backpropagation(BasicNetwork network,
-                 INeuralDataSet training, double learnRate,
+                 MLDataSet training, double learnRate,
                  double momentum)
             : base(network, training)
         {

@@ -45,7 +45,7 @@ namespace Encog.Neural.NeuralData.Image
     /// collects and then downsamples images for use with a neural network. This is a
     /// memory based class, so large datasets can run out of memory.
     /// </summary>
-    public class ImageNeuralDataSet : BasicNeuralDataSet
+    public class ImageMlDataSet : BasicMLDataSet
     {
         /// <summary>
         /// Error message to inform the caller that only ImageNeuralData objects can
@@ -92,7 +92,7 @@ namespace Encog.Neural.NeuralData.Image
         /// <param name="findBounds">Should the bounds be found and clipped.</param>
         /// <param name="hi">The high value to normalize to.</param>
         /// <param name="lo">The low value to normalize to.</param>
-        public ImageNeuralDataSet(IDownSample downsampler,
+        public ImageMlDataSet(IDownSample downsampler,
                  bool findBounds, double hi, double lo)
         {
             this.downsampler = downsampler;
@@ -108,11 +108,11 @@ namespace Encog.Neural.NeuralData.Image
         /// Add the specified data, must be an ImageNeuralData class.
         /// </summary>
         /// <param name="data">The data The object to add.</param>
-        public override void Add(INeuralData data)
+        public override void Add(MLData data)
         {
-            if (!(data is ImageNeuralData))
+            if (!(data is ImageMlData))
             {
-                throw new NeuralNetworkError(ImageNeuralDataSet.MUST_USE_IMAGE);
+                throw new NeuralNetworkError(ImageMlDataSet.MUST_USE_IMAGE);
             }
 
             base.Add(data);
@@ -123,11 +123,11 @@ namespace Encog.Neural.NeuralData.Image
         /// </summary>
         /// <param name="inputData">The image to train with.</param>
         /// <param name="idealData">The expected otuput form this image.</param>
-        public override void Add(INeuralData inputData, INeuralData idealData)
+        public override void Add(MLData inputData, MLData idealData)
         {
-            if (!(inputData is ImageNeuralData))
+            if (!(inputData is ImageMlData))
             {
-                throw new NeuralNetworkError(ImageNeuralDataSet.MUST_USE_IMAGE);
+                throw new NeuralNetworkError(ImageMlDataSet.MUST_USE_IMAGE);
             }
 
             base.Add(inputData, idealData);
@@ -137,11 +137,11 @@ namespace Encog.Neural.NeuralData.Image
         /// Add input and expected output. This is used for supervised training.
         /// </summary>
         /// <param name="inputData">The input data to train on.</param>
-        public override void Add(INeuralDataPair inputData)
+        public override void Add(MLDataPair inputData)
         {
-            if (!(inputData.Input is ImageNeuralData))
+            if (!(inputData.Input is ImageMlData))
             {
-                throw new NeuralNetworkError(ImageNeuralDataSet.MUST_USE_IMAGE);
+                throw new NeuralNetworkError(ImageMlDataSet.MUST_USE_IMAGE);
             }
 
             base.Add(inputData);
@@ -158,16 +158,16 @@ namespace Encog.Neural.NeuralData.Image
             this.height = height;
             this.width = width;
 
-            foreach (INeuralDataPair pair in this)
+            foreach (MLDataPair pair in this)
             {
-                if (!(pair.Input is ImageNeuralData))
+                if (!(pair.Input is ImageMlData))
                 {
                     throw new NeuralNetworkError(
                             "Invalid class type found in ImageNeuralDataSet, only "
                                     + "ImageNeuralData items are allowed.");
                 }
 
-                ImageNeuralData input = (ImageNeuralData)pair.Input;
+                ImageMlData input = (ImageMlData)pair.Input;
                 input.Downsample(this.downsampler, this.findBounds, height, width,
                         this.hi, this.lo);
 

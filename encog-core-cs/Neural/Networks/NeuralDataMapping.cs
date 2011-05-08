@@ -36,19 +36,19 @@ using Encog.Neural.Data;
 namespace Encog.Neural.Networks
 {
     /// <summary>
-    /// A mapping between two INeuralData classes.
+    /// A mapping between two MLData classes.
     /// </summary>
     public class NeuralDataMapping
     {
         /// <summary>
         /// The source.
         /// </summary>
-        private INeuralData from;
+        private MLData from;
 
         /// <summary>
         /// The target.
         /// </summary>
-        private INeuralData to;
+        private MLData to;
 
         /// <summary>
         /// Construct an empty mapping.
@@ -63,7 +63,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="from">The source.</param>
         /// <param name="to">The target.</param>
-        public NeuralDataMapping(INeuralData from, INeuralData to)
+        public NeuralDataMapping(MLData from, MLData to)
         {
             this.from = from;
             this.to = to;
@@ -72,7 +72,7 @@ namespace Encog.Neural.Networks
         /// <summary>
         /// The source.
         /// </summary>
-        public INeuralData From
+        public MLData From
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Encog.Neural.Networks
         /// <summary>
         /// The target.
         /// </summary>
-        public INeuralData To
+        public MLData To
         {
             get
             {

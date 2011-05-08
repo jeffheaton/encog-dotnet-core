@@ -42,7 +42,7 @@ namespace Encog.Neural.NeuralData.CSV
 {
     /// <summary>
     /// An implementation of the NeuralDataSet interface designed to provide a CSV
-    /// file to the neural network. This implementation uses the BasicNeuralData to
+    /// file to the neural network. This implementation uses the BasicMLData to
     /// hold the data being read. This class has no ability to write CSV files.
     /// The columns of the CSV file will specify both the input and ideal 
     /// columns.  
@@ -50,7 +50,7 @@ namespace Encog.Neural.NeuralData.CSV
     /// This class is not memory based, so very long files can be used, 
     /// without running out of memory.
     /// </summary>
-    public class CSVNeuralDataSet : BasicNeuralDataSet
+    public class CsvMlDataSet : BasicMLDataSet
     {
 
 
@@ -141,7 +141,7 @@ namespace Encog.Neural.NeuralData.CSV
         /// <param name="inputSize">The number of columns that make up the input set.</param>
         /// <param name="idealSize">The number of columns that make up the ideal set.</param>
         /// <param name="headers">True if headers are present on the first line.</param>
-        public CSVNeuralDataSet(String filename, int inputSize,
+        public CsvMlDataSet(String filename, int inputSize,
                  int idealSize, bool headers)
             : this(filename, inputSize, idealSize, headers, CSVFormat.ENGLISH)
         {
@@ -155,7 +155,7 @@ namespace Encog.Neural.NeuralData.CSV
         /// <param name="idealSize">The number of columns that make up the ideal set.</param>
         /// <param name="headers">True if headers are present on the first line.</param>
         /// <param name="format">The format to use.</param>
-        public CSVNeuralDataSet(String filename, int inputSize,
+        public CsvMlDataSet(String filename, int inputSize,
                  int idealSize, bool headers, CSVFormat format)
         {
             this.filename = filename;

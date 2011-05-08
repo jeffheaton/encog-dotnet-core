@@ -71,7 +71,7 @@ namespace Encog.Examples.Benchmark
             new double[1] { 1.0 }, 
             new double[1] { 0.0 } };
 
-        public double Evaluate(BasicNetwork network, INeuralDataSet training)
+        public double Evaluate(BasicNetwork network, MLDataSet training)
         {
             ResilientPropagation rprop = new ResilientPropagation(network, training);
             double startingError = network.CalculateError(training);
@@ -84,7 +84,7 @@ namespace Encog.Examples.Benchmark
         }
 
         public double EvaluateRandomizer(IRandomizer randomizer,
-                BasicNetwork network, INeuralDataSet training)
+                BasicNetwork network, MLDataSet training)
         {
             double total = 0;
             for (int i = 0; i < SAMPLE_SIZE; i++)
@@ -115,7 +115,7 @@ namespace Encog.Examples.Benchmark
             FanInRandomizer fanRandom = new FanInRandomizer();
             GaussianRandomizer gaussianRandom = new GaussianRandomizer(0, 1);
 
-            BasicNeuralDataSet training = new BasicNeuralDataSet(XOR_INPUT,
+            BasicMLDataSet training = new BasicMLDataSet(XOR_INPUT,
                     XOR_IDEAL);
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 10, 0, 1, true);
 

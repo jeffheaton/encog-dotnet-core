@@ -67,7 +67,7 @@ namespace Encog.Neural.Networks.Logic
         /// from any recurrent layers.</param>
         /// <param name="source">The source synapse.</param>
         public override void PreprocessLayer(ILayer layer,
-                 INeuralData input, ISynapse source)
+                 MLData input, ISynapse source)
         {
             foreach (ISynapse synapse in
                      this.Network.Structure.GetPreviousSynapses(layer))
@@ -80,11 +80,11 @@ namespace Encog.Neural.Networks.Logic
                         SimpleRecurrentLogic.logger.Debug("Recurrent layer from: " + input.ToString());
                     }
 #endif
-                    INeuralData recurrentInput = synapse.FromLayer.Recur();
+                    MLData recurrentInput = synapse.FromLayer.Recur();
 
                     if (recurrentInput != null)
                     {
-                        INeuralData recurrentOutput = synapse
+                        MLData recurrentOutput = synapse
                                .Compute(recurrentInput);
 
                         for (int i = 0; i < input.Count; i++)

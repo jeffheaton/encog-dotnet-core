@@ -76,7 +76,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="useHolder">Allows a holder to be specified, this allows
         /// propagation training to check the output of each layer.</param>
         /// <returns>The results from the output neurons.</returns>
-        public virtual INeuralData Compute(INeuralData input,
+        public virtual MLData Compute(MLData input,
                  NeuralOutputHolder useHolder)
         {
             NeuralOutputHolder holder;
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Logic
             if (useHolder == null && this.network.Structure.Flat != null)
             {
                 this.network.Structure.UpdateFlatNetwork();
-                INeuralData result = new BasicNeuralData(this.network.Structure.Flat.OutputCount);
+                MLData result = new BasicMLData(this.network.Structure.Flat.OutputCount);
                 this.network.Structure.Flat.Compute(input.Data, result.Data);
                 return result;
             }
@@ -121,7 +121,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="input">The input to this layer.</param>
         /// <param name="source">The source synapse.</param>
         private void Compute(NeuralOutputHolder holder, ILayer layer,
-                 INeuralData input, ISynapse source)
+                 MLData input, ISynapse source)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Encog.Neural.Networks.Logic
                             FeedforwardLogic.logger.Debug("Processing synapse: " + synapse.ToString());
                         }
 #endif
-                        INeuralData pattern = synapse.Compute(input);
+                        MLData pattern = synapse.Compute(input);
                         pattern = synapse.ToLayer.Compute(pattern);
                         synapse.ToLayer.Process(pattern);
                         holder.Result[synapse] = input;
@@ -198,7 +198,7 @@ namespace Encog.Neural.Networks.Logic
         /// <param name="layer">The layer to process.</param>
         /// <param name="input">The input to this layer.</param>
         /// <param name="source">The source from this layer.</param>
-        virtual public void PreprocessLayer(ILayer layer, INeuralData input, ISynapse source)
+        virtual public void PreprocessLayer(ILayer layer, MLData input, ISynapse source)
         {
             // nothing to do		
         }

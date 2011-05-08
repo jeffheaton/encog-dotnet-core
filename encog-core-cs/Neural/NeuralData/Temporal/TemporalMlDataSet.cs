@@ -60,7 +60,7 @@ namespace Encog.Neural.NeuralData.Temporal
     /// of granularity specified for this class.  No two points can occupy the same
     /// granularity increment.
     /// </summary>
-    public class TemporalNeuralDataSet : BasicNeuralDataSet
+    public class TemporalMlDataSet : BasicMLDataSet
     {
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="inputWindowSize">What is the input window size.</param>
         /// <param name="predictWindowSize">What is the prediction window size.</param>
-        public TemporalNeuralDataSet(int inputWindowSize,
+        public TemporalMlDataSet(int inputWindowSize,
                  int predictWindowSize)
         {
             this.inputWindowSize = inputWindowSize;
@@ -315,9 +315,9 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="inputData">Not used</param>
         /// <param name="idealData">Not used</param>
-        public override void Add(INeuralData inputData, INeuralData idealData)
+        public override void Add(MLData inputData, MLData idealData)
         {
-            throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
+            throw new TemporalError(TemporalMlDataSet.ADD_NOT_SUPPORTED);
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace Encog.Neural.NeuralData.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="inputData">Not used.</param>
-        public override void Add(INeuralDataPair inputData)
+        public override void Add(MLDataPair inputData)
         {
-            throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
+            throw new TemporalError(TemporalMlDataSet.ADD_NOT_SUPPORTED);
         }
 
         /// <summary>
@@ -335,9 +335,9 @@ namespace Encog.Neural.NeuralData.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="data">Not used.</param>
-        public override void Add(INeuralData data)
+        public override void Add(MLData data)
         {
-            throw new TemporalError(TemporalNeuralDataSet.ADD_NOT_SUPPORTED);
+            throw new TemporalError(TemporalMlDataSet.ADD_NOT_SUPPORTED);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="index">The index to generate neural data for.</param>
         /// <returns>The input neural data generated.</returns>
-        public virtual BasicNeuralData GenerateInputNeuralData(int index)
+        public virtual BasicMLData GenerateInputNeuralData(int index)
         {
             if (index + this.inputWindowSize > this.points.Count)
             {
@@ -476,7 +476,7 @@ namespace Encog.Neural.NeuralData.Temporal
                         + "beyond the end of provided data.");
             }
 
-            BasicNeuralData result = new BasicNeuralData(this.inputNeuronCount);
+            BasicMLData result = new BasicMLData(this.inputNeuronCount);
             int resultIndex = 0;
 
             for (int i = 0; i < this.inputWindowSize; i++)
@@ -588,7 +588,7 @@ namespace Encog.Neural.NeuralData.Temporal
         /// </summary>
         /// <param name="index">The index to generate for.</param>
         /// <returns>The neural data generated.</returns>
-        public virtual BasicNeuralData GenerateOutputNeuralData(int index)
+        public virtual BasicMLData GenerateOutputNeuralData(int index)
         {
             if (index + this.predictWindowSize > this.points.Count)
             {
@@ -596,7 +596,7 @@ namespace Encog.Neural.NeuralData.Temporal
                         + "beyond the end of provided data.");
             }
 
-            BasicNeuralData result = new BasicNeuralData(this.outputNeuronCount);
+            BasicMLData result = new BasicMLData(this.outputNeuronCount);
             int resultIndex = 0;
 
             for (int i = 0; i < this.predictWindowSize; i++)
@@ -656,10 +656,10 @@ namespace Encog.Neural.NeuralData.Temporal
 
             for (int i = start; i < range; i++)
             {
-                BasicNeuralData input = GenerateInputNeuralData(i);
-                BasicNeuralData ideal = GenerateOutputNeuralData(i
+                BasicMLData input = GenerateInputNeuralData(i);
+                BasicMLData ideal = GenerateOutputNeuralData(i
                         + this.inputWindowSize);
-                BasicNeuralDataPair pair = new BasicNeuralDataPair(input, ideal);
+                BasicMLDataPair pair = new BasicMLDataPair(input, ideal);
                 base.Add(pair);
             }
         }

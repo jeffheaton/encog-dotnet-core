@@ -99,7 +99,7 @@ namespace Encog.Examples.XOR.SCG
             network.Structure.FinalizeStructure();
             (new RangeRandomizer(-5,5)).Randomize(network);
 
-		    INeuralDataSet trainingSet = new BasicNeuralDataSet(XOR_INPUT, XOR_IDEAL);
+		    MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 		
 		    // train the neural network
 		    ScaledConjugateGradient train = new ScaledConjugateGradient(network, trainingSet);
@@ -118,9 +118,9 @@ namespace Encog.Examples.XOR.SCG
 
             // test the neural network
             Console.WriteLine("Neural Network Results:");
-            foreach (INeuralDataPair pair in trainingSet)
+            foreach (MLDataPair pair in trainingSet)
             {
-                INeuralData output = network.Compute(pair.Input);
+                MLData output = network.Compute(pair.Input);
                 Console.WriteLine(pair.Input[0] + "," + pair.Input[1]
                         + ", actual=" + output[0] + ",ideal=" + pair.Ideal[0]);
             }

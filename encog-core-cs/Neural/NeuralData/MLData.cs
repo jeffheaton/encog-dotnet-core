@@ -31,50 +31,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data;
 
-namespace Encog.Neural.NeuralData
+namespace Encog.Neural.Data
 {
     /// <summary>
-    /// A neural data pair holds both the input and ideal data.  If this
-    /// is an unsupervised data element, then only input is provided.
+    /// Neural data, basically an array of values.
     /// </summary>
-    public interface INeuralDataPair: ICloneable
+    public interface MLData: ICloneable
     {
         /// <summary>
-        /// The input that the neural network.
+        /// Get or set the specified index.
         /// </summary>
-        INeuralData Input
+        /// <param name="x">The index to access.</param>
+        /// <returns></returns>
+        double this[int x]
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Allowes indexed access to the data.
+        /// </summary>
+        double[] Data
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// How many elements in this data structure.
+        /// </summary>
+        int Count
         {
             get;
         }
 
         /// <summary>
-        /// The ideal data that the neural network should produce
-        /// for the specified input.
+        /// Clear the data to zero values.
         /// </summary>
-        INeuralData Ideal
-        {
-            get;
-        }
-
-        /// <summary>
-        /// True if this training pair is supervised.  That is, it has 
-	    /// both input and ideal data.
-        /// </summary>
-        bool Supervised
-        {
-            get;
-        }
-
-        /// <summary>
-        /// The supervised ideal data.
-        /// </summary>
-        double[] IdealArray { get; set; }
-
-        /// <summary>
-        /// The input array.
-        /// </summary>
-        double[] InputArray { get; set; }
+        void Clear();
     }
 }

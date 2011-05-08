@@ -48,7 +48,7 @@ namespace encog_test.Data.SQL
             // no JET db on 64-bit
             if (bits < 64)
             {
-                SQLNeuralDataSet data = new SQLNeuralDataSet(
+                SqlMlDataSet data = new SqlMlDataSet(
                         "SELECT in1,in2,ideal1 FROM xor ORDER BY id",
                         2, 1, "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=..\\..\\encog.mdb; User Id=admin; Password=");
 

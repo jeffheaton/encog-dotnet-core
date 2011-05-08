@@ -22,7 +22,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
         /// <summary>
         /// The training data to use.
         /// </summary>
-        public INeuralDataSet Training { get; set; }
+        public MLDataSet Training { get; set; }
 
         /// <summary>
         /// The strategies to use.
@@ -76,7 +76,7 @@ namespace Encog.Neural.Networks.Training.Concurrent.Jobs
         /// <param name="training">The training data to use.</param>
         /// <param name="loadToMemory">True, if binary data should be loaded to memory.</param>
         public TrainingJob(BasicNetwork network,
-                 INeuralDataSet training, bool loadToMemory)
+                 MLDataSet training, bool loadToMemory)
             : base()
         {
 

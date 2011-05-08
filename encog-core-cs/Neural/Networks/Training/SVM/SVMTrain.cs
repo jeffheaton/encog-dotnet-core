@@ -131,7 +131,7 @@ namespace Encog.Neural.Networks.Training.SVM
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data for this network.</param>
-        public SVMTrain(BasicNetwork network, INeuralDataSet training)
+        public SVMTrain(BasicNetwork network, MLDataSet training)
         {
             this.network = (SVMNetwork)network;
             this.Training = training;

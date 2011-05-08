@@ -175,13 +175,13 @@ namespace Encog.Util.Banchmark
         /// </summary>
         private void EvalMemory()
         {
-            BasicNeuralDataSet training = RandomTrainingFactory.Generate(
+            BasicMLDataSet training = RandomTrainingFactory.Generate(
                     1000, 10000, 10, 10, -1, 1);
 
             long stop = (10 * Evaluate.MILIS);
             int record = 0;
 
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(10, 10);
+            MLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
 
             int iterations = 0;
             Stopwatch watch = new Stopwatch();
@@ -209,20 +209,20 @@ namespace Encog.Util.Banchmark
         {
             String file = "temp.egb";
 
-            BasicNeuralDataSet training = RandomTrainingFactory.Generate(
+            BasicMLDataSet training = RandomTrainingFactory.Generate(
                     1000, 10000, 10, 10, -1, 1);
 
             // create the binary file
 
             File.Delete(file);
 
-            BufferedNeuralDataSet training2 = new BufferedNeuralDataSet(file);
+            BufferedMlDataSet training2 = new BufferedMlDataSet(file);
             training2.Load(training);
 
             long stop = (10 * Evaluate.MILIS);
             int record = 0;
 
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(10, 10);
+            MLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
 
             Stopwatch watch = new Stopwatch();
             watch.Start();

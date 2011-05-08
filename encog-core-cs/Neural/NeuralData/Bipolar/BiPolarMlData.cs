@@ -31,83 +31,84 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.NeuralData;
-using System.Runtime.Serialization;
-using Encog.Util;
-using Encog.Engine.Util;
+using Encog.MathUtil.Matrices;
+using Encog.Neural.Data;
 
-namespace Encog.Neural.Data.Basic
+namespace Encog.Neural.NeuralData.Bipolar
 {
     /// <summary>
-    /// Basic implementation of the NeuralData interface that stores the
-    /// data in an array.  
+    /// A NeuralData implementation designed to work with bipolar data.
+    /// Bipolar data contains two values.  True is stored as 1, and false
+    /// is stored as -1.
     /// </summary>
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralData : INeuralData
+    public class BiPolarMlData : MLData
     {
-        private double[] data;
+        /// <summary>
+        /// The data held by this object.
+        /// </summary>
+        private bool[] data;
 
         /// <summary>
         /// Construct this object with the specified data. 
         /// </summary>
-        /// <param name="d">The data to construct this object with.</param>
-        public BasicNeuralData(double[] d)
-            : this(d.Length)
+        /// <param name="d">The data to create this object with.</param>
+        public BiPolarMlData(bool[] d)
         {
+            this.data = new bool[d.Length];
             for (int i = 0; i < d.Length; i++)
             {
                 this.data[i] = d[i];
             }
         }
 
-
         /// <summary>
-        /// Construct this object with blank data and a specified size.
+        /// Construct a data object with the specified size.
         /// </summary>
-        /// <param name="size">The amount of data to store.</param>
-        public BasicNeuralData(int size)
+        /// <param name="size">The size of this data object.</param>
+        public BiPolarMlData(int size)
         {
-            this.data = new double[size];
+            this.data = new bool[size];
         }
 
         /// <summary>
-        /// Access the data by index.
+        /// Allowes indexed access to the data.
         /// </summary>
-        /// <param name="x">The index to access.</param>
-        /// <returns></returns>
-        public virtual double this[int x]
+        /// <param name="x">The index.</param>
+        /// <returns>The value at the specified index.</returns>
+        public double this[int x]
         {
             get
             {
-                return this.data[x];
+                return BiPolarUtil.Bipolar2double(this.data[x]);
             }
             set
             {
-                this.data[x] = value;
+                this.data[x] = BiPolarUtil.Double2bipolar(value);
             }
         }
 
         /// <summary>
         /// Get the data as an array.
         /// </summary>
-        public virtual double[] Data
+        public double[] Data
         {
             get
             {
-                return this.data;
+                return BiPolarUtil.Bipolar2double(this.data);
             }
             set
             {
-                this.data = value;
+                this.data = BiPolarUtil.Double2bipolar(value);
             }
         }
 
         /// <summary>
-        /// Get the count of data items.
+        /// The size of the array.
         /// </summary>
-        public virtual int Count
+        public int Count
         {
             get
             {
@@ -116,39 +117,43 @@ namespace Encog.Neural.Data.Basic
         }
 
         /// <summary>
-        /// Convert the object to a string.
+        /// Get the specified data item as a boolean.
         /// </summary>
-        /// <returns>The object as a string.</returns>
-        public override string ToString()
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool GetBoolean(int i)
         {
-            StringBuilder result = new StringBuilder();
-            result.Append('[');
-            for (int i = 0; i < this.Count; i++)
-            {
-                if (i > 0)
-                    result.Append(',');
-                result.Append(this.Data[i]);
-            }
-            result.Append(']');
-            return result.ToString();
+            return this.data[i];
         }
 
         /// <summary>
         /// Clone this object.
         /// </summary>
         /// <returns>A clone of this object.</returns>
-        public object Clone()
+        public virtual object Clone()
         {
-            BasicNeuralData result = new BasicNeuralData(this.data);
-            return result;
+            return new BiPolarMlData(this.data);
         }
 
         /// <summary>
-        /// Clear to zero.
+        /// Set the value as a boolean.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="b">The boolean value.</param>
+        public void SetBoolean(int index, bool b)
+        {
+            this.data[index] = b;
+        }
+
+        /// <summary>
+        /// Clear to false.
         /// </summary>
         public void Clear()
         {
-            EngineArray.Fill(this.data, 0);
+            for (int i = 0; i < this.data.Length; i++)
+            {
+                this.data[i] = false;
+            }
         }
     }
 }

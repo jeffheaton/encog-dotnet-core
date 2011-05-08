@@ -91,7 +91,7 @@ namespace Encog.Examples.Boltzmann
             }
         }
 
-        public bool IsValidTour(BiPolarNeuralData data)
+        public bool IsValidTour(BiPolarMlData data)
         {
             int cities, stops;
 
@@ -118,7 +118,7 @@ namespace Encog.Examples.Boltzmann
             return true;
         }
 
-        public double LengthOfTour(BiPolarNeuralData data)
+        public double LengthOfTour(BiPolarMlData data)
         {
             double result;
             int n1, n2, n3;
@@ -141,7 +141,7 @@ namespace Encog.Examples.Boltzmann
             return result;
         }
 
-        String DisplayTour(BiPolarNeuralData data)
+        String DisplayTour(BiPolarMlData data)
         {
             StringBuilder result = new StringBuilder();
 

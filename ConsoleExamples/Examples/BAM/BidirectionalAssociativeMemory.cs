@@ -85,9 +85,9 @@ namespace Encog.Examples.BAM
 
         private IExampleInterface app;
 
-        public BiPolarNeuralData StringToBipolar(String str)
+        public BiPolarMlData StringToBipolar(String str)
         {
-            BiPolarNeuralData result = new BiPolarNeuralData(str.Length * BITS_PER_CHAR);
+            BiPolarMlData result = new BiPolarMlData(str.Length * BITS_PER_CHAR);
             int currentIndex = 0;
             for (int i = 0; i < str.Length; i++)
             {
@@ -106,7 +106,7 @@ namespace Encog.Examples.BAM
             return result;
         }
 
-        public String BipolalToString(BiPolarNeuralData data)
+        public String BipolalToString(BiPolarMlData data)
         {
             StringBuilder result = new StringBuilder();
 
@@ -130,9 +130,9 @@ namespace Encog.Examples.BAM
             return result.ToString();
         }
 
-        public BiPolarNeuralData RandomBiPolar(int size)
+        public BiPolarMlData RandomBiPolar(int size)
         {
-            BiPolarNeuralData result = new BiPolarNeuralData(size);
+            BiPolarMlData result = new BiPolarMlData(size);
             for (int i = 0; i < size; i++)
             {
                 if (ThreadSafeRandom.NextDouble() > 0.5)
@@ -146,9 +146,9 @@ namespace Encog.Examples.BAM
         public String MappingToString(NeuralDataMapping mapping)
         {
             StringBuilder result = new StringBuilder();
-            result.Append(BipolalToString((BiPolarNeuralData)mapping.From));
+            result.Append(BipolalToString((BiPolarMlData)mapping.From));
             result.Append(" -> ");
-            result.Append(BipolalToString((BiPolarNeuralData)mapping.To));
+            result.Append(BipolalToString((BiPolarMlData)mapping.To));
             return result.ToString();
         }
 

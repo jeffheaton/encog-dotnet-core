@@ -98,9 +98,9 @@ namespace Encog.Neural.Networks.Synapse
         /// </summary>
         /// <param name="input">The input from the synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        public override INeuralData Compute(INeuralData input)
+        public override MLData Compute(MLData input)
         {
-            INeuralData result = new BasicNeuralData(this.ToNeuronCount);
+            MLData result = new BasicMLData(this.ToNeuronCount);
             // just sum the input
             double sum = 0;
             for (int i = 0; i < input.Count; i++)

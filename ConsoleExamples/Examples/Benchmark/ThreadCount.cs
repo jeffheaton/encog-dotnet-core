@@ -71,7 +71,7 @@ namespace Encog.Examples.Benchmark
             network.Structure.FinalizeStructure();
             network.Reset();
 
-            INeuralDataSet training = RandomTrainingFactory.Generate(1000,50000,
+            MLDataSet training = RandomTrainingFactory.Generate(1000,50000,
                     INPUT_COUNT, OUTPUT_COUNT, -1, 1);
 
             ResilientPropagation rprop = new ResilientPropagation(network, training);

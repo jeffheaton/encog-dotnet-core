@@ -156,9 +156,9 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// </summary>
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        public INeuralData Compute(INeuralData input)
+        public MLData Compute(MLData input)
         {
-            INeuralData result = new BasicNeuralData(ToNeuronCount);
+            MLData result = new BasicMLData(ToNeuronCount);
 
             if (this.neurons.Count == 0)
             {

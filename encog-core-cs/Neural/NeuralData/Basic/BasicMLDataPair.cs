@@ -43,28 +43,26 @@ namespace Encog.Neural.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicNeuralDataPair : INeuralDataPair
+    public class BasicMLDataPair : MLDataPair
     {
         /// <summary>
         /// The the expected output from the neural network, or null
         /// for unsupervised training.
         /// </summary>
-        private INeuralData ideal;
-
-
+        private MLData ideal;
 
         /// <summary>
         /// The training input to the neural network.
         /// </summary>
-        private INeuralData input;
+        private MLData input;
 
         /// <summary>
-        /// Construct a BasicNeuralDataPair class with the specified input
+        /// Construct a BasicMLDataPair class with the specified input
         /// and ideal values.
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
         /// <param name="ideal">The expected results from the neural network.</param>
-        public BasicNeuralDataPair(INeuralData input, INeuralData ideal)
+        public BasicMLDataPair(MLData input, MLData ideal)
         {
             this.input = input;
             this.ideal = ideal;
@@ -74,7 +72,7 @@ namespace Encog.Neural.Data.Basic
         /// Construct a data pair that only includes input. (unsupervised)
         /// </summary>
         /// <param name="input">The input data.</param>
-        public BasicNeuralDataPair(INeuralData input)
+        public BasicMLDataPair(MLData input)
         {
             this.input = input;
             this.ideal = null;
@@ -83,7 +81,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The input data.
         /// </summary>
-        public virtual INeuralData Input
+        public virtual MLData Input
         {
             get
             {
@@ -94,7 +92,7 @@ namespace Encog.Neural.Data.Basic
         /// <summary>
         /// The ideal data.
         /// </summary>
-        public virtual INeuralData Ideal
+        public virtual MLData Ideal
         {
             get
             {
@@ -139,10 +137,10 @@ namespace Encog.Neural.Data.Basic
             Object result;
 
             if (this.Ideal == null)
-                result = new BasicNeuralDataPair((INeuralData)this.input.Clone());
+                result = new BasicMLDataPair((MLData)this.input.Clone());
             else
-                result = new BasicNeuralDataPair((INeuralData)this.input.Clone(),
-                    (INeuralData)this.ideal.Clone());
+                result = new BasicMLDataPair((MLData)this.input.Clone(),
+                    (MLData)this.ideal.Clone());
 
             return result;
         }
@@ -155,18 +153,18 @@ namespace Encog.Neural.Data.Basic
         /// <param name="inputSize">The size of the input data.</param>
         /// <param name="idealSize">The size of the ideal data.</param>
         /// <returns>A new neural data pair object.</returns>
-        public static INeuralDataPair CreatePair(int inputSize, int idealSize)
+        public static MLDataPair CreatePair(int inputSize, int idealSize)
         {
-            INeuralDataPair result;
+            MLDataPair result;
 
             if (idealSize > 0)
             {
-                result = new BasicNeuralDataPair(new BasicNeuralData(inputSize),
-                        new BasicNeuralData(idealSize));
+                result = new BasicMLDataPair(new BasicMLData(inputSize),
+                        new BasicMLData(idealSize));
             }
             else
             {
-                result = new BasicNeuralDataPair(new BasicNeuralData(inputSize));
+                result = new BasicMLDataPair(new BasicMLData(inputSize));
             }
 
             return result;

@@ -93,7 +93,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// The training set that we are using to train.
         /// </summary>
-        private INeuralDataSet indexableTraining;
+        private MLDataSet indexableTraining;
 
         /// <summary>
         /// The training set length.
@@ -159,7 +159,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <summary>
         /// The training elements.
         /// </summary>
-        private INeuralDataPair pair;
+        private MLDataPair pair;
 
         /// <summary>
         /// Should we use Bayesian regularization.
@@ -172,7 +172,7 @@ namespace Encog.Neural.Networks.Training.LMA
         /// <param name="network">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
         public LevenbergMarquardtTraining(BasicNetwork network,
-                INeuralDataSet training) {
+                MLDataSet training) {
 
             ILayer outputLayer = network.GetLayer(BasicNetwork.TAG_OUTPUT);
 
@@ -203,11 +203,11 @@ namespace Encog.Neural.Networks.Training.LMA
             this.gradient = new double[this.parametersLength];
             this.diagonal = new double[this.parametersLength];
 
-            BasicNeuralData input = new BasicNeuralData(
+            BasicMLData input = new BasicMLData(
                     this.indexableTraining.InputSize);
-            BasicNeuralData ideal = new BasicNeuralData(
+            BasicMLData ideal = new BasicMLData(
                     this.indexableTraining.IdealSize);
-            this.pair = new BasicNeuralDataPair(input, ideal);
+            this.pair = new BasicMLDataPair(input, ideal);
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Encog.Neural.Networks.Training.LMA
                 for (int i = 0; i < this.trainingLength; i++)
                 {
                     this.indexableTraining.GetRecord(i, this.pair);
-                    INeuralData actual = this.network.Compute(this.pair
+                    MLData actual = this.network.Compute(this.pair
                             .Input);
                     double e = this.pair.Ideal[0]
                             - actual[0];

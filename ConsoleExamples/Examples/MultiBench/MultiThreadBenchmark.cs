@@ -74,14 +74,14 @@ namespace Encog.Examples.MultiBench
             return network;
         }
 
-        public INeuralDataSet generateTraining()
+        public MLDataSet generateTraining()
         {
-            INeuralDataSet training = RandomTrainingFactory.Generate(1000,50000,
+            MLDataSet training = RandomTrainingFactory.Generate(1000,50000,
                     INPUT_COUNT, OUTPUT_COUNT, -1, 1);
             return training;
         }
 
-        public double evaluateRPROP(BasicNetwork network, INeuralDataSet data)
+        public double evaluateRPROP(BasicNetwork network, MLDataSet data)
         {
 
             ResilientPropagation train = new ResilientPropagation(network, data);
@@ -100,7 +100,7 @@ namespace Encog.Examples.MultiBench
             return diff;
         }
 
-        public double evaluateMPROP(BasicNetwork network, INeuralDataSet data)
+        public double evaluateMPROP(BasicNetwork network, MLDataSet data)
         {
 
             ResilientPropagation train = new ResilientPropagation(network, data);
@@ -123,7 +123,7 @@ namespace Encog.Examples.MultiBench
             this.app = app;
             Logging.StopConsoleLogging();
             BasicNetwork network = generateNetwork();
-            INeuralDataSet data = generateTraining();
+            MLDataSet data = generateTraining();
 
             double rprop = evaluateRPROP(network, data);
             double mprop = evaluateMPROP(network, data);

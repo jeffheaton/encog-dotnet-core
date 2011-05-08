@@ -191,7 +191,7 @@ namespace Encog.Neural.Networks.Training.CPN
         /// </summary>
         /// <param name="data">The data to use to determine the winning neuron.</param>
         /// <returns>The winning neuron index, or -1 if no winner.</returns>
-        public int Winner(INeuralData data)
+        public int Winner(MLData data)
         {
             int winner = -1;
 

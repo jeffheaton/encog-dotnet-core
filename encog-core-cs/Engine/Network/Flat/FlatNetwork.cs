@@ -237,12 +237,12 @@ namespace Encog.Engine.Network.Flat
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(INeuralDataSet data)
+        public double CalculateError(MLDataSet data)
         {
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
             double[] actual = new double[this.outputCount];
-            INeuralDataPair pair = BasicNeuralDataPair.CreatePair(data.InputSize,
+            MLDataPair pair = BasicMLDataPair.CreatePair(data.InputSize,
                     data.IdealSize);
 
             for (int i = 0; i < data.Count; i++)

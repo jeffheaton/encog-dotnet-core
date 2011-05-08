@@ -39,7 +39,7 @@ namespace Encog.Neural.Data.Folded
     /// <summary>
     /// The enumerator for a folded dataset.
     /// </summary>
-    public class FoldedEnumerator : IEnumerator<INeuralDataPair>
+    public class FoldedEnumerator : IEnumerator<MLDataPair>
     {
         /// <summary>
         /// The current index.
@@ -49,7 +49,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The current data item.
         /// </summary>
-        private INeuralDataPair currentPair;
+        private MLDataPair currentPair;
 
         /// <summary>
         /// The owner.
@@ -69,7 +69,7 @@ namespace Encog.Neural.Data.Folded
         /// <summary>
         /// The current object.
         /// </summary>
-        public INeuralDataPair Current
+        public MLDataPair Current
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Encog.Neural.Data.Folded
         {
             if (HasNext())
             {
-                INeuralDataPair pair = BasicNeuralDataPair.CreatePair(
+                MLDataPair pair = BasicMLDataPair.CreatePair(
                         this.owner.InputSize, this.owner.IdealSize);
                 this.owner.GetRecord(this.currentIndex++, pair);
                 this.currentPair = pair;

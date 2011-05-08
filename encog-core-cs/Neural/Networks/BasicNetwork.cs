@@ -187,14 +187,14 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(INeuralDataSet data)
+        public double CalculateError(MLDataSet data)
         {
             ClearContext();
             ErrorCalculation errorCalculation = new ErrorCalculation();
 
-            foreach (INeuralDataPair pair in data)
+            foreach (MLDataPair pair in data)
             {
-                INeuralData actual = Compute(pair.Input);
+                MLData actual = Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
             }
             return errorCalculation.Calculate();
@@ -231,7 +231,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
         /// <returns>The output from the neural network.</returns>
-        public virtual INeuralData Compute(INeuralData input)
+        public virtual MLData Compute(MLData input)
         {
             return Compute(input, null);
         }
@@ -247,7 +247,7 @@ namespace Encog.Neural.Networks
         /// <param name="useHolder">Allows a holder to be specified, this allows
         /// propagation training to check the output of each layer.</param>
         /// <returns>The results from the output neurons.</returns>
-        public virtual INeuralData Compute(INeuralData input,
+        public virtual MLData Compute(MLData input,
                  NeuralOutputHolder useHolder)
         {
             try
@@ -338,7 +338,7 @@ namespace Encog.Neural.Networks
         /// from any recurrent layers.</param>
         /// <param name="source">The source synapse.</param>
         private void HandleRecurrentInput(ILayer layer,
-                 INeuralData input, ISynapse source)
+                 MLData input, ISynapse source)
         {
             foreach (ISynapse synapse
                     in this.structure.GetPreviousSynapses(layer))
@@ -351,12 +351,12 @@ namespace Encog.Neural.Networks
                         BasicNetwork.logger.Debug("Recurrent layer from: " + input);
                     }
 #endif
-                    INeuralData recurrentInput = synapse.FromLayer
+                    MLData recurrentInput = synapse.FromLayer
                            .Recur();
 
                     if (recurrentInput != null)
                     {
-                        INeuralData recurrentOutput = synapse
+                        MLData recurrentOutput = synapse
                                .Compute(recurrentInput);
 
                         for (int i = 0; i < input.Count; i++)
@@ -443,10 +443,10 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="input">The input patter to present to the neural network.</param>
         /// <returns>The winning neuron.</returns>
-        public int Winner(INeuralData input)
+        public int Winner(MLData input)
         {
 
-            INeuralData output = Compute(input);
+            MLData output = Compute(input);
             return DetermineWinner(output);
         }
 
@@ -455,7 +455,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         /// <param name="output">The output from the neural network.</param>
         /// <returns>The winning neuron.</returns>
-        public static int DetermineWinner(INeuralData output)
+        public static int DetermineWinner(MLData output)
         {
 
             int win = 0;
@@ -725,8 +725,8 @@ namespace Encog.Neural.Networks
         /// <inheritdoc/>
         public void Compute(double[] input, double[] output)
         {
-            BasicNeuralData input2 = new BasicNeuralData(input);
-            INeuralData output2 = this.Compute(input2);
+            BasicMLData input2 = new BasicMLData(input);
+            MLData output2 = this.Compute(input2);
             EngineArray.ArrayCopy(output2.Data, output);
         }
 

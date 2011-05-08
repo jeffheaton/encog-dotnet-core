@@ -8,7 +8,7 @@ namespace Encog.Neural.Data.Buffer.CODEC
     /// <summary>
     /// A CODEC is used to encode and decode data. The DataSetCODEC is designed to
     /// move data to/from the Encog binary training file format, used by
-    /// BufferedNeuralDataSet. CODECs are provided for such items as CSV files,
+    /// BufferedMlDataSet. CODECs are provided for such items as CSV files,
     /// arrays and many other sources.
     /// </summary>
     public interface IDataSetCODEC

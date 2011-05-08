@@ -81,7 +81,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         /// <param name="network">The network.</param>
         /// <param name="training">The training set.</param>
-        public Propagation(BasicNetwork network, INeuralDataSet training)
+        public Propagation(BasicNetwork network, MLDataSet training)
             : base()
         {
             this.network = network;
