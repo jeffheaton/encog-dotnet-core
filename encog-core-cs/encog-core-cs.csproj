@@ -63,69 +63,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Quant\Balance\BalanceCSV.cs" />
-    <Compile Include="App\Quant\Basic\BasicFile.cs" />
-    <Compile Include="App\Quant\Basic\BasicCachedFile.cs" />
-    <Compile Include="App\Quant\Basic\BaseCachedColumn.cs" />
-    <Compile Include="App\Quant\Classify\ClassifyCSV.cs" />
-    <Compile Include="App\Quant\Classify\ClassifyMethod.cs" />
-    <Compile Include="App\Quant\Classify\ClassifyStats.cs" />
-    <Compile Include="App\Quant\Classify\ClassItem.cs" />
-    <Compile Include="App\Quant\Filter\FilterCSV.cs" />
-    <Compile Include="App\Quant\Indicators\Indicator.cs" />
-    <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
-    <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />
-    <Compile Include="App\Quant\Indicators\Predictive\BestReturn.cs" />
-    <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
-    <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
-    <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
-    <Compile Include="App\Quant\Normalize\NormalizeCSV.cs" />
-    <Compile Include="App\Quant\Normalize\NormalizationDesired.cs" />
-    <Compile Include="App\Quant\Normalize\NormalizationStats.cs" />
-    <Compile Include="App\Quant\Normalize\NormalizeArray.cs" />
-    <Compile Include="App\Quant\Normalize\NormalizedFieldStats.cs" />
-    <Compile Include="App\Quant\QuantError.cs" />
-    <Compile Include="App\Quant\Segregate\SegregateCSV.cs" />
-    <Compile Include="App\Quant\Filter\ExcludedField.cs" />
-    <Compile Include="App\Quant\Segregate\SegregateTargetPercent.cs" />
-    <Compile Include="App\Quant\Shuffle\ShuffleCSV.cs" />
-    <Compile Include="App\Quant\Temporal\TemporalType.cs" />
-    <Compile Include="App\Script\Commands\CmdDatasetEvaluate.cs" />
-    <Compile Include="App\Script\Commands\CmdFileAdd.cs" />
-    <Compile Include="App\Script\Commands\CmdFileFind.cs" />
-    <Compile Include="App\Script\Commands\CmdFileLoad.cs" />
-    <Compile Include="App\Script\Commands\CmdFileRemove.cs" />
-    <Compile Include="App\Script\Commands\CmdFileSave.cs" />
-    <Compile Include="App\Script\Commands\CmdFinalize.cs" />
-    <Compile Include="App\Script\Commands\CmdNetworkLayer.cs" />
-    <Compile Include="App\Script\Commands\CmdNinjaConvert.cs" />
-    <Compile Include="App\Script\Commands\CmdTrain.cs" />
-    <Compile Include="App\Script\Commands\CmdDatasetAdd.cs" />
-    <Compile Include="App\Script\Commands\CmdDatasetCreate.cs" />
-    <Compile Include="App\Script\Commands\CmdDatasetDump.cs" />
-    <Compile Include="App\Script\Commands\CmdNetworkCreate.cs" />
-    <Compile Include="App\Script\Commands\CmdSet.cs" />
-    <Compile Include="App\Script\Commands\CmdWriteLine.cs" />
-    <Compile Include="App\Script\EncogQuantScript.cs" />
-    <Compile Include="App\Script\IQuantCommand.cs" />
-    <Compile Include="App\Script\IScriptedObject.cs" />
-    <Compile Include="App\Script\Objects\ScriptEGFile.cs" />
-    <Compile Include="App\Script\Objects\ScriptVariable.cs" />
-    <Compile Include="App\Script\Objects\ScriptDataSet.cs" />
-    <Compile Include="App\Script\Objects\ScriptLayer.cs" />
-    <Compile Include="App\Script\Objects\ScriptNetwork.cs" />
-    <Compile Include="App\Script\ParseLine.cs" />
-    <Compile Include="App\Script\ScriptError.cs" />
-    <Compile Include="App\Quant\Basic\LoadedRow.cs" />
-    <Compile Include="App\Quant\Sort\RowComparitor.cs" />
-    <Compile Include="App\Quant\Sort\SortCSV.cs" />
-    <Compile Include="App\Quant\Sort\SortedField.cs" />
-    <Compile Include="App\Quant\Sort\SortType.cs" />
-    <Compile Include="App\Quant\Temporal\TemporalWindowCSV.cs" />
-    <Compile Include="App\Quant\Temporal\TemporalWindowField.cs" />
-    <Compile Include="App\Quant\Basic\FileData.cs" />
-    <Compile Include="App\Quant\Util\BarBuffer.cs" />
-    <Compile Include="App\Script\Util\ScriptedObjects.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />
@@ -266,12 +203,8 @@
     <Compile Include="Neural\NeuralData\INeuralData.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataPair.cs" />
     <Compile Include="Neural\NeuralData\INeuralDataSet.cs" />
-    <Compile Include="Persist\Persistors\NormalizationStatsPersistor.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
-    <Compile Include="App\Quant\Loader\IMarketLoader.cs" />
-    <Compile Include="App\Quant\Loader\LoaderError.cs" />
-    <Compile Include="App\Quant\Loader\YahooFinance\YahooDownload.cs" />
     <Compile Include="Neural\NeuralData\NeuralDataError.cs" />
     <Compile Include="Neural\NeuralData\SQL\SQLNeuralDataSet.cs" />
     <Compile Include="Neural\NeuralData\Temporal\TemporalDataDescription.cs" />
@@ -560,20 +493,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App\Quant\Normalize\.svn\all-wcprops" />
-    <None Include="App\Quant\Normalize\.svn\entries" />
-    <None Include="App\Quant\Normalize\.svn\text-base\EncogNormalize.cs.svn-base" />
-    <None Include="App\Quant\Normalize\.svn\text-base\NormalizationDesired.cs.svn-base" />
-    <None Include="App\Quant\Normalize\.svn\text-base\NormalizedFieldStats.cs.svn-base" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App\Quant\Normalize\.svn\prop-base\" />
-    <Folder Include="App\Quant\Normalize\.svn\props\" />
-    <Folder Include="App\Quant\Normalize\.svn\tmp\prop-base\" />
-    <Folder Include="App\Quant\Normalize\.svn\tmp\props\" />
-    <Folder Include="App\Quant\Normalize\.svn\tmp\text-base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
