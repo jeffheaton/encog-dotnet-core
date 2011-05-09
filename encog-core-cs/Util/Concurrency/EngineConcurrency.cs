@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -27,17 +27,13 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-
-#if logging
 using log4net;
+#if logging
+
 #endif
 
-namespace Encog.Engine.Concurrency.Job
+namespace Encog.Util.Concurrency
 {
     /// <summary>
     /// This class abstracts thread pools, and potentially grids and other types of

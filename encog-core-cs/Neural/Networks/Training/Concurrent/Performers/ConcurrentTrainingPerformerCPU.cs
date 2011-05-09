@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Training.Concurrent.Jobs;
-using Encog.Engine.Concurrency.Job;
 using System.Diagnostics;
 using Encog.Engine.Network.Train.Prop;
+using Encog.Util.Concurrency;
 using Encog.Util.Time;
 
 namespace Encog.Neural.Networks.Training.Concurrent.Performers

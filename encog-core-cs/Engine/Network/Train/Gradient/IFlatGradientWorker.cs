@@ -22,17 +22,16 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.Util.Concurrency;
+
 namespace Encog.Engine.Network.Train.Gradient
 {
-
-    using Encog.Engine.Concurrency;
     using Encog.Engine.Network.Flat;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Encog.Engine.Concurrency.Job;
 
     /// <summary>
     /// An interface used to define gradient workers for flat networks.

@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -28,11 +28,9 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Encog.Engine;
 
-namespace Encog.Engine.Concurrency.Job
+namespace Encog.Util.Concurrency.Job
 {
     /// <summary>
     /// A concurrent JOB, works well for multicore machines.  Provides

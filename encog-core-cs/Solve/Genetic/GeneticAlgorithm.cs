@@ -38,7 +38,7 @@ using Encog.Solve.Genetic.Population;
 using Encog.MathUtil;
 using Encog.Neural.Networks;
 using Encog.Solve.Genetic.Species;
-using Encog.Engine.Concurrency.Job;
+using Encog.Util.Concurrency;
 
 namespace Encog.Solve.Genetic
 {

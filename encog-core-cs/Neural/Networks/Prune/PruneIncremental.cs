@@ -29,6 +29,7 @@
 
 #if logging
 using Encog.ML.Data;
+using Encog.Util.Concurrency.Job;
 using log4net;
 #endif
 
@@ -39,7 +40,6 @@ using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Engine.Concurrency.Job;
 using Encog.Engine;
 
 namespace Encog.Neural.Networks.Prune

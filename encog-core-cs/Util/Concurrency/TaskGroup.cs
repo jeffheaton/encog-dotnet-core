@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -27,13 +27,9 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
-namespace Encog.Engine.Concurrency.Job
+namespace Encog.Util.Concurrency
 {
     /// <summary>
     /// A task group is a group of tasks that you would like to execute at once.  

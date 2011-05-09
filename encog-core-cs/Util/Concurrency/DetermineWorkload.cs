@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Encog(tm) Core v2.5 - Java Version
  * http://www.heatonresearch.com/encog/
  * http://code.google.com/p/encog-java/
@@ -22,16 +22,12 @@
  * http://www.heatonresearch.com/copyright
  */
 
-namespace Encog.Engine.Concurrency
+using System;
+using System.Collections.Generic;
+using Encog.Engine.Util;
+
+namespace Encog.Util.Concurrency
 {
-
-    using Encog.Engine.Util;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// Used by several Encog training methods to break up a workload. Can also be
     /// used to determine the number of threads to use. If zero threads are

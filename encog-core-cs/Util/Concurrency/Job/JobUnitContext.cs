@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -28,62 +28,72 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Encog.Engine.Concurrency.Job
+namespace Encog.Util.Concurrency.Job
 {
     /// <summary>
-    /// An item in the thread pool.
+    /// Holds basic configuration information for an Encog job.
     /// </summary>
-    public class PoolItem
+    public class JobUnitContext
     {
         /// <summary>
-        /// The task that was executed.
+        /// The job unit that this job will execute.
         /// </summary>
-        private IEngineTask task;
+        private Object jobUnit;
 
         /// <summary>
-        /// The concurrency object that started this.
+        /// The owner of this job.
         /// </summary>
-        private EngineConcurrency owner;
+        private ConcurrentJob owner;
 
         /// <summary>
-        /// The task group that this item is a part of.
+        /// The task number.
         /// </summary>
-        private TaskGroup group;
+        private int taskNumber;
 
         /// <summary>
-        /// Construct a pool item.
+        /// The JobUnit that this context will execute.
         /// </summary>
-        /// <param name="owner">The owner of this task.</param>
-        /// <param name="task">The task to execute.</param>
-        /// <param name="group">The group that this task belongs to.</param>
-        public PoolItem(EngineConcurrency owner, IEngineTask task,  TaskGroup group)
+        public Object JobUnit
         {
-            this.owner = owner;
-            this.task = task;
-            this.group = group;
+            get
+            {
+                return jobUnit;
+            }
+            set
+            {
+                this.jobUnit = value;
+            }
         }
 
         /// <summary>
-        /// The thread callback.  This actually executes the task.
+        /// The owner of this job.
         /// </summary>
-        /// <param name="threadContext">The thread context, not used.</param>
-        public void ThreadPoolCallback(Object threadContext)
+        public ConcurrentJob Owner
         {
-            try
+            get
             {
-                this.task.Run();
-                owner.TaskFinished(this);
+                return owner;
             }
-            finally
+            set
             {
-                if (this.group != null)
-                {
-                    this.group.TaskStopping();
-                }
+                this.owner = value;
+            }
+        }
+
+
+        /// <summary>
+        /// The task number.
+        /// </summary>
+        public int TaskNumber
+        {
+            get
+            {
+                return taskNumber;
+            }
+            set
+            {
+                this.taskNumber = value;
             }
         }
     }

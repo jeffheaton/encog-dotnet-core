@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Engine.Concurrency.Job;
+using Encog.Util.Concurrency;
 
 namespace Encog.Neural.Networks.Training.Concurrent.Performers
 {

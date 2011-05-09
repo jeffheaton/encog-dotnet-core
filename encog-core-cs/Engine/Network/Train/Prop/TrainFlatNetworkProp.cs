@@ -22,18 +22,17 @@
  * http://www.heatonresearch.com/copyright
  */
 using Encog.ML.Data;
+using Encog.Util.Concurrency;
 
 namespace Encog.Engine.Network.Train.Prop
 {
 
     using Encog.Engine;
-    using Encog.Engine.Concurrency;
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train;
     using Encog.Engine.Network.Train.Gradient;
     using Encog.Engine.Util;
     using System;
-    using Encog.Engine.Concurrency.Job;   
 
     /// <summary>
     /// Train a flat network using multithreading, and GPU support.

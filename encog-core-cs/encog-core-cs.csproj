@@ -95,14 +95,6 @@
     </Compile>
     <Compile Include="EncogFramework.cs" />
     <Compile Include="EncogError.cs" />
-    <Compile Include="Engine\Concurrency\DetermineWorkload.cs" />
-    <Compile Include="Engine\Concurrency\EngineConcurrency.cs" />
-    <Compile Include="Engine\Concurrency\IEngineTask.cs" />
-    <Compile Include="Engine\Concurrency\Job\ConcurrentJob.cs" />
-    <Compile Include="Engine\Concurrency\Job\JobUnitContext.cs" />
-    <Compile Include="Engine\Concurrency\Job\JobUnitWorker.cs" />
-    <Compile Include="Engine\Concurrency\PoolItem.cs" />
-    <Compile Include="Engine\Concurrency\TaskGroup.cs" />
     <Compile Include="Engine\EncogEngine.cs" />
     <Compile Include="Engine\EncogEngineError.cs" />
     <Compile Include="Engine\IEngineMachineLearning.cs" />
@@ -196,6 +188,14 @@
     <Compile Include="ML\Data\Specific\BiPolarMlData.cs" />
     <Compile Include="ML\Data\Specific\CsvMlDataSet.cs" />
     <Compile Include="ML\Data\Specific\SqlMlDataSet.cs" />
+    <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
+    <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
+    <Compile Include="Util\Concurrency\IEngineTask.cs" />
+    <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />
+    <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
+    <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
+    <Compile Include="Util\Concurrency\PoolItem.cs" />
+    <Compile Include="Util\Concurrency\TaskGroup.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
