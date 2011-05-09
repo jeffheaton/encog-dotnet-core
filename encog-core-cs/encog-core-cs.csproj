@@ -198,12 +198,6 @@
     <Compile Include="ML\Data\Specific\SqlMlDataSet.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
-    <Compile Include="Neural\NeuralData\Temporal\TemporalDataDescription.cs" />
-    <Compile Include="Neural\NeuralData\Temporal\TemporalError.cs" />
-    <Compile Include="Neural\NeuralData\Temporal\TemporalMlDataSet.cs" />
-    <Compile Include="Neural\NeuralData\Temporal\TemporalPoint.cs" />
-    <Compile Include="Neural\NeuralData\TextData.cs" />
-    <Compile Include="Neural\NeuralData\PropertyData.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\IContextClearable.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
@@ -484,9 +478,7 @@
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Neural\NeuralData\Bipolar\" />
-    <Folder Include="Neural\NeuralData\CSV\" />
-    <Folder Include="Neural\NeuralData\SQL\" />
+    <Folder Include="Neural\NeuralData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
