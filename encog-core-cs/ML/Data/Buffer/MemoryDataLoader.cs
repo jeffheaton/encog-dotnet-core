@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
+﻿using Encog.Engine;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Data.Buffer.CODEC;
-using Encog.Engine;
-using Encog.Neural.NeuralData;
+using Encog.ML.Data.Buffer.CODEC;
 
-namespace Encog.Neural.Data.Buffer
+namespace Encog.ML.Data.Buffer
 {
     /// <summary>
     /// This class is used, together with a CODEC, load training data from some 

@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -29,18 +29,12 @@
 
 #if !SILVERLIGHT
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data.Basic;
-using Encog.Neural.Data;
 using System.Data.Common;
-using System.Data.OleDb;
-using Encog.Neural.Data.Buffer.CODEC;
-using Encog.Neural.Data.Buffer;
-using Encog.Neural.NeuralData.Buffer.CODEC;
+using Encog.ML.Data.Basic;
+using Encog.ML.Data.Buffer;
+using Encog.ML.Data.Buffer.CODEC;
 
-namespace Encog.Neural.NeuralData.SQL
+namespace Encog.ML.Data.Specific
 {
     /// <summary>
     /// A dataset based on a SQL query. This is not a memory based dataset, so it can

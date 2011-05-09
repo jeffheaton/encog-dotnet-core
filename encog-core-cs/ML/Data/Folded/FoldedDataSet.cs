@@ -29,13 +29,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
 
-namespace Encog.Neural.Data.Folded
+namespace Encog.ML.Data.Folded
 {
     /// <summary>
     /// A folded data set allows you to "fold" the data into several equal(or nearly

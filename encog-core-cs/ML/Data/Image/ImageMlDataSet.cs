@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -30,16 +30,11 @@
 #if !SILVERLIGHT
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
-using System.Reflection;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Data;
+using Encog.Neural;
 using Encog.Util.DownSample;
 
-namespace Encog.Neural.NeuralData.Image
+namespace Encog.ML.Data.Image
 {
     /// <summary>
     /// Store a collection of images for training with a neural network. This class

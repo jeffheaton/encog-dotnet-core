@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Neural.Data.Buffer.CODEC;
-using Encog.Neural.Data.Buffer;
+using Encog.ML.Data.Buffer;
+using Encog.ML.Data.Buffer.CODEC;
 using encog_test.Neural.Networks;
 using NUnit.Framework;
 using Encog.Util.CSV;

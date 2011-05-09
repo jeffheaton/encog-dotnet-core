@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Util.CSV;
 using System.IO;
-using Encog.Util;
+using System.Text;
 using Encog.Engine.Util;
+using Encog.Util.CSV;
 
-namespace Encog.Neural.Data.Buffer.CODEC
+namespace Encog.ML.Data.Buffer.CODEC
 {
     /// <summary>
     /// A CODEC used to read/write data from/to a CSV data file. There are two

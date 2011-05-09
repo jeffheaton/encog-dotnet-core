@@ -28,10 +28,10 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
+using Encog.ML.Data.Specific;
 using NUnit.Framework;
 using System.IO;
 using System.Text;
-using Encog.Neural.NeuralData.CSV;
 using encog_test.Neural.Networks;
 
 namespace encog_test.Data.CSV

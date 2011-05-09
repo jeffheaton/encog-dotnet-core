@@ -174,30 +174,30 @@
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedDataError.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedMlDataSet.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedNeuralDataSetEnumerator.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\ArrayDataCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\CSVDataCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\IDataSetCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\NeuralDataSetCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\SQLCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\EncogEGBFile.cs" />
+    <Compile Include="ML\Data\Buffer\MemoryDataLoader.cs" />
+    <Compile Include="ML\Data\Folded\FoldedDataSet.cs" />
+    <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
+    <Compile Include="ML\Data\Image\ImageMlData.cs" />
+    <Compile Include="ML\Data\Image\ImageMlDataSet.cs" />
     <Compile Include="ML\Data\MLData.cs" />
+    <Compile Include="ML\Data\MLDataError.cs" />
     <Compile Include="ML\Data\MLDataPair.cs" />
     <Compile Include="ML\Data\MLDataSet.cs" />
-    <Compile Include="Neural\NeuralData\Bipolar\BiPolarMlData.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\BinaryDataLoader.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\BufferedDataError.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\BufferedMlDataSet.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\BufferedNeuralDataSetEnumerator.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\CODEC\ArrayDataCODEC.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\CODEC\CSVDataCODEC.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\CODEC\IDataSetCODEC.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\CODEC\NeuralDataSetCODEC.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\CODEC\SQLCODEC.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\EncogEGBFile.cs" />
-    <Compile Include="Neural\NeuralData\Buffer\MemoryDataLoader.cs" />
-    <Compile Include="Neural\NeuralData\CSV\CsvMlDataSet.cs" />
-    <Compile Include="Neural\NeuralData\Folded\FoldedDataSet.cs" />
-    <Compile Include="Neural\NeuralData\Folded\FoldedEnumerator.cs" />
-    <Compile Include="Neural\NeuralData\Image\ImageMlData.cs" />
-    <Compile Include="Neural\NeuralData\Image\ImageMlDataSet.cs" />
+    <Compile Include="ML\Data\Specific\BiPolarMlData.cs" />
+    <Compile Include="ML\Data\Specific\CsvMlDataSet.cs" />
+    <Compile Include="ML\Data\Specific\SqlMlDataSet.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
-    <Compile Include="Neural\NeuralData\NeuralDataError.cs" />
-    <Compile Include="Neural\NeuralData\SQL\SqlMlDataSet.cs" />
     <Compile Include="Neural\NeuralData\Temporal\TemporalDataDescription.cs" />
     <Compile Include="Neural\NeuralData\Temporal\TemporalError.cs" />
     <Compile Include="Neural\NeuralData\Temporal\TemporalMlDataSet.cs" />
@@ -483,7 +483,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Neural\NeuralData\Bipolar\" />
+    <Folder Include="Neural\NeuralData\CSV\" />
+    <Folder Include="Neural\NeuralData\SQL\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

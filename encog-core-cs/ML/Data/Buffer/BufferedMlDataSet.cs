@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -29,15 +29,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.NeuralData;
-using System.IO;
 using Encog.Persist;
 
-namespace Encog.Neural.Data.Buffer
+namespace Encog.ML.Data.Buffer
 {
     /// <summary>
     /// This class is not memory based, so very long files can be used, without
@@ -127,7 +125,7 @@ namespace Encog.Neural.Data.Buffer
         {
             if (this.loading)
             {
-                throw new NeuralDataError(
+                throw new MLDataError(
                         "Can't create enumerator while loading, call EndLoad first.");
             }
             BufferedNeuralDataSetEnumerator result = new BufferedNeuralDataSetEnumerator(this);
@@ -199,7 +197,7 @@ namespace Encog.Neural.Data.Buffer
         {
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
+                throw new MLDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             egb.Write(data1.Data);
@@ -216,7 +214,7 @@ namespace Encog.Neural.Data.Buffer
 
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
+                throw new MLDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             this.egb.Write(inputData.Data);
@@ -231,7 +229,7 @@ namespace Encog.Neural.Data.Buffer
         {
             if (!this.loading)
             {
-                throw new NeuralDataError(BufferedMlDataSet.ERROR_ADD);
+                throw new MLDataError(BufferedMlDataSet.ERROR_ADD);
             }
 
             this.egb.Write(pair.Input.Data);

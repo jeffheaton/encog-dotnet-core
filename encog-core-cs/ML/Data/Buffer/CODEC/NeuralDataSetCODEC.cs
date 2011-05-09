@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
-using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
-using Encog.Util;
+﻿using System.Collections.Generic;
 using Encog.Engine.Util;
+using Encog.ML.Data.Basic;
 
-namespace Encog.Neural.Data.Buffer.CODEC
+namespace Encog.ML.Data.Buffer.CODEC
 {
     /// <summary>
     /// A CODEC that works with the NeuralDataSet class.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Neural.Data.Buffer.CODEC
+﻿namespace Encog.ML.Data.Buffer.CODEC
 {
     /// <summary>
     /// A CODEC is used to encode and decode data. The DataSetCODEC is designed to

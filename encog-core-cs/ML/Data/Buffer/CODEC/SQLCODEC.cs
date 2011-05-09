@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Neural.Data.Buffer.CODEC;
 using System.Data.Common;
 using System.Data.OleDb;
 
-namespace Encog.Neural.NeuralData.Buffer.CODEC
+namespace Encog.ML.Data.Buffer.CODEC
 {
     public class SQLCODEC : IDataSetCODEC
     {

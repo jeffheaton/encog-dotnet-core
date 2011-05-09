@@ -32,14 +32,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.ML.Data;
+using Encog.ML.Data.Buffer;
+using Encog.ML.Data.Buffer.CODEC;
+using Encog.ML.Data.Specific;
 using Encog.Neural.NeuralData;
 using Encog.Neural.Data;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using System.IO;
-using Encog.Neural.NeuralData.CSV;
-using Encog.Neural.Data.Buffer;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Engine.Network.Activation;
@@ -47,7 +48,6 @@ using Encog.Engine.Util;
 
 #if !SILVERLIGHT
 using System.Windows.Forms;
-using Encog.Neural.Data.Buffer.CODEC;
 using Encog.Util.CSV;
 #endif
 

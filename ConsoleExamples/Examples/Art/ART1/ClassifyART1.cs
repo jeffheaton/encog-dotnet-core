@@ -32,10 +32,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
+using Encog.ML.Data.Specific;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Logic;
-using Encog.Neural.NeuralData.Bipolar;
 
 namespace Encog.Examples.Art.ART1
 {

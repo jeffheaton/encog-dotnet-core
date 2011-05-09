@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.ML.Data.Basic;
+using Encog.ML.Data.Buffer;
 using NUnit.Framework;
 using System.IO;
-using Encog.Neural.Data.Buffer;
 using encog_test.Neural.Networks;
 
 namespace encog_test.Encog.Data.Buffer

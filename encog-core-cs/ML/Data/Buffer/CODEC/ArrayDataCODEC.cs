@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Util;
-using Encog.Engine.Util;
+﻿using Encog.Engine.Util;
 
-namespace Encog.Neural.Data.Buffer.CODEC
+namespace Encog.ML.Data.Buffer.CODEC
 {
     /// <summary>
     /// A CODEC used for arrays.

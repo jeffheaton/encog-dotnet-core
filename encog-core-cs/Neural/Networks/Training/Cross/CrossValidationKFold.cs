@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Engine.Network.Flat;
-using Encog.Neural.Data.Folded;
+using Encog.ML.Data.Folded;
 
 namespace Encog.Neural.Networks.Training.Cross
 {

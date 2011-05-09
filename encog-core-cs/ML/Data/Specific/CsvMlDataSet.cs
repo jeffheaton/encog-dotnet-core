@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -28,17 +28,12 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.MathUtil;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Data;
+using Encog.ML.Data.Buffer;
+using Encog.ML.Data.Buffer.CODEC;
 using Encog.Util.CSV;
-using Encog.Neural.Data.Buffer.CODEC;
-using Encog.Neural.Data.Buffer;
 
-namespace Encog.Neural.NeuralData.CSV
+namespace Encog.ML.Data.Specific
 {
     /// <summary>
     /// An implementation of the NeuralDataSet interface designed to provide a CSV

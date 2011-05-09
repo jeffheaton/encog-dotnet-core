@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
-using Encog.Neural.NeuralData.Bipolar;
+using Encog.ML.Data.Specific;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Pattern;

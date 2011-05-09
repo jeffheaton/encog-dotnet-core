@@ -27,12 +27,9 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Encog.Neural.Data.Buffer
+namespace Encog.ML.Data.Buffer
 {
     /// <summary>
     /// Reads in little endian form.

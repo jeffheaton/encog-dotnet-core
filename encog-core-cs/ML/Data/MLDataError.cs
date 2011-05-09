@@ -28,22 +28,19 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Encog.Neural.Data.Buffer
+namespace Encog.ML.Data
 {
     /// <summary>
-    /// Errors thrown by the buffered data objects.
+    /// The base Encog neural data error.
     /// </summary>
-    public class BufferedDataError : EncogError
+    public class MLDataError: EncogError
     {
         /// <summary>
         /// Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
-        public BufferedDataError(String str)
+        public MLDataError(String str)
             : base(str)
         {
         }
@@ -52,7 +49,7 @@ namespace Encog.Neural.Data.Buffer
         /// Pass on an exception.
         /// </summary>
         /// <param name="e">The other exception.</param>
-        public BufferedDataError(Exception e)
+        public MLDataError(Exception e)
             : base(e)
         {
         }

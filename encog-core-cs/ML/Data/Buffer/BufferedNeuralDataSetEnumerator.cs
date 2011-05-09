@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
+using System.IO;
 using Encog.ML.Data.Basic;
 using Encog.Neural.NeuralData;
-using System.IO;
 
-namespace Encog.Neural.Data.Buffer
+namespace Encog.ML.Data.Buffer
 {
     /// <summary>
     /// An enumerator to move through the buffered data set.
@@ -73,7 +70,7 @@ namespace Encog.Neural.Data.Buffer
             {
                 if (this.currentRecord == null)
                 {
-                    throw new NeuralDataError("Can't read current record until MoveNext is called once.");
+                    throw new MLDataError("Can't read current record until MoveNext is called once.");
                 }
                 return this.currentRecord;
             }

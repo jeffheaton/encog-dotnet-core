@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Encog.ML.Data.Basic;
 // Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
@@ -30,12 +30,7 @@ using System.Linq;
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System.Text;
-using Encog.ML.Data;
-using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
-
-namespace Encog.Neural.Data.Folded
+namespace Encog.ML.Data.Folded
 {
     /// <summary>
     /// The enumerator for a folded dataset.

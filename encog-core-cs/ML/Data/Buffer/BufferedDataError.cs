@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -28,22 +28,19 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Encog.Neural.NeuralData
+namespace Encog.ML.Data.Buffer
 {
     /// <summary>
-    /// The base Encog neural data error.
+    /// Errors thrown by the buffered data objects.
     /// </summary>
-    public class NeuralDataError: EncogError
+    public class BufferedDataError : EncogError
     {
         /// <summary>
         /// Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
-        public NeuralDataError(String str)
+        public BufferedDataError(String str)
             : base(str)
         {
         }
@@ -52,7 +49,7 @@ namespace Encog.Neural.NeuralData
         /// Pass on an exception.
         /// </summary>
         /// <param name="e">The other exception.</param>
-        public NeuralDataError(Exception e)
+        public BufferedDataError(Exception e)
             : base(e)
         {
         }
