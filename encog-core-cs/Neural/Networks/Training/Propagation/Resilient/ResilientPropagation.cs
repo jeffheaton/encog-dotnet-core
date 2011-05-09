@@ -30,7 +30,7 @@
 using System;
 using Encog.ML.Data;
 using Encog.Engine.Network.Train.Prop;
-using Encog.Engine.Util;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.Propagation.Resilient
 {

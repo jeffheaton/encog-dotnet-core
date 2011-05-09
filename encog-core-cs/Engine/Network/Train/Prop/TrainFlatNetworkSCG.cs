@@ -21,13 +21,14 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
+using Encog.MathUtil;
 using Encog.ML.Data;
+using Encog.Util;
 
 namespace Encog.Engine.Network.Train.Prop
 {
     using Encog.Engine.Network.Flat;
     using System;
-    using Encog.Engine.Util;
 
     /// <summary>
     /// Train a network using scaled conjugate gradient.

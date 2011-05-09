@@ -28,8 +28,8 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
+using Encog.MathUtil;
 using Encog.ML.Data;
-using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.CPN
 {

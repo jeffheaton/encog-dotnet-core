@@ -28,11 +28,10 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
+using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.Neural.Networks.Layers;
-using Encog.Engine.Util;
-
 #if logging
 using log4net;
 #endif

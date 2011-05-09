@@ -29,6 +29,7 @@
 
 #if logging
 using Encog.ML.Data;
+using Encog.Util;
 using log4net;
 #endif
 
@@ -39,7 +40,6 @@ using Encog.Neural.Networks.Synapse;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil.Matrices;
-using Encog.Engine.Util;
 using Encog.Neural.Networks.Structure;
 
 

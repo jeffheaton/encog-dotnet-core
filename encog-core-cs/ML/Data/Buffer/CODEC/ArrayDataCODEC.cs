@@ -1,4 +1,4 @@
-﻿using Encog.Engine.Util;
+﻿using Encog.Util;
 
 namespace Encog.ML.Data.Buffer.CODEC
 {

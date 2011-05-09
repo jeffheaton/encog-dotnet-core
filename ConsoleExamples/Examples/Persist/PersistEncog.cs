@@ -30,11 +30,11 @@
 using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Util;
 using Encog.Util.Simple;
 using Encog.Neural.Networks;
 using Encog.Persist;
 using System.IO;
-using Encog.Engine.Util;
 
 namespace Encog.Examples.Persist
 {

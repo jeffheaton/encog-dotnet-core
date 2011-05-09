@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -27,57 +27,28 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Engine.Util
+namespace Encog.MathUtil.Error
 {
     /// <summary>
-    /// A simple class that prevents numbers from getting either too
-    /// big or too small.
+    /// Selects the error calculation mode for Encog.
     /// </summary>
-    public sealed class BoundNumbers
+    public enum ErrorCalculationMode
     {
         /// <summary>
-        /// Private constructor.
+        /// Root mean square error.
         /// </summary>
-        private BoundNumbers()
-        {
-
-        }
+        RMS,
 
         /// <summary>
-        /// Too small of a number.
+        /// Mean square error.
         /// </summary>
-        public const double TOO_SMALL = -1.0E20;
+        MSE,
 
         /// <summary>
-        /// Too big of a number.
+        /// Used for QuickProp, an exaggerated error function. 
+        /// Fahlman suggests using a function that exaggerates the difference the larger the error is 
+        /// in a non-linear fashion.
         /// </summary>
-        public const double TOO_BIG = 1.0E20;
-
-        /// <summary>
-        /// Bound the number so that it does not become too big or too small.
-        /// </summary>
-        /// <param name="d">The number to check.</param>
-        /// <returns>The new number. Only changed if it was too big or too small.</returns>
-        public static double Bound(double d)
-        {
-            if (d < TOO_SMALL)
-            {
-                return TOO_SMALL;
-            }
-            else if (d > TOO_BIG)
-            {
-                return TOO_BIG;
-            }
-            else
-            {
-                return d;
-            }
-        }
+        ARCTAN
     }
-
 }

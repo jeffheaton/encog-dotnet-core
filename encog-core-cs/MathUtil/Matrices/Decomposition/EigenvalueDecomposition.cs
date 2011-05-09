@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
-using Encog.Engine.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {

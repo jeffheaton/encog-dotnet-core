@@ -22,6 +22,8 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.MathUtil;
+
 namespace Encog.Engine.Network.Activation
 {
 
@@ -30,7 +32,6 @@ namespace Encog.Engine.Network.Activation
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Encog.Engine.Util;
 
 
     /// <summary>

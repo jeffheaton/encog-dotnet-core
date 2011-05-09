@@ -32,7 +32,7 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Synapse;
 using Encog.Engine.Network.Activation;
-using Encog.Engine.Util;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.LMA
 {

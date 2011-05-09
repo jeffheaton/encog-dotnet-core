@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -27,33 +27,52 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Engine.Util
+namespace Encog.MathUtil
 {
     /// <summary>
-    /// Selects the error calculation mode for Encog.
+    /// A simple class that prevents numbers from getting either too
+    /// big or too small.
     /// </summary>
-    public enum ErrorCalculationMode
+    public sealed class BoundNumbers
     {
         /// <summary>
-        /// Root mean square error.
+        /// Private constructor.
         /// </summary>
-        RMS,
+        private BoundNumbers()
+        {
+
+        }
 
         /// <summary>
-        /// Mean square error.
+        /// Too small of a number.
         /// </summary>
-        MSE,
+        public const double TOO_SMALL = -1.0E20;
 
         /// <summary>
-        /// Used for QuickProp, an exaggerated error function. 
-        /// Fahlman suggests using a function that exaggerates the difference the larger the error is 
-        /// in a non-linear fashion.
+        /// Too big of a number.
         /// </summary>
-        ARCTAN
+        public const double TOO_BIG = 1.0E20;
+
+        /// <summary>
+        /// Bound the number so that it does not become too big or too small.
+        /// </summary>
+        /// <param name="d">The number to check.</param>
+        /// <returns>The new number. Only changed if it was too big or too small.</returns>
+        public static double Bound(double d)
+        {
+            if (d < TOO_SMALL)
+            {
+                return TOO_SMALL;
+            }
+            else if (d > TOO_BIG)
+            {
+                return TOO_BIG;
+            }
+            else
+            {
+                return d;
+            }
+        }
     }
+
 }

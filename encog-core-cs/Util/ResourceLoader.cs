@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
+using System.Text;
 
-namespace Encog.Engine.Util
+namespace Encog.Util
 {
     /// <summary>
     /// Used to load data from resources.

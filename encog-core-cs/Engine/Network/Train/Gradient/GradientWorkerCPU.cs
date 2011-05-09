@@ -22,15 +22,16 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.MathUtil.Error;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Util;
 
 namespace Encog.Engine.Network.Train.Gradient
 {
     using Encog.Engine.Network.Activation;
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train.Prop;
-    using Encog.Engine.Util;
     using System;    
 
     /// <summary>

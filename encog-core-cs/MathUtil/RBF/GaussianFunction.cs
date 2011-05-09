@@ -34,7 +34,6 @@ using System.Text;
 #if logging
 using log4net;
 using Encog.MathUtil;
-using Encog.Engine.Util;
 using Encog.Engine.Network.RBF;
 #endif
 

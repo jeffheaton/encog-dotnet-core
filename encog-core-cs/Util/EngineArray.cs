@@ -1,4 +1,4 @@
-// Encog(tm) Artificial Intelligence Framework v2.5
+﻿// Encog(tm) Artificial Intelligence Framework v2.5
 // .Net Version
 // http://www.heatonresearch.com/encog/
 // http://code.google.com/p/encog-java/
@@ -29,11 +29,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 
-namespace Encog.Engine.Util
+namespace Encog.Util
 {
     /// <summary>
     /// Simple array utilities for Encog.

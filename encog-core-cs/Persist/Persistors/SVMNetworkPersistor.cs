@@ -7,7 +7,6 @@ using Encog.Neural.Networks.SVM;
 using Encog.MathUtil.LIBSVM;
 using Encog.Util;
 using Encog.Parse.Tags.Write;
-using Encog.Engine.Util;
 
 namespace Encog.Persist.Persistors
 {

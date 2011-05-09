@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Encog.Engine.Util;
+using Encog.Util;
 using Encog.Util.CSV;
 
 namespace Encog.ML.Data.Buffer.CODEC

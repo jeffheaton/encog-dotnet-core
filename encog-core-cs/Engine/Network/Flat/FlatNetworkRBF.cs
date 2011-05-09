@@ -22,6 +22,8 @@
  * http://www.heatonresearch.com/copyright
  */
 
+using Encog.Util;
+
 namespace Encog.Engine.Network.Flat
 {
 
@@ -31,7 +33,6 @@ namespace Encog.Engine.Network.Flat
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Encog.Engine.Util;
     using Encog.Engine.Network.RBF;
 
     /// <summary>

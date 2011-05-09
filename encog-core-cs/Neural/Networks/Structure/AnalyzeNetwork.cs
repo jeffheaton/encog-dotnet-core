@@ -35,7 +35,6 @@ using Encog.MathUtil;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
 using Encog.Util;
-using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Structure
 {

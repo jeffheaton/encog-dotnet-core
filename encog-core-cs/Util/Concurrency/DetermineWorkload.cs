@@ -24,7 +24,7 @@
 
 using System;
 using System.Collections.Generic;
-using Encog.Engine.Util;
+using Encog.MathUtil;
 
 namespace Encog.Util.Concurrency
 {

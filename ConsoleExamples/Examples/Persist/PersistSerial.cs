@@ -33,7 +33,6 @@ using Encog.ML.Data.Basic;
 using Encog.Util.Simple;
 using Encog.Neural.Networks;
 using Encog.Util;
-using Encog.Engine.Util;
 
 namespace Encog.Examples.Persist
 {

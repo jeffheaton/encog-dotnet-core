@@ -1,8 +1,8 @@
 ﻿using System;
+using Encog.MathUtil.Error;
 using Encog.ML.Data;
 using Encog.Neural.Networks.SVM;
 using Encog.MathUtil.LIBSVM;
-using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.SVM
 {

@@ -1,12 +1,13 @@
+using Encog.MathUtil.Error;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Util;
 
 namespace Encog.Engine.Network.Flat
 {
 
     using Encog.Engine;
     using Encog.Engine.Network.Activation;
-    using Encog.Engine.Util;
     using System;
     using System.Collections.Generic;
 

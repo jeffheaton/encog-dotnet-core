@@ -126,20 +126,16 @@
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkProp.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkResilient.cs" />
     <Compile Include="Engine\Network\Train\Prop\TrainFlatNetworkSCG.cs" />
-    <Compile Include="Engine\Util\BoundMath.cs" />
-    <Compile Include="Engine\Util\BoundNumbers.cs" />
-    <Compile Include="Engine\Util\EngineArray.cs" />
-    <Compile Include="Engine\Util\ErrorCalculation.cs" />
-    <Compile Include="Engine\Util\ErrorCalculationMode.cs" />
-    <Compile Include="Engine\Util\Format.cs" />
-    <Compile Include="Engine\Util\IntRange.cs" />
-    <Compile Include="Engine\Util\ObjectPair.cs" />
-    <Compile Include="Engine\Util\ResourceLoader.cs" />
     <Compile Include="Engine\Validate\BasicMachineLearningValidate.cs" />
     <Compile Include="Engine\Validate\IValidateMachineLearning.cs" />
     <Compile Include="Engine\Validate\ValidateMachineLearningError.cs" />
     <Compile Include="ICloneable.cs" />
+    <Compile Include="MathUtil\BoundMath.cs" />
+    <Compile Include="MathUtil\BoundNumbers.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
+    <Compile Include="MathUtil\IntRange.cs" />
     <Compile Include="MathUtil\LIBSVM\SupportClass.cs" />
     <Compile Include="MathUtil\LIBSVM\svm.cs" />
     <Compile Include="MathUtil\LIBSVM\svm_model.cs" />
@@ -196,6 +192,10 @@
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\PoolItem.cs" />
     <Compile Include="Util\Concurrency\TaskGroup.cs" />
+    <Compile Include="Util\EngineArray.cs" />
+    <Compile Include="Util\Format.cs" />
+    <Compile Include="Util\ObjectPair.cs" />
+    <Compile Include="Util\ResourceLoader.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
@@ -476,6 +476,7 @@
     <EmbeddedResource Include="Engine\Resources\KernelVectorAdd.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Engine\Util\" />
     <Folder Include="Neural\NeuralData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

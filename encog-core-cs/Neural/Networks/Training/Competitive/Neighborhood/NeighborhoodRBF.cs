@@ -5,7 +5,7 @@ using System.Text;
 using Encog.Engine.Network.RBF;
 using Encog.Neural.Networks.Layers;
 using Encog.MathUtil.RBF;
-using Encog.Engine.Util;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.Competitive.Neighborhood
 {

@@ -27,9 +27,9 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+using Encog.MathUtil;
 using Encog.ML.Data;
 using Encog.Neural.Networks.Synapse;
-using Encog.Engine.Util;
 
 namespace Encog.Neural.Networks.Training.Competitive
 {

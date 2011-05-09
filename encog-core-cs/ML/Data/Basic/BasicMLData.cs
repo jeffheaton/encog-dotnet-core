@@ -29,7 +29,7 @@
 
 using System;
 using System.Text;
-using Encog.Engine.Util;
+using Encog.Util;
 
 namespace Encog.ML.Data.Basic
 {

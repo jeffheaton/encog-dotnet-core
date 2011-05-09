@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Engine.Util
+﻿namespace Encog.Util
 {
     /// <summary>
     /// A pair of objects.

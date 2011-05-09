@@ -33,9 +33,8 @@ using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Synapse;
-using Encog.Engine.Util;
-
 #if logging
+using Encog.Util;
 using log4net;
 #endif
 

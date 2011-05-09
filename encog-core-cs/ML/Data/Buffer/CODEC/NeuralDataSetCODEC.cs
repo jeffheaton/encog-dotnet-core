@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Encog.Engine.Util;
 using Encog.ML.Data.Basic;
+using Encog.Util;
 
 namespace Encog.ML.Data.Buffer.CODEC
 {

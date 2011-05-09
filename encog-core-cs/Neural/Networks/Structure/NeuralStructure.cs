@@ -28,6 +28,7 @@
 // http://www.heatonresearch.com/copyright.html
 
 #if logging
+using Encog.Util;
 using log4net;
 #endif
 
@@ -40,7 +41,6 @@ using Encog.Neural.Networks.Synapse;
 using Encog.MathUtil;
 using Encog.MathUtil.Matrices;
 using Encog.Engine.Network.Flat;
-using Encog.Engine.Util;
 using Encog.Engine.Network.Activation;
 
 

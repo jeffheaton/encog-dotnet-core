@@ -21,7 +21,9 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
+using Encog.MathUtil;
 using Encog.ML.Data;
+using Encog.Util;
 using Encog.Util.Concurrency;
 
 namespace Encog.Engine.Network.Train.Prop
@@ -31,7 +33,6 @@ namespace Encog.Engine.Network.Train.Prop
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train;
     using Encog.Engine.Network.Train.Gradient;
-    using Encog.Engine.Util;
     using System;
 
     /// <summary>

@@ -33,7 +33,6 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Buffer;
 using Encog.Engine;
-using Encog.Engine.Util;
 using System.Diagnostics;
 using System.IO;
 
