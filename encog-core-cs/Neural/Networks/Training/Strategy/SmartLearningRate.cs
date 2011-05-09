@@ -27,13 +27,6 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Neural.NeuralData;
-using Encog.Neural.Data;
-
 #if logging
 using log4net;
 #endif

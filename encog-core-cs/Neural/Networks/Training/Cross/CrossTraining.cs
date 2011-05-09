@@ -27,13 +27,8 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Folded;
-using Encog.Neural.NeuralData;
 
 namespace Encog.Neural.Networks.Training.Cross
 {

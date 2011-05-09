@@ -27,14 +27,9 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.NEAT;
 using Encog.Util.Simple;

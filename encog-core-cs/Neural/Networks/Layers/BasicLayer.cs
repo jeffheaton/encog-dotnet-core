@@ -34,11 +34,8 @@ using log4net;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
-using Encog.Neural.Data;
-using System.Runtime.Serialization;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Neural.Networks.Synapse.NEAT;

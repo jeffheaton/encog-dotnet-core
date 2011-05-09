@@ -33,11 +33,7 @@ using log4net;
 #endif
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Data;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.MathUtil.Matrices;

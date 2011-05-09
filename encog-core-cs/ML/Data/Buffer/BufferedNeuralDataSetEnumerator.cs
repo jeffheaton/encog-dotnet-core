@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
 
 namespace Encog.ML.Data.Buffer
 {

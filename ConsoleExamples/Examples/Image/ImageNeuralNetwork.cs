@@ -29,8 +29,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Image;
@@ -38,7 +36,6 @@ using Encog.Neural.Networks;
 using Encog.Util.DownSample;
 using Encog.Util.Logging;
 using System.IO;
-using Encog.Neural.Data;
 using Encog.Util.Simple;
 using System.Drawing;
 using Encog.Neural.Networks.Training.Propagation.Resilient;

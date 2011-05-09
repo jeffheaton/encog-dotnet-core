@@ -31,14 +31,7 @@ namespace Encog.Engine.Network.Train.Gradient
     using Encog.Engine.Network.Flat;
     using Encog.Engine.Network.Train.Prop;
     using Encog.Engine.Util;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using System.Diagnostics;
-    using Encog.Util.Time;
-    using Encog.Neural.NeuralData;
+    using System;    
 
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.

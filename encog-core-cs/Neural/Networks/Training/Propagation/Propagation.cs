@@ -33,22 +33,9 @@ using log4net;
 #endif
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.MathUtil;
-using Encog.Neural.Data;
-using Encog.Neural.NeuralData;
-using Encog.Neural.Networks.Synapse;
-using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Structure;
 using Encog.Util;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Propagation.Manhattan;
-using Encog.Engine.Network.Flat;
 using Encog.Engine.Network.Train;
-using Encog.Engine.Network.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Propagation
 {

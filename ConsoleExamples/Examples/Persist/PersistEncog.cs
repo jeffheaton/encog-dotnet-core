@@ -27,19 +27,13 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
 using Encog.Util.Simple;
 using Encog.Neural.Networks;
 using Encog.Persist;
 using System.IO;
-using Encog.Util;
 using Encog.Engine.Util;
 
 namespace Encog.Examples.Persist

@@ -30,13 +30,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.Solve.Genetic;
 using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Species;
 using Encog.Solve.Genetic.Population;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Genetic;
 using Encog.MathUtil;
 using Encog.MathUtil.Randomize;

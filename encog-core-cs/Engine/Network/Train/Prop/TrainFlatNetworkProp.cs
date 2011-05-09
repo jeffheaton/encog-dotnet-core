@@ -33,12 +33,7 @@ namespace Encog.Engine.Network.Train.Prop
     using Encog.Engine.Network.Train.Gradient;
     using Encog.Engine.Util;
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Encog.Engine.Concurrency.Job;
-    using Encog.Neural.NeuralData;
+    using Encog.Engine.Concurrency.Job;   
 
     /// <summary>
     /// Train a flat network using multithreading, and GPU support.

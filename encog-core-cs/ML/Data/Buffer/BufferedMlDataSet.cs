@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
 using Encog.Persist;
 
 namespace Encog.ML.Data.Buffer

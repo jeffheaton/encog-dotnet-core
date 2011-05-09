@@ -28,14 +28,10 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks;
-using Encog.Neural.NeuralData;
 using ConsoleExamples.Examples;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util.Simple;

@@ -29,13 +29,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Synapse;
@@ -43,7 +38,6 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Competitive;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.Neural.Networks.Pattern;
-using Encog.Neural.Data;
 using Encog.MathUtil.Randomize;
 using Encog.MathUtil;
 using Encog.Neural.Networks.Layers;

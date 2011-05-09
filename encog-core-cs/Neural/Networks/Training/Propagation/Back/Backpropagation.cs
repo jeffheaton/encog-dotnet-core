@@ -28,13 +28,8 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Training.Strategy;
-using Encog.Neural.Networks.Structure;
 using Encog.Engine.Network.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Propagation.Back

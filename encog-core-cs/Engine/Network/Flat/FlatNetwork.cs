@@ -8,11 +8,7 @@ namespace Encog.Engine.Network.Flat
     using Encog.Engine.Network.Activation;
     using Encog.Engine.Util;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Implements a flat (vector based) neural network in the Encog Engine. This is

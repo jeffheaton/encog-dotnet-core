@@ -28,14 +28,10 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using NUnit.Framework;
 using Encog.Util.Logging;
-using Encog.Neural.NeuralData;
 using encog_test.Neural.Networks;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Propagation.Resilient;

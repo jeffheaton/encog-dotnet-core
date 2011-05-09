@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Encog.Neural.Networks.Training.Concurrent.Jobs;
 using Encog.Neural.Networks.Training.Concurrent.Performers;
 using Encog.Engine;
-using Encog.Neural.NeuralData;
-using Encog.Neural.Networks.Training.Strategy;
-using Encog.Engine.Network.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Concurrent
 {

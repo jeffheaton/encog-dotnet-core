@@ -28,11 +28,6 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Solve.Anneal;
-using Encog.Neural.NeuralData;
 using Encog.MathUtil;
 using Encog.Neural.Networks.Structure;
 

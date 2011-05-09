@@ -29,12 +29,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.Persist;
 using Encog.Neural.Networks.Synapse;
-using Encog.Neural.Data;
 using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Layers

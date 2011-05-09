@@ -27,11 +27,6 @@ namespace Encog.Engine.Network.Train.Prop
 {
     using Encog.Engine.Network.Flat;
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Encog.Neural.NeuralData;
 
     /// <summary>
     /// Train a flat network using RPROP.

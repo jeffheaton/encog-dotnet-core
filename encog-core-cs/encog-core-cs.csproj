@@ -368,10 +368,8 @@
     <Compile Include="Persist\Persistors\Generic\XML2Object.cs" />
     <Compile Include="Persist\Persistors\OneToOneSynapsePersistor.cs" />
     <Compile Include="Persist\Persistors\PersistorUtil.cs" />
-    <Compile Include="Persist\Persistors\PropertyDataPersistor.cs" />
     <Compile Include="Persist\Persistors\RadialBasisFunctionLayerPersistor.cs" />
     <Compile Include="Persist\Persistors\SVMNetworkPersistor.cs" />
-    <Compile Include="Persist\Persistors\TextDataPersistor.cs" />
     <Compile Include="Persist\Persistors\TrainingContinuationPersistor.cs" />
     <Compile Include="Persist\Persistors\WeightedSynapsePersistor.cs" />
     <Compile Include="Persist\Persistors\WeightlessSynapsePersistor.cs" />

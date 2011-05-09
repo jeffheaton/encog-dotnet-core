@@ -34,10 +34,8 @@ using log4net;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks.Pattern;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation.Resilient;

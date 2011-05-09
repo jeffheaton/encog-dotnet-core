@@ -28,19 +28,14 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Encog.MathUtil.RBF;
-using Encog.MathUtil;
 using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Data;
 using Encog.Persist;
 using Encog.Persist.Persistors;
 using Encog.Engine.Network.Activation;
-using Encog.Engine.Util;
 using Encog.Engine.Network.RBF;
 
 #if logging

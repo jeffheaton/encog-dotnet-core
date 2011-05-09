@@ -27,16 +27,7 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
-using Encog.Neural.NeuralData;
-using Encog.Neural.Networks.Structure;
-using Encog.Neural.Networks.Layers;
-using Encog.MathUtil;
-using Encog.Util;
 using Encog.Engine.Network.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Propagation.SCG

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
-using Encog.Neural.Data;
-using Encog.Util;
-using Encog.Neural.NeuralData;
+﻿using Encog.ML.Data;
 using Encog.MathUtil.LIBSVM;
 
 namespace Encog.Neural.Networks.Training.SVM

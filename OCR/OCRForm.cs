@@ -29,20 +29,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Data;
 using Encog.Neural.Networks.Training.Competitive;
 using Encog.Neural.Networks.Training.Competitive.Neighborhood;
 using Encog.MathUtil.RBF;

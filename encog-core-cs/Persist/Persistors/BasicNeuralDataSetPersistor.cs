@@ -29,15 +29,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.NeuralData;
-using Encog.MathUtil;
 using Encog.Parse.Tags.Read;
 using Encog.Parse.Tags.Write;
-using Encog.Neural.Data;
 using Encog.Util.CSV;
 
 namespace Encog.Persist.Persistors

@@ -28,8 +28,6 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System.Collections.Generic;
-using Encog.Neural.Data;
-using Encog.Neural.NeuralData;
 
 namespace Encog.ML.Data
 {
