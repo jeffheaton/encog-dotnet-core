@@ -2,7 +2,6 @@
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 
 namespace Encog.Neural.Networks.SVM
 {
@@ -207,7 +206,7 @@ namespace Encog.Neural.Networks.SVM
         /// <returns>The newly created persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new SVMNetworkPersistor();
+            return null;
         }
 
         /// <summary>

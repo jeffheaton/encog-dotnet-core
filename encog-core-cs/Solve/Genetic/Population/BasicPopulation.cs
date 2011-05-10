@@ -36,7 +36,6 @@ using Encog.Solve.Genetic.Genome;
 using Encog.Solve.Genetic.Innovation;
 using Encog.Solve.Genetic.Species;
 using Encog.Persist;
-using Encog.Persist.Persistors.Generic;
 using Encog.Persist.Attributes;
 
 namespace Encog.Solve.Genetic.Population
@@ -347,7 +346,7 @@ namespace Encog.Solve.Genetic.Population
         /// <returns>The new persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new GenericPersistor(typeof(BasicPopulation));
+            return null;
         }
 
         /// <summary>

@@ -34,7 +34,6 @@ using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.Engine.Network.Activation;
 using Encog.Engine.Network.RBF;
 
@@ -140,7 +139,7 @@ namespace Encog.Neural.Networks.Layers
         /// <returns></returns>
         public override IPersistor CreatePersistor()
         {
-            return new RadialBasisFunctionLayerPersistor();
+            return null;
         }
 
         /// <summary>

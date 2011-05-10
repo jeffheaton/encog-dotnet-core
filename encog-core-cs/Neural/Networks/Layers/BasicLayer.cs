@@ -37,7 +37,6 @@ using System.Collections.Generic;
 using System.Text;
 using Encog.Neural.Networks.Synapse;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.Neural.Networks.Synapse.NEAT;
 using Encog.Engine.Network.Activation;
 
@@ -283,7 +282,7 @@ namespace Encog.Neural.Networks.Layers
         /// <returns>The new persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new BasicLayerPersistor();
+            return null;
         }
 
         /// <summary>

@@ -31,7 +31,6 @@ using System;
 using Encog.ML.Data;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.MathUtil.Matrices;
 
 namespace Encog.Neural.Networks.Synapse
@@ -94,7 +93,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <returns>A persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new DirectSynapsePersistor();
+            return null;
         }
 
         /// <summary>

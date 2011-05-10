@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.Persist.Persistors.Generic;
 
 namespace Encog.Persist
 {
@@ -51,7 +50,7 @@ namespace Encog.Persist
         /// <inheritdoc/>
         public virtual IPersistor CreatePersistor()
         {
-            return new GenericPersistor(this.GetType());
+            return null;
         }
 
         /// <summary>

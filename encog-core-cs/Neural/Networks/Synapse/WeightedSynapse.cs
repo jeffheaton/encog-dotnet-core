@@ -33,7 +33,6 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 
 namespace Encog.Neural.Networks.Synapse
 {
@@ -121,7 +120,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <returns>A new persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new WeightedSynapsePersistor();
+            return null;
         }
 
         /// <summary>

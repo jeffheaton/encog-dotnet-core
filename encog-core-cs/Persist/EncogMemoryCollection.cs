@@ -33,7 +33,6 @@ using System.Linq;
 using System.Text;
 using Encog.Persist.Location;
 using Encog.Parse.Tags.Read;
-using Encog.Persist.Persistors;
 
 namespace Encog.Persist
 {
@@ -111,15 +110,15 @@ namespace Encog.Persist
                     String type = xmlIn.LastTag.Name;
                     String name = xmlIn.LastTag.Attributes["name"];
 
-                    IPersistor persistor = PersistorUtil
-                            .CreatePersistor(type);
+                    //IPersistor persistor = PersistorUtil
+                    //        .CreatePersistor(type);
 
-                    if (persistor == null)
+                    /*if (persistor == null)
                     {
                         throw new PersistError("Do not know how to load: " + type);
                     }
                     IEncogPersistedObject obj = persistor.Load(xmlIn);
-                    this.Contents[name] = obj;
+                    this.Contents[name] = obj;*/
                 }
             }
             finally

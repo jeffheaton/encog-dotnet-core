@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 
 namespace Encog.Neural.Networks.Training.Propagation
 {
@@ -52,7 +51,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <returns>A persistor for this object.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new TrainingContinuationPersistor();
+            return null;
         }
 
         /// <summary>

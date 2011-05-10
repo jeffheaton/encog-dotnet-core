@@ -30,7 +30,6 @@
 using System;
 using System.Collections.Generic;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 
 namespace Encog.ML.Data.Basic
 {
@@ -327,7 +326,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>The persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new BasicNeuralDataSetPersistor();
+            return null;
         }
 
         /// <summary>

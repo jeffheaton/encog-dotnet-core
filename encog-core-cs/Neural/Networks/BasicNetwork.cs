@@ -37,7 +37,6 @@ using Encog.Neural.Networks.Synapse;
 using System.Runtime.Serialization;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks.Logic;
 using Encog.Neural.Networks.Structure;
@@ -266,7 +265,7 @@ namespace Encog.Neural.Networks
         /// <returns>The newly created persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new BasicNetworkPersistor();
+            return null;
         }
 
         /// <summary>

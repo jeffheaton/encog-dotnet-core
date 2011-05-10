@@ -36,7 +36,6 @@ using System.IO;
 using Encog.Persist.Location;
 using Encog.Parse.Tags.Write;
 using Encog.Parse.Tags;
-using Encog.Persist.Persistors;
 using Encog.MathUtil;
 using System.Reflection;
 
@@ -364,7 +363,7 @@ namespace Encog.Persist
             // did we find the object?
             if (Advance(name))
             {
-                String objectType = this.xmlIn.LastTag.Name;
+                /*String objectType = this.xmlIn.LastTag.Name;
                 IPersistor persistor = PersistorUtil
                        .CreatePersistor(objectType);
 
@@ -373,7 +372,8 @@ namespace Encog.Persist
                     throw new PersistError(
                             "Do not know how to load: " + objectType);
                 }
-                return persistor.Load(this.xmlIn);
+                return persistor.Load(this.xmlIn);*/
+                return null;
             }
             else
             {

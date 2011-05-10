@@ -35,7 +35,6 @@ using log4net;
 using System;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.MathUtil.Matrices;
 
 namespace Encog.Neural.Networks.Synapse
@@ -116,7 +115,7 @@ namespace Encog.Neural.Networks.Synapse
         /// <returns>A persistor for this object.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new OneToOneSynapsePersistor();
+            return null;
         }
 
         /// <summary>

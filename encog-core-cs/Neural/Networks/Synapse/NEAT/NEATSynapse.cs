@@ -34,7 +34,6 @@ using Encog.Persist.Attributes;
 using Encog.Neural.Networks.Layers;
 using Encog.Persist;
 using Encog.MathUtil.Matrices;
-using Encog.Persist.Persistors.Generic;
 using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Networks.Synapse.NEAT
@@ -225,7 +224,7 @@ namespace Encog.Neural.Networks.Synapse.NEAT
         /// <returns></returns>
         public override IPersistor CreatePersistor()
         {
-            return new GenericPersistor(typeof(NEATSynapse));
+            return null;
         }
 
 

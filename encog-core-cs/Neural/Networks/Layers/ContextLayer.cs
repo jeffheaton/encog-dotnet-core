@@ -31,7 +31,6 @@ using System;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Persist;
-using Encog.Persist.Persistors;
 using Encog.Engine.Network.Activation;
 #if logging
 using log4net;
@@ -111,7 +110,7 @@ namespace Encog.Neural.Networks.Layers
         /// <returns>The new persistor.</returns>
         public override IPersistor CreatePersistor()
         {
-            return new ContextLayerPersistor();
+            return null;
         }
 
         /// <summary>
