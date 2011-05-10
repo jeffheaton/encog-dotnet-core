@@ -1,9 +1,10 @@
 ﻿using Encog.MathUtil.LIBSVM;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Neural.Networks;
 using Encog.Persist;
 
-namespace Encog.Neural.Networks.SVM
+namespace Encog.ML.SVM
 {
     /// <summary>
     /// This is a network that is backed by one or more Support Vector Machines

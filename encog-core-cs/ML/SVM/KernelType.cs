@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Neural.Networks.SVM
+﻿namespace Encog.ML.SVM
 {
     /// <summary>
     /// The type of SVM kernel in use.

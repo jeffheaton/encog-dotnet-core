@@ -231,6 +231,9 @@
     <Compile Include="ML\MLProperties.cs" />
     <Compile Include="ML\MLRegression.cs" />
     <Compile Include="ML\MLResettable.cs" />
+    <Compile Include="ML\SVM\KernelType.cs" />
+    <Compile Include="ML\SVM\SVMNetwork.cs" />
+    <Compile Include="ML\SVM\SVMType.cs" />
     <Compile Include="ML\TrainingImplementationType.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
@@ -293,9 +296,6 @@
     <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
     <Compile Include="Neural\Networks\Structure\SynapseComparator.cs" />
     <Compile Include="Neural\Networks\Structure\ValidateForFlat.cs" />
-    <Compile Include="Neural\Networks\SVM\KernelType.cs" />
-    <Compile Include="Neural\Networks\SVM\SVMNetwork.cs" />
-    <Compile Include="Neural\Networks\SVM\SVMType.cs" />
     <Compile Include="Neural\Networks\Synapse\BasicSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\DirectSynapse.cs" />
     <Compile Include="Neural\Networks\Synapse\ISynapse.cs" />

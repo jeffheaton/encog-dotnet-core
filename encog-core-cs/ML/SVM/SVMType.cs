@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.Neural.Networks.SVM
+﻿namespace Encog.ML.SVM
 {
     /// <summary>
     /// Supports both class and new support vector calculations, as well as one-class
