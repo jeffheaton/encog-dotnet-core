@@ -1,0 +1,347 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Analyze/f:PerformAnalysis.cs" caret="2240" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="3287" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ExampleInfo.cs" caret="1979" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:ParamsHolder.cs" caret="2504" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:GeneticTSP/f:GeneticSolveTSP.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Associate/f:HopfieldAssociate.cs" caret="707" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:ObjectCloner.cs" caret="2654" fromTop="4" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="221" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationSigmoid.cs" caret="2878" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFlat.cs" caret="2791" fromTop="26" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="3376" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3417" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORDisplay.cs" caret="2900" fromTop="5" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="1774" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadXML.cs" caret="1476" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/f:BotUtil.cs" caret="1658" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:Browse/f:Browser.cs" caret="1809" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Write/f:WriteTags.cs" caret="2106" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/f:Tag.cs" caret="2181" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:Browse/f:LoadWebPage.cs" caret="2214" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Concurrency/f:EngineConcurrency.cs" caret="2307" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:ReadCSV.cs" caret="2824" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:DirectoryUtil.cs" caret="3637" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4046" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="16229" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Image/f:ImageNeuralNetwork.cs" caret="3053" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Simple/f:HopfieldSimple.cs" caret="3066" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:JordanNetwork/f:JordanExample.cs" caret="4277" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="4262" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MultiBench/f:MultiThreadBenchmark.cs" caret="4602" fromTop="11" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="1861" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="1986" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="2173" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="2192" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="2700" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="3043" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="2777" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="3016" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="3336" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="3251" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="3608" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4398" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="4723" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4863" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="5305" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="5468" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="8291" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="13448" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="17337" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="3440" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4012" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="6924" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="7321" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="12473" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="16210" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Image/f:ImageNeuralNetwork.cs" caret="3053" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Simple/f:HopfieldSimple.cs" caret="3066" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:JordanNetwork/f:JordanExample.cs" caret="4277" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="4262" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MultiBench/f:MultiThreadBenchmark.cs" caret="4602" fromTop="11" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir>C:\Program Files (x86)\NUnit 2.5.3\bin\net-2.0\</NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="long" priority="1" />
+      <Item value="new" priority="5" />
+      <Item value="svm_node" priority="1" />
+      <Item value="result" priority="7" />
+      <Item value="for" priority="8" />
+      <Item value="int" priority="6" />
+      <Item value="i" priority="17" />
+      <Item value="training" priority="0" />
+      <Item value="paras" priority="3" />
+      <Item value="foreach" priority="2" />
+      <Item value="String`0" priority="4" />
+      <Item value="key" priority="0" />
+      <Item value="value_ren" priority="0" />
+      <Item value="public" priority="3" />
+      <Item value="const" priority="0" />
+      <Item value="ReflectionUtil`0" priority="0" />
+      <Item value="Exception`0" priority="0" />
+      <Item value="IActivationFunction`0" priority="1" />
+      <Item value="ART" priority="1" />
+      <Item value="ARTNetwork" priority="0" />
+      <Item value="BasicART`0" priority="0" />
+      <Item value="StringReader`0" priority="0" />
+      <Item value="SupportVectorMachine`0" priority="0" />
+      <Item value="StreamWriter`0" priority="0" />
+      <Item value="StreamWriter" priority="0" />
+      <Item value="ba" priority="2" />
+      <Item value="networkParams" priority="0" />
+      <Item value="EncogFramework`0" priority="2" />
+      <Item value="header" priority="0" />
+      <Item value="tok" priority="0" />
+      <Item value="Length" priority="2" />
+      <Item value="t" priority="0" />
+      <Item value="Directory`0" priority="0" />
+      <Item value="ThreadSafeRandom`0" priority="1" />
+      <Item value="vecNeurons" priority="1" />
+      <Item value="this" priority="7" />
+      <Item value="private" priority="1" />
+      <Item value="bool" priority="0" />
+      <Item value="BasicMLDataSet`0" priority="0" />
+      <Item value="Population" priority="4" />
+      <Item value="speciesArray" priority="0" />
+      <Item value="NEATGenome`0" priority="0" />
+      <Item value="newPop" priority="0" />
+      <Item value="genome" priority="0" />
+      <Item value="override" priority="1" />
+      <Item value="MLMethod`0" priority="0" />
+      <Item value="FileInfo" priority="0" />
+      <Item value="MLRegression`0" priority="0" />
+      <Item value="MLTrain`0" priority="0" />
+      <Item value="BasicNetwork`0" priority="4" />
+      <Item value="NEATNetwork`0" priority="0" />
+      <Item value="Hopfield" priority="1" />
+      <Item value="network" priority="3" />
+      <Item value="pattern1" priority="0" />
+      <Item value="using" priority="1" />
+      <Item value="Encog" priority="1" />
+      <Item value="Neural" priority="0" />
+      <Item value="BAMNetwork`0" priority="0" />
+      <Item value="Boltzmann" priority="0" />
+      <Item value="j" priority="0" />
+      <Item value="BoltzmannMachine`0" priority="0" />
+      <Item value="hopfield" priority="0" />
+      <Item value="HopfieldNetwork`0" priority="1" />
+      <Item value="CPNPattern`0" priority="0" />
+      <Item value="CPNNetwork`0" priority="3" />
+      <Item value="BasicTrainSOM`0" priority="0" />
+      <Item value="SOMNetwork`0" priority="2" />
+      <Item value="if" priority="1" />
+      <Item value="else" priority="1" />
+      <Item value="return" priority="1" />
+      <Item value="null" priority="0" />
+      <Item value="CSVFormat`0" priority="1" />
+      <Item value="csv" priority="0" />
+      <Item value="format" priority="2" />
+      <Item value="in" priority="2" />
+      <Item value="str" priority="0" />
+      <Item value="sorted" priority="1" />
+      <Item value="var" priority="3" />
+      <Item value="item" priority="2" />
+      <Item value="list" priority="1" />
+      <Item value="ItemPropertyInfo`0" priority="0" />
+      <Item value="string" priority="0" />
+      <Item value="array" priority="2" />
+      <Item value="idx" priority="0" />
+      <Item value="data" priority="0" />
+      <Item value="key2" priority="0" />
+      <Item value="file" priority="0" />
+      <Item value="Engine" priority="0" />
+      <Item value="revertedData" priority="0" />
+      <Item value="oldList" priority="1" />
+      <Item value="ClassItem" priority="0" />
+      <Item value="double" priority="1" />
+      <Item value="app" priority="1" />
+      <Item value="ConsoleExamples" priority="0" />
+      <Item value="Console`0" priority="7" />
+      <Item value="examples" priority="1" />
+      <Item value="Examples" priority="1" />
+      <Item value="XOR" priority="1" />
+      <Item value="IExample`0" priority="3" />
+      <Item value="XORHelloWorld`0" priority="0" />
+      <Item value="XORFlat`0" priority="0" />
+      <Item value="ToString`0" priority="0" />
+      <Item value="XORDisplay`0" priority="0" />
+      <Item value="static" priority="0" />
+      <Item value="StringBuilder`0" priority="0" />
+      <Item value="StringBuilder" priority="0" />
+      <Item value="builder" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
+      <Item value="l" priority="0" />
+      <Item value="x" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Data.MLDataSet">
+      <Item value="InputSize" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Data.MLData">
+      <Item value="Count" priority="7" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.NEAT.NEATNetwork">
+      <Item value="Properties" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IDictionary`2">
+      <Item value="Keys" priority="4" />
+      <Item value="Add`0" priority="0" />
+      <Item value="Contains`0" priority="0" />
+      <Item value="Remove`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IList`1">
+      <Item value="Add`0" priority="29" />
+      <Item value="Clear`0" priority="6" />
+      <Item value="Count" priority="3" />
+      <Item value="Remove`0" priority="0" />
+      <Item value="Insert`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="Split`0" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.ReflectionUtil">
+      <Item value="LoadObject`0" priority="0" />
+      <Item value="AF_PATH" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_node">
+      <Item value="value_Renamed" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.MathUtil.LIBSVM.svm">
+      <Item value="svm_load_model`0" priority="1" />
+      <Item value="svm_save_model`0" priority="0" />
+      <Item value="svm_predict`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IO.MemoryStream">
+      <Item value="ToArray`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.PNN.BasicPNN">
+      <Item value="Properties" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IO.FileInfo">
+      <Item value="ToString`0" priority="4" />
+      <Item value="Directory" priority="2" />
+      <Item value="DirectoryName" priority="5" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Exception">
+      <Item value="ToString`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Data.Specific.BiPolarMLData">
+      <Item value="SetBoolean`0" priority="4" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.MathUtil.ThreadSafeRandom">
+      <Item value="NextDouble`0" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.MathUtil.Matrices.Decomposition.LUDecomposition">
+      <Item value="IsNonsingular" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.EngineArray">
+      <Item value="AllocateBool2D`0" priority="0" />
+      <Item value="AllocateDouble2D`0" priority="0" />
+      <Item value="PutAll`2" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Genetic.Population.IPopulation">
+      <Item value="Species" priority="3" />
+      <Item value="Add`0" priority="0" />
+      <Item value="Best" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Train.MLTrain">
+      <Item value="Method" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.NEAT.Training.NEATTraining">
+      <Item value="Population" priority="0" />
+      <Item value="Method" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.Thermal.HopfieldNetwork">
+      <Item value="AddPattern`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Genetic.GeneticAlgorithm">
+      <Item value="PerformCalculateScore`0" priority="0" />
+      <Item value="CalculateScore" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Examples.AnnealTSP.TSPSimulatedAnnealing">
+      <Item value="Array" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.Thermal.BoltzmannMachine">
+      <Item value="Weights" priority="1" />
+      <Item value="Threshold" priority="0" />
+      <Item value="SetWeight`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SOMColors.SOMColors">
+      <Item value="network" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.SOM.SOMNetwork">
+      <Item value="Weights" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.BasicML">
+      <Item value="properties" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Uri">
+      <Item value="ToString`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Data.Specific.CSVMLDataSet">
+      <Item value="Format" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.App.Analyst.Script.DataField">
+      <Item value="ClassMembers" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
+      <Item value="Add`0" priority="3" />
+      <Item value="Sort`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
+      <Item value="data" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.ICollection`1">
+      <Item value="Count" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Util.CSV.ReadCSV">
+      <Item value="ColumnNames" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Examples.IExampleInterface">
+      <Item value="Args" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Console">
+      <Item value="WriteLine`0" priority="8" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Examples.XOR.XORFactory">
+      <Item value="Info" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Examples.XOR.XORFactory">
+      <Item value="xorPNNr`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Examples.XOR.XORHelloWorld">
+      <Item value="Info" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Text.StringBuilder">
+      <Item value="ToString`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.CSV.NumberList">
+      <Item value="ToList`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.CSV.CSVFormat">
+      <Item value="ENGLISH" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>

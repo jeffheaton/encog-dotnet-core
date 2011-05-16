@@ -1,0 +1,584 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encog</RootNamespace>
+    <AssemblyName>encog-core-cs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;logging</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App\Analyst\AnalystError.cs" />
+    <Compile Include="App\Analyst\AnalystFileFormat.cs" />
+    <Compile Include="App\Analyst\AnalystGoal.cs" />
+    <Compile Include="App\Analyst\AnalystListener.cs" />
+    <Compile Include="App\Analyst\Analyze\AnalyzedField.cs" />
+    <Compile Include="App\Analyst\Analyze\PerformAnalysis.cs" />
+    <Compile Include="App\Analyst\Commands\Cmd.cs" />
+    <Compile Include="App\Analyst\Commands\CmdBalance.cs" />
+    <Compile Include="App\Analyst\Commands\CmdCluster.cs" />
+    <Compile Include="App\Analyst\Commands\CmdCreate.cs" />
+    <Compile Include="App\Analyst\Commands\CmdEvaluate.cs" />
+    <Compile Include="App\Analyst\Commands\CmdEvaluateRaw.cs" />
+    <Compile Include="App\Analyst\Commands\CmdGenerate.cs" />
+    <Compile Include="App\Analyst\Commands\CmdNormalize.cs" />
+    <Compile Include="App\Analyst\Commands\CmdRandomize.cs" />
+    <Compile Include="App\Analyst\Commands\CmdReset.cs" />
+    <Compile Include="App\Analyst\Commands\CmdSegregate.cs" />
+    <Compile Include="App\Analyst\Commands\CmdSet.cs" />
+    <Compile Include="App\Analyst\Commands\CmdTrain.cs" />
+    <Compile Include="App\Analyst\ConsoleAnalystListener.cs" />
+    <Compile Include="App\Analyst\CSV\AnalystClusterCSV.cs" />
+    <Compile Include="App\Analyst\CSV\AnalystEvaluateCSV.cs" />
+    <Compile Include="App\Analyst\CSV\AnalystEvaluateRawCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Balance\BalanceCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Basic\BaseCachedColumn.cs" />
+    <Compile Include="App\Analyst\CSV\Basic\BasicCachedFile.cs" />
+    <Compile Include="App\Analyst\CSV\Basic\BasicFile.cs" />
+    <Compile Include="App\Analyst\CSV\Basic\FileData.cs" />
+    <Compile Include="App\Analyst\CSV\Basic\LoadedRow.cs" />
+    <Compile Include="App\Analyst\CSV\ClusterRow.cs" />
+    <Compile Include="App\Analyst\CSV\Filter\ExcludedField.cs" />
+    <Compile Include="App\Analyst\CSV\Filter\FilterCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Normalize\AnalystNormalizeCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Segregate\SegregateCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Segregate\SegregateTargetPercent.cs" />
+    <Compile Include="App\Analyst\CSV\Shuffle\ShuffleCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Sort\RowComparator.cs" />
+    <Compile Include="App\Analyst\CSV\Sort\SortCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Sort\SortedField.cs" />
+    <Compile Include="App\Analyst\CSV\Sort\SortType.cs" />
+    <Compile Include="App\Analyst\CSV\TimeSeriesUtil.cs" />
+    <Compile Include="App\Analyst\EncogAnalyst.cs" />
+    <Compile Include="App\Analyst\Report\AnalystReport.cs" />
+    <Compile Include="App\Analyst\Script\AnalystClassItem.cs" />
+    <Compile Include="App\Analyst\Script\AnalystScript.cs" />
+    <Compile Include="App\Analyst\Script\DataField.cs" />
+    <Compile Include="App\Analyst\Script\Normalize\AnalystField.cs" />
+    <Compile Include="App\Analyst\Script\Normalize\AnalystNormalize.cs" />
+    <Compile Include="App\Analyst\Script\Prop\PropertyConstraints.cs" />
+    <Compile Include="App\Analyst\Script\Prop\PropertyEntry.cs" />
+    <Compile Include="App\Analyst\Script\Prop\PropertyType.cs" />
+    <Compile Include="App\Analyst\Script\Prop\ScriptProperties.cs" />
+    <Compile Include="App\Analyst\Script\ScriptLoad.cs" />
+    <Compile Include="App\Analyst\Script\ScriptSave.cs" />
+    <Compile Include="App\Analyst\Script\Segregate\AnalystSegregate.cs" />
+    <Compile Include="App\Analyst\Script\Segregate\AnalystSegregateTarget.cs" />
+    <Compile Include="App\Analyst\Script\Task\AnalystTask.cs" />
+    <Compile Include="App\Analyst\Util\AnalystReportBridge.cs" />
+    <Compile Include="App\Analyst\Util\ConvertStringConst.cs" />
+    <Compile Include="App\Analyst\Util\CSVHeaders.cs" />
+    <Compile Include="App\Analyst\Wizard\AnalystWizard.cs" />
+    <Compile Include="App\Analyst\Wizard\NormalizeRange.cs" />
+    <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
+    <Compile Include="App\Quant\Indicators\Indicator.cs" />
+    <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
+    <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />
+    <Compile Include="App\Quant\Indicators\Predictive\BestReturn.cs" />
+    <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
+    <Compile Include="App\Quant\Loader\LoaderError.cs" />
+    <Compile Include="App\Quant\Loader\MarketLoader.cs" />
+    <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
+    <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
+    <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
+    <Compile Include="App\Quant\QuantError.cs" />
+    <Compile Include="App\Quant\QuantTask.cs" />
+    <Compile Include="App\Quant\Util\BarBuffer.cs" />
+    <Compile Include="Bot\BotError.cs" />
+    <Compile Include="Bot\BotUtil.cs" />
+    <Compile Include="Bot\Browse\Address.cs" />
+    <Compile Include="Bot\Browse\BrowseError.cs" />
+    <Compile Include="Bot\Browse\Browser.cs" />
+    <Compile Include="Bot\Browse\Extract\BasicExtract.cs" />
+    <Compile Include="Bot\Browse\Extract\IExtractListener.cs" />
+    <Compile Include="Bot\Browse\Extract\IExtract.cs" />
+    <Compile Include="Bot\Browse\Extract\ListExtractListener.cs" />
+    <Compile Include="Bot\Browse\LoadWebPage.cs" />
+    <Compile Include="Bot\Browse\Range\Div.cs" />
+    <Compile Include="Bot\Browse\Range\DocumentRange.cs" />
+    <Compile Include="Bot\Browse\Range\Form.cs" />
+    <Compile Include="Bot\Browse\Range\FormElement.cs" />
+    <Compile Include="Bot\Browse\Range\Input.cs" />
+    <Compile Include="Bot\Browse\Range\Link.cs" />
+    <Compile Include="Bot\Browse\Range\Span.cs" />
+    <Compile Include="Bot\Browse\WebPage.cs" />
+    <Compile Include="Bot\DataUnits\CodeDataUnit.cs" />
+    <Compile Include="Bot\DataUnits\DataUnit.cs" />
+    <Compile Include="Bot\DataUnits\TagDataUnit.cs" />
+    <Compile Include="Bot\DataUnits\TextDataUnit.cs" />
+    <Compile Include="Bot\RSS\RSS.cs" />
+    <Compile Include="Bot\RSS\RSSItem.cs" />
+    <Compile Include="ConsoleStatusReportable.cs" />
+    <Compile Include="encog-core-cs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>encog-core-cs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="EncogFramework.cs" />
+    <Compile Include="EncogError.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationBiPolar.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationCompetitive.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationGaussian.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationLinear.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationLOG.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationRamp.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSigmoid.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSIN.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSoftMax.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
+    <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="ICloneable.cs" />
+    <Compile Include="IStatusReportable.cs" />
+    <Compile Include="MathUtil\BoundMath.cs" />
+    <Compile Include="MathUtil\BoundNumbers.cs" />
+    <Compile Include="MathUtil\EncogMath.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
+    <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
+    <Compile Include="MathUtil\IntRange.cs" />
+    <Compile Include="MathUtil\LIBSVM\SupportClass.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_model.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_node.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_parameter.cs" />
+    <Compile Include="MathUtil\LIBSVM\svm_problem.cs" />
+    <Compile Include="MathUtil\Matrices\BiPolarUtil.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\CholeskyDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\EigenvalueDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\LUDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\QRDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Decomposition\SingularValueDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Matrix.cs" />
+    <Compile Include="MathUtil\Matrices\MatrixError.cs" />
+    <Compile Include="MathUtil\Matrices\MatrixMath.cs" />
+    <Compile Include="MathUtil\NumericRange.cs" />
+    <Compile Include="MathUtil\Randomize\BasicRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\ConsistentRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\ConstRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\Distort.cs" />
+    <Compile Include="MathUtil\Randomize\FanInRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\IRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\RangeRandomizer.cs" />
+    <Compile Include="MathUtil\RBF\BasicRBF.cs" />
+    <Compile Include="MathUtil\RBF\InverseMultiquadricFunction.cs" />
+    <Compile Include="MathUtil\RBF\MexicanHatFunction.cs" />
+    <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
+    <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
+    <Compile Include="MathUtil\RBF\RBFEnum.cs" />
+    <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
+    <Compile Include="ML\BasicML.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLData.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedDataError.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedMLDataSet.cs" />
+    <Compile Include="ML\Data\Buffer\BufferedNeuralDataSetEnumerator.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\ArrayDataCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\CSVDataCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\IDataSetCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\NeuralDataSetCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\CODEC\SQLCODEC.cs" />
+    <Compile Include="ML\Data\Buffer\EncogEGBFile.cs" />
+    <Compile Include="ML\Data\Buffer\MemoryDataLoader.cs" />
+    <Compile Include="ML\Data\Folded\FoldedDataSet.cs" />
+    <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
+    <Compile Include="ML\Data\Image\ImageMlData.cs" />
+    <Compile Include="ML\Data\Image\ImageMlDataSet.cs" />
+    <Compile Include="ML\Data\MLData.cs" />
+    <Compile Include="ML\Data\MLDataError.cs" />
+    <Compile Include="ML\Data\MLDataPair.cs" />
+    <Compile Include="ML\Data\MLDataSet.cs" />
+    <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
+    <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
+    <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />
+    <Compile Include="ML\Factory\Method\FeedforwardFactory.cs" />
+    <Compile Include="ML\Factory\Method\PNNFactory.cs" />
+    <Compile Include="ML\Factory\Method\RBFNetworkFactory.cs" />
+    <Compile Include="ML\Factory\Method\SOMFactory.cs" />
+    <Compile Include="ML\Factory\Method\SRNFactory.cs" />
+    <Compile Include="ML\Factory\Method\SVMFactory.cs" />
+    <Compile Include="ML\Factory\MLMethodFactory.cs" />
+    <Compile Include="ML\Factory\MLTrainFactory.cs" />
+    <Compile Include="ML\Factory\Parse\ArchitectureLayer.cs" />
+    <Compile Include="ML\Factory\Parse\ArchitectureParse.cs" />
+    <Compile Include="ML\Factory\Train\AnnealFactory.cs" />
+    <Compile Include="ML\Factory\Train\BackPropFactory.cs" />
+    <Compile Include="ML\Factory\Train\ClusterSOMFactory.cs" />
+    <Compile Include="ML\Factory\Train\GeneticFactory.cs" />
+    <Compile Include="ML\Factory\Train\LMAFactory.cs" />
+    <Compile Include="ML\Factory\Train\ManhattanFactory.cs" />
+    <Compile Include="ML\Factory\Train\NeighborhoodSOMFactory.cs" />
+    <Compile Include="ML\Factory\Train\PNNTrainFactory.cs" />
+    <Compile Include="ML\Factory\Train\RBFSVDFactory.cs" />
+    <Compile Include="ML\Factory\Train\RPROPFactory.cs" />
+    <Compile Include="ML\Factory\Train\SCGFactory.cs" />
+    <Compile Include="ML\Factory\Train\SVMFactory.cs" />
+    <Compile Include="ML\Factory\Train\SVMSearchFactory.cs" />
+    <Compile Include="ML\Genetic\BasicGeneticAlgorithm.cs" />
+    <Compile Include="ML\Genetic\Crossover\ICrossover.cs" />
+    <Compile Include="ML\Genetic\Crossover\Splice.cs" />
+    <Compile Include="ML\Genetic\Crossover\SpliceNoRepeat.cs" />
+    <Compile Include="ML\Genetic\Genes\BasicGene.cs" />
+    <Compile Include="ML\Genetic\Genes\CharGene.cs" />
+    <Compile Include="ML\Genetic\Genes\DoubleGene.cs" />
+    <Compile Include="ML\Genetic\Genes\IGene.cs" />
+    <Compile Include="ML\Genetic\Genes\IntegerGene.cs" />
+    <Compile Include="ML\Genetic\GeneticAlgorithm.cs" />
+    <Compile Include="ML\Genetic\GeneticError.cs" />
+    <Compile Include="ML\Genetic\Genome\BasicGenome.cs" />
+    <Compile Include="ML\Genetic\Genome\ICalculateGenomeScore.cs" />
+    <Compile Include="ML\Genetic\Genome\Chromosome.cs" />
+    <Compile Include="ML\Genetic\Genome\IGenome.cs" />
+    <Compile Include="ML\Genetic\Genome\GenomeComparator.cs" />
+    <Compile Include="ML\Genetic\Innovation\BasicInnovation.cs" />
+    <Compile Include="ML\Genetic\Innovation\BasicInnovationList.cs" />
+    <Compile Include="ML\Genetic\Innovation\IInnovation.cs" />
+    <Compile Include="ML\Genetic\Innovation\IInnovationList.cs" />
+    <Compile Include="ML\Genetic\MateWorker.cs" />
+    <Compile Include="ML\Genetic\Mutate\Mutate.cs" />
+    <Compile Include="ML\Genetic\Mutate\MutatePerturb.cs" />
+    <Compile Include="ML\Genetic\Mutate\MutateShuffle.cs" />
+    <Compile Include="ML\Genetic\Population\BasicPopulation.cs" />
+    <Compile Include="ML\Genetic\Population\IPopulation.cs" />
+    <Compile Include="ML\Genetic\Population\Population_Constants.cs" />
+    <Compile Include="ML\Genetic\Selection\ParentSelection.cs" />
+    <Compile Include="ML\Genetic\Selection\TruncateSelection.cs" />
+    <Compile Include="ML\Genetic\Species\BasicSpecies.cs" />
+    <Compile Include="ML\Genetic\Species\Species.cs" />
+    <Compile Include="ML\KMeans\Centroid.cs" />
+    <Compile Include="ML\KMeans\KMeansCluster.cs" />
+    <Compile Include="ML\KMeans\KMeansClustering.cs" />
+    <Compile Include="ML\MLAutoAssocation.cs" />
+    <Compile Include="ML\MLClassification.cs" />
+    <Compile Include="ML\MLCluster.cs" />
+    <Compile Include="ML\MLClustering.cs" />
+    <Compile Include="ML\MLContext.cs" />
+    <Compile Include="ML\MLEncodable.cs" />
+    <Compile Include="ML\MLError.cs" />
+    <Compile Include="ML\MLInput.cs" />
+    <Compile Include="ML\MLInputOutput.cs" />
+    <Compile Include="ML\MLMethod.cs" />
+    <Compile Include="ML\MLOutput.cs" />
+    <Compile Include="ML\MLProperties.cs" />
+    <Compile Include="ML\MLRegression.cs" />
+    <Compile Include="ML\MLResettable.cs" />
+    <Compile Include="ML\TrainingImplementationType.cs" />
+    <Compile Include="Neural\ART\BasicART.cs" />
+    <Compile Include="Neural\ART\ART1.cs" />
+    <Compile Include="Neural\ART\PersistART1.cs" />
+    <Compile Include="Neural\BAM\BAMNetwork.cs" />
+    <Compile Include="Neural\BAM\PersistBAM.cs" />
+    <Compile Include="Neural\CPN\CPN.cs" />
+    <Compile Include="Neural\CPN\PersistCPN.cs" />
+    <Compile Include="Neural\CPN\Training\TrainInstar.cs" />
+    <Compile Include="Neural\CPN\Training\TrainOutstar.cs" />
+    <Compile Include="Neural\Flat\FlatLayer.cs" />
+    <Compile Include="Neural\Flat\FlatNetwork.cs" />
+    <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
+    <Compile Include="Neural\Flat\Train\Gradient\FlatGradientWorker.cs" />
+    <Compile Include="Neural\Flat\Train\Gradient\GradientWorkerCPU.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\RPROPConst.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkBackPropagation.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkManhattan.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkProp.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkResilient.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkSCG.cs" />
+    <Compile Include="Neural\Flat\Train\TrainFlatNetwork.cs" />
+    <Compile Include="Neural\NEAT\NEATLink.cs" />
+    <Compile Include="Neural\NEAT\NEATNetwork.cs" />
+    <Compile Include="Neural\NEAT\NEATNeuron.cs" />
+    <Compile Include="Neural\NEAT\NEATNeuronType.cs" />
+    <Compile Include="Neural\NEAT\NEATPopulation.cs" />
+    <Compile Include="Neural\NEAT\PersistNEATNetwork.cs" />
+    <Compile Include="Neural\NEAT\PersistNEATPopulation.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATGenome.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATInnovation.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATInnovationList.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATInnovationType.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATLinkGene.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATNeuronGene.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATParent.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATTraining.cs" />
+    <Compile Include="Neural\Networks\BasicNetwork.cs" />
+    <Compile Include="Neural\Networks\ContainsFlat.cs" />
+    <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
+    <Compile Include="Neural\Networks\Layers\Layer.cs" />
+    <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
+    <Compile Include="Neural\Networks\PersistBasicNetwork.cs" />
+    <Compile Include="Neural\Networks\Structure\AnalyzeNetwork.cs" />
+    <Compile Include="Neural\Networks\Structure\NetworkCODEC.cs" />
+    <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
+    <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealing.cs" />
+    <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealingHelper.cs" />
+    <Compile Include="Neural\Networks\Training\ICalculateScore.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\CrossTraining.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\CrossValidationKFold.cs" />
+    <Compile Include="Neural\Networks\Training\Cross\NetworkFold.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\GeneticScoreAdapter.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
+    <Compile Include="Neural\Networks\Training\Genetic\NeuralGenome.cs" />
+    <Compile Include="Neural\Networks\Training\ILearningRate.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\ComputeJacobian.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\JacobianChainRule.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\LevenbergMarquardtTraining.cs" />
+    <Compile Include="Neural\Networks\Training\IMomentum.cs" />
+    <Compile Include="Neural\Networks\Training\PNN\CalculationCriteria.cs" />
+    <Compile Include="Neural\Networks\Training\PNN\DeriveMinimum.cs" />
+    <Compile Include="Neural\Networks\Training\PNN\GlobalMinimumSearch.cs" />
+    <Compile Include="Neural\Networks\Training\PNN\TrainBasicPNN.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Back\Backpropagation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\PersistTrainingContinuation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Propagation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
+    <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
+    <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
+    <Compile Include="Neural\Networks\Training\Train.cs" />
+    <Compile Include="Neural\Networks\Training\TrainingError.cs" />
+    <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
+    <Compile Include="ML\Train\BasicTraining.cs" />
+    <Compile Include="ML\Train\MLTrain.cs" />
+    <Compile Include="ML\Train\Strategy\End\EndIterationsStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\End\EndMaxErrorStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\End\EndMinutesStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\End\EndTrainingStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\Greedy.cs" />
+    <Compile Include="ML\Train\Strategy\HybridStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\RequiredImprovementStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\ResetStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\StopTrainingStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\IStrategy.cs" />
+    <Compile Include="Neural\Pattern\ADALINEPattern.cs" />
+    <Compile Include="Neural\Pattern\ART1Pattern.cs" />
+    <Compile Include="Neural\Pattern\BAMPattern.cs" />
+    <Compile Include="Neural\Pattern\BoltzmannPattern.cs" />
+    <Compile Include="Neural\Pattern\CPNPattern.cs" />
+    <Compile Include="Neural\Pattern\ElmanPattern.cs" />
+    <Compile Include="Neural\Pattern\FeedForwardPattern.cs" />
+    <Compile Include="Neural\Pattern\HopfieldPattern.cs" />
+    <Compile Include="Neural\Pattern\JordanPattern.cs" />
+    <Compile Include="Neural\Pattern\NeuralNetworkPattern.cs" />
+    <Compile Include="Neural\Pattern\PatternError.cs" />
+    <Compile Include="Neural\Pattern\PNNPattern.cs" />
+    <Compile Include="Neural\Pattern\RadialBasisPattern.cs" />
+    <Compile Include="Neural\Pattern\SOMPattern.cs" />
+    <Compile Include="Neural\Pattern\SVMPattern.cs" />
+    <Compile Include="Neural\PNN\AbstractPNN.cs" />
+    <Compile Include="Neural\PNN\BasicPNN.cs" />
+    <Compile Include="Neural\PNN\PersistBasicPNN.cs" />
+    <Compile Include="Neural\PNN\PNNKernelType.cs" />
+    <Compile Include="Neural\PNN\PNNOutputMode.cs" />
+    <Compile Include="Neural\Prune\HiddenLayerParams.cs" />
+    <Compile Include="Neural\Prune\NetworkPattern.cs" />
+    <Compile Include="Neural\Prune\PruneIncremental.cs" />
+    <Compile Include="Neural\Prune\PruneSelective.cs" />
+    <Compile Include="Neural\RBF\PersistRBFNetwork.cs" />
+    <Compile Include="Neural\RBF\RBFNetwork.cs" />
+    <Compile Include="Neural\RBF\Training\SVD.cs" />
+    <Compile Include="Neural\RBF\Training\SVDTraining.cs" />
+    <Compile Include="Neural\SOM\PersistSOM.cs" />
+    <Compile Include="Neural\SOM\SOMNetwork.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\BasicTrainSOM.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\BestMatchingUnit.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\NeighborhoodBubble.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\INeighborhoodFunction.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\NeighborhoodRBF.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\NeighborhoodRBF1D.cs" />
+    <Compile Include="Neural\SOM\Training\Neighborhood\NeighborhoodSingle.cs" />
+    <Compile Include="Neural\SOM\Training\ClusterCopy\SOMClusterCopyTraining.cs" />
+    <Compile Include="Neural\Thermal\BoltzmannMachine.cs" />
+    <Compile Include="Neural\Thermal\HopfieldNetwork.cs" />
+    <Compile Include="Neural\Thermal\PersistBoltzmann.cs" />
+    <Compile Include="Neural\Thermal\PersistHopfield.cs" />
+    <Compile Include="Neural\Thermal\ThermalNetwork.cs" />
+    <Compile Include="Persist\EncogDirectoryPersistence.cs" />
+    <Compile Include="Persist\EncogFileSection.cs" />
+    <Compile Include="Persist\EncogPersistor.cs" />
+    <Compile Include="Persist\EncogReadHelper.cs" />
+    <Compile Include="Persist\EncogWriteHelper.cs" />
+    <Compile Include="Persist\PersistConst.cs" />
+    <Compile Include="Persist\PersistError.cs" />
+    <Compile Include="Persist\PersistorRegistry.cs" />
+    <Compile Include="ML\SVM\KernelType.cs" />
+    <Compile Include="ML\SVM\PersistSVM.cs" />
+    <Compile Include="ML\SVM\SupportVectorMachine.cs" />
+    <Compile Include="ML\SVM\SVMType.cs" />
+    <Compile Include="ML\SVM\Training\EncodeSVMProblem.cs" />
+    <Compile Include="ML\SVM\Training\SVMSearchTrain.cs" />
+    <Compile Include="ML\SVM\Training\SVMTrain.cs" />
+    <Compile Include="Plugin\EncogPluginBase.cs" />
+    <Compile Include="Plugin\EncogPluginType1.cs" />
+    <Compile Include="Plugin\EncogPluginType1Const.cs" />
+    <Compile Include="Plugin\SystemPlugin\SystemCalculationPlugin.cs" />
+    <Compile Include="Plugin\SystemPlugin\SystemLoggingPlugin.cs" />
+    <Compile Include="Util\Arrayutil\ClassItem.cs" />
+    <Compile Include="Util\Arrayutil\NormalizationAction.cs" />
+    <Compile Include="Util\Arrayutil\NormalizationActionExtension.cs" />
+    <Compile Include="Util\Arrayutil\NormalizeArray.cs" />
+    <Compile Include="Util\Arrayutil\NormalizedField.cs" />
+    <Compile Include="Util\Arrayutil\TemporalType.cs" />
+    <Compile Include="Util\Arrayutil\TemporalWindowArray.cs" />
+    <Compile Include="Util\Arrayutil\TemporalWindowField.cs" />
+    <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
+    <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
+    <Compile Include="Util\Concurrency\IEngineTask.cs" />
+    <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />
+    <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
+    <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
+    <Compile Include="Util\Concurrency\PoolItem.cs" />
+    <Compile Include="Util\Concurrency\TaskGroup.cs" />
+    <Compile Include="Util\EncogValidate.cs" />
+    <Compile Include="Util\EngineArray.cs" />
+    <Compile Include="Util\Error\CalculateRegressionError.cs" />
+    <Compile Include="Util\File\Directory.cs" />
+    <Compile Include="Util\File\FileUtil.cs" />
+    <Compile Include="Util\File\ResourceInputStream.cs" />
+    <Compile Include="Util\Format.cs" />
+    <Compile Include="Util\HTMLReport.cs" />
+    <Compile Include="Util\Logging\EncogLogging.cs" />
+    <Compile Include="Util\ObjectPair.cs" />
+    <Compile Include="Util\ParamsHolder.cs" />
+    <Compile Include="Util\ResourceLoader.cs" />
+    <Compile Include="Util\SimpleParser.cs" />
+    <Compile Include="Util\Simple\TrainingSetUtil.cs" />
+    <Compile Include="Util\Time\NumericDateUtil.cs" />
+    <Compile Include="Neural\NeuralNetworkError.cs" />
+    <Compile Include="NullStatusReportable.cs" />
+    <Compile Include="Parse\ParseError.cs" />
+    <Compile Include="Parse\PeekableInputStream.cs" />
+    <Compile Include="Parse\Tags\Read\ReadHTML.cs" />
+    <Compile Include="Parse\Tags\Read\ReadTags.cs" />
+    <Compile Include="Parse\Tags\Read\ReadXML.cs" />
+    <Compile Include="Parse\Tags\Tag.cs" />
+    <Compile Include="Parse\Tags\TagConst.cs" />
+    <Compile Include="Parse\Tags\Write\WriteTags.cs" />
+    <Compile Include="Parse\Tags\Write\WriteXML.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Banchmark\EncogBenchmark.cs" />
+    <Compile Include="Util\Banchmark\Evaluate.cs" />
+    <Compile Include="Util\Banchmark\RandomTrainingFactory.cs" />
+    <Compile Include="Util\CSV\NumberList.cs" />
+    <Compile Include="Util\CSV\CSVError.cs" />
+    <Compile Include="Util\CSV\CSVFormat.cs" />
+    <Compile Include="Util\DirectoryUtil.cs" />
+    <Compile Include="Util\DownSample\IDownSample.cs" />
+    <Compile Include="Util\DownSample\RGBDownsample.cs" />
+    <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
+    <Compile Include="Util\FileUtil.cs" />
+    <Compile Include="Util\HTTP\FormUtility.cs" />
+    <Compile Include="Util\HTTP\URLUtility.cs" />
+    <Compile Include="Util\Identity\BasicGenerateID.cs" />
+    <Compile Include="Util\Identity\IGenerateID.cs" />
+    <Compile Include="Util\Logging\DumpMatrix.cs" />
+    <Compile Include="MathUtil\Convert.cs" />
+    <Compile Include="MathUtil\Equilateral.cs" />
+    <Compile Include="MathUtil\LinearCongruentialGenerator.cs" />
+    <Compile Include="MathUtil\MathConst.cs" />
+    <Compile Include="MathUtil\RBF\GaussianFunction.cs" />
+    <Compile Include="MathUtil\ThreadSafeRandom.cs" />
+    <Compile Include="Util\ObjectCloner.cs" />
+    <Compile Include="Util\CSV\ReadCSV.cs" />
+    <Compile Include="Util\ReflectionUtil.cs" />
+    <Compile Include="Util\SerializeObject.cs" />
+    <Compile Include="Util\Simple\EncogUtility.cs" />
+    <Compile Include="Util\Simple\TrainingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Util\Simple\TrainingDialog.Designer.cs">
+      <DependentUpon>TrainingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\StringUtil.cs" />
+    <Compile Include="Util\Time\DateUtil.cs" />
+    <Compile Include="Util\Time\EnglishTimeUnitNames.cs" />
+    <Compile Include="Util\Time\ITimeUnitNames.cs" />
+    <Compile Include="Util\Time\TimeSpanUtil.cs" />
+    <Compile Include="Util\Time\TimeUnit.cs" />
+    <Compile Include="Util\Validate\ValidateNetwork.cs" />
+    <Compile Include="Util\YahooSearch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="encog-core-cs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>encog-core-cs.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\classes.txt" />
+    <EmbeddedResource Include="Util\Simple\TrainingDialog.resx">
+      <DependentUpon>TrainingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Neural\NeuralData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

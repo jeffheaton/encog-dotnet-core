@@ -1,0 +1,9 @@
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\ConsoleExamples.exe
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\ConsoleExamples.pdb
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\encog-core-cs.dll
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\log4net.dll
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\encog-core-cs.pdb
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\bin\Debug\encog-core-cs.xml
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\obj\Debug\ResolveAssemblyReference.cache
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\obj\Debug\ConsoleExamples.exe
+D:\workarea\workarea\encog-core-cs\encog-core-cs\ConsoleExamples\obj\Debug\ConsoleExamples.pdb

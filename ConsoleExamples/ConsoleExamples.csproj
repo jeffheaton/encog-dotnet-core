@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A65A5878-6336-4ACF-9C40-540F8FAF2CC7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encog</RootNamespace>
+    <AssemblyName>ConsoleExamples</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleExamples.cs" />
+    <Compile Include="Examples\Adaline\AdalineDigits.cs" />
+    <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
+    <Compile Include="Examples\Benchmark\ThreadCount.cs" />
+    <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
+    <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
+    <Compile Include="Examples\GeneticTSP\ICalculateGenomeScore.cs" />
+    <Compile Include="Examples\GeneticTSP\TSPGenome.cs" />
+    <Compile Include="Examples\GeneticTSP\TSPScore.cs" />
+    <Compile Include="Examples\Hopfield\Associate\HopfieldAssociate.cs" />
+    <Compile Include="Examples\Hopfield\Simple\HopfieldSimple.cs" />
+    <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
+    <Compile Include="Examples\Image\ImagePair.cs" />
+    <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
+    <Compile Include="Examples\MultiBench\MultiThreadBenchmark.cs" />
+    <Compile Include="Examples\Persist\PersistEncog.cs" />
+    <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Examples\Util\City.cs" />
+    <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
+    <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
+    <Compile Include="Examples\ARTExample\ClassifyART1.cs" />
+    <Compile Include="Examples\BAM\BidirectionalAssociativeMemory.cs" />
+    <Compile Include="Examples\Benchmark\EncogBenchmarkExample.cs" />
+    <Compile Include="Examples\Boltzmann\BoltzTSP.cs" />
+    <Compile Include="Examples\ConsoleInterface.cs" />
+    <Compile Include="Examples\CPN\RocketCPN.cs" />
+    <Compile Include="Examples\ElmanNetwork\ElmanExample.cs" />
+    <Compile Include="Examples\ExampleArgument.cs" />
+    <Compile Include="Examples\ExampleInfo.cs" />
+    <Compile Include="Examples\IExample.cs" />
+    <Compile Include="Examples\IExampleInterface.cs" />
+    <Compile Include="Examples\Util\TemporalXOR.cs" />
+    <Compile Include="Examples\XOR\XORDisplay.cs" />
+    <Compile Include="Examples\XOR\XORFactory.cs" />
+    <Compile Include="Examples\XOR\XORFlat.cs" />
+    <Compile Include="Examples\XOR\XORHelloWorld.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\encog-core-cs\encog-core-cs.csproj">
+      <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
+      <Name>encog-core-cs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,354 @@
+using System;
+using Encog.MathUtil.Randomize;
+using Encog.MathUtil.RBF;
+using Encog.ML;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
+using Encog.Neural.Flat;
+using Encog.Neural.Networks;
+using Encog.Util;
+using Encog.Util.Simple;
+
+namespace Encog.Neural.RBF
+{
+    /// <summary>
+    /// RBF neural network.
+    /// </summary>
+    ///
+    public class RBFNetwork : BasicML, MLError, MLRegression,
+                              ContainsFlat
+    {
+        /// <summary>
+        /// Serial id.
+        /// </summary>
+        ///
+        private const long serialVersionUID = 1L;
+
+        /// <summary>
+        /// The underlying flat network.
+        /// </summary>
+        ///
+        private readonly FlatNetworkRBF flat;
+
+        /// <summary>
+        /// Construct RBF network.
+        /// </summary>
+        ///
+        public RBFNetwork()
+        {
+            flat = new FlatNetworkRBF();
+        }
+
+        /// <summary>
+        /// Construct RBF network.
+        /// </summary>
+        ///
+        /// <param name="inputCount">The input count.</param>
+        /// <param name="hiddenCount">The hidden count.</param>
+        /// <param name="outputCount">The output count.</param>
+        /// <param name="t">The RBF type.</param>
+        public RBFNetwork(int inputCount, int hiddenCount,
+                          int outputCount, RBFEnum t)
+        {
+            if (hiddenCount == 0)
+            {
+                throw new NeuralNetworkError(
+                    "RBF network cannot have zero hidden neurons.");
+            }
+
+            var rbf = new IRadialBasisFunction[hiddenCount];
+
+            // Set the standard RBF neuron width.
+            // Literature seems to suggest this is a good default value.
+            double volumeNeuronWidth = 2.0d/hiddenCount;
+
+            flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf);
+
+            try
+            {
+                // try this
+                SetRBFCentersAndWidthsEqualSpacing(-1, 1, t, volumeNeuronWidth,
+                                                   false);
+            }
+            catch (EncogError ex)
+            {
+                // if we have the wrong number of hidden neurons, try this
+                RandomizeRBFCentersAndWidths(-1, 1, t);
+            }
+        }
+
+        /// <summary>
+        /// Construct RBF network.
+        /// </summary>
+        ///
+        /// <param name="inputCount">The input count.</param>
+        /// <param name="outputCount">The output count.</param>
+        /// <param name="rbf">The RBF type.</param>
+        public RBFNetwork(int inputCount, int outputCount,
+                          IRadialBasisFunction[] rbf)
+        {
+            flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf);
+            flat.RBF = rbf;
+        }
+
+        /// <summary>
+        /// Set the RBF's.
+        /// </summary>
+        ///
+        /// <value>The RBF's.</value>
+        public IRadialBasisFunction[] RBF
+        {
+            /// <summary>
+            /// Get the RBF's.
+            /// </summary>
+            ///
+            /// <returns>The RBF's.</returns>
+            get { return flat.RBF; }
+            /// <summary>
+            /// Set the RBF's.
+            /// </summary>
+            ///
+            /// <param name="rbf">The RBF's.</param>
+            set { flat.RBF = value; }
+        }
+
+        #region ContainsFlat Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        public FlatNetwork Flat
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            ///
+            get { return flat; }
+        }
+
+        #endregion
+
+        #region MLError Members
+
+        /// <summary>
+        /// Calculate the error for this neural network.
+        /// </summary>
+        ///
+        /// <param name="data">The training set.</param>
+        /// <returns>The error percentage.</returns>
+        public double CalculateError(MLDataSet data)
+        {
+            return EncogUtility.CalculateRegressionError(this, data);
+        }
+
+        #endregion
+
+        #region MLRegression Members
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        public MLData Compute(MLData input)
+        {
+            MLData output = new BasicMLData(OutputCount);
+            flat.Compute(input.Data, output.Data);
+            return output;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        public virtual int InputCount
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            ///
+            get { return flat.InputCount; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        public virtual int OutputCount
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            ///
+            get { return flat.OutputCount; }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Set the RBF components to random values.
+        /// </summary>
+        ///
+        /// <param name="min">Minimum random value.</param>
+        /// <param name="max">Max random value.</param>
+        /// <param name="t">The type of RBF to use.</param>
+        public void RandomizeRBFCentersAndWidths(double min,
+                                                 double max, RBFEnum t)
+        {
+            int dimensions = InputCount;
+            var centers = new double[dimensions];
+
+            for (int i = 0; i < dimensions; i++)
+            {
+                centers[i] = RangeRandomizer.Randomize(min, max);
+            }
+
+            for (int i_0 = 0; i_0 < flat.RBF.Length; i_0++)
+            {
+                SetRBFFunction(i_0, t, centers, RangeRandomizer.Randomize(min, max));
+            }
+        }
+
+        /// <summary>
+        /// Array containing center position. Row n contains centers for neuron n.
+        /// Row n contains x elements for x number of dimensions.
+        /// </summary>
+        ///
+        /// <param name="centers">The centers.</param>
+        /// <param name="widths"></param>
+        /// <param name="t">The RBF Function to use for this layer.</param>
+        public void SetRBFCentersAndWidths(double[][] centers,
+                                           double[] widths, RBFEnum t)
+        {
+            for (int i = 0; i < flat.RBF.Length; i++)
+            {
+                SetRBFFunction(i, t, centers[i], widths[i]);
+            }
+        }
+
+        /// <summary>
+        /// Equally spaces all hidden neurons within the n dimensional variable
+        /// space.
+        /// </summary>
+        ///
+        /// <param name="minPosition">The minimum position neurons should be centered. Typically 0.</param>
+        /// <param name="maxPosition">The maximum position neurons should be centered. Typically 1</param>
+        /// <param name="volumeNeuronRBFWidth">The neuron width of neurons within the mesh.</param>
+        /// <param name="useWideEdgeRBFs">Enables wider RBF's around the boundary of the neuron mesh.</param>
+        public void SetRBFCentersAndWidthsEqualSpacing(
+            double minPosition, double maxPosition,
+            RBFEnum t, double volumeNeuronRBFWidth,
+            bool useWideEdgeRBFs)
+        {
+            int totalNumHiddenNeurons = flat.RBF.Length;
+
+            int dimensions = InputCount;
+            double disMinMaxPosition = Math.Abs(maxPosition - minPosition);
+
+            // Check to make sure we have the correct number of neurons for the
+            // provided dimensions
+            var expectedSideLength = (int) Math.Pow(totalNumHiddenNeurons, 1.0d/dimensions);
+            double cmp = Math.Pow(totalNumHiddenNeurons, 1.0d/dimensions);
+
+            if (expectedSideLength != cmp)
+            {
+                throw new NeuralNetworkError(
+                    "Total number of RBF neurons must be some integer to the power of 'dimensions'.\n"
+                    + Format.FormatDouble(expectedSideLength, 5)
+                    + " <> " + Format.FormatDouble(cmp, 5));
+            }
+
+            double edgeNeuronRBFWidth = 2.5d*volumeNeuronRBFWidth;
+
+            var centers = new double[totalNumHiddenNeurons][];
+            var widths = new double[totalNumHiddenNeurons];
+
+            for (int i = 0; i < totalNumHiddenNeurons; i++)
+            {
+                centers[i] = new double[dimensions];
+
+                int sideLength = expectedSideLength;
+
+                // Evenly distribute the volume neurons.
+                int temp = i;
+
+                // First determine the centers
+                for (int j = dimensions; j > 0; j--)
+                {
+                    // i + j * sidelength + k * sidelength ^2 + ... l * sidelength ^
+                    // n
+                    // i - neuron number in x direction, i.e. 0,1,2,3
+                    // j - neuron number in y direction, i.e. 0,1,2,3
+                    // Following example assumes sidelength of 4
+                    // e.g Neuron 5 - x position is (int)5/4 * 0.33 = 0.33
+                    // then take modulus of 5%4 = 1
+                    // Neuron 5 - y position is (int)1/1 * 0.33 = 0.33
+                    centers[i][j - 1] = ((int) (temp/Math.Pow(sideLength, j - 1))*(disMinMaxPosition/(sideLength - 1)))
+                                        + minPosition;
+                    temp = temp%(int) (Math.Pow(sideLength, j - 1));
+                }
+
+                // Now set the widths
+                bool contains = false;
+
+                for (int z = 0; z < centers[0].Length; z++)
+                {
+                    if ((centers[i][z] == 1.0d) || (centers[i][z] == 0.0d))
+                    {
+                        contains = true;
+                    }
+                }
+
+                if (contains && useWideEdgeRBFs)
+                {
+                    widths[i] = edgeNeuronRBFWidth;
+                }
+                else
+                {
+                    widths[i] = volumeNeuronRBFWidth;
+                }
+            }
+
+            SetRBFCentersAndWidths(centers, widths, t);
+        }
+
+        /// <summary>
+        /// Set an RBF function.
+        /// </summary>
+        ///
+        /// <param name="index">The index to set.</param>
+        /// <param name="t">The function type.</param>
+        /// <param name="centers">The centers.</param>
+        /// <param name="width">The width.</param>
+        public void SetRBFFunction(int index, RBFEnum t,
+                                   double[] centers, double width)
+        {
+            if (t == RBFEnum.Gaussian)
+            {
+                flat.RBF[index] = new GaussianFunction(0.5d, centers,
+                                                       width);
+            }
+            else if (t == RBFEnum.Multiquadric)
+            {
+                flat.RBF[index] = new MultiquadricFunction(0.5d, centers,
+                                                           width);
+            }
+            else if (t == RBFEnum.InverseMultiquadric)
+            {
+                flat.RBF[index] = new InverseMultiquadricFunction(0.5d,
+                                                                  centers, width);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        public override void UpdateProperties()
+        {
+            // unneeded
+        }
+    }
+}
