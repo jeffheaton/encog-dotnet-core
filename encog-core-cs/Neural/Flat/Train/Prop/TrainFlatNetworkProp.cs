@@ -1,9 +1,9 @@
 using System;
 using Encog.MathUtil;
 using Encog.ML.Data;
-using Encog.Neural.Flat.Train.Gradient;
 using Encog.Util;
 using Encog.Util.Concurrency;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Flat.Train.Prop
 {
@@ -81,7 +81,19 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The workers.
         /// </summary>
         ///
-        private FlatGradientWorker[] workers;
+        private GradientWorker[] workers;
+
+        /// <summary>
+        /// True (default) if we should fix flatspots on supported activation functions.
+        /// </summary>
+        public bool FixFlatSpot { get; set; }
+
+        /// <summary>
+        /// The flat spot constants.
+        /// </summary>
+        private double[] flatSpot;        
+
+
 
         /// <summary>
         /// Train a flat network multithreaded.
@@ -101,6 +113,7 @@ namespace Encog.Neural.Flat.Train.Prop
             indexable = training_1;
             numThreads = 0;
             reportedException = null;
+            FixFlatSpot = true;
         }
 
         /// <value>The gradients from the last iteration;</value>
@@ -221,7 +234,7 @@ namespace Encog.Neural.Flat.Train.Prop
             }
 
 
-            foreach (FlatGradientWorker worker  in  workers)
+            foreach (GradientWorker worker in workers)
             {
                 EngineArray.ArrayCopy(network.Weights, 0,
                                       worker.Weights, 0, network.Weights.Length);
@@ -280,7 +293,7 @@ namespace Encog.Neural.Flat.Train.Prop
                     .CreateTaskGroup();
 
 
-                foreach (FlatGradientWorker worker  in  workers)
+                foreach (GradientWorker worker in workers)
                 {
                     EngineConcurrency.Instance.ProcessTask(worker, group);
                 }
@@ -292,7 +305,7 @@ namespace Encog.Neural.Flat.Train.Prop
                 workers[0].Run();
             }
 
-            currentError = totalError/workers.Length;
+            currentError = totalError / workers.Length;
         }
 
         /// <summary>
@@ -319,20 +332,51 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         private void Init()
         {
-            var determine = new DetermineWorkload(
-                numThreads, (int) indexable.Count);
+            // fix flat spot, if needed
+            this.flatSpot = new double[this.network.ActivationFunctions.Length];
 
-            workers = new FlatGradientWorker[determine.ThreadCount];
+            if (FixFlatSpot)
+            {
+                for (int i = 0; i < this.network.ActivationFunctions.Length; i++)
+                {
+                    IActivationFunction af = this.network.ActivationFunctions[i];
+                    // if the diriv tends to 0 on either -1, 0.0 or 1, then 
+                    // add a flat-spot const.
+                    double t1 = af.DerivativeFunction(-1.0);
+                    double t2 = af.DerivativeFunction(0.0);
+                    double t3 = af.DerivativeFunction(1.0);
+                    if ((Math.Abs(t1) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                            || (Math.Abs(t2) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                            || (Math.Abs(t3) < EncogFramework.DEFAULT_DOUBLE_EQUAL))
+                    {
+                        this.flatSpot[i] = 0.1;
+                    }
+                    else
+                    {
+                        this.flatSpot[i] = 0.0;
+                    }
+                }
+            }
+            else
+            {
+                EngineArray.Fill(this.flatSpot, 0.0);
+            }
+
+
+            var determine = new DetermineWorkload(
+                numThreads, (int)indexable.Count);
+
+            workers = new GradientWorker[determine.ThreadCount];
 
             int index = 0;
 
 
             // handle CPU
-            foreach (IntRange r  in  determine.CalculateWorkers())
+            foreach (IntRange r in determine.CalculateWorkers())
             {
-                workers[index++] = new GradientWorkerCPU(((FlatNetwork) network.Clone()),
+                workers[index++] = new GradientWorker(((FlatNetwork)network.Clone()),
                                                          this, indexable.OpenAdditional(), r.Low,
-                                                         r.High);
+                                                         r.High, flatSpot);
             }
         }
 

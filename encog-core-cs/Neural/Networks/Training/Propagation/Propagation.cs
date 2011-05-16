@@ -6,6 +6,7 @@ using Encog.Neural.Flat;
 using Encog.Neural.Flat.Train;
 using Encog.Util;
 using Encog.Util.Logging;
+using Encog.Neural.Flat.Train.Prop;
 
 namespace Encog.Neural.Networks.Training.Propagation
 {
@@ -85,6 +86,27 @@ namespace Encog.Neural.Networks.Training.Propagation
             ///
             /// <param name="numThreads">The number of threads.</param>
             set { flatTraining.NumThreads = value; }
+        }
+
+
+        /// <summary>
+        /// Default is true.  Call this with false to disable flat spot fix.
+        /// 
+        /// For more info on flat spot:
+        /// 
+        /// http://www.heatonresearch.com/wiki/Flat_Spot
+        /// 
+        /// </summary>
+        public bool FixFlatSpot 
+        {
+            get
+            {
+                return ((TrainFlatNetworkProp)this.flatTraining).FixFlatSpot;
+            }
+            set
+            {
+                ((TrainFlatNetworkProp)this.flatTraining).FixFlatSpot = value;
+            }
         }
 
         #region Train Members

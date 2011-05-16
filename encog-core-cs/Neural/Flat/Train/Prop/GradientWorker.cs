@@ -5,14 +5,15 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Flat.Train.Prop;
 using Encog.Util;
+using Encog.Util.Concurrency;
 
-namespace Encog.Neural.Flat.Train.Gradient
+namespace Encog.Neural.Flat.Train.Prop
 {
     /// <summary>
     /// Worker class for the mulithreaded training of flat networks.
     /// </summary>
     ///
-    public class GradientWorkerCPU : FlatGradientWorker
+    public class GradientWorker: IEngineTask
     {
         /// <summary>
         /// The actual values from the neural network.
@@ -111,6 +112,12 @@ namespace Encog.Neural.Flat.Train.Gradient
         private readonly double[] weights;
 
         /// <summary>
+        /// Derivative add constant.  Used to combat flat spot.
+        /// </summary>
+        private double[] _flatSpot;
+
+
+        /// <summary>
         /// Construct a gradient worker.
         /// </summary>
         ///
@@ -119,9 +126,10 @@ namespace Encog.Neural.Flat.Train.Gradient
         /// <param name="theTraining">The training data.</param>
         /// <param name="theLow">The low index to use in the training data.</param>
         /// <param name="theHigh">The high index to use in the training data.</param>
-        public GradientWorkerCPU(FlatNetwork theNetwork,
+        /// <param name="theFlatSpots">Holds an array of flat spot constants.</param>
+        public GradientWorker(FlatNetwork theNetwork,
                                  TrainFlatNetworkProp theOwner, MLDataSet theTraining,
-                                 int theLow, int theHigh)
+                                 int theLow, int theHigh, double[] flatSpots)
         {
             errorCalculation = new ErrorCalculation();
             network = theNetwork;
@@ -129,6 +137,7 @@ namespace Encog.Neural.Flat.Train.Gradient
             low = theLow;
             high = theHigh;
             owner = theOwner;
+            _flatSpot = flatSpots;
 
             layerDelta = new double[network.LayerOutput.Length];
             gradients = new double[network.Weights.Length];
@@ -208,14 +217,14 @@ namespace Encog.Neural.Flat.Train.Gradient
 
             for (int i = 0; i < actual.Length; i++)
             {
-                layerDelta[i] = network.ActivationFunctions[0]
-                                    .DerivativeFunction(actual[i])
+                layerDelta[i] = (network.ActivationFunctions[0]
+                                    .DerivativeFunction(actual[i])+_flatSpot[0])
                                 *(ideal[i] - actual[i]);
             }
 
-            for (int i_0 = network.BeginTraining; i_0 < network.EndTraining; i_0++)
+            for (int i = network.BeginTraining; i < network.EndTraining; i++)
             {
-                ProcessLevel(i_0);
+                ProcessLevel(i);
             }
         }
 
@@ -233,6 +242,7 @@ namespace Encog.Neural.Flat.Train.Gradient
 
             int index = weightIndex[currentLevel];
             IActivationFunction activation = network.ActivationFunctions[currentLevel + 1];
+            double currentFlatSpot = _flatSpot[currentLevel + 1];
 
             // handle weights
             int yi = fromLayerIndex;
@@ -251,7 +261,7 @@ namespace Encog.Neural.Flat.Train.Gradient
                 }
 
                 layerDelta[yi] = sum
-                                 *activation.DerivativeFunction(layerOutput[yi]);
+                                 *(activation.DerivativeFunction(layerOutput[yi])+currentFlatSpot);
                 yi++;
             }
         }

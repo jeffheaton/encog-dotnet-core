@@ -329,8 +329,7 @@
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
-    <Compile Include="Neural\Flat\Train\Gradient\FlatGradientWorker.cs" />
-    <Compile Include="Neural\Flat\Train\Gradient\GradientWorkerCPU.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\GradientWorker.cs" />
     <Compile Include="Neural\Flat\Train\Prop\RPROPConst.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkBackPropagation.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkManhattan.cs" />
