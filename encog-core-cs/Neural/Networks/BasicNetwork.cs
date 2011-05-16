@@ -26,6 +26,7 @@ namespace Encog.Neural.Networks
     /// Once the neural network has been completely constructed.
     /// </summary>
     ///
+    [Serializable]
     public class BasicNetwork : BasicML, ContainsFlat, MLContext,
                                 MLRegression, MLEncodable, MLResettable, MLClassification, MLError
     {
