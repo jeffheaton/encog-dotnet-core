@@ -38,7 +38,7 @@ namespace Encog.MathUtil.Randomize
         ///
         /// <param name="min_0">The minimum random value.</param>
         /// <param name="max_1">The maximum random value.</param>
-        public ConsistentRandomizer(double min_0, double max_1) : this(max_1, min_0, 1000)
+        public ConsistentRandomizer(double min_0, double max_1) : this(min_0,max_1, 1000)
         {
         }
 
