@@ -1,6 +1,0 @@
-﻿<NUnitProject>
-  <Settings activeconfig="Default" />
-  <Config name="Default" binpathtype="Auto">
-    <assembly path="encog-test\bin\Release\encog-test.dll" />
-  </Config>
-</NUnitProject>
