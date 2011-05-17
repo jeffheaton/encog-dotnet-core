@@ -6,6 +6,7 @@ using Encog.App.Analyst.Script.Prop;
 using Encog.App.Analyst.Script.Segregate;
 using Encog.App.Analyst.Script.Task;
 using Encog.Util.CSV;
+using Encog.Util.File;
 
 namespace Encog.App.Analyst.Script
 {
@@ -353,9 +354,9 @@ namespace Encog.App.Analyst.Script
         {
             String name = Properties.GetFilename(sourceID);
 
-            if (new FileInfo(name).DirectoryName == null && basePath != null)
+            if ( name.IndexOf(Path.PathSeparator) == -1 && basePath != null)
             {
-                return new FileInfo(basePath + name);
+                return FileUtil.CombinePath(new FileInfo(basePath) , name);
             }
             else
             {

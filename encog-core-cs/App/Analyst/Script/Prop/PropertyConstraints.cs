@@ -37,7 +37,7 @@ namespace Encog.App.Analyst.Script.Prop
             try
             {
                 Stream mask0 = ResourceInputStream
-                    .OpenResourceInputStream("org/encog/data/analyst.csv");
+                    .OpenResourceInputStream("Encog.Resources.analyst.csv");
                 var csv = new ReadCSV(mask0, false, CSVFormat.EG_FORMAT);
 
                 while (csv.Next())

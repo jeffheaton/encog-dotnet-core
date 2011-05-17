@@ -86,7 +86,7 @@ namespace Encog.App.Analyst.CSV
                 recordCount++;
             }
             RecordCount = recordCount;
-            Count = csv.ColumnNames.Count;
+            Count = csv.ColumnCount;
 
             ReadHeaders(csv);
             csv.Close();

@@ -39,6 +39,7 @@ namespace Encog.Util.File
                 // open the files before the copy
                 FileStream
                     ins0 = source.OpenRead();
+				target.Delete();
                 FileStream xout = target.OpenWrite();
 
                 // perform the copy

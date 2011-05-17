@@ -60,7 +60,7 @@ namespace Encog.Util.File
         public static String ReadFileAsString(FileInfo filePath)
         {
             var fileData = new StringBuilder(1000);
-            TextReader reader = new StreamReader(filePath.OpenWrite());
+            TextReader reader = new StreamReader(filePath.OpenRead());
             var buf = new char[1024];
             int numRead = 0;
             while ((numRead = reader.Read(buf, 0, buf.Length)) != -1)
@@ -92,6 +92,7 @@ namespace Encog.Util.File
         {
             try
             {
+				target.Delete();
                 FileStream fos = target.OpenWrite();
                 Stream mask0 = source.OpenRead();
 
@@ -134,6 +135,7 @@ namespace Encog.Util.File
             {
                 Stream mask0 = ResourceInputStream
                     .OpenResourceInputStream(resource);
+				targetFile.Delete();
                 Stream os = targetFile.OpenWrite();
                 Copy(mask0, os);
                 mask0.Close();
@@ -143,6 +145,12 @@ namespace Encog.Util.File
             {
                 throw new EncogError(ex);
             }
+        }
+
+        public static FileInfo CombinePath(FileInfo dir, string f)
+        {
+            string s = dir.ToString();
+            return new FileInfo(Path.Combine(s, f));
         }
     }
 }

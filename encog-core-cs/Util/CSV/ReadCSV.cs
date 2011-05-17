@@ -176,6 +176,24 @@ namespace Encog.Util.CSV
             Begin(headers, format);
         }
 
+        /// <summary>
+        /// Return the number of columns, if known. 
+        /// </summary>
+        public int ColumnCount
+        {
+            get
+            {
+                if (this.data == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return data.Length;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Read the headers.

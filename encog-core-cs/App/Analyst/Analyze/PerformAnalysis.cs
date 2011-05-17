@@ -87,7 +87,7 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFieldsFromCount(ReadCSV csv)
         {
-            fields = new AnalyzedField[csv.ColumnNames.Count];
+            fields = new AnalyzedField[csv.ColumnCount];
             for (int i = 0; i < fields.Length; i++)
             {
                 fields[i] = new AnalyzedField(script, "field:" + (i + 1));
@@ -102,10 +102,10 @@ namespace Encog.App.Analyst.Analyze
         private void GenerateFieldsFromHeaders(ReadCSV csv)
         {
             var h = new CSVHeaders(csv.ColumnNames);
-            fields = new AnalyzedField[csv.ColumnNames.Count];
+            fields = new AnalyzedField[csv.ColumnCount];
             for (int i = 0; i < fields.Length; i++)
             {
-                if (i >= csv.ColumnNames.Count)
+                if (i >= csv.ColumnCount)
                 {
                     throw new AnalystError(
                         "CSV header count does not match column count");
@@ -133,7 +133,7 @@ namespace Encog.App.Analyst.Analyze
                     GenerateFields(csv);
                 }
 
-                for (int i = 0; i < csv.ColumnNames.Count; i++)
+                for (int i = 0; i < csv.ColumnCount; i++)
                 {
                     fields[i].Analyze1(csv.Get(i));
                 }
@@ -151,7 +151,7 @@ namespace Encog.App.Analyst.Analyze
             csv = new ReadCSV(filename, headers, csvFormat);
             while (csv.Next())
             {
-                for (int i_0 = 0; i_0 < csv.ColumnNames.Count; i_0++)
+                for (int i_0 = 0; i_0 < csv.ColumnCount; i_0++)
                 {
                     fields[i_0].Analyze2(csv.Get(i_0));
                 }

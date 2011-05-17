@@ -73,6 +73,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.XOR.XORHelloWorld.Info);
             examples.Add(Encog.Examples.XOR.XORFlat.Info);
             examples.Add(Encog.Examples.XOR.XORDisplay.Info);
+            examples.Add(Encog.Examples.Analyst.AnalystExample.Info);
         }
 
         public void ListCommands()

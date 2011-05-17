@@ -158,6 +158,7 @@ namespace Encog.Persist
 
             try
             {
+				filename.Delete();
                 fos = filename.OpenWrite();
                 SaveObject(fos, obj);
             }
@@ -227,7 +228,7 @@ namespace Encog.Persist
             try
             {
                 var path = new FileInfo(Path.Combine(parent.FullName, name));
-                TextReader br = new StreamReader(path.OpenWrite());
+                TextReader br = new StreamReader(path.OpenRead());
                 String header = br.ReadLine();
                 String[] paras = header.Split(',');
                 br.Close();

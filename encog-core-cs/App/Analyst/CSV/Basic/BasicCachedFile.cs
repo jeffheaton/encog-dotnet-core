@@ -79,7 +79,7 @@ namespace Encog.App.Analyst.CSV.Basic
             try
             {
                 int recordCount = 0;
-                reader = new StreamReader(InputFilename.OpenWrite());
+                reader = new StreamReader(InputFilename.OpenRead());
                 while (reader.ReadLine() != null)
                 {
                     UpdateStatus(true);
@@ -125,7 +125,7 @@ namespace Encog.App.Analyst.CSV.Basic
                     throw new QuantError("File is empty");
                 }
 
-                for (int i = 0; i < csv.ColumnNames.Count; i++)
+                for (int i = 0; i < csv.ColumnCount; i++)
                 {
                     String name;
 

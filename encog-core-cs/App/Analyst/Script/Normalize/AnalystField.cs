@@ -643,7 +643,7 @@ namespace Encog.App.Analyst.Script.Normalize
             // build lookup map
             for (int i = 0; i < classes.Count; i++)
             {
-                lookup[Name] = classes[i].Index;
+                lookup[classes[i].Name] = classes[i].Index;
             }
         }
 

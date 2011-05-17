@@ -139,7 +139,8 @@ namespace Encog.App.Analyst.CSV.Normalize
                 csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
 
-                tw = new StreamWriter(file.OpenRead());
+				file.Delete();
+                tw = new StreamWriter(file.OpenWrite());
 
                 // write headers, if needed
                 if (ProduceOutputHeaders)

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ConsoleExamples.cs" />
     <Compile Include="Examples\Adaline\AdalineDigits.cs" />
+    <Compile Include="Examples\Analyst\AnalystExample.cs" />
     <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
     <Compile Include="Examples\Benchmark\ThreadCount.cs" />
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
@@ -94,6 +95,7 @@
       <Name>encog-core-cs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

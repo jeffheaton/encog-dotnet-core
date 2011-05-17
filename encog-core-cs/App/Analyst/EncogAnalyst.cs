@@ -432,6 +432,7 @@ namespace Encog.App.Analyst
             try
             {
                 // download the URL	
+				file.Delete();
                 FileStream fos = file.OpenWrite();
                 int lastUpdate = 0;
 

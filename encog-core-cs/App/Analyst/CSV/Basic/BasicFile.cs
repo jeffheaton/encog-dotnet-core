@@ -389,7 +389,7 @@ namespace Encog.App.Analyst.CSV.Basic
                 rc++;
             }
             recordCount = rc;
-            columnCount = csv.ColumnNames.Count;
+            columnCount = csv.ColumnCount;
 
             ReadHeaders(csv);
             csv.Close();
@@ -406,7 +406,8 @@ namespace Encog.App.Analyst.CSV.Basic
         {
             try
             {
-                var tw = new StreamWriter(outputFile.OpenRead());
+                outputFile.Delete();
+                var tw = new StreamWriter(outputFile.OpenWrite());
                 if (outputFormat == null)
                 {
                     outputFormat = inputFormat;
@@ -461,15 +462,15 @@ namespace Encog.App.Analyst.CSV.Basic
         {
             if (expectInputHeaders)
             {
-                inputHeadings = new String[csv.ColumnNames.Count];
-                for (int i = 0; i < csv.ColumnNames.Count; i++)
+                inputHeadings = new String[csv.ColumnCount];
+                for (int i = 0; i < csv.ColumnCount; i++)
                 {
                     inputHeadings[i] = csv.ColumnNames[i];
                 }
             }
             else
             {
-                inputHeadings = new String[csv.ColumnNames.Count];
+                inputHeadings = new String[csv.ColumnCount];
 
                 int i_0 = 0;
                 if (Script != null)
