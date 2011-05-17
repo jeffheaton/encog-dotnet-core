@@ -8,7 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:DirectoryUtil.cs" caret="3637" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4046" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="16229" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Image/f:ImageNeuralNetwork.cs" caret="3053" fromTop="11" />
@@ -25,22 +24,22 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Anneal/f:NeuralSimulatedAnnealingHelper.cs" caret="3140" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Anneal/f:NeuralSimulatedAnnealing.cs" caret="6061" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/f:MLTrainFactory.cs" caret="11105" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Randomize/f:RangeRandomizer.cs" caret="951" fromTop="14" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Genetic/f:NeuralGenome.cs" caret="458" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:IGenome.cs" caret="1" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="8134" fromTop="14" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Genetic/f:NeuralGeneticAlgorithm.cs" caret="3567" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/f:BasicGeneticAlgorithm.cs" caret="1600" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/d:Train/f:GeneticFactory.cs" caret="1738" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="29746" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutatePerturb.cs" caret="1358" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutateShuffle.cs" caret="778" fromTop="12" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:NEAT/d:Training/f:NEATGenome.cs" caret="11254" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="8260" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Crossover/f:Splice.cs" caret="1390" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Crossover/f:Splice.cs" caret="1388" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="29746" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Randomize/f:RangeRandomizer.cs" caret="1874" fromTop="12" />
+      <File id="5554410A-C46E-4E98-AB73-99CDD6B0991D/f:SOMColors.cs" caret="3854" fromTop="10" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="8" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="10" />
@@ -70,6 +69,7 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:NEAT/d:Training/f:NEATGenome.cs" caret="11231" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="8237" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Crossover/f:Splice.cs" caret="1500" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Randomize/f:RangeRandomizer.cs" caret="1874" fromTop="12" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -117,7 +117,7 @@
       <Item value="Length" priority="2" />
       <Item value="t" priority="0" />
       <Item value="Directory`0" priority="0" />
-      <Item value="ThreadSafeRandom`0" priority="1" />
+      <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
       <Item value="this" priority="11" />
       <Item value="private" priority="1" />
@@ -256,7 +256,7 @@
       <Item value="SetBoolean`0" priority="4" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.MathUtil.ThreadSafeRandom">
-      <Item value="NextDouble`0" priority="2" />
+      <Item value="NextDouble`0" priority="3" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.Matrices.Decomposition.LUDecomposition">
       <Item value="IsNonsingular" priority="0" />

@@ -64,7 +64,7 @@ namespace Encog.MathUtil.Randomize
         public static double Randomize(double min, double max)
         {
             double range = max - min;
-            return (range*(new Random()).Next()) + min;
+            return (range*ThreadSafeRandom.NextDouble()) + min;
         }
 
         /// <summary>
