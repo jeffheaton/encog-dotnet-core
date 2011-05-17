@@ -1,8 +1,0 @@
-<Modules>
-  <Module PersistentId="d:Miscellaneous Files" ModuleId="System.Windows.Forms" />
-  <Module PersistentId="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95" ModuleId="encog-core-cs" />
-  <Module PersistentId="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Windows.Forms_1" />
-  <Module PersistentId="83F646D8-D413-47F4-AE4D-AFF34C6A0CA7" ModuleId="OCR" />
-  <Module PersistentId="A65A5878-6336-4ACF-9C40-540F8FAF2CC7" ModuleId="ConsoleExamples" />
-  <Module PersistentId="5554410A-C46E-4E98-AB73-99CDD6B0991D" ModuleId="SOMColors" />
-</Modules>
