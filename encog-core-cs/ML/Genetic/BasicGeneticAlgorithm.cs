@@ -1,6 +1,7 @@
 using System;
 using Encog.ML.Genetic.Genome;
 using Encog.Util.Concurrency;
+using Encog.MathUtil;
 
 namespace Encog.ML.Genetic
 {
@@ -48,7 +49,7 @@ namespace Encog.ML.Genetic
             for (int i = 0; i < countToMate; i++)
             {
                 IGenome mother = Population.Genomes[i];
-                int fatherInt = ((new Random()).Next()*matingPopulationSize);
+                int fatherInt = (int)(ThreadSafeRandom.NextDouble()*matingPopulationSize);
                 IGenome father = Population.Genomes[fatherInt];
                 IGenome child1 = Population.Genomes[offspringIndex];
                 IGenome child2 = Population.Genomes[offspringIndex + 1];

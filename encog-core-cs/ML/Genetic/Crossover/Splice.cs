@@ -1,5 +1,6 @@
 using System;
 using Encog.ML.Genetic.Genome;
+using Encog.MathUtil;
 
 namespace Encog.ML.Genetic.Crossover
 {
@@ -43,7 +44,7 @@ namespace Encog.ML.Genetic.Crossover
             int geneLength = mother.Genes.Count;
 
             // the chromosome must be cut at two positions, determine them
-            int cutpoint1 = ((new Random()).Next()*(geneLength - cutLength));
+            int cutpoint1 = (int)(ThreadSafeRandom.NextDouble()*(geneLength - cutLength));
             int cutpoint2 = cutpoint1 + cutLength;
 
             // handle cut section

@@ -1,6 +1,7 @@
 using System;
 using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
+using Encog.MathUtil;
 
 namespace Encog.ML.Genetic.Mutate
 {
@@ -41,7 +42,7 @@ namespace Encog.ML.Genetic.Mutate
                 {
                     var doubleGene = (DoubleGene) gene;
                     double value_ren = doubleGene.Value;
-                    value_ren += (perturbAmount - ((new Random()).Next()*perturbAmount*2));
+                    value_ren += (perturbAmount - (ThreadSafeRandom.NextDouble()*perturbAmount*2));
                     doubleGene.Value = value_ren;
                 }
             }

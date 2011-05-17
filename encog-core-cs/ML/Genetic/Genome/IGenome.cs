@@ -16,7 +16,8 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The adjusted score.</value>
-        double AdjustedScore { /// <summary>
+        double AdjustedScore
+        { /// <summary>
             /// Get the adjusted score, this considers old-age penalties and youth
             /// bonuses. If there are no such bonuses or penalties, this is the same as
             /// the score.
@@ -29,7 +30,8 @@ namespace Encog.ML.Genetic.Genome
             /// </summary>
             ///
             /// <param name="adjustedScore">The adjusted score.</param>
-            set; }
+            set;
+        }
 
 
         /// <summary>
@@ -37,19 +39,23 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The amount to spawn.</value>
-        double AmountToSpawn { /// <returns>The amount of offspring this genome will have.</returns>
+        double AmountToSpawn
+        { /// <returns>The amount of offspring this genome will have.</returns>
             get;
             /// <summary>
             /// Set the amount to spawn.
             /// </summary>
             ///
             /// <param name="amountToSpawn">The amount to spawn.</param>
-            set; }
+            set;
+        }
 
 
         /// <value>The chromosomes that make up this genome.</value>
-        IList<Chromosome> Chromosomes { /// <returns>The chromosomes that make up this genome.</returns>
-            get; }
+        IList<Chromosome> Chromosomes
+        { /// <returns>The chromosomes that make up this genome.</returns>
+            get;
+        }
 
 
         /// <summary>
@@ -58,7 +64,8 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The GA.</value>
-        GeneticAlgorithm GeneticAlgorithm { /// <returns>Get the GA used by this genome. This is normally a transient
+        GeneticAlgorithm GeneticAlgorithm
+        { /// <returns>Get the GA used by this genome. This is normally a transient
             /// field and only used during training.</returns>
             get;
             /// <summary>
@@ -67,7 +74,8 @@ namespace Encog.ML.Genetic.Genome
             /// </summary>
             ///
             /// <param name="ga">The GA.</param>
-            set; }
+            set;
+        }
 
 
         /// <summary>
@@ -75,19 +83,23 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The genome id.</value>
-        long GenomeID { /// <returns>The genome ID.</returns>
+        long GenomeID
+        { /// <returns>The genome ID.</returns>
             get;
             /// <summary>
             /// Set the genome ID.
             /// </summary>
             ///
             /// <param name="genomeID">The genome id.</param>
-            set; }
+            set;
+        }
 
 
         /// <value>The organism produced by this genome.</value>
-        Object Organism { /// <returns>The organism produced by this genome.</returns>
-            get; }
+        Object Organism
+        { /// <returns>The organism produced by this genome.</returns>
+            get;
+        }
 
 
         /// <summary>
@@ -95,14 +107,16 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The population that this genome belongs to.</value>
-        IPopulation Population { /// <returns>The population that this genome belongs to.</returns>
+        IPopulation Population
+        { /// <returns>The population that this genome belongs to.</returns>
             get;
             /// <summary>
             /// Set the population that this genome belongs to.
             /// </summary>
             ///
             /// <param name="population">The population that this genome belongs to.</param>
-            set; }
+            set;
+        }
 
 
         /// <summary>
@@ -110,14 +124,16 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The new score.</value>
-        double Score { /// <returns>The score for this genome.</returns>
+        double Score
+        { /// <returns>The score for this genome.</returns>
             get;
             /// <summary>
             /// Set the score.
             /// </summary>
             ///
             /// <param name="score">The new score.</param>
-            set; }
+            set;
+        }
 
         /// <returns>The number of genes in this genome.</returns>
         int CalculateGeneCount();

@@ -4,6 +4,7 @@ using Encog.ML.Train;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Util.Logging;
+using Encog.MathUtil;
 
 namespace Encog.Neural.Networks.Training.Anneal
 {
@@ -170,7 +171,7 @@ namespace Encog.Neural.Networks.Training.Anneal
 
             for (int i = 0; i < array.Length; i++)
             {
-                double add = CUT - (new Random()).Next();
+                double add = CUT - ThreadSafeRandom.NextDouble();
                 add /= anneal.StartTemperature;
                 add *= anneal.Temperature;
                 array[i] = array[i] + add;

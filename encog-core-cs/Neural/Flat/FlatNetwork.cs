@@ -6,6 +6,7 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks;
 using Encog.Util;
+using Encog.MathUtil;
 
 namespace Encog.Neural.Flat
 {
@@ -890,7 +891,7 @@ namespace Encog.Neural.Flat
         {
             for (int i = 0; i < weights.Length; i++)
             {
-                weights[i] = ((new Random()).Next()*(hi - lo)) + lo;
+                weights[i] = (ThreadSafeRandom.NextDouble()*(hi - lo)) + lo;
             }
         }
     }

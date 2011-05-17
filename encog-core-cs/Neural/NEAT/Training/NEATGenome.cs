@@ -4,6 +4,7 @@ using Encog.MathUtil.Randomize;
 using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
 using Encog.Neural.Neat.Training;
+using Encog.MathUtil;
 
 namespace Encog.Neural.NEAT.Training
 {
@@ -325,7 +326,7 @@ namespace Encog.Neural.NEAT.Training
                               int numTrysToFindLoop, int numTrysToAddLink)
         {
             // should we even add the link
-            if ((new Random()).Next() > mutationRate)
+            if (ThreadSafeRandom.NextDouble() > mutationRate)
             {
                 return;
             }
@@ -340,7 +341,7 @@ namespace Encog.Neural.NEAT.Training
             bool recurrent = false;
 
             // a self-connected loop?
-            if ((new Random()).Next() < chanceOfLooped)
+            if (ThreadSafeRandom.NextDouble() < chanceOfLooped)
             {
                 // try to find(randomly) a neuron to add a self-connected link to
                 while ((countTrysToFindLoop--) > 0)
@@ -435,7 +436,7 @@ namespace Encog.Neural.NEAT.Training
         internal void AddNeuron(double mutationRate, int numTrysToFindOldLink)
         {
             // should we add a neuron?
-            if ((new Random()).Next() > mutationRate)
+            if (ThreadSafeRandom.NextDouble() > mutationRate)
             {
                 return;
             }
@@ -845,7 +846,7 @@ namespace Encog.Neural.NEAT.Training
         {
             foreach (IGene gene  in  neuronsChromosome.Genes)
             {
-                if ((new Random()).Next() < mutateRate)
+                if (ThreadSafeRandom.NextDouble() < mutateRate)
                 {
                     var neuronGene = (NEATNeuronGene) gene;
                     neuronGene.ActivationResponse = neuronGene.ActivationResponse
@@ -867,9 +868,9 @@ namespace Encog.Neural.NEAT.Training
             foreach (IGene gene  in  linksChromosome.Genes)
             {
                 var linkGene = (NEATLinkGene) gene;
-                if ((new Random()).Next() < mutateRate)
+                if (ThreadSafeRandom.NextDouble() < mutateRate)
                 {
-                    if ((new Random()).Next() < probNewMutate)
+                    if (ThreadSafeRandom.NextDouble() < probNewMutate)
                     {
                         linkGene.Weight = RangeRandomizer.Randomize(-1, 1);
                     }

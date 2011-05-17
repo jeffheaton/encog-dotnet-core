@@ -8,24 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:ParamsHolder.cs" caret="2504" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:GeneticTSP/f:GeneticSolveTSP.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Associate/f:HopfieldAssociate.cs" caret="707" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:ObjectCloner.cs" caret="2654" fromTop="4" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="221" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFlat.cs" caret="2791" fromTop="26" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="3376" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3417" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORDisplay.cs" caret="2900" fromTop="5" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="1774" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadXML.cs" caret="1476" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/f:BotUtil.cs" caret="1658" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:Browse/f:Browser.cs" caret="1809" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Write/f:WriteTags.cs" caret="2106" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/f:Tag.cs" caret="2181" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:Browse/f:LoadWebPage.cs" caret="2214" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Concurrency/f:EngineConcurrency.cs" caret="2307" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:ReadCSV.cs" caret="2824" fromTop="6" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:DirectoryUtil.cs" caret="3637" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:EncogFramework.cs" caret="4046" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Parse/d:Tags/d:Read/f:ReadTags.cs" caret="16229" fromTop="11" />
@@ -38,23 +20,26 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="7455" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="8807" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="3341" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="17108" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Anneal/f:SimulatedAnnealing.cs" caret="5629" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Anneal/f:NeuralSimulatedAnnealingHelper.cs" caret="3140" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Anneal/f:NeuralSimulatedAnnealing.cs" caret="6061" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/f:MLTrainFactory.cs" caret="11105" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Randomize/f:RangeRandomizer.cs" caret="951" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Genetic/f:NeuralGenome.cs" caret="458" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:IGenome.cs" caret="1" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="8134" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Genetic/f:NeuralGeneticAlgorithm.cs" caret="3567" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/f:BasicGeneticAlgorithm.cs" caret="1600" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/d:Train/f:GeneticFactory.cs" caret="1738" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="29746" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutatePerturb.cs" caret="1358" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutateShuffle.cs" caret="778" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:NEAT/d:Training/f:NEATGenome.cs" caret="11254" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="8260" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Crossover/f:Splice.cs" caret="1390" fromTop="9" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="393" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="3763" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="3755" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="4017" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="2952" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="6775" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="6462" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="8199" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:GradientWorker.cs" caret="7455" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="8" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="0" fromTop="9" />
@@ -70,6 +55,21 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/d:Train/d:Prop/f:TrainFlatNetworkProp.cs" caret="8807" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="3327" fromTop="14" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="3341" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Anneal/f:NeuralSimulatedAnnealing.cs" caret="6038" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="8386" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:IGenome.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:IGenome.cs" caret="4972" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="2337" fromTop="2" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="2193" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="3077" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="2342" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/f:BasicGeneticAlgorithm.cs" caret="1600" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="29723" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutatePerturb.cs" caret="1335" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Mutate/f:MutateShuffle.cs" caret="755" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:NEAT/d:Training/f:NEATGenome.cs" caret="11231" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="8237" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Crossover/f:Splice.cs" caret="1500" fromTop="11" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -89,7 +89,7 @@
       <Item value="svm_node" priority="1" />
       <Item value="result" priority="7" />
       <Item value="for" priority="8" />
-      <Item value="int" priority="6" />
+      <Item value="int" priority="7" />
       <Item value="i" priority="17" />
       <Item value="training" priority="0" />
       <Item value="paras" priority="3" />
@@ -119,7 +119,7 @@
       <Item value="Directory`0" priority="0" />
       <Item value="ThreadSafeRandom`0" priority="1" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="10" />
+      <Item value="this" priority="11" />
       <Item value="private" priority="1" />
       <Item value="bool" priority="1" />
       <Item value="BasicMLDataSet`0" priority="0" />
@@ -354,6 +354,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Flat.Train.Prop.TrainFlatNetworkProp">
       <Item value="flatSpot" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Genetic.Genome.BasicGenome">
+      <Item value="geneticAlgorithm" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

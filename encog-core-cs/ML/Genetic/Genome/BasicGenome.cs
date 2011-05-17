@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Encog.ML.Genetic.Population;
+using Encog.MathUtil;
 
 namespace Encog.ML.Genetic.Genome
 {
@@ -94,9 +95,13 @@ namespace Encog.ML.Genetic.Genome
         ///
         public int CompareTo(IGenome other)
         {
-            if (geneticAlgorithm.CalculateScore.ShouldMinimize)
+            if ( geneticAlgorithm.CalculateScore.ShouldMinimize)
             {
-                if (Score > other.Score)
+                if (Math.Abs(Score - other.Score) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                {
+                    return 0;
+                }
+                else if (Score > other.Score)
                 {
                     return 1;
                 }
@@ -104,12 +109,18 @@ namespace Encog.ML.Genetic.Genome
             }
             else
             {
-                if (Score > other.Score)
+                if (Math.Abs(Score - other.Score) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                {
+                    return 0;
+                }
+                else if (Score > other.Score)
                 {
                     return -1;
                 }
                 return 1;
+
             }
+
         }
 
         /// <summary>
@@ -270,13 +281,13 @@ namespace Encog.ML.Genetic.Genome
                                                 fatherChromosome, offspring1Chromosome,
                                                 offspring2Chromosome);
 
-                if ((new Random()).Next() < geneticAlgorithm.MutationPercent)
+                if (ThreadSafeRandom.NextDouble() < geneticAlgorithm.MutationPercent)
                 {
                     geneticAlgorithm.Mutate.PerformMutation(
                         offspring1Chromosome);
                 }
 
-                if ((new Random()).Next() < geneticAlgorithm.MutationPercent)
+                if (ThreadSafeRandom.NextDouble() < geneticAlgorithm.MutationPercent)
                 {
                     geneticAlgorithm.Mutate.PerformMutation(
                         offspring2Chromosome);
