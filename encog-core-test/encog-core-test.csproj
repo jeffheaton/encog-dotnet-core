@@ -57,10 +57,15 @@
     <Compile Include="Engine\Network\Activation\TestActivationSIN.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationSoftMax.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationTANH.cs" />
+    <Compile Include="MathUtil\Matrices\TestBiPolarUtil.cs" />
+    <Compile Include="MathUtil\Matrices\TestMatrix.cs" />
+    <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
+    <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
+    <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationBiPolar.cs" />
     <Compile Include="Util\XOR.cs" />
@@ -70,6 +75,9 @@
       <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
       <Name>encog-core-cs</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Neural\Networks\Training\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

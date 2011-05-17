@@ -27,28 +27,31 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
-using NUnit.Framework;
-using Encog.Bot.Browse;
-using Encog.Bot.Browse.Extract;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace encog_test.Encog.Bot.Browse.Extract
+namespace Encog.Parse.Tags.Write
 {
-    [TestFixture]
-    public class TestExtract
+    [TestClass]
+    public class TestXmlWrite
     {
-        [Test]
-        public void testWordExtract()
+        [TestMethod]
+        public void TestWrite()
         {
-            Browser b = new Browser();
-            b.Navigate(new Uri("http://www.httprecipes.com"));
-            WebPage page = b.CurrentPage;
-            ExtractWords extract = new ExtractWords();
-            IList<Object> list = extract.ExtractList(page);
-            Assert.IsTrue(list.Count > 5);
+            var ms = new MemoryStream();
+            var write = new WriteXML(ms);
+            write.BeginDocument();
+            write.AddAttribute("name", "value");
+            write.BeginTag("tag");
+            write.EndTag();
+            write.EndDocument();
+            ms.Close();
+
+            var enc = new ASCIIEncoding();
+            string str = enc.GetString(ms.ToArray());
+
+            Assert.AreEqual("<tag name=\"value\"></tag>", str);
         }
     }
 }

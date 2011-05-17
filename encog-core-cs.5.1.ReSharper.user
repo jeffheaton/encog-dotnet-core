@@ -8,11 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="5554410A-C46E-4E98-AB73-99CDD6B0991D/f:SOMColors.cs" caret="3854" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Analyze/f:PerformAnalysis.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:Cmd.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdBalance.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdCluster.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdCreate.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdEvaluate.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdEvaluateRaw.cs" caret="0" fromTop="0" />
@@ -37,39 +32,44 @@
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="266" fromTop="10" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBufferedNeuralDataSet.cs" caret="261" fromTop="10" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="1597" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1779" fromTop="20" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1304" fromTop="3" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestBiPolarUtil.cs" caret="2960" fromTop="11" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="16853" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="9708" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1395" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Read/f:TestXMLRead.cs" caret="1382" fromTop="10" />
     </RecentFiles>
     <RecentEdits>
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="3651" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="3651" fromTop="16" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="3651" fromTop="4" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="2330" fromTop="9" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="1577" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:XOR.cs" caret="1904" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2546" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2546" fromTop="16" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2546" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2546" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2546" fromTop="13" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="2436" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBufferedNeuralDataSet.cs" caret="825" fromTop="14" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBufferedNeuralDataSet.cs" caret="825" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBufferedNeuralDataSet.cs" caret="554" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBufferedNeuralDataSet.cs" caret="261" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="7" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="13" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="13" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="6" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="2716" fromTop="14" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestCSVNeuralData.cs" caret="1597" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1906" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1906" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1906" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1558" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Specific/f:TestSQLDataSet.cs" caret="1779" fromTop="20" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="12286" fromTop="15" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="14480" fromTop="14" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="15278" fromTop="11" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="16412" fromTop="8" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="16694" fromTop="14" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrix.cs" caret="16853" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="9960" fromTop="9" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="1839" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="2464" fromTop="9" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="2926" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="3146" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="4455" fromTop="16" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="4462" fromTop="16" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="4607" fromTop="8" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="5800" fromTop="13" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="6703" fromTop="7" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="7262" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="7726" fromTop="6" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="8237" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="9058" fromTop="11" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:MathUtil/d:Matrices/f:TestMatrixMath.cs" caret="9708" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Read/f:TestXMLRead.cs" caret="2092" fromTop="11" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1952" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1952" fromTop="3" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1952" fromTop="16" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1952" fromTop="7" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1653" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Write/f:TestXmlWrite.cs" caret="1383" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Read/f:TestXMLRead.cs" caret="2092" fromTop="13" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Parse/d:Tags/d:Read/f:TestXMLRead.cs" caret="1914" fromTop="10" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -87,7 +87,7 @@
       <Item value="long" priority="1" />
       <Item value="new" priority="5" />
       <Item value="svm_node" priority="1" />
-      <Item value="result" priority="7" />
+      <Item value="result" priority="9" />
       <Item value="for" priority="8" />
       <Item value="int" priority="7" />
       <Item value="i" priority="17" />
@@ -203,8 +203,15 @@
       <Item value="Data" priority="0" />
       <Item value="Buffer" priority="0" />
       <Item value="Specific" priority="1" />
-      <Item value="MathUtil" priority="0" />
+      <Item value="MathUtil" priority="1" />
       <Item value="Util" priority="0" />
+      <Item value="Mathutil" priority="0" />
+      <Item value="Matrices" priority="0" />
+      <Item value="d" priority="1" />
+      <Item value="matrix" priority="0" />
+      <Item value="Parse" priority="0" />
+      <Item value="Tags" priority="0" />
+      <Item value="Read" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -375,6 +382,10 @@
     <ItemStatistics item="Qualified:@Encog.Util.XOR">
       <Item value="XORInput" priority="10" />
       <Item value="XORIdeal" priority="7" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.MathUtil.Matrices.Matrix">
+      <Item value="ToString`0" priority="0" />
+      <Item value="Clone`0" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

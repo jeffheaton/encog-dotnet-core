@@ -27,21 +27,16 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Encog.MathUtil.Matrices;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace encog_test.TestMatrix
+namespace Encog.MathUtil.Matrices
 {
-    [TestFixture]
+    [TestClass]
     public class TestBiPolarUtil
     {
-        [Test]
-        public void Bipolar2double()
+        [TestMethod]
+        public void Bipolar2Double()
         {
             // test a 1x4
             bool[] boolData1 = { true, false, true, false };
@@ -52,18 +47,18 @@ namespace encog_test.TestMatrix
 
             // test a 2x2
             bool[][] boolData2 = { 
-                new bool[2]{ true, false }, 
-                new bool[2]{ false, true } };
+                new[]{ true, false }, 
+                new[]{ false, true } };
             double[][] checkData2 = { 
-                new double[2] { 1, -1 }, 
-                new double[2] { -1, 1 } };
-            Matrix matrix2 = new Matrix(BiPolarUtil.Bipolar2double(boolData2));
-            Matrix checkMatrix2 = new Matrix(checkData2);
+                new[] { 1.0, -1.0 }, 
+                new[] { -1.0, 1.0 } };
+            var matrix2 = new Matrix(BiPolarUtil.Bipolar2double(boolData2));
+            var checkMatrix2 = new Matrix(checkData2);
             Assert.IsTrue(matrix2.Equals(checkMatrix2));
         }
 
-        [Test]
-        public void Double2bipolar()
+        [TestMethod]
+        public void Double2Bipolar()
         {
             // test a 1x4
             double[] doubleData1 = { 1, -1, 1, -1 };
@@ -76,12 +71,12 @@ namespace encog_test.TestMatrix
 
             // test a 2x2
             double[][] doubleData2 =  { 
-                new double[2] { 1, -1 },
-                new double[2] { -1, 1 } };
+                new[] { 1.0, -1.0 },
+                new[] { -1.0, 1.0 } };
             bool[][] checkData2 =  { 
-                new bool[2] { true, false }, 
-                new bool[2] { false, true } };
-            bool[][] result2 = BiPolarUtil.Double2bipolar(doubleData2);
+                new[] { true, false }, 
+                new[] { false, true } };
+            var result2 = BiPolarUtil.Double2bipolar(doubleData2);
 
             Assert.AreEqual(result2[0][0], checkData2[0][0]);
             Assert.AreEqual(result2[0][1], checkData2[0][1]);
@@ -90,7 +85,7 @@ namespace encog_test.TestMatrix
 
         }
 
-        [Test]
+        [TestMethod]
         public void Binary()
         {
             Assert.AreEqual(0.0, BiPolarUtil.NormalizeBinary(-1));

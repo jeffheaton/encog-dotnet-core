@@ -27,35 +27,31 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.IO;
-using Encog.Parse.Tags.Write;
+using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace encog_test.Encog.Parse.Tags.Write
+namespace Encog.Parse.Tags.Read
 {
-    [TestFixture]
-    public class TestXMLWrite
+    [TestClass]
+    public class TestXMLRead
     {
-        [Test]
-        public void testXMLWrite()
+        public const string XML = "<doc><a t1='text1'>a</a><b>b</b><c>c</c><d>d</d></doc>";
+
+        [TestMethod]
+        public void TestRead()
         {
-            MemoryStream ms = new MemoryStream();
-            WriteXML write = new WriteXML(ms);
-            write.BeginDocument();
-            write.AddAttribute("name", "value");
-            write.BeginTag("tag");
-            write.EndTag();
-            write.EndDocument();
-            ms.Close();
-
-            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
-            String str = enc.GetString(ms.ToArray());
-
-            Assert.AreEqual("<tag name=\"value\"></tag>", str);
+            var enc = new ASCIIEncoding();
+            var bis = new MemoryStream(enc.GetBytes(XML));
+            var read = new ReadXML(bis);
+            Assert.AreEqual(0, read.Read());
+            Assert.IsTrue(read.IsIt("doc", true));
+            Assert.AreEqual(0, read.Read());
+            Assert.IsTrue(read.IsIt("a", true));
+            Assert.AreEqual('a', read.Read());
+            Assert.AreEqual(0, read.Read());
+            Assert.IsTrue(read.IsIt("a", false));
+            bis.Close();
         }
     }
 }
