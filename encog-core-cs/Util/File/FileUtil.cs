@@ -5,8 +5,19 @@ using Encog.Bot;
 
 namespace Encog.Util.File
 {
+    /// <summary>
+    /// Contains several utilities for working with files.
+    /// </summary>
     public class FileUtil
     {
+        /// <summary>
+        /// Add, or replace a filename base.  A filename base is between an underbar
+        /// and the . for the extension.  For example: "myfile_raw.csv", the base is
+        /// "raw".
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="bs"></param>
+        /// <returns></returns>
         public static FileInfo AddFilenameBase(FileInfo filename, String bs)
         {
             String f = GetFileName(filename);
@@ -37,6 +48,11 @@ namespace Encog.Util.File
             return new FileInfo(f + bs + "." + ext);
         }
 
+        /// <summary>
+        /// Get the filename, without extension.
+        /// </summary>
+        /// <param name="file">The file to parse.</param>
+        /// <returns>The file name.</returns>
         public static String GetFileName(FileInfo file)
         {
             String fileName = file.ToString();
@@ -48,6 +64,11 @@ namespace Encog.Util.File
             return fileName.Substring(0, (mid) - (0));
         }
 
+        /// <summary>
+        /// Get the file extension.
+        /// </summary>
+        /// <param name="file">The base file.</param>
+        /// <returns>The extension.</returns>
         public static String GetFileExt(FileInfo file)
         {
             String fileName = file.ToString();
@@ -57,6 +78,11 @@ namespace Encog.Util.File
             return fileName.Substring(mid + 1, (fileName.Length) - (mid + 1));
         }
 
+        /// <summary>
+        /// Read a file into a string.
+        /// </summary>
+        /// <param name="filePath">The file to read.</param>
+        /// <returns>The contents of the file.</returns>
         public static String ReadFileAsString(FileInfo filePath)
         {
             var fileData = new StringBuilder(1000);
@@ -73,6 +99,12 @@ namespace Encog.Util.File
             return fileData.ToString();
         }
 
+        /// <summary>
+        /// Change a file's extension.
+        /// </summary>
+        /// <param name="name">The filename to change.</param>
+        /// <param name="ext">The new extension.</param>
+        /// <returns></returns>
         public static String ForceExtension(String name, String ext)
         {
             String b = GetFileName(new FileInfo(name));

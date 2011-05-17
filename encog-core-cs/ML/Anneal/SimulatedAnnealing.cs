@@ -40,6 +40,9 @@ namespace Encog.ML.Anneal
         ///
         private double temperature;
 
+        /// <summary>
+        /// Construct the object.  Default ShouldMinimize to true.
+        /// </summary>
         public SimulatedAnnealing()
         {
             shouldMinimize = true;

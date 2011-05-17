@@ -13,12 +13,6 @@ namespace Encog.Neural.Thermal
                                            MLAutoAssocation, MLResettable
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The current state of the thermal network.
         /// </summary>
         ///

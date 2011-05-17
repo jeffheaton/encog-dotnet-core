@@ -12,11 +12,6 @@ namespace Encog.ML
     [Serializable]
     public abstract class BasicML : MLMethod, MLProperties
     {
-        /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
 
         /// <summary>
         /// Properties about the neural network. Some NeuralLogic classes require
@@ -25,6 +20,9 @@ namespace Encog.ML
         ///
         private readonly IDictionary<String, String> properties;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BasicML()
         {
             properties = new Dictionary<String, String>();
@@ -116,6 +114,10 @@ namespace Encog.ML
             UpdateProperties();
         }
 
+        /// <summary>
+        /// Update from the propeties stored in the hash map.  Should be called 
+        /// whenever the properties change and might need to be reloaded.
+        /// </summary>
         public abstract void UpdateProperties();
 
         #endregion

@@ -17,6 +17,9 @@ namespace Encog.ML.Genetic
         ///
         private bool first;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BasicGeneticAlgorithm()
         {
             first = true;

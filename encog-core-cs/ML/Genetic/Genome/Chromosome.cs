@@ -16,17 +16,14 @@ namespace Encog.ML.Genetic.Genome
     public class Chromosome
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The individual elements of this chromosome.
         /// </summary>
         ///
         private readonly List<IGene> genes;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public Chromosome()
         {
             genes = new List<IGene>();

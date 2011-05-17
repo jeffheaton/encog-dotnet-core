@@ -9,12 +9,6 @@ namespace Encog.ML.Genetic.Genes
     public class IntegerGene : BasicGene
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The value of this gene.
         /// </summary>
         ///

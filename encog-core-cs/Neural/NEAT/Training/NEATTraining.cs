@@ -765,7 +765,13 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
-        public NEATGenome Crossover(NEATGenome mom, NEATGenome dad)
+        /// <summary>
+        /// Perform a cross over.  
+        /// </summary>
+        /// <param name="mom">The mother genome.</param>
+        /// <param name="dad">The father genome.</param>
+        /// <returns></returns>
+        public new NEATGenome Crossover(NEATGenome mom, NEATGenome dad)
         {
             NEATParent best;
 
@@ -928,6 +934,9 @@ namespace Encog.Neural.NEAT.Training
             return babyGenome;
         }
 
+        /// <summary>
+        /// Init the training.
+        /// </summary>
         private void Init()
         {
             if (CalculateScore.ShouldMinimize)
@@ -966,6 +975,9 @@ namespace Encog.Neural.NEAT.Training
             SpeciateAndCalculateSpawnLevels();
         }
 
+        /// <summary>
+        /// Reset counts and kill genomes with worse scores.
+        /// </summary>
         public void ResetAndKill()
         {
             totalFitAdjustment = 0;
@@ -992,10 +1004,9 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
-        /**
-	 * Sort the genomes.
-	 */
-
+        /// <summary>
+        /// Sort the genomes.
+        /// </summary>
         public void SortAndRecord()
         {
             foreach (IGenome g in Population.Genomes)
@@ -1019,10 +1030,9 @@ namespace Encog.Neural.NEAT.Training
                                                  bestEverScore);
         }
 
-        /**
-	 * Determine the species.
-	 */
-
+        /// <summary>
+        /// Determine the species.
+        /// </summary>
         public void SpeciateAndCalculateSpawnLevels()
         {
             // calculate compatibility between genomes and species
@@ -1082,14 +1092,11 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
-        /**
-	 * Select a gene using a tournament.
-	 * 
-	 * @param numComparisons
-	 *            The number of compares to do.
-	 * @return The chosen genome.
-	 */
-
+        /// <summary>
+        /// Select a gene using a tournament.
+        /// </summary>
+        /// <param name="numComparisons">The number of compares to do.</param>
+        /// <returns>The chosen genome.</returns>
         public NEATGenome TournamentSelection(int numComparisons)
         {
             double bestScoreSoFar = 0;
@@ -1098,8 +1105,7 @@ namespace Encog.Neural.NEAT.Training
 
             for (int i = 0; i < numComparisons; ++i)
             {
-                var thisTry = (int) RangeRandomizer.Randomize(0,
-                                                              Population.Size() - 1);
+                var thisTry = (int) RangeRandomizer.Randomize(0,Population.Size() - 1);
 
                 if (Population.Get(thisTry).Score > bestScoreSoFar)
                 {

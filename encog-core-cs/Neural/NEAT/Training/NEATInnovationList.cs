@@ -20,12 +20,6 @@ namespace Encog.Neural.NEAT.Training
     public class NEATInnovationList : BasicInnovationList
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The next neuron id.
         /// </summary>
         ///

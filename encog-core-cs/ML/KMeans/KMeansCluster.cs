@@ -29,6 +29,9 @@ namespace Encog.ML.Kmeans
         ///
         private double sumSqr;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public KMeansCluster()
         {
             data = new List<MLData>();

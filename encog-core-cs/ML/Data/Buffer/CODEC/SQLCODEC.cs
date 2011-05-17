@@ -4,6 +4,9 @@ using System.Data.OleDb;
 
 namespace Encog.ML.Data.Buffer.CODEC
 {
+    /// <summary>
+    /// A CODEC designed to work with SQL.
+    /// </summary>
     public class SQLCODEC : IDataSetCODEC
     {
         /// <summary>
@@ -53,6 +56,12 @@ namespace Encog.ML.Data.Buffer.CODEC
 
         #region IDataSetCODEC Members
 
+        /// <summary>
+        /// Read a record.
+        /// </summary>
+        /// <param name="input">The input data.</param>
+        /// <param name="ideal">The ideal data.</param>
+        /// <returns></returns>
         public bool Read(double[] input, double[] ideal)
         {
             if (!results.NextResult())
@@ -75,31 +84,54 @@ namespace Encog.ML.Data.Buffer.CODEC
             return true;
         }
 
+        /// <summary>
+        /// Write a recrod.
+        /// </summary>
+        /// <param name="input">The input data.</param>
+        /// <param name="ideal">The ideal data.</param>
         public void Write(double[] input, double[] ideal)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Prepare to write.
+        /// </summary>
+        /// <param name="recordCount">The record count.</param>
+        /// <param name="inputSize">The input size.</param>
+        /// <param name="idealSize">The ideal size.</param>
         public void PrepareWrite(int recordCount, int inputSize, int idealSize)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Prepare to read.
+        /// </summary>
         public void PrepareRead()
         {
             results = statement.ExecuteReader();
         }
 
+        /// <summary>
+        /// The input size.
+        /// </summary>
         public int InputSize
         {
             get { return inputSize; }
         }
 
+        /// <summary>
+        /// The ideal size.
+        /// </summary>
         public int IdealSize
         {
             get { return idealSize; }
         }
 
+        /// <summary>
+        /// Close the codec.
+        /// </summary>
         public void Close()
         {
             if (connection != null)

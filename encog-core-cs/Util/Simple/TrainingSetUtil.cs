@@ -5,6 +5,9 @@ using Encog.Util.CSV;
 
 namespace Encog.Util.Simple
 {
+    /// <summary>
+    /// Provides some utilities for training sets.
+    /// </summary>
     public class TrainingSetUtil
     {
         /// <summary>
@@ -52,6 +55,11 @@ namespace Encog.Util.Simple
             return result;
         }
 
+        /// <summary>
+        /// Convert a training set to an array.
+        /// </summary>
+        /// <param name="training"></param>
+        /// <returns></returns>
         public static ObjectPair<double[][], double[][]> TrainingToArray(
             MLDataSet training)
         {

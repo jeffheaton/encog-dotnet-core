@@ -9,8 +9,6 @@ namespace Encog.App.Quant
     [Serializable]
     public class QuantError : EncogError
     {
-        private const long serialVersionUID = 4280940104791165511L;
-
         /// <summary>
         /// Construct a message exception.
         /// </summary>

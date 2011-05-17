@@ -4,6 +4,9 @@ using Encog.ML.Data;
 
 namespace Encog.Util.Error
 {
+    /// <summary>
+    /// Calculate the error for regression based Machine Learning Methods.
+    /// </summary>
     public class CalculateRegressionError
     {
         public static double CalculateError(MLRegression method,

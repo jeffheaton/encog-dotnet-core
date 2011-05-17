@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// A utility for generating HTML reports.
+    /// </summary>
     public class HTMLReport
     {
         private readonly StringBuilder text;

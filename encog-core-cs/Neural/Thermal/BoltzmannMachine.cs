@@ -14,12 +14,6 @@ namespace Encog.Neural.Thermal
     public class BoltzmannMachine : ThermalNetwork
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The property for run cycles.
         /// </summary>
         ///

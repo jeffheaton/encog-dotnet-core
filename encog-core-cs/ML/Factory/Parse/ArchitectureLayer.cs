@@ -15,6 +15,9 @@ namespace Encog.ML.Factory.Parse
         ///
         private readonly IDictionary<String, String> paras;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public ArchitectureLayer()
         {
             paras = new Dictionary<String, String>();

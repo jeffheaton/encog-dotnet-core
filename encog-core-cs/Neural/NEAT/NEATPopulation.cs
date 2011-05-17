@@ -5,16 +5,20 @@ using Encog.Neural.NEAT.Training;
 
 namespace Encog.Neural.NEAT
 {
+    /// <summary>
+    /// A population that is designed to be used with NEAT.
+    /// </summary>
     [Serializable]
     public class NEATPopulation : BasicPopulation
     {
         /// <summary>
-        /// Serial id.
+        /// NEAT activation function tag.
         /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
         public const String PROPERTY_NEAT_ACTIVATION = "neatAct";
+
+        /// <summary>
+        /// NEAT output activation function.
+        /// </summary>
         public const String PROPERTY_OUTPUT_ACTIVATION = "outAct";
 
         /// <summary>
@@ -80,6 +84,9 @@ namespace Encog.Neural.NEAT
                                                  genome_2.Neurons);
         }
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public NEATPopulation()
         {
             neatActivationFunction = new ActivationSigmoid();

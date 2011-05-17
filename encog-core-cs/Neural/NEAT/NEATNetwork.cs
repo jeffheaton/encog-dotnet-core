@@ -31,13 +31,18 @@ namespace Encog.Neural.NEAT
                                MLError
     {
         /// <summary>
-        /// The serial ID.
+        /// The depth property.
         /// </summary>
-        ///
-        private const long serialVersionUID = 3660295468309926508L;
-
         public const String PROPERTY_NETWORK_DEPTH = "depth";
+
+        /// <summary>
+        /// The links property.
+        /// </summary>
         public const String PROPERTY_LINKS = "links";
+
+        /// <summary>
+        /// The snapshot property.
+        /// </summary>
         public const String PROPERTY_SNAPSHOT = "snapshot";
 
         /// <summary>
@@ -143,10 +148,11 @@ namespace Encog.Neural.NEAT
             set { activationFunction = value; }
         }
 
-
+        /// <summary>
+        /// The network depth.
+        /// </summary>
         public int NetworkDepth
         {
-            /// <returns>The network depth.</returns>
             get { return networkDepth; }
             set { networkDepth = value; }
         }
@@ -155,7 +161,6 @@ namespace Encog.Neural.NEAT
         /// <value>The NEAT neurons.</value>
         public IList<NEATNeuron> Neurons
         {
-            /// <returns>The NEAT neurons.</returns>
             get { return neurons; }
         }
 
@@ -167,22 +172,14 @@ namespace Encog.Neural.NEAT
         /// <value>True if snapshot is used.</value>
         public bool Snapshot
         {
-            /// <returns>True if snapshot is being used.</returns>
             get { return snapshot; }
-            /// <summary>
-            /// Sets if snapshot is used.
-            /// </summary>
-            ///
-            /// <param name="snapshot_0">True if snapshot is used.</param>
             set { snapshot = value; }
         }
 
         /// <value>the outputActivationFunction to set</value>
         public IActivationFunction OutputActivationFunction
         {
-            /// <returns>the outputActivationFunction</returns>
             get { return outputActivationFunction; }
-            /// <param name="outputActivationFunction_0">the outputActivationFunction to set</param>
             set { outputActivationFunction = value; }
         }
 
@@ -296,14 +293,18 @@ namespace Encog.Neural.NEAT
             return result;
         }
 
-
+        /// <summary>
+        /// The input count.
+        /// </summary>
         public virtual int InputCount
         {
             get { return inputCount; }
             set { inputCount = value; }
         }
 
-
+        /// <summary>
+        /// The output count.
+        /// </summary>
         public virtual int OutputCount
         {
             get { return outputCount; }
@@ -312,6 +313,9 @@ namespace Encog.Neural.NEAT
 
         #endregion
 
+        /// <summary>
+        /// Not needed.
+        /// </summary>
         public override void UpdateProperties()
         {
         }

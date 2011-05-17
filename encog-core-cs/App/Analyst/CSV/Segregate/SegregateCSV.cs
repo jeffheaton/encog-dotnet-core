@@ -26,6 +26,9 @@ namespace Encog.App.Analyst.CSV.Segregate
         ///
         private readonly IList<SegregateTargetPercent> targets;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public SegregateCSV()
         {
             targets = new List<SegregateTargetPercent>();

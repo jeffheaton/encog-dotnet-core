@@ -17,12 +17,6 @@ namespace Encog.Neural.NEAT.Training
     public class NEATLinkGene : BasicGene
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The from neuron id.
         /// </summary>
         ///

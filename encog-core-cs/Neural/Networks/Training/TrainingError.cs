@@ -10,12 +10,6 @@ namespace Encog.Neural.Networks.Training
     public class TrainingError : NeuralNetworkError
     {
         /// <summary>
-        /// The serial id. 
-        /// </summary>
-        ///
-        private const long serialVersionUID = 9138367057650889570L;
-
-        /// <summary>
         /// Construct a message exception.
         /// </summary>
         ///

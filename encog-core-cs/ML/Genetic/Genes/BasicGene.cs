@@ -10,12 +10,6 @@ namespace Encog.ML.Genetic.Genes
     public abstract class BasicGene : IGene
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Is this gene enabled?
         /// </summary>
         ///
@@ -33,6 +27,9 @@ namespace Encog.ML.Genetic.Genes
         ///
         private long innovationId;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BasicGene()
         {
             enabled = true;

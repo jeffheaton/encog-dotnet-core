@@ -61,12 +61,6 @@ namespace Encog.Neural.Networks.Training.Lma
         private readonly double[] rowErrors;
 
         /// <summary>
-        /// The current error.
-        /// </summary>
-        ///
-        private double error;
-
-        /// <summary>
         /// The current column in the Jacobian matrix.
         /// </summary>
         ///
@@ -100,14 +94,6 @@ namespace Encog.Neural.Networks.Training.Lma
             var ideal = new BasicMLData(
                 indexableTraining.IdealSize);
             pair = new BasicMLDataPair(input, ideal);
-        }
-
-
-        /// <value>The sum squared errors.</value>
-        public double Error
-        {
-            /// <returns>The sum squared errors.</returns>
-            get { return error; }
         }
 
         #region ComputeJacobian Members

@@ -78,11 +78,6 @@ namespace Encog.Util.Banchmark
         private int binaryScore;
 
         /// <summary>
-        /// The OpenCL score.
-        /// </summary>
-        private int clScore;
-
-        /// <summary>
         /// The CPU score.
         /// </summary>
         private int cpuScore;
@@ -107,14 +102,6 @@ namespace Encog.Util.Banchmark
         public int CpuScore
         {
             get { return cpuScore; }
-        }
-
-        /// <summary>
-        /// The OpenCL score.
-        /// </summary>
-        public int CLScore
-        {
-            get { return clScore; }
         }
 
         /// <summary>

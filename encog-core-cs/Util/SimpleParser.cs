@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Encog.Util
 {
+    /// <summary>
+    /// A very simple text parser.
+    /// </summary>
     public class SimpleParser
     {
         private int currentPosition;

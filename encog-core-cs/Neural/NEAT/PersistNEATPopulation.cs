@@ -14,16 +14,27 @@ using Encog.Util.CSV;
 
 namespace Encog.Neural.Neat
 {
+    /// <summary>
+    /// Persist the NEAT population.
+    /// </summary>
     public class PersistNEATPopulation : EncogPersistor
     {
         #region EncogPersistor Members
 
+        /// <summary>
+        /// The persistence class string.
+        /// </summary>
         public virtual String PersistClassString
         {
             get { return typeof (NEATPopulation).Name; }
         }
 
 
+        /// <summary>
+        /// Read the object.
+        /// </summary>
+        /// <param name="mask0">The stream to read the object from.</param>
+        /// <returns>The object that was loaded.</returns>
         public virtual Object Read(Stream mask0)
         {
             var result = new NEATPopulation();
@@ -148,28 +159,28 @@ namespace Encog.Neural.Neat
                     result.OutputCount = EncogFileSection.ParseInt(paras,
                                                                    PersistConst.OUTPUT_COUNT);
                     result.OldAgePenalty = EncogFileSection.ParseDouble(paras,
-                                                                        Population_Constants.PROPERTY_OLD_AGE_PENALTY);
+                                                                        PopulationConst.PROPERTY_OLD_AGE_PENALTY);
                     result.OldAgeThreshold = EncogFileSection.ParseInt(paras,
-                                                                       Population_Constants.PROPERTY_OLD_AGE_THRESHOLD);
+                                                                       PopulationConst.PROPERTY_OLD_AGE_THRESHOLD);
                     result.PopulationSize = EncogFileSection.ParseInt(paras,
-                                                                      Population_Constants.PROPERTY_POPULATION_SIZE);
+                                                                      PopulationConst.PROPERTY_POPULATION_SIZE);
                     result.SurvivalRate = EncogFileSection.ParseDouble(paras,
-                                                                       Population_Constants.PROPERTY_SURVIVAL_RATE);
+                                                                       PopulationConst.PROPERTY_SURVIVAL_RATE);
                     result.YoungBonusAgeThreshhold = EncogFileSection.ParseInt(
-                        paras, Population_Constants.PROPERTY_YOUNG_AGE_THRESHOLD);
+                        paras, PopulationConst.PROPERTY_YOUNG_AGE_THRESHOLD);
                     result.YoungScoreBonus = EncogFileSection.ParseDouble(paras,
-                                                                          Population_Constants.PROPERTY_YOUNG_AGE_BONUS);
+                                                                          PopulationConst.PROPERTY_YOUNG_AGE_BONUS);
                     result.GenomeIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
-                                                                                  Population_Constants.
+                                                                                  PopulationConst.
                                                                                       PROPERTY_NEXT_GENOME_ID);
                     result.InnovationIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
-                                                                                      Population_Constants.
+                                                                                      PopulationConst.
                                                                                           PROPERTY_NEXT_INNOVATION_ID);
                     result.GeneIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
-                                                                                Population_Constants.
+                                                                                PopulationConst.
                                                                                     PROPERTY_NEXT_GENE_ID);
                     result.SpeciesIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
-                                                                                   Population_Constants.
+                                                                                   PopulationConst.
                                                                                        PROPERTY_NEXT_SPECIES_ID);
                 }
             }
@@ -204,6 +215,11 @@ namespace Encog.Neural.Neat
             return result;
         }
 
+        /// <summary>
+        /// Save the object.
+        /// </summary>
+        /// <param name="os">The stream to write to.</param>
+        /// <param name="obj">The object to save.</param>
         public virtual void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);
@@ -217,22 +233,22 @@ namespace Encog.Neural.Neat
                                pop.NeatActivationFunction);
             xout.WriteProperty(PersistConst.INPUT_COUNT, pop.InputCount);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, pop.OutputCount);
-            xout.WriteProperty(Population_Constants.PROPERTY_OLD_AGE_PENALTY,
+            xout.WriteProperty(PopulationConst.PROPERTY_OLD_AGE_PENALTY,
                                pop.OldAgePenalty);
-            xout.WriteProperty(Population_Constants.PROPERTY_OLD_AGE_THRESHOLD,
+            xout.WriteProperty(PopulationConst.PROPERTY_OLD_AGE_THRESHOLD,
                                pop.OldAgeThreshold);
-            xout.WriteProperty(Population_Constants.PROPERTY_POPULATION_SIZE,
+            xout.WriteProperty(PopulationConst.PROPERTY_POPULATION_SIZE,
                                pop.PopulationSize);
-            xout.WriteProperty(Population_Constants.PROPERTY_SURVIVAL_RATE,
+            xout.WriteProperty(PopulationConst.PROPERTY_SURVIVAL_RATE,
                                pop.SurvivalRate);
-            xout.WriteProperty(Population_Constants.PROPERTY_YOUNG_AGE_THRESHOLD,
+            xout.WriteProperty(PopulationConst.PROPERTY_YOUNG_AGE_THRESHOLD,
                                pop.YoungBonusAgeThreshold);
-            xout.WriteProperty(Population_Constants.PROPERTY_YOUNG_AGE_BONUS,
+            xout.WriteProperty(PopulationConst.PROPERTY_YOUNG_AGE_BONUS,
                                pop.YoungScoreBonus);
-            xout.WriteProperty(Population_Constants.PROPERTY_NEXT_GENOME_ID, pop.GenomeIDGenerate.CurrentID);
-            xout.WriteProperty(Population_Constants.PROPERTY_NEXT_INNOVATION_ID, pop.InnovationIDGenerate.CurrentID);
-            xout.WriteProperty(Population_Constants.PROPERTY_NEXT_GENE_ID, pop.GeneIDGenerate.CurrentID);
-            xout.WriteProperty(Population_Constants.PROPERTY_NEXT_SPECIES_ID, pop.SpeciesIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_GENOME_ID, pop.GenomeIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_INNOVATION_ID, pop.InnovationIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_GENE_ID, pop.GeneIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_SPECIES_ID, pop.SpeciesIDGenerate.CurrentID);
             xout.AddSubSection("INNOVATIONS");
             if (pop.Innovations != null)
             {
@@ -309,7 +325,9 @@ namespace Encog.Neural.Neat
             xout.Flush();
         }
 
-
+        /// <summary>
+        /// The file version.
+        /// </summary>
         public virtual int FileVersion
         {
             get { return 1; }
@@ -317,6 +335,11 @@ namespace Encog.Neural.Neat
 
         #endregion
 
+        /// <summary>
+        /// Convert the neuron type to a string.
+        /// </summary>
+        /// <param name="t">The neuron type.</param>
+        /// <returns>The string.</returns>
         public static String NeuronTypeToString(NEATNeuronType t)
         {
             switch (t)
@@ -336,6 +359,11 @@ namespace Encog.Neural.Neat
             }
         }
 
+        /// <summary>
+        /// Convert the innovation type to a string.
+        /// </summary>
+        /// <param name="t">The innovation type.</param>
+        /// <returns>The string.</returns>
         public static String InnovationTypeToString(NEATInnovationType t)
         {
             switch (t)
@@ -349,6 +377,11 @@ namespace Encog.Neural.Neat
             }
         }
 
+        /// <summary>
+        /// Convert a string to an innovation type.
+        /// </summary>
+        /// <param name="t">The string to convert.</param>
+        /// <returns>The innovation type.</returns>
         public static NEATInnovationType StringToInnovationType(String t)
         {
             if (t.Equals("l", StringComparison.InvariantCultureIgnoreCase))
@@ -365,6 +398,11 @@ namespace Encog.Neural.Neat
             }
         }
 
+        /// <summary>
+        /// Convert a string to a neuron type.
+        /// </summary>
+        /// <param name="t">The string.</param>
+        /// <returns>The resulting neuron type.</returns>
         public static NEATNeuronType StringToNeuronType(String t)
         {
             if (t.Equals("b"))

@@ -7,13 +7,11 @@ namespace Encog.Neural.Networks.Training.Lma
     public interface ComputeJacobian
     {
         /// <value>The Jacobian matrix after it is calculated.</value>
-        double[][] Jacobian { /// <returns>The Jacobian matrix after it is calculated.</returns>
-            get; }
+        double[][] Jacobian { get; }
 
 
         /// <value>The errors for each row of the matrix.</value>
-        double[] RowErrors { /// <returns>The errors for each row of the matrix.</returns>
-            get; }
+        double[] RowErrors { get; }
 
         /// <summary>
         /// Calculate the Jacobian.

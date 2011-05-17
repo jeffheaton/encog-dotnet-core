@@ -43,12 +43,6 @@ namespace Encog.Neural.Networks
         public const double DEFAULT_CONNECTION_LIMIT = 0.0000000001d;
 
         /// <summary>
-        /// Serial id for this class.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -136440631687066461L;
-
-        /// <summary>
         /// The property for connection limit.
         /// </summary>
         ///

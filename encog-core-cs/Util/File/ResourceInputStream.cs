@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace Encog.Util.File
 {
+    /// <summary>
+    /// A stream that is used to read resources.
+    /// </summary>
     public class ResourceInputStream
     {
         /// <summary>

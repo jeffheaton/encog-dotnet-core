@@ -44,12 +44,6 @@ namespace Encog.ML.Genetic.Population
         public const int DEFAULT_YOUTH_THRESHOLD = 10;
 
         /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Generate gene id's.
         /// </summary>
         ///

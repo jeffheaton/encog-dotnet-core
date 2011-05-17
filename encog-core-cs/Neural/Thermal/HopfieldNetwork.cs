@@ -13,12 +13,6 @@ namespace Encog.Neural.Thermal
     public class HopfieldNetwork : ThermalNetwork
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Default constructor.
         /// </summary>
         ///

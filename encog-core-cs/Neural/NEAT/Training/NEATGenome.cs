@@ -21,12 +21,13 @@ namespace Encog.Neural.NEAT.Training
     public class NEATGenome : BasicGenome, ICloneable
     {
         /// <summary>
-        /// Serial id.
+        /// The neurons property.
         /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
         public const String PROPERTY_NEURONS = "neurons";
+
+        /// <summary>
+        /// The links property.
+        /// </summary>
         public const String PROPERTY_LINKS = "links";
 
         /// <summary>
@@ -211,6 +212,9 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public NEATGenome()
         {
         }
@@ -307,6 +311,10 @@ namespace Encog.Neural.NEAT.Training
 
         #region ICloneable Members
 
+        /// <summary>
+        /// Clone the object. Not currently supported.
+        /// </summary>
+        /// <returns>The cloned object.</returns>
         public object Clone()
         {
             throw new NotImplementedException();

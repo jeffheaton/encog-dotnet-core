@@ -14,12 +14,6 @@ namespace Encog.ML.Genetic.Genome
     public abstract class BasicGenome : IGenome
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The chromosomes for this gene.
         /// </summary>
         ///
@@ -67,6 +61,9 @@ namespace Encog.ML.Genetic.Genome
         ///
         private double score;
 
+        /// <summary>
+        /// Construct the bo
+        /// </summary>
         public BasicGenome()
         {
             chromosomes = new List<Chromosome>();
@@ -314,10 +311,7 @@ namespace Encog.ML.Genetic.Genome
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var builder = new StringBuilder();

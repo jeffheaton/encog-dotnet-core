@@ -18,12 +18,6 @@ namespace Encog.Neural.NEAT.Training
     public class NEATInnovation : BasicInnovation
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The from neuron id.
         /// </summary>
         ///
@@ -152,7 +146,9 @@ namespace Encog.Neural.NEAT.Training
             set { fromNeuronID = value; }
         }
 
-
+        /// <summary>
+        /// The innovation type.
+        /// </summary>
         public NEATInnovationType InnovationType
         {
             /// <returns>The innovation type.</returns>

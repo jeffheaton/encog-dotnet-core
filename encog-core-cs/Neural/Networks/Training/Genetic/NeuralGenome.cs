@@ -13,12 +13,6 @@ namespace Encog.Neural.Networks.Training.Genetic
     public class NeuralGenome : BasicGenome
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The chromosome.
         /// </summary>
         ///

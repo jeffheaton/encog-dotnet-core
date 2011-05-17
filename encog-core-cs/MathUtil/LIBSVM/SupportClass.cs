@@ -58,7 +58,9 @@ namespace Encog.MathUtil.LIBSVM
     /// </summary>
     public class SupportClass
     {
-        //Provides access to a static System.Random class instance
+        /// <summary>
+        /// Provides access to a static System.Random class instance
+        /// </summary>
         public static Random Random = new Random();
 
         /*******************************/

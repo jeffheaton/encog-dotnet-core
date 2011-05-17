@@ -11,12 +11,6 @@ namespace Encog.Neural.Pattern
     public class PatternError : NeuralNetworkError
     {
         /// <summary>
-        /// The serial id for this class.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1828040493714503355L;
-
-        /// <summary>
         /// Construct a message exception.
         /// </summary>
         ///

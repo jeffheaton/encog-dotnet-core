@@ -19,6 +19,9 @@ namespace Encog.App.Analyst.Script.Normalize
         ///
         private readonly IList<AnalystField> normalizedFields;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public AnalystNormalize()
         {
             normalizedFields = new List<AnalystField>();

@@ -49,6 +49,12 @@ namespace Encog.MathUtil.Randomize
             get { return max; }
         }
 
+        /// <summary>
+        /// Produce a random int, within a specified range.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <returns>The random int.</returns>
         public static int RandomInt(int min, int max)
         {
             return (int) Randomize(min, max + 1);

@@ -37,6 +37,9 @@ namespace Encog.App.Analyst
         ///
         private bool shutdownRequested;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public ConsoleAnalystListener()
         {
             currentTask = "";

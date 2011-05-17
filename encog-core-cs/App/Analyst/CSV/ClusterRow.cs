@@ -9,11 +9,6 @@ namespace Encog.App.Analyst.CSV
     ///
     public class ClusterRow : BasicMLDataPair
     {
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -6542401157014650211L;
 
         /// <summary>
         /// The loaded row of data.

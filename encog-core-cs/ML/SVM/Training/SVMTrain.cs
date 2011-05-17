@@ -189,7 +189,7 @@ namespace Encog.ML.SVM.Training
 
 
         /// <value>True if the training is done.</value>
-        public virtual bool TrainingDone
+        public override bool TrainingDone
         {
             /// <returns>True if the training is done.</returns>
             get { return trainingDone; }

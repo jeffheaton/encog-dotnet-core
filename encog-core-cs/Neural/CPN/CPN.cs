@@ -24,12 +24,6 @@ namespace Encog.Neural.CPN
     public class CPNNetwork : BasicML, MLRegression, MLResettable, MLError
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The number of neurons in the input layer.
         /// </summary>
         ///

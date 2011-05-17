@@ -20,12 +20,6 @@ namespace Encog.Neural.BAM
     public class BAMNetwork : BasicML
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Neurons in the F1 layer.
         /// </summary>
         ///

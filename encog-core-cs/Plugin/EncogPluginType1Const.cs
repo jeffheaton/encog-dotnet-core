@@ -1,5 +1,8 @@
 namespace Encog.Plugin
 {
+    /// <summary>
+    /// A type-1 Encog plugin.
+    /// </summary>
     public class EncogPluginType1Const
     {
         /// <summary>

@@ -9,12 +9,6 @@ namespace Encog.ML.Genetic.Genes
     public class CharGene : BasicGene
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The character value of the gene.
         /// </summary>
         ///

@@ -25,6 +25,9 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         private readonly IList<BaseCachedColumn> columns;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BasicCachedFile()
         {
             columnMapping = new Dictionary<String, BaseCachedColumn>();

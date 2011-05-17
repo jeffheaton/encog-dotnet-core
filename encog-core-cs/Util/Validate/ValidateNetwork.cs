@@ -3,6 +3,9 @@ using Encog.ML.Data;
 
 namespace Encog.Util.Validate
 {
+    /// <summary>
+    /// Perform validations on a network.
+    /// </summary>
     public class ValidateNetwork
     {
         public static void ValidateMethodToData(MLMethod method, MLDataSet training)

@@ -9,11 +9,6 @@ namespace Encog.App.Quant.Loader
     [Serializable]
     public class LoaderError : QuantError
     {
-        /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 7737393439642876303L;
 
         /// <summary>
         /// Construct a message exception.

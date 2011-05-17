@@ -63,16 +63,21 @@ namespace Encog.Util
         /// <returns>The value.</returns>
         public String GetString(String name, bool required, String defaultValue)
         {
-            if (!paras.ContainsKey(name) && required)
+            if (paras.ContainsKey(name) )
             {
-                throw new EncogError("Missing property: " + name);
+                return paras[name];                
             }
             else
             {
-                return defaultValue;
-            }
-            
-            return paras[name];
+                if (required)
+                {
+                    throw new EncogError("Missing property: " + name);
+                }
+                else
+                {
+                    return defaultValue;
+                }
+            }                       
         }
 
         /// <summary>

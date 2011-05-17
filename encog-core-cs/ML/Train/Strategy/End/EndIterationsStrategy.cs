@@ -1,11 +1,18 @@
 namespace Encog.ML.Train.Strategy.End
 {
+    /// <summary>
+    /// End the training when a specified number of iterations has been reached.
+    /// </summary>
     public class EndIterationsStrategy : EndTrainingStrategy
     {
         private readonly int maxIterations;
         private int currentIteration;
         private MLTrain train;
 
+        /// <summary>
+        /// Construct the object, specify the max number of iterations.
+        /// </summary>
+        /// <param name="maxIterations_0">The number of iterations.</param>
         public EndIterationsStrategy(int maxIterations_0)
         {
             maxIterations = maxIterations_0;

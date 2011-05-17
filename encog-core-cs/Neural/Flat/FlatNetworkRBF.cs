@@ -12,8 +12,6 @@ namespace Encog.Neural.Flat
     [Serializable]
     public class FlatNetworkRBF : FlatNetwork
     {
-        private const long serialVersionUID = 1L;
-
         /// <summary>
         /// The RBF's used.
         /// </summary>

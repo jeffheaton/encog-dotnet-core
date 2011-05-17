@@ -135,7 +135,7 @@ namespace Encog.ML.Data.Specific
         /// <summary>
         /// The amount of ideal data.
         /// </summary>
-        public int IdealSize
+        public override int IdealSize
         {
             get { return idealSize; }
         }
@@ -143,7 +143,7 @@ namespace Encog.ML.Data.Specific
         /// <summary>
         /// The amount of input data.
         /// </summary>
-        public int InputSize
+        public override int InputSize
         {
             get { return inputSize; }
         }

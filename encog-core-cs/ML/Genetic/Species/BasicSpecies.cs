@@ -14,12 +14,6 @@ namespace Encog.ML.Genetic.Species
     public class BasicSpecies : ISpecies
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The list of genomes.
         /// </summary>
         ///

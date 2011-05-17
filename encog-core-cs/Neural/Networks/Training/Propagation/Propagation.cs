@@ -25,12 +25,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         private readonly ContainsFlat network;
 
         /// <summary>
-        /// The current flat network we are using for training, or null for none.
-        /// </summary>
-        ///
-        private FlatNetwork currentFlatNetwork;
-
-        /// <summary>
         /// The current flat trainer we are using, or null for none.
         /// </summary>
         ///
@@ -47,15 +41,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             network = network_0;
             Training = training;
         }
-
-
-        /// <value>the currentFlatNetwork</value>
-        public FlatNetwork CurrentFlatNetwork
-        {
-            /// <returns>the currentFlatNetwork</returns>
-            get { return currentFlatNetwork; }
-        }
-
 
         /// <value>the flatTraining to set</value>
         public TrainFlatNetwork FlatTraining

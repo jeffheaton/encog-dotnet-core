@@ -25,6 +25,9 @@ namespace Encog.App.Analyst.CSV.Filter
         ///
         private int filteredCount;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public FilterCSV()
         {
             excludedFields = new List<ExcludedField>();

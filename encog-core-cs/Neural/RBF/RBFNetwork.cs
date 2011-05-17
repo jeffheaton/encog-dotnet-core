@@ -19,12 +19,6 @@ namespace Encog.Neural.RBF
                               ContainsFlat
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The underlying flat network.
         /// </summary>
         ///

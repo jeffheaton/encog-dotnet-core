@@ -299,6 +299,9 @@ namespace Encog.ML.Factory
         ///
         private readonly SVMSearchFactory svmSearchFactory;
 
+        /// <summary>
+        /// Construct the boject.
+        /// </summary>
         public MLTrainFactory()
         {
             backpropFactory = new BackPropFactory();

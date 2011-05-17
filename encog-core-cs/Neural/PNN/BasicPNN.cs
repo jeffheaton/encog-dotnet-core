@@ -22,9 +22,7 @@ namespace Encog.Neural.PNN
     /// </summary>
     ///
     public class BasicPNN : AbstractPNN, MLRegression
-    {
-        private const long serialVersionUID = -7990707837655024635L;
-
+    {      
         /// <summary>
         /// The sigma's specify the widths of each kernel used.
         /// </summary>

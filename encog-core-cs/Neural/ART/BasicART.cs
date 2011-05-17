@@ -19,12 +19,6 @@ namespace Encog.Neural.ART
     public class BasicART : BasicML
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Neural network property, the A1 parameter.
         /// </summary>
         ///

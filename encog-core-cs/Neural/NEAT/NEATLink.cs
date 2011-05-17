@@ -15,12 +15,6 @@ namespace Encog.Neural.NEAT
     public class NEATLink
     {
         /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -4117045705080951946L;
-
-        /// <summary>
         /// The source neuron.
         /// </summary>
         ///
@@ -101,12 +95,7 @@ namespace Encog.Neural.NEAT
             get { return recurrent; }
         }
 
-
-        public bool SupportsMapPersistence()
-        {
-            return true;
-        }
-
+        /// <inheritdoc/>
         public override String ToString()
         {
             var result = new StringBuilder();

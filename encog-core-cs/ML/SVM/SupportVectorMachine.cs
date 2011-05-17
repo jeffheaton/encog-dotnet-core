@@ -69,12 +69,6 @@ namespace Encog.ML.SVM
         public const double DEFAULT_P = 0.1d;
 
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The params for the model.
         /// </summary>
         ///

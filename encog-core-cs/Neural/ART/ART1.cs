@@ -30,12 +30,6 @@ namespace Encog.Neural.ART
     public class ART1 : BasicART, MLResettable, MLClassification
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// A parameter for F1 layer.
         /// </summary>
         ///
@@ -454,6 +448,9 @@ namespace Encog.Neural.ART
             }
         }
 
+        /// <summary>
+        /// The input count.
+        /// </summary>
         public int InputCount
         {
             get { return f1Count; }

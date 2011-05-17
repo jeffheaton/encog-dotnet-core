@@ -15,12 +15,6 @@ namespace Encog.Neural.SOM
                               MLError
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// Do not allow patterns to go below this very small number.
         /// </summary>
         ///

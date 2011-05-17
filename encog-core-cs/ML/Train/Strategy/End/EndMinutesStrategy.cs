@@ -2,18 +2,40 @@ using System;
 
 namespace Encog.ML.Train.Strategy.End
 {
+    /// <summary>
+    /// End training when a specified number of minutes is up.
+    /// </summary>
     public class EndMinutesStrategy : EndTrainingStrategy
     {
-        private readonly int minutes;
-        private int minutesLeft;
-        private bool started;
-        private long startedTime;
+        /// <summary>
+        /// The number of minutes to train for.
+        /// </summary>
+        private readonly int _minutes;
 
-        public EndMinutesStrategy(int minutes_0)
+        /// <summary>
+        /// The number of minutes that are left.
+        /// </summary>
+        private int _minutesLeft;
+
+        /// <summary>
+        /// True if training has started.
+        /// </summary>
+        private bool _started;
+
+        /// <summary>
+        /// The starting time for training.
+        /// </summary>
+        private long _startedTime;
+
+        /// <summary>
+        /// Construct the strategy object.
+        /// </summary>
+        /// <param name="minutes"></param>
+        public EndMinutesStrategy(int minutes)
         {
-            minutes = minutes_0;
-            started = false;
-            minutesLeft = minutes_0;
+            _minutes = minutes;
+            _started = false;
+            _minutesLeft = minutes;
         }
 
         /// <value>the minutesLeft</value>
@@ -24,7 +46,7 @@ namespace Encog.ML.Train.Strategy.End
             {
                 lock (this)
                 {
-                    return minutesLeft;
+                    return _minutesLeft;
                 }
             }
         }
@@ -34,7 +56,7 @@ namespace Encog.ML.Train.Strategy.End
         public int Minutes
         {
             /// <returns>the minutes</returns>
-            get { return minutes; }
+            get { return _minutes; }
         }
 
         #region EndTrainingStrategy Members
@@ -47,7 +69,7 @@ namespace Encog.ML.Train.Strategy.End
         {
             lock (this)
             {
-                return started && minutesLeft >= 0;
+                return _started && _minutesLeft >= 0;
             }
         }
 
@@ -57,8 +79,8 @@ namespace Encog.ML.Train.Strategy.End
         ///
         public virtual void Init(MLTrain train)
         {
-            started = true;
-            startedTime = DateTime.Now.Millisecond;
+            _started = true;
+            _startedTime = DateTime.Now.Millisecond;
         }
 
         /// <summary>
@@ -70,7 +92,7 @@ namespace Encog.ML.Train.Strategy.End
             lock (this)
             {
                 long now = DateTime.Now.Millisecond;
-                minutesLeft = ((int) ((now - startedTime)/60000));
+                _minutesLeft = ((int) ((now - _startedTime)/60000));
             }
         }
 

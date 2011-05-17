@@ -33,12 +33,6 @@ namespace Encog.Neural.Networks.Layers
     public class BasicLayer : FlatLayer, Layer
     {
         /// <summary>
-        /// The serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -5682296868750703898L;
-
-        /// <summary>
         /// The network that this layer belongs to.
         /// </summary>
         ///

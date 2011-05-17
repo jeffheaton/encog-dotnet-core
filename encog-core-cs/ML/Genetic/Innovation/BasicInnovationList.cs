@@ -11,17 +11,14 @@ namespace Encog.ML.Genetic.Innovation
     public class BasicInnovationList : IInnovationList
     {
         /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The list of innovations.
         /// </summary>
         ///
         private readonly IList<IInnovation> list;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BasicInnovationList()
         {
             list = new List<IInnovation>();

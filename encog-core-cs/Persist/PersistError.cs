@@ -9,8 +9,6 @@ namespace Encog.Persist
     [Serializable]
     public class PersistError : EncogError
     {
-        private const long serialVersionUID = 7380539044552943978L;
-
         /// <summary>
         /// Construct a message exception.
         /// </summary>

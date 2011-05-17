@@ -28,6 +28,10 @@ namespace Encog.ML.Train
         ///
         private int iteration;
 
+        /// <summary>
+        /// Construct the object, specify the implementation type.
+        /// </summary>
+        /// <param name="implementationType_0"></param>
         public BasicTraining(TrainingImplementationType implementationType_0)
         {
             strategies = new List<IStrategy>();
@@ -139,7 +143,9 @@ namespace Encog.ML.Train
             }
         }
 
-
+        /// <summary>
+        /// The implementation type.
+        /// </summary>
         public virtual TrainingImplementationType ImplementationType
         {
             get { return implementationType; }

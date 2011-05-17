@@ -69,6 +69,9 @@ namespace Encog.ML.Factory
         ///
         private readonly SVMFactory svmFactory;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public MLMethodFactory()
         {
             feedforwardFactory = new FeedforwardFactory();

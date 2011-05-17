@@ -225,6 +225,9 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         private readonly IDictionary<String, String> data;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public ScriptProperties()
         {
             data = new Dictionary<String, String>();

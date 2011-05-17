@@ -17,14 +17,15 @@ namespace Encog.Neural.NEAT
     [Serializable]
     public class NEATNeuron
     {
+        /// <summary>
+        /// The neuron id property.
+        /// </summary>
         public const String NEURON_ID = "neuronID";
-        public const String ACTIVATION_RESPONSE = "aresp";
 
         /// <summary>
-        /// The serial id.
+        /// The activation response property.
         /// </summary>
-        ///
-        private const long serialVersionUID = -2815145950124389743L;
+        public const String ACTIVATION_RESPONSE = "aresp";
 
         /// <summary>
         /// The activation response. This is evolved to allow NEAT to scale the slope
@@ -133,7 +134,6 @@ namespace Encog.Neural.NEAT
         /// <value>the activation response.</value>
         public double ActivationResponse
         {
-            /// <returns>the activation response.</returns>
             get { return activationResponse; }
         }
 
@@ -141,7 +141,6 @@ namespace Encog.Neural.NEAT
         /// <value>the inbound links.</value>
         public IList<NEATLink> InboundLinks
         {
-            /// <returns>the inbound links.</returns>
             get { return inboundLinks; }
         }
 
@@ -149,7 +148,6 @@ namespace Encog.Neural.NEAT
         /// <value>The neuron id.</value>
         public long NeuronID
         {
-            /// <returns>The neuron id.</returns>
             get { return neuronID; }
         }
 
@@ -157,25 +155,14 @@ namespace Encog.Neural.NEAT
         /// <value>the neuron type.</value>
         public NEATNeuronType NeuronType
         {
-            /// <returns>the neuron type.</returns>
             get { return neuronType; }
         }
 
 
-        /// <summary>
-        /// Set the output.
-        /// </summary>
-        ///
         /// <value>The output of the neuron.</value>
         public double Output
         {
-            /// <returns>The output from this neuron.</returns>
             get { return output; }
-            /// <summary>
-            /// Set the output.
-            /// </summary>
-            ///
-            /// <param name="output_0">The output of the neuron.</param>
             set { output = value; }
         }
 
@@ -183,7 +170,6 @@ namespace Encog.Neural.NEAT
         /// <value>The outbound links.</value>
         public IList<NEATLink> OutputboundLinks
         {
-            /// <returns>The outbound links.</returns>
             get { return outputboundLinks; }
         }
 
@@ -191,7 +177,6 @@ namespace Encog.Neural.NEAT
         /// <value>The x position.</value>
         public int PosX
         {
-            /// <returns>The x position.</returns>
             get { return posX; }
         }
 
@@ -199,7 +184,6 @@ namespace Encog.Neural.NEAT
         /// <value>The y position.</value>
         public int PosY
         {
-            /// <returns>The y position.</returns>
             get { return posY; }
         }
 
@@ -207,7 +191,6 @@ namespace Encog.Neural.NEAT
         /// <value>The split x.</value>
         public double SplitX
         {
-            /// <returns>The split x.</returns>
             get { return splitX; }
         }
 
@@ -215,7 +198,6 @@ namespace Encog.Neural.NEAT
         /// <value>The split y.</value>
         public double SplitY
         {
-            /// <returns>The split y.</returns>
             get { return splitY; }
         }
 
@@ -223,15 +205,11 @@ namespace Encog.Neural.NEAT
         /// <value>The sum activation.</value>
         public double SumActivation
         {
-            /// <returns>The sum activation.</returns>
             get { return sumActivation; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String ToString()
         {
             var result = new StringBuilder();
@@ -260,6 +238,11 @@ namespace Encog.Neural.NEAT
             return result.ToString();
         }
 
+        /// <summary>
+        /// Convert a string to a NEAT neuron type.
+        /// </summary>
+        /// <param name="t">The string.</param>
+        /// <returns>The NEAT neuron type.</returns>
         public static NEATNeuronType String2NeuronType(String t)
         {
             String type = t.ToLower().Trim();
@@ -284,6 +267,11 @@ namespace Encog.Neural.NEAT
             return default(NEATNeuronType) /* was: null */;
         }
 
+        /// <summary>
+        /// Convert NEAT neuron type to string.
+        /// </summary>
+        /// <param name="t">The neuron type.</param>
+        /// <returns>The string of the specified neuron type.</returns>
         public static String NeuronType2String(NEATNeuronType t)
         {
             switch (t)

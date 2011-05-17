@@ -25,6 +25,9 @@ namespace Encog.App.Analyst.CSV.Sort
         ///
         private readonly List<SortedField> sortOrder;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public SortCSV()
         {
             data = new List<LoadedRow>();

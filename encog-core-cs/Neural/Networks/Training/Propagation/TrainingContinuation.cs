@@ -10,12 +10,6 @@ namespace Encog.Neural.Networks.Training.Propagation
     public class TrainingContinuation
     {
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -3649790586015301015L;
-
-        /// <summary>
         /// The contents of this object.
         /// </summary>
         ///

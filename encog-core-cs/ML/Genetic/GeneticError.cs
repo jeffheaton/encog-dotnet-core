@@ -9,8 +9,6 @@ namespace Encog.ML.Genetic
     [Serializable]
     public class GeneticError : EncogError
     {
-        private const long serialVersionUID = -5557732297908150500L;
-
         /// <summary>
         /// Construct a message exception.
         /// </summary>

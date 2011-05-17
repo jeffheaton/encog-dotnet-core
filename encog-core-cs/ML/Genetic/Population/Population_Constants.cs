@@ -2,7 +2,10 @@ using System;
 
 namespace Encog.ML.Genetic.Population
 {
-    public class Population_Constants
+    /// <summary>
+    /// Constants for the population.
+    /// </summary>
+    public class PopulationConst
     {
         /// <summary>
         /// Property tag for the next gene id.

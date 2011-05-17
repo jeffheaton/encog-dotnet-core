@@ -18,12 +18,6 @@ namespace Encog.Neural.Networks.Structure
     public class NeuralStructure
     {
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = -2929683885395737817L;
-
-        /// <summary>
         /// The layers in this neural network.
         /// </summary>
         ///

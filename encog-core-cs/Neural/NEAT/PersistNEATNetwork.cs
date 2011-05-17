@@ -7,22 +7,34 @@ using Encog.Util.CSV;
 
 namespace Encog.Neural.NEAT
 {
+    /// <summary>
+    /// Persist a NEAT network.
+    /// </summary>
     public class PersistNEATNetwork : EncogPersistor
     {
         #region EncogPersistor Members
 
+        /// <summary>
+        /// The file version.
+        /// </summary>
         public virtual int FileVersion
         {
             get { return 1; }
         }
 
-
+        /// <summary>
+        /// The persist class string.
+        /// </summary>
         public virtual String PersistClassString
         {
             get { return "NEATNetwork"; }
         }
 
-
+        /// <summary>
+        /// Read the object.
+        /// </summary>
+        /// <param name="mask0">The stream to read from.</param>
+        /// <returns>The loaded object.</returns>
         public virtual Object Read(Stream mask0)
         {
             var result = new NEATNetwork();
@@ -108,6 +120,11 @@ namespace Encog.Neural.NEAT
             return result;
         }
 
+        /// <summary>
+        /// Save the object.
+        /// </summary>
+        /// <param name="os">The output stream.</param>
+        /// <param name="obj">The object to save.</param>
         public virtual void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

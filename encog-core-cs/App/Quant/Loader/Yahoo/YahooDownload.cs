@@ -14,15 +14,32 @@ namespace Encog.App.Quant.Loader.Yahoo
     /// </summary>
     public class YahooDownload
     {
+        /// <summary>
+        /// The DJIA index.
+        /// </summary>
         public const String INDEX_DJIA = "^dji";
+
+        /// <summary>
+        /// The SP500 index.
+        /// </summary>
         public const String INDEX_SP500 = "^gspc";
+
+        /// <summary>
+        /// The NASDAQ index.
+        /// </summary>
         public const String INDEX_NASDAQ = "^ixic";
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public YahooDownload()
         {
             Percision = 10;
         }
 
+        /// <summary>
+        /// The percision.
+        /// </summary>
         public int Percision { get; set; }
 
 
@@ -58,6 +75,14 @@ namespace Encog.App.Quant.Loader.Yahoo
             return new Uri(str);
         }
 
+        /// <summary>
+        /// Load financial data.
+        /// </summary>
+        /// <param name="ticker">The ticker symbol.</param>
+        /// <param name="output">The output file.</param>
+        /// <param name="outputFormat">The output format.</param>
+        /// <param name="from">Starting date.</param>
+        /// <param name="to">Ending date.</param>
         public void LoadAllData(String ticker, String output, CSVFormat outputFormat, DateTime from,
                                 DateTime to)
         {

@@ -38,6 +38,9 @@ namespace Encog.MathUtil
     /// </summary>
     public class Equilateral
     {
+        /// <summary>
+        /// Minimum number of classes for equilateral.
+        /// </summary>
         public const int MIN_EQ = 3;
 
         /// <summary>

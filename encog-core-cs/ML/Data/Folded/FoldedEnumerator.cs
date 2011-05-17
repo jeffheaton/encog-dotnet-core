@@ -81,6 +81,9 @@ namespace Encog.ML.Data.Folded
             }
         }
 
+        /// <summary>
+        /// Not supported.
+        /// </summary>
         public void Dispose()
         {
             throw new NotImplementedException();

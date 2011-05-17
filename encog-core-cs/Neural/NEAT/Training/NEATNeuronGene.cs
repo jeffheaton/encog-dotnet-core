@@ -16,12 +16,6 @@ namespace Encog.Neural.Neat.Training
     [Serializable]
     public class NEATNeuronGene : BasicGene
     {
-        /// <summary>
-        /// Serial id.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
         public const String PROPERTY_ACT_RESPONSE = "aResp";
         public const String PROPERTY_RECURRENT = "recurrent";
         public const String PROPERTY_SPLIT_X = "splitX";

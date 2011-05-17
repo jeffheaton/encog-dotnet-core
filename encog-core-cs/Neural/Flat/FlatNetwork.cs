@@ -25,12 +25,6 @@ namespace Encog.Neural.Flat
     public class FlatNetwork
     {
         /// <summary>
-        /// The serial ID.
-        /// </summary>
-        ///
-        private const long serialVersionUID = 1L;
-
-        /// <summary>
         /// The default bias activation.
         /// </summary>
         ///
@@ -424,11 +418,12 @@ namespace Encog.Neural.Flat
             set { layerCounts = value; }
         }
 
-
+        /// <summary>
+        /// The layer feed counts. The number of neurons in each layer that are fed by the previous
+        /// layer.
+        /// </summary>
         public int[] LayerFeedCounts
         {
-            /// <returns>The number of neurons in each layer that are fed by the previous
-            /// layer.</returns>
             get { return layerFeedCounts; }
             set { layerFeedCounts = value; }
         }
