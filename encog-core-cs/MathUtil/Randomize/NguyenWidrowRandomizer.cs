@@ -29,18 +29,17 @@ namespace Encog.MathUtil.Randomize
         #region IRandomizer Members
 
         /// <summary>
-        /// The <i>Nguyen-Widrow</i> initialization algorithm is the following :
-        /// <br>
-        /// 1. Initialize all weight of hidden layers with (ranged) random values<br>
-        /// 2. For each hidden layer<br>
+        /// The Nguyen-Widrow initialization algorithm is the following :
+        /// 
+        /// 1. Initialize all weight of hidden layers with (ranged) random values
+        /// 2. For each hidden layer
         /// 2.1 calculate beta value, 0.7/// Nth(#neurons of input layer) root of
-        /// #neurons of current layer <br>
-        /// 2.2 for each synapse<br>
-        /// 2.1.1 for each weight <br>
+        /// #neurons of current layer 
+        /// 2.2 for each synapse
+        /// 2.1.1 for each weight 
         /// 2.1.2 Adjust weight by dividing by norm of weight for neuron and
         /// multiplying by beta value
         /// </summary>
-        ///
         /// <param name="method">The network to randomize.</param>
         public override sealed void Randomize(MLMethod method)
         {

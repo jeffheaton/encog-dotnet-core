@@ -192,17 +192,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set the theAction for the field.
         /// </summary>
-        ///
-        /// <value>The action for the field.</value>
         public NormalizationAction Action
         {
-            /// <returns>The action for the field.</returns>
             get { return action; }
-            /// <summary>
-            /// Set the theAction for the field.
-            /// </summary>
-            ///
-            /// <param name="theAction">The action for the field.</param>
             set { action = value; }
         }
 
@@ -210,17 +202,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set the actual high for the field.
         /// </summary>
-        ///
-        /// <value>The actual high for the field.</value>
         public double ActualHigh
         {
-            /// <returns>The actual high for the field.</returns>
             get { return actualHigh; }
-            /// <summary>
-            /// Set the actual high for the field.
-            /// </summary>
-            ///
-            /// <param name="theActualHigh">The actual high for the field.</param>
             set { actualHigh = value; }
         }
 
@@ -228,17 +212,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set the actual low for the field.
         /// </summary>
-        ///
-        /// <value>The actual low for the field.</value>
         public double ActualLow
         {
-            /// <returns>The actual low for the field.</returns>
             get { return actualLow; }
-            /// <summary>
-            /// Set the actual low for the field.
-            /// </summary>
-            ///
-            /// <param name="theActualLow">The actual low for the field.</param>
             set { actualLow = value; }
         }
 
@@ -246,7 +222,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>The classes.</value>
         public IList<ClassItem> Classes
         {
-            /// <returns>The classes.</returns>
             get { return classes; }
         }
 
@@ -256,9 +231,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// classification method used.</value>
         public int ColumnsNeeded
         {
-            /// <returns>Returns the number of columns needed for this classification. The
-            /// number of columns needed will vary, depending on the
-            /// classification method used.</returns>
             get
             {
                 switch (action)
@@ -279,7 +251,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>The equilateral utility.</value>
         public Equilateral Eq
         {
-            /// <returns>The equilateral utility.</returns>
             get { return eq; }
         }
 
@@ -287,17 +258,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set the name of the field.
         /// </summary>
-        ///
-        /// <value>The name of the field.</value>
         public String Name
         {
-            /// <returns>The name of the field.</returns>
             get { return name; }
-            /// <summary>
-            /// Set the name of the field.
-            /// </summary>
-            ///
-            /// <param name="theName">The name of the field.</param>
             set { name = value; }
         }
 
@@ -305,17 +268,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set the normalized high for the field.
         /// </summary>
-        ///
-        /// <value>The normalized high for the field.</value>
         public double NormalizedHigh
         {
-            /// <returns>The normalized high for the field.</returns>
             get { return normalizedHigh; }
-            /// <summary>
-            /// Set the normalized high for the field.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedHigh">The normalized high for the field.</param>
             set { normalizedHigh = value; }
         }
 
@@ -327,13 +282,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>The normalized low for the field.</value>
         public double NormalizedLow
         {
-            /// <returns>The normalized low for the neural network.</returns>
             get { return normalizedLow; }
-            /// <summary>
-            /// Set the normalized low for the field.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedLow">The normalized low for the field.</param>
             set { normalizedLow = value; }
         }
 
@@ -341,9 +290,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>the timeSlice to set</value>
         public int TimeSlice
         {
-            /// <returns>the timeSlice</returns>
             get { return timeSlice; }
-            /// <param name="theTimeSlice">the timeSlice to set</param>
             set { timeSlice = value; }
         }
 
@@ -351,7 +298,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>True if this field is classification.</value>
         public bool Classify
         {
-            /// <returns>True if this field is classification.</returns>
             get
             {
                 return (action == NormalizationAction.Equilateral)
@@ -364,7 +310,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>Is this field ignored.</value>
         public bool Ignored
         {
-            /// <returns>Is this field ignored.</returns>
             get { return action == NormalizationAction.Ignore; }
         }
 
@@ -372,7 +317,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>Is this field input.</value>
         public bool Input
         {
-            /// <returns>Is this field input.</returns>
             get { return !output; }
         }
 
@@ -380,17 +324,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Set if this is an output field.
         /// </summary>
-        ///
-        /// <value>True, if this is output.</value>
         public bool Output
         {
-            /// <returns>Is this field output.</returns>
             get { return output; }
-            /// <summary>
-            /// Set if this is an output field.
-            /// </summary>
-            ///
-            /// <param name="b">True, if this is output.</param>
             set { output = value; }
         }
 
@@ -437,7 +373,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// Denormalize the specified value.
         /// </summary>
         ///
-        /// <param name="value">The value to normalize.</param>
+        /// <param name="value_ren">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double DeNormalize(double value_ren)
         {
@@ -548,7 +484,7 @@ namespace Encog.App.Analyst.Script.Normalize
                 {
                     classNumber = Int32.Parse(str);
                 }
-                catch (FormatException ex)
+                catch (FormatException )
                 {
                     throw new QuantError("Can't determine class for: " + str);
                 }
@@ -745,7 +681,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// Normalize the specified value.
         /// </summary>
         ///
-        /// <param name="value">The value to normalize.</param>
+        /// <param name="value_ren">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double Normalize(double value_ren)
         {
@@ -754,10 +690,7 @@ namespace Encog.App.Analyst.Script.Normalize
                    + normalizedLow;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

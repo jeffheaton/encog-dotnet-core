@@ -133,7 +133,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="theSection">The section.</param>
         /// <param name="subSection">The sub section.</param>
         /// <param name="theName">The name of the property.</param>
-        /// <param name="value">The value of the property.</param>
+        /// <param name="value_ren">The value of the property.</param>
         public void Validate(String theSection,
                              String subSection, String theName, String value_ren)
         {
@@ -187,7 +187,7 @@ namespace Encog.App.Analyst.Script.Prop
                         throw new AnalystError("Unsupported property type.");
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 var result_1 = new StringBuilder();
                 result_1.Append("Illegal value for ");

@@ -62,22 +62,14 @@ namespace Encog.ML.Train
         }
 
 
-        /// <value></value>
-        public virtual double Error { /// <summary>
-            /// Get the current error percent from the training.
-            /// </summary>
-            ///
-            /// <returns>The current error.</returns>
-            get; /// <param name="error_0"></param>
-            set; }
+        /// <inheritdoc/>
+        public virtual double Error { get; set; }
 
 
         /// <value>the iteration to set</value>
         public virtual int IterationNumber
         {
-            /// <returns>the iteration</returns>
             get { return iteration; }
-            /// <param name="iteration_0">the iteration to set</param>
             set { iteration = value; }
         }
 
@@ -85,7 +77,6 @@ namespace Encog.ML.Train
         /// <value>The strategies to use.</value>
         public virtual IList<IStrategy> Strategies
         {
-            /// <returns>The strategies to use.</returns>
             get { return strategies; }
         }
 
@@ -93,21 +84,12 @@ namespace Encog.ML.Train
         /// <summary>
         /// Set the training object that this strategy is working with.
         /// </summary>
-        ///
-        /// <value>The training object.</value>
-        public virtual MLDataSet Training { /// <returns>The training data to use.</returns>
-            get; /// <summary>
-            /// Set the training object that this strategy is working with.
-            /// </summary>
-            ///
-            /// <param name="training_0">The training object.</param>
-            set; }
+        public virtual MLDataSet Training { get; set; }
 
 
         /// <value>True if training can progress no further.</value>
         public virtual bool TrainingDone
         {
-            /// <returns>True if training can progress no further.</returns>
             get
             {
                 foreach (IStrategy strategy  in  strategies)

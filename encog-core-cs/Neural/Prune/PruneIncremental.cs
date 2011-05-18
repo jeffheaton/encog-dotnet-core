@@ -55,7 +55,6 @@ namespace Encog.Neural.Prune
         /// The object that status should be reported to.
         /// </summary>
         ///
-        /* @SuppressWarnings("unused")*/
         private readonly IStatusReportable report;
 
         /// <summary>
@@ -168,7 +167,6 @@ namespace Encog.Neural.Prune
         /// <value>The network being processed.</value>
         public BasicNetwork BestNetwork
         {
-            /// <returns>The network being processed.</returns>
             get { return bestNetwork; }
         }
 
@@ -176,7 +174,6 @@ namespace Encog.Neural.Prune
         /// <value>The hidden layer max and min.</value>
         public IList<HiddenLayerParams> Hidden
         {
-            /// <returns>The hidden layer max and min.</returns>
             get { return hidden; }
         }
 
@@ -184,7 +181,6 @@ namespace Encog.Neural.Prune
         /// <value>The size of the first hidden layer.</value>
         public int Hidden1Size
         {
-            /// <returns>The size of the first hidden layer.</returns>
             get { return hidden1Size; }
         }
 
@@ -192,7 +188,6 @@ namespace Encog.Neural.Prune
         /// <value>The size of the second hidden layer.</value>
         public int Hidden2Size
         {
-            /// <returns>The size of the second hidden layer.</returns>
             get { return hidden2Size; }
         }
 
@@ -200,7 +195,6 @@ namespace Encog.Neural.Prune
         /// <value>The higest error so far.</value>
         public double High
         {
-            /// <returns>The higest error so far.</returns>
             get { return high; }
         }
 
@@ -208,7 +202,6 @@ namespace Encog.Neural.Prune
         /// <value>The number of training iterations to try for each network.</value>
         public int Iterations
         {
-            /// <returns>The number of training iterations to try for each network.</returns>
             get { return iterations; }
         }
 
@@ -216,7 +209,6 @@ namespace Encog.Neural.Prune
         /// <value>The lowest error so far.</value>
         public double Low
         {
-            /// <returns>The lowest error so far.</returns>
             get { return low; }
         }
 
@@ -224,7 +216,6 @@ namespace Encog.Neural.Prune
         /// <value>The network pattern to use.</value>
         public NeuralNetworkPattern Pattern
         {
-            /// <returns>The network pattern to use.</returns>
             get { return pattern; }
         }
 
@@ -232,7 +223,6 @@ namespace Encog.Neural.Prune
         /// <value>The error results.</value>
         public double[][] Results
         {
-            /// <returns>The error results.</returns>
             get { return results; }
         }
 
@@ -240,7 +230,6 @@ namespace Encog.Neural.Prune
         /// <value>the topErrors</value>
         public double[] TopErrors
         {
-            /// <returns>the topErrors</returns>
             get { return topErrors; }
         }
 
@@ -248,7 +237,6 @@ namespace Encog.Neural.Prune
         /// <value>the topNetworks</value>
         public BasicNetwork[] TopNetworks
         {
-            /// <returns>the topNetworks</returns>
             get { return topNetworks; }
         }
 
@@ -256,7 +244,6 @@ namespace Encog.Neural.Prune
         /// <value>The training set to use.</value>
         public MLDataSet Training
         {
-            /// <returns>The training set to use.</returns>
             get { return training; }
         }
 

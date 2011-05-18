@@ -97,7 +97,7 @@ namespace Encog.Persist
         /// Add a column as a long.
         /// </summary>
         ///
-        /// <param name="d">The long to add.</param>
+        /// <param name="v">The long to add.</param>
         public void AddColumn(long v)
         {
             if (line.Length > 0)
@@ -258,7 +258,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The boolean value.</param>
+        /// <param name="value_ren">The boolean value.</param>
         public void WriteProperty(String name, bool value_ren)
         {
             xout.WriteLine(name + "=" + ((value_ren) ? 't' : 'f'));
@@ -295,7 +295,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="value_ren">The value.</param>
         public void WriteProperty(String name, double value_ren)
         {
             xout.WriteLine(name + "="
@@ -307,7 +307,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="v">The value.</param>
         public void WriteProperty(String name, long v)
         {
             xout.WriteLine(name + "="
@@ -332,7 +332,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The int value.</param>
+        /// <param name="value_ren">The int value.</param>
         public void WriteProperty(String name, int value_ren)
         {
             xout.WriteLine(name + "=" + value_ren);
@@ -382,7 +382,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="value_ren">The value.</param>
         public void WriteProperty(String name, String value_ren)
         {
             xout.WriteLine(name + "=" + value_ren);

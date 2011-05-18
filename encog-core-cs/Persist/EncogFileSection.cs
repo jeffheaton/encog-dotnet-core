@@ -93,7 +93,7 @@ namespace Encog.Persist
         /// Parse an activation function from a string.
         /// </summary>
         ///
-        /// <param name="params">The params.</param>
+        /// <param name="paras">The params.</param>
         /// <param name="name">The name of the param to parse.</param>
         /// <returns>The parsed activation function.</returns>
         public static IActivationFunction ParseActivationFunction(
@@ -139,7 +139,7 @@ namespace Encog.Persist
         /// Parse a boolean from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed boolean value.</returns>
         public static bool ParseBoolean(IDictionary<String, String> paras,
@@ -156,7 +156,7 @@ namespace Encog.Persist
 
                 return value_ren.Trim().ToLower()[0] == 't';
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
                                        + "invalid integer: " + value_ren);
@@ -167,7 +167,7 @@ namespace Encog.Persist
         /// Parse a double from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed double value.</returns>
         public static double ParseDouble(IDictionary<String, String> paras,
@@ -184,7 +184,7 @@ namespace Encog.Persist
 
                 return CSVFormat.EG_FORMAT.Parse(value_ren);
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
                                        + "invalid integer: " + value_ren);
@@ -195,7 +195,7 @@ namespace Encog.Persist
         /// Parse a double array from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed double array value.</returns>
         public static double[] ParseDoubleArray(IDictionary<String, String> paras,
@@ -212,7 +212,7 @@ namespace Encog.Persist
 
                 return NumberList.FromList(CSVFormat.EG_FORMAT, v);
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
                                        + "invalid integer: " + v);
@@ -223,7 +223,7 @@ namespace Encog.Persist
         /// Parse an int from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed int value.</returns>
         public static int ParseInt(IDictionary<String, String> paras,
@@ -251,7 +251,7 @@ namespace Encog.Persist
         /// Parse an int array from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed int array value.</returns>
         public static int[] ParseIntArray(IDictionary<String, String> paras,
@@ -268,7 +268,7 @@ namespace Encog.Persist
 
                 return NumberList.FromListInt(CSVFormat.EG_FORMAT, value_ren);
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
                                        + "invalid integer: " + value_ren);
@@ -279,7 +279,7 @@ namespace Encog.Persist
         /// Parse a matrix from a name-value collection of params.
         /// </summary>
         ///
-        /// <param name="params">The name-value pairs.</param>
+        /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed matrix value.</returns>
         public static Matrix ParseMatrix(IDictionary<String, String> paras,

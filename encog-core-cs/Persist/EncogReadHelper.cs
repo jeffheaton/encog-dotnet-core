@@ -45,7 +45,7 @@ namespace Encog.Persist
         /// Construct the object.
         /// </summary>
         ///
-        /// <param name="is">The input stream.</param>
+        /// <param name="mask0">The input stream.</param>
         public EncogReadHelper(Stream mask0)
         {
             lines = new List<String>();

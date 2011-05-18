@@ -119,105 +119,55 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <value>The gradients from the last iteration;</value>
         public double[] LastGradient
         {
-            /// <returns>The gradients from the last iteration;</returns>
             get { return lastGradient; }
         }
 
         #region TrainFlatNetwork Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void FinishTraining()
         {
             // nothing to do
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public double Error
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return currentError; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int IterationNumber
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return iteration; }
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             set { iteration = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public FlatNetwork Network
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int NumThreads
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return numThreads; }
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             set { numThreads = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public MLDataSet Training
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return training; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void Iteration()
         {
             iteration++;

@@ -45,6 +45,9 @@ namespace Encog.Neural.Pattern
         ///
         private int outputNeurons;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public FeedForwardPattern()
         {
             hidden = new List<Int32>();
@@ -53,9 +56,7 @@ namespace Encog.Neural.Pattern
         /// <value>the activationOutput to set</value>
         public IActivationFunction ActivationOutput
         {
-            /// <returns>the activationOutput</returns>
             get { return activationOutput; }
-            /// <param name="activationOutput_0">the activationOutput to set</param>
             set { activationOutput = value; }
         }
 
@@ -64,8 +65,6 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Add a hidden layer, with the specified number of neurons.
         /// </summary>
-        ///
-        /// <param name="count">The number of neurons to add.</param>
         public void AddHiddenLayer(int count)
         {
             hidden.Add(count);
@@ -83,8 +82,6 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the feedforward neural network.
         /// </summary>
-        ///
-        /// <returns>The feedforward neural network.</returns>
         public MLMethod Generate()
         {
             if (activationOutput == null)
@@ -117,15 +114,11 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the activation function to use on each of the layers.
         /// </summary>
-        ///
-        /// <value>The activation function.</value>
         public IActivationFunction ActivationFunction
         {
             /// <summary>
             /// Set the activation function to use on each of the layers.
             /// </summary>
-            ///
-            /// <param name="activation">The activation function.</param>
             set { activationHidden = value; }
         }
 
@@ -133,15 +126,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>Neuron count.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">Neuron count.</param>
             set { inputNeurons = value; }
         }
 
@@ -149,15 +135,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of output neurons.
         /// </summary>
-        ///
-        /// <value>Neuron count.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">Neuron count.</param>
             set { outputNeurons = value; }
         }
 

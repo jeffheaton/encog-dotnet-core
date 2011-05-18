@@ -93,6 +93,7 @@ namespace Encog.Neural.NEAT
         /// <param name="outputCount_1">The number of output neurons.</param>
         /// <param name="neurons_2">The neurons in this synapse.</param>
         /// <param name="activationFunction_3">The activation function to use.</param>
+        /// <param name="outputActivationFunction_4">The output activation function.</param>
         /// <param name="networkDepth_5">The depth of the network.</param>
         public NEATNetwork(int inputCount_0, int outputCount_1,
                            IList<NEATNeuron> neurons_2,

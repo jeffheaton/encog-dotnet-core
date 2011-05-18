@@ -114,7 +114,7 @@ namespace Encog.Util.Time
         /// <summary>
         /// Get the year month of a numeric date.
         /// </summary>
-        /// <param name="date">The numeric date.</param>
+        /// <param name="l">The numeric date.</param>
         /// <returns>The month.</returns>
         public static int GetMonth(ulong l)
         {

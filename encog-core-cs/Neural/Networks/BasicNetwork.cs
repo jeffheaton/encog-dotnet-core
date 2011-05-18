@@ -160,12 +160,6 @@ namespace Encog.Neural.Networks
         /// <value>THe new activation.</value>
         public double BiasActivation
         {
-            /// <summary>
-            /// Sets the bias activation for every layer that supports bias. Make sure
-            /// that the network structure has been finalized before calling this method.
-            /// </summary>
-            ///
-            /// <param name="activation">THe new activation.</param>
             set
             {
                 // first, see what mode we are on. If the network has not been
@@ -195,16 +189,9 @@ namespace Encog.Neural.Networks
 
         #region ContainsFlat Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public FlatNetwork Flat
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return Structure.Flat; }
         }
 
@@ -212,10 +199,7 @@ namespace Encog.Neural.Networks
 
         #region MLClassification Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int Classify(MLData input)
         {
             return Winner(input);
@@ -241,10 +225,7 @@ namespace Encog.Neural.Networks
 
         #region MLEncodable Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void DecodeFromArray(double[] encoded)
         {
             structure.RequireFlat();
@@ -259,20 +240,14 @@ namespace Encog.Neural.Networks
             EngineArray.ArrayCopy(encoded, weights);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int EncodedArrayLength()
         {
             structure.RequireFlat();
             return structure.Flat.EncodeLength;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void EncodeToArray(double[] encoded)
         {
             structure.RequireFlat();
@@ -328,16 +303,9 @@ namespace Encog.Neural.Networks
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get
             {
                 structure.RequireFlat();
@@ -345,16 +313,9 @@ namespace Encog.Neural.Networks
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get
             {
                 structure.RequireFlat();
@@ -422,7 +383,7 @@ namespace Encog.Neural.Networks
         /// <param name="fromLayer">The from layer.</param>
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value">The value to add.</param>
+        /// <param name="value_ren">The value to add.</param>
         public void AddWeight(int fromLayer, int fromNeuron,
                               int toNeuron, double value_ren)
         {
@@ -712,7 +673,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <param name="l">The layer to use.</param>
-        /// <param name="value">The bias activation.</param>
+        /// <param name="value_ren">The bias activation.</param>
         public void SetLayerBiasActivation(int l, double value_ren)
         {
             if (!IsLayerBiased(l))
@@ -736,7 +697,7 @@ namespace Encog.Neural.Networks
         /// <param name="fromLayer">The from layer.</param>
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value">The to value.</param>
+        /// <param name="value_ren">The to value.</param>
         public void SetWeight(int fromLayer, int fromNeuron,
                               int toNeuron, double value_ren)
         {

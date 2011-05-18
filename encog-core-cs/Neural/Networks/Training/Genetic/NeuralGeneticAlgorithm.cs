@@ -81,31 +81,16 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// <summary>
         /// Set the genetic helper class.
         /// </summary>
-        ///
-        /// <value>The genetic helper class.</value>
         public NeuralGeneticAlgorithmHelper Genetic
         {
-            /// <returns>The genetic algorithm implementation.</returns>
             get { return genetic; }
-            /// <summary>
-            /// Set the genetic helper class.
-            /// </summary>
-            ///
-            /// <param name="genetic_0">The genetic helper class.</param>
             set { genetic = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return Genetic.Method; }
         }
 
@@ -124,19 +109,13 @@ namespace Encog.Neural.Networks.Training.Genetic
             PostIteration();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed void Resume(TrainingContinuation state)
         {
         }
@@ -152,7 +131,6 @@ namespace Encog.Neural.Networks.Training.Genetic
             /// <value>The error from the last iteration.</value>
             public double Error
             {
-                /// <returns>The error from the last iteration.</returns>
                 get
                 {
                     IGenome genome = Population.Best;
@@ -164,15 +142,8 @@ namespace Encog.Neural.Networks.Training.Genetic
             /// <summary>
             /// Get the current best neural network.
             /// </summary>
-            ///
-            /// <value>The current best neural network.</value>
             public MLMethod Method
             {
-                /// <summary>
-                /// Get the current best neural network.
-                /// </summary>
-                ///
-                /// <returns>The current best neural network.</returns>
                 get
                 {
                     IGenome genome = Population.Best;

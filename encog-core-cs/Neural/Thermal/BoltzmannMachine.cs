@@ -75,8 +75,6 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// Construct a Boltzmann machine with the specified number of neurons.
         /// </summary>
-        ///
-        /// <param name="neuronCount">The number of neurons.</param>
         public BoltzmannMachine(int neuronCount) : base(neuronCount)
         {
             annealCycles = 100;
@@ -89,37 +87,22 @@ namespace Encog.Neural.Thermal
         /// <value>the annealCycles to set</value>
         public int AnnealCycles
         {
-            /// <returns>the annealCycles</returns>
             get { return annealCycles; }
-            /// <param name="annealCycles_0">the annealCycles to set</param>
             set { annealCycles = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return NeuronCount; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+
+        /// <inheritdoc/>
         public override int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return NeuronCount; }
         }
 
@@ -127,9 +110,7 @@ namespace Encog.Neural.Thermal
         /// <value>the runCycles to set</value>
         public int RunCycles
         {
-            /// <returns>the runCycles</returns>
             get { return runCycles; }
-            /// <param name="runCycles_0">the runCycles to set</param>
             set { runCycles = value; }
         }
 
@@ -137,17 +118,9 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// Set the network temperature.
         /// </summary>
-        ///
-        /// <value>The temperature to operate the network at.</value>
         public double Temperature
         {
-            /// <returns>The temperature the network is currently operating at.</returns>
             get { return temperature; }
-            /// <summary>
-            /// Set the network temperature.
-            /// </summary>
-            ///
-            /// <param name="temperature_0">The temperature to operate the network at.</param>
             set { temperature = value; }
         }
 
@@ -155,17 +128,9 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// Set the thresholds.
         /// </summary>
-        ///
-        /// <value>The thresholds.</value>
         public double[] Threshold
         {
-            /// <returns>the threshold</returns>
             get { return threshold; }
-            /// <summary>
-            /// Set the thresholds.
-            /// </summary>
-            ///
-            /// <param name="t">The thresholds.</param>
             set { threshold = value; }
         }
 

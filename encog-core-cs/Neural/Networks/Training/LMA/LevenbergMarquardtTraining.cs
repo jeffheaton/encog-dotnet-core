@@ -190,7 +190,6 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <value>The trained network.</value>
         public override MLMethod Method
         {
-            /// <returns>The trained network.</returns>
             get { return network; }
         }
 
@@ -198,17 +197,9 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <summary>
         /// Set if Bayesian regularization should be used.
         /// </summary>
-        ///
-        /// <value>True to use Bayesian regularization.</value>
         public bool UseBayesianRegularization
         {
-            /// <returns>True, if Bayesian regularization is used.</returns>
             get { return useBayesianRegularization; }
-            /// <summary>
-            /// Set if Bayesian regularization should be used.
-            /// </summary>
-            ///
-            /// <param name="useBayesianRegularization_0">True to use Bayesian regularization.</param>
             set { useBayesianRegularization = value; }
         }
 
@@ -414,11 +405,13 @@ namespace Encog.Neural.Networks.Training.Lma
             return result/2.0d;
         }
 
+        /// <inheritdoc/>
         public override TrainingContinuation Pause()
         {
             return null;
         }
 
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

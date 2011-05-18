@@ -129,10 +129,7 @@ namespace Encog.Neural.Networks.Training.PNN
             samplesLoaded = false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed bool CanContinue
         {
             get { return false; }
@@ -142,23 +139,14 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the maxError to set</value>
         public double MaxError
         {
-            /// <returns>the maxError</returns>
             get { return maxError; }
-            /// <param name="maxError_0">the maxError to set</param>
             set { maxError = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -166,9 +154,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the minImprovement to set</value>
         public double MinImprovement
         {
-            /// <returns>the minImprovement</returns>
             get { return minImprovement; }
-            /// <param name="minImprovement_0">the minImprovement to set</param>
             set { minImprovement = value; }
         }
 
@@ -176,9 +162,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the numSigmas to set</value>
         public int NumSigmas
         {
-            /// <returns>the numSigmas</returns>
             get { return numSigmas; }
-            /// <param name="numSigmas_0">the numSigmas to set</param>
             set { numSigmas = value; }
         }
 
@@ -186,9 +170,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the sigmaHigh to set</value>
         public double SigmaHigh
         {
-            /// <returns>the sigmaHigh</returns>
             get { return sigmaHigh; }
-            /// <param name="sigmaHigh_0">the sigmaHigh to set</param>
             set { sigmaHigh = value; }
         }
 
@@ -196,9 +178,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the sigmaLow to set</value>
         public double SigmaLow
         {
-            /// <returns>the sigmaLow</returns>
             get { return sigmaLow; }
-            /// <param name="sigmaLow_0">the sigmaLow to set</param>
             set { sigmaLow = value; }
         }
 

@@ -99,7 +99,7 @@ namespace Encog.Util
             {
                 return Int32.Parse(str);
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new EncogError("Property " + name
                                      + " has an invalid value of " + str

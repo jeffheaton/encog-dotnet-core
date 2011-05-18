@@ -134,13 +134,7 @@ namespace Encog.ML.Genetic.Genome
         /// <value>The score.</value>
         public double AdjustedScore
         {
-            /// <returns>The adjusted score, which considers bonuses.</returns>
             get { return adjustedScore; }
-            /// <summary>
-            /// Set the adjusted score.
-            /// </summary>
-            ///
-            /// <param name="theAdjustedScore">The score.</param>
             set { adjustedScore = value; }
         }
 
@@ -148,17 +142,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the amount to spawn.
         /// </summary>
-        ///
-        /// <value>The amount to spawn.</value>
         public double AmountToSpawn
         {
-            /// <returns>The amount this genome will spawn.</returns>
             get { return amountToSpawn; }
-            /// <summary>
-            /// Set the amount to spawn.
-            /// </summary>
-            ///
-            /// <param name="theAmountToSpawn">The amount to spawn.</param>
             set { amountToSpawn = value; }
         }
 
@@ -166,7 +152,6 @@ namespace Encog.ML.Genetic.Genome
         /// <value>The number of chromosomes.</value>
         public IList<Chromosome> Chromosomes
         {
-            /// <returns>The number of chromosomes.</returns>
             get { return chromosomes; }
         }
 
@@ -174,8 +159,6 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the genetic algorithm to use.
         /// </summary>
-        ///
-        /// <value>The genetic algorithm to use.</value>
         public GeneticAlgorithm GA
         {
             get { return ga; }
@@ -186,17 +169,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the genome id.
         /// </summary>
-        ///
-        /// <value>the genome id.</value>
         public long GenomeID
         {
-            /// <returns>The genome id.</returns>
             get { return genomeID; }
-            /// <summary>
-            /// Set the genome id.
-            /// </summary>
-            ///
-            /// <param name="theGenomeID">the genome id.</param>
             set { genomeID = value; }
         }
 
@@ -204,17 +179,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the organism.
         /// </summary>
-        ///
-        /// <value>The organism.</value>
         public Object Organism
         {
-            /// <returns>The organism produced.</returns>
             get { return organism; }
-            /// <summary>
-            /// Set the organism.
-            /// </summary>
-            ///
-            /// <param name="theOrganism">The organism.</param>
             set { organism = value; }
         }
 
@@ -222,9 +189,7 @@ namespace Encog.ML.Genetic.Genome
         /// <value>the population to set</value>
         public IPopulation Population
         {
-            /// <returns>the population</returns>
             get { return population; }
-            /// <param name="thePopulation">the population to set</param>
             set { population = value; }
         }
 
@@ -232,17 +197,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the score.
         /// </summary>
-        ///
-        /// <value>Set the score.</value>
         public double Score
         {
-            /// <returns>The score.</returns>
             get { return score; }
-            /// <summary>
-            /// Set the score.
-            /// </summary>
-            ///
-            /// <param name="theScore">Set the score.</param>
             set { score = value; }
         }
 

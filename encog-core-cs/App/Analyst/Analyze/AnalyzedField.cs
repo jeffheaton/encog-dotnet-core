@@ -119,7 +119,7 @@ namespace Encog.App.Analyst.Analyze
                     total += d;
                     accountedFor = true;
                 }
-                catch (FormatException ex)
+                catch (FormatException )
                 {
                     Real = false;
                     if (!Integer)
@@ -143,7 +143,7 @@ namespace Encog.App.Analyst.Analyze
                         total += i;
                     }
                 }
-                catch (FormatException ex_0)
+                catch (FormatException )
                 {
                     Integer = false;
                     if (!Real)

@@ -140,9 +140,7 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the fromNeuronID to set</value>
         public long FromNeuronID
         {
-            /// <returns>The from neuron id.</returns>
             get { return fromNeuronID; }
-            /// <param name="fromNeuronID_0">the fromNeuronID to set</param>
             set { fromNeuronID = value; }
         }
 
@@ -151,7 +149,6 @@ namespace Encog.Neural.NEAT.Training
         /// </summary>
         public NEATInnovationType InnovationType
         {
-            /// <returns>The innovation type.</returns>
             get { return innovationType; }
             set { innovationType = value; }
         }
@@ -160,40 +157,35 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Set the neuron id.
         /// </summary>
-        ///
-        /// <value>The neuron id.</value>
         public long NeuronID
         {
-            /// <returns>The neuron ID.</returns>
             get { return neuronID; }
-            /// <summary>
-            /// Set the neuron id.
-            /// </summary>
-            ///
-            /// <param name="neuronID_0">The neuron id.</param>
             set { neuronID = value; }
         }
 
-
+        /// <summary>
+        /// The neuron type.
+        /// </summary>
         public NEATNeuronType NeuronType
         {
-            /// <returns>The neuron type.</returns>
             get { return neuronType; }
             set { neuronType = value; }
         }
 
-
+        /// <summary>
+        /// The split X, useful for display, also used during training, max is 1.0.
+        /// </summary>
         public double SplitX
         {
-            /// <returns>The split x.</returns>
             get { return splitX; }
             set { splitX = value; }
         }
 
-
+        /// <summary>
+        /// The split Y, useful for display, also used during training, max is 1.0.
+        /// </summary>
         public double SplitY
         {
-            /// <returns>The split y.</returns>
             get { return splitY; }
             set { splitY = value; }
         }
@@ -202,17 +194,12 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the toNeuronID to set</value>
         public long ToNeuronID
         {
-            /// <returns>The to neuron id.</returns>
             get { return toNeuronID; }
-            /// <param name="toNeuronID_0">the toNeuronID to set</param>
             set { toNeuronID = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String ToString()
         {
             var result = new StringBuilder();

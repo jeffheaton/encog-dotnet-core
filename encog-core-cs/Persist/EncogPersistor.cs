@@ -10,6 +10,9 @@ namespace Encog.Persist
     ///
     public interface EncogPersistor
     {
+        /// <summary>
+        /// The native type.
+        /// </summary>
         Type NativeType { get;  }
         
         /// <value>Get the class string for the object.</value>
@@ -23,7 +26,7 @@ namespace Encog.Persist
         /// Read the object from an input stream.
         /// </summary>
         ///
-        /// <param name="is">The input stream.</param>
+        /// <param name="mask0">The input stream.</param>
         /// <returns>The object.</returns>
         Object Read(Stream mask0);
 

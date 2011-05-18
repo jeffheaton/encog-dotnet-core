@@ -25,133 +25,135 @@ namespace Encog.Neural.NEAT.Training
     /// </summary>
     ///
     public class NEATTraining : GeneticAlgorithm, MLTrain
-    {
-        /**
-	 * The average fit adjustment.
-	 */
-
-        /**
-	 * The number of inputs.
-	 */
+    {        
+        /// <summary>
+        /// The number of inputs.
+        /// </summary>
         private readonly int inputCount;
 
-        /**
-	 * The number of output neurons.
-	 */
+        /// <summary>
+        /// The number of output neurons.
+        /// </summary>
         private readonly int outputCount;
+
+        /// <summary>
+        /// The average fit adjustment.
+        /// </summary>
         private double averageFitAdjustment;
+
+        /// <summary>
+        /// The best ever network.
+        /// </summary>
         private NEATNetwork bestEverNetwork;
+
+        /// <summary>
+        /// The best ever score.
+        /// </summary>
         private double bestEverScore;
+
+        /// <summary>
+        /// The iteration number.
+        /// </summary>
         private int iteration;
 
-        /**
-	 * The activation mutation rate.
-	 */
+        /// <summary>
+        /// The activation mutation rate.
+        /// </summary>
         private double paramActivationMutationRate = 0.1;
 
-        /**
-	 * The likelyhood of adding a link.
-	 */
+        /// <summary>
+        /// The likelyhood of adding a link.
+        /// </summary>
         private double paramChanceAddLink = 0.07;
 
-        /**
-	 * The likelyhood of adding a node.
-	 */
+        /// <summary>
+        /// The likelyhood of adding a node.
+        /// </summary>
         private double paramChanceAddNode = 0.04;
 
-        /**
-	 * THe likelyhood of adding a recurrent link.
-	 */
+        /// <summary>
+        /// The likelyhood of adding a recurrent link.
+        /// </summary>
         private double paramChanceAddRecurrentLink = 0.05;
 
-        /**
-	 * The compatibility threshold for a species.
-	 */
+        /// <summary>
+        /// The compatibility threshold for a species.
+        /// </summary>
         private double paramCompatibilityThreshold = 0.26;
 
-        /**
-	 * The crossover rate.
-	 */
+        /// <summary>
+        /// The crossover rate.
+        /// </summary>
         private double paramCrossoverRate = 0.7;
 
-        /**
-	 * The max activation perturbation.
-	 */
+        /// <summary>
+        /// The max activation perturbation.
+        /// </summary>
         private double paramMaxActivationPerturbation = 0.1;
 
-        /**
-	 * The maximum number of species.
-	 */
+        /// <summary>
+        /// The maximum number of species.
+        /// </summary>
         private int paramMaxNumberOfSpecies;
 
-        /**
-	 * The maximum number of neurons.
-	 */
+        /// <summary>
+        /// The maximum number of neurons.
+        /// </summary>
         private double paramMaxPermittedNeurons = 100;
 
-        /**
-	 * The maximum weight perturbation.
-	 */
+        /// <summary>
+        /// The maximum weight perturbation.
+        /// </summary>
         private double paramMaxWeightPerturbation = 0.5;
 
-        /**
-	 * The mutation rate.
-	 */
+        /// <summary>
+        /// The mutation rate.
+        /// </summary>
         private double paramMutationRate = 0.2;
 
-        /**
-	 * The number of link add attempts.
-	 */
+        /// <summary>
+        /// The number of link add attempts.
+        /// </summary>
         private int paramNumAddLinkAttempts = 5;
 
-        /**
-	 * The number of generations allowed with no improvement.
-	 */
+        /// <summary>
+        /// The number of generations allowed with no improvement.
+        /// </summary>
         private int paramNumGensAllowedNoImprovement = 15;
 
-        /**
-	 * The number of tries to find a looped link.
-	 */
+        /// <summary>
+        /// The number of tries to find a looped link.
+        /// </summary>
         private int paramNumTrysToFindLoopedLink = 5;
 
-        /**
-	 * The number of tries to find an old link.
-	 */
+        /// <summary>
+        /// The number of tries to find an old link.
+        /// </summary>
         private int paramNumTrysToFindOldLink = 5;
 
-        /**
-	 * The probability that the weight will be totally replaced.
-	 */
+        /// <summary>
+        /// The probability that the weight will be totally replaced.
+        /// </summary>
         private double paramProbabilityWeightReplaced = 0.1;
 
-        /**
-	 * The total fit adjustment.
-	 */
-
-        /**
-	 * Determines if we are using snapshot mode.
-	 */
+        /// <summary>
+        /// Determines if we are using snapshot mode.
+        /// </summary>
         private bool snapshot;
+
+        /// <summary>
+        /// The total fit adjustment.
+        /// </summary>
         private double totalFitAdjustment;
 
-        /**
-	 * The iteration number.
-	 */
-
-        /**
-	 * Construct a neat trainer with a new population. The new population is
-	 * created from the specified parameters.
-	 * 
-	 * @param calculateScore
-	 *            The score calculation object.
-	 * @param inputCount
-	 *            The input neuron count.
-	 * @param outputCount
-	 *            The output neuron count.
-	 * @param populationSize
-	 *            The population size.
-	 */
-
+        /// <summary>
+        /// Construct a neat trainer with a new population. The new population is
+        /// created from the specified parameters.
+        /// </summary>
+        /// <param name="calculateScore">The score calculation object.</param>
+        /// <param name="inputCount">The input neuron count.</param>
+        /// <param name="outputCount">The output neuron count.</param>
+        /// <param name="populationSize">The population size.</param>
         public NEATTraining(ICalculateScore calculateScore,
                             int inputCount, int outputCount,
                             int populationSize)
@@ -167,15 +169,11 @@ namespace Encog.Neural.NEAT.Training
             Init();
         }
 
-        /**
-	 * Construct neat training with an existing population.
-	 * 
-	 * @param calculateScore
-	 *            The score object to use.
-	 * @param population
-	 *            The population to use.
-	 */
-
+        /// <summary>
+        /// Construct neat training with an existing population.
+        /// </summary>
+        /// <param name="calculateScore">The score object to use.</param>
+        /// <param name="population">The population to use.</param>
         public NEATTraining(ICalculateScore calculateScore,
                             IPopulation population)
         {
@@ -194,56 +192,33 @@ namespace Encog.Neural.NEAT.Training
             Init();
         }
 
-        /**
-	 * Add a neuron.
-	 * 
-	 * @param nodeID
-	 *            The neuron id.
-	 * @param vec
-	 *            THe list of id's used.
-	 */
-
-        /**
-	 * @return The innovations.
-	 */
-
+        /// <summary>
+        /// The innovations.
+        /// </summary>
         public NEATInnovationList Innovations
         {
             get { return (NEATInnovationList) Population.Innovations; }
         }
 
-        /**
-	 * @return The input count.
-	 */
-
+        /// <summary>
+        /// The input count.
+        /// </summary>
         public int InputCount
         {
             get { return inputCount; }
         }
 
-        /**
-	 * @return The number of output neurons.
-	 */
-
+        /// <summary>
+        /// The number of output neurons.
+        /// </summary>
         public int OutputCount
         {
             get { return outputCount; }
         }
 
-        /**
-	 * Returns an empty list, strategies are not supported.
-	 * 
-	 * @return The strategies in use(none).
-	 */
-
-
-        /**
-	 * Set the activation mutation rate.
-	 * 
-	 * @param paramActivationMutationRate
-	 *            The mutation rate.
-	 */
-
+        /// <summary>
+        /// Set the activation mutation rate.
+        /// </summary>
         public double ParamActivationMutationRate
         {
             get { return paramActivationMutationRate; }
@@ -251,13 +226,9 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the chance to add a link.
-	 * 
-	 * @param paramChanceAddLink
-	 *            The chance to add a link.
-	 */
-
+        /// <summary>
+        /// Set the chance to add a link.
+        /// </summary>
         public double ParamChanceAddLink
         {
             get { return paramChanceAddLink; }
@@ -265,26 +236,18 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the chance to add a node.
-	 * 
-	 * @param paramChanceAddNode
-	 *            The chance to add a node.
-	 */
-
+        /// <summary>
+        /// Set the chance to add a node.
+        /// </summary>
         public double ParamChanceAddNode
         {
             get { return paramChanceAddNode; }
             set { paramChanceAddNode = value; }
         }
 
-        /**
-	 * Set the chance to add a recurrent link.
-	 * 
-	 * @param paramChanceAddRecurrentLink
-	 *            The chance to add a recurrent link.
-	 */
-
+        /// <summary>
+        /// Set the chance to add a recurrent link.
+        /// </summary>
         public double ParamChanceAddRecurrentLink
         {
             get { return paramChanceAddRecurrentLink; }
@@ -292,13 +255,9 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the compatibility threshold for species.
-	 * 
-	 * @param paramCompatibilityThreshold
-	 *            The threshold.
-	 */
-
+        /// <summary>
+        /// Set the compatibility threshold for species.
+        /// </summary>
         public double ParamCompatibilityThreshold
         {
             get { return paramCompatibilityThreshold; }
@@ -306,13 +265,9 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the cross over rate.
-	 * 
-	 * @param paramCrossoverRate
-	 *            The crossover rate.
-	 */
-
+        /// <summary>
+        /// Set the cross over rate.
+        /// </summary>
         public double ParamCrossoverRate
         {
             get { return paramCrossoverRate; }
@@ -320,104 +275,72 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the max activation perturbation.
-	 * 
-	 * @param paramMaxActivationPerturbation
-	 *            The max perturbation.
-	 */
-
+        /// <summary>
+        /// Set the max activation perturbation.
+        /// </summary>
         public double ParamMaxActivationPerturbation
         {
             get { return paramMaxActivationPerturbation; }
             set { paramMaxActivationPerturbation = value; }
         }
 
-        /**
-	 * Set the maximum number of species.
-	 * 
-	 * @param paramMaxNumberOfSpecies
-	 *            The max number of species.
-	 */
-
+        /// <summary>
+        /// Set the maximum number of species.
+        /// </summary>
         public int ParamMaxNumberOfSpecies
         {
             get { return paramMaxNumberOfSpecies; }
             set { paramMaxNumberOfSpecies = value; }
         }
 
-        /**
-	 * Set the max permitted neurons.
-	 * 
-	 * @param paramMaxPermittedNeurons
-	 *            The max permitted neurons.
-	 */
-
+        /// <summary>
+        /// Set the max permitted neurons.
+        /// </summary>
         public double ParamMaxPermittedNeurons
         {
             get { return paramMaxPermittedNeurons; }
             set { paramMaxPermittedNeurons = value; }
         }
 
-        /**
-	 * Set the max weight perturbation.
-	 * 
-	 * @param paramMaxWeightPerturbation
-	 *            The max weight perturbation.
-	 */
-
+       /// <summary>
+        /// Set the max weight perturbation.
+       /// </summary>
         public double ParamMaxWeightPerturbation
         {
             get { return paramMaxWeightPerturbation; }
             set { paramMaxWeightPerturbation = value; }
         }
 
-        /**
-	 * Set the mutation rate.
-	 * 
-	 * @param paramMutationRate
-	 *            The mutation rate.
-	 */
-
+        /// <summary>
+        /// Set the mutation rate.
+        /// </summary>
         public double ParamMutationRate
         {
             get { return paramMutationRate; }
             set { paramMutationRate = value; }
         }
 
-        /**
-	 * Set the number of attempts to add a link.
-	 * 
-	 * @param paramNumAddLinkAttempts
-	 *            The number of attempts to add a link.
-	 */
-
+        /// <summary>
+        /// Set the number of attempts to add a link.
+        /// </summary>
         public int ParamNumAddLinkAttempts
         {
             get { return paramNumAddLinkAttempts; }
             set { paramNumAddLinkAttempts = value; }
         }
 
-        /**
-	 * Set the number of no-improvement generations allowed.
-	 * 
-	 * @param paramNumGensAllowedNoImprovement
-	 *            The number of generations.
-	 */
-
+        /// <summary>
+        /// Set the number of no-improvement generations allowed.
+        /// </summary>
         public int ParamNumGensAllowedNoImprovement
         {
             get { return paramNumGensAllowedNoImprovement; }
             set { paramNumGensAllowedNoImprovement = value; }
         }
 
-        /**
-	 * Set the number of tries to create a looped link.
-	 * 
-	 * @param paramNumTrysToFindLoopedLink
-	 *            Number of tries.
-	 */
-
+        /// <summary>
+        /// Set the number of tries to create a looped link.
+        /// </summary>
         public int ParamNumTrysToFindLoopedLink
         {
             get { return paramNumTrysToFindLoopedLink; }
@@ -425,13 +348,9 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the number of tries to try an old link.
-	 * 
-	 * @param paramNumTrysToFindOldLink
-	 *            Number of tries.
-	 */
-
+        /// <summary>
+        /// Set the number of tries to try an old link.
+        /// </summary>
         public int ParamNumTrysToFindOldLink
         {
             get { return paramNumTrysToFindOldLink; }
@@ -439,26 +358,18 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /**
-	 * Set the probability to replace a weight.
-	 * 
-	 * @param paramProbabilityWeightReplaced
-	 *            The probability.
-	 */
-
+        /// <summary>
+        /// Set the probability to replace a weight.
+        /// </summary>
         public double ParamProbabilityWeightReplaced
         {
             get { return paramProbabilityWeightReplaced; }
             set { paramProbabilityWeightReplaced = value; }
         }
 
-        /**
-	 * Set if we are using snapshot mode.
-	 * 
-	 * @param snapshot
-	 *            True if we are using snapshot mode.
-	 */
-
+        /// <summary>
+        /// Set if we are using snapshot mode.
+        /// </summary>
         public bool Snapshot
         {
             get { return snapshot; }
@@ -467,76 +378,77 @@ namespace Encog.Neural.NEAT.Training
 
         #region MLTrain Members
 
+        /// <inheritdoc/>
         public void AddStrategy(IStrategy strategy)
         {
             throw new TrainingError(
                 "Strategies are not supported by this training method.");
         }
 
+        /// <inheritdoc/>
         public bool CanContinue
         {
             get { return false; }
         }
 
+        /// <inheritdoc/>
         public void FinishTraining()
         {
         }
 
-        /**
-	 * return The error for the best genome.
-	 */
-
+        /// <summary>
+        /// The error for the best genome.
+        /// </summary>
         public double Error
         {
             get { return bestEverScore; }
             set { bestEverScore = value; }
         }
 
+        /// <inheritdoc/>
         public TrainingImplementationType ImplementationType
         {
             get { return TrainingImplementationType.Iterative; }
         }
 
+        /// <inheritdoc/>
         public int IterationNumber
         {
             get { return iteration; }
             set { iteration = value; }
         }
 
-        /**
-	 * @return A network created for the best genome.
-	 */
-
+        /// <summary>
+        /// A network created for the best genome.
+        /// </summary>
         public MLMethod Method
         {
             get { return bestEverNetwork; }
         }
 
+        /// <inheritdoc/>
         public IList<IStrategy> Strategies
         {
             get { return new List<IStrategy>(); }
         }
 
-        /**
-	 * Returns null, does not use a training set, rather uses a score function.
-	 * 
-	 * @return null, not used.
-	 */
-
+        /// <summary>
+        /// Returns null, does not use a training set, rather uses a score function.
+        /// </summary>
         public MLDataSet Training
         {
             get { return null; }
         }
 
+        /// <inheritdoc/>
         public bool TrainingDone
         {
             get { return false; }
         }
 
-        /**
-	 * Perform one training iteration.
-	 */
-
+        /// <summary>
+        /// Perform one training iteration.
+        /// </summary>
         public override void Iteration()
         {
             iteration++;
@@ -666,16 +578,7 @@ namespace Encog.Neural.NEAT.Training
             SpeciateAndCalculateSpawnLevels();
         }
 
-        /**
-	 * Perform the specified number of training iterations. This is a basic
-	 * implementation that just calls iteration the specified number of times.
-	 * However, some training methods, particularly with the GPU, benefit
-	 * greatly by calling with higher numbers than 1.
-	 * 
-	 * @param count
-	 *            The number of training iterations.
-	 */
-
+        /// <inheritdoc/>
         public void Iteration(int count)
         {
             for (int i = 0; i < count; i++)
@@ -684,17 +587,24 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
+        /// <inheritdoc/>
         public TrainingContinuation Pause()
         {
             return null;
         }
 
+        /// <inheritdoc/>
         public void Resume(TrainingContinuation state)
         {
         }
 
         #endregion
 
+        /// <summary>
+        /// Add the specified neuron id.
+        /// </summary>
+        /// <param name="nodeID">The neuron to add.</param>
+        /// <param name="vec">The list to add to.</param>
         public void AddNeuronID(long nodeID, IList<long> vec)
         {
             for (int i = 0; i < vec.Count; i++)
@@ -710,6 +620,9 @@ namespace Encog.Neural.NEAT.Training
             return;
         }
 
+        /// <summary>
+        /// Adjust the compatibility threshold.
+        /// </summary>
         public void AdjustCompatibilityThreshold()
         {
             // has this been disabled (unlimited species)
@@ -731,11 +644,10 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
-        /**
-	 * Adjust each species score.
-	 */
-
-        public void adjustSpeciesScore()
+        /// <summary>
+        /// Adjust each species score.
+        /// </summary>
+        public void AdjustSpeciesScore()
         {
             foreach (ISpecies s in Population.Species)
             {
@@ -1067,7 +979,7 @@ namespace Encog.Neural.NEAT.Training
                 }
             }
 
-            adjustSpeciesScore();
+            AdjustSpeciesScore();
 
             foreach (IGenome g in Population.Genomes)
             {

@@ -133,7 +133,7 @@ namespace Encog.App.Analyst.CSV.Sort
                             InputFormat.Parse(str);
                             nonNumeric[i] = false;
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
                             nonNumeric[i] = true;
                         }

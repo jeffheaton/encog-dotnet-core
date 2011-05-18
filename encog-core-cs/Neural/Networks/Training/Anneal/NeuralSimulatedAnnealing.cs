@@ -141,6 +141,7 @@ namespace Encog.Neural.Networks.Training.Anneal
             PostIteration();
         }
 
+        /// <inheritdoc/>
         public override TrainingContinuation Pause()
         {
             return null;

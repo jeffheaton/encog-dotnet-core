@@ -111,6 +111,11 @@ namespace Encog.Util.File
             return b + "." + ext;
         }
 
+        /// <summary>
+        /// Write a string to a file.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="str"></param>
         public static void WriteFileAsString(FileInfo path, String str)
         {
             FileStream fs = path.Create();
@@ -120,6 +125,11 @@ namespace Encog.Util.File
             fs.Close();
         }
 
+        /// <summary>
+        /// Copy from one file to another.
+        /// </summary>
+        /// <param name="source">The source file.</param>
+        /// <param name="target">The target file.</param>
         public static void Copy(FileInfo source, FileInfo target)
         {
             try
@@ -139,6 +149,11 @@ namespace Encog.Util.File
             }
         }
 
+        /// <summary>
+        /// Copy from one stream to another.
+        /// </summary>
+        /// <param name="mask0">The source.</param>
+        /// <param name="os">The target.</param>
         public static void Copy(Stream mask0, Stream os)
         {
             try
@@ -161,6 +176,11 @@ namespace Encog.Util.File
             }
         }
 
+        /// <summary>
+        /// Copy a resource to the file system.
+        /// </summary>
+        /// <param name="resource">The resource to copy.</param>
+        /// <param name="targetFile">There to copy the resource to.</param>
         public static void CopyResource(String resource, FileInfo targetFile)
         {
             try
@@ -179,6 +199,12 @@ namespace Encog.Util.File
             }
         }
 
+        /// <summary>
+        /// Combine a path with a filename.
+        /// </summary>
+        /// <param name="dir">The path to combine.</param>
+        /// <param name="f">The filename to combine.</param>
+        /// <returns>The resulting path.</returns>
         public static FileInfo CombinePath(FileInfo dir, string f)
         {
             string s = dir.ToString();

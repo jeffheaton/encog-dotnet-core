@@ -34,7 +34,7 @@ namespace Encog.ML.Factory
         public const String TYPE_SOM = "som";
 
         /// <summary>
-        /// A probabilistic neural network. Supports both PNN & GRNN.
+        /// A probabilistic neural network. Supports both PNN and GRNN.
         /// </summary>
         ///
         public const String TYPE_PNN = "pnn";

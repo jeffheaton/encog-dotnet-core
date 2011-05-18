@@ -236,15 +236,8 @@ namespace Encog.App.Analyst.Script.Prop
         /// <summary>
         /// Get all filenames.
         /// </summary>
-        ///
-        /// <value>The filenames in a list.</value>
         public IList<String> Filenames
         {
-            /// <summary>
-            /// Get all filenames.
-            /// </summary>
-            ///
-            /// <returns>The filenames in a list.</returns>
             get
             {
                 IList<String> result = new List<String>();
@@ -493,7 +486,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="value_ren">The value.</param>
         public void SetFilename(String key, String value_ren)
         {
             String key2 = "SETUP:FILENAMES_" + key;
@@ -524,7 +517,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="value_ren">The value.</param>
         public void SetProperty(String name, AnalystGoal value_ren)
         {
             switch (value_ren)
@@ -597,7 +590,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="name">The property name.</param>
-        /// <param name="value">The property value.</param>
+        /// <param name="value_ren">The property value.</param>
         public void SetProperty(String name, String value_ren)
         {
             data[name] = value_ren;

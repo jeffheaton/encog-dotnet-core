@@ -162,7 +162,7 @@ namespace Encog.Neural.Thermal
         ///
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value">The value to add.</param>
+        /// <param name="value_ren">The value to add.</param>
         public void AddWeight(int fromNeuron, int toNeuron,
                               double value_ren)
         {
@@ -250,6 +250,10 @@ namespace Encog.Neural.Thermal
             currentState.Data = output;
         }
 
+        /// <summary>
+        /// Set the current state.
+        /// </summary>
+        /// <param name="s">The new current state.</param>
         public void SetCurrentState(double[] s)
         {
             currentState = new BiPolarMLData(s.Length);
@@ -262,7 +266,7 @@ namespace Encog.Neural.Thermal
         ///
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value">The value.</param>
+        /// <param name="value_ren">The value.</param>
         public void SetWeight(int fromNeuron, int toNeuron,
                               double value_ren)
         {

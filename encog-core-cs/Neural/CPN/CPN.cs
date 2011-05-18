@@ -84,7 +84,6 @@ namespace Encog.Neural.CPN
         /// <value>The instar count, same as the input count.</value>
         public int InstarCount
         {
-            /// <returns>The instar count, same as the input count.</returns>
             get { return instarCount; }
         }
 
@@ -92,7 +91,6 @@ namespace Encog.Neural.CPN
         /// <value>The outstar count, same as the output count.</value>
         public int OutstarCount
         {
-            /// <returns>The outstar count, same as the output count.</returns>
             get { return outstarCount; }
         }
 
@@ -100,7 +98,6 @@ namespace Encog.Neural.CPN
         /// <value>The weights between the input and instar.</value>
         public Matrix WeightsInputToInstar
         {
-            /// <returns>The weights between the input and instar.</returns>
             get { return weightsInputToInstar; }
         }
 
@@ -108,7 +105,6 @@ namespace Encog.Neural.CPN
         /// <value>The weights between the instar and outstar.</value>
         public Matrix WeightsInstarToOutstar
         {
-            /// <returns>The weights between the instar and outstar.</returns>
             get { return weightsInstarToOutstar; }
         }
 
@@ -116,7 +112,6 @@ namespace Encog.Neural.CPN
         /// <value>The winner count.</value>
         public int WinnerCount
         {
-            /// <returns>The winner count.</returns>
             get { return winnerCount; }
         }
 
@@ -137,39 +132,22 @@ namespace Encog.Neural.CPN
 
         #region MLRegression Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public MLData Compute(MLData input)
         {
             MLData temp = ComputeInstar(input);
             return ComputeOutstar(temp);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return inputCount; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return outstarCount; }
         }
 

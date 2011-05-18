@@ -164,13 +164,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The new inputFormat format.</value>
         public CSVFormat InputFormat
         {
-            /// <returns>THe input format.</returns>
             get { return inputFormat; }
-            /// <summary>
-            /// Set the input format.
-            /// </summary>
-            ///
-            /// <param name="theInputFormat">The new inputFormat format.</param>
             set { inputFormat = value; }
         }
 
@@ -182,13 +176,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The new input headings.</value>
         public String[] InputHeadings
         {
-            /// <returns>The input headings.</returns>
             get { return inputHeadings; }
-            /// <summary>
-            /// Set the input headings.
-            /// </summary>
-            ///
-            /// <param name="theInputHeadings">The new input headings.</param>
             set { inputHeadings = value; }
         }
 
@@ -196,9 +184,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>the outputFormat to set</value>
         public CSVFormat OutputFormat
         {
-            /// <returns>the outputFormat</returns>
             get { return outputFormat; }
-            /// <param name="theOutputFormat">the outputFormat to set</param>
             set { outputFormat = value; }
         }
 
@@ -206,26 +192,14 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the precision to use.
         /// </summary>
-        ///
-        /// <value>The precision to use.</value>
-        public int Precision { /// <returns>The precision to use.</returns>
-            get; /// <summary>
-            /// Set the precision to use.
-            /// </summary>
-            ///
-            /// <param name="thePrecision">The precision to use.</param>
-            set; }
+        public int Precision { get; set; }
 
 
         /// <summary>
         /// Set the record count.
         /// </summary>
-        ///
-        /// <value>The record count.</value>
         public int RecordCount
         {
-            /// <returns>Get the record count. File must have been analyzed first to read
-            /// the record count.</returns>
             get
             {
                 if (!analyzed)
@@ -234,11 +208,6 @@ namespace Encog.App.Analyst.CSV.Basic
                 }
                 return recordCount;
             }
-            /// <summary>
-            /// Set the record count.
-            /// </summary>
-            ///
-            /// <param name="v">The record count.</param>
             set { recordCount = value; }
         }
 
@@ -246,17 +215,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the status reporting object.
         /// </summary>
-        ///
-        /// <value>The status reporting object.</value>
         public IStatusReportable Report
         {
-            /// <returns>The status reporting object.</returns>
             get { return report; }
-            /// <summary>
-            /// Set the status reporting object.
-            /// </summary>
-            ///
-            /// <param name="theReport">The status reporting object.</param>
             set { report = value; }
         }
 
@@ -264,18 +225,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the reporting interval.
         /// </summary>
-        ///
-        /// <value>The new reporting interval.</value>
         public int ReportInterval
         {
-            /// <returns>The reporting interval, an update will be sent for every block of
-            /// rows that matches the size of this property.</returns>
             get { return reportInterval; }
-            /// <summary>
-            /// Set the reporting interval.
-            /// </summary>
-            ///
-            /// <param name="theReportInterval">The new reporting interval.</param>
             set { reportInterval = value; }
         }
 
@@ -283,17 +235,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set to true, if the file has been analyzed.
         /// </summary>
-        ///
-        /// <value>True, if the file has been analyzed.</value>
         public bool Analyzed
         {
-            /// <returns>Has the file been analyzed.</returns>
             get { return analyzed; }
-            /// <summary>
-            /// Set to true, if the file has been analyzed.
-            /// </summary>
-            ///
-            /// <param name="theAnalyzed">True, if the file has been analyzed.</param>
             set { analyzed = value; }
         }
 
@@ -301,17 +245,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the flag to determine if we are expecting input headers.
         /// </summary>
-        ///
-        /// <value>Are input headers expected?</value>
         public bool ExpectInputHeaders
         {
-            /// <returns>True if we are expecting input headers.</returns>
             get { return expectInputHeaders; }
-            /// <summary>
-            /// Set the flag to determine if we are expecting input headers.
-            /// </summary>
-            ///
-            /// <param name="theExpectInputHeaders">Are input headers expected?</param>
             set { expectInputHeaders = value; }
         }
 
@@ -319,16 +255,12 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>the produceOutputHeaders to set</value>
         public bool ProduceOutputHeaders
         {
-            /// <returns>the produceOutputHeaders</returns>
             get { return produceOutputHeaders; }
-            /// <param name="theProduceOutputHeaders">the produceOutputHeaders to set</param>
             set { produceOutputHeaders = value; }
         }
 
         /// <value>the script to set</value>
-        public AnalystScript Script { /// <returns>the script</returns>
-            get; /// <param name="theScript">the script to set</param>
-            set; }
+        public AnalystScript Script { get; set; }
 
         #region QuantTask Members
 

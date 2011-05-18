@@ -17,7 +17,7 @@ namespace Encog.Neural.PNN
     /// (SVM). These network types directly support the use of classification.
     /// The following book was very helpful in implementing PNN/GRNN's in Encog.
     /// Advanced Algorithms for Neural Networks: A C++ Sourcebook
-    /// by Timothy Masters, PhD (http://www.timothymasters.info/) John Wiley & Sons
+    /// by Timothy Masters, PhD (http://www.timothymasters.info/) John Wiley Sons
     /// Inc (Computers); April 3, 1995, ISBN: 0471105880
     /// </summary>
     [Serializable]
@@ -241,6 +241,7 @@ namespace Encog.Neural.PNN
 
         #endregion
 
+        /// <inheritdoc/>
         public override void UpdateProperties()
         {
             // unneeded

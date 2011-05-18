@@ -25,6 +25,9 @@ namespace Encog.Plugin.SystemPlugin
         ///
         private bool logConsole;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public SystemLoggingPlugin()
         {
             currentLevel = EncogLogging.LEVEL_DISABLE;

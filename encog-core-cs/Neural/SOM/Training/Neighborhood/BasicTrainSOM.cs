@@ -167,20 +167,13 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The input neuron count.</value>
         public int InputNeuronCount
         {
-            /// <returns>The input neuron count.</returns>
             get { return inputNeuronCount; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return null; }
         }
 
@@ -188,7 +181,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The network neighborhood function.</value>
         public INeighborhoodFunction Neighborhood
         {
-            /// <returns>The network neighborhood function.</returns>
             get { return neighborhood; }
         }
 
@@ -196,7 +188,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The output neuron count.</value>
         public int OutputNeuronCount
         {
-            /// <returns>The output neuron count.</returns>
             get { return outputNeuronCount; }
         }
 
@@ -205,19 +196,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Determine if a winner is to be forced. See class description for more
         /// info.
         /// </summary>
-        ///
-        /// <value>True if a winner is to be forced.</value>
         public bool ForceWinner
         {
-            /// <returns>Is a winner to be forced of neurons that do not learn. See class
-            /// description for more info.</returns>
             get { return forceWinner; }
-            /// <summary>
-            /// Determine if a winner is to be forced. See class description for more
-            /// info.
-            /// </summary>
-            ///
-            /// <param name="forceWinner_0">True if a winner is to be forced.</param>
             set { forceWinner = value; }
         }
 
@@ -226,17 +207,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Set the learning rate. This is the rate at which the weights are changed.
         /// </summary>
-        ///
-        /// <value>The learning rate.</value>
         public double LearningRate
         {
-            /// <returns>The learning rate. This was set when the object was created.</returns>
             get { return learningRate; }
-            /// <summary>
-            /// Set the learning rate. This is the rate at which the weights are changed.
-            /// </summary>
-            ///
-            /// <param name="rate">The learning rate.</param>
             set { learningRate = value; }
         }
 

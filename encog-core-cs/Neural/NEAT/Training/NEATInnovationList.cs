@@ -74,6 +74,9 @@ namespace Encog.Neural.NEAT.Training
             }
         }
 
+        /// <summary>
+        /// The population.
+        /// </summary>
         public NEATPopulation Population
         {
             set { population = value; }
@@ -93,8 +96,8 @@ namespace Encog.Neural.NEAT.Training
         /// Check to see if we already have an innovation.
         /// </summary>
         ///
-        /// <param name="in">The input neuron.</param>
-        /// <param name="out">THe output neuron.</param>
+        /// <param name="ins0">The input neuron.</param>
+        /// <param name="xout">THe output neuron.</param>
         /// <param name="type">The type.</param>
         /// <returns>The innovation, either new or existing if found.</returns>
         public NEATInnovation CheckInnovation(long ins0, long xout,
@@ -148,8 +151,8 @@ namespace Encog.Neural.NEAT.Training
         /// Create a new innovation.
         /// </summary>
         ///
-        /// <param name="in">The input neuron.</param>
-        /// <param name="out">The output neuron.</param>
+        /// <param name="ins0">The input neuron.</param>
+        /// <param name="xout">The output neuron.</param>
         /// <param name="type">The type.</param>
         public void CreateNewInnovation(long ins0, long xout,
                                         NEATInnovationType type)

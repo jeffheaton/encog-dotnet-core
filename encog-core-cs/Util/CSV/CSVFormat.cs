@@ -38,7 +38,11 @@ namespace Encog.Util.CSV
     /// </summary>
     public class CSVFormat
     {
+        /// <summary>
+        /// The maximum number of digits.
+        /// </summary>
         public const int MAX_FORMATS = 100;
+
         private static readonly CSVFormat _DECIMAL_POINT = new CSVFormat('.', ',');
         private static readonly CSVFormat _DECIMAL_COMMA = new CSVFormat(',', ';');
         private static CSVFormat _ENGLISH = DECIMAL_POINT;

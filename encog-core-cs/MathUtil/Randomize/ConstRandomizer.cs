@@ -17,7 +17,7 @@ namespace Encog.MathUtil.Randomize
         /// Construct a range randomizer.
         /// </summary>
         ///
-        /// <param name="value">The constant value.</param>
+        /// <param name="value_ren">The constant value.</param>
         public ConstRandomizer(double value_ren)
         {
             this.value_ren = value_ren;

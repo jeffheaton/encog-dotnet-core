@@ -34,6 +34,9 @@ namespace Encog.Neural.Pattern
         ///
         private SVMType svmType;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public SVMPattern()
         {
             Regression = true;
@@ -44,28 +47,13 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set if regression is used.
         /// </summary>
-        ///
-        /// <value>True if regression is used.</value>
-        public bool Regression { /// <returns>True, if this is regression.</returns>
-            get; /// <summary>
-            /// Set if regression is used.
-            /// </summary>
-            ///
-            /// <param name="regression_0">True if regression is used.</param>
-            set; }
+        public bool Regression { get; set; }
 
         /// <summary>
         /// Set the kernel type.
         /// </summary>
-        ///
-        /// <value>The kernel type.</value>
         public KernelType KernelType
         {
-            /// <summary>
-            /// Set the kernel type.
-            /// </summary>
-            ///
-            /// <param name="kernelType_0">The kernel type.</param>
             set { kernelType = value; }
         }
 
@@ -73,15 +61,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the SVM type.
         /// </summary>
-        ///
-        /// <value>The SVM type.</value>
         public SVMType SVMType
         {
-            /// <summary>
-            /// Set the SVM type.
-            /// </summary>
-            ///
-            /// <param name="svmType_0">The SVM type.</param>
             set { svmType = value; }
         }
 
@@ -123,17 +104,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>The number of input neurons.</value>
         public int InputNeurons
         {
-            /// <returns>The input neuron count.</returns>
             get { return inputNeurons; }
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of input neurons.</param>
             set { inputNeurons = value; }
         }
 
@@ -141,17 +114,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of output neurons.
         /// </summary>
-        ///
-        /// <value>The output neuron count.</value>
         public int OutputNeurons
         {
-            /// <returns>The input output count.</returns>
             get { return outputNeurons; }
-            /// <summary>
-            /// Set the number of output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The output neuron count.</param>
             set { outputNeurons = value; }
         }
 
@@ -159,15 +124,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Not used, the BAM uses a bipoloar activation function.
         /// </summary>
-        ///
-        /// <value>Not used.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Not used, the BAM uses a bipoloar activation function.
-            /// </summary>
-            ///
-            /// <param name="activation">Not used.</param>
             set
             {
                 throw new PatternError(

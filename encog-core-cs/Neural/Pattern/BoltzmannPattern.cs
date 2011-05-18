@@ -34,6 +34,9 @@ namespace Encog.Neural.Pattern
         ///
         private double temperature;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public BoltzmannPattern()
         {
             annealCycles = 100;
@@ -44,17 +47,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of annealing cycles per run.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public int AnnealCycles
         {
-            /// <returns>The number of annealing cycles per run.</returns>
             get { return annealCycles; }
-            /// <summary>
-            /// Set the number of annealing cycles per run.
-            /// </summary>
-            ///
-            /// <param name="annealCycles_0">The new value.</param>
             set { annealCycles = value; }
         }
 
@@ -62,17 +57,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of cycles per run.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public int RunCycles
         {
-            /// <returns>The number of cycles per run.</returns>
             get { return runCycles; }
-            /// <summary>
-            /// Set the number of cycles per run.
-            /// </summary>
-            ///
-            /// <param name="runCycles_0">The new value.</param>
             set { runCycles = value; }
         }
 
@@ -80,17 +67,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the temperature.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public double Temperature
         {
-            /// <returns>The temperature.</returns>
             get { return temperature; }
-            /// <summary>
-            /// Set the temperature.
-            /// </summary>
-            ///
-            /// <param name="temperature_0">The new value.</param>
             set { temperature = value; }
         }
 
@@ -119,8 +98,6 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the network.
         /// </summary>
-        ///
-        /// <returns>The generated network.</returns>
         public MLMethod Generate()
         {
             var boltz = new BoltzmannMachine(neuronCount);
@@ -138,11 +115,6 @@ namespace Encog.Neural.Pattern
         /// <value>Not used.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Not used, will throw an exception.
-            /// </summary>
-            ///
-            /// <param name="activation">Not used.</param>
             set
             {
                 throw new PatternError(
@@ -160,12 +132,6 @@ namespace Encog.Neural.Pattern
         /// <value>The number of input neurons.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons. This is the same as the number of output
-            /// neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of input neurons.</param>
             set { neuronCount = value; }
         }
 
@@ -174,16 +140,8 @@ namespace Encog.Neural.Pattern
         /// Set the number of output neurons. This is the same as the number of input
         /// neurons.
         /// </summary>
-        ///
-        /// <value>The number of output neurons.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons. This is the same as the number of input
-            /// neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of output neurons.</param>
             set { neuronCount = value; }
         }
 

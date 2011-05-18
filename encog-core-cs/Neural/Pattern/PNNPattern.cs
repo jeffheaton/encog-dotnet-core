@@ -34,6 +34,9 @@ namespace Encog.Neural.Pattern
         ///
         private int outputNeurons;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public PNNPattern()
         {
             kernel = PNNKernelType.Gaussian;
@@ -43,17 +46,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the kernel type.
         /// </summary>
-        ///
-        /// <value>The kernel type.</value>
         public PNNKernelType Kernel
         {
-            /// <returns>The kernel.</returns>
             get { return kernel; }
-            /// <summary>
-            /// Set the kernel type.
-            /// </summary>
-            ///
-            /// <param name="kernel_0">The kernel type.</param>
             set { kernel = value; }
         }
 
@@ -61,17 +56,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the output model.
         /// </summary>
-        ///
-        /// <value>The output model.</value>
         public PNNOutputMode Outmodel
         {
-            /// <returns>The output model.</returns>
             get { return outmodel; }
-            /// <summary>
-            /// Set the output model.
-            /// </summary>
-            ///
-            /// <param name="outmodel_0">The output model.</param>
             set { outmodel = value; }
         }
 

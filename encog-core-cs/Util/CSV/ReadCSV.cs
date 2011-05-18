@@ -54,6 +54,9 @@ namespace Encog.Util.CSV
         /// </summary>
         public String TimeFormat { get; set; }
 
+        /// <summary>
+        /// The current format.
+        /// </summary>
         public CSVFormat Format
         {
             get { return format; }
@@ -73,6 +76,7 @@ namespace Encog.Util.CSV
         /// Parse a date using the specified format.
         /// </summary>
         /// <param name="when">A string that contains a date in the specified format.</param>
+        /// <param name="dateFormat">The date format.</param>
         /// <returns>A DateTime that was parsed.</returns>
         public static DateTime ParseDate(String when, String dateFormat)
         {

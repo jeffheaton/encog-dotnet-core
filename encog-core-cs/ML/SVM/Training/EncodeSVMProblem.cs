@@ -64,7 +64,7 @@ namespace Encog.ML.SVM.Training
 
                 return result;
             }
-            catch (OutOfMemoryException e)
+            catch (OutOfMemoryException )
             {
                 throw new EncogError("SVM Model - Out of Memory");
             }

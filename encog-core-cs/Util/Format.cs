@@ -77,6 +77,9 @@ namespace Encog.Util
         /// </summary>
         public const int SECONDS_INA_DAY = SECONDS_INA_HOUR*24;
 
+        /// <summary>
+        /// Miliseconds in a day.
+        /// </summary>
         public const long MILI_IN_SEC = 1000;
 
         /// <summary>
@@ -199,6 +202,11 @@ namespace Encog.Util
             return result.ToString();
         }
 
+        /// <summary>
+        /// Format a boolean to yes/no.
+        /// </summary>
+        /// <param name="p">The default answer.</param>
+        /// <returns>A string form of the boolean.</returns>
         public static string FormatYesNo(bool p)
         {
             if (p)

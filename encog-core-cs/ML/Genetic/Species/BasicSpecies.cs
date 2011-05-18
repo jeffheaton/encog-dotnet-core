@@ -100,9 +100,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>the population to set</value>
         public IPopulation Population
         {
-            /// <returns>The population that this species belongs to.</returns>
             get { return population; }
-            /// <param name="thePopulation">the population to set</param>
             set { population = value; }
         }
 
@@ -114,14 +112,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>the leaderID to set</value>
         public long TempLeaderID
         {
-            /// <returns>the leaderID</returns>
             get { return leaderID; }
-            /// <summary>
-            /// Set the leader id. This value is not persisted, it is used only for
-            /// loading.
-            /// </summary>
-            ///
-            /// <param name="theLeaderID">the leaderID to set</param>
             set { leaderID = value; }
         }
 
@@ -176,13 +167,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>The age of this species.</value>
         public int Age
         {
-            /// <returns>The age of this species.</returns>
             get { return age; }
-            /// <summary>
-            /// Set the age of this species.
-            /// </summary>
-            ///
-            /// <param name="theAge">The age of this species.</param>
             set { age = value; }
         }
 
@@ -194,13 +179,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>The best score.</value>
         public double BestScore
         {
-            /// <returns>The best score for this species.</returns>
             get { return bestScore; }
-            /// <summary>
-            /// Set the best score.
-            /// </summary>
-            ///
-            /// <param name="theBestScore">The best score.</param>
             set { bestScore = value; }
         }
 
@@ -212,13 +191,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>The number of generations.</value>
         public int GensNoImprovement
         {
-            /// <returns>The number of generations with no improvement.</returns>
             get { return gensNoImprovement; }
-            /// <summary>
-            /// Set the number of generations with no improvement.
-            /// </summary>
-            ///
-            /// <param name="theGensNoImprovement">The number of generations.</param>
             set { gensNoImprovement = value; }
         }
 
@@ -230,13 +203,7 @@ namespace Encog.ML.Genetic.Species
         /// <value>The new leader.</value>
         public IGenome Leader
         {
-            /// <returns>THe leader of this species.</returns>
             get { return leader; }
-            /// <summary>
-            /// Set the leader.
-            /// </summary>
-            ///
-            /// <param name="theLeader">The new leader.</param>
             set { leader = value; }
         }
 
@@ -244,7 +211,6 @@ namespace Encog.ML.Genetic.Species
         /// <value>The members of this species.</value>
         public IList<IGenome> Members
         {
-            /// <returns>The members of this species.</returns>
             get { return members; }
         }
 
@@ -252,7 +218,6 @@ namespace Encog.ML.Genetic.Species
         /// <value>The number to spawn.</value>
         public double NumToSpawn
         {
-            /// <returns>The number to spawn.</returns>
             get { return spawnsRequired; }
         }
 
@@ -260,17 +225,9 @@ namespace Encog.ML.Genetic.Species
         /// <summary>
         /// Set the number of spawns required.
         /// </summary>
-        ///
-        /// <value>The number of spawns required.</value>
         public double SpawnsRequired
         {
-            /// <returns>The spawns required.</returns>
             get { return spawnsRequired; }
-            /// <summary>
-            /// Set the number of spawns required.
-            /// </summary>
-            ///
-            /// <param name="theSpawnsRequired">The number of spawns required.</param>
             set { spawnsRequired = value; }
         }
 
@@ -291,16 +248,9 @@ namespace Encog.ML.Genetic.Species
         /// <summary>
         /// Set the species id.
         /// </summary>
-        ///
-        /// <value>The new species id.</value>
         public long SpeciesID
         {
             get { return speciesID; }
-            /// <summary>
-            /// Set the species id.
-            /// </summary>
-            ///
-            /// <param name="i">The new species id.</param>
             set { speciesID = value; }
         }
 

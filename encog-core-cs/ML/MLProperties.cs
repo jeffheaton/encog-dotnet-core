@@ -59,7 +59,7 @@ namespace Encog.ML
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value of the property.</param>
+        /// <param name="value_ren">The value of the property.</param>
         void SetProperty(String name, String value_ren);
 
         /// <summary>

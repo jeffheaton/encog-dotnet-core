@@ -132,7 +132,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>All of the values in the neural network.</value>
         public double[] AllValues
         {
-            /// <returns>All of the values in the neural network.</returns>
             get { return allValues; }
         }
 
@@ -140,7 +139,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The numeric range of the bias values.</value>
         public NumericRange Bias
         {
-            /// <returns>The numeric range of the bias values.</returns>
             get { return bias; }
         }
 
@@ -148,7 +146,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The bias values in the neural network.</value>
         public double[] BiasValues
         {
-            /// <returns>The bias values in the neural network.</returns>
             get { return biasValues; }
         }
 
@@ -156,7 +153,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The number of disabled connections in the network.</value>
         public int DisabledConnections
         {
-            /// <returns>The number of disabled connections in the network.</returns>
             get { return disabledConnections; }
         }
 
@@ -164,7 +160,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The total number of connections in the network.</value>
         public int TotalConnections
         {
-            /// <returns>The total number of connections in the network.</returns>
             get { return totalConnections; }
         }
 
@@ -172,7 +167,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The numeric range of the weights values.</value>
         public NumericRange Weights
         {
-            /// <returns>The numeric range of the weights values.</returns>
             get { return weights; }
         }
 
@@ -180,7 +174,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The numeric range of the weights and bias values.</value>
         public NumericRange WeightsAndBias
         {
-            /// <returns>The numeric range of the weights and bias values.</returns>
             get { return weightsAndBias; }
         }
 
@@ -188,15 +181,11 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The weight values in the neural network.</value>
         public double[] WeightValues
         {
-            /// <returns>The weight values in the neural network.</returns>
             get { return weightValues; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder();

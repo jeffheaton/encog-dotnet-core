@@ -210,7 +210,6 @@ namespace Encog.ML.SVM
         /// <value>The kernel type.</value>
         public KernelType KernelType
         {
-            /// <returns>The kernel type.</returns>
             get
             {
                 switch (paras.kernel_type)
@@ -235,17 +234,9 @@ namespace Encog.ML.SVM
         /// <summary>
         /// Set the model.
         /// </summary>
-        ///
-        /// <value>The model.</value>
         public svm_model Model
         {
-            /// <returns>The SVM models for each output.</returns>
             get { return model; }
-            /// <summary>
-            /// Set the model.
-            /// </summary>
-            ///
-            /// <param name="theModel">The model.</param>
             set { model = value; }
         }
 
@@ -253,7 +244,6 @@ namespace Encog.ML.SVM
         /// <value>The SVM params for each of the outputs.</value>
         public svm_parameter Params
         {
-            /// <returns>The SVM params for each of the outputs.</returns>
             get { return paras; }
         }
 
@@ -261,7 +251,6 @@ namespace Encog.ML.SVM
         /// <value>The SVM type.</value>
         public SVMType SVMType
         {
-            /// <returns>The SVM type.</returns>
             get
             {
                 switch (paras.svm_type)
@@ -284,10 +273,7 @@ namespace Encog.ML.SVM
 
         #region MLClassification Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int Classify(MLData input)
         {
             if (model == null)
@@ -363,20 +349,13 @@ namespace Encog.ML.SVM
         /// <value>The new input count.</value>
         public int InputCount
         {
-            /// <returns>The input count.</returns>
             get { return inputCount; }
-            /// <summary>
-            /// Set the input count.
-            /// </summary>
-            ///
-            /// <param name="i">The new input count.</param>
             set { inputCount = value; }
         }
 
         /// <value>For a SVM, the output count is always one.</value>
         public int OutputCount
         {
-            /// <returns>For a SVM, the output count is always one.</returns>
             get { return 1; }
         }
 

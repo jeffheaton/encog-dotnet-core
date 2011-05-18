@@ -88,36 +88,17 @@ namespace Encog.Neural.RBF
         /// <summary>
         /// Set the RBF's.
         /// </summary>
-        ///
-        /// <value>The RBF's.</value>
         public IRadialBasisFunction[] RBF
         {
-            /// <summary>
-            /// Get the RBF's.
-            /// </summary>
-            ///
-            /// <returns>The RBF's.</returns>
             get { return flat.RBF; }
-            /// <summary>
-            /// Set the RBF's.
-            /// </summary>
-            ///
-            /// <param name="rbf">The RBF's.</param>
             set { flat.RBF = value; }
         }
 
         #region ContainsFlat Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public FlatNetwork Flat
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return flat; }
         }
 
@@ -140,10 +121,7 @@ namespace Encog.Neural.RBF
 
         #region MLRegression Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public MLData Compute(MLData input)
         {
             MLData output = new BasicMLData(OutputCount);
@@ -152,30 +130,16 @@ namespace Encog.Neural.RBF
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return flat.InputCount; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return flat.OutputCount; }
         }
 
@@ -229,6 +193,7 @@ namespace Encog.Neural.RBF
         ///
         /// <param name="minPosition">The minimum position neurons should be centered. Typically 0.</param>
         /// <param name="maxPosition">The maximum position neurons should be centered. Typically 1</param>
+        /// <param name="t">The RBF type.</param>
         /// <param name="volumeNeuronRBFWidth">The neuron width of neurons within the mesh.</param>
         /// <param name="useWideEdgeRBFs">Enables wider RBF's around the boundary of the neuron mesh.</param>
         public void SetRBFCentersAndWidthsEqualSpacing(
@@ -336,10 +301,7 @@ namespace Encog.Neural.RBF
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void UpdateProperties()
         {
             // unneeded

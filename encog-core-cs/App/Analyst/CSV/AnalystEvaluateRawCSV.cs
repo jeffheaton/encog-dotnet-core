@@ -81,7 +81,6 @@ namespace Encog.App.Analyst.CSV
         /// </summary>
         ///
         /// <param name="outputFile">The name of the output file.</param>
-        /// <param name="method"></param>
         /// <returns>The output stream for the text file.</returns>
         private StreamWriter AnalystPrepareOutputFile(FileInfo outputFile)
         {

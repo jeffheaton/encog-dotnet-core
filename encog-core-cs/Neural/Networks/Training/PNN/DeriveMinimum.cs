@@ -8,7 +8,7 @@ namespace Encog.Neural.Networks.Training.PNN
     /// This is done using a CJ (conjugate gradient) method.
     /// Some of the algorithms in this class are based on C++ code from:
     /// Advanced Algorithms for Neural Networks: A C++ Sourcebook by Timothy Masters
-    /// John Wiley & Sons Inc (Computers); April 3, 1995 ISBN: 0471105880
+    /// John Wiley Sons Inc (Computers); April 3, 1995 ISBN: 0471105880
     /// </summary>
     ///
     public class DeriveMinimum
@@ -25,7 +25,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="n">The number of variables.</param>
         /// <param name="x">The independent variable.</param>
         /// <param name="ystart">The start for y.</param>
-        /// <param name="base">Work vector, must have n elements.</param>
+        /// <param name="bs">Work vector, must have n elements.</param>
         /// <param name="direc">Work vector, must have n elements.</param>
         /// <param name="g">Work vector, must have n elements.</param>
         /// <param name="h">Work vector, must have n elements.</param>

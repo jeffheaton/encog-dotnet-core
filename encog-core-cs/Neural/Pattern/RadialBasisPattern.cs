@@ -34,8 +34,14 @@ namespace Encog.Neural.Pattern
         ///
         private int outputNeurons;
 
+        /// <summary>
+        /// The RBF type.
+        /// </summary>
         private RBFEnum rbfType;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public RadialBasisPattern()
         {
             rbfType = RBFEnum.Gaussian;
@@ -44,6 +50,9 @@ namespace Encog.Neural.Pattern
             hiddenNeurons = -1;
         }
 
+        /// <summary>
+        /// The RBF type.
+        /// </summary>
         public RBFEnum RBF
         {
             set { rbfType = value; }

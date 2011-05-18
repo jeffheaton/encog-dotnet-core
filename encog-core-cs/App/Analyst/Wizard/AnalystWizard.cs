@@ -305,17 +305,9 @@ namespace Encog.App.Analyst.Wizard
         /// <summary>
         /// Set the goal.
         /// </summary>
-        ///
-        /// <value>The goal.</value>
         public AnalystGoal Goal
         {
-            /// <returns>The analyst goal.</returns>
             get { return goal; }
-            /// <summary>
-            /// Set the goal.
-            /// </summary>
-            ///
-            /// <param name="theGoal">The goal.</param>
             set { goal = value; }
         }
 
@@ -323,9 +315,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the lagWindowSize to set</value>
         public int LagWindowSize
         {
-            /// <returns>the lagWindowSize</returns>
             get { return lagWindowSize; }
-            /// <param name="theLagWindowSize">the lagWindowSize to set</param>
             set { lagWindowSize = value; }
         }
 
@@ -333,9 +323,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the leadWindowSize to set</value>
         public int LeadWindowSize
         {
-            /// <returns>the leadWindowSize</returns>
             get { return leadWindowSize; }
-            /// <param name="theLeadWindowSize">the leadWindowSize to set</param>
             set { leadWindowSize = value; }
         }
 
@@ -343,9 +331,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the methodType to set</value>
         public WizardMethodType MethodType
         {
-            /// <returns>the methodType</returns>
             get { return methodType; }
-            /// <param name="theMethodType">the methodType to set</param>
             set { methodType = value; }
         }
 
@@ -353,9 +339,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the range to set</value>
         public NormalizeRange Range
         {
-            /// <returns>the range</returns>
             get { return range; }
-            /// <param name="theRange">the range to set</param>
             set { range = value; }
         }
 
@@ -367,13 +351,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>The target field.</value>
         public String TargetField
         {
-            /// <returns>Get the target field.</returns>
             get { return targetField; }
-            /// <summary>
-            /// Set the target field.
-            /// </summary>
-            ///
-            /// <param name="theTargetField">The target field.</param>
             set { targetField = value; }
         }
 
@@ -381,9 +359,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the includeTargetField to set</value>
         public bool IncludeTargetField
         {
-            /// <returns>the includeTargetField</returns>
             get { return includeTargetField; }
-            /// <param name="theIncludeTargetField">the includeTargetField to set</param>
             set { includeTargetField = value; }
         }
 
@@ -391,9 +367,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the taskBalance to set</value>
         public bool TaskBalance
         {
-            /// <returns>the taskBalance</returns>
             get { return taskBalance; }
-            /// <param name="theTaskBalance">the taskBalance to set</param>
             set { taskBalance = value; }
         }
 
@@ -401,9 +375,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the taskCluster to set</value>
         public bool TaskCluster
         {
-            /// <returns>the taskCluster</returns>
             get { return taskCluster; }
-            /// <param name="theTaskCluster">the taskCluster to set</param>
             set { taskCluster = value; }
         }
 
@@ -411,9 +383,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the taskNormalize to set</value>
         public bool TaskNormalize
         {
-            /// <returns>the taskNormalize</returns>
             get { return taskNormalize; }
-            /// <param name="theTaskNormalize">the taskNormalize to set</param>
             set { taskNormalize = value; }
         }
 
@@ -421,9 +391,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the taskRandomize to set</value>
         public bool TaskRandomize
         {
-            /// <returns>the taskRandomize</returns>
             get { return taskRandomize; }
-            /// <param name="theTaskRandomize">the taskRandomize to set</param>
             set { taskRandomize = value; }
         }
 
@@ -431,9 +399,7 @@ namespace Encog.App.Analyst.Wizard
         /// <value>the taskSegregate to set</value>
         public bool TaskSegregate
         {
-            /// <returns>the taskSegregate</returns>
             get { return taskSegregate; }
-            /// <param name="theTaskSegregate">the taskSegregate to set</param>
             set { taskSegregate = value; }
         }
 

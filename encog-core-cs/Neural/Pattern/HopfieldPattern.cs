@@ -20,6 +20,9 @@ namespace Encog.Neural.Pattern
         ///
         private int neuronCount;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public HopfieldPattern()
         {
             neuronCount = -1;

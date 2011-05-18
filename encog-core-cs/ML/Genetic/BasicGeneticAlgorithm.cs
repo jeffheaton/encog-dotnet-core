@@ -29,8 +29,6 @@ namespace Encog.ML.Genetic
         /// Modify the weight matrix and bias values based on the last call to
         /// calcError.
         /// </summary>
-        ///
-        /// <exception cref="NeuralNetworkException"></exception>
         public override sealed void Iteration()
         {
             if (first)

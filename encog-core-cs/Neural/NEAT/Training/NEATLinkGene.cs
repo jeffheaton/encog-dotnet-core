@@ -87,22 +87,27 @@ namespace Encog.Neural.NEAT.Training
             set { weight = value; }
         }
 
-
+        /// <summary>
+        /// True if this is a recurrent link.
+        /// </summary>
         public bool Recurrent
         {
-            /// <returns>True if this is a recurrent link.</returns>
             get { return recurrent; }
             set { recurrent = value; }
         }
 
-
+        /// <summary>
+        /// The from neuron id.
+        /// </summary>
         public int FromNeuronID
         {
             get { return (int) fromNeuronID; }
             set { fromNeuronID = value; }
         }
 
-
+        /// <summary>
+        /// The to neuron id.
+        /// </summary>
         public int ToNeuronID
         {
             get { return (int) toNeuronID; }
@@ -112,7 +117,6 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Copy from another gene.
         /// </summary>
-        ///
         /// <param name="gene">The other gene.</param>
         public override void Copy(IGene gene)
         {
@@ -125,19 +129,6 @@ namespace Encog.Neural.NEAT.Training
             weight = other.weight;
         }
 
-
-        /// <returns>The from neuron id.</returns>
-        public long getFromNeuronID()
-        {
-            return fromNeuronID;
-        }
-
-
-        /// <returns>The to neuron id.</returns>
-        public long getToNeuronID()
-        {
-            return toNeuronID;
-        }
 
         /// <summary>
         /// 

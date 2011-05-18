@@ -75,7 +75,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// Determine the sign of the value.
         /// </summary>
         ///
-        /// <param name="value">The value to check.</param>
+        /// <param name="value_ren">The value to check.</param>
         /// <returns>-1 if less than zero, 1 if greater, or 0 if zero.</returns>
         private int Sign(double value_ren)
         {

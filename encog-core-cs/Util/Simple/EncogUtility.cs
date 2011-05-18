@@ -88,6 +88,15 @@ namespace Encog.Util.Simple
             buffer.EndLoad();
         }
 
+        /// <summary>
+        /// Convert a CSV file to binary.
+        /// </summary>
+        /// <param name="csvFile">The CSV file to convert.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="binFile">The binary file.</param>
+        /// <param name="input">The input.</param>
+        /// <param name="ideal">The ideal.</param>
+        /// <param name="headers">True, if headers are present.</param>
         public static void ConvertCSV2Binary(FileInfo csvFile, CSVFormat format,
                                              FileInfo binFile, int[] input, int[] ideal, bool headers)
         {
@@ -343,6 +352,12 @@ namespace Encog.Util.Simple
             train.FinishTraining();
         }
 
+        /// <summary>
+        /// Calculate a regression error.
+        /// </summary>
+        /// <param name="method">The method to check.</param>
+        /// <param name="data">The data to check.</param>
+        /// <returns>The error.</returns>
         public static double CalculateRegressionError(MLRegression method,
                                                       MLDataSet data)
         {
@@ -359,12 +374,17 @@ namespace Encog.Util.Simple
             return errorCalculation.Calculate();
         }
 
+        /// <summary>
+        /// Save the dataset to a CSV file.
+        /// </summary>
+        /// <param name="targetFile">The target file.</param>
+        /// <param name="format">The format to use.</param>
+        /// <param name="set">The data set.</param>
         public static void SaveCSV(FileInfo targetFile, CSVFormat format, MLDataSet set)
         {
             try
             {
                 var file = new StreamWriter(targetFile.ToString());
-
 
                 foreach (MLDataPair data in set)
                 {
@@ -373,14 +393,14 @@ namespace Encog.Util.Simple
                     for (int i = 0; i < data.Input.Count; i++)
                     {
                         double d = data.Input[i];
-                        //Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format); **FIX**
+                        Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format);
                         line.Append(format.Format(d, EncogFramework.DEFAULT_PRECISION));
                     }
 
                     for (int i_0 = 0; i_0 < data.Ideal.Count; i_0++)
                     {
                         double d_1 = data.Ideal[i_0];
-                        //Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format); **FIX**
+                        Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format);
                         line.Append(format.Format(d_1, EncogFramework.DEFAULT_PRECISION));
                     }
 
@@ -395,6 +415,12 @@ namespace Encog.Util.Simple
             }
         }
 
+        /// <summary>
+        /// Calculate an error for a method that makes use of classification.
+        /// </summary>
+        /// <param name="method">The method to check.</param>
+        /// <param name="data">The data to check.</param>
+        /// <returns>The error.</returns>
         public static double CalculateClassificationError(MLClassification method,
                                                           MLDataSet data)
         {
@@ -413,6 +439,11 @@ namespace Encog.Util.Simple
             return (total - correct)/(double) total;
         }
 
+        /// <summary>
+        /// Load an EGB file to memory.
+        /// </summary>
+        /// <param name="filename">The file to load.</param>
+        /// <returns>A memory data set.</returns>
         public static MLDataSet LoadEGB2Memory(FileInfo filename)
         {
             var buffer = new BufferedMLDataSet(filename.ToString());

@@ -15,26 +15,6 @@ namespace Encog.ML.Data.Specific
     public class SQLMLDataSet : BasicMLDataSet
     {
         /// <summary>
-        /// The database connection.
-        /// </summary>
-        private DbConnection connection;
-
-        /// <summary>
-        /// What is the size of the ideal data?
-        /// </summary>
-        private int idealSize;
-
-        /// <summary>
-        /// What is the size of the input data?
-        /// </summary>
-        private int inputSize;
-
-        /// <summary>
-        /// The SQL statement being used.
-        /// </summary>
-        private DbCommand statement;
-
-        /// <summary>
         /// Create a SQL neural data set.
         /// </summary>
         /// <param name="sql">The SQL to execute.</param>

@@ -8,6 +8,11 @@ namespace Encog.Util.Validate
     /// </summary>
     public class ValidateNetwork
     {
+        /// <summary>
+        /// Validate that the specified data can be used with the method.
+        /// </summary>
+        /// <param name="method">The method to validate.</param>
+        /// <param name="training">The training data.</param>
         public static void ValidateMethodToData(MLMethod method, MLDataSet training)
         {
             if (!(method is MLInput) || !(method is MLOutput))

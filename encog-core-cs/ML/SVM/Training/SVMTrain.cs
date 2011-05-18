@@ -103,10 +103,7 @@ namespace Encog.ML.SVM.Training
             c = 1.0d;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed bool CanContinue
         {
             get { return false; }
@@ -115,17 +112,9 @@ namespace Encog.ML.SVM.Training
         /// <summary>
         /// Set the constant C.
         /// </summary>
-        ///
-        /// <value>The constant C.</value>
         public double C
         {
-            /// <returns>The constant C.</returns>
             get { return c; }
-            /// <summary>
-            /// Set the constant C.
-            /// </summary>
-            ///
-            /// <param name="theC">The constant C.</param>
             set { c = value; }
         }
 
@@ -133,17 +122,9 @@ namespace Encog.ML.SVM.Training
         /// <summary>
         /// Set the number of folds.
         /// </summary>
-        ///
-        /// <value>the fold to set.</value>
         public int Fold
         {
-            /// <returns>the fold</returns>
             get { return fold; }
-            /// <summary>
-            /// Set the number of folds.
-            /// </summary>
-            ///
-            /// <param name="theFold">the fold to set.</param>
             set { fold = value; }
         }
 
@@ -151,31 +132,16 @@ namespace Encog.ML.SVM.Training
         /// <summary>
         /// Set the gamma.
         /// </summary>
-        ///
-        /// <value>The new gamma.</value>
         public double Gamma
         {
-            /// <returns>The gamma.</returns>
             get { return gamma; }
-            /// <summary>
-            /// Set the gamma.
-            /// </summary>
-            ///
-            /// <param name="theGamma">The new gamma.</param>
             set { gamma = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -183,7 +149,6 @@ namespace Encog.ML.SVM.Training
         /// <value>The problem being trained.</value>
         public svm_problem Problem
         {
-            /// <returns>The problem being trained.</returns>
             get { return problem; }
         }
 
@@ -191,7 +156,6 @@ namespace Encog.ML.SVM.Training
         /// <value>True if the training is done.</value>
         public override bool TrainingDone
         {
-            /// <returns>True if the training is done.</returns>
             get { return trainingDone; }
         }
 
@@ -272,19 +236,13 @@ namespace Encog.ML.SVM.Training
             trainingDone = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

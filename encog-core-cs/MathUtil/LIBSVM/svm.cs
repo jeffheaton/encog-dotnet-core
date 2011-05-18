@@ -2694,6 +2694,7 @@ namespace Encog.MathUtil.LIBSVM
         }
 #endif
 
+
         public static String svm_check_parameter(svm_problem prob, svm_parameter param)
         {
             // svm_type

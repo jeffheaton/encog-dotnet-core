@@ -165,11 +165,11 @@ namespace Encog.Util
         /// Fill the specified array with the specified value.
         /// </summary>
         /// <param name="p">The array to fill.</param>
-        /// <param name="value">The value to fill.</param>
-        internal static void Fill(double[] p, double value)
+        /// <param name="value_ren">The value to fill.</param>
+        internal static void Fill(double[] p, double value_ren)
         {
             for (int i = 0; i < p.Length; i++)
-                p[i] = value;
+                p[i] = value_ren;
         }
 
         /// <summary>
@@ -238,24 +238,29 @@ namespace Encog.Util
         /// Fill the array with the specified value.
         /// </summary>
         /// <param name="target">The array to fill.</param>
-        /// <param name="value">The value to fill.</param>
-        public static void Fill(double[] target, int value)
+        /// <param name="value_ren">The value to fill.</param>
+        public static void Fill(double[] target, int value_ren)
         {
             for (int i = 0; i < target.Length; i++)
-                target[i] = value;
+                target[i] = value_ren;
         }
 
         /// <summary>
         /// Fill the array with the specified value.
         /// </summary>
         /// <param name="target">The array to fill.</param>
-        /// <param name="value">The value to fill.</param>
-        public static void Fill(float[] target, int value)
+        /// <param name="value_ren">The value to fill.</param>
+        public static void Fill(float[] target, int value_ren)
         {
             for (int i = 0; i < target.Length; i++)
-                target[i] = value;
+                target[i] = value_ren;
         }
 
+        /// <summary>
+        /// Get the index of the largest value in the array.
+        /// </summary>
+        /// <param name="data">The array to search.</param>
+        /// <returns>The index.</returns>
         public static int IndexOfLargest(double[] data)
         {
             int result = -1;
@@ -268,7 +273,11 @@ namespace Encog.Util
 
             return result;
         }
-
+        /// <summary>
+        /// Get the min value in an array.
+        /// </summary>
+        /// <param name="weights">The array to search.</param>
+        /// <returns>The result.</returns>
         public static double Min(double[] weights)
         {
             double result = double.MaxValue;
@@ -279,6 +288,11 @@ namespace Encog.Util
             return result;
         }
 
+        /// <summary>
+        /// Get the max value from an array.
+        /// </summary>
+        /// <param name="weights">The array to search.</param>
+        /// <returns>The value.</returns>
         public static double Max(double[] weights)
         {
             double result = Double.MinValue;
@@ -289,6 +303,13 @@ namespace Encog.Util
             return result;
         }
 
+        /// <summary>
+        /// Put all elements from one dictionary to another.
+        /// </summary>
+        /// <typeparam name="K">The key type.</typeparam>
+        /// <typeparam name="V">The value type.</typeparam>
+        /// <param name="source">The source dictionary.</param>
+        /// <param name="target">The target dictionary.</param>
         public static void PutAll<K, V>(IDictionary<K, V> source, IDictionary<K, V> target)
         {
             foreach (var x in source)
@@ -297,7 +318,12 @@ namespace Encog.Util
             }
         }
 
-
+        /// <summary>
+        /// Determine if the array contains the specified number.
+        /// </summary>
+        /// <param name="array">The array to search.</param>
+        /// <param name="target">The number being searched for.</param>
+        /// <returns>True, if the number was found.</returns>
         public static bool Contains(int[] array, int target)
         {
             for (int i = 0; i < array.Length; i++)
@@ -311,6 +337,11 @@ namespace Encog.Util
             return false;
         }
 
+        /// <summary>
+        /// Get the index of the max value in the array.
+        /// </summary>
+        /// <param name="data">The array to search.</param>
+        /// <returns>The result</returns>
         public static int MaxIndex(double[] data)
         {
             int result = -1;
@@ -324,6 +355,11 @@ namespace Encog.Util
             return result;
         }
 
+        /// <summary>
+        /// Get the index of the max value in the array.
+        /// </summary>
+        /// <param name="data">The array to search.</param>
+        /// <returns>The result</returns>
         public static int MaxIndex(int[] data)
         {
             int result = -1;

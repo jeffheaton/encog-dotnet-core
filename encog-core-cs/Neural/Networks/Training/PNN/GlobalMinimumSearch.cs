@@ -9,7 +9,7 @@ namespace Encog.Neural.Networks.Training.PNN
     /// step.
     /// Some of the algorithms in this class are based on C++ code from:
     /// Advanced Algorithms for Neural Networks: A C++ Sourcebook by Timothy Masters
-    /// John Wiley & Sons Inc (Computers); April 3, 1995 ISBN: 0471105880
+    /// John Wiley Sons Inc (Computers); April 3, 1995 ISBN: 0471105880
     /// </summary>
     ///
     public class GlobalMinimumSearch

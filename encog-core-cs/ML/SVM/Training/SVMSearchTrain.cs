@@ -167,10 +167,7 @@ namespace Encog.ML.SVM.Training
             internalTrain = new SVMTrain(network, training);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed bool CanContinue
         {
             get { return false; }
@@ -180,9 +177,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the constBegin to set</value>
         public double ConstBegin
         {
-            /// <returns>the constBegin</returns>
             get { return constBegin; }
-            /// <param name="theConstBegin">the constBegin to set</param>
             set { constBegin = value; }
         }
 
@@ -190,9 +185,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the constEnd to set</value>
         public double ConstEnd
         {
-            /// <returns>the constEnd</returns>
             get { return constEnd; }
-            /// <param name="theConstEnd">the constEnd to set</param>
             set { constEnd = value; }
         }
 
@@ -200,9 +193,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the constStep to set</value>
         public double ConstStep
         {
-            /// <returns>the constStep</returns>
             get { return constStep; }
-            /// <param name="theConstStep">the constStep to set</param>
             set { constStep = value; }
         }
 
@@ -210,9 +201,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the fold to set</value>
         public int Fold
         {
-            /// <returns>the fold</returns>
             get { return fold; }
-            /// <param name="theFold">the fold to set</param>
             set { fold = value; }
         }
 
@@ -220,9 +209,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the gammaBegin to set</value>
         public double GammaBegin
         {
-            /// <returns>the gammaBegin</returns>
             get { return gammaBegin; }
-            /// <param name="theGammaBegin">the gammaBegin to set</param>
             set { gammaBegin = value; }
         }
 
@@ -230,9 +217,7 @@ namespace Encog.ML.SVM.Training
         /// <value>the gammaEnd to set.</value>
         public double GammaEnd
         {
-            /// <returns>the gammaEnd</returns>
             get { return gammaEnd; }
-            /// <param name="theGammaEnd">the gammaEnd to set.</param>
             set { gammaEnd = value; }
         }
 
@@ -240,23 +225,14 @@ namespace Encog.ML.SVM.Training
         /// <value>the gammaStep to set</value>
         public double GammaStep
         {
-            /// <returns>the gammaStep</returns>
             get { return gammaStep; }
-            /// <param name="theGammaStep">the gammaStep to set</param>
             set { gammaStep = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -264,14 +240,10 @@ namespace Encog.ML.SVM.Training
         /// <value>True if the training is done.</value>
         public override bool TrainingDone
         {
-            /// <returns>True if the training is done.</returns>
             get { return trainingDone; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed void FinishTraining()
         {
             internalTrain.Gamma = bestGamma;
@@ -283,7 +255,6 @@ namespace Encog.ML.SVM.Training
         /// <summary>
         /// Perform one training iteration.
         /// </summary>
-        ///
         public override sealed void Iteration()
         {
             if (!trainingDone)
@@ -343,19 +314,13 @@ namespace Encog.ML.SVM.Training
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

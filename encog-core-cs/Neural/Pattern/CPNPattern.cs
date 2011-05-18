@@ -45,16 +45,8 @@ namespace Encog.Neural.Pattern
         /// Set the number of neurons in the instar layer. This level is essentially
         /// a hidden layer.
         /// </summary>
-        ///
-        /// <value>The instar count.</value>
         public int InstarCount
         {
-            /// <summary>
-            /// Set the number of neurons in the instar layer. This level is essentially
-            /// a hidden layer.
-            /// </summary>
-            ///
-            /// <param name="instarCount_0">The instar count.</param>
             set { instarCount = value; }
         }
 
@@ -62,16 +54,8 @@ namespace Encog.Neural.Pattern
         /// Set the number of neurons in the outstar level, this level is mapped to
         /// the "output" level.
         /// </summary>
-        ///
-        /// <value>The outstar count.</value>
         public int OutstarCount
         {
-            /// <summary>
-            /// Set the number of neurons in the outstar level, this level is mapped to
-            /// the "output" level.
-            /// </summary>
-            ///
-            /// <param name="outstarCount_0">The outstar count.</param>
             set { outstarCount = value; }
         }
 
@@ -154,16 +138,8 @@ namespace Encog.Neural.Pattern
         /// Set the number of output neurons. Calling this method maps to setting the
         /// number of neurons in the outstar layer.
         /// </summary>
-        ///
-        /// <value>The count.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons. Calling this method maps to setting the
-            /// number of neurons in the outstar layer.
-            /// </summary>
-            ///
-            /// <param name="count">The count.</param>
             set { outstarCount = value; }
         }
 

@@ -16,9 +16,24 @@ namespace Encog.Neural.Neat.Training
     [Serializable]
     public class NEATNeuronGene : BasicGene
     {
+        /// <summary>
+        /// The activation response tag.
+        /// </summary>
         public const String PROPERTY_ACT_RESPONSE = "aResp";
+
+        /// <summary>
+        /// The recurrent tag.
+        /// </summary>
         public const String PROPERTY_RECURRENT = "recurrent";
+
+        /// <summary>
+        /// The split-x tag.
+        /// </summary>
         public const String PROPERTY_SPLIT_X = "splitX";
+
+        /// <summary>
+        /// The split-y tag.
+        /// </summary>
         public const String PROPERTY_SPLIT_Y = "splitY";
 
         /// <summary>
@@ -97,17 +112,9 @@ namespace Encog.Neural.Neat.Training
         /// <summary>
         /// Set the activation response.
         /// </summary>
-        ///
-        /// <value>The activation response.</value>
         public double ActivationResponse
         {
-            /// <returns>The activation response.</returns>
             get { return activationResponse; }
-            /// <summary>
-            /// Set the activation response.
-            /// </summary>
-            ///
-            /// <param name="activationResponse_0">The activation response.</param>
             set { activationResponse = value; }
         }
 
@@ -115,17 +122,9 @@ namespace Encog.Neural.Neat.Training
         /// <summary>
         /// Set the neuron type.
         /// </summary>
-        ///
-        /// <value>The neuron type.</value>
         public NEATNeuronType NeuronType
         {
-            /// <returns>The type for this neuron.</returns>
             get { return neuronType; }
-            /// <summary>
-            /// Set the neuron type.
-            /// </summary>
-            ///
-            /// <param name="neuronType_0">The neuron type.</param>
             set { neuronType = value; }
         }
 
@@ -133,17 +132,9 @@ namespace Encog.Neural.Neat.Training
         /// <summary>
         /// Set the split x.
         /// </summary>
-        ///
-        /// <value>The split x.</value>
         public double SplitX
         {
-            /// <returns>The split x value.</returns>
             get { return splitX; }
-            /// <summary>
-            /// Set the split x.
-            /// </summary>
-            ///
-            /// <param name="splitX_0">The split x.</param>
             set { splitX = value; }
         }
 
@@ -151,17 +142,9 @@ namespace Encog.Neural.Neat.Training
         /// <summary>
         /// Set the split y.
         /// </summary>
-        ///
-        /// <value>The split y.</value>
         public double SplitY
         {
-            /// <returns>The split y value.</returns>
             get { return splitY; }
-            /// <summary>
-            /// Set the split y.
-            /// </summary>
-            ///
-            /// <param name="splitY_0">The split y.</param>
             set { splitY = value; }
         }
 
@@ -169,17 +152,9 @@ namespace Encog.Neural.Neat.Training
         /// <summary>
         /// Set if this is a recurrent neuron.
         /// </summary>
-        ///
-        /// <value>True if this is a recurrent neuron.</value>
         public bool Recurrent
         {
-            /// <returns>True if this is recurrent.</returns>
             get { return recurrent; }
-            /// <summary>
-            /// Set if this is a recurrent neuron.
-            /// </summary>
-            ///
-            /// <param name="recurrent_0">True if this is a recurrent neuron.</param>
             set { recurrent = value; }
         }
 
@@ -199,7 +174,7 @@ namespace Encog.Neural.Neat.Training
             splitY = other.splitY;
         }
 
-
+        /// <inheritdoc/>
         public override String ToString()
         {
             var result = new StringBuilder();

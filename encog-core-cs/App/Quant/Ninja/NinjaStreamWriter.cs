@@ -25,11 +25,6 @@ namespace Encog.App.Quant.Ninja
         private bool columnsDefined;
 
         /// <summary>
-        /// The filename to write to.
-        /// </summary>
-        private String filename;
-
-        /// <summary>
         /// The format of the CSV file.
         /// </summary>
         private CSVFormat format;

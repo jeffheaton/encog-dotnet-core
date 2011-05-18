@@ -54,7 +54,7 @@ namespace Encog.ML.Genetic.Genome
         /// specified by the "should minimize" property of the score function.
         /// </summary>
         ///
-        /// <param name="value">The current value.</param>
+        /// <param name="value_ren">The current value.</param>
         /// <param name="bonus">The bonus.</param>
         /// <returns>The resulting value.</returns>
         public double ApplyBonus(double value_ren, double bonus)
@@ -76,7 +76,7 @@ namespace Encog.ML.Genetic.Genome
         /// function.
         /// </summary>
         ///
-        /// <param name="value">The current value.</param>
+        /// <param name="value_ren">The current value.</param>
         /// <param name="bonus">The penalty.</param>
         /// <returns>The resulting value.</returns>
         public double ApplyPenalty(double value_ren, double bonus)

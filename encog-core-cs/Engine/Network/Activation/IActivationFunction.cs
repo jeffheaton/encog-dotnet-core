@@ -86,8 +86,8 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         ///
         /// <param name="index">The index of the param to set.</param>
-        /// <param name="value">The value to set.</param>
-        void SetParam(int index, double value);
+        /// <param name="value_ren">The value to set.</param>
+        void SetParam(int index, double value_ren);
 
 
         /// <summary>

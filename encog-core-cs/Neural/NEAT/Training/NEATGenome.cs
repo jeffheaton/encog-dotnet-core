@@ -222,9 +222,7 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the inputCount to set</value>
         public int InputCount
         {
-            /// <returns>The number of input neurons.</returns>
             get { return inputCount; }
-            /// <param name="inputCount_0">the inputCount to set</param>
             set { inputCount = value; }
         }
 
@@ -232,7 +230,6 @@ namespace Encog.Neural.NEAT.Training
         /// <value>THe links chromosome.</value>
         public Chromosome Links
         {
-            /// <returns>THe links chromosome.</returns>
             get { return linksChromosome; }
         }
 
@@ -240,9 +237,7 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the networkDepth to set</value>
         public int NetworkDepth
         {
-            /// <returns>The network depth.</returns>
             get { return networkDepth; }
-            /// <param name="networkDepth_0">the networkDepth to set</param>
             set { networkDepth = value; }
         }
 
@@ -250,7 +245,6 @@ namespace Encog.Neural.NEAT.Training
         /// <value>The neurons chromosome.</value>
         public Chromosome Neurons
         {
-            /// <returns>The neurons chromosome.</returns>
             get { return neuronsChromosome; }
         }
 
@@ -258,7 +252,6 @@ namespace Encog.Neural.NEAT.Training
         /// <value>The number of genes in the links chromosome.</value>
         public int NumGenes
         {
-            /// <returns>The number of genes in the links chromosome.</returns>
             get { return linksChromosome.Size(); }
         }
 
@@ -266,9 +259,7 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the outputCount to set</value>
         public int OutputCount
         {
-            /// <returns>The output count.</returns>
             get { return outputCount; }
-            /// <param name="outputCount_0">the outputCount to set</param>
             set { outputCount = value; }
         }
 
@@ -280,22 +271,14 @@ namespace Encog.Neural.NEAT.Training
         /// <value>The species id.</value>
         public long SpeciesID
         {
-            /// <returns>The species ID.</returns>
             get { return speciesID; }
-            /// <summary>
-            /// Set the species id.
-            /// </summary>
-            ///
-            /// <param name="species">The species id.</param>
             set { speciesID = value; }
         }
 
         /// <value>the linksChromosome to set</value>
         public Chromosome LinksChromosome
         {
-            /// <returns>the linksChromosome</returns>
             get { return linksChromosome; }
-            /// <param name="linksChromosome_0">the linksChromosome to set</param>
             set { linksChromosome = value; }
         }
 
@@ -303,9 +286,7 @@ namespace Encog.Neural.NEAT.Training
         /// <value>the neuronsChromosome to set</value>
         public Chromosome NeuronsChromosome
         {
-            /// <returns>the neuronsChromosome</returns>
             get { return neuronsChromosome; }
-            /// <param name="neuronsChromosome_0">the neuronsChromosome to set</param>
             set { neuronsChromosome = value; }
         }
 

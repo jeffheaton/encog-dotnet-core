@@ -167,8 +167,8 @@ namespace Encog.Util.HTTP
         /// multipart form.
         /// </summary>
         /// <param name="name">The name of the field.</param>
-        /// <param name="value">The value of the field.</param>
-        public void Add(String name, String value)
+        /// <param name="value_ren">The value of the field.</param>
+        public void Add(String name, String value_ren)
         {
             if (boundary != null)
             {
@@ -176,7 +176,7 @@ namespace Encog.Util.HTTP
                 WriteName(name);
                 Newline();
                 Newline();
-                Writeln(value);
+                Writeln(value_ren);
             }
             else
             {
@@ -186,7 +186,7 @@ namespace Encog.Util.HTTP
                 }
                 Write(Encode(name));
                 Write("=");
-                Write(Encode(value));
+                Write(Encode(value_ren));
             }
             first = false;
         }

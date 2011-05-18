@@ -118,8 +118,8 @@ namespace Encog.Parse
         /// <summary>
         /// Not supported.
         /// </summary>
-        /// <param name="value">The length.</param>
-        public override void SetLength(long value)
+        /// <param name="value_ren">The length.</param>
+        public override void SetLength(long value_ren)
         {
             throw new NotSupportedException();
         }

@@ -175,11 +175,11 @@ namespace Encog.MathUtil.Matrices
         /// </summary>
         /// <param name="row">The row to add to.</param>
         /// <param name="col">The column to add to.</param>
-        /// <param name="value">The value to add.</param>
-        public void Add(int row, int col, double value)
+        /// <param name="value_ren">The value to add.</param>
+        public void Add(int row, int col, double value_ren)
         {
             Validate(row, col);
-            double newValue = matrix[row][col] + value;
+            double newValue = matrix[row][col] + value_ren;
             matrix[row][col] = newValue;
         }
 
@@ -489,14 +489,14 @@ namespace Encog.MathUtil.Matrices
         /// <summary>
         /// Set every value in the matrix to the specified value.
         /// </summary>
-        /// <param name="value">The value to set the matrix to.</param>
-        public void Set(double value)
+        /// <param name="value_ren">The value to set the matrix to.</param>
+        public void Set(double value_ren)
         {
             for (int row = 0; row < Rows; row++)
             {
                 for (int col = 0; col < Cols; col++)
                 {
-                    matrix[row][col] = value;
+                    matrix[row][col] = value_ren;
                 }
             }
         }

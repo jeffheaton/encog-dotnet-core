@@ -9,6 +9,12 @@ namespace Encog.Util.Error
     /// </summary>
     public class CalculateRegressionError
     {
+        /// <summary>
+        /// Calculate an error for a method that uses regression.
+        /// </summary>
+        /// <param name="method">The method to evaluate.</param>
+        /// <param name="data">The training data to evaluate with.</param>
+        /// <returns>The error.</returns>
         public static double CalculateError(MLRegression method,
                                             MLDataSet data)
         {

@@ -43,9 +43,9 @@ namespace Encog.Util
         /// </summary>
         /// <param name="e">The node to add the attribute to.</param>
         /// <param name="name">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
+        /// <param name="value_ren">The value of the attribute.</param>
         public static void AddAttribute(XmlNode e, String name,
-                 String value)
+                 String value_ren)
         {
             XmlAttribute attr = e.OwnerDocument.CreateAttribute(name);
             attr.Value = value;
@@ -57,10 +57,10 @@ namespace Encog.Util
         /// </summary>
         /// <param name="doc">The document to use.</param>
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value to add to the property.</param>
+        /// <param name="value_ren">The value to add to the property.</param>
         /// <returns>The newly created property.</returns>
         public static XmlNode CreateProperty(XmlDocument doc, String name,
-                 String value)
+                 String value_ren)
         {
             XmlNode n = doc.CreateElement(name);
             n.AppendChild(doc.CreateTextNode(value));

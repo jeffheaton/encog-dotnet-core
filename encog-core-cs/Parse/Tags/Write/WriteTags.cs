@@ -79,10 +79,10 @@ namespace Encog.Parse.Tags.Write
         /// Add an attribute to be written with the next tag.
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
-        public void AddAttribute(String name, String value)
+        /// <param name="value_ren">The value of the attribute.</param>
+        public void AddAttribute(String name, String value_ren)
         {
-            attributes.Add(name, value);
+            attributes.Add(name, value_ren);
         }
 
         /// <summary>

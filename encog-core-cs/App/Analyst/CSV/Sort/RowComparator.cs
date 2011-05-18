@@ -35,7 +35,7 @@ namespace Encog.App.Analyst.CSV.Sort
         ///
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
-        /// <returns>0 if the same, <0 x is less, >0 y is less.</returns>
+        /// <returns>0 if the same, &lt;0 x is less, &gt;0 y is less.</returns>
         public int Compare(LoadedRow x, LoadedRow y)
         {
             foreach (SortedField t  in  sort.SortOrder)

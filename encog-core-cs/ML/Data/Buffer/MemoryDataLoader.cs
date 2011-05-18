@@ -45,7 +45,6 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Convert an external file format, such as CSV, to an Encog memory training set. 
         /// </summary>
-        /// <param name="binaryFile">The binary file to create.</param>
         public MLDataSet External2Memory()
         {
             Status.Report(0, 0, "Importing to memory");

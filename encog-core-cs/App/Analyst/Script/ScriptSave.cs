@@ -67,7 +67,7 @@ namespace Encog.App.Analyst.Script
         /// Save the config info.
         /// </summary>
         ///
-        /// <param name="out">THe output file.</param>
+        /// <param name="xout">THe output file.</param>
         private void SaveConfig(EncogWriteHelper xout)
         {
             SaveSubSection(xout, "SETUP", "CONFIG");
@@ -96,7 +96,7 @@ namespace Encog.App.Analyst.Script
         /// Save the data fields.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         private void SaveData(EncogWriteHelper xout)
         {
             SaveSubSection(xout, "DATA", "CONFIG");
@@ -155,7 +155,7 @@ namespace Encog.App.Analyst.Script
         /// Save the ML sections.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         private void SaveMachineLearning(EncogWriteHelper xout)
         {
             SaveSubSection(xout, "ML", "CONFIG");
@@ -166,7 +166,7 @@ namespace Encog.App.Analyst.Script
         /// Save the normalization data.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         private void SaveNormalize(EncogWriteHelper xout)
         {
             SaveSubSection(xout, "NORMALIZE", "CONFIG");
@@ -226,7 +226,7 @@ namespace Encog.App.Analyst.Script
         /// Save segregate info.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         private void SaveSegregate(EncogWriteHelper xout)
         {
             SaveSubSection(xout, "SEGREGATE", "CONFIG");
@@ -248,7 +248,7 @@ namespace Encog.App.Analyst.Script
         /// Save a subsection.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         /// <param name="section">The section.</param>
         /// <param name="subSection">The subsection.</param>
         private void SaveSubSection(EncogWriteHelper xout,
@@ -284,7 +284,7 @@ namespace Encog.App.Analyst.Script
         /// Save the tasks.
         /// </summary>
         ///
-        /// <param name="out">The output file.</param>
+        /// <param name="xout">The output file.</param>
         private void SaveTasks(EncogWriteHelper xout)
         {
             xout.AddSection("TASKS");

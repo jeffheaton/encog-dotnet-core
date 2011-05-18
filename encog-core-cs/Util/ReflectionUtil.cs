@@ -192,15 +192,15 @@ namespace Encog.Util
         /// Resolve an enumeration.
         /// </summary>
         /// <param name="field">The field to resolve.</param>
-        /// <param name="value">The value to get the enum for.</param>
+        /// <param name="value_ren">The value to get the enum for.</param>
         /// <returns>The enum that was resolved.</returns>
-        public static Object ResolveEnum(FieldInfo field, FieldInfo value)
+        public static Object ResolveEnum(FieldInfo field, FieldInfo value_ren)
         {
             Type type = field.GetType();
             Object[] objs = type.GetMembers(BindingFlags.Public | BindingFlags.Static);
             foreach (MemberInfo obj in objs)
             {
-                if (obj.Name.Equals(value))
+                if (obj.Name.Equals(value_ren))
                     return obj;
             }
             return null;

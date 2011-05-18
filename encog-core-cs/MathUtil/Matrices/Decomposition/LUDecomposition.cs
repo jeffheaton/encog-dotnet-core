@@ -343,16 +343,16 @@ namespace Encog.MathUtil.Matrices.Decomposition
         /// <summary>
         /// Solve the matrix for a 1d array.
         /// </summary>
-        /// <param name="value">The value to solve for.</param>
+        /// <param name="value_ren">The value to solve for.</param>
         /// <returns>The solved matrix.</returns>
-        public double[] Solve(double[] value)
+        public double[] Solve(double[] value_ren)
         {
-            if (value == null)
+            if (value_ren == null)
             {
                 throw new MatrixError("value");
             }
 
-            if (value.Length != LU.Length)
+            if (value_ren.Length != LU.Length)
             {
                 throw new MatrixError("Invalid matrix dimensions.");
             }
@@ -363,11 +363,11 @@ namespace Encog.MathUtil.Matrices.Decomposition
             }
 
             // Copy right hand side with pivoting
-            int count = value.Length;
+            int count = value_ren.Length;
             var b = new double[count];
             for (int i = 0; i < b.Length; i++)
             {
-                b[i] = value[piv[i]];
+                b[i] = value_ren[piv[i]];
             }
 
             int rows = LU[0].Length;

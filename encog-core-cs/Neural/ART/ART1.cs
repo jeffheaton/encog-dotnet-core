@@ -170,13 +170,7 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double A1
         {
-            /// <returns>The A1 parameter.</returns>
             get { return a1; }
-            /// <summary>
-            /// Set the A1 parameter.
-            /// </summary>
-            ///
-            /// <param name="theA1">The new value.</param>
             set { a1 = value; }
         }
 
@@ -184,17 +178,9 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the B1 parameter.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public double B1
         {
-            /// <returns>The B1 parameter.</returns>
             get { return b1; }
-            /// <summary>
-            /// Set the B1 parameter.
-            /// </summary>
-            ///
-            /// <param name="theB1">The new value.</param>
             set { b1 = value; }
         }
 
@@ -206,13 +192,7 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double C1
         {
-            /// <returns>The C1 parameter.</returns>
             get { return c1; }
-            /// <summary>
-            /// Set the C1 parameter.
-            /// </summary>
-            ///
-            /// <param name="theC1">The new value.</param>
             set { c1 = value; }
         }
 
@@ -224,13 +204,7 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double D1
         {
-            /// <returns>The D1 parameter.</returns>
             get { return d1; }
-            /// <summary>
-            /// Set the D1 parameter.
-            /// </summary>
-            ///
-            /// <param name="theD1">The new value.</param>
             set { d1 = value; }
         }
 
@@ -238,17 +212,9 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the F1 count.  The F1 layer is the input layer.
         /// </summary>
-        ///
-        /// <value>The count.</value>
         public int F1Count
         {
-            /// <returns>the f1Count</returns>
             get { return f1Count; }
-            /// <summary>
-            /// Set the F1 count.  The F1 layer is the input layer.
-            /// </summary>
-            ///
-            /// <param name="i">The count.</param>
             set
             {
                 f1Count = value;
@@ -264,13 +230,7 @@ namespace Encog.Neural.ART
         /// <value>The count.</value>
         public int F2Count
         {
-            /// <returns>the f2Count</returns>
             get { return f2Count; }
-            /// <summary>
-            /// Set the F2 count.  The F2 layer is the output layer.
-            /// </summary>
-            ///
-            /// <param name="i">The count.</param>
             set
             {
                 f2Count = value;
@@ -287,35 +247,21 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double L
         {
-            /// <returns>The L parameter.</returns>
             get { return l; }
-            /// <summary>
-            /// Set the L parameter.
-            /// </summary>
-            ///
-            /// <param name="theL">The new value.</param>
             set { l = value; }
         }
 
 
         /// <summary>
-        /// Set the i parameter.
+        /// This is the value that is returned if there is no winner.  
+        /// This value is generally set to the index of the last classes, plus 1.
+        /// For example, if there were 3 classes, the network would return 0-2 to
+        /// represent what class was found, in this case the no winner property
+        /// would be set to 3.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public int NoWinner
         {
-            /// <returns>This is the value that is returned if there is no winner.  
-            /// This value is generally set to the index of the last classes, plus 1.
-            /// For example, if there were 3 classes, the network would return 0-2 to
-            /// represent what class was found, in this case the no winner property
-            /// would be set to 3.</returns>
             get { return noWinner; }
-            /// <summary>
-            /// Set the i parameter.
-            /// </summary>
-            ///
-            /// <param name="i">The new value.</param>
             set { noWinner = value; }
         }
 
@@ -323,17 +269,9 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the vigilance.
         /// </summary>
-        ///
-        /// <value>The new value.</value>
         public double Vigilance
         {
-            /// <returns>The vigilance parameter.</returns>
             get { return vigilance; }
-            /// <summary>
-            /// Set the vigilance.
-            /// </summary>
-            ///
-            /// <param name="theVigilance">The new value.</param>
             set { vigilance = value; }
         }
 
@@ -341,17 +279,9 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the f1 to f2 matrix.
         /// </summary>
-        ///
-        /// <value>The new matrix.</value>
         public Matrix WeightsF1toF2
         {
-            /// <returns>the weightsF1toF2</returns>
             get { return weightsF1toF2; }
-            /// <summary>
-            /// Set the f1 to f2 matrix.
-            /// </summary>
-            ///
-            /// <param name="matrix">The new matrix.</param>
             set { weightsF1toF2 = value; }
         }
 
@@ -359,17 +289,9 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the f2 to f1 matrix.
         /// </summary>
-        ///
-        /// <value>The new matrix.</value>
         public Matrix WeightsF2toF1
         {
-            /// <returns>the weightsF2toF1</returns>
             get { return weightsF2toF1; }
-            /// <summary>
-            /// Set the f2 to f1 matrix.
-            /// </summary>
-            ///
-            /// <param name="matrix">The new matrix.</param>
             set { weightsF2toF1 = value; }
         }
 
@@ -377,7 +299,6 @@ namespace Encog.Neural.ART
         /// <value>The winning neuron.</value>
         public int Winner
         {
-            /// <returns>The winning neuron.</returns>
             get { return winner; }
         }
 
@@ -391,15 +312,8 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Set the input to the neural network.
         /// </summary>
-        ///
-        /// <value>The input.</value>
         private BiPolarMLData Input
         {
-            /// <summary>
-            /// Set the input to the neural network.
-            /// </summary>
-            ///
-            /// <param name="input">The input.</param>
             set
             {
                 double activation;
@@ -460,8 +374,6 @@ namespace Encog.Neural.ART
         /// count.</value>
         public int OutputCount
         {
-            /// <returns>The number of neurons in the output count, which is the f2 layer
-            /// count.</returns>
             get { return f2Count; }
         }
 

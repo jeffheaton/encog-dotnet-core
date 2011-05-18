@@ -79,7 +79,7 @@ namespace Encog.Util.File
         /// Read the entire contents of a stream into a string.
         /// </summary>
         ///
-        /// <param name="is">The input stream to read from.</param>
+        /// <param name="mask0">The input stream to read from.</param>
         /// <returns>The string that was read in.</returns>
         public static String ReadStream(Stream mask0)
         {

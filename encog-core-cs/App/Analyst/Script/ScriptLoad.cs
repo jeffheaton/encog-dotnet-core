@@ -492,7 +492,7 @@ namespace Encog.App.Analyst.Script
         /// <param name="section">The section.</param>
         /// <param name="subSection">The sub section.</param>
         /// <param name="name">The name of the property.</param>
-        /// <param name="value">The new value for the property.</param>
+        /// <param name="value_ren">The new value for the property.</param>
         private void ValidateProperty(String section,
                                       String subSection, String name, String value_ren)
         {

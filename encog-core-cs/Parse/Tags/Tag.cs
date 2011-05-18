@@ -180,10 +180,10 @@ namespace Encog.Parse.Tags
         /// Set a HTML attribute.
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
-        /// <param name="value">The value of the attribute.</param>
-        public void SetAttribute(String name, String value)
+        /// <param name="value_ren">The value of the attribute.</param>
+        public void SetAttribute(String name, String value_ren)
         {
-            attributes[name] = value;
+            attributes[name] = value_ren;
         }
 
         /// <summary>

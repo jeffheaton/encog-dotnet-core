@@ -49,7 +49,6 @@ namespace Encog.Util.Banchmark
         /// <summary>
         /// Evaluate training.
         /// </summary>
-        /// <param name="device">The OpenCL device, null for CPU.</param>
         /// <param name="input">Input neurons.</param>
         /// <param name="hidden1">Hidden 1 neurons.</param>
         /// <param name="hidden2">Hidden 2 neurons.</param>
@@ -72,7 +71,6 @@ namespace Encog.Util.Banchmark
         /// causes each of the training pairs to be run through the network. The
         /// network is evaluated 10 times and the lowest time is reported. 
         /// </summary>
-        /// <param name="profile">The network to evaluate with.</param>
         /// <param name="network">The training data to use.</param>
         /// <param name="training">The number of seconds that it took.</param>
         /// <returns></returns>

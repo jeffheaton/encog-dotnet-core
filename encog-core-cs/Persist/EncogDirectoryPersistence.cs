@@ -76,7 +76,7 @@ namespace Encog.Persist
         /// Load an object from an input stream.
         /// </summary>
         ///
-        /// <param name="is">The input stream to read from.</param>
+        /// <param name="mask0">The input stream to read from.</param>
         /// <returns>The loaded object.</returns>
         public static Object LoadObject(Stream mask0)
         {
@@ -112,7 +112,7 @@ namespace Encog.Persist
         /// Read a line from the input stream.
         /// </summary>
         ///
-        /// <param name="is">The input stream.</param>
+        /// <param name="mask0">The input stream.</param>
         /// <returns>The line read.</returns>
         private static String ReadLine(Stream mask0)
         {
@@ -258,6 +258,7 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="name">The name to load.</param>
+        /// <param name="obj">The object.</param>
         public void SaveToDirectory(String name, Object obj)
         {
             var path = new FileInfo(Path.Combine(parent.FullName, name));

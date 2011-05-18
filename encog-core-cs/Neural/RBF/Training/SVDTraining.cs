@@ -62,6 +62,12 @@ namespace Encog.Neural.Rbf.Training
             get { return network; }
         }
 
+        /// <summary>
+        /// Convert a flat network to a matrix.
+        /// </summary>
+        /// <param name="flat">The flat network to convert.</param>
+        /// <param name="start">The starting point.</param>
+        /// <param name="matrix">The matrix to convert to.</param>
         public void FlatToMatrix(double[] flat, int start,
                                  double[][] matrix)
         {

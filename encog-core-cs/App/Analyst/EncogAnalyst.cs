@@ -98,7 +98,6 @@ namespace Encog.App.Analyst
         /// <value>The lag depth.</value>
         public int LagDepth
         {
-            /// <returns>The lag depth.</returns>
             get
             {
                 int result = 0;
@@ -118,7 +117,6 @@ namespace Encog.App.Analyst
         /// <value>The lead depth.</value>
         public int LeadDepth
         {
-            /// <returns>The lead depth.</returns>
             get
             {
                 int result = 0;
@@ -138,7 +136,6 @@ namespace Encog.App.Analyst
         /// <value>the listeners</value>
         public IList<AnalystListener> Listeners
         {
-            /// <returns>the listeners</returns>
             get { return listeners; }
         }
 
@@ -146,21 +143,12 @@ namespace Encog.App.Analyst
         /// <summary>
         /// Set the max iterations.
         /// </summary>
-        ///
-        /// <value>The value for max iterations.</value>
-        public int MaxIteration { /// <returns>The max iterations.</returns>
-            get; /// <summary>
-            /// Set the max iterations.
-            /// </summary>
-            ///
-            /// <param name="i">The value for max iterations.</param>
-            set; }
+        public int MaxIteration { get; set; }
 
 
         /// <value>The reverted data.</value>
         public IDictionary<String, String> RevertData
         {
-            /// <returns>The reverted data.</returns>
             get { return revertData; }
         }
 
@@ -168,29 +156,20 @@ namespace Encog.App.Analyst
         /// <value>the script</value>
         public AnalystScript Script
         {
-            /// <returns>the script</returns>
             get { return script; }
         }
 
         /// <summary>
         /// Set the current task.
         /// </summary>
-        ///
-        /// <value>The current task.</value>
         public QuantTask CurrentQuantTask
         {
-            /// <summary>
-            /// Set the current task.
-            /// </summary>
-            ///
-            /// <param name="task">The current task.</param>
             set { currentQuantTask = value; }
         }
 
         /// <value>True, if any field has a time slice.</value>
         public bool TimeSeries
         {
-            /// <returns>True, if any field has a time slice.</returns>
             get
             {
                 foreach (AnalystField field  in  script.Normalize.NormalizedFields)

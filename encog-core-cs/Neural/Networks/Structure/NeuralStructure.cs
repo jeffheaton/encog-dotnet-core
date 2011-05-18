@@ -162,7 +162,7 @@ namespace Encog.Neural.Networks.Structure
                     connectionLimited = true;
                     connectionLimit = CSVFormat.EG_FORMAT.Parse(limit);
                 }
-                catch (FormatException e)
+                catch (FormatException )
                 {
                     throw new NeuralNetworkError("Invalid property("
                                                  + BasicNetwork.TAG_LIMIT + "):" + limit);

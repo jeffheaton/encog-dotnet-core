@@ -80,13 +80,17 @@ namespace Encog.Neural.Networks.Layers
             set { network = value; }
         }
 
-
+        /// <summary>
+        /// THe neuron count.
+        /// </summary>
         public virtual int NeuronCount
         {
             get { return Count; }
         }
 
-
+        /// <summary>
+        /// The activation function.
+        /// </summary>
         public virtual IActivationFunction ActivationFunction
         {
             get { return base.Activation; }

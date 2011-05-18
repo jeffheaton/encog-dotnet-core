@@ -15,6 +15,9 @@ namespace Encog.Neural.Networks.Training.Propagation
         ///
         private readonly IDictionary<String, Object> contents;
 
+        /// <summary>
+        /// Construct the object.
+        /// </summary>
         public TrainingContinuation()
         {
             contents = new Dictionary<String, Object>();

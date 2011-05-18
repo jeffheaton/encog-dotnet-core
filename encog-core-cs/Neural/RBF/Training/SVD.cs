@@ -344,21 +344,45 @@ namespace Encog.Neural.RBF.Training
             }
         }
 
+        /// <summary>
+        /// Take the min of two numbers.
+        /// </summary>
+        /// <param name="m">First number.</param>
+        /// <param name="n">Second number.</param>
+        /// <returns>The min.</returns>
         public static int MIN(int m, int n)
         {
             return (m < n) ? m : n;
         }
 
+        /// <summary>
+        /// Take the max of two numbers.
+        /// </summary>
+        /// <param name="a">The first number.</param>
+        /// <param name="b">The second number.</param>
+        /// <returns>The max.</returns>
         public static double MAX(double a, double b)
         {
             return (a > b) ? a : b;
         }
 
+        /// <summary>
+        /// Take the sign of two numbers.
+        /// </summary>
+        /// <param name="a">The first number.</param>
+        /// <param name="b">The second number.</param>
+        /// <returns></returns>
         public static double SIGN(double a, double b)
         {
             return (((b) >= 0.0d) ? Math.Abs(a) : -Math.Abs(a));
         }
 
+        /// <summary>
+        /// Compute the pythag distance of two numbers.
+        /// </summary>
+        /// <param name="a">The first number.</param>
+        /// <param name="b">The second number.</param>
+        /// <returns>The result.</returns>
         public static double Pythag(double a, double b)
         {
             double absa, absb;

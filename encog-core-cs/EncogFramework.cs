@@ -163,7 +163,6 @@ namespace Encog
         /// <value>the loggingPlugin</value>
         public EncogPluginType1 LoggingPlugin
         {
-            /// <returns>the loggingPlugin</returns>
             get { return loggingPlugin; }
         }
 
@@ -206,8 +205,6 @@ namespace Encog
         /// plugin, a new system one will be created. Encog will crash without a
         /// logging or system plugin.
         /// </summary>
-        ///
-        /// <param name="plugin">The plugin.</param>
         public void UnregisterPlugin(EncogPluginBase plugin)
         {
             // is it a special plugin?

@@ -108,7 +108,6 @@ namespace Encog.ML.Genetic.Population
         /// <summary>
         /// Construct a population.
         /// </summary>
-        ///
         /// <param name="thePopulationSize">The population size.</param>
         public BasicPopulation(int thePopulationSize)
         {
@@ -129,7 +128,6 @@ namespace Encog.ML.Genetic.Population
         /// <value>the geneIDGenerate</value>
         public IGenerateID GeneIDGenerate
         {
-            /// <returns>the geneIDGenerate</returns>
             get { return geneIDGenerate; }
         }
 
@@ -137,89 +135,61 @@ namespace Encog.ML.Genetic.Population
         /// <value>the genomeIDGenerate</value>
         public IGenerateID GenomeIDGenerate
         {
-            /// <returns>the genomeIDGenerate</returns>
             get { return genomeIDGenerate; }
         }
 
         /// <value>the innovationIDGenerate</value>
         public IGenerateID InnovationIDGenerate
         {
-            /// <returns>the innovationIDGenerate</returns>
             get { return innovationIDGenerate; }
         }
 
         /// <summary>
         /// Set the name.
         /// </summary>
-        ///
-        /// <value>The new name.</value>
-        public String Name { /// <returns>The name.</returns>
-            get; /// <summary>
-            /// Set the name.
-            /// </summary>
-            ///
-            /// <param name="theName">The new name.</param>
-            set; }
+        public String Name { get; set; }
 
         /// <value>the speciesIDGenerate</value>
         public IGenerateID SpeciesIDGenerate
         {
-            /// <returns>the speciesIDGenerate</returns>
             get { return speciesIDGenerate; }
         }
 
         #region IPopulation Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+
+        /// <inheritdoc/>
         public void Add(IGenome genome)
         {
             genomes.Add(genome);
             genome.Population = this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public long AssignGeneID()
         {
             return geneIDGenerate.Generate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public long AssignGenomeID()
         {
             return genomeIDGenerate.Generate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public long AssignInnovationID()
         {
             return innovationIDGenerate.Generate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public long AssignSpeciesID()
         {
             return speciesIDGenerate.Generate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Claim(GeneticAlgorithm ga)
         {
             foreach (IGenome genome  in  genomes)
@@ -228,34 +198,21 @@ namespace Encog.ML.Genetic.Population
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Clear()
         {
             genomes.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public IGenome Get(int i)
         {
             return genomes[i];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public IGenome Best
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get
             {
                 if (genomes.Count == 0)
@@ -270,164 +227,63 @@ namespace Encog.ML.Genetic.Population
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public IList<IGenome> Genomes
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return genomes; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public IInnovationList Innovations { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public IInnovationList Innovations { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public double OldAgePenalty { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public double OldAgePenalty { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public int OldAgeThreshold { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public int OldAgeThreshold { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public int PopulationSize { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public int PopulationSize { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public IList<ISpecies> Species
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get { return species; }
-        }
+        /// <inheritdoc/>
+        public IList<ISpecies> Species { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public double SurvivalRate { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public double SurvivalRate { get; set; }
 
 
         /// <value>the youngBonusAgeThreshold to set</value>
         public int YoungBonusAgeThreshold
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return youngBonusAgeThreshold; }
-            /// <param name="theYoungBonusAgeThreshold">the youngBonusAgeThreshold to set</param>
             set { youngBonusAgeThreshold = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public double YoungScoreBonus { /// <summary>
-            /// 
-            /// </summary>
-            ///
-            get; /// <summary>
-            /// 
-            /// </summary>
-            ///
-            set; }
+        /// <inheritdoc/>
+        public double YoungScoreBonus { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int YoungBonusAgeThreshhold
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             set { youngBonusAgeThreshold = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int Size()
         {
             return genomes.Count;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Sort()
         {
             genomes.Sort();

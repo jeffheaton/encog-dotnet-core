@@ -153,17 +153,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the action for the field.
         /// </summary>
-        ///
-        /// <value>The action for the field.</value>
         public NormalizationAction Action
         {
-            /// <returns>The action for the field.</returns>
             get { return action; }
-            /// <summary>
-            /// Set the action for the field.
-            /// </summary>
-            ///
-            /// <param name="theAction">The action for the field.</param>
             set { action = value; }
         }
 
@@ -171,17 +163,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the actual high for the field.
         /// </summary>
-        ///
-        /// <value>The actual high for the field.</value>
         public double ActualHigh
         {
-            /// <returns>The actual high for the field.</returns>
             get { return actualHigh; }
-            /// <summary>
-            /// Set the actual high for the field.
-            /// </summary>
-            ///
-            /// <param name="theActualHigh">The actual high for the field.</param>
             set { actualHigh = value; }
         }
 
@@ -189,17 +173,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the actual low for the field.
         /// </summary>
-        ///
-        /// <value>The theActual low for the field.</value>
         public double ActualLow
         {
-            /// <returns>The actual low for the field.</returns>
             get { return actualLow; }
-            /// <summary>
-            /// Set the actual low for the field.
-            /// </summary>
-            ///
-            /// <param name="theActualLow">The theActual low for the field.</param>
             set { actualLow = value; }
         }
 
@@ -207,7 +183,6 @@ namespace Encog.Util.Arrayutil
         /// <value>A list of any classes in this field.</value>
         public IList<ClassItem> Classes
         {
-            /// <returns>A list of any classes in this field.</returns>
             get { return classes; }
         }
 
@@ -217,9 +192,6 @@ namespace Encog.Util.Arrayutil
         /// classification method used.</value>
         public int ColumnsNeeded
         {
-            /// <returns>Returns the number of columns needed for this classification. The
-            /// number of columns needed will vary, depending on the
-            /// classification method used.</returns>
             get
             {
                 switch (action)
@@ -240,7 +212,6 @@ namespace Encog.Util.Arrayutil
         /// <value>The equilateral object used by this class, null if none.</value>
         public Equilateral Eq
         {
-            /// <returns>The equilateral object used by this class, null if none.</returns>
             get { return eq; }
         }
 
@@ -248,17 +219,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the name of the field.
         /// </summary>
-        ///
-        /// <value>The name of the field.</value>
         public String Name
         {
-            /// <returns>The name of the field.</returns>
             get { return name; }
-            /// <summary>
-            /// Set the name of the field.
-            /// </summary>
-            ///
-            /// <param name="theName">The name of the field.</param>
             set { name = value; }
         }
 
@@ -266,17 +229,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the normalized high for the field.
         /// </summary>
-        ///
-        /// <value>The normalized high for the field.</value>
         public double NormalizedHigh
         {
-            /// <returns>The normalized high for the field.</returns>
             get { return normalizedHigh; }
-            /// <summary>
-            /// Set the normalized high for the field.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedHigh">The normalized high for the field.</param>
             set { normalizedHigh = value; }
         }
 
@@ -284,17 +239,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the normalized low for the field.
         /// </summary>
-        ///
-        /// <value>The normalized low for the field.</value>
         public double NormalizedLow
         {
-            /// <returns>The normalized low for the neural network.</returns>
             get { return normalizedLow; }
-            /// <summary>
-            /// Set the normalized low for the field.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedLow">The normalized low for the field.</param>
             set { normalizedLow = value; }
         }
 
@@ -302,10 +249,8 @@ namespace Encog.Util.Arrayutil
         /// <value>Is this field a classify field.</value>
         public bool Classify
         {
-            /// <returns>Is this field a classify field.</returns>
             get
-            {
-                // TODO Auto-generated method stub
+            {         
                 return (action == NormalizationAction.Equilateral)
                        || (action == NormalizationAction.OneOf)
                        || (action == NormalizationAction.SingleField);
@@ -328,7 +273,7 @@ namespace Encog.Util.Arrayutil
         /// Denormalize the specified value.
         /// </summary>
         ///
-        /// <param name="value">The value to normalize.</param>
+        /// <param name="value_ren">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double DeNormalize(double value_ren)
         {
@@ -564,7 +509,7 @@ namespace Encog.Util.Arrayutil
         /// Normalize the specified value.
         /// </summary>
         ///
-        /// <param name="value">The value to normalize.</param>
+        /// <param name="value_ren">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double Normalize(double value_ren)
         {

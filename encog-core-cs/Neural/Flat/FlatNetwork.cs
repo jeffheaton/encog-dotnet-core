@@ -231,17 +231,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the activation functions.
         /// </summary>
-        ///
-        /// <value>The activation functions.</value>
         public IActivationFunction[] ActivationFunctions
         {
-            /// <returns>The activation functions.</returns>
             get { return activationFunctions; }
-            /// <summary>
-            /// Set the activation functions.
-            /// </summary>
-            ///
-            /// <param name="af">The activation functions.</param>
             set { activationFunctions = value; }
         }
 
@@ -249,9 +241,7 @@ namespace Encog.Neural.Flat
         /// <value>the beginTraining to set</value>
         public int BeginTraining
         {
-            /// <returns>the beginTraining</returns>
             get { return beginTraining; }
-            /// <param name="beginTraining_0">the beginTraining to set</param>
             set { beginTraining = value; }
         }
 
@@ -259,17 +249,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the bias activation.
         /// </summary>
-        ///
-        /// <value>The bias activation.</value>
         public double[] BiasActivation
         {
-            /// <returns>The bias activation.</returns>
             get { return biasActivation; }
-            /// <summary>
-            /// Set the bias activation.
-            /// </summary>
-            ///
-            /// <param name="biasActivation_0">The bias activation.</param>
             set { biasActivation = value; }
         }
 
@@ -277,9 +259,7 @@ namespace Encog.Neural.Flat
         /// <value>the connectionLimit to set</value>
         public double ConnectionLimit
         {
-            /// <returns>the connectionLimit</returns>
             get { return connectionLimit; }
-            /// <param name="connectionLimit_0">the connectionLimit to set</param>
             set
             {
                 connectionLimit = value;
@@ -295,17 +275,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the context target offset.
         /// </summary>
-        ///
-        /// <value>The context target offset.</value>
         public int[] ContextTargetOffset
         {
-            /// <returns>The offset of the context target for each layer.</returns>
             get { return contextTargetOffset; }
-            /// <summary>
-            /// Set the context target offset.
-            /// </summary>
-            ///
-            /// <param name="contextTargetOffset_0">The context target offset.</param>
             set { contextTargetOffset = value; }
         }
 
@@ -313,18 +285,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the context target size.
         /// </summary>
-        ///
-        /// <value>The context target size.</value>
         public int[] ContextTargetSize
         {
-            /// <returns>The context target size for each layer. Zero if the layer does
-            /// not feed a context layer.</returns>
             get { return contextTargetSize; }
-            /// <summary>
-            /// Set the context target size.
-            /// </summary>
-            ///
-            /// <param name="contextTargetSize_0">The context target size.</param>
             set { contextTargetSize = value; }
         }
 
@@ -332,7 +295,6 @@ namespace Encog.Neural.Flat
         /// <value>The length of the array the network would encode to.</value>
         public int EncodeLength
         {
-            /// <returns>The length of the array the network would encode to.</returns>
             get { return weights.Length; }
         }
 
@@ -340,9 +302,7 @@ namespace Encog.Neural.Flat
         /// <value>the endTraining to set</value>
         public int EndTraining
         {
-            /// <returns>the endTraining</returns>
             get { return endTraining; }
-            /// <param name="endTraining_0">the endTraining to set</param>
             set { endTraining = value; }
         }
 
@@ -350,17 +310,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the hasContext property.
         /// </summary>
-        ///
-        /// <value>True if the network has context.</value>
         public bool HasContext
         {
-            /// <returns>True if this network has context.</returns>
             get { return hasContext; }
-            /// <summary>
-            /// Set the hasContext property.
-            /// </summary>
-            ///
-            /// <param name="hasContext_0">True if the network has context.</param>
             set { hasContext = value; }
         }
 
@@ -368,17 +320,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the input count.
         /// </summary>
-        ///
-        /// <value>The input count.</value>
         public int InputCount
         {
-            /// <returns>The number of input neurons.</returns>
             get { return inputCount; }
-            /// <summary>
-            /// Set the input count.
-            /// </summary>
-            ///
-            /// <param name="inputCount_0">The input count.</param>
             set { inputCount = value; }
         }
 
@@ -386,17 +330,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the layer context count.
         /// </summary>
-        ///
-        /// <value>The layer context count.</value>
         public int[] LayerContextCount
         {
-            /// <returns>The layer context count.</returns>
             get { return layerContextCount; }
-            /// <summary>
-            /// Set the layer context count.
-            /// </summary>
-            ///
-            /// <param name="layerContextCount_0">The layer context count.</param>
             set { layerContextCount = value; }
         }
 
@@ -404,17 +340,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the layer counts.
         /// </summary>
-        ///
-        /// <value>The layer counts.</value>
         public int[] LayerCounts
         {
-            /// <returns>The number of neurons in each layer.</returns>
             get { return layerCounts; }
-            /// <summary>
-            /// Set the layer counts.
-            /// </summary>
-            ///
-            /// <param name="layerCounts_0">The layer counts.</param>
             set { layerCounts = value; }
         }
 
@@ -432,17 +360,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the layer index.
         /// </summary>
-        ///
-        /// <value>The layer index.</value>
         public int[] LayerIndex
         {
-            /// <returns>Indexes into the weights for the start of each layer.</returns>
             get { return layerIndex; }
-            /// <summary>
-            /// Set the layer index.
-            /// </summary>
-            ///
-            /// <param name="i">The layer index.</param>
             set { layerIndex = value; }
         }
 
@@ -450,17 +370,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the layer output.
         /// </summary>
-        ///
-        /// <value>The layer output.</value>
         public double[] LayerOutput
         {
-            /// <returns>The output for each layer.</returns>
             get { return layerOutput; }
-            /// <summary>
-            /// Set the layer output.
-            /// </summary>
-            ///
-            /// <param name="layerOutput_0">The layer output.</param>
             set { layerOutput = value; }
         }
 
@@ -468,7 +380,6 @@ namespace Encog.Neural.Flat
         /// <value>The neuron count.</value>
         public int NeuronCount
         {
-            /// <returns>The neuron count.</returns>
             get
             {
                 int result = 0;
@@ -485,17 +396,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the output count.
         /// </summary>
-        ///
-        /// <value>The output count.</value>
         public int OutputCount
         {
-            /// <returns>The number of output neurons.</returns>
             get { return outputCount; }
-            /// <summary>
-            /// Set the output count.
-            /// </summary>
-            ///
-            /// <param name="outputCount_0">The output count.</param>
             set { outputCount = value; }
         }
 
@@ -503,17 +406,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the weight index.
         /// </summary>
-        ///
-        /// <value>The weight index.</value>
         public int[] WeightIndex
         {
-            /// <returns>The index of each layer in the weight and threshold array.</returns>
             get { return weightIndex; }
-            /// <summary>
-            /// Set the weight index.
-            /// </summary>
-            ///
-            /// <param name="weightIndex_0">The weight index.</param>
             set { weightIndex = value; }
         }
 
@@ -521,24 +416,15 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the weights.
         /// </summary>
-        ///
-        /// <value>The weights.</value>
         public double[] Weights
         {
-            /// <returns>The index of each layer in the weight and threshold array.</returns>
             get { return weights; }
-            /// <summary>
-            /// Set the weights.
-            /// </summary>
-            ///
-            /// <param name="weights_0">The weights.</param>
             set { weights = value; }
         }
 
         /// <value>the isLimited</value>
         public bool Limited
         {
-            /// <returns>the isLimited</returns>
             get { return isLimited; }
         }
 

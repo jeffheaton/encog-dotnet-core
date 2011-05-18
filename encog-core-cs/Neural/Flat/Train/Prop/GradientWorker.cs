@@ -129,7 +129,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="theFlatSpots">Holds an array of flat spot constants.</param>
         public GradientWorker(FlatNetwork theNetwork,
                                  TrainFlatNetworkProp theOwner, MLDataSet theTraining,
-                                 int theLow, int theHigh, double[] flatSpots)
+                                 int theLow, int theHigh, double[] theFlatSpots)
         {
             errorCalculation = new ErrorCalculation();
             network = theNetwork;
@@ -137,7 +137,7 @@ namespace Encog.Neural.Flat.Train.Prop
             low = theLow;
             high = theHigh;
             owner = theOwner;
-            _flatSpot = flatSpots;
+            _flatSpot = theFlatSpots;
 
             layerDelta = new double[network.LayerOutput.Length];
             gradients = new double[network.Weights.Length];
@@ -156,16 +156,9 @@ namespace Encog.Neural.Flat.Train.Prop
 
         #region FlatGradientWorker Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public FlatNetwork Network
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -173,7 +166,6 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <value>The weights for this network.</value>
         public double[] Weights
         {
-            /// <returns>The weights for this network.</returns>
             get { return weights; }
         }
 
