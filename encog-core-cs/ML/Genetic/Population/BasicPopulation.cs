@@ -66,13 +66,7 @@ namespace Encog.ML.Genetic.Population
         /// </summary>
         ///
         private readonly IGenerateID innovationIDGenerate;
-
-        /// <summary>
-        /// The species in this population.
-        /// </summary>
-        ///
-        private readonly IList<ISpecies> species;
-
+       
         /// <summary>
         /// Generate species id's.
         /// </summary>
@@ -97,7 +91,7 @@ namespace Encog.ML.Genetic.Population
             innovationIDGenerate = new BasicGenerateID();
             OldAgePenalty = DEFAULT_OLD_AGE_PENALTY;
             OldAgeThreshold = DEFAULT_OLD_AGE_THRESHOLD;
-            species = new List<ISpecies>();
+            Species = new List<ISpecies>();
             speciesIDGenerate = new BasicGenerateID();
             SurvivalRate = DEFAULT_SURVIVAL_RATE;
             youngBonusAgeThreshold = DEFAULT_YOUTH_THRESHOLD;
@@ -117,7 +111,7 @@ namespace Encog.ML.Genetic.Population
             innovationIDGenerate = new BasicGenerateID();
             OldAgePenalty = DEFAULT_OLD_AGE_PENALTY;
             OldAgeThreshold = DEFAULT_OLD_AGE_THRESHOLD;
-            species = new List<ISpecies>();
+            Species = new List<ISpecies>();
             speciesIDGenerate = new BasicGenerateID();
             SurvivalRate = DEFAULT_SURVIVAL_RATE;
             youngBonusAgeThreshold = DEFAULT_YOUTH_THRESHOLD;
