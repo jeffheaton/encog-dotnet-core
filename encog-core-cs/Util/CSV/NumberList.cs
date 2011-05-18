@@ -50,6 +50,10 @@ namespace Encog.Util.CSV
         /// <returns>An array of doubles parsed from the string.</returns>
         public static double[] FromList(CSVFormat format, String str)
         {
+            if( str.Trim().Length==0)
+            {
+                return new double[0];
+            }
             // first count the numbers
 
             String[] tok = str.Split(format.Separator);
@@ -84,6 +88,10 @@ namespace Encog.Util.CSV
         /// <returns>An array of ints parsed from the string.</returns>
         public static int[] FromListInt(CSVFormat format, String str)
         {
+            if (str.Trim().Length == 0)
+            {
+                return new int[0];
+            }
             // first count the numbers
 
             String[] tok = str.Split(format.Separator);

@@ -27,11 +27,13 @@
 // 
 // http://www.heatonresearch.com/copyright.html
 
+using System;
 namespace Encog.Util.Identity
 {
     /// <summary>
     /// Generate unique id's.  ID's start at 1.
     /// </summary>
+    [Serializable]
     public class BasicGenerateID : IGenerateID
     {
         /// <summary>

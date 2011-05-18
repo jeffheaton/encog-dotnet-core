@@ -20,7 +20,7 @@ namespace Encog.Neural.PNN
     /// by Timothy Masters, PhD (http://www.timothymasters.info/) John Wiley & Sons
     /// Inc (Computers); April 3, 1995, ISBN: 0471105880
     /// </summary>
-    ///
+    [Serializable]
     public class BasicPNN : AbstractPNN, MLRegression
     {      
         /// <summary>

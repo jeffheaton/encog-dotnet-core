@@ -66,8 +66,23 @@
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
+    <Compile Include="Persist\TestPersistART.cs" />
+    <Compile Include="Persist\TestPersistBAM.cs" />
+    <Compile Include="Persist\TestPersistBasicNetwork.cs" />
+    <Compile Include="Persist\TestPersistBoltzmann.cs" />
+    <Compile Include="Persist\TestPersistCPN.cs" />
+    <Compile Include="Persist\TestPersistHopfield.cs" />
+    <Compile Include="Persist\TestPersistNEAT.cs" />
+    <Compile Include="Persist\TestPersistPNN.cs" />
+    <Compile Include="Persist\TestPersistPopulation.cs" />
+    <Compile Include="Persist\TestPersistRBF.cs" />
+    <Compile Include="Persist\TestPersistSOM.cs" />
+    <Compile Include="Persist\TestPersistSVM.cs" />
+    <Compile Include="Persist\TestPersistTrainingContinuation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationBiPolar.cs" />
+    <Compile Include="Util\TempDir.cs" />
+    <Compile Include="Util\TestResourceLoader.cs" />
     <Compile Include="Util\XOR.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Neural\Networks\Training\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\hello.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

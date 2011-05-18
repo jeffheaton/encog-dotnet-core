@@ -10,13 +10,13 @@ namespace Encog.Persist
     ///
     public interface EncogPersistor
     {
+        Type NativeType { get;  }
+        
         /// <value>Get the class string for the object.</value>
-        String PersistClassString { /// <returns>Get the class string for the object.</returns>
-            get; }
+        String PersistClassString { get; }
 
         /// <value>Get the file version used by this persistor.</value>
-        int FileVersion { /// <returns>Get the file version used by this persistor.</returns>
-            get; }
+        int FileVersion { get; }
 
 
         /// <summary>

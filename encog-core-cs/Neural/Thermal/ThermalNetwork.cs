@@ -2,13 +2,14 @@ using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Specific;
 using Encog.Util;
+using System;
 
 namespace Encog.Neural.Thermal
 {
     /// <summary>
     /// The thermal network forms the base class for Hopfield and Boltzmann machines.
     /// </summary>
-    ///
+    [Serializable]
     public abstract class ThermalNetwork : BasicML, MLMethod,
                                            MLAutoAssocation, MLResettable
     {

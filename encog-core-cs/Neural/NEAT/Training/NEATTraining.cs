@@ -928,7 +928,7 @@ namespace Encog.Neural.NEAT.Training
             var babyGenome = new NEATGenome(Population
                                                 .AssignGenomeID(), babyNeurons, babyGenes, mom.InputCount,
                                             mom.OutputCount);
-            babyGenome.GeneticAlgorithm = this;
+            babyGenome.GA = this;
             babyGenome.Population = Population;
 
             return babyGenome;
@@ -965,7 +965,7 @@ namespace Encog.Neural.NEAT.Training
                     throw new TrainingError(
                         "All NEATGenome's must have the same input and output sizes as the base network.");
                 }
-                neat.GeneticAlgorithm = this;
+                neat.GA = this;
             }
 
             Population.Claim(this);

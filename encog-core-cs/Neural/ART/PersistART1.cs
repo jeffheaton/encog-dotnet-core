@@ -10,6 +10,7 @@ namespace Encog.Neural.ART
     /// Persist an ART1 network.  
     /// </summary>
     ///
+    [Serializable]
     public class PersistART1 : EncogPersistor
     {
         #region EncogPersistor Members
@@ -121,6 +122,12 @@ namespace Encog.Neural.ART
                                art1.WeightsF2toF1);
 
             xout.Flush();
+        }
+
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(ART1); }
         }
 
         #endregion

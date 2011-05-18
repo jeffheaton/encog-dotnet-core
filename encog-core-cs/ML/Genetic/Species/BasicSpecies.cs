@@ -46,7 +46,7 @@ namespace Encog.ML.Genetic.Species
         /// <summary>
         /// The id of the leader.
         /// </summary>
-        ///
+        [NonSerialized]
         private long leaderID;
 
         /// <summary>

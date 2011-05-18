@@ -34,6 +34,8 @@ namespace Encog.Persist
         ///
         private readonly IDictionary<String, EncogPersistor> map;
 
+        private readonly IDictionary<Type, EncogPersistor> classMap;
+
         /// <summary>
         /// Construct the object.
         /// </summary>
@@ -41,6 +43,7 @@ namespace Encog.Persist
         private PersistorRegistry()
         {
             map = new Dictionary<String, EncogPersistor>();
+            classMap = new Dictionary<Type, EncogPersistor>();
             Add(new PersistSVM());
             Add(new PersistHopfield());
             Add(new PersistBoltzmann());
@@ -79,6 +82,7 @@ namespace Encog.Persist
         public void Add(EncogPersistor persistor)
         {
             map[persistor.PersistClassString] = persistor;
+            classMap[persistor.NativeType] = persistor;
         }
 
         /// <summary>
@@ -89,7 +93,7 @@ namespace Encog.Persist
         /// <returns>Return the persistor.</returns>
         public EncogPersistor GetPersistor(Type clazz)
         {
-            return GetPersistor(clazz.Name);
+            return classMap[clazz];
         }
 
         /// <summary>
@@ -100,7 +104,15 @@ namespace Encog.Persist
         /// <returns>The persistor.</returns>
         public EncogPersistor GetPersistor(String name)
         {
-            return map[name];
+            if( map.ContainsKey(name))
+            {
+                return map[name];    
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }

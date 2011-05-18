@@ -4,13 +4,14 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.SOM.Training.Neighborhood;
 using Encog.Util;
+using System;
 
 namespace Encog.Neural.SOM
 {
     /// <summary>
     /// A self organizing map neural network.
     /// </summary>
-    ///
+    [Serializable]
     public class SOMNetwork : BasicML, MLClassification, MLResettable,
                               MLError
     {

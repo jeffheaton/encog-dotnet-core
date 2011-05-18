@@ -21,6 +21,7 @@ namespace Encog.Neural.CPN
     /// good at regression.
     /// </summary>
     ///
+    [Serializable]
     public class CPNNetwork : BasicML, MLRegression, MLResettable, MLError
     {
         /// <summary>

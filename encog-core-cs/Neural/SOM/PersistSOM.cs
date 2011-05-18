@@ -94,6 +94,12 @@ namespace Encog.Neural.SOM
             xout.Flush();
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(SOMNetwork); }
+        }
+
         #endregion
     }
 }

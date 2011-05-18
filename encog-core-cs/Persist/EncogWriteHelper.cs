@@ -94,6 +94,21 @@ namespace Encog.Persist
         }
 
         /// <summary>
+        /// Add a column as a long.
+        /// </summary>
+        ///
+        /// <param name="d">The long to add.</param>
+        public void AddColumn(long v)
+        {
+            if (line.Length > 0)
+            {
+                line.Append(COMMA);
+            }
+
+            line.Append(v);
+        }
+
+        /// <summary>
         /// Add a column as an integer.
         /// </summary>
         ///
@@ -285,6 +300,18 @@ namespace Encog.Persist
         {
             xout.WriteLine(name + "="
                            + CSVFormat.EG_FORMAT.Format(value_ren, EncogFramework.DEFAULT_PRECISION));
+        }
+
+        /// <summary>
+        /// Write the property as a long.
+        /// </summary>
+        ///
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value.</param>
+        public void WriteProperty(String name, long v)
+        {
+            xout.WriteLine(name + "="
+                           + v);
         }
 
         /// <summary>

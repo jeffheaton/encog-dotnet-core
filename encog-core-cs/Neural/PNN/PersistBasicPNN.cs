@@ -263,5 +263,11 @@ namespace Encog.Neural.Pnn
                 return default(PNNOutputMode) /* was: null */;
             }
         }
+
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(BasicPNN); }
+        }
     }
 }

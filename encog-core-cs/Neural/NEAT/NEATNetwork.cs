@@ -26,7 +26,7 @@ namespace Encog.Neural.NEAT
     /// Stanley while at The University of Texas at Austin.
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
-    ///
+    [Serializable]
     public class NEATNetwork : BasicML, MLContext, MLRegression,
                                MLError
     {

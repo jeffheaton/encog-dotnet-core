@@ -26,7 +26,7 @@ namespace Encog.Neural.ART
     /// distinct training and usage stage. The ART1 network will learn as it is 
     /// used. 
     /// </summary>
-    ///
+    [Serializable]
     public class ART1 : BasicART, MLResettable, MLClassification
     {
         /// <summary>
@@ -68,7 +68,7 @@ namespace Encog.Neural.ART
         /// <summary>
         /// Allows members of the F2 layer to be inhibited.
         /// </summary>
-        ///
+        [NonSerialized]
         private bool[] inhibitF2;
 
         /// <summary>

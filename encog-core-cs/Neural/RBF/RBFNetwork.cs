@@ -14,7 +14,7 @@ namespace Encog.Neural.RBF
     /// <summary>
     /// RBF neural network.
     /// </summary>
-    ///
+    [Serializable]
     public class RBFNetwork : BasicML, MLError, MLRegression,
                               ContainsFlat
     {

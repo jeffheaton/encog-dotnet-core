@@ -31,6 +31,12 @@ namespace Encog.Neural.CPN
         ///
         internal const String PROPERTY_winnerCount = "winnerCount";
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(CPNNetwork); }
+        }
+
         #region EncogPersistor Members
 
         /// <summary>

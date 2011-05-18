@@ -64,7 +64,7 @@ namespace Encog.ML.Genetic.Genome
         /// </summary>
         ///
         /// <value>The GA.</value>
-        GeneticAlgorithm GeneticAlgorithm
+        GeneticAlgorithm GA
         { /// <returns>Get the GA used by this genome. This is normally a transient
             /// field and only used during training.</returns>
             get;

@@ -33,8 +33,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using Encog.Util;
 using Encog.Util.HTTP;
+using Encog.Util.File;
 
 
 namespace Encog.Bot

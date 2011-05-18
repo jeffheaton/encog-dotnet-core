@@ -254,6 +254,12 @@ namespace Encog.Neural.Rbf
             xout.Flush();
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(RBFNetwork); }
+        }
+
         #endregion
     }
 }

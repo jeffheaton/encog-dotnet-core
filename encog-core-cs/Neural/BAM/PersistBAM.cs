@@ -102,6 +102,12 @@ namespace Encog.Neural.BAM
             xout.Flush();
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(BAMNetwork); }
+        }
+
         #endregion
     }
 }

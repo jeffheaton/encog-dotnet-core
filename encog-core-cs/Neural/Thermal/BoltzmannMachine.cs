@@ -10,7 +10,7 @@ namespace Encog.Neural.Thermal
     /// <summary>
     /// Implements a Boltzmann machine.
     /// </summary>
-    ///
+    [Serializable]
     public class BoltzmannMachine : ThermalNetwork
     {
         /// <summary>
@@ -34,13 +34,13 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// Count used to internally determine if a neuron is "off".
         /// </summary>
-        ///
+        [NonSerialized]
         private int[] off;
 
         /// <summary>
         /// Count used to internally determine if a neuron is "on".
         /// </summary>
-        ///
+        [NonSerialized]
         private int[] on;
 
         /// <summary>

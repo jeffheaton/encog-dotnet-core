@@ -65,7 +65,7 @@ namespace Encog.Neural.Networks.Training.Genetic
                 randomizer.Randomize(chromosomeNetwork);
 
                 var genome = new NeuralGenome(chromosomeNetwork);
-                genome.GeneticAlgorithm = Genetic;
+                genome.GA = Genetic;
                 Genetic.PerformCalculateScore(genome);
                 Genetic.Population.Add(genome);
             }

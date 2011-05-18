@@ -111,6 +111,12 @@ namespace Encog.Neural.Thermal
             xout.Flush();
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(BoltzmannMachine); }
+        }
+
         #endregion
     }
 }

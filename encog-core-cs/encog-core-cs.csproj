@@ -294,7 +294,7 @@
     <Compile Include="ML\Genetic\Mutate\MutateShuffle.cs" />
     <Compile Include="ML\Genetic\Population\BasicPopulation.cs" />
     <Compile Include="ML\Genetic\Population\IPopulation.cs" />
-    <Compile Include="ML\Genetic\Population\Population_Constants.cs" />
+    <Compile Include="ML\Genetic\Population\PopulationConst.cs" />
     <Compile Include="ML\Genetic\Selection\ParentSelection.cs" />
     <Compile Include="ML\Genetic\Selection\TruncateSelection.cs" />
     <Compile Include="ML\Genetic\Species\BasicSpecies.cs" />
@@ -520,7 +520,6 @@
     <Compile Include="Util\DownSample\IDownSample.cs" />
     <Compile Include="Util\DownSample\RGBDownsample.cs" />
     <Compile Include="Util\DownSample\SimpleIntensityDownsample.cs" />
-    <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\HTTP\FormUtility.cs" />
     <Compile Include="Util\HTTP\URLUtility.cs" />
     <Compile Include="Util\Identity\BasicGenerateID.cs" />
@@ -571,7 +570,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="Resources\analyst.csv" />
+    <EmbeddedResource Include="Resources\analyst.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

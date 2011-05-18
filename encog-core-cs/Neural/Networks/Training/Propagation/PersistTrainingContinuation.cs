@@ -26,6 +26,11 @@ namespace Encog.Neural.Networks.Training.Propagation
             get { return 1; }
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof (TrainingContinuation); }
+        }
 
         /// <summary>
         /// 

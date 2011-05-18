@@ -16,6 +16,7 @@ namespace Encog.Neural.ART
     /// used. 
     /// </summary>
     ///
+    [Serializable]
     public class BasicART : BasicML
     {
         /// <summary>

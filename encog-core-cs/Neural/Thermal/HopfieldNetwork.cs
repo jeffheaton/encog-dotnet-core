@@ -9,7 +9,7 @@ namespace Encog.Neural.Thermal
     /// <summary>
     /// Implements a Hopfield network.
     /// </summary>
-    ///
+    [Serializable]
     public class HopfieldNetwork : ThermalNetwork
     {
         /// <summary>

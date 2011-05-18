@@ -2,6 +2,7 @@ using Encog.MathUtil.Matrices;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.Neural.Networks;
+using System;
 
 namespace Encog.Neural.BAM
 {
@@ -17,6 +18,7 @@ namespace Encog.Neural.BAM
     /// to map to the correct value.
     /// </summary>
     ///
+    [Serializable]
     public class BAMNetwork : BasicML
     {
         /// <summary>

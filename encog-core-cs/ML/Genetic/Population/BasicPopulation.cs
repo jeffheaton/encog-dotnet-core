@@ -10,7 +10,7 @@ namespace Encog.ML.Genetic.Population
     /// <summary>
     /// Defines the basic functionality for a population of genomes.
     /// </summary>
-    ///
+    [Serializable]
     public class BasicPopulation : IPopulation
     {
         /// <summary>
@@ -224,7 +224,7 @@ namespace Encog.ML.Genetic.Population
         {
             foreach (IGenome genome  in  genomes)
             {
-                genome.GeneticAlgorithm = ga;
+                genome.GA = ga;
             }
         }
 

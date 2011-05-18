@@ -204,7 +204,7 @@ namespace Encog.Persist
                 os.Flush();
                 var pw = new StreamWriter(os);
                 DateTime now = DateTime.Now;
-                pw.WriteLine("encog," + obj.GetType().Name + ",java,"
+                pw.WriteLine("encog," + p.PersistClassString + ",java,"
                              + EncogFramework.VERSION + "," + p.FileVersion + ","
                              + (now.Ticks/10000));
                 pw.Flush();

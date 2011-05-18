@@ -93,7 +93,7 @@ namespace Encog.Neural.NEAT.Training
         {
             neuronsChromosome = new Chromosome();
             linksChromosome = new Chromosome();
-            GeneticAlgorithm = other.GeneticAlgorithm;
+            GA = other.GA;
 
             Chromosomes.Add(neuronsChromosome);
             Chromosomes.Add(linksChromosome);
@@ -397,7 +397,7 @@ namespace Encog.Neural.NEAT.Training
             }
 
             // check to see if this innovation has already been tried
-            NEATInnovation innovation = ((NEATTraining) GeneticAlgorithm).Innovations.CheckInnovation(neuron1ID,
+            NEATInnovation innovation = ((NEATTraining) GA).Innovations.CheckInnovation(neuron1ID,
                                                                                                       neuron1ID,
                                                                                                       NEATInnovationType
                                                                                                           .NewLink);
@@ -414,11 +414,11 @@ namespace Encog.Neural.NEAT.Training
             if (innovation == null)
             {
                 // new innovation
-                ((NEATTraining) GeneticAlgorithm).Innovations
+                ((NEATTraining) GA).Innovations
                     .CreateNewInnovation(neuron1ID, neuron2ID,
                                          NEATInnovationType.NewLink);
 
-                long id2 = (GeneticAlgorithm).Population.AssignInnovationID();
+                long id2 = GA.Population.AssignInnovationID();
 
                 var linkGene = new NEATLinkGene(neuron1ID,
                                                 neuron2ID, true, id2, RangeRandomizer.Randomize(-1, 1),
@@ -508,7 +508,7 @@ namespace Encog.Neural.NEAT.Training
             double newWidth = (fromGene.SplitX + toGene.SplitX)/2;
 
             // has this innovation already been tried?
-            NEATInnovation innovation = ((NEATTraining) GeneticAlgorithm).Innovations.CheckInnovation(from, to,
+            NEATInnovation innovation = ((NEATTraining) GA).Innovations.CheckInnovation(from, to,
                                                                                                       NEATInnovationType
                                                                                                           .NewNeuron);
 
@@ -526,7 +526,7 @@ namespace Encog.Neural.NEAT.Training
             if (innovation == null)
             {
                 // this innovation has not been tried, create it
-                long newNeuronID = ((NEATTraining) GeneticAlgorithm).Innovations.CreateNewInnovation(from, to,
+                long newNeuronID = ((NEATTraining) GA).Innovations.CreateNewInnovation(from, to,
                                                                                                      NEATInnovationType.
                                                                                                          NewNeuron,
                                                                                                      NEATNeuronType.
@@ -537,9 +537,9 @@ namespace Encog.Neural.NEAT.Training
                                           NEATNeuronType.Hidden, newNeuronID, newDepth, newWidth));
 
                 // add the first link
-                long link1ID = (GeneticAlgorithm).Population.AssignInnovationID();
+                long link1ID = (GA).Population.AssignInnovationID();
 
-                ((NEATTraining) GeneticAlgorithm).Innovations
+                ((NEATTraining) GA).Innovations
                     .CreateNewInnovation(from, newNeuronID,
                                          NEATInnovationType.NewLink);
 
@@ -549,9 +549,9 @@ namespace Encog.Neural.NEAT.Training
                 linksChromosome.Add(link1);
 
                 // add the second link
-                long link2ID = (GeneticAlgorithm).Population.AssignInnovationID();
+                long link2ID = (GA).Population.AssignInnovationID();
 
-                ((NEATTraining) GeneticAlgorithm).Innovations
+                ((NEATTraining) GA).Innovations
                     .CreateNewInnovation(newNeuronID, to,
                                          NEATInnovationType.NewLink);
 
@@ -566,13 +566,13 @@ namespace Encog.Neural.NEAT.Training
                 // existing innovation
                 long newNeuronID_0 = innovation.NeuronID;
 
-                NEATInnovation innovationLink1 = ((NEATTraining) GeneticAlgorithm).Innovations.CheckInnovation(from,
+                NEATInnovation innovationLink1 = ((NEATTraining) GA).Innovations.CheckInnovation(from,
                                                                                                                newNeuronID_0,
                                                                                                                NEATInnovationType
                                                                                                                    .
                                                                                                                    NewLink);
                 NEATInnovation innovationLink2 =
-                    ((NEATTraining) GeneticAlgorithm).Innovations.CheckInnovation(newNeuronID_0, to,
+                    ((NEATTraining) GA).Innovations.CheckInnovation(newNeuronID_0, to,
                                                                                   NEATInnovationType.NewLink);
 
                 if ((innovationLink1 == null) || (innovationLink2 == null))

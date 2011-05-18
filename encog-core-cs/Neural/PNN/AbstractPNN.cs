@@ -7,7 +7,7 @@ namespace Encog.Neural.PNN
     /// <summary>
     /// Abstract class to build PNN networks upon.
     /// </summary>
-    ///
+    [Serializable]
     public abstract class AbstractPNN : BasicML
     {
         /// <summary>

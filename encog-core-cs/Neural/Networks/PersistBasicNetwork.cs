@@ -203,6 +203,12 @@ namespace Encog.Neural.Networks
             xout.Flush();
         }
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(BasicNetwork); }
+        }
+
         #endregion
     }
 }

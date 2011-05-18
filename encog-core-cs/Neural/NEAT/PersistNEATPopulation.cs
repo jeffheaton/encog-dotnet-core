@@ -17,6 +17,7 @@ namespace Encog.Neural.Neat
     /// <summary>
     /// Persist the NEAT population.
     /// </summary>
+    [Serializable]
     public class PersistNEATPopulation : EncogPersistor
     {
         #region EncogPersistor Members
@@ -193,11 +194,12 @@ namespace Encog.Neural.Neat
             {
                 var neatGenome = (NEATGenome) genome;
                 var speciesId = (int) neatGenome.SpeciesID;
-                ISpecies species_4 = speciesMap[speciesId];
-                if (species_4 != null)
+                if( speciesMap.ContainsKey(speciesId))
                 {
-                    species_4.Members.Add(neatGenome);
+                    ISpecies s = speciesMap[speciesId];
+                    s.Members.Add(neatGenome);
                 }
+                
                 neatGenome.InputCount = result.InputCount;
                 neatGenome.OutputCount = result.OutputCount;
             }
@@ -429,6 +431,12 @@ namespace Encog.Neural.Neat
             {
                 return default(NEATNeuronType) /* was: null */;
             }
+        }
+
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(NEATPopulation); }
         }
     }
 }

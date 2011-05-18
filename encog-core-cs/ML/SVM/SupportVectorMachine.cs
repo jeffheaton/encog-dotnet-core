@@ -22,7 +22,7 @@ namespace Encog.ML.SVM
     /// neural network training classes will work. This class must be trained using
     /// SVMTrain.
     /// </summary>
-    ///
+    [Serializable]
     public class SupportVectorMachine : BasicML, MLRegression, MLClassification,
                                         MLError
     {

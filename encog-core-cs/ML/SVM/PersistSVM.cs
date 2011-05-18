@@ -110,6 +110,12 @@ namespace Encog.ML.SVM
         ///
         public const String PARAM_WEIGHT_LABEL = "weightLabel";
 
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(SupportVectorMachine); }
+        }
+
         #region EncogPersistor Members
 
         /// <value>The file version.</value>
@@ -164,7 +170,7 @@ namespace Encog.ML.SVM
                         params_0, PARAM_CACHE_SIZE);
                     result.Params.coef0 = EncogFileSection.ParseDouble(params_0,
                                                                        PARAM_COEF0);
-                    result.Params.degree = EncogFileSection.ParseInt(params_0,
+                    result.Params.degree = EncogFileSection.ParseDouble(params_0,
                                                                      PARAM_DEGREE);
                     result.Params.eps = EncogFileSection.ParseDouble(params_0,
                                                                      PARAM_EPS);

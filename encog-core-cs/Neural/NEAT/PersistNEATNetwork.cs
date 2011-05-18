@@ -10,6 +10,7 @@ namespace Encog.Neural.NEAT
     /// <summary>
     /// Persist a NEAT network.
     /// </summary>
+    [Serializable]
     public class PersistNEATNetwork : EncogPersistor
     {
         #region EncogPersistor Members
@@ -147,7 +148,7 @@ namespace Encog.Neural.NEAT
 
             foreach (NEATNeuron neatNeuron  in  neat.Neurons)
             {
-                xout.AddColumn(neatNeuron.NeuronID);
+                xout.AddColumn((int)neatNeuron.NeuronID);
                 xout.AddColumn(PersistNEATPopulation.NeuronTypeToString(neatNeuron.NeuronType));
                 xout.AddColumn(neatNeuron.ActivationResponse);
                 xout.AddColumn(neatNeuron.SplitX);
@@ -172,11 +173,17 @@ namespace Encog.Neural.NEAT
 
         private void WriteLink(EncogWriteHelper xout, NEATLink link)
         {
-            xout.AddColumn(link.FromNeuron.NeuronID);
-            xout.AddColumn(link.ToNeuron.NeuronID);
+            xout.AddColumn((int)link.FromNeuron.NeuronID);
+            xout.AddColumn((int)link.ToNeuron.NeuronID);
             xout.AddColumn(link.Recurrent);
             xout.AddColumn(link.Weight);
             xout.WriteLine();
+        }
+
+        /// <inheritdoc/>
+        public Type NativeType
+        {
+            get { return typeof(NEATNetwork); }
         }
     }
 }
