@@ -64,6 +64,7 @@
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
+    <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
     <Compile Include="Persist\TestPersistART.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Persist\TestPersistTrainingContinuation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationBiPolar.cs" />
+    <Compile Include="Util\NetworkUtil.cs" />
     <Compile Include="Util\TempDir.cs" />
     <Compile Include="Util\TestResourceLoader.cs" />
     <Compile Include="Util\XOR.cs" />
@@ -91,9 +93,7 @@
       <Name>encog-core-cs</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural\Networks\Training\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\hello.txt" />
   </ItemGroup>
