@@ -40,7 +40,7 @@ namespace Encog.MathUtil.Error
         /// <summary>
         /// The current error calculation mode.
         /// </summary>
-        private static ErrorCalculationMode mode = ErrorCalculationMode.RMS;
+        private static ErrorCalculationMode mode = ErrorCalculationMode.MSE;
 
         /// <summary>
         /// The overall error.
@@ -85,8 +85,6 @@ namespace Encog.MathUtil.Error
                     return CalculateRMS();
                 case ErrorCalculationMode.MSE:
                     return CalculateMSE();
-                case ErrorCalculationMode.ARCTAN:
-                    return CalculateARCTAN();
                 default:
                     return CalculateMSE();
             }
@@ -152,9 +150,6 @@ namespace Encog.MathUtil.Error
             {
                 double delta = ideal[i] - actual[i];
 
-                if (Mode == ErrorCalculationMode.ARCTAN)
-                    delta = Math.Atan(delta);
-
                 globalError += delta*delta;
             }
 
@@ -169,9 +164,6 @@ namespace Encog.MathUtil.Error
         public void UpdateError(double actual, double ideal)
         {
             double delta = ideal - actual;
-
-            if (Mode == ErrorCalculationMode.ARCTAN)
-                delta = Math.Atan(delta);
 
             globalError += delta*delta;
 

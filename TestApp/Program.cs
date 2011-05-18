@@ -16,7 +16,9 @@ namespace TestApp
 
         static void Main(string[] args)
         {
- 
+            double d = 0.5555;           
+            Console.WriteLine(d.ToString("R"));
+            Console.ReadLine();
         }
     }
 }

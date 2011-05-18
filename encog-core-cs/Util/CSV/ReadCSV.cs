@@ -400,7 +400,13 @@ namespace Encog.Util.CSV
         {
             try
             {
-                String line = reader.ReadLine();
+                String line = null;
+
+                do
+                {
+                    line = this.reader.ReadLine();
+                } while ((line != null) && line.Trim().Length == 0);
+
                 if (line == null)
                 {
                     return false;

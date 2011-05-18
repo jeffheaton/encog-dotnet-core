@@ -39,12 +39,13 @@ namespace Encog.Examples.Analyst
             EncogAnalyst encog = new EncogAnalyst();
             encog.AddAnalystListener(new ConsoleAnalystListener());
             AnalystWizard wiz = new AnalystWizard(encog);
-
+            //wiz.TaskRandomize = false;
             wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DECPNT_COMMA);
+            encog.Save(analystFile);
 
             encog.ExecuteTask("task-full");
 
-            encog.Save(analystFile);
+            
 
             AnalystReport report = new AnalystReport(encog);
             report.ProduceReport(FileUtil.CombinePath(dir, "report.html"));

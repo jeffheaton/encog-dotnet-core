@@ -113,7 +113,7 @@ namespace Encog.Util.File
 
         public static void WriteFileAsString(FileInfo path, String str)
         {
-            FileStream fs = path.OpenRead();
+            FileStream fs = path.Create();
             var writer = new StreamWriter(fs);
             writer.Write(str);
             writer.Close();

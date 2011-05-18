@@ -29,6 +29,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Encog.Util.CSV
 {
@@ -37,6 +38,7 @@ namespace Encog.Util.CSV
     /// </summary>
     public class CSVFormat
     {
+        public const int MAX_FORMATS = 100;
         private static readonly CSVFormat _DECIMAL_POINT = new CSVFormat('.', ',');
         private static readonly CSVFormat _DECIMAL_COMMA = new CSVFormat(',', ';');
         private static CSVFormat _ENGLISH = DECIMAL_POINT;
@@ -47,6 +49,8 @@ namespace Encog.Util.CSV
 
         private readonly NumberFormatInfo numberFormat;
         private readonly char separatorChar;
+        private String[] formats;
+
 
         /// <summary>
         /// Create a CSV format for the specified decimal char and separator char.
@@ -69,6 +73,24 @@ namespace Encog.Util.CSV
             else
             {
                 numberFormat = NumberFormatInfo.CurrentInfo;
+            }
+
+            // There might be a better way to do this, but I can't seem to find a way in
+            // C# where I can specify "x" decimal places, and not end up with trailing zeros.
+            formats = new String[MAX_FORMATS];
+            for (int i = 0; i < MAX_FORMATS; i++)
+            {
+                StringBuilder str = new StringBuilder();
+                str.Append("#0");
+                if (i > 0)
+                {
+                    str.Append(".");
+                }
+                for (int j = 0; j < i; j++)
+                {
+                    str.Append("#");
+                }
+                this.formats[i] = str.ToString();
             }
         }
 
@@ -158,7 +180,9 @@ namespace Encog.Util.CSV
         /// <returns>The formatted number.</returns>
         public String Format(double d, int digits)
         {
-            return d.ToString("F" + digits, numberFormat);
+            int digits2 = Math.Min(digits, MAX_FORMATS);
+            digits2 = Math.Max(digits2, 0);
+            return d.ToString(this.formats[digits2], numberFormat);
         }
     }
 }
