@@ -118,7 +118,7 @@ namespace Encog.Util
         public static void LoadClassmap()
         {
             {
-                Stream istream = ResourceInputStream.OpenResourceInputStream("Encog.Resources.classes.txt");
+                Stream istream = ResourceLoader.CreateStream("Encog.Resources.classes.txt");
                 var sr = new StreamReader(istream);
 
                 String line;

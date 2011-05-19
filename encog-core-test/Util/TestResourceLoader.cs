@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Encog.Util.File;
 
 namespace Encog.Util
 {

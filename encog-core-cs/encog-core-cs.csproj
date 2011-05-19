@@ -487,13 +487,12 @@
     <Compile Include="Util\Error\CalculateRegressionError.cs" />
     <Compile Include="Util\File\Directory.cs" />
     <Compile Include="Util\File\FileUtil.cs" />
-    <Compile Include="Util\File\ResourceInputStream.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\ObjectPair.cs" />
     <Compile Include="Util\ParamsHolder.cs" />
-    <Compile Include="Util\ResourceLoader.cs" />
+    <Compile Include="Util\File\ResourceLoader.cs" />
     <Compile Include="Util\SimpleParser.cs" />
     <Compile Include="Util\Simple\TrainingSetUtil.cs" />
     <Compile Include="Util\Time\NumericDateUtil.cs" />

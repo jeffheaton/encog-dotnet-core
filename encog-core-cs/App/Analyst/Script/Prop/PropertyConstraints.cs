@@ -36,8 +36,7 @@ namespace Encog.App.Analyst.Script.Prop
             data = new Dictionary<String, List<PropertyEntry>>();
             try
             {
-                Stream mask0 = ResourceInputStream
-                    .OpenResourceInputStream("Encog.Resources.analyst.csv");
+                Stream mask0 = ResourceLoader.CreateStream("Encog.Resources.analyst.csv");
                 var csv = new ReadCSV(mask0, false, CSVFormat.EG_FORMAT);
 
                 while (csv.Next())

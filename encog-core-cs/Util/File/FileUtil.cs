@@ -164,11 +164,11 @@ namespace Encog.Util.File
                 {
                     length = mask0.Read(buffer, 0, buffer.Length);
 
-                    if (length >= 0)
+                    if (length > 0)
                     {
                         os.Write(buffer, 0, length);
                     }
-                } while (length >= 0);
+                } while (length > 0);
             }
             catch (IOException ex)
             {
@@ -185,8 +185,7 @@ namespace Encog.Util.File
         {
             try
             {
-                Stream mask0 = ResourceInputStream
-                    .OpenResourceInputStream(resource);
+                Stream mask0 = ResourceLoader.CreateStream(resource);
 				targetFile.Delete();
                 Stream os = targetFile.OpenWrite();
                 Copy(mask0, os);

@@ -45,6 +45,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Analyst\TestAnalystClassification.cs" />
+    <Compile Include="App\Analyst\TestAnalystRegression.cs" />
+    <Compile Include="App\Analyst\TestAnalystWizard.cs" />
     <Compile Include="Bot\Browse\TestAddress.cs" />
     <Compile Include="Bot\Browse\TestBrowse.cs" />
     <Compile Include="Bot\Browse\TestWebPageData.cs" />
@@ -99,6 +102,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <EmbeddedResource Include="Resources\simple-c.ega" />
+    <EmbeddedResource Include="Resources\simple.csv" />
+    <EmbeddedResource Include="Resources\simple-r.ega" />
+    <EmbeddedResource Include="Resources\iris.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Encog.Util
+namespace Encog.Util.File
 {
     /// <summary>
     /// Used to load data from resources.
