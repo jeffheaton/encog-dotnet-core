@@ -413,7 +413,7 @@ namespace Encog.App.Analyst.CSV.Basic
                     }
                 }
 
-                while (i_0 < csv.ColumnNames.Count)
+                while (i_0 < csv.ColumnCount)
                 {
                     inputHeadings[i_0] = "field:" + i_0;
                     i_0++;

@@ -80,12 +80,12 @@ namespace Encog.App.Analyst.CSV.Sort
                 data.Add(row);
             }
 
-            Count = csv.ColumnNames.Count;
+            Count = csv.ColumnCount;
 
             if (ExpectInputHeaders)
             {
-                InputHeadings = new String[csv.ColumnNames.Count];
-                for (int i = 0; i < csv.ColumnNames.Count; i++)
+                InputHeadings = new String[csv.ColumnCount];
+                for (int i = 0; i < csv.ColumnCount; i++)
                 {
                     InputHeadings[i] = csv.ColumnNames[i];
                 }

@@ -34,13 +34,13 @@ namespace Encog.App.Quant.Loader.Yahoo
         /// </summary>
         public YahooDownload()
         {
-            Percision = 10;
+            Precision = 10;
         }
 
         /// <summary>
         /// The percision.
         /// </summary>
-        public int Percision { get; set; }
+        public int Precision { get; set; }
 
 
         /// <summary>
@@ -111,17 +111,17 @@ namespace Encog.App.Quant.Loader.Yahoo
                 line.Append(outputFormat.Separator);
                 line.Append(NumericDateUtil.Time2Int(date));
                 line.Append(outputFormat.Separator);
-                line.Append(outputFormat.Format(open, Percision));
+                line.Append(outputFormat.Format(open, Precision));
                 line.Append(outputFormat.Separator);
-                line.Append(outputFormat.Format(high, Percision));
+                line.Append(outputFormat.Format(high, Precision));
                 line.Append(outputFormat.Separator);
-                line.Append(outputFormat.Format(low, Percision));
+                line.Append(outputFormat.Format(low, Precision));
                 line.Append(outputFormat.Separator);
-                line.Append(outputFormat.Format(close, Percision));
+                line.Append(outputFormat.Format(close, Precision));
                 line.Append(outputFormat.Separator);
                 line.Append(volume);
                 line.Append(outputFormat.Separator);
-                line.Append(outputFormat.Format(adjustedClose, Percision));
+                line.Append(outputFormat.Format(adjustedClose, Precision));
                 tw.WriteLine(line.ToString());
             }
 

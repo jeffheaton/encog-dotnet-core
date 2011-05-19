@@ -48,6 +48,16 @@
     <Compile Include="App\Analyst\TestAnalystClassification.cs" />
     <Compile Include="App\Analyst\TestAnalystRegression.cs" />
     <Compile Include="App\Analyst\TestAnalystWizard.cs" />
+    <Compile Include="App\CSV\TestBalanceCSV.cs" />
+    <Compile Include="App\CSV\TestFilter.cs" />
+    <Compile Include="App\CSV\TestNinjaFileConvert.cs" />
+    <Compile Include="App\CSV\TestNinjaStreamWriter.cs" />
+    <Compile Include="App\CSV\TestNormalizeArray.cs" />
+    <Compile Include="App\CSV\TestProcessIndicators.cs" />
+    <Compile Include="App\CSV\TestSegregateCSV.cs" />
+    <Compile Include="App\CSV\TestShuffle.cs" />
+    <Compile Include="App\CSV\TestSort.cs" />
+    <Compile Include="App\CSV\TestYahooDownload.cs" />
     <Compile Include="Bot\Browse\TestAddress.cs" />
     <Compile Include="Bot\Browse\TestBrowse.cs" />
     <Compile Include="Bot\Browse\TestWebPageData.cs" />

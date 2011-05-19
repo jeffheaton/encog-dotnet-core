@@ -51,7 +51,7 @@ namespace Encog.App.Analyst.Util
                     }
                     else
                     {
-                        for (int i = 0; i < csv.ColumnNames.Count; i++)
+                        for (int i = 0; i < csv.ColumnCount; i++)
                         {
                             headerList.Add("field:" + (i + 1));
                         }

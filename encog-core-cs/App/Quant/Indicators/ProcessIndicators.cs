@@ -174,7 +174,7 @@ namespace Encog.App.Quant.Indicators
             try
             {
                 ResetStatus();
-                tw = new StreamWriter(filename.OpenRead());
+                tw = new StreamWriter(filename.Create());
 
                 // write the headers
                 if (ExpectInputHeaders)
