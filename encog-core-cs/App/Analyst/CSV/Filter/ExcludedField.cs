@@ -13,13 +13,13 @@ namespace Encog.App.Analyst.CSV.Filter
         /// The field number.
         /// </summary>
         ///
-        private int fieldNumber;
+        private int _fieldNumber;
 
         /// <summary>
         /// The field value to filter on.
         /// </summary>
         ///
-        private String fieldValue;
+        private String _fieldValue;
 
         /// <summary>
         /// Construct the object.
@@ -29,24 +29,24 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <param name="theFieldValue">The field value to filter on.</param>
         public ExcludedField(int theFieldNumber, String theFieldValue)
         {
-            fieldNumber = theFieldNumber;
-            fieldValue = theFieldValue;
+            _fieldNumber = theFieldNumber;
+            _fieldValue = theFieldValue;
         }
 
 
         /// <value>the fieldNumber to set</value>
         public int FieldNumber
         {
-            get { return fieldNumber; }
-            set { fieldNumber = value; }
+            get { return _fieldNumber; }
+            set { _fieldNumber = value; }
         }
 
 
         /// <value>the fieldValue to set</value>
         public String FieldValue
         {
-            get { return fieldValue; }
-            set { fieldValue = value; }
+            get { return _fieldValue; }
+            set { _fieldValue = value; }
         }
 
 
@@ -59,9 +59,9 @@ namespace Encog.App.Analyst.CSV.Filter
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" fieldNumber=");
-            result.Append(fieldNumber);
+            result.Append(_fieldNumber);
             result.Append(", value=");
-            result.Append(fieldValue);
+            result.Append(_fieldValue);
 
             result.Append("]");
             return result.ToString();

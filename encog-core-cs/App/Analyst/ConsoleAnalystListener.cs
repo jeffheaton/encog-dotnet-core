@@ -11,39 +11,39 @@ namespace Encog.App.Analyst
     /// progress to the console.
     /// </summary>
     ///
-    public class ConsoleAnalystListener : AnalystListener
+    public class ConsoleAnalystListener : IAnalystListener
     {
         /// <summary>
         /// Stopwatch to time process.
         /// </summary>
         ///
-        private readonly Stopwatch stopwatch;
+        private readonly Stopwatch _stopwatch;
 
         /// <summary>
         /// True if the current command should be canceled.
         /// </summary>
         ///
-        private bool cancelCommand;
+        private bool _cancelCommand;
 
         /// <summary>
         /// The current task.
         /// </summary>
         ///
-        private String currentTask;
+        private String _currentTask;
 
         /// <summary>
         /// True if shutdown has been requested.
         /// </summary>
         ///
-        private bool shutdownRequested;
+        private bool _shutdownRequested;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public ConsoleAnalystListener()
         {
-            currentTask = "";
-            stopwatch = new Stopwatch();
+            _currentTask = "";
+            _stopwatch = new Stopwatch();
         }
 
         #region AnalystListener Members
@@ -82,8 +82,8 @@ namespace Encog.App.Analyst
                 Console.Out.WriteLine("Beginning Task#" + current + "/" + total
                                       + " : " + name);
             }
-            currentTask = name;
-            stopwatch.Start();
+            _currentTask = name;
+            _stopwatch.Start();
         }
 
         /// <summary>
@@ -93,24 +93,17 @@ namespace Encog.App.Analyst
         public void ReportCommandEnd(bool cancel)
         {
             String cancelStr = "";
-            cancelCommand = false;
-            stopwatch.Stop();
+            _cancelCommand = false;
+            _stopwatch.Stop();
 
-            if (cancel)
-            {
-                cancelStr = "canceled";
-            }
-            else
-            {
-                cancelStr = "completed";
-            }
+            cancelStr = cancel ? "canceled" : "completed";
 
             Console.Out.WriteLine("Task "
-                                  + currentTask
+                                  + _currentTask
                                   + " "
                                   + cancelStr
                                   + ", task elapsed time "
-                                  + Format.FormatTimeSpan((int) (stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
+                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
         }
 
         /// <summary>
@@ -124,7 +117,7 @@ namespace Encog.App.Analyst
                                   + " Error:"
                                   + Format.FormatPercent(train.Error)
                                   + " elapsed time = "
-                                  + Format.FormatTimeSpan((int) (stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
+                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
         }
 
         /// <summary>
@@ -150,7 +143,7 @@ namespace Encog.App.Analyst
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void RequestCancelCommand()
         {
-            cancelCommand = true;
+            _cancelCommand = true;
         }
 
         /// <summary>
@@ -160,7 +153,7 @@ namespace Encog.App.Analyst
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void RequestShutdown()
         {
-            shutdownRequested = true;
+            _shutdownRequested = true;
         }
 
         /// <summary>
@@ -170,7 +163,7 @@ namespace Encog.App.Analyst
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool ShouldShutDown()
         {
-            return shutdownRequested;
+            return _shutdownRequested;
         }
 
         /// <summary>
@@ -180,7 +173,7 @@ namespace Encog.App.Analyst
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool ShouldStopCommand()
         {
-            return cancelCommand;
+            return _cancelCommand;
         }
 
         #endregion

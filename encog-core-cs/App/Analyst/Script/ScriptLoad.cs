@@ -21,37 +21,37 @@ namespace Encog.App.Analyst.Script
         /// Column 1.
         /// </summary>
         ///
-        public const int COLUMN_ONE = 1;
+        public const int ColumnOne = 1;
 
         /// <summary>
         /// Column 2.
         /// </summary>
         ///
-        public const int COLUMN_TWO = 2;
+        public const int ColumnTwo = 2;
 
         /// <summary>
         /// Column 3.
         /// </summary>
         ///
-        public const int COLUMN_THREE = 3;
+        public const int ColumnThree = 3;
 
         /// <summary>
         /// Column 4.
         /// </summary>
         ///
-        public const int COLUMN_FOUR = 4;
+        public const int ColumnFour = 4;
 
         /// <summary>
         /// Column 5.
         /// </summary>
         ///
-        public const int COLUMN_FIVE = 5;
+        public const int ColumnFive = 5;
 
         /// <summary>
         /// The script being loaded.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// Construct a script loader.
@@ -60,7 +60,7 @@ namespace Encog.App.Analyst.Script
         /// <param name="theScript">The script to load into.</param>
         public ScriptLoad(AnalystScript theScript)
         {
-            script = theScript;
+            _script = theScript;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Encog.App.Analyst.Script
                 {
                     IList<String> cols = EncogFileSection.SplitColumns(line);
 
-                    if (cols.Count < COLUMN_FOUR)
+                    if (cols.Count < ColumnFour)
                     {
                         throw new AnalystError("Invalid data class: " + line);
                     }
@@ -90,7 +90,7 @@ namespace Encog.App.Analyst.Script
                     String name = cols[2];
                     int count = Int32.Parse(cols[3]);
 
-                    DataField df = script.FindDataField(field);
+                    DataField df = _script.FindDataField(field);
 
                     if (df == null)
                     {
@@ -119,18 +119,18 @@ namespace Encog.App.Analyst.Script
             }
 
 
-            foreach (DataField field_0  in  script.Fields)
+            foreach (DataField field  in  _script.Fields)
             {
-                if (field_0.Class)
+                if (field.Class)
                 {
-                    List<AnalystClassItem> classList = map[field_0.Name];
+                    List<AnalystClassItem> classList = map[field.Name];
                     if (classList != null)
                     {
                         classList.Sort();
-                        field_0.ClassMembers.Clear();
+                        field.ClassMembers.Clear();
                         foreach (AnalystClassItem item in classList)
                         {
-                            field_0.ClassMembers.Add(item);
+                            field.ClassMembers.Add(item);
                         }
                     }
                 }
@@ -155,21 +155,23 @@ namespace Encog.App.Analyst.Script
                     String name = cols[0];
                     bool isclass = Int32.Parse(cols[1]) > 0;
                     bool iscomplete = Int32.Parse(cols[2]) > 0;
-                    bool isint = Int32.Parse(cols[COLUMN_THREE]) > 0;
-                    bool isreal = Int32.Parse(cols[COLUMN_FOUR]) > 0;
+                    bool isint = Int32.Parse(cols[ColumnThree]) > 0;
+                    bool isreal = Int32.Parse(cols[ColumnFour]) > 0;
                     double amax = CSVFormat.EG_FORMAT.Parse(cols[5]);
                     double amin = CSVFormat.EG_FORMAT.Parse(cols[6]);
                     double mean = CSVFormat.EG_FORMAT.Parse(cols[7]);
                     double sdev = CSVFormat.EG_FORMAT.Parse(cols[8]);
-                    var df = new DataField(name);
-                    df.Class = isclass;
-                    df.Complete = iscomplete;
-                    df.Integer = isint;
-                    df.Real = isreal;
-                    df.Max = amax;
-                    df.Min = amin;
-                    df.Mean = mean;
-                    df.StandardDeviation = sdev;
+                    var df = new DataField(name)
+                                 {
+                                     Class = isclass,
+                                     Complete = iscomplete,
+                                     Integer = isint,
+                                     Real = isreal,
+                                     Max = amax,
+                                     Min = amin,
+                                     Mean = mean,
+                                     StandardDeviation = sdev
+                                 };
                     dfs.Add(df);
                 }
                 else
@@ -184,7 +186,7 @@ namespace Encog.App.Analyst.Script
                 array[i] = dfs[i];
             }
 
-            script.Fields = array;
+            _script.Fields = array;
         }
 
         /// <summary>
@@ -195,12 +197,12 @@ namespace Encog.App.Analyst.Script
         private void HandleFilenames(EncogFileSection section)
         {
             IDictionary<String, String> prop = section.ParseParams();
-            script.Properties.ClearFilenames();
+            _script.Properties.ClearFilenames();
 
 
             foreach (var  e  in  prop)
             {
-                script.Properties.SetFilename(e.Key, e.Value);
+                _script.Properties.SetFilename(e.Key, e.Value);
             }
         }
 
@@ -211,7 +213,7 @@ namespace Encog.App.Analyst.Script
         /// <param name="section">The section being loaded.</param>
         private void HandleNormalizeRange(EncogFileSection section)
         {
-            script.Normalize.NormalizedFields.Clear();
+            _script.Normalize.NormalizedFields.Clear();
             bool first = true;
 
             foreach (String line  in  section.Lines)
@@ -227,7 +229,7 @@ namespace Encog.App.Analyst.Script
                     double high = CSVFormat.EG_FORMAT.Parse(cols[4]);
                     double low = CSVFormat.EG_FORMAT.Parse(cols[5]);
 
-                    NormalizationAction des = default(NormalizationAction) /* was: null */;
+                    NormalizationAction des;
                     if (action.Equals("range"))
                     {
                         des = NormalizationAction.Normalize;
@@ -257,10 +259,8 @@ namespace Encog.App.Analyst.Script
                         throw new AnalystError("Unknown field type:" + action);
                     }
 
-                    var nf = new AnalystField(name, des, high, low);
-                    nf.TimeSlice = timeSlice;
-                    nf.Output = isOutput;
-                    script.Normalize.NormalizedFields.Add(nf);
+                    var nf = new AnalystField(name, des, high, low) {TimeSlice = timeSlice, Output = isOutput};
+                    _script.Normalize.NormalizedFields.Add(nf);
                 }
                 else
                 {
@@ -303,7 +303,7 @@ namespace Encog.App.Analyst.Script
                 array[i] = nfs[i];
             }
 
-            script.Segregate.SegregateTargets = array;
+            _script.Segregate.SegregateTargets = array;
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Encog.App.Analyst.Script
             {
                 task.Lines.Add(line);
             }
-            script.AddTask(task);
+            _script.AddTask(task);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Encog.App.Analyst.Script
 
             try
             {
-                EncogFileSection section = null;
+                EncogFileSection section;
                 reader = new EncogReadHelper(stream);
 
                 while ((section = reader.ReadNextSection()) != null)
@@ -342,7 +342,7 @@ namespace Encog.App.Analyst.Script
                 }
 
                 // init the script
-                script.Init();
+                _script.Init();
             }
             finally
             {
@@ -367,14 +367,10 @@ namespace Encog.App.Analyst.Script
             {
                 String key = section.SectionName.ToUpper() + ":"
                              + section.SubSectionName.ToUpper() + "_" + name;
-                String value_ren = prop[name];
-                if (value_ren == null)
-                {
-                    value_ren = "";
-                }
+                String v = prop[name] ?? "";
                 ValidateProperty(section.SectionName,
-                                 section.SubSectionName, name, value_ren);
-                script.Properties.SetProperty(key, value_ren);
+                                 section.SubSectionName, name, v);
+                _script.Properties.SetProperty(key, v);
             }
         }
 

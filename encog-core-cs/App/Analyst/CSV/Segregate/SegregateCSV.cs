@@ -18,26 +18,26 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// TOtal percents should add to this.
         /// </summary>
         ///
-        public const int TOTAL_PCT = 100;
+        public const int TotalPct = 100;
 
         /// <summary>
         /// The segregation targets.
         /// </summary>
         ///
-        private readonly IList<SegregateTargetPercent> targets;
+        private readonly IList<SegregateTargetPercent> _targets;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public SegregateCSV()
         {
-            targets = new List<SegregateTargetPercent>();
+            _targets = new List<SegregateTargetPercent>();
         }
 
         /// <value>The segregation targets.</value>
         public IList<SegregateTargetPercent> Targets
         {
-            get { return targets; }
+            get { return _targets; }
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Encog.App.Analyst.CSV.Segregate
 
 
             // first try to assign as many as can be assigned
-            foreach (SegregateTargetPercent p  in  targets)
+            foreach (SegregateTargetPercent p  in  _targets)
             {
                 SegregateTargetPercent stp = p;
 
@@ -97,8 +97,9 @@ namespace Encog.App.Analyst.CSV.Segregate
             // if there are extras, just add them to the largest group
             if (remain > 0)
             {
-                smallestItem.NumberRemaining = smallestItem.NumberRemaining
-                                               + remain;
+                if (smallestItem != null)
+                    smallestItem.NumberRemaining = smallestItem.NumberRemaining
+                                                   + remain;
             }
         }
 
@@ -115,7 +116,7 @@ namespace Encog.App.Analyst.CSV.Segregate
                                   ExpectInputHeaders, InputFormat);
             ResetStatus();
 
-            foreach (SegregateTargetPercent target  in  targets)
+            foreach (SegregateTargetPercent target  in  _targets)
             {
                 StreamWriter tw = PrepareOutputFile(target.Filename);
 
@@ -142,12 +143,12 @@ namespace Encog.App.Analyst.CSV.Segregate
         {
             ValidateAnalyzed();
 
-            if (targets.Count < 1)
+            if (_targets.Count < 1)
             {
                 throw new QuantError("There are no segregation targets.");
             }
 
-            if (targets.Count < 2)
+            if (_targets.Count < 2)
             {
                 throw new QuantError(
                     "There must be at least two segregation targets.");
@@ -155,12 +156,12 @@ namespace Encog.App.Analyst.CSV.Segregate
 
             int total = 0;
 
-            foreach (SegregateTargetPercent p  in  targets)
+            foreach (SegregateTargetPercent p  in  _targets)
             {
                 total += p.Percent;
             }
 
-            if (total != TOTAL_PCT)
+            if (total != TotalPct)
             {
                 throw new QuantError("Target percents must equal 100.");
             }

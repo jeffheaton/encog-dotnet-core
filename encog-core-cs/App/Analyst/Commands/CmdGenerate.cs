@@ -22,7 +22,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "GENERATE";
+        public const String CommandName = "GENERATE";
 
         /// <summary>
         /// Construct this generate command.
@@ -36,7 +36,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Encog.App.Analyst.Commands
         {
             int[] result;
             String type = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_TYPE);
+                ScriptProperties.MlConfigType);
 
             // is it non-supervised?
             if (type.Equals(MLMethodFactory.TYPE_SOM))
@@ -124,9 +124,9 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.GENERATE_CONFIG_SOURCE_FILE);
+                ScriptProperties.GenerateConfigSourceFile);
             String targetID = Prop.GetPropertyString(
-                ScriptProperties.GENERATE_CONFIG_TARGET_FILE);
+                ScriptProperties.GenerateConfigTargetFile);
             CSVFormat format = Analyst.Script.DetermineInputFormat(
                 sourceID);
 

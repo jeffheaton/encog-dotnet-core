@@ -18,13 +18,13 @@ namespace Encog.App.Analyst.Commands
         /// The default number of iterations.
         /// </summary>
         ///
-        public const int DEFAULT_ITERATIONS = 100;
+        public const int DefaultIterations = 100;
 
         /// <summary>
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "CLUSTER";
+        public const String CommandName = "CLUSTER";
 
         /// <summary>
         /// Construct the cluster command.
@@ -38,7 +38,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -46,12 +46,12 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.CLUSTER_CONFIG_SOURCE_FILE);
+                ScriptProperties.ClusterConfigSourceFile);
             String targetID = Prop.GetPropertyString(
-                ScriptProperties.CLUSTER_CONFIG_TARGET_FILE);
+                ScriptProperties.ClusterConfigTargetFile);
             int clusters = Prop.GetPropertyInt(
-                ScriptProperties.CLUSTER_CONFIG_CLUSTERS);
-            Prop.GetPropertyString(ScriptProperties.CLUSTER_CONFIG_TYPE);
+                ScriptProperties.ClusterConfigClusters);
+            Prop.GetPropertyString(ScriptProperties.ClusterConfigType);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning cluster");
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
@@ -70,14 +70,13 @@ namespace Encog.App.Analyst.Commands
             Script.MarkGenerated(targetID);
 
             // prepare to normalize
-            var cluster = new AnalystClusterCSV();
-            cluster.Script = Script;
+            var cluster = new AnalystClusterCSV {Script = Script};
             Analyst.CurrentQuantTask = cluster;
             cluster.Report = new AnalystReportBridge(Analyst);
             bool headers = Script.ExpectInputHeaders(sourceID);
             cluster.Analyze(Analyst, sourceFile, headers, inputFormat);
             cluster.OutputFormat = outputFormat;
-            cluster.Process(targetFile, clusters, Analyst, DEFAULT_ITERATIONS);
+            cluster.Process(targetFile, clusters, Analyst, DefaultIterations);
             Analyst.CurrentQuantTask = null;
             return cluster.ShouldStop();
         }

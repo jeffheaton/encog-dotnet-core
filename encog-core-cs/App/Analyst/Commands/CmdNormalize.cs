@@ -19,7 +19,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "NORMALIZE";
+        public const String CommandName = "NORMALIZE";
 
         /// <summary>
         /// Construct the normalize command.
@@ -33,7 +33,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -41,9 +41,9 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.NORMALIZE_CONFIG_SOURCE_FILE);
+                ScriptProperties.NormalizeConfigSourceFile);
             String targetID = Prop.GetPropertyString(
-                ScriptProperties.NORMALIZE_CONFIG_TARGET_FILE);
+                ScriptProperties.NormalizeConfigTargetFile);
 
             FileInfo sourceFile = Script.ResolveFilename(sourceID);
             FileInfo targetFile = Script.ResolveFilename(targetID);
@@ -61,8 +61,7 @@ namespace Encog.App.Analyst.Commands
             CSVFormat outputFormat = Script.DetermineOutputFormat();
 
             // prepare to normalize
-            var norm = new AnalystNormalizeCSV();
-            norm.Script = Script;
+            var norm = new AnalystNormalizeCSV {Script = Script};
             Analyst.CurrentQuantTask = norm;
             norm.Report = new AnalystReportBridge(Analyst);
 

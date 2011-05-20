@@ -21,25 +21,25 @@ namespace Encog.App.Analyst.CSV
         /// The analyst file to use.
         /// </summary>
         ///
-        private EncogAnalyst analyst;
+        private EncogAnalyst _analyst;
 
         /// <summary>
         /// The ideal count.
         /// </summary>
         ///
-        private int idealCount;
+        private int _idealCount;
 
         /// <summary>
         /// The input count.
         /// </summary>
         ///
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// The output count.
         /// </summary>
         ///
-        private int outputCount;
+        private int _outputCount;
 
         /// <summary>
         /// Analyze the data. This counts the records and prepares the data to be
@@ -56,23 +56,23 @@ namespace Encog.App.Analyst.CSV
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
             InputFormat = format;
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
 
             Analyzed = true;
 
             PerformBasicCounts();
 
-            inputCount = analyst.DetermineInputCount();
-            outputCount = analyst.DetermineOutputCount();
-            idealCount = InputHeadings.Length - inputCount;
+            _inputCount = _analyst.DetermineInputCount();
+            _outputCount = _analyst.DetermineOutputCount();
+            _idealCount = InputHeadings.Length - _inputCount;
 
-            if ((InputHeadings.Length != inputCount)
-                && (InputHeadings.Length != (inputCount + outputCount)))
+            if ((InputHeadings.Length != _inputCount)
+                && (InputHeadings.Length != (_inputCount + _outputCount)))
             {
                 throw new AnalystError("Invalid number of columns("
                                        + InputHeadings.Length + "), must match input("
-                                       + inputCount + ") count or input+output("
-                                       + (inputCount + outputCount) + ") count.");
+                                       + _inputCount + ") count or input+output("
+                                       + (_inputCount + _outputCount) + ") count.");
             }
         }
 
@@ -94,7 +94,7 @@ namespace Encog.App.Analyst.CSV
 
 
                     // first handle the input fields
-                    foreach (AnalystField field  in  analyst.Script.Normalize.NormalizedFields)
+                    foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
                     {
                         if (field.Input)
                         {
@@ -103,13 +103,13 @@ namespace Encog.App.Analyst.CSV
                     }
 
                     // now, handle any ideal fields
-                    if (idealCount > 0)
+                    if (_idealCount > 0)
                     {
-                        foreach (AnalystField field_0  in  analyst.Script.Normalize.NormalizedFields)
+                        foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
                         {
-                            if (field_0.Output)
+                            if (field.Output)
                             {
-                                field_0.AddRawHeadings(line, "ideal:",
+                                field.AddRawHeadings(line, "ideal:",
                                                        OutputFormat);
                             }
                         }
@@ -117,11 +117,11 @@ namespace Encog.App.Analyst.CSV
 
 
                     // now, handle the output fields
-                    foreach (AnalystField field_1  in  analyst.Script.Normalize.NormalizedFields)
+                    foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
                     {
-                        if (field_1.Output)
+                        if (field.Output)
                         {
-                            field_1.AddRawHeadings(line, "output:", OutputFormat);
+                            field.AddRawHeadings(line, "output:", OutputFormat);
                         }
                     }
 
@@ -147,15 +147,14 @@ namespace Encog.App.Analyst.CSV
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
 
-            if (method.InputCount != inputCount)
+            if (method.InputCount != _inputCount)
             {
                 throw new AnalystError("This machine learning method has "
                                        + method.InputCount
-                                       + " inputs, however, the data has " + inputCount
+                                       + " inputs, however, the data has " + _inputCount
                                        + " inputs.");
             }
 
-            MLData output = null;
             MLData input = new BasicMLData(method.InputCount);
 
             StreamWriter tw = AnalystPrepareOutputFile(outputFile);
@@ -164,11 +163,11 @@ namespace Encog.App.Analyst.CSV
             while (csv.Next())
             {
                 UpdateStatus(false);
-                var row = new LoadedRow(csv, idealCount);
+                var row = new LoadedRow(csv, _idealCount);
 
                 int dataIndex = 0;
                 // load the input data
-                for (int i = 0; i < inputCount; i++)
+                for (int i = 0; i < _inputCount; i++)
                 {
                     String str = row.Data[i];
                     double d = InputFormat.Parse(str);
@@ -177,17 +176,16 @@ namespace Encog.App.Analyst.CSV
                 }
 
                 // do we need to skip the ideal values?
-                dataIndex += idealCount;
+                dataIndex += _idealCount;
 
                 // compute the result
-                output = method.Compute(input);
+                MLData output = method.Compute(input);
 
                 // display the computed result
-                for (int i_0 = 0; i_0 < outputCount; i_0++)
+                for (int i = 0; i < _outputCount; i++)
                 {
-                    double d_1 = output[i_0];
-                    row.Data[dataIndex++] = InputFormat.Format(d_1,
-                                                               Precision);
+                    double d = output[i];
+                    row.Data[dataIndex++] = InputFormat.Format(d, Precision);
                 }
 
                 WriteRow(tw, row);

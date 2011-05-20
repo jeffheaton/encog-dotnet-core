@@ -40,7 +40,7 @@ namespace Encog.Examples.Analyst
             encog.AddAnalystListener(new ConsoleAnalystListener());
             AnalystWizard wiz = new AnalystWizard(encog);
             //wiz.TaskRandomize = false;
-            wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DECPNT_COMMA);
+            wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DecpntComma);
             encog.Save(analystFile);
 
             encog.ExecuteTask("task-full");
@@ -63,7 +63,7 @@ namespace Encog.Examples.Analyst
             AnalystWizard wiz = new AnalystWizard(encog);
             wiz.TaskBalance = true;
 
-            wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DECPNT_COMMA);
+            wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DecpntComma);
 
             encog.ExecuteTask("task-full");
 

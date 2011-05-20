@@ -18,19 +18,19 @@ namespace Encog.App.Analyst.Report
         /// Used as a col-span.
         /// </summary>
         ///
-        public const int FIVE_SPAN = 5;
+        public const int FiveSpan = 5;
 
         /// <summary>
         /// Used as a col-span.
         /// </summary>
         ///
-        public const int EIGHT_SPAN = 5;
+        public const int EightSpan = 5;
 
         /// <summary>
         /// The analyst to use.
         /// </summary>
         ///
-        private readonly EncogAnalyst analyst;
+        private readonly EncogAnalyst _analyst;
 
         /// <summary>
         /// Construct the report.
@@ -39,7 +39,7 @@ namespace Encog.App.Analyst.Report
         /// <param name="theAnalyst">The analyst to use.</param>
         public AnalystReport(EncogAnalyst theAnalyst)
         {
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Encog.App.Analyst.Report
             report.EndRow();
 
 
-            foreach (DataField df  in  analyst.Script.Fields)
+            foreach (DataField df  in  _analyst.Script.Fields)
             {
                 report.BeginRow();
                 report.Cell(df.Name);
@@ -78,18 +78,18 @@ namespace Encog.App.Analyst.Report
                 report.Cell(Format.FormatYesNo(df.Complete));
                 report.Cell(Format.FormatYesNo(df.Integer));
                 report.Cell(Format.FormatYesNo(df.Real));
-                report.Cell(Format.FormatDouble(df.Max, FIVE_SPAN));
-                report.Cell(Format.FormatDouble(df.Min, FIVE_SPAN));
-                report.Cell(Format.FormatDouble(df.Mean, FIVE_SPAN));
+                report.Cell(Format.FormatDouble(df.Max, FiveSpan));
+                report.Cell(Format.FormatDouble(df.Min, FiveSpan));
+                report.Cell(Format.FormatDouble(df.Mean, FiveSpan));
                 report.Cell(Format.FormatDouble(df.StandardDeviation,
-                                                FIVE_SPAN));
+                                                FiveSpan));
                 report.EndRow();
 
                 if (df.ClassMembers.Count > 0)
                 {
                     report.BeginRow();
                     report.Cell("&nbsp;");
-                    report.BeginTableInCell(EIGHT_SPAN);
+                    report.BeginTableInCell(EightSpan);
                     report.BeginRow();
                     report.Header("Code");
                     report.Header("Name");
@@ -121,13 +121,13 @@ namespace Encog.App.Analyst.Report
             report.EndRow();
 
 
-            foreach (AnalystField item_0  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField item  in  _analyst.Script.Normalize.NormalizedFields)
             {
                 report.BeginRow();
-                report.Cell(item_0.Name);
-                report.Cell(item_0.Action.ToString());
-                report.Cell(Format.FormatDouble(item_0.NormalizedHigh, FIVE_SPAN));
-                report.Cell(Format.FormatDouble(item_0.NormalizedLow, FIVE_SPAN));
+                report.Cell(item.Name);
+                report.Cell(item.Action.ToString());
+                report.Cell(Format.FormatDouble(item.NormalizedHigh, FiveSpan));
+                report.Cell(Format.FormatDouble(item.NormalizedLow, FiveSpan));
                 report.EndRow();
             }
 
@@ -140,13 +140,13 @@ namespace Encog.App.Analyst.Report
             report.Header("Value");
             report.EndRow();
 
-            String t = analyst.Script.Properties
-                .GetPropertyString(ScriptProperties.ML_CONFIG_TYPE);
-            String a = analyst.Script.Properties
-                .GetPropertyString(ScriptProperties.ML_CONFIG_ARCHITECTURE);
-            String rf = analyst.Script.Properties
+            String t = _analyst.Script.Properties
+                .GetPropertyString(ScriptProperties.MlConfigType);
+            String a = _analyst.Script.Properties
+                .GetPropertyString(ScriptProperties.MlConfigArchitecture);
+            String rf = _analyst.Script.Properties
                 .GetPropertyString(
-                    ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE);
+                    ScriptProperties.MlConfigMachineLearningFile);
 
             report.TablePair("Type", t);
             report.TablePair("Architecture", a);
@@ -160,13 +160,13 @@ namespace Encog.App.Analyst.Report
             report.Header("Filename");
             report.EndRow();
 
-            foreach (String key  in  analyst.Script.Properties.Filenames)
+            foreach (String key  in  _analyst.Script.Properties.Filenames)
             {
-                String value_ren = analyst.Script.Properties
+                String v = _analyst.Script.Properties
                     .GetFilename(key);
                 report.BeginRow();
                 report.Cell(key);
-                report.Cell(value_ren);
+                report.Cell(v);
                 report.EndRow();
             }
             report.EndTable();

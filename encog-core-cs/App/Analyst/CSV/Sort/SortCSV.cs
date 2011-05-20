@@ -17,28 +17,28 @@ namespace Encog.App.Analyst.CSV.Sort
         /// The loaded rows.
         /// </summary>
         ///
-        private readonly List<LoadedRow> data;
+        private readonly List<LoadedRow> _data;
 
         /// <summary>
         /// The sort order.
         /// </summary>
         ///
-        private readonly List<SortedField> sortOrder;
+        private readonly List<SortedField> _sortOrder;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public SortCSV()
         {
-            data = new List<LoadedRow>();
-            sortOrder = new List<SortedField>();
+            _data = new List<LoadedRow>();
+            _sortOrder = new List<SortedField>();
         }
 
 
         /// <value>Used to specify the sort order.</value>
         public IList<SortedField> SortOrder
         {
-            get { return sortOrder; }
+            get { return _sortOrder; }
         }
 
 
@@ -76,7 +76,7 @@ namespace Encog.App.Analyst.CSV.Sort
             {
                 UpdateStatus("Reading input file");
                 var row = new LoadedRow(csv);
-                data.Add(row);
+                _data.Add(row);
             }
 
             Count = csv.ColumnCount;
@@ -100,7 +100,7 @@ namespace Encog.App.Analyst.CSV.Sort
         private void SortData()
         {
             IComparer<LoadedRow> comp = new RowComparator(this);
-            data.Sort(comp);
+            _data.Sort(comp);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Encog.App.Analyst.CSV.Sort
 
 
             // write the file
-            foreach (LoadedRow row  in  data)
+            foreach (LoadedRow row  in  _data)
             {
                 UpdateStatus("Writing output");
                 // for the first row, determine types
@@ -143,22 +143,22 @@ namespace Encog.App.Analyst.CSV.Sort
                 // write the row
                 var line = new StringBuilder();
 
-                for (int i_0 = 0; i_0 < Count; i_0++)
+                for (int i = 0; i < Count; i++)
                 {
-                    if (i_0 > 0)
+                    if (i > 0)
                     {
                         line.Append(",");
                     }
 
-                    if (nonNumeric[i_0])
+                    if (nonNumeric[i])
                     {
                         line.Append("\"");
-                        line.Append(row.Data[i_0]);
+                        line.Append(row.Data[i]);
                         line.Append("\"");
                     }
                     else
                     {
-                        line.Append(row.Data[i_0]);
+                        line.Append(row.Data[i]);
                     }
                 }
 

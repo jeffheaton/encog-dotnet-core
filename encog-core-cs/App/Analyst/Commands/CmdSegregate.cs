@@ -21,7 +21,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "SEGREGATE";
+        public const String CommandName = "SEGREGATE";
 
         /// <summary>
         /// Construct the segregate command.
@@ -35,7 +35,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -43,7 +43,7 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.SEGREGATE_CONFIG_SOURCE_FILE);
+                ScriptProperties.SegregateConfigSourceFile);
 
             FileInfo sourceFile = Script.ResolveFilename(sourceID);
 
@@ -57,8 +57,7 @@ namespace Encog.App.Analyst.Commands
 
             // prepare to segregate
             bool headers = Script.ExpectInputHeaders(sourceID);
-            var seg = new SegregateCSV();
-            seg.Script = Script;
+            var seg = new SegregateCSV {Script = Script};
             Analyst.CurrentQuantTask = seg;
 
             foreach (AnalystSegregateTarget target  in  Script.Segregate.SegregateTargets)

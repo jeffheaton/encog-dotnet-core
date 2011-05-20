@@ -14,7 +14,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "RESET";
+        public const String CommandName = "RESET";
 
         /// <summary>
         /// Construct the reset command.
@@ -28,7 +28,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>

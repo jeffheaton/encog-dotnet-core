@@ -35,6 +35,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// A format.
         /// </summary>
         ///
-        typeFormat
+        TypeFormat
     }
 }

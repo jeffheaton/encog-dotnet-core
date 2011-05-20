@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Encog.Util.Arrayutil;
 
@@ -17,36 +18,27 @@ namespace Encog.App.Analyst.Script.Normalize
         /// that data will be presented to the ML method.
         /// </summary>
         ///
-        private readonly IList<AnalystField> normalizedFields;
+        private readonly IList<AnalystField> _normalizedFields;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public AnalystNormalize()
         {
-            normalizedFields = new List<AnalystField>();
+            _normalizedFields = new List<AnalystField>();
         }
 
         /// <value>the normalizedFields</value>
         public IList<AnalystField> NormalizedFields
         {
-            get { return normalizedFields; }
+            get { return _normalizedFields; }
         }
 
 
         /// <returns>Calculate the input columns.</returns>
         public int CalculateInputColumns()
         {
-            int result = 0;
-
-            foreach (AnalystField field  in  normalizedFields)
-            {
-                if (field.Input)
-                {
-                    result += field.ColumnsNeeded;
-                }
-            }
-            return result;
+            return _normalizedFields.Where(field => field.Input).Sum(field => field.ColumnsNeeded);
         }
 
         /// <summary>
@@ -56,16 +48,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <returns>The output columns.</returns>
         public int CalculateOutputColumns()
         {
-            int result = 0;
-
-            foreach (AnalystField field  in  normalizedFields)
-            {
-                if (field.Output)
-                {
-                    result += field.ColumnsNeeded;
-                }
-            }
-            return result;
+            return _normalizedFields.Where(field => field.Output).Sum(field => field.ColumnsNeeded);
         }
 
 
@@ -74,7 +57,7 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             int result = 0;
 
-            foreach (AnalystField field  in  normalizedFields)
+            foreach (AnalystField field  in  _normalizedFields)
             {
                 if (field.Action != NormalizationAction.Ignore)
                 {
@@ -92,13 +75,13 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <param name="script">The script.</param>
         public void Init(AnalystScript script)
         {
-            if (normalizedFields == null)
+            if (_normalizedFields == null)
             {
                 return;
             }
 
 
-            foreach (AnalystField norm  in  normalizedFields)
+            foreach (AnalystField norm  in  _normalizedFields)
             {
                 DataField f = script.FindDataField(norm.Name);
 
@@ -137,9 +120,9 @@ namespace Encog.App.Analyst.Script.Normalize
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(": ");
-            if (normalizedFields != null)
+            if (_normalizedFields != null)
             {
-                result.Append(normalizedFields.ToString());
+                result.Append(_normalizedFields.ToString());
             }
             result.Append("]");
             return result.ToString();

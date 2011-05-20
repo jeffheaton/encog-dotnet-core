@@ -19,31 +19,31 @@ namespace Encog.App.Analyst.Analyze
         /// The file name to analyze.
         /// </summary>
         ///
-        private readonly String filename;
+        private readonly String _filename;
 
         /// <summary>
         /// The format of this file.
         /// </summary>
         ///
-        private readonly AnalystFileFormat format;
+        private readonly AnalystFileFormat _format;
 
         /// <summary>
         /// True, if headers are present.
         /// </summary>
         ///
-        private readonly bool headers;
+        private readonly bool _headers;
 
         /// <summary>
         /// The script to use.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// The fields to analyze.
         /// </summary>
         ///
-        private AnalyzedField[] fields;
+        private AnalyzedField[] _fields;
 
         /// <summary>
         /// Construct the analysis object.
@@ -57,10 +57,10 @@ namespace Encog.App.Analyst.Analyze
                                String theFilename, bool theHeaders,
                                AnalystFileFormat theFormat)
         {
-            filename = theFilename;
-            headers = theHeaders;
-            format = theFormat;
-            script = theScript;
+            _filename = theFilename;
+            _headers = theHeaders;
+            _format = theFormat;
+            _script = theScript;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFields(ReadCSV csv)
         {
-            if (headers)
+            if (_headers)
             {
                 GenerateFieldsFromHeaders(csv);
             }
@@ -87,10 +87,10 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFieldsFromCount(ReadCSV csv)
         {
-            fields = new AnalyzedField[csv.ColumnCount];
-            for (int i = 0; i < fields.Length; i++)
+            _fields = new AnalyzedField[csv.ColumnCount];
+            for (int i = 0; i < _fields.Length; i++)
             {
-                fields[i] = new AnalyzedField(script, "field:" + (i + 1));
+                _fields[i] = new AnalyzedField(_script, "field:" + (i + 1));
             }
         }
 
@@ -102,15 +102,15 @@ namespace Encog.App.Analyst.Analyze
         private void GenerateFieldsFromHeaders(ReadCSV csv)
         {
             var h = new CSVHeaders(csv.ColumnNames);
-            fields = new AnalyzedField[csv.ColumnCount];
-            for (int i = 0; i < fields.Length; i++)
+            _fields = new AnalyzedField[csv.ColumnCount];
+            for (int i = 0; i < _fields.Length; i++)
             {
                 if (i >= csv.ColumnCount)
                 {
                     throw new AnalystError(
                         "CSV header count does not match column count");
                 }
-                fields[i] = new AnalyzedField(script, h.GetHeader(i));
+                _fields[i] = new AnalyzedField(_script, h.GetHeader(i));
             }
         }
 
@@ -122,55 +122,63 @@ namespace Encog.App.Analyst.Analyze
         public void Process(EncogAnalyst target)
         {
             CSVFormat csvFormat = ConvertStringConst
-                .ConvertToCSVFormat(format);
-            var csv = new ReadCSV(filename, headers, csvFormat);
+                .ConvertToCSVFormat(_format);
+            var csv = new ReadCSV(_filename, _headers, csvFormat);
 
             // pass one, calculate the min/max
             while (csv.Next())
             {
-                if (fields == null)
+                if (_fields == null)
                 {
                     GenerateFields(csv);
                 }
 
                 for (int i = 0; i < csv.ColumnCount; i++)
                 {
-                    fields[i].Analyze1(csv.Get(i));
+                    if (_fields != null)
+                    {
+                        _fields[i].Analyze1(csv.Get(i));
+                    }
                 }
             }
 
 
-            foreach (AnalyzedField field  in  fields)
+            if (_fields != null)
             {
-                field.CompletePass1();
+                foreach (AnalyzedField field in _fields)
+                {
+                    field.CompletePass1();
+                }
             }
 
             csv.Close();
 
             // pass two, standard deviation
-            csv = new ReadCSV(filename, headers, csvFormat);
+            csv = new ReadCSV(_filename, _headers, csvFormat);
             while (csv.Next())
             {
-                for (int i_0 = 0; i_0 < csv.ColumnCount; i_0++)
+                for (int i = 0; i < csv.ColumnCount; i++)
                 {
-                    fields[i_0].Analyze2(csv.Get(i_0));
+                    if (_fields != null)
+                    {
+                        _fields[i].Analyze2(csv.Get(i));
+                    }
                 }
             }
 
 
-            foreach (AnalyzedField field_1  in  fields)
+            if (_fields != null)
             {
-                field_1.CompletePass2();
+                foreach (AnalyzedField field in _fields)
+                {
+                    field.CompletePass2();
+                }
             }
 
             csv.Close();
 
-            String str = script.Properties.GetPropertyString(
-                ScriptProperties.SETUP_CONFIG_ALLOWED_CLASSES);
-            if (str == null)
-            {
-                str = "";
-            }
+            String str = _script.Properties.GetPropertyString(
+                ScriptProperties.SetupConfigAllowedClasses) ?? "";
 
             bool allowInt = str.Contains("int");
             bool allowReal = str.Contains("real")
@@ -179,46 +187,46 @@ namespace Encog.App.Analyst.Analyze
 
 
             // remove any classes that did not qualify
-            foreach (AnalyzedField field_2  in  fields)
+            foreach (AnalyzedField field  in  _fields)
             {
-                if (field_2.Class)
+                if (field.Class)
                 {
-                    if (!allowInt && field_2.Integer)
+                    if (!allowInt && field.Integer)
                     {
-                        field_2.Class = false;
+                        field.Class = false;
                     }
 
-                    if (!allowString && (!field_2.Integer && !field_2.Real))
+                    if (!allowString && (!field.Integer && !field.Real))
                     {
-                        field_2.Class = false;
+                        field.Class = false;
                     }
 
-                    if (!allowReal && field_2.Real && !field_2.Integer)
+                    if (!allowReal && field.Real && !field.Integer)
                     {
-                        field_2.Class = false;
+                        field.Class = false;
                     }
 
-                    if (field_2.Integer
-                        && (field_2.AnalyzedClassMembers.Count <= 2))
+                    if (field.Integer
+                        && (field.AnalyzedClassMembers.Count <= 2))
                     {
-                        field_2.Class = false;
+                        field.Class = false;
                     }
                 }
             }
 
             // merge with existing
             if ((target.Script.Fields != null)
-                && (fields.Length == target.Script.Fields.Length))
+                && (_fields.Length == target.Script.Fields.Length))
             {
-                for (int i_3 = 0; i_3 < fields.Length; i_3++)
+                for (int i = 0; i < _fields.Length; i++)
                 {
                     // copy the old field name
-                    fields[i_3].Name = target.Script.Fields[i_3].Name;
+                    _fields[i].Name = target.Script.Fields[i].Name;
 
-                    if (fields[i_3].Class)
+                    if (_fields[i].Class)
                     {
-                        IList<AnalystClassItem> t = fields[i_3].AnalyzedClassMembers;
-                        IList<AnalystClassItem> s = target.Script.Fields[i_3].ClassMembers;
+                        IList<AnalystClassItem> t = _fields[i].AnalyzedClassMembers;
+                        IList<AnalystClassItem> s = target.Script.Fields[i].ClassMembers;
 
                         if (s.Count == t.Count)
                         {
@@ -235,11 +243,11 @@ namespace Encog.App.Analyst.Analyze
             }
 
             // now copy the fields
-            var df = new DataField[fields.Length];
+            var df = new DataField[_fields.Length];
 
             for (int i_4 = 0; i_4 < df.Length; i_4++)
             {
-                df[i_4] = fields[i_4].FinalizeField();
+                df[i_4] = _fields[i_4].FinalizeField();
             }
 
             target.Script.Fields = df;
@@ -254,9 +262,9 @@ namespace Encog.App.Analyst.Analyze
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" filename=");
-            result.Append(filename);
+            result.Append(_filename);
             result.Append(", headers=");
-            result.Append(headers);
+            result.Append(_headers);
             result.Append("]");
             return result.ToString();
         }

@@ -17,34 +17,34 @@ namespace Encog.App.Analyst.CSV.Basic
         /// The column mapping.
         /// </summary>
         ///
-        private readonly IDictionary<String, BaseCachedColumn> columnMapping;
+        private readonly IDictionary<String, BaseCachedColumn> _columnMapping;
 
         /// <summary>
         /// The columns.
         /// </summary>
         ///
-        private readonly IList<BaseCachedColumn> columns;
+        private readonly IList<BaseCachedColumn> _columns;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public BasicCachedFile()
         {
-            columnMapping = new Dictionary<String, BaseCachedColumn>();
-            columns = new List<BaseCachedColumn>();
+            _columnMapping = new Dictionary<String, BaseCachedColumn>();
+            _columns = new List<BaseCachedColumn>();
         }
 
         /// <value>The column mappings.</value>
         public IDictionary<String, BaseCachedColumn> ColumnMapping
         {
-            get { return columnMapping; }
+            get { return _columnMapping; }
         }
 
 
         /// <value>The columns.</value>
         public IList<BaseCachedColumn> Columns
         {
-            get { return columns; }
+            get { return _columns; }
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="column">The column to add.</param>
         public void AddColumn(BaseCachedColumn column)
         {
-            columns.Add(column);
-            columnMapping[column.Name] = column;
+            _columns.Add(column);
+            _columnMapping[column.Name] = column;
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace Encog.App.Analyst.CSV.Basic
             InputFilename = input;
             ExpectInputHeaders = headers;
             InputFormat = format;
-            columnMapping.Clear();
-            columns.Clear();
+            _columnMapping.Clear();
+            _columns.Clear();
 
             // first count the rows
             TextReader reader = null;
@@ -150,9 +150,9 @@ namespace Encog.App.Analyst.CSV.Basic
                         InputFormat.Parse(str);
                         io = true;
                     }
-                    catch (FormatException ex_0)
+                    catch (FormatException ex)
                     {
-                        EncogLogging.Log(ex_0);
+                        EncogLogging.Log(ex);
                     }
 
                     AddColumn(new FileData(name, i, io, io));
@@ -160,7 +160,7 @@ namespace Encog.App.Analyst.CSV.Basic
             }
             finally
             {
-                csv.Close();
+                if (csv != null) csv.Close();
                 Analyzed = true;
             }
         }
@@ -171,38 +171,38 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         /// <param name="name">The unknown column name.</param>
         /// <returns>The known column name.</returns>
-        private String AttemptResolveName(String name)
+        private static String AttemptResolveName(String name)
         {
             String name2 = name.ToLower();
 
             if (name2.IndexOf("open") != -1)
             {
-                return FileData.OPEN;
+                return FileData.Open;
             }
-            else if (name2.IndexOf("close") != -1)
+            if (name2.IndexOf("close") != -1)
             {
-                return FileData.CLOSE;
+                return FileData.Close;
             }
-            else if (name2.IndexOf("low") != -1)
+            if (name2.IndexOf("low") != -1)
             {
-                return FileData.LOW;
+                return FileData.Low;
             }
-            else if (name2.IndexOf("hi") != -1)
+            if (name2.IndexOf("hi") != -1)
             {
-                return FileData.HIGH;
+                return FileData.High;
             }
-            else if (name2.IndexOf("vol") != -1)
+            if (name2.IndexOf("vol") != -1)
             {
-                return FileData.VOLUME;
+                return FileData.Volume;
             }
-            else if ((name2.IndexOf("date") != -1)
+            if ((name2.IndexOf("date") != -1)
                      || (name.IndexOf("yyyy") != -1))
             {
-                return FileData.DATE;
+                return FileData.Date;
             }
-            else if (name2.IndexOf("time") != -1)
+            if (name2.IndexOf("time") != -1)
             {
-                return FileData.TIME;
+                return FileData.Time;
             }
 
             return name;
@@ -217,12 +217,12 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <returns>The column data.</returns>
         public String GetColumnData(String name, ReadCSV csv)
         {
-            if (!columnMapping.ContainsKey(name))
+            if (!_columnMapping.ContainsKey(name))
             {
                 return null;
             }
 
-            BaseCachedColumn column = columnMapping[name];
+            BaseCachedColumn column = _columnMapping[name];
 
             if (!(column is FileData))
             {

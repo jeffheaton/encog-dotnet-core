@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Encog.App.Analyst.Script.Normalize;
 using Encog.App.Analyst.Script.Prop;
 using Encog.App.Analyst.Script.Segregate;
@@ -20,7 +21,7 @@ namespace Encog.App.Analyst.Script
         /// The script to save.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// Construct the script.
@@ -29,7 +30,7 @@ namespace Encog.App.Analyst.Script
         /// <param name="theScript">The script to save.</param>
         public ScriptSave(AnalystScript theScript)
         {
-            script = theScript;
+            _script = theScript;
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Encog.App.Analyst.Script
             SaveSubSection(xout, "HEADER", "DATASOURCE");
             SaveConfig(xout);
 
-            if (script.Fields != null)
+            if (_script.Fields != null)
             {
                 SaveData(xout);
                 SaveNormalize(xout);
@@ -53,7 +54,7 @@ namespace Encog.App.Analyst.Script
             SaveSubSection(xout, "CLUSTER", "CONFIG");
             SaveSubSection(xout, "BALANCE", "CONFIG");
 
-            if (script.Segregate.SegregateTargets != null)
+            if (_script.Segregate.SegregateTargets != null)
             {
                 SaveSegregate(xout);
             }
@@ -73,22 +74,17 @@ namespace Encog.App.Analyst.Script
             SaveSubSection(xout, "SETUP", "CONFIG");
             xout.AddSubSection("FILENAMES");
 
-            IList<String> list = script.Properties.Filenames;
+            IList<String> list = _script.Properties.Filenames;
 
 
-            foreach (String key  in  list)
+            foreach (var key  in  list)
             {
-                String value_ren = script.Properties.GetFilename(key);
-                var f = new FileInfo(value_ren);
-                if ((f.DirectoryName != null)
-                    && f.DirectoryName.Equals(script.BasePath, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    xout.WriteProperty(key, f.Name);
-                }
-                else
-                {
-                    xout.WriteProperty(key, value_ren);
-                }
+                String v = _script.Properties.GetFilename(key);
+                var f = new FileInfo(v);
+                xout.WriteProperty(key,
+                                   f.DirectoryName.Equals(_script.BasePath, StringComparison.InvariantCultureIgnoreCase)
+                                       ? f.Name
+                                       : v);
             }
         }
 
@@ -113,7 +109,7 @@ namespace Encog.App.Analyst.Script
             xout.WriteLine();
 
 
-            foreach (DataField field  in  script.Fields)
+            foreach (DataField field  in  _script.Fields)
             {
                 xout.AddColumn(field.Name);
                 xout.AddColumn(field.Class);
@@ -135,13 +131,13 @@ namespace Encog.App.Analyst.Script
             xout.WriteLine();
 
 
-            foreach (DataField field_0  in  script.Fields)
+            foreach (DataField field  in  _script.Fields)
             {
-                if (field_0.Class)
+                if (field.Class)
                 {
-                    foreach (AnalystClassItem col  in  field_0.ClassMembers)
+                    foreach (AnalystClassItem col  in  field.ClassMembers)
                     {
-                        xout.AddColumn(field_0.Name);
+                        xout.AddColumn(field.Name);
                         xout.AddColumn(col.Code);
                         xout.AddColumn(col.Name);
                         xout.AddColumn(col.Count);
@@ -180,17 +176,10 @@ namespace Encog.App.Analyst.Script
             xout.AddColumn("low");
             xout.WriteLine();
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 xout.AddColumn(field.Name);
-                if (field.Input)
-                {
-                    xout.AddColumn("input");
-                }
-                else
-                {
-                    xout.AddColumn("output");
-                }
+                xout.AddColumn(field.Input ? "input" : "output");
                 xout.AddColumn(field.TimeSlice);
                 switch (field.Action)
                 {
@@ -236,7 +225,7 @@ namespace Encog.App.Analyst.Script
             xout.WriteLine();
 
 
-            foreach (AnalystSegregateTarget target  in  script.Segregate.SegregateTargets)
+            foreach (AnalystSegregateTarget target  in  _script.Segregate.SegregateTargets)
             {
                 xout.AddColumn(target.File);
                 xout.AddColumn(target.Percent);
@@ -267,16 +256,9 @@ namespace Encog.App.Analyst.Script
             {
                 String key = section + ":" + subSection + "_"
                              + entry.Name;
-                String value_ren = script.Properties.GetPropertyString(
+                String v = _script.Properties.GetPropertyString(
                     key);
-                if (value_ren != null)
-                {
-                    xout.WriteProperty(entry.Name, value_ren);
-                }
-                else
-                {
-                    xout.WriteProperty(entry.Name, "");
-                }
+                xout.WriteProperty(entry.Name, v ?? "");
             }
         }
 
@@ -288,18 +270,13 @@ namespace Encog.App.Analyst.Script
         private void SaveTasks(EncogWriteHelper xout)
         {
             xout.AddSection("TASKS");
-            var list = new List<String>();
-
-            foreach (string item in script.Tasks.Keys)
-            {
-                list.Add(item);
-            }
+            var list = _script.Tasks.Keys.ToList();
 
             list.Sort();
 
             foreach (String key  in  list)
             {
-                AnalystTask task = script.GetTask(key);
+                AnalystTask task = _script.GetTask(key);
                 xout.AddSubSection(task.Name);
 
                 foreach (String line  in  task.Lines)

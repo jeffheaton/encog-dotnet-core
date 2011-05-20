@@ -25,13 +25,13 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "TRAIN";
+        public const String CommandName = "TRAIN";
 
         /// <summary>
         /// The number of folds, if kfold is used.
         /// </summary>
         ///
-        private int kfold;
+        private int _kfold;
 
         /// <summary>
         /// Construct the train command.
@@ -45,7 +45,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <summary>
@@ -61,18 +61,18 @@ namespace Encog.App.Analyst.Commands
             var factory = new MLTrainFactory();
 
             String type = Prop.GetPropertyString(
-                ScriptProperties.ML_TRAIN_TYPE);
+                ScriptProperties.MlTrainType);
             String args = Prop.GetPropertyString(
-                ScriptProperties.ML_TRAIN_ARGUMENTS);
+                ScriptProperties.MlTrainArguments);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training type:" + type);
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training args:" + args);
 
             MLTrain train = factory.Create(method, trainingSet, type, args);
 
-            if (kfold > 0)
+            if (_kfold > 0)
             {
-                train = new CrossValidationKFold(train, kfold);
+                train = new CrossValidationKFold(train, _kfold);
             }
 
             return train;
@@ -84,7 +84,7 @@ namespace Encog.App.Analyst.Commands
         ///
         public override sealed bool ExecuteCommand(String args)
         {
-            kfold = ObtainCross();
+            _kfold = ObtainCross();
             MLDataSet trainingSet = ObtainTrainingSet();
             MLMethod method = ObtainMethod();
             MLTrain trainer = CreateTrainer(method, trainingSet);
@@ -94,7 +94,7 @@ namespace Encog.App.Analyst.Commands
             PerformTraining(trainer, method, trainingSet);
 
             String resourceID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE);
+                ScriptProperties.MlConfigMachineLearningFile);
             FileInfo resourceFile = Analyst.Script.ResolveFilename(
                 resourceID);
             EncogDirectoryPersistence.SaveObject(resourceFile, method);
@@ -112,12 +112,12 @@ namespace Encog.App.Analyst.Commands
         private int ObtainCross()
         {
             String cross = Prop.GetPropertyString(
-                ScriptProperties.ML_TRAIN_CROSS);
-            if ((cross == null) || (cross.Length == 0))
+                ScriptProperties.MlTrainCross);
+            if (string.IsNullOrEmpty(cross))
             {
                 return 0;
             }
-            else if (cross.ToLower().StartsWith("kfold:"))
+            if (cross.ToLower().StartsWith("kfold:"))
             {
                 String str = cross.Substring(6);
                 try
@@ -129,10 +129,7 @@ namespace Encog.App.Analyst.Commands
                     throw new AnalystError("Invalid kfold :" + str);
                 }
             }
-            else
-            {
-                throw new AnalystError("Unknown cross validation: " + cross);
-            }
+            throw new AnalystError("Unknown cross validation: " + cross);
         }
 
         /// <summary>
@@ -143,10 +140,10 @@ namespace Encog.App.Analyst.Commands
         private MLMethod ObtainMethod()
         {
             String resourceID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE);
+                ScriptProperties.MlConfigMachineLearningFile);
             FileInfo resourceFile = Script.ResolveFilename(resourceID);
 
-            var method = (MLMethod) EncogDirectoryPersistence
+            var method = EncogDirectoryPersistence
                                         .LoadObject(resourceFile);
 
             if (!(method is MLMethod))
@@ -156,7 +153,7 @@ namespace Encog.App.Analyst.Commands
                     + method.GetType().Name);
             }
 
-            return method;
+            return (MLMethod)method;
         }
 
         /// <summary>
@@ -167,13 +164,13 @@ namespace Encog.App.Analyst.Commands
         private MLDataSet ObtainTrainingSet()
         {
             String trainingID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_TRAINING_FILE);
+                ScriptProperties.MlConfigTrainingFile);
 
             FileInfo trainingFile = Script.ResolveFilename(trainingID);
 
             MLDataSet trainingSet = EncogUtility.LoadEGB2Memory(trainingFile);
 
-            if (kfold > 0)
+            if (_kfold > 0)
             {
                 trainingSet = new FoldedDataSet(trainingSet);
             }
@@ -193,7 +190,7 @@ namespace Encog.App.Analyst.Commands
         {
             ValidateNetwork.ValidateMethodToData(method, trainingSet);
             double targetError = Prop.GetPropertyDouble(
-                ScriptProperties.ML_TRAIN_TARGET_ERROR);
+                ScriptProperties.MlTrainTargetError);
             Analyst.ReportTrainingBegin();
             int maxIteration = Analyst.MaxIteration;
 

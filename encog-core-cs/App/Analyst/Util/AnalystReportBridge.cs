@@ -12,7 +12,7 @@ namespace Encog.App.Analyst.Util
         /// The analyst to bridge to.
         /// </summary>
         ///
-        private readonly EncogAnalyst analyst;
+        private readonly EncogAnalyst _analyst;
 
         /// <summary>
         /// Construct the bridge object.
@@ -21,7 +21,7 @@ namespace Encog.App.Analyst.Util
         /// <param name="theAnalyst">The Encog analyst to use.</param>
         public AnalystReportBridge(EncogAnalyst theAnalyst)
         {
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
         }
 
         #region IStatusReportable Members
@@ -33,7 +33,7 @@ namespace Encog.App.Analyst.Util
         public void Report(int total, int current,
                            String message)
         {
-            foreach (AnalystListener listener  in  analyst.Listeners)
+            foreach (IAnalystListener listener  in  _analyst.Listeners)
             {
                 listener.Report(total, current, message);
             }

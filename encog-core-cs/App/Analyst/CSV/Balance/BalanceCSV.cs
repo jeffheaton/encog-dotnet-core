@@ -24,12 +24,12 @@ namespace Encog.App.Analyst.CSV.Balance
         /// Tracks the counts of each class.
         /// </summary>
         ///
-        private IDictionary<String, Int32> counts;
+        private IDictionary<String, Int32> _counts;
 
         /// <value>Tracks the counts of each class.</value>
         public IDictionary<String, Int32> Counts
         {
-            get { return counts; }
+            get { return _counts; }
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace Encog.App.Analyst.CSV.Balance
         {
             var result = new StringBuilder();
 
-            foreach (String key  in counts.Keys)
+            foreach (String key  in _counts.Keys)
             {
                 result.Append(key);
                 result.Append(" : ");
-                result.Append((counts[key]));
+                result.Append((_counts[key]));
                 result.Append("\n");
             }
             return result.ToString();
@@ -85,7 +85,7 @@ namespace Encog.App.Analyst.CSV.Balance
             ValidateAnalyzed();
             StreamWriter tw = PrepareOutputFile(outputFile);
 
-            counts = new Dictionary<String, Int32>();
+            _counts = new Dictionary<String, Int32>();
 
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
@@ -97,13 +97,13 @@ namespace Encog.App.Analyst.CSV.Balance
                 UpdateStatus(false);
                 String key = row.Data[targetField];
                 int count;
-                if (!counts.ContainsKey(key))
+                if (!_counts.ContainsKey(key))
                 {
                     count = 0;
                 }
                 else
                 {
-                    count = counts[key];
+                    count = _counts[key];
                 }
 
                 if (count < countPer)
@@ -112,7 +112,7 @@ namespace Encog.App.Analyst.CSV.Balance
                     count++;
                 }
 
-                counts[key] = count;
+                _counts[key] = count;
             }
             ReportDone(false);
             csv.Close();

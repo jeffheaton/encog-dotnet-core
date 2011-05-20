@@ -25,19 +25,19 @@ namespace Encog.App.Quant.Ninja
             {
                 var line = new StringBuilder();
                 UpdateStatus(false);
-                line.Append(GetColumnData(FileData.DATE, csv));
+                line.Append(GetColumnData(FileData.Date, csv));
                 line.Append(" ");
-                line.Append(GetColumnData(FileData.TIME, csv));
+                line.Append(GetColumnData(FileData.Time, csv));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.OPEN, csv)), Precision));
+                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Open, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.HIGH, csv)), Precision));
+                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.High, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.LOW, csv)), Precision));
+                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Low, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.CLOSE, csv)), Precision));
+                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Close, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.VOLUME, csv)), Precision));
+                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Volume, csv)), Precision));
 
                 tw.WriteLine(line.ToString());
             }

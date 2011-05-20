@@ -9,7 +9,7 @@ namespace Encog.App.Analyst
     /// Encog.app.analyst.util.AnalystReportBridge
     /// </summary>
     ///
-    public interface AnalystListener
+    public interface IAnalystListener
     {
         /// <summary>
         /// Request stop the entire process.

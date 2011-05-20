@@ -18,7 +18,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of the command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "RANDOMIZE";
+        public const String CommandName = "RANDOMIZE";
 
         /// <summary>
         /// Construct the randomize command.
@@ -32,7 +32,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -40,9 +40,9 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.RANDOMIZE_CONFIG_SOURCE_FILE);
+                ScriptProperties.RandomizeConfigSourceFile);
             String targetID = Prop.GetPropertyString(
-                ScriptProperties.RANDOMIZE_CONFIG_TARGET_FILE);
+                ScriptProperties.RandomizeConfigTargetFile);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning randomize");
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
@@ -60,8 +60,7 @@ namespace Encog.App.Analyst.Commands
             Script.MarkGenerated(targetID);
 
             // prepare to normalize
-            var norm = new ShuffleCSV();
-            norm.Script = Script;
+            var norm = new ShuffleCSV {Script = Script};
             Analyst.CurrentQuantTask = norm;
             norm.Report = new AnalystReportBridge(Analyst);
             bool headers = Script.ExpectInputHeaders(sourceID);

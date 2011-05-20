@@ -14,13 +14,13 @@ namespace Encog.App.Analyst.Script.Task
         /// The "source code" for this task.
         /// </summary>
         ///
-        private readonly IList<String> lines;
+        private readonly IList<String> _lines;
 
         /// <summary>
         /// The name of the task.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// Construct an analyst task.
@@ -29,23 +29,23 @@ namespace Encog.App.Analyst.Script.Task
         /// <param name="theName">The name of this task.</param>
         public AnalystTask(String theName)
         {
-            lines = new List<String>();
-            name = theName;
+            _lines = new List<String>();
+            _name = theName;
         }
 
 
         /// <value>the lines</value>
         public IList<String> Lines
         {            
-            get { return lines; }
+            get { return _lines; }
         }
 
 
         /// <value>the name to set</value>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
 
@@ -58,7 +58,7 @@ namespace Encog.App.Analyst.Script.Task
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append("]");
             return result.ToString();
         }

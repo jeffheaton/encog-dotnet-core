@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Encog.App.Analyst.CSV.Basic;
 using Encog.Util.CSV;
 
@@ -17,27 +18,27 @@ namespace Encog.App.Analyst.CSV.Filter
         /// The excluded fields.
         /// </summary>
         ///
-        private readonly IList<ExcludedField> excludedFields;
+        private readonly IList<ExcludedField> _excludedFields;
 
         /// <summary>
         /// A count of the filtered rows.
         /// </summary>
         ///
-        private int filteredCount;
+        private int _filteredCount;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public FilterCSV()
         {
-            excludedFields = new List<ExcludedField>();
+            _excludedFields = new List<ExcludedField>();
         }
 
 
         /// <value>A list of the fields and their values, that should be excluded.</value>
         public IList<ExcludedField> Excluded
         {
-            get { return excludedFields; }
+            get { return _excludedFields; }
         }
 
 
@@ -45,7 +46,7 @@ namespace Encog.App.Analyst.CSV.Filter
         /// for the output CSV.</value>
         public int FilteredRowCount
         {
-            get { return filteredCount; }
+            get { return _filteredCount; }
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <param name="fieldValue">The field value.</param>
         public void Exclude(int fieldNumber, String fieldValue)
         {
-            excludedFields.Add(new ExcludedField(fieldNumber, fieldValue));
+            _excludedFields.Add(new ExcludedField(fieldNumber, fieldValue));
         }
 
 
@@ -90,7 +91,7 @@ namespace Encog.App.Analyst.CSV.Filter
                                   ExpectInputHeaders, InputFormat);
 
             StreamWriter tw = PrepareOutputFile(outputFile);
-            filteredCount = 0;
+            _filteredCount = 0;
 
             ResetStatus();
             while (csv.Next() && !ShouldStop())
@@ -100,7 +101,7 @@ namespace Encog.App.Analyst.CSV.Filter
                 if (ShouldProcess(row))
                 {
                     WriteRow(tw, row);
-                    filteredCount++;
+                    _filteredCount++;
                 }
             }
             ReportDone(false);
@@ -116,16 +117,7 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <returns>True, if the row should be processed.</returns>
         private bool ShouldProcess(LoadedRow row)
         {
-            foreach (ExcludedField field  in  excludedFields)
-            {
-                if (row.Data[field.FieldNumber].Trim().Equals(
-                    field.FieldValue.Trim()))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return _excludedFields.All(field => !row.Data[field.FieldNumber].Trim().Equals(field.FieldValue.Trim()));
         }
     }
 }

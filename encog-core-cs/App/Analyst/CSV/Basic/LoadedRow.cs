@@ -14,7 +14,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// The row data.
         /// </summary>
         ///
-        private readonly String[] data;
+        private readonly String[] _data;
 
         /// <summary>
         /// Load a row from the specified CSV file.
@@ -34,10 +34,10 @@ namespace Encog.App.Analyst.CSV.Basic
         public LoadedRow(ReadCSV csv, int extra)
         {
             int count = csv.GetCount();
-            data = new String[count + extra];
+            _data = new String[count + extra];
             for (int i = 0; i < count; i++)
             {
-                data[i] = csv.Get(i);
+                _data[i] = csv.Get(i);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The row data.</value>
         public String[] Data
         {
-            get { return data; }
+            get { return _data; }
         }
     }
 }

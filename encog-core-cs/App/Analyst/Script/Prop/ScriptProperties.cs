@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Encog.App.Analyst.Util;
 using Encog.Util;
@@ -19,218 +20,218 @@ namespace Encog.App.Analyst.Script.Prop
         /// Property for: "HEADER:DATASOURCE_sourceFile".
         /// </summary>
         ///
-        public const String HEADER_DATASOURCE_SOURCE_FILE = "HEADER:DATASOURCE_sourceFile";
+        public const String HeaderDatasourceSourceFile = "HEADER:DATASOURCE_sourceFile";
 
         /// <summary>
         /// Property for: "HEADER:DATASOURCE_rawFile".
         /// </summary>
         ///
-        public const String HEADER_DATASOURCE_RAW_FILE = "HEADER:DATASOURCE_rawFile";
+        public const String HeaderDatasourceRawFile = "HEADER:DATASOURCE_rawFile";
 
         /// <summary>
         /// Property for: "HEADER:DATASOURCE_sourceFormat".
         /// </summary>
         ///
-        public const String HEADER_DATASOURCE_SOURCE_FORMAT = "HEADER:DATASOURCE_sourceFormat";
+        public const String HeaderDatasourceSourceFormat = "HEADER:DATASOURCE_sourceFormat";
 
         /// <summary>
         /// Property for: "HEADER:DATASOURCE_sourceHeaders".
         /// </summary>
         ///
-        public const String HEADER_DATASOURCE_SOURCE_HEADERS = "HEADER:DATASOURCE_sourceHeaders";
+        public const String HeaderDatasourceSourceHeaders = "HEADER:DATASOURCE_sourceHeaders";
 
         /// <summary>
         /// Property for: "SETUP:CONFIG_maxClassCount".
         /// </summary>
         ///
-        public const String SETUP_CONFIG_MAX_CLASS_COUNT = "SETUP:CONFIG_maxClassCount";
+        public const String SetupConfigMaxClassCount = "SETUP:CONFIG_maxClassCount";
 
         /// <summary>
         /// Property for: = "SETUP:CONFIG_allowedClasses". 
         /// </summary>
         ///
-        public const String SETUP_CONFIG_ALLOWED_CLASSES = "SETUP:CONFIG_allowedClasses";
+        public const String SetupConfigAllowedClasses = "SETUP:CONFIG_allowedClasses";
 
         /// <summary>
         /// Property for: "SETUP:CONFIG_inputHeaders". 
         /// </summary>
         ///
-        public const String SETUP_CONFIG_INPUT_HEADERS = "SETUP:CONFIG_inputHeaders";
+        public const String SetupConfigInputHeaders = "SETUP:CONFIG_inputHeaders";
 
         /// <summary>
         /// Property for: "SETUP:CONFIG_csvFormat". 
         /// </summary>
         ///
-        public const String SETUP_CONFIG_CSV_FORMAT = "SETUP:CONFIG_csvFormat";
+        public const String SetupConfigCSVFormat = "SETUP:CONFIG_csvFormat";
 
         /// <summary>
         /// Property for: "DATA:CONFIG_goal". 
         /// </summary>
         ///
-        public const String DATA_CONFIG_GOAL = "DATA:CONFIG_goal";
+        public const String DataConfigGoal = "DATA:CONFIG_goal";
 
         /// <summary>
         /// Property for: "NORMALIZE:CONFIG_sourceFile". 
         /// </summary>
         ///
-        public const String NORMALIZE_CONFIG_SOURCE_FILE = "NORMALIZE:CONFIG_sourceFile";
+        public const String NormalizeConfigSourceFile = "NORMALIZE:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "NORMALIZE:CONFIG_targetFile". 
         /// </summary>
         ///
-        public const String NORMALIZE_CONFIG_TARGET_FILE = "NORMALIZE:CONFIG_targetFile";
+        public const String NormalizeConfigTargetFile = "NORMALIZE:CONFIG_targetFile";
 
         /// <summary>
         /// Property for: "BALANCE:CONFIG_sourceFile".
         /// </summary>
         ///
-        public const String BALANCE_CONFIG_SOURCE_FILE = "BALANCE:CONFIG_sourceFile";
+        public const String BalanceConfigSourceFile = "BALANCE:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "BALANCE:CONFIG_targetFile". 
         /// </summary>
         ///
-        public const String BALANCE_CONFIG_TARGET_FILE = "BALANCE:CONFIG_targetFile";
+        public const String BalanceConfigTargetFile = "BALANCE:CONFIG_targetFile";
 
         /// <summary>
         /// Property for: "BALANCE:CONFIG_balanceField". 
         /// </summary>
         ///
-        public const String BALANCE_CONFIG_BALANCE_FIELD = "BALANCE:CONFIG_balanceField";
+        public const String BalanceConfigBalanceField = "BALANCE:CONFIG_balanceField";
 
         /// <summary>
         /// Property for: "BALANCE:CONFIG_countPer". 
         /// </summary>
         ///
-        public const String BALANCE_CONFIG_COUNT_PER = "BALANCE:CONFIG_countPer";
+        public const String BalanceConfigCountPer = "BALANCE:CONFIG_countPer";
 
         /// <summary>
         /// Property for: "RANDOMIZE:CONFIG_sourceFile".
         /// </summary>
         ///
-        public const String RANDOMIZE_CONFIG_SOURCE_FILE = "RANDOMIZE:CONFIG_sourceFile";
+        public const String RandomizeConfigSourceFile = "RANDOMIZE:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "RANDOMIZE:CONFIG_targetFile". 
         /// </summary>
         ///
-        public const String RANDOMIZE_CONFIG_TARGET_FILE = "RANDOMIZE:CONFIG_targetFile";
+        public const String RandomizeConfigTargetFile = "RANDOMIZE:CONFIG_targetFile";
 
         /// <summary>
         /// Property for: "SEGREGATE:CONFIG_sourceFile". 
         /// </summary>
         ///
-        public const String SEGREGATE_CONFIG_SOURCE_FILE = "SEGREGATE:CONFIG_sourceFile";
+        public const String SegregateConfigSourceFile = "SEGREGATE:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "GENERATE:CONFIG_sourceFile". 
         /// </summary>
         ///
-        public const String GENERATE_CONFIG_SOURCE_FILE = "GENERATE:CONFIG_sourceFile";
+        public const String GenerateConfigSourceFile = "GENERATE:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "GENERATE:CONFIG_targetFile". 
         /// </summary>
         ///
-        public const String GENERATE_CONFIG_TARGET_FILE = "GENERATE:CONFIG_targetFile";
+        public const String GenerateConfigTargetFile = "GENERATE:CONFIG_targetFile";
 
         /// <summary>
         /// Property for: "ML:CONFIG_trainingFile". 
         /// </summary>
         ///
-        public const String ML_CONFIG_TRAINING_FILE = "ML:CONFIG_trainingFile";
+        public const String MlConfigTrainingFile = "ML:CONFIG_trainingFile";
 
         /// <summary>
         /// Property for: "ML:CONFIG_evalFile".
         /// </summary>
         ///
-        public const String ML_CONFIG_EVAL_FILE = "ML:CONFIG_evalFile";
+        public const String MlConfigEvalFile = "ML:CONFIG_evalFile";
 
         /// <summary>
         /// Property for: "ML:CONFIG_machineLearningFile".
         /// </summary>
         ///
-        public const String ML_CONFIG_MACHINE_LEARNING_FILE = "ML:CONFIG_machineLearningFile";
+        public const String MlConfigMachineLearningFile = "ML:CONFIG_machineLearningFile";
 
         /// <summary>
         /// Property for: "ML:CONFIG_outputFile". 
         /// </summary>
         ///
-        public const String ML_CONFIG_OUTPUT_FILE = "ML:CONFIG_outputFile";
+        public const String MlConfigOutputFile = "ML:CONFIG_outputFile";
 
         /// <summary>
         /// Property for: = ML:CONFIG_type". 
         /// </summary>
         ///
-        public const String ML_CONFIG_TYPE = "ML:CONFIG_type";
+        public const String MlConfigType = "ML:CONFIG_type";
 
         /// <summary>
         /// Property for: "ML:CONFIG_architecture". 
         /// </summary>
         ///
-        public const String ML_CONFIG_ARCHITECTURE = "ML:CONFIG_architecture";
+        public const String MlConfigArchitecture = "ML:CONFIG_architecture";
 
         /// <summary>
         /// Property for: "ML:TRAIN_type". 
         /// </summary>
         ///
-        public const String ML_TRAIN_TYPE = "ML:TRAIN_type";
+        public const String MlTrainType = "ML:TRAIN_type";
 
         /// <summary>
         /// Property for: "ML:TRAIN_arguments". 
         /// </summary>
         ///
-        public const String ML_TRAIN_ARGUMENTS = "ML:TRAIN_arguments";
+        public const String MlTrainArguments = "ML:TRAIN_arguments";
 
         /// <summary>
         /// Property for: "ML:TRAIN_targetError". 
         /// </summary>
         ///
-        public const String ML_TRAIN_TARGET_ERROR = "ML:TRAIN_targetError";
+        public const String MlTrainTargetError = "ML:TRAIN_targetError";
 
         /// <summary>
         /// Property for: "ML:TRAIN_cross". 
         /// </summary>
         ///
-        public const String ML_TRAIN_CROSS = "ML:TRAIN_cross";
+        public const String MlTrainCross = "ML:TRAIN_cross";
 
         /// <summary>
         /// Property for: "CLUSTER:CONFIG_sourceFile".
         /// </summary>
         ///
-        public const String CLUSTER_CONFIG_SOURCE_FILE = "CLUSTER:CONFIG_sourceFile";
+        public const String ClusterConfigSourceFile = "CLUSTER:CONFIG_sourceFile";
 
         /// <summary>
         /// Property for: "CLUSTER:CONFIG_targetFile". 
         /// </summary>
         ///
-        public const String CLUSTER_CONFIG_TARGET_FILE = "CLUSTER:CONFIG_targetFile";
+        public const String ClusterConfigTargetFile = "CLUSTER:CONFIG_targetFile";
 
         /// <summary>
         /// Property for: "CLUSTER:CONFIG_type". 
         /// </summary>
         ///
-        public const String CLUSTER_CONFIG_TYPE = "CLUSTER:CONFIG_type";
+        public const String ClusterConfigType = "CLUSTER:CONFIG_type";
 
         /// <summary>
         /// Property for: "CLUSTER:CONFIG_clusters". 
         /// </summary>
         ///
-        public const String CLUSTER_CONFIG_CLUSTERS = "CLUSTER:CONFIG_clusters";
+        public const String ClusterConfigClusters = "CLUSTER:CONFIG_clusters";
 
         /// <summary>
         /// Properties are stored in this map.
         /// </summary>
         ///
-        private readonly IDictionary<String, String> data;
+        private readonly IDictionary<String, String> _data;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public ScriptProperties()
         {
-            data = new Dictionary<String, String>();
+            _data = new Dictionary<String, String>();
         }
 
         /// <summary>
@@ -240,20 +241,11 @@ namespace Encog.App.Analyst.Script.Prop
         {
             get
             {
-                IList<String> result = new List<String>();
-
-                foreach (String key  in  data.Keys)
-                {
-                    if (key.StartsWith("SETUP:FILENAMES"))
-                    {
-                        int index = key.IndexOf('_');
-                        if (index != -1)
-                        {
-                            result.Add(key.Substring(index + 1));
-                        }
-                    }
-                }
-                return result;
+                return (from key in _data.Keys
+                        where key.StartsWith("SETUP:FILENAMES")
+                        let index = key.IndexOf('_')
+                        where index != -1
+                        select key.Substring(index + 1)).ToList();
             }
         }
 
@@ -287,20 +279,20 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         public void ClearFilenames()
         {
-            var array = new string[data.Keys.Count];
+            var array = new string[_data.Keys.Count];
 
             int idx = 0;
-            foreach (string item in data.Keys)
+            foreach (string item in _data.Keys)
             {
                 array[idx++] = item;
             }
 
-            foreach (Object element  in  array)
+            foreach (string element  in  array)
             {
-                var key = (String) element;
+                var key = element;
                 if (key.StartsWith("SETUP:FILENAMES"))
                 {
-                    data.Remove(key);
+                    _data.Remove(key);
                 }
             }
         }
@@ -315,12 +307,12 @@ namespace Encog.App.Analyst.Script.Prop
         {
             String key2 = "SETUP:FILENAMES_" + file;
 
-            if (!data.ContainsKey(key2))
+            if (!_data.ContainsKey(key2))
             {
                 throw new AnalystError("Undefined file: " + file);
             }
 
-            return data[key2];
+            return _data[key2];
         }
 
 
@@ -332,7 +324,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>The property value.</returns>
         public Object GetProperty(String name)
         {
-            return data[name];
+            return _data[name];
         }
 
         /// <summary>
@@ -343,14 +335,11 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>A boolean value.</returns>
         public bool GetPropertyBoolean(String name)
         {
-            if (!data.ContainsKey(name))
+            if (!_data.ContainsKey(name))
             {
                 return false;
             }
-            else
-            {
-                return data[name].ToLower().StartsWith("t");
-            }
+            return _data[name].ToLower().StartsWith("t");
         }
 
         /// <summary>
@@ -361,9 +350,9 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>A format value.</returns>
         public CSVFormat GetPropertyCSVFormat(String name)
         {
-            String value_ren = data[name];
+            String v = _data[name];
             AnalystFileFormat code = ConvertStringConst
-                .String2AnalystFileFormat(value_ren);
+                .String2AnalystFileFormat(v);
             return ConvertStringConst.ConvertToCSVFormat(code);
         }
 
@@ -375,8 +364,8 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>A double value.</returns>
         public double GetPropertyDouble(String name)
         {
-            String value_ren = data[name];
-            return CSVFormat.EG_FORMAT.Parse(value_ren);
+            String v = _data[name];
+            return CSVFormat.EG_FORMAT.Parse(v);
         }
 
         /// <summary>
@@ -387,7 +376,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>A file value.</returns>
         public String GetPropertyFile(String name)
         {
-            return data[name];
+            return _data[name];
         }
 
         /// <summary>
@@ -398,8 +387,8 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>A format value.</returns>
         public AnalystFileFormat GetPropertyFormat(String name)
         {
-            String value_ren = data[name];
-            return ConvertStringConst.String2AnalystFileFormat(value_ren);
+            String v = _data[name];
+            return ConvertStringConst.String2AnalystFileFormat(v);
         }
 
         /// <summary>
@@ -412,12 +401,12 @@ namespace Encog.App.Analyst.Script.Prop
         {
             try
             {
-                String value_ren = data[name];
-                if (value_ren == null)
+                String v = _data[name];
+                if (v == null)
                 {
                     return 0;
                 }
-                return Int32.Parse(value_ren);
+                return Int32.Parse(v);
             }
             catch (FormatException ex)
             {
@@ -433,11 +422,11 @@ namespace Encog.App.Analyst.Script.Prop
         /// <returns>The property value.</returns>
         public String GetPropertyString(String name)
         {
-            if (!data.ContainsKey(name))
+            if (!_data.ContainsKey(name))
             {
                 return null;
             }
-            return data[name];
+            return _data[name];
         }
 
         /// <summary>
@@ -450,7 +439,7 @@ namespace Encog.App.Analyst.Script.Prop
         {
             try
             {
-                return new Uri(data[name]);
+                return new Uri(_data[name]);
             }
             catch (UriFormatException e)
             {
@@ -465,8 +454,8 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="revertedData">The source data to revert from.</param>
         public void PerformRevert(IDictionary<String, String> revertedData)
         {
-            data.Clear();
-            EngineArray.PutAll(revertedData, data);
+            _data.Clear();
+            EngineArray.PutAll(revertedData, _data);
         }
 
         /// <summary>
@@ -477,7 +466,7 @@ namespace Encog.App.Analyst.Script.Prop
         public IDictionary<String, String> PrepareRevert()
         {
             IDictionary<String, String> result = new Dictionary<String, String>();
-            EngineArray.PutAll(data, result);
+            EngineArray.PutAll(_data, result);
             return result;
         }
 
@@ -486,11 +475,11 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="key">The key.</param>
-        /// <param name="value_ren">The value.</param>
-        public void SetFilename(String key, String value_ren)
+        /// <param name="v">The value.</param>
+        public void SetFilename(String key, String v)
         {
             String key2 = "SETUP:FILENAMES_" + key;
-            data[key2] = value_ren;
+            _data[key2] = v;
         }
 
         /// <summary>
@@ -502,7 +491,7 @@ namespace Encog.App.Analyst.Script.Prop
         public void SetProperty(String name,
                                 AnalystFileFormat format)
         {
-            data[name] = ConvertStringConst.AnalystFileFormat2String(format);
+            _data[name] = ConvertStringConst.AnalystFileFormat2String(format);
         }
 
         /// <summary>
@@ -510,19 +499,19 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="name">The name.</param>
-        /// <param name="value_ren">The value.</param>
-        public void SetProperty(String name, AnalystGoal value_ren)
+        /// <param name="v">The value.</param>
+        public void SetProperty(String name, AnalystGoal v)
         {
-            switch (value_ren)
+            switch (v)
             {
                 case AnalystGoal.Classification:
-                    data[name] = "classification";
+                    _data[name] = "classification";
                     break;
                 case AnalystGoal.Regression:
-                    data[name] = "regression";
+                    _data[name] = "regression";
                     break;
                 default:
-                    data[name] = "";
+                    _data[name] = "";
                     break;
             }
         }
@@ -537,11 +526,11 @@ namespace Encog.App.Analyst.Script.Prop
         {
             if (b)
             {
-                data[name] = "t";
+                _data[name] = "t";
             }
             else
             {
-                data[name] = "f";
+                _data[name] = "f";
             }
         }
 
@@ -553,7 +542,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="d">The value.</param>
         public void SetProperty(String name, double d)
         {
-            data[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
+            _data[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
         }
 
         /// <summary>
@@ -564,7 +553,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="f">The filename value.</param>
         public void SetProperty(String name, FileInfo f)
         {
-            data[name] = f.ToString();
+            _data[name] = f.ToString();
         }
 
         /// <summary>
@@ -575,7 +564,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="i">The value.</param>
         public void SetProperty(String name, int i)
         {
-            data[name] = ("" + i);
+            _data[name] = ("" + i);
         }
 
         /// <summary>
@@ -583,10 +572,10 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         /// <param name="name">The property name.</param>
-        /// <param name="value_ren">The property value.</param>
-        public void SetProperty(String name, String value_ren)
+        /// <param name="v">The property value.</param>
+        public void SetProperty(String name, String v)
         {
-            data[name] = value_ren;
+            _data[name] = v;
         }
 
         /// <summary>
@@ -597,7 +586,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="url">The url of the property.</param>
         public void SetProperty(String name, Uri url)
         {
-            data[name] = url.ToString();
+            _data[name] = url.ToString();
         }
 
         /// <summary>
@@ -609,7 +598,7 @@ namespace Encog.App.Analyst.Script.Prop
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" :");
-            result.Append(data.ToString());
+            result.Append(_data.ToString());
             result.Append("]");
             return result.ToString();
         }

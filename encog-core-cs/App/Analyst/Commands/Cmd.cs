@@ -16,37 +16,37 @@ namespace Encog.App.Analyst.Commands
         /// The analyst object that this command belongs to.
         /// </summary>
         ///
-        private readonly EncogAnalyst analyst;
+        private readonly EncogAnalyst _analyst;
 
         /// <summary>
         /// The properties to use with this command.
         /// </summary>
         ///
-        private readonly ScriptProperties properties;
+        private readonly ScriptProperties _properties;
 
         /// <summary>
         /// The script object that this command belongs to.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// Construct this command.
         /// </summary>
         ///
         /// <param name="theAnalyst">The analyst that this command belongs to.</param>
-        public Cmd(EncogAnalyst theAnalyst)
+        protected Cmd(EncogAnalyst theAnalyst)
         {
-            analyst = theAnalyst;
-            script = analyst.Script;
-            properties = script.Properties;
+            _analyst = theAnalyst;
+            _script = _analyst.Script;
+            _properties = _script.Properties;
         }
 
 
         /// <value>The analyst used with this command.</value>
         public EncogAnalyst Analyst
         {
-            get { return analyst; }
+            get { return _analyst; }
         }
 
 
@@ -57,14 +57,14 @@ namespace Encog.App.Analyst.Commands
         /// <value>The properties used with this command.</value>
         public ScriptProperties Prop
         {
-            get { return properties; }
+            get { return _properties; }
         }
 
 
         /// <value>The script used with this command.</value>
         public AnalystScript Script
         {
-            get { return script; }
+            get { return _script; }
         }
 
         /// <summary>

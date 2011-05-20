@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Encog.App.Analyst.Script.Normalize;
 using Encog.App.Analyst.Script.Prop;
 using Encog.App.Analyst.Script.Segregate;
@@ -20,49 +21,49 @@ namespace Encog.App.Analyst.Script
         /// The default MAX size for a class.
         /// </summary>
         ///
-        public const int DEFAULT_MAX_CLASS = 50;
+        public const int DefaultMaxClass = 50;
 
         /// <summary>
         /// Tracks which files were generated.
         /// </summary>
         ///
-        private readonly IList<String> generated;
+        private readonly IList<String> _generated;
 
         /// <summary>
         /// Information about how to normalize.
         /// </summary>
         ///
-        private readonly AnalystNormalize normalize;
+        private readonly AnalystNormalize _normalize;
 
         /// <summary>
         /// The properties.
         /// </summary>
         ///
-        private readonly ScriptProperties properties;
+        private readonly ScriptProperties _properties;
 
         /// <summary>
         /// Information about how to segregate.
         /// </summary>
         ///
-        private readonly AnalystSegregate segregate;
+        private readonly AnalystSegregate _segregate;
 
         /// <summary>
         /// The tasks.
         /// </summary>
         ///
-        private readonly IDictionary<String, AnalystTask> tasks;
+        private readonly IDictionary<String, AnalystTask> _tasks;
 
         /// <summary>
         /// The base path.
         /// </summary>
         ///
-        private String basePath;
+        private String _basePath;
 
         /// <summary>
         /// The data fields, these are the raw data from the CSV file.
         /// </summary>
         ///
-        private DataField[] fields;
+        private DataField[] _fields;
 
         /// <summary>
         /// Construct an analyst script.
@@ -70,18 +71,18 @@ namespace Encog.App.Analyst.Script
         ///
         public AnalystScript()
         {
-            normalize = new AnalystNormalize();
-            segregate = new AnalystSegregate();
-            generated = new List<String>();
-            tasks = new Dictionary<String, AnalystTask>();
-            properties = new ScriptProperties();
-            properties.SetProperty(ScriptProperties.SETUP_CONFIG_CSV_FORMAT,
-                                   AnalystFileFormat.DECPNT_COMMA);
-            properties.SetProperty(
-                ScriptProperties.SETUP_CONFIG_MAX_CLASS_COUNT,
-                DEFAULT_MAX_CLASS);
-            properties
-                .SetProperty(ScriptProperties.SETUP_CONFIG_ALLOWED_CLASSES,
+            _normalize = new AnalystNormalize();
+            _segregate = new AnalystSegregate();
+            _generated = new List<String>();
+            _tasks = new Dictionary<String, AnalystTask>();
+            _properties = new ScriptProperties();
+            _properties.SetProperty(ScriptProperties.SetupConfigCSVFormat,
+                                   AnalystFileFormat.DecpntComma);
+            _properties.SetProperty(
+                ScriptProperties.SetupConfigMaxClassCount,
+                DefaultMaxClass);
+            _properties
+                .SetProperty(ScriptProperties.SetupConfigAllowedClasses,
                              "integer,string");
         }
 
@@ -90,23 +91,23 @@ namespace Encog.App.Analyst.Script
         /// </summary>
         public String BasePath
         {
-            get { return basePath; }
-            set { basePath = value; }
+            get { return _basePath; }
+            set { _basePath = value; }
         }
 
 
         /// <value>the fields to set</value>
         public DataField[] Fields
         {
-            get { return fields; }
-            set { fields = value; }
+            get { return _fields; }
+            set { _fields = value; }
         }
 
 
         /// <value>the normalize</value>
         public AnalystNormalize Normalize
         {
-            get { return normalize; }
+            get { return _normalize; }
         }
 
 
@@ -120,20 +121,20 @@ namespace Encog.App.Analyst.Script
         /// <value>the properties</value>
         public ScriptProperties Properties
         {
-            get { return properties; }
+            get { return _properties; }
         }
 
 
         /// <value>the segregate</value>
         public AnalystSegregate Segregate
         {
-            get { return segregate; }
+            get { return _segregate; }
         }
 
         /// <value>The tasks.</value>
         public IDictionary<String, AnalystTask> Tasks
         {
-            get { return tasks; }
+            get { return _tasks; }
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Encog.App.Analyst.Script
 
         public void AddTask(AnalystTask task)
         {
-            tasks[task.Name] = task;
+            _tasks[task.Name] = task;
         }
 
         /// <summary>
@@ -151,7 +152,7 @@ namespace Encog.App.Analyst.Script
         ///
         public void ClearTasks()
         {
-            tasks.Clear();
+            _tasks.Clear();
         }
 
         /// <summary>
@@ -163,19 +164,9 @@ namespace Encog.App.Analyst.Script
         public CSVFormat DetermineInputFormat(String sourceID)
         {
             String rawID = Properties.GetPropertyString(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE);
-            CSVFormat result;
+                ScriptProperties.HeaderDatasourceRawFile);
 
-            if (sourceID.Equals(rawID))
-            {
-                result = Properties.GetPropertyCSVFormat(
-                    ScriptProperties.HEADER_DATASOURCE_SOURCE_FORMAT);
-            }
-            else
-            {
-                result = Properties.GetPropertyCSVFormat(
-                    ScriptProperties.SETUP_CONFIG_CSV_FORMAT);
-            }
+            CSVFormat result = Properties.GetPropertyCSVFormat(sourceID.Equals(rawID) ? ScriptProperties.HeaderDatasourceSourceFormat : ScriptProperties.SetupConfigCSVFormat);
 
             return result;
         }
@@ -188,7 +179,7 @@ namespace Encog.App.Analyst.Script
         public CSVFormat DetermineOutputFormat()
         {
             return Properties.GetPropertyCSVFormat(
-                ScriptProperties.SETUP_CONFIG_CSV_FORMAT);
+                ScriptProperties.SetupConfigCSVFormat);
         }
 
         /// <summary>
@@ -203,11 +194,8 @@ namespace Encog.App.Analyst.Script
             {
                 return true;
             }
-            else
-            {
-                return properties
-                    .GetPropertyBoolean(ScriptProperties.SETUP_CONFIG_INPUT_HEADERS);
-            }
+            return _properties
+                .GetPropertyBoolean(ScriptProperties.SetupConfigInputHeaders);
         }
 
         /// <summary>
@@ -218,15 +206,7 @@ namespace Encog.App.Analyst.Script
         /// <returns>The specified data field.</returns>
         public DataField FindDataField(String name)
         {
-            foreach (DataField dataField  in  fields)
-            {
-                if (dataField.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return dataField;
-                }
-            }
-
-            return null;
+            return _fields.FirstOrDefault(dataField => dataField.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -237,9 +217,9 @@ namespace Encog.App.Analyst.Script
         /// <returns>The index of the specified data field, or -1 if not found.</returns>
         public int FindDataFieldIndex(DataField df)
         {
-            for (int result = 0; result < fields.Length; result++)
+            for (int result = 0; result < _fields.Length; result++)
             {
-                if (df == fields[result])
+                if (df == _fields[result])
                 {
                     return result;
                 }
@@ -257,16 +237,7 @@ namespace Encog.App.Analyst.Script
         public AnalystField FindNormalizedField(String name,
                                                 int slice)
         {
-            foreach (AnalystField field  in  Normalize.NormalizedFields)
-            {
-                if (field.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)
-                    && (field.TimeSlice == slice))
-                {
-                    return field;
-                }
-            }
-
-            return null;
+            return Normalize.NormalizedFields.FirstOrDefault(field => field.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && (field.TimeSlice == slice));
         }
 
 
@@ -278,11 +249,11 @@ namespace Encog.App.Analyst.Script
         /// <returns>The analyst task.</returns>
         public AnalystTask GetTask(String name)
         {
-            if (!tasks.ContainsKey(name))
+            if (!_tasks.ContainsKey(name))
             {
                 return null;
             }
-            return tasks[name];
+            return _tasks[name];
         }
 
 
@@ -292,7 +263,7 @@ namespace Encog.App.Analyst.Script
         ///
         public void Init()
         {
-            normalize.Init(this);
+            _normalize.Init(this);
         }
 
         /// <summary>
@@ -303,7 +274,7 @@ namespace Encog.App.Analyst.Script
         /// <returns>True, if the specified file was generated.</returns>
         public bool IsGenerated(String filename)
         {
-            return generated.Contains(filename);
+            return _generated.Contains(filename);
         }
 
         /// <summary>
@@ -324,8 +295,8 @@ namespace Encog.App.Analyst.Script
         /// <param name="filename">The filename.</param>
         public void MarkGenerated(String filename)
         {
-            if (!generated.Contains(filename))
-                generated.Add(filename);
+            if (!_generated.Contains(filename))
+                _generated.Add(filename);
         }
 
         /// <summary>
@@ -338,14 +309,11 @@ namespace Encog.App.Analyst.Script
         {
             String name = Properties.GetFilename(sourceID);
 
-            if ( name.IndexOf(Path.PathSeparator) == -1 && basePath != null)
+            if ( name.IndexOf(Path.PathSeparator) == -1 && _basePath != null)
             {
-                return FileUtil.CombinePath(new FileInfo(basePath) , name);
+                return FileUtil.CombinePath(new FileInfo(_basePath) , name);
             }
-            else
-            {
-                return new FileInfo(name);
-            }
+            return new FileInfo(name);
         }
 
         /// <summary>

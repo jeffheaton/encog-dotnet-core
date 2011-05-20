@@ -15,7 +15,7 @@ namespace Encog.App.Analyst.CSV.Sort
         /// The owner object.
         /// </summary>
         ///
-        private readonly SortCSV sort;
+        private readonly SortCSV _sort;
 
         /// <summary>
         /// Construct the object.
@@ -24,7 +24,7 @@ namespace Encog.App.Analyst.CSV.Sort
         /// <param name="owner">The owner.</param>
         public RowComparator(SortCSV owner)
         {
-            sort = owner;
+            _sort = owner;
         }
 
         #region IComparer<LoadedRow> Members
@@ -38,7 +38,7 @@ namespace Encog.App.Analyst.CSV.Sort
         /// <returns>0 if the same, &lt;0 x is less, &gt;0 y is less.</returns>
         public int Compare(LoadedRow x, LoadedRow y)
         {
-            foreach (SortedField t  in  sort.SortOrder)
+            foreach (SortedField t  in  _sort.SortOrder)
             {
                 int index = t.Index;
                 String xStr = x.Data[index];
@@ -47,8 +47,8 @@ namespace Encog.App.Analyst.CSV.Sort
                 switch (t.SortType)
                 {
                     case SortType.SortDecimal:
-                        double xDouble = sort.InputFormat.Parse(xStr);
-                        double yDouble = sort.InputFormat.Parse(yStr);
+                        double xDouble = _sort.InputFormat.Parse(xStr);
+                        double yDouble = _sort.InputFormat.Parse(yStr);
                         int c = xDouble.CompareTo(yDouble);
                         if (c != 0)
                         {

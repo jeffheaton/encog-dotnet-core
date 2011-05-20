@@ -35,248 +35,248 @@ namespace Encog.App.Analyst.Wizard
         /// The default training percent.
         /// </summary>
         ///
-        public const int DEFAULT_TRAIN_PERCENT = 75;
+        public const int DefaultTrainPercent = 75;
 
         /// <summary>
         /// The default evaluation percent.
         /// </summary>
         ///
-        public const int DEFAULT_EVAL_PERCENT = 25;
+        public const int DefaultEvalPercent = 25;
 
         /// <summary>
         /// The default training error.
         /// </summary>
         ///
-        public const double DEFAULT_TRAIN_ERROR = 0.01d;
+        public const double DefaultTrainError = 0.01d;
 
         /// <summary>
         /// The raw file.
         /// </summary>
         ///
-        public const String FILE_RAW = "FILE_RAW";
+        public const String FileRaw = "FILE_RAW";
 
         /// <summary>
         /// The normalized file.
         /// </summary>
         ///
-        public const String FILE_NORMALIZE = "FILE_NORMALIZE";
+        public const String FileNormalize = "FILE_NORMALIZE";
 
         /// <summary>
         /// The randomized file.
         /// </summary>
         ///
-        public const String FILE_RANDOM = "FILE_RANDOMIZE";
+        public const String FileRandom = "FILE_RANDOMIZE";
 
         /// <summary>
         /// The training file.
         /// </summary>
         ///
-        public const String FILE_TRAIN = "FILE_TRAIN";
+        public const String FileTrain = "FILE_TRAIN";
 
         /// <summary>
         /// The evaluation file.
         /// </summary>
         ///
-        public const String FILE_EVAL = "FILE_EVAL";
+        public const String FileEval = "FILE_EVAL";
 
         /// <summary>
         /// The eval file normalization file.
         /// </summary>
         ///
-        public const String FILE_EVAL_NORM = "FILE_EVAL_NORM";
+        public const String FileEvalNorm = "FILE_EVAL_NORM";
 
         /// <summary>
         /// The training set.
         /// </summary>
         ///
-        public const String FILE_TRAINSET = "FILE_TRAINSET";
+        public const String FileTrainset = "FILE_TRAINSET";
 
         /// <summary>
         /// The machine learning file.
         /// </summary>
         ///
-        public const String FILE_ML = "FILE_ML";
+        public const String FileMl = "FILE_ML";
 
         /// <summary>
         /// The output file.
         /// </summary>
         ///
-        public const String FILE_OUTPUT = "FILE_OUTPUT";
+        public const String FileOutput = "FILE_OUTPUT";
 
         /// <summary>
         /// The balanced file.
         /// </summary>
         ///
-        public const String FILE_BALANCE = "FILE_BALANCE";
+        public const String FileBalance = "FILE_BALANCE";
 
         /// <summary>
         /// The clustered file.
         /// </summary>
         ///
-        public const String FILE_CLUSTER = "FILE_CLUSTER";
+        public const String FileCluster = "FILE_CLUSTER";
 
         /// <summary>
         /// The analyst.
         /// </summary>
         ///
-        private readonly EncogAnalyst analyst;
+        private readonly EncogAnalyst _analyst;
 
         /// <summary>
         /// The analyst script.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// Are we using single-field(direct) classification.
         /// </summary>
         ///
-        private bool directClassification;
+        private bool _directClassification;
 
         /// <summary>
         /// The balance filename.
         /// </summary>
         ///
-        private String filenameBalance;
+        private String _filenameBalance;
 
         /// <summary>
         /// The cluster filename.
         /// </summary>
         ///
-        private String filenameCluster;
+        private String _filenameCluster;
 
         /// <summary>
         /// The evaluation filename.
         /// </summary>
         ///
-        private String filenameEval;
+        private String _filenameEval;
 
         /// <summary>
         /// The normalization eval file name.
         /// </summary>
         ///
-        private String filenameEvalNorm;
+        private String _filenameEvalNorm;
 
         /// <summary>
         /// The machine learning file name.
         /// </summary>
         ///
-        private String filenameML;
+        private String _filenameMl;
 
         /// <summary>
         /// The normalized filename.
         /// </summary>
         ///
-        private String filenameNorm;
+        private String _filenameNorm;
 
         /// <summary>
         /// The output filename.
         /// </summary>
         ///
-        private String filenameOutput;
+        private String _filenameOutput;
 
         /// <summary>
         /// The random file name.
         /// </summary>
         ///
-        private String filenameRandom;
+        private String _filenameRandom;
 
         /// <summary>
         /// The raw filename.
         /// </summary>
         ///
-        private String filenameRaw;
+        private String _filenameRaw;
 
         /// <summary>
         /// The training filename.
         /// </summary>
         ///
-        private String filenameTrain;
+        private String _filenameTrain;
 
         /// <summary>
         /// The training set filename.
         /// </summary>
         ///
-        private String filenameTrainSet;
+        private String _filenameTrainSet;
 
         /// <summary>
         /// The analyst goal.
         /// </summary>
         ///
-        private AnalystGoal goal;
+        private AnalystGoal _goal;
 
         /// <summary>
         /// Should the target field be included int he input, if we are doing 
         /// time-series.
         /// </summary>
         ///
-        private bool includeTargetField;
+        private bool _includeTargetField;
 
         /// <summary>
         /// The size of the lag window, if we are doing time-series.
         /// </summary>
         ///
-        private int lagWindowSize;
+        private int _lagWindowSize;
 
         /// <summary>
         /// The size of the lead window, if we are doing time-series.
         /// </summary>
         ///
-        private int leadWindowSize;
+        private int _leadWindowSize;
 
         /// <summary>
         /// The machine learning method that we will be using.
         /// </summary>
         ///
-        private WizardMethodType methodType;
+        private WizardMethodType _methodType;
 
         /// <summary>
         /// The normalization range.
         /// </summary>
         ///
-        private NormalizeRange range;
+        private NormalizeRange _range;
 
         /// <summary>
         /// The target field, or "" to detect.
         /// </summary>
         ///
-        private String targetField;
+        private String _targetField;
 
         /// <summary>
         /// True if the balance command should be generated.
         /// </summary>
         ///
-        private bool taskBalance;
+        private bool _taskBalance;
 
         /// <summary>
         /// True if the cluster command should be generated.
         /// </summary>
         ///
-        private bool taskCluster;
+        private bool _taskCluster;
 
         /// <summary>
         /// True if the normalize command should be generated.
         /// </summary>
         ///
-        private bool taskNormalize;
+        private bool _taskNormalize;
 
         /// <summary>
         /// True if the randomize command should be generated.
         /// </summary>
         ///
-        private bool taskRandomize;
+        private bool _taskRandomize;
 
         /// <summary>
         /// True if the segregate command should be generated.
         /// </summary>
         ///
-        private bool taskSegregate;
+        private bool _taskSegregate;
 
         /// <summary>
         /// True if we are doing time-series.
         /// </summary>
         ///
-        private bool timeSeries;
+        private bool _timeSeries;
 
         /// <summary>
         /// Construct the analyst wizard.
@@ -285,21 +285,21 @@ namespace Encog.App.Analyst.Wizard
         /// <param name="theAnalyst">The analyst to use.</param>
         public AnalystWizard(EncogAnalyst theAnalyst)
         {
-            directClassification = false;
-            taskSegregate = true;
-            taskRandomize = true;
-            taskNormalize = true;
-            taskBalance = false;
-            taskCluster = true;
-            range = NormalizeRange.NegOne2One;
-            analyst = theAnalyst;
-            script = analyst.Script;
-            methodType = WizardMethodType.FeedForward;
-            targetField = "";
-            goal = AnalystGoal.Classification;
-            leadWindowSize = 0;
-            lagWindowSize = 0;
-            includeTargetField = false;
+            _directClassification = false;
+            _taskSegregate = true;
+            _taskRandomize = true;
+            _taskNormalize = true;
+            _taskBalance = false;
+            _taskCluster = true;
+            _range = NormalizeRange.NegOne2One;
+            _analyst = theAnalyst;
+            _script = _analyst.Script;
+            _methodType = WizardMethodType.FeedForward;
+            _targetField = "";
+            _goal = AnalystGoal.Classification;
+            _leadWindowSize = 0;
+            _lagWindowSize = 0;
+            _includeTargetField = false;
         }
 
         /// <summary>
@@ -307,40 +307,40 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         public AnalystGoal Goal
         {
-            get { return goal; }
-            set { goal = value; }
+            get { return _goal; }
+            set { _goal = value; }
         }
 
 
         /// <value>the lagWindowSize to set</value>
         public int LagWindowSize
         {
-            get { return lagWindowSize; }
-            set { lagWindowSize = value; }
+            get { return _lagWindowSize; }
+            set { _lagWindowSize = value; }
         }
 
 
         /// <value>the leadWindowSize to set</value>
         public int LeadWindowSize
         {
-            get { return leadWindowSize; }
-            set { leadWindowSize = value; }
+            get { return _leadWindowSize; }
+            set { _leadWindowSize = value; }
         }
 
 
         /// <value>the methodType to set</value>
         public WizardMethodType MethodType
         {
-            get { return methodType; }
-            set { methodType = value; }
+            get { return _methodType; }
+            set { _methodType = value; }
         }
 
 
         /// <value>the range to set</value>
         public NormalizeRange Range
         {
-            get { return range; }
-            set { range = value; }
+            get { return _range; }
+            set { _range = value; }
         }
 
 
@@ -351,56 +351,56 @@ namespace Encog.App.Analyst.Wizard
         /// <value>The target field.</value>
         public String TargetField
         {
-            get { return targetField; }
-            set { targetField = value; }
+            get { return _targetField; }
+            set { _targetField = value; }
         }
 
 
         /// <value>the includeTargetField to set</value>
         public bool IncludeTargetField
         {
-            get { return includeTargetField; }
-            set { includeTargetField = value; }
+            get { return _includeTargetField; }
+            set { _includeTargetField = value; }
         }
 
 
         /// <value>the taskBalance to set</value>
         public bool TaskBalance
         {
-            get { return taskBalance; }
-            set { taskBalance = value; }
+            get { return _taskBalance; }
+            set { _taskBalance = value; }
         }
 
 
         /// <value>the taskCluster to set</value>
         public bool TaskCluster
         {
-            get { return taskCluster; }
-            set { taskCluster = value; }
+            get { return _taskCluster; }
+            set { _taskCluster = value; }
         }
 
 
         /// <value>the taskNormalize to set</value>
         public bool TaskNormalize
         {
-            get { return taskNormalize; }
-            set { taskNormalize = value; }
+            get { return _taskNormalize; }
+            set { _taskNormalize = value; }
         }
 
 
         /// <value>the taskRandomize to set</value>
         public bool TaskRandomize
         {
-            get { return taskRandomize; }
-            set { taskRandomize = value; }
+            get { return _taskRandomize; }
+            set { _taskRandomize = value; }
         }
 
 
         /// <value>the taskSegregate to set</value>
         public bool TaskSegregate
         {
-            get { return taskSegregate; }
-            set { taskSegregate = value; }
+            get { return _taskSegregate; }
+            set { _taskSegregate = value; }
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace Encog.App.Analyst.Wizard
         /// <param name="setTarget">The target.</param>
         /// <param name="setSource">The source.</param>
         /// <returns>The "set" command.</returns>
-        private String CreateSet(String setTarget, String setSource)
+        private static String CreateSet(String setTarget, String setSource)
         {
             var result = new StringBuilder();
             result.Append("set ");
@@ -427,12 +427,12 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void DetermineClassification()
         {
-            directClassification = false;
+            _directClassification = false;
 
-            if ((methodType == WizardMethodType.SVM)
-                || (methodType == WizardMethodType.SOM))
+            if ((_methodType == WizardMethodType.SVM)
+                || (_methodType == WizardMethodType.SOM))
             {
-                directClassification = true;
+                _directClassification = true;
             }
         }
 
@@ -442,21 +442,21 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void DetermineTargetField()
         {
-            IList<AnalystField> fields = script.Normalize.NormalizedFields;
+            IList<AnalystField> fields = _script.Normalize.NormalizedFields;
 
-            if (targetField.Trim().Length == 0)
+            if (_targetField.Trim().Length == 0)
             {
                 bool success = false;
 
-                if (goal == AnalystGoal.Classification)
+                if (_goal == AnalystGoal.Classification)
                 {
                     // first try to the last classify field
                     foreach (AnalystField field  in  fields)
                     {
-                        DataField df = script.FindDataField(field.Name);
+                        DataField df = _script.FindDataField(field.Name);
                         if (field.Action.IsClassify() && df.Class)
                         {
-                            targetField = field.Name;
+                            _targetField = field.Name;
                             success = true;
                         }
                     }
@@ -464,12 +464,12 @@ namespace Encog.App.Analyst.Wizard
                 else
                 {
                     // otherwise, just return the last regression field
-                    foreach (AnalystField field_0  in  fields)
+                    foreach (AnalystField field  in  fields)
                     {
-                        DataField df_1 = script.FindDataField(field_0.Name);
-                        if (!df_1.Class && (df_1.Real || df_1.Integer))
+                        DataField df = _script.FindDataField(field.Name);
+                        if (!df.Class && (df.Real || df.Integer))
                         {
-                            targetField = field_0.Name;
+                            _targetField = field.Name;
                             success = true;
                         }
                     }
@@ -485,42 +485,42 @@ namespace Encog.App.Analyst.Wizard
             }
             else
             {
-                if (script.FindDataField(targetField) == null)
+                if (_script.FindDataField(_targetField) == null)
                 {
                     throw new AnalystError("Invalid target field: "
-                                           + targetField);
+                                           + _targetField);
                 }
             }
 
-            script.Properties.SetProperty(
-                ScriptProperties.DATA_CONFIG_GOAL, goal);
+            _script.Properties.SetProperty(
+                ScriptProperties.DataConfigGoal, _goal);
 
-            if (!timeSeries && taskBalance)
+            if (!_timeSeries && _taskBalance)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.BALANCE_CONFIG_BALANCE_FIELD,
-                    targetField);
-                DataField field_2 = analyst.Script.FindDataField(
-                    targetField);
-                if ((field_2 != null) && field_2.Class)
+                _script.Properties.SetProperty(
+                    ScriptProperties.BalanceConfigBalanceField,
+                    _targetField);
+                DataField field = _analyst.Script.FindDataField(
+                    _targetField);
+                if ((field != null) && field.Class)
                 {
-                    int countPer = field_2.MinClassCount;
-                    script.Properties.SetProperty(
-                        ScriptProperties.BALANCE_CONFIG_COUNT_PER, countPer);
+                    int countPer = field.MinClassCount;
+                    _script.Properties.SetProperty(
+                        ScriptProperties.BalanceConfigCountPer, countPer);
                 }
             }
 
             // now that the target field has been determined, set the analyst fields
             AnalystField af = null;
 
-            foreach (AnalystField field_3  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
             {
-                if ((field_3.Action != NormalizationAction.Ignore)
-                    && field_3.Name.Equals(targetField, StringComparison.InvariantCultureIgnoreCase))
+                if ((field.Action != NormalizationAction.Ignore)
+                    && field.Name.Equals(_targetField, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if ((af == null) || (af.TimeSlice < af.TimeSlice))
+                    if ((af == null) || (af.TimeSlice < field.TimeSlice))
                     {
-                        af = field_3;
+                        af = field;
                     }
                 }
             }
@@ -531,20 +531,20 @@ namespace Encog.App.Analyst.Wizard
             }
 
             // set the clusters count
-            if (taskCluster)
+            if (_taskCluster)
             {
-                if ((targetField.Length == 0)
-                    || (goal != AnalystGoal.Classification))
+                if ((_targetField.Length == 0)
+                    || (_goal != AnalystGoal.Classification))
                 {
-                    script.Properties.SetProperty(
-                        ScriptProperties.CLUSTER_CONFIG_CLUSTERS, 2);
+                    _script.Properties.SetProperty(
+                        ScriptProperties.ClusterConfigClusters, 2);
                 }
                 else
                 {
-                    DataField tf = script
-                        .FindDataField(targetField);
-                    script.Properties.SetProperty(
-                        ScriptProperties.CLUSTER_CONFIG_CLUSTERS,
+                    DataField tf = _script
+                        .FindDataField(_targetField);
+                    _script.Properties.SetProperty(
+                        ScriptProperties.ClusterConfigClusters,
                         tf.ClassMembers.Count);
                 }
             }
@@ -556,7 +556,7 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void ExpandTimeSlices()
         {
-            IList<AnalystField> oldList = script.Normalize.NormalizedFields;
+            IList<AnalystField> oldList = _script.Normalize.NormalizedFields;
             IList<AnalystField> newList = new List<AnalystField>();
 
 
@@ -565,13 +565,11 @@ namespace Encog.App.Analyst.Wizard
             {
                 if (!field.Ignored)
                 {
-                    if (includeTargetField || field.Input)
+                    if (_includeTargetField || field.Input)
                     {
-                        for (int i = 0; i < lagWindowSize; i++)
+                        for (int i = 0; i < _lagWindowSize; i++)
                         {
-                            var newField = new AnalystField(field);
-                            newField.TimeSlice = -i;
-                            newField.Output = false;
+                            var newField = new AnalystField(field) {TimeSlice = -i, Output = false};
                             newList.Add(newField);
                         }
                     }
@@ -584,17 +582,16 @@ namespace Encog.App.Analyst.Wizard
 
 
             // generate the outputs foreach the new list
-            foreach (AnalystField field_0  in  oldList)
+            foreach (AnalystField field  in  oldList)
             {
-                if (!field_0.Ignored)
+                if (!field.Ignored)
                 {
-                    if (field_0.Output)
+                    if (field.Output)
                     {
-                        for (int i_1 = 1; i_1 <= leadWindowSize; i_1++)
+                        for (int i = 1; i <= _leadWindowSize; i++)
                         {
-                            var newField_2 = new AnalystField(field_0);
-                            newField_2.TimeSlice = i_1;
-                            newList.Add(newField_2);
+                            var newField = new AnalystField(field) {TimeSlice = i};
+                            newList.Add(newField);
                         }
                     }
                 }
@@ -602,11 +599,11 @@ namespace Encog.App.Analyst.Wizard
 
 
             // generate the ignores foreach the new list
-            foreach (AnalystField field_3  in  oldList)
+            foreach (AnalystField field  in  oldList)
             {
-                if (field_3.Ignored)
+                if (field.Ignored)
                 {
-                    newList.Add(field_3);
+                    newList.Add(field);
                 }
             }
 
@@ -623,32 +620,30 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         ///
         /// <param name="inputColumns">The input column count.</param>
-        /// <param name="outputColumns">The output column count.</param>
-        private void GenerateFeedForward(int inputColumns,
-                                         int outputColumns)
+        private void GenerateFeedForward(int inputColumns)
         {
             var hidden = (int) ((inputColumns)*1.5d);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_TYPE,
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigType,
                 MLMethodFactory.TYPE_FEEDFORWARD);
 
-            if (range == NormalizeRange.NegOne2One)
+            if (_range == NormalizeRange.NegOne2One)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.ML_CONFIG_ARCHITECTURE,
+                _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigArchitecture,
                     "?:B->TANH->" + hidden + ":B->TANH->?");
             }
             else
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.ML_CONFIG_ARCHITECTURE,
+                _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigArchitecture,
                     "?:B->SIGMOID->" + hidden + ":B->SIGMOID->?");
             }
 
-            script.Properties.SetProperty(ScriptProperties.ML_TRAIN_TYPE,
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
                                           "rprop");
-            script.Properties.SetProperty(
-                ScriptProperties.ML_TRAIN_TARGET_ERROR, DEFAULT_TRAIN_ERROR);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainTargetError, DefaultTrainError);
         }
 
         /// <summary>
@@ -658,52 +653,52 @@ namespace Encog.App.Analyst.Wizard
         /// <param name="rawFile">The raw filename.</param>
         private void GenerateFilenames(FileInfo rawFile)
         {
-            filenameRaw = rawFile.Name;
-            filenameNorm = FileUtil.AddFilenameBase(rawFile, "_norm").Name;
-            filenameRandom = FileUtil.AddFilenameBase(rawFile, "_random").Name;
-            filenameTrain = FileUtil.AddFilenameBase(rawFile, "_train").Name;
-            filenameEval = FileUtil.AddFilenameBase(rawFile, "_eval").Name;
-            filenameEvalNorm = FileUtil.AddFilenameBase(rawFile, "_eval_norm").Name;
-            filenameTrainSet = FileUtil.ForceExtension(filenameTrain,
+            _filenameRaw = rawFile.Name;
+            _filenameNorm = FileUtil.AddFilenameBase(rawFile, "_norm").Name;
+            _filenameRandom = FileUtil.AddFilenameBase(rawFile, "_random").Name;
+            _filenameTrain = FileUtil.AddFilenameBase(rawFile, "_train").Name;
+            _filenameEval = FileUtil.AddFilenameBase(rawFile, "_eval").Name;
+            _filenameEvalNorm = FileUtil.AddFilenameBase(rawFile, "_eval_norm").Name;
+            _filenameTrainSet = FileUtil.ForceExtension(_filenameTrain,
                                                        "egb");
-            filenameML = FileUtil.ForceExtension(filenameTrain, "eg");
-            filenameOutput = FileUtil.AddFilenameBase(rawFile, "_output").Name;
-            filenameBalance = FileUtil.AddFilenameBase(rawFile, "_balance").Name;
-            filenameCluster = FileUtil.AddFilenameBase(rawFile, "_cluster").Name;
+            _filenameMl = FileUtil.ForceExtension(_filenameTrain, "eg");
+            _filenameOutput = FileUtil.AddFilenameBase(rawFile, "_output").Name;
+            _filenameBalance = FileUtil.AddFilenameBase(rawFile, "_balance").Name;
+            _filenameCluster = FileUtil.AddFilenameBase(rawFile, "_cluster").Name;
 
-            ScriptProperties p = script.Properties;
+            ScriptProperties p = _script.Properties;
 
-            p.SetFilename(FILE_RAW, filenameRaw);
-            if (taskNormalize)
+            p.SetFilename(FileRaw, _filenameRaw);
+            if (_taskNormalize)
             {
-                p.SetFilename(FILE_NORMALIZE, filenameNorm);
+                p.SetFilename(FileNormalize, _filenameNorm);
             }
 
-            if (taskRandomize)
+            if (_taskRandomize)
             {
-                p.SetFilename(FILE_RANDOM, filenameRandom);
+                p.SetFilename(FileRandom, _filenameRandom);
             }
 
-            if (taskCluster)
+            if (_taskCluster)
             {
-                p.SetFilename(FILE_CLUSTER, filenameCluster);
+                p.SetFilename(FileCluster, _filenameCluster);
             }
 
-            if (taskSegregate)
+            if (_taskSegregate)
             {
-                p.SetFilename(FILE_TRAIN, filenameTrain);
-                p.SetFilename(FILE_EVAL, filenameEval);
-                p.SetFilename(FILE_EVAL_NORM, filenameEvalNorm);
+                p.SetFilename(FileTrain, _filenameTrain);
+                p.SetFilename(FileEval, _filenameEval);
+                p.SetFilename(FileEvalNorm, _filenameEvalNorm);
             }
 
-            if (taskBalance)
+            if (_taskBalance)
             {
-                p.SetFilename(FILE_BALANCE, filenameBalance);
+                p.SetFilename(FileBalance, _filenameBalance);
             }
 
-            p.SetFilename(FILE_TRAINSET, filenameTrainSet);
-            p.SetFilename(FILE_ML, filenameML);
-            p.SetFilename(FILE_OUTPUT, filenameOutput);
+            p.SetFilename(FileTrainset, _filenameTrainSet);
+            p.SetFilename(FileMl, _filenameMl);
+            p.SetFilename(FileOutput, _filenameOutput);
         }
 
         /// <summary>
@@ -714,31 +709,31 @@ namespace Encog.App.Analyst.Wizard
         {
             DetermineTargetField();
 
-            if (targetField == null)
+            if (_targetField == null)
             {
                 throw new AnalystError(
                     "Failed to find normalized version of target field: "
-                    + targetField);
+                    + _targetField);
             }
 
-            int inputColumns = script.Normalize
+            int inputColumns = _script.Normalize
                 .CalculateInputColumns();
-            int idealColumns = script.Normalize
+            int idealColumns = _script.Normalize
                 .CalculateOutputColumns();
 
-            switch (methodType)
+            switch (_methodType)
             {
                 case WizardMethodType.FeedForward:
-                    GenerateFeedForward(inputColumns, idealColumns);
+                    GenerateFeedForward(inputColumns);
                     break;
                 case WizardMethodType.SVM:
-                    GenerateSVM(inputColumns, idealColumns);
+                    GenerateSVM();
                     break;
                 case WizardMethodType.RBF:
                     GenerateRBF(inputColumns, idealColumns);
                     break;
                 case WizardMethodType.SOM:
-                    GenerateSOM(inputColumns);
+                    GenerateSOM();
                     break;
                 default:
                     throw new AnalystError("Unknown method type");
@@ -751,36 +746,28 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void GenerateNormalizedFields()
         {
-            IList<AnalystField> norm = script.Normalize.NormalizedFields;
+            IList<AnalystField> norm = _script.Normalize.NormalizedFields;
             norm.Clear();
-            DataField[] dataFields = script.Fields;
+            DataField[] dataFields = _script.Fields;
 
-            for (int i = 0; i < script.Fields.Length; i++)
+            for (int i = 0; i < _script.Fields.Length; i++)
             {
                 DataField f = dataFields[i];
 
                 NormalizationAction action;
-                bool isLast = i == script.Fields.Length - 1;
+                bool isLast = i == _script.Fields.Length - 1;
 
                 if ((f.Integer || f.Real) && !f.Class)
                 {
                     action = NormalizationAction.Normalize;
-                    AnalystField af;
-                    if (range == NormalizeRange.NegOne2One)
-                    {
-                        af = new AnalystField(f.Name, action, 1, -1);
-                    }
-                    else
-                    {
-                        af = new AnalystField(f.Name, action, 1, 0);
-                    }
+                    AnalystField af = _range == NormalizeRange.NegOne2One ? new AnalystField(f.Name, action, 1, -1) : new AnalystField(f.Name, action, 1, 0);
                     norm.Add(af);
                     af.ActualHigh = f.Max;
                     af.ActualLow = f.Min;
                 }
                 else if (f.Class)
                 {
-                    if (isLast && directClassification)
+                    if (isLast && _directClassification)
                     {
                         action = NormalizationAction.SingleField;
                     }
@@ -793,14 +780,9 @@ namespace Encog.App.Analyst.Wizard
                         action = NormalizationAction.OneOf;
                     }
 
-                    if (range == NormalizeRange.NegOne2One)
-                    {
-                        norm.Add(new AnalystField(f.Name, action, 1, -1));
-                    }
-                    else
-                    {
-                        norm.Add(new AnalystField(f.Name, action, 1, 0));
-                    }
+                    norm.Add(_range == NormalizeRange.NegOne2One
+                                 ? new AnalystField(f.Name, action, 1, -1)
+                                 : new AnalystField(f.Name, action, 1, 0));
                 }
                 else
                 {
@@ -809,7 +791,7 @@ namespace Encog.App.Analyst.Wizard
                 }
             }
 
-            script.Normalize.Init(script);
+            _script.Normalize.Init(_script);
         }
 
         /// <summary>
@@ -821,26 +803,18 @@ namespace Encog.App.Analyst.Wizard
         private void GenerateRBF(int inputColumns, int outputColumns)
         {
             var hidden = (int) ((inputColumns)*1.5d);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_TYPE,
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigType,
                 MLMethodFactory.TYPE_RBFNETWORK);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_ARCHITECTURE,
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigArchitecture,
                 "?->GAUSSIAN(c=" + hidden + ")->?");
 
-            if (outputColumns > 1)
-            {
-                script.Properties.SetProperty(
-                    ScriptProperties.ML_TRAIN_TYPE, "rprop");
-            }
-            else
-            {
-                script.Properties.SetProperty(
-                    ScriptProperties.ML_TRAIN_TYPE, "svd");
-            }
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainType, outputColumns > 1 ? "rprop" : "svd");
 
-            script.Properties.SetProperty(ScriptProperties.ML_TRAIN_TYPE,
-                                          DEFAULT_TRAIN_ERROR);
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+                                          DefaultTrainError);
         }
 
         /// <summary>
@@ -849,19 +823,19 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void GenerateSegregate()
         {
-            if (taskSegregate)
+            if (_taskSegregate)
             {
                 var array = new AnalystSegregateTarget[2];
-                array[0] = new AnalystSegregateTarget(FILE_TRAIN,
-                                                      DEFAULT_TRAIN_PERCENT);
-                array[1] = new AnalystSegregateTarget(FILE_EVAL,
-                                                      DEFAULT_EVAL_PERCENT);
-                script.Segregate.SegregateTargets = array;
+                array[0] = new AnalystSegregateTarget(FileTrain,
+                                                      DefaultTrainPercent);
+                array[1] = new AnalystSegregateTarget(FileEval,
+                                                      DefaultEvalPercent);
+                _script.Segregate.SegregateTargets = array;
             }
             else
             {
-                var array_0 = new AnalystSegregateTarget[0];
-                script.Segregate.SegregateTargets = array_0;
+                var array = new AnalystSegregateTarget[0];
+                _script.Segregate.SegregateTargets = array;
             }
         }
 
@@ -871,153 +845,131 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void GenerateSettings()
         {
-            String target;
-            String evalSource;
-
             // starting point
-            target = FILE_RAW;
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE, target);
+            string target = FileRaw;
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceRawFile, target);
 
             // randomize
-            if (!timeSeries && taskRandomize)
+            if (!_timeSeries && _taskRandomize)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.RANDOMIZE_CONFIG_SOURCE_FILE,
-                    FILE_RAW);
-                target = FILE_RANDOM;
-                script.Properties.SetProperty(
-                    ScriptProperties.RANDOMIZE_CONFIG_TARGET_FILE, target);
+                _script.Properties.SetProperty(
+                    ScriptProperties.RandomizeConfigSourceFile,
+                    FileRaw);
+                target = FileRandom;
+                _script.Properties.SetProperty(
+                    ScriptProperties.RandomizeConfigTargetFile, target);
             }
 
             // balance
-            if (!timeSeries && taskBalance)
+            if (!_timeSeries && _taskBalance)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.BALANCE_CONFIG_SOURCE_FILE, target);
-                target = FILE_BALANCE;
-                script.Properties.SetProperty(
-                    ScriptProperties.BALANCE_CONFIG_TARGET_FILE, target);
+                _script.Properties.SetProperty(
+                    ScriptProperties.BalanceConfigSourceFile, target);
+                target = FileBalance;
+                _script.Properties.SetProperty(
+                    ScriptProperties.BalanceConfigTargetFile, target);
             }
 
             // segregate
-            if (taskSegregate)
+            if (_taskSegregate)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.SEGREGATE_CONFIG_SOURCE_FILE, target);
-                target = FILE_TRAIN;
+                _script.Properties.SetProperty(
+                    ScriptProperties.SegregateConfigSourceFile, target);
+                target = FileTrain;
             }
 
             // normalize
-            if (taskNormalize)
+            if (_taskNormalize)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.NORMALIZE_CONFIG_SOURCE_FILE, target);
-                target = FILE_NORMALIZE;
-                script.Properties.SetProperty(
-                    ScriptProperties.NORMALIZE_CONFIG_TARGET_FILE, target);
+                _script.Properties.SetProperty(
+                    ScriptProperties.NormalizeConfigSourceFile, target);
+                target = FileNormalize;
+                _script.Properties.SetProperty(
+                    ScriptProperties.NormalizeConfigTargetFile, target);
             }
 
-            if (taskSegregate)
-            {
-                evalSource = FILE_EVAL;
-            }
-            else
-            {
-                evalSource = target;
-            }
+            string evalSource = _taskSegregate ? FileEval : target;
 
             // cluster
-            if (taskCluster)
+            if (_taskCluster)
             {
-                script.Properties.SetProperty(
-                    ScriptProperties.CLUSTER_CONFIG_SOURCE_FILE, evalSource);
-                script.Properties.SetProperty(
-                    ScriptProperties.CLUSTER_CONFIG_TARGET_FILE,
-                    FILE_CLUSTER);
-                script.Properties.SetProperty(
-                    ScriptProperties.CLUSTER_CONFIG_TYPE, "kmeans");
+                _script.Properties.SetProperty(
+                    ScriptProperties.ClusterConfigSourceFile, evalSource);
+                _script.Properties.SetProperty(
+                    ScriptProperties.ClusterConfigTargetFile,
+                    FileCluster);
+                _script.Properties.SetProperty(
+                    ScriptProperties.ClusterConfigType, "kmeans");
             }
 
             // generate
-            script.Properties.SetProperty(
-                ScriptProperties.GENERATE_CONFIG_SOURCE_FILE, target);
-            script.Properties.SetProperty(
-                ScriptProperties.GENERATE_CONFIG_TARGET_FILE,
-                FILE_TRAINSET);
+            _script.Properties.SetProperty(
+                ScriptProperties.GenerateConfigSourceFile, target);
+            _script.Properties.SetProperty(
+                ScriptProperties.GenerateConfigTargetFile,
+                FileTrainset);
 
             // ML
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_TRAINING_FILE,
-                FILE_TRAINSET);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE,
-                FILE_ML);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_OUTPUT_FILE,
-                FILE_OUTPUT);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigTrainingFile,
+                FileTrainset);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigMachineLearningFile,
+                FileMl);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigOutputFile,
+                FileOutput);
 
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_EVAL_FILE, evalSource);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigEvalFile, evalSource);
 
             // other
-            script.Properties.SetProperty(
-                ScriptProperties.SETUP_CONFIG_CSV_FORMAT,
-                AnalystFileFormat.DECPNT_COMMA);
+            _script.Properties.SetProperty(
+                ScriptProperties.SetupConfigCSVFormat,
+                AnalystFileFormat.DecpntComma);
         }
 
         /// <summary>
         /// Generate a SOM machine learning method.
         /// </summary>
-        ///
-        /// <param name="inputColumns">The number of input columns.</param>
-        private void GenerateSOM(int inputColumns)
+        private void GenerateSOM()
         {
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_TYPE, MLMethodFactory.TYPE_SOM);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_ARCHITECTURE, "?->?");
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigType, MLMethodFactory.TYPE_SOM);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigArchitecture, "?->?");
 
-            script.Properties.SetProperty(ScriptProperties.ML_TRAIN_TYPE,
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
                                           MLTrainFactory.TYPE_SOM_NEIGHBORHOOD);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_TRAIN_ARGUMENTS,
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainArguments,
                 "ITERATIONS=1000,NEIGHBORHOOD=rbf1d,RBF_TYPE=gaussian");
 
             // ScriptProperties.ML_TRAIN_arguments
-            script.Properties.SetProperty(
-                ScriptProperties.ML_TRAIN_TARGET_ERROR, DEFAULT_TRAIN_ERROR);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainTargetError, DefaultTrainError);
         }
 
         /// <summary>
         /// Generate a SVM machine learning method.
         /// </summary>
-        ///
-        /// <param name="inputColumns">The number of input columns.</param>
-        /// <param name="outputColumns">The number of ideal columns.</param>
-        private void GenerateSVM(int inputColumns, int outputColumns)
+        private void GenerateSVM()
         {
             var arch = new StringBuilder();
             arch.Append("?->");
-            if (goal == AnalystGoal.Classification)
-            {
-                arch.Append("C");
-            }
-            else
-            {
-                arch.Append("R");
-            }
+            arch.Append(_goal == AnalystGoal.Classification ? "C" : "R");
             arch.Append("(type=new,kernel=rbf)->?");
 
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_TYPE, MLMethodFactory.TYPE_SVM);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_CONFIG_ARCHITECTURE, arch.ToString());
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigType, MLMethodFactory.TYPE_SVM);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigArchitecture, arch.ToString());
 
-            script.Properties.SetProperty(ScriptProperties.ML_TRAIN_TYPE,
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
                                           MLTrainFactory.TYPE_SVM_SEARCH);
-            script.Properties.SetProperty(
-                ScriptProperties.ML_TRAIN_TARGET_ERROR, DEFAULT_TRAIN_ERROR);
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainTargetError, DefaultTrainError);
         }
 
         /// <summary>
@@ -1026,23 +978,23 @@ namespace Encog.App.Analyst.Wizard
         ///
         private void GenerateTasks()
         {
-            var task1 = new AnalystTask(EncogAnalyst.TASK_FULL);
-            if (!timeSeries && taskRandomize)
+            var task1 = new AnalystTask(EncogAnalyst.TaskFull);
+            if (!_timeSeries && _taskRandomize)
             {
                 task1.Lines.Add("randomize");
             }
 
-            if (!timeSeries && taskBalance)
+            if (!_timeSeries && _taskBalance)
             {
                 task1.Lines.Add("balance");
             }
 
-            if (taskSegregate)
+            if (_taskSegregate)
             {
                 task1.Lines.Add("segregate");
             }
 
-            if (taskNormalize)
+            if (_taskNormalize)
             {
                 task1.Lines.Add("normalize");
             }
@@ -1053,28 +1005,28 @@ namespace Encog.App.Analyst.Wizard
             task1.Lines.Add("evaluate");
 
             var task2 = new AnalystTask("task-generate");
-            if (!timeSeries && taskRandomize)
+            if (!_timeSeries && _taskRandomize)
             {
                 task2.Lines.Add("randomize");
             }
 
-            if (taskSegregate)
+            if (_taskSegregate)
             {
                 task2.Lines.Add("segregate");
             }
-            if (taskNormalize)
+            if (_taskNormalize)
             {
                 task2.Lines.Add("normalize");
             }
             task2.Lines.Add("generate");
 
             var task3 = new AnalystTask("task-evaluate-raw");
-            task3.Lines.Add(CreateSet(ScriptProperties.ML_CONFIG_EVAL_FILE,
-                                      FILE_EVAL_NORM));
-            task3.Lines.Add(CreateSet(ScriptProperties.NORMALIZE_CONFIG_SOURCE_FILE,
-                                      FILE_EVAL));
-            task3.Lines.Add(CreateSet(ScriptProperties.NORMALIZE_CONFIG_TARGET_FILE,
-                                      FILE_EVAL_NORM));
+            task3.Lines.Add(CreateSet(ScriptProperties.MlConfigEvalFile,
+                                      FileEvalNorm));
+            task3.Lines.Add(CreateSet(ScriptProperties.NormalizeConfigSourceFile,
+                                      FileEval));
+            task3.Lines.Add(CreateSet(ScriptProperties.NormalizeConfigTargetFile,
+                                      FileEvalNorm));
             task3.Lines.Add("normalize");
             task3.Lines.Add("evaluate-raw");
 
@@ -1090,13 +1042,13 @@ namespace Encog.App.Analyst.Wizard
             var task7 = new AnalystTask("task-cluster");
             task7.Lines.Add("cluster");
 
-            script.AddTask(task1);
-            script.AddTask(task2);
-            script.AddTask(task3);
-            script.AddTask(task4);
-            script.AddTask(task5);
-            script.AddTask(task6);
-            script.AddTask(task7);
+            _script.AddTask(task1);
+            _script.AddTask(task2);
+            _script.AddTask(task3);
+            _script.AddTask(task4);
+            _script.AddTask(task5);
+            _script.AddTask(task6);
+            _script.AddTask(task7);
         }
 
 
@@ -1106,18 +1058,18 @@ namespace Encog.App.Analyst.Wizard
         ///
         public void Reanalyze()
         {
-            String rawID = script.Properties.GetPropertyFile(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE);
+            String rawID = _script.Properties.GetPropertyFile(
+                ScriptProperties.HeaderDatasourceRawFile);
 
-            FileInfo rawFilename = analyst.Script
+            FileInfo rawFilename = _analyst.Script
                 .ResolveFilename(rawID);
 
-            analyst.Analyze(
+            _analyst.Analyze(
                 rawFilename,
-                script.Properties.GetPropertyBoolean(
-                    ScriptProperties.SETUP_CONFIG_INPUT_HEADERS),
-                script.Properties.GetPropertyFormat(
-                    ScriptProperties.SETUP_CONFIG_CSV_FORMAT));
+                _script.Properties.GetPropertyBoolean(
+                    ScriptProperties.SetupConfigInputHeaders),
+                _script.Properties.GetPropertyFormat(
+                    ScriptProperties.SetupConfigCSVFormat));
         }
 
         /// <summary>
@@ -1130,27 +1082,27 @@ namespace Encog.App.Analyst.Wizard
         public void Wizard(FileInfo analyzeFile, bool b,
                            AnalystFileFormat format)
         {
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_FORMAT, format);
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_HEADERS, b);
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE, analyzeFile);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceSourceFormat, format);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceSourceHeaders, b);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceRawFile, analyzeFile);
 
-            timeSeries = ((lagWindowSize > 0) || (leadWindowSize > 0));
+            _timeSeries = ((_lagWindowSize > 0) || (_leadWindowSize > 0));
 
             DetermineClassification();
             GenerateFilenames(analyzeFile);
             GenerateSettings();
-            analyst.Analyze(analyzeFile, b, format);
+            _analyst.Analyze(analyzeFile, b, format);
             GenerateNormalizedFields();
             GenerateSegregate();
 
             GenerateGenerate();
 
             GenerateTasks();
-            if (timeSeries && (lagWindowSize > 0)
-                && (leadWindowSize > 0))
+            if (_timeSeries && (_lagWindowSize > 0)
+                && (_leadWindowSize > 0))
             {
                 ExpandTimeSlices();
             }
@@ -1169,20 +1121,20 @@ namespace Encog.App.Analyst.Wizard
                            FileInfo analyzeFile, bool b,
                            AnalystFileFormat format)
         {
-            script.BasePath = saveFile.DirectoryName;
+            _script.BasePath = saveFile.DirectoryName;
 
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_FILE, url);
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_FORMAT, format);
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_HEADERS, b);
-            script.Properties.SetProperty(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE, analyzeFile);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceSourceFile, url);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceSourceFormat, format);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceSourceHeaders, b);
+            _script.Properties.SetProperty(
+                ScriptProperties.HeaderDatasourceRawFile, analyzeFile);
 
             GenerateFilenames(analyzeFile);
             GenerateSettings();
-            analyst.Download();
+            _analyst.Download();
 
             Wizard(analyzeFile, b, format);
         }

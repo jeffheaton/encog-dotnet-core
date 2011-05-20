@@ -50,9 +50,9 @@ namespace Encog.App.Quant.Indicators
         public override sealed void Calculate(IDictionary<String, BaseCachedColumn> data,
                                               int length)
         {
-            Require(data, FileData.CLOSE);
+            Require(data, FileData.Close);
 
-            double[] close = data[FileData.CLOSE].Data;
+            double[] close = data[FileData.Close].Data;
             double[] output = Data;
 
             int lookbackTotal = (periods - 1);

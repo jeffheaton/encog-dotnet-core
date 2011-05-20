@@ -25,30 +25,28 @@ namespace Encog.App.Analyst.Util
         /// <returns>A string.</returns>
         public static String AnalystFileFormat2String(AnalystFileFormat af)
         {
-            if (af == AnalystFileFormat.DECPNT_COMMA)
+            if (af == AnalystFileFormat.DecpntComma)
             {
                 return "decpnt|comma";
             }
-            else if (af == AnalystFileFormat.DECPNT_SPACE)
+            if (af == AnalystFileFormat.DecpntSpace)
             {
                 return "decpnt|space";
             }
-            else if (af == AnalystFileFormat.DECPNT_SEMI)
+            if (af == AnalystFileFormat.DecpntSemi)
             {
                 return "decpnt|semi";
             }
-            else if (af == AnalystFileFormat.DECCOMMA_SPACE)
+            if (af == AnalystFileFormat.DeccommaSpace)
             {
                 return "deccomma|space";
             }
-            else if (af == AnalystFileFormat.DECCOMMA_SEMI)
+            if (af == AnalystFileFormat.DeccommaSemi)
             {
                 return "deccomma|semi";
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         /// <summary>
@@ -59,23 +57,23 @@ namespace Encog.App.Analyst.Util
         /// <returns>The CSV format.</returns>
         public static CSVFormat ConvertToCSVFormat(AnalystFileFormat af)
         {
-            if (af == AnalystFileFormat.DECPNT_COMMA)
+            if (af == AnalystFileFormat.DecpntComma)
             {
                 return new CSVFormat('.', ',');
             }
-            else if (af == AnalystFileFormat.DECPNT_SPACE)
+            else if (af == AnalystFileFormat.DecpntSpace)
             {
                 return new CSVFormat('.', ' ');
             }
-            else if (af == AnalystFileFormat.DECPNT_SEMI)
+            else if (af == AnalystFileFormat.DecpntSemi)
             {
                 return new CSVFormat('.', ';');
             }
-            else if (af == AnalystFileFormat.DECCOMMA_SPACE)
+            else if (af == AnalystFileFormat.DeccommaSpace)
             {
                 return new CSVFormat(',', ' ');
             }
-            else if (af == AnalystFileFormat.DECCOMMA_SEMI)
+            else if (af == AnalystFileFormat.DeccommaSemi)
             {
                 return new CSVFormat(',', ';');
             }
@@ -95,27 +93,27 @@ namespace Encog.App.Analyst.Util
         {
             if (str.Equals("decpnt|comma", StringComparison.InvariantCultureIgnoreCase))
             {
-                return AnalystFileFormat.DECPNT_COMMA;
+                return AnalystFileFormat.DecpntComma;
             }
             else if (str.Equals("decpnt|space", StringComparison.InvariantCultureIgnoreCase))
             {
-                return AnalystFileFormat.DECPNT_SPACE;
+                return AnalystFileFormat.DecpntSpace;
             }
             else if (str.Equals("decpnt|semi", StringComparison.InvariantCultureIgnoreCase))
             {
-                return AnalystFileFormat.DECPNT_SEMI;
+                return AnalystFileFormat.DecpntSemi;
             }
             else if (str.Equals("decpnt|space", StringComparison.InvariantCultureIgnoreCase))
             {
-                return AnalystFileFormat.DECCOMMA_SPACE;
+                return AnalystFileFormat.DeccommaSpace;
             }
             else if (str.Equals("decpnt|semi", StringComparison.InvariantCultureIgnoreCase))
             {
-                return AnalystFileFormat.DECCOMMA_SEMI;
+                return AnalystFileFormat.DeccommaSemi;
             }
             else
             {
-                return AnalystFileFormat.UNKNOWN;
+                return AnalystFileFormat.Unknown;
             }
         }
     }

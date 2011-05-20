@@ -61,7 +61,7 @@
     <Compile Include="App\Analyst\AnalystError.cs" />
     <Compile Include="App\Analyst\AnalystFileFormat.cs" />
     <Compile Include="App\Analyst\AnalystGoal.cs" />
-    <Compile Include="App\Analyst\AnalystListener.cs" />
+    <Compile Include="App\Analyst\IAnalystListener.cs" />
     <Compile Include="App\Analyst\Analyze\AnalyzedField.cs" />
     <Compile Include="App\Analyst\Analyze\PerformAnalysis.cs" />
     <Compile Include="App\Analyst\Commands\Cmd.cs" />

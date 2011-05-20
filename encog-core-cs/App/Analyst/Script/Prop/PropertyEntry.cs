@@ -15,19 +15,19 @@ namespace Encog.App.Analyst.Script.Prop
         /// The type of property.
         /// </summary>
         ///
-        private readonly PropertyType entryType;
+        private readonly PropertyType _entryType;
 
         /// <summary>
         /// The name of the property.
         /// </summary>
         ///
-        private readonly String name;
+        private readonly String _name;
 
         /// <summary>
         /// The section of the property.
         /// </summary>
         ///
-        private readonly String section;
+        private readonly String _section;
 
         /// <summary>
         /// Construct a property entry.
@@ -39,37 +39,37 @@ namespace Encog.App.Analyst.Script.Prop
         public PropertyEntry(PropertyType theEntryType, String theName,
                              String theSection)
         {
-            entryType = theEntryType;
-            name = theName;
-            section = theSection;
+            _entryType = theEntryType;
+            _name = theName;
+            _section = theSection;
         }
 
 
         /// <value>the entryType</value>
         public PropertyType EntryType
         {
-            get { return entryType; }
+            get { return _entryType; }
         }
 
 
         /// <value>The key.</value>
         public String Key
         {
-            get { return section + "_" + name; }
+            get { return _section + "_" + _name; }
         }
 
 
         /// <value>the name</value>
         public String Name
         {
-            get { return name; }
+            get { return _name; }
         }
 
 
         /// <value>the section</value>
         public String Section
         {
-            get { return section; }
+            get { return _section; }
         }
 
         #region IComparable<PropertyEntry> Members
@@ -80,7 +80,7 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         public int CompareTo(PropertyEntry o)
         {
-            return String.CompareOrdinal(name, o.name);
+            return String.CompareOrdinal(_name, o._name);
         }
 
         #endregion
@@ -115,9 +115,9 @@ namespace Encog.App.Analyst.Script.Prop
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", section=");
-            result.Append(section);
+            result.Append(_section);
             result.Append("]");
             return result.ToString();
         }
@@ -129,11 +129,11 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="theSection">The section.</param>
         /// <param name="subSection">The sub section.</param>
         /// <param name="theName">The name of the property.</param>
-        /// <param name="value_ren">The value of the property.</param>
+        /// <param name="v">The value of the property.</param>
         public void Validate(String theSection,
-                             String subSection, String theName, String value_ren)
+                             String subSection, String theName, String v)
         {
-            if ((value_ren == null) || (value_ren.Length == 0))
+            if (string.IsNullOrEmpty(v))
             {
                 return;
             }
@@ -143,37 +143,37 @@ namespace Encog.App.Analyst.Script.Prop
                 switch (EntryType)
                 {
                     case PropertyType.TypeBoolean:
-                        if ((Char.ToUpper(value_ren[0]) != 'T')
-                            && (Char.ToUpper(value_ren[0]) != 'F'))
+                        if ((Char.ToUpper(v[0]) != 'T')
+                            && (Char.ToUpper(v[0]) != 'F'))
                         {
                             var result = new StringBuilder();
                             result.Append("Illegal boolean for ");
-                            result.Append(DotForm(section, subSection,
-                                                  name));
+                            result.Append(DotForm(_section, subSection,
+                                                  _name));
                             result.Append(", value is ");
-                            result.Append(value_ren);
+                            result.Append(v);
                             result.Append(".");
                             throw new AnalystError(result.ToString());
                         }
                         break;
                     case PropertyType.TypeDouble:
-                        CSVFormat.EG_FORMAT.Parse(value_ren);
+                        CSVFormat.EG_FORMAT.Parse(v);
                         break;
-                    case PropertyType.typeFormat:
-                        if (ConvertStringConst.String2AnalystFileFormat(value_ren) == AnalystFileFormat.UNKNOWN)
+                    case PropertyType.TypeFormat:
+                        if (ConvertStringConst.String2AnalystFileFormat(v) == AnalystFileFormat.Unknown)
                         {
-                            var result_0 = new StringBuilder();
-                            result_0.Append("Invalid file format for ");
-                            result_0.Append(DotForm(section, subSection,
-                                                    name));
-                            result_0.Append(", value is ");
-                            result_0.Append(value_ren);
-                            result_0.Append(".");
-                            throw new AnalystError(result_0.ToString());
+                            var result = new StringBuilder();
+                            result.Append("Invalid file format for ");
+                            result.Append(DotForm(_section, subSection,
+                                                    _name));
+                            result.Append(", value is ");
+                            result.Append(v);
+                            result.Append(".");
+                            throw new AnalystError(result.ToString());
                         }
                         break;
                     case PropertyType.TypeInteger:
-                        Int32.Parse(value_ren);
+                        Int32.Parse(v);
                         break;
                     case PropertyType.TypeListString:
                         break;
@@ -185,15 +185,15 @@ namespace Encog.App.Analyst.Script.Prop
             }
             catch (FormatException )
             {
-                var result_1 = new StringBuilder();
-                result_1.Append("Illegal value for ");
-                result_1.Append(DotForm(section, subSection, name));
-                result_1.Append(", expecting a ");
-                result_1.Append(EntryType.ToString());
-                result_1.Append(", but got ");
-                result_1.Append(value_ren);
-                result_1.Append(".");
-                throw new AnalystError(result_1.ToString());
+                var result = new StringBuilder();
+                result.Append("Illegal value for ");
+                result.Append(DotForm(_section, subSection, _name));
+                result.Append(", expecting a ");
+                result.Append(EntryType.ToString());
+                result.Append(", but got ");
+                result.Append(v);
+                result.Append(".");
+                throw new AnalystError(result.ToString());
             }
         }
     }

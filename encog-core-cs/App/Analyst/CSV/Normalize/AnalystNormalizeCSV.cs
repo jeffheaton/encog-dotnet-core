@@ -21,19 +21,19 @@ namespace Encog.App.Analyst.CSV.Normalize
         /// The analyst to use.
         /// </summary>
         ///
-        private EncogAnalyst analyst;
+        private EncogAnalyst _analyst;
 
         /// <summary>
         /// THe headers.
         /// </summary>
         ///
-        private CSVHeaders analystHeaders;
+        private CSVHeaders _analystHeaders;
 
         /// <summary>
         /// Used to process time series.
         /// </summary>
         ///
-        private TimeSeriesUtil series;
+        private TimeSeriesUtil _series;
 
         /// <summary>
         /// Extract fields from a file into a numeric array for machine learning.
@@ -75,9 +75,9 @@ namespace Encog.App.Analyst.CSV.Normalize
                 }
                 else
                 {
-                    double[] d_0 = stat.Encode(str);
+                    double[] d = stat.Encode(str);
 
-                    foreach (double element  in  d_0)
+                    foreach (double element  in  d)
                     {
                         output[outputIndex++] = element;
                     }
@@ -102,20 +102,20 @@ namespace Encog.App.Analyst.CSV.Normalize
             InputFilename = inputFilename;
             InputFormat = inputFormat;
             ExpectInputHeaders = expectInputHeaders;
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
             Analyzed = true;
 
-            analystHeaders = new CSVHeaders(inputFilename, expectInputHeaders,
+            _analystHeaders = new CSVHeaders(inputFilename, expectInputHeaders,
                                             inputFormat);
 
 
-            foreach (AnalystField field  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
             {
                 field.Init();
             }
 
-            series = new TimeSeriesUtil(analyst,
-                                        analystHeaders.Headers);
+            _series = new TimeSeriesUtil(_analyst,
+                                        _analystHeaders.Headers);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Encog.App.Analyst.CSV.Normalize
         /// <param name="file">The file to write to.</param>
         public void Normalize(FileInfo file)
         {
-            if (analyst == null)
+            if (_analyst == null)
             {
                 throw new EncogError(
                     "Can't normalize yet, file has not been analyzed.");
@@ -149,7 +149,7 @@ namespace Encog.App.Analyst.CSV.Normalize
                 }
 
                 ResetStatus();
-                int outputLength = analyst.DetermineUniqueColumns();
+                int outputLength = _analyst.DetermineUniqueColumns();
 
                 // write file contents
                 while (csv.Next() && !ShouldStop())
@@ -157,12 +157,12 @@ namespace Encog.App.Analyst.CSV.Normalize
                     UpdateStatus(false);
 
                     double[] output = ExtractFields(
-                        analyst, analystHeaders, csv, outputLength,
+                        _analyst, _analystHeaders, csv, outputLength,
                         false);
 
-                    if (series.TotalDepth > 1)
+                    if (_series.TotalDepth > 1)
                     {
-                        output = series.Process(output);
+                        output = _series.Process(output);
                     }
 
                     if (output != null)
@@ -198,9 +198,9 @@ namespace Encog.App.Analyst.CSV.Normalize
                     {
                         tw.Close();
                     }
-                    catch (Exception ex_0)
+                    catch (Exception ex)
                     {
-                        EncogLogging.Log(ex_0);
+                        EncogLogging.Log(ex);
                     }
                 }
             }
@@ -231,7 +231,7 @@ namespace Encog.App.Analyst.CSV.Normalize
         {
             var line = new StringBuilder();
 
-            foreach (AnalystField stat  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField stat  in  _analyst.Script.Normalize.NormalizedFields)
             {
                 int needed = stat.ColumnsNeeded;
 

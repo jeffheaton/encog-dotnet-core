@@ -15,49 +15,49 @@ namespace Encog.App.Analyst.CSV
         /// The analyst to use.
         /// </summary>
         ///
-        private readonly EncogAnalyst analyst;
+        private readonly EncogAnalyst _analyst;
 
         /// <summary>
         /// The buffer to hold the time-series data.
         /// </summary>
         ///
-        private readonly IList<double[]> buffer;
+        private readonly IList<double[]> _buffer;
 
         /// <summary>
         /// The heading map.
         /// </summary>
         ///
-        private readonly IDictionary<String, Int32> headingMap;
+        private readonly IDictionary<String, Int32> _headingMap;
 
         /// <summary>
         /// The input size.
         /// </summary>
         ///
-        private readonly int inputSize;
+        private readonly int _inputSize;
 
         /// <summary>
         /// The lag depth.
         /// </summary>
         ///
-        private readonly int lagDepth;
+        private readonly int _lagDepth;
 
         /// <summary>
         /// The lead depth.
         /// </summary>
         ///
-        private readonly int leadDepth;
+        private readonly int _leadDepth;
 
         /// <summary>
         /// The output size.
         /// </summary>
         ///
-        private readonly int outputSize;
+        private readonly int _outputSize;
 
         /// <summary>
         /// The total depth.
         /// </summary>
         ///
-        private readonly int totalDepth;
+        private readonly int _totalDepth;
 
         /// <summary>
         /// Construct the time-series utility.
@@ -66,23 +66,23 @@ namespace Encog.App.Analyst.CSV
         /// <param name="theAnalyst">The analyst to use.</param>
         /// <param name="headings">The column headings.</param>
         public TimeSeriesUtil(EncogAnalyst theAnalyst,
-                              IList<String> headings)
+                              IEnumerable<string> headings)
         {
-            buffer = new List<double[]>();
-            headingMap = new Dictionary<String, Int32>();
-            analyst = theAnalyst;
-            lagDepth = analyst.LagDepth;
-            leadDepth = analyst.LeadDepth;
-            totalDepth = lagDepth + leadDepth + 1;
-            inputSize = analyst.DetermineUniqueColumns();
-            outputSize = analyst.DetermineInputCount()
-                         + analyst.DetermineOutputCount();
+            _buffer = new List<double[]>();
+            _headingMap = new Dictionary<String, Int32>();
+            _analyst = theAnalyst;
+            _lagDepth = _analyst.LagDepth;
+            _leadDepth = _analyst.LeadDepth;
+            _totalDepth = _lagDepth + _leadDepth + 1;
+            _inputSize = _analyst.DetermineUniqueColumns();
+            _outputSize = _analyst.DetermineInputCount()
+                         + _analyst.DetermineOutputCount();
 
             int headingIndex = 0;
 
             foreach (String column  in  headings)
             {
-                headingMap[column] = headingIndex++;
+                _headingMap[column] = headingIndex++;
             }
         }
 
@@ -90,56 +90,56 @@ namespace Encog.App.Analyst.CSV
         /// <value>the analyst</value>
         public EncogAnalyst Analyst
         {
-            get { return analyst; }
+            get { return _analyst; }
         }
 
 
         /// <value>the buffer</value>
         public IList<double[]> Buffer
         {
-            get { return buffer; }
+            get { return _buffer; }
         }
 
 
         /// <value>the headingMap</value>
         public IDictionary<String, Int32> HeadingMap
         {
-            get { return headingMap; }
+            get { return _headingMap; }
         }
 
 
         /// <value>the inputSize</value>
         public int InputSize
         {
-            get { return inputSize; }
+            get { return _inputSize; }
         }
 
 
         /// <value>the lagDepth</value>
         public int LagDepth
         {
-            get { return lagDepth; }
+            get { return _lagDepth; }
         }
 
 
         /// <value>the leadDepth</value>
         public int LeadDepth
         {
-            get { return leadDepth; }
+            get { return _leadDepth; }
         }
 
 
         /// <value>the outputSize</value>
         public int OutputSize
         {
-            get { return outputSize; }
+            get { return _outputSize; }
         }
 
 
         /// <value>the totalDepth</value>
         public int TotalDepth
         {
-            get { return totalDepth; }
+            get { return _totalDepth; }
         }
 
 
@@ -151,46 +151,46 @@ namespace Encog.App.Analyst.CSV
         /// <returns>The output.</returns>
         public double[] Process(double[] input)
         {
-            if (input.Length != inputSize)
+            if (input.Length != _inputSize)
             {
                 throw new AnalystError("Invalid input size: " + input.Length
-                                       + ", should be " + inputSize);
+                                       + ", should be " + _inputSize);
             }
 
-            buffer.Insert(0, EngineArray.ArrayCopy(input));
+            _buffer.Insert(0, EngineArray.ArrayCopy(input));
 
             // are we ready yet?
-            if (buffer.Count < totalDepth)
+            if (_buffer.Count < _totalDepth)
             {
                 return null;
             }
 
             // create output
-            var output = new double[outputSize];
+            var output = new double[_outputSize];
 
             int outputIndex = 0;
 
-            foreach (AnalystField field  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
             {
                 if (!field.Ignored)
                 {
-                    if (!headingMap.ContainsKey(field.Name))
+                    if (!_headingMap.ContainsKey(field.Name))
                     {
                         throw new AnalystError("Undefined field: "
                                                + field.Name);
                     }
-                    int headingIndex = headingMap[field.Name];
+                    int headingIndex = _headingMap[field.Name];
                     int timeslice = TranslateTimeSlice(field.TimeSlice);
-                    double[] row = buffer[timeslice];
+                    double[] row = _buffer[timeslice];
                     double d = row[headingIndex];
                     output[outputIndex++] = d;
                 }
             }
 
             // keep the buffer at a good size
-            while (buffer.Count > totalDepth)
+            while (_buffer.Count > _totalDepth)
             {
-                buffer.RemoveAt(buffer.Count - 1);
+                _buffer.RemoveAt(_buffer.Count - 1);
             }
 
             return output;
@@ -205,7 +205,7 @@ namespace Encog.App.Analyst.CSV
         /// <returns>The translated displacement.</returns>
         private int TranslateTimeSlice(int index)
         {
-            return Math.Abs(index - leadDepth);
+            return Math.Abs(index - _leadDepth);
         }
     }
 }

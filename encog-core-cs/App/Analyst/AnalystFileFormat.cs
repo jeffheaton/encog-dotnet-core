@@ -10,35 +10,35 @@ namespace Encog.App.Analyst
         /// Normal English file, decimal point and comma.
         /// </summary>
         ///
-        DECPNT_COMMA,
+        DecpntComma,
 
         /// <summary>
         /// Normal English file, decimal point, but space delimiter.
         /// </summary>
         ///
-        DECPNT_SPACE,
+        DecpntSpace,
 
         /// <summary>
         /// Decimal point and ; delimiter.
         /// </summary>
         ///
-        DECPNT_SEMI,
+        DecpntSemi,
 
         /// <summary>
         /// Decimal comma and space. (non-English usually).
         /// </summary>
         ///
-        DECCOMMA_SPACE,
+        DeccommaSpace,
 
         /// <summary>
         /// Decimal comma and ; . (non-English usually).
         /// </summary>
         ///
-        DECCOMMA_SEMI,
+        DeccommaSemi,
 
         /// <summary>
         /// Unknown, an error.
         /// </summary>
-        UNKNOWN
+        Unknown
     }
 }

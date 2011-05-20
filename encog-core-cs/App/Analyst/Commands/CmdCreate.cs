@@ -20,7 +20,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "CREATE";
+        public const String CommandName = "CREATE";
 
         /// <summary>
         /// Construct the create command.
@@ -34,7 +34,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -42,17 +42,17 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String trainingID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_TRAINING_FILE);
+                ScriptProperties.MlConfigTrainingFile);
             String resourceID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE);
+                ScriptProperties.MlConfigMachineLearningFile);
 
             FileInfo trainingFile = Script.ResolveFilename(trainingID);
             FileInfo resourceFile = Script.ResolveFilename(resourceID);
 
             String type = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_TYPE);
+                ScriptProperties.MlConfigType);
             String arch = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_ARCHITECTURE);
+                ScriptProperties.MlConfigArchitecture);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning create");
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training file:"

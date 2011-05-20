@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Encog.App.Analyst.Script
 {
@@ -14,7 +15,7 @@ namespace Encog.App.Analyst.Script
         /// The class members.
         /// </summary>
         ///
-        private readonly IList<AnalystClassItem> classMembers;
+        private readonly IList<AnalystClassItem> _classMembers;
 
         /// <summary>
         /// Construct the data field.
@@ -23,7 +24,7 @@ namespace Encog.App.Analyst.Script
         /// <param name="theName">The name of this field.</param>
         public DataField(String theName)
         {
-            classMembers = new List<AnalystClassItem>();
+            _classMembers = new List<AnalystClassItem>();
             Name = theName;
             Min = Double.MaxValue;
             Max = Double.MinValue;
@@ -39,7 +40,7 @@ namespace Encog.App.Analyst.Script
         /// <value>the classMembers</value>
         public IList<AnalystClassItem> ClassMembers
         {
-            get { return classMembers; }
+            get { return _classMembers; }
         }
 
 
@@ -65,13 +66,7 @@ namespace Encog.App.Analyst.Script
         {
             get
             {
-                int cmin = Int32.MaxValue;
-
-                foreach (AnalystClassItem cls  in  classMembers)
-                {
-                    cmin = Math.Min(cmin, cls.Count);
-                }
-                return cmin;
+                return _classMembers.Aggregate(Int32.MaxValue, (current, cls) => Math.Min(current, cls.Count));
             }
         }
 

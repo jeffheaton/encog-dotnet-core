@@ -13,7 +13,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "SET";
+        public const String CommandName = "SET";
 
         /// <summary>
         /// Construct the set command with the analyst.
@@ -27,7 +27,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -35,7 +35,7 @@ namespace Encog.App.Analyst.Commands
         {
             int index = args.IndexOf('=');
             String dots = args.Substring(0, (index) - (0)).Trim();
-            String value_ren = args.Substring(index + 1).Trim();
+            String v = args.Substring(index + 1).Trim();
 
             PropertyEntry entry = PropertyConstraints.Instance
                 .FindEntry(dots);
@@ -46,13 +46,13 @@ namespace Encog.App.Analyst.Commands
             }
 
             // strip quotes
-            if (value_ren[0] == '\"')
+            if (v[0] == '\"')
             {
-                value_ren = value_ren.Substring(1);
+                v = v.Substring(1);
             }
-            if (value_ren.EndsWith("\""))
+            if (v.EndsWith("\""))
             {
-                value_ren = value_ren.Substring(0, (value_ren.Length - 1) - (0));
+                v = v.Substring(0, (v.Length - 1) - (0));
             }
 
             String[] cols = dots.Split('.');
@@ -60,8 +60,8 @@ namespace Encog.App.Analyst.Commands
             String subSection = cols[1];
             String name = cols[2];
 
-            entry.Validate(section, subSection, name, value_ren);
-            Prop.SetProperty(entry.Key, value_ren);
+            entry.Validate(section, subSection, name, v);
+            Prop.SetProperty(entry.Key, v);
 
             return false;
         }

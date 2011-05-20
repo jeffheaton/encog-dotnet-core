@@ -24,31 +24,31 @@ namespace Encog.App.Analyst.CSV
         /// The analyst to use.
         /// </summary>
         ///
-        private EncogAnalyst analyst;
+        private EncogAnalyst _analyst;
 
         /// <summary>
         /// The headers.
         /// </summary>
         ///
-        private CSVHeaders analystHeaders;
+        private CSVHeaders _analystHeaders;
 
         /// <summary>
         /// The number of columns in the file.
         /// </summary>
         ///
-        private int fileColumns;
+        private int _fileColumns;
 
         /// <summary>
         /// The number of output columns.
         /// </summary>
         ///
-        private int outputColumns;
+        private int _outputColumns;
 
         /// <summary>
         /// Used to handle time series.
         /// </summary>
         ///
-        private TimeSeriesUtil series;
+        private TimeSeriesUtil _series;
 
         /// <summary>
         /// Analyze the data. This counts the records and prepares the data to be
@@ -67,15 +67,15 @@ namespace Encog.App.Analyst.CSV
             InputFormat = format;
 
             Analyzed = true;
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
 
             PerformBasicCounts();
-            fileColumns = InputHeadings.Length;
-            outputColumns = analyst.DetermineOutputFieldCount();
+            _fileColumns = InputHeadings.Length;
+            _outputColumns = _analyst.DetermineOutputFieldCount();
 
-            analystHeaders = new CSVHeaders(InputHeadings);
-            series = new TimeSeriesUtil(analyst,
-                                        analystHeaders.Headers);
+            _analystHeaders = new CSVHeaders(InputHeadings);
+            _series = new TimeSeriesUtil(_analyst,
+                                        _analystHeaders.Headers);
         }
 
         /// <summary>
@@ -83,11 +83,8 @@ namespace Encog.App.Analyst.CSV
         /// </summary>
         ///
         /// <param name="outputFile">The output file.</param>
-        /// <param name="input">The input count.</param>
-        /// <param name="output">The output count.</param>
-        /// <returns>The file to write to.</returns>
-        private StreamWriter PrepareOutputFile(FileInfo outputFile,
-                                               int input, int output)
+        ///<returns>The file to write to.</returns>
+        private new StreamWriter PrepareOutputFile(FileInfo outputFile)
         {
             try
             {
@@ -112,7 +109,7 @@ namespace Encog.App.Analyst.CSV
 
 
                     // now add the output fields that will be generated
-                    foreach (AnalystField field  in  analyst.Script.Normalize.NormalizedFields)
+                    foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
                     {
                         if (field.Output && !field.Ignored)
                         {
@@ -146,23 +143,23 @@ namespace Encog.App.Analyst.CSV
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
 
-            MLData output = null;
+            MLData output;
 
-            int outputLength = analyst.DetermineUniqueColumns();
+            int outputLength = _analyst.DetermineUniqueColumns();
 
-            StreamWriter tw = PrepareOutputFile(outputFile, analyst.Script.Normalize.CountActiveFields() - 1, 1);
+            StreamWriter tw = PrepareOutputFile(outputFile);
 
             ResetStatus();
             while (csv.Next())
             {
                 UpdateStatus(false);
-                var row = new LoadedRow(csv, outputColumns);
+                var row = new LoadedRow(csv, _outputColumns);
 
-                double[] inputArray = AnalystNormalizeCSV.ExtractFields(analyst,
-                                                                        analystHeaders, csv, outputLength, false);
-                if (series.TotalDepth > 1)
+                double[] inputArray = AnalystNormalizeCSV.ExtractFields(_analyst,
+                                                                        _analystHeaders, csv, outputLength, false);
+                if (_series.TotalDepth > 1)
                 {
-                    inputArray = series.Process(inputArray);
+                    inputArray = _series.Process(inputArray);
                 }
 
                 if (inputArray != null)
@@ -185,14 +182,14 @@ namespace Encog.App.Analyst.CSV
                     }
 
                     // skip file data
-                    int index = fileColumns;
+                    int index = _fileColumns;
                     int outputIndex = 0;
 
 
                     // display output
-                    foreach (AnalystField field  in  analyst.Script.Normalize.NormalizedFields)
+                    foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
                     {
-                        if (analystHeaders.Find(field.Name) != -1)
+                        if (_analystHeaders.Find(field.Name) != -1)
                         {
                             if (field.Output)
                             {

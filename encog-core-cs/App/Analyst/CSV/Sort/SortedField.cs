@@ -13,13 +13,13 @@ namespace Encog.App.Analyst.CSV.Sort
         /// The index of the field.
         /// </summary>
         ///
-        private int index;
+        private int _index;
 
         /// <summary>
         /// The type of sort.
         /// </summary>
         ///
-        private SortType sortType;
+        private SortType _sortType;
 
         /// <summary>
         /// Construct the object.
@@ -31,25 +31,25 @@ namespace Encog.App.Analyst.CSV.Sort
         public SortedField(int theIndexindex, SortType t,
                            bool theAscending)
         {
-            index = theIndexindex;
+            _index = theIndexindex;
             Ascending = theAscending;
-            sortType = t;
+            _sortType = t;
         }
 
 
         /// <value>the index to set</value>
         public int Index
         {
-            get { return index; }
-            set { index = value; }
+            get { return _index; }
+            set { _index = value; }
         }
 
 
         /// <value>the sortType to set</value>
         public SortType SortType
         {
-            get { return sortType; }
-            set { sortType = value; }
+            get { return _sortType; }
+            set { _sortType = value; }
         }
 
 
@@ -63,9 +63,9 @@ namespace Encog.App.Analyst.CSV.Sort
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" index=");
-            result.Append(index);
+            result.Append(_index);
             result.Append(", type=");
-            result.Append(sortType);
+            result.Append(_sortType);
 
             result.Append("]");
             return result.ToString();

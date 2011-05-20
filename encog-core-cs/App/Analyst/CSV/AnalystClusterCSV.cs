@@ -23,19 +23,19 @@ namespace Encog.App.Analyst.CSV
         /// The analyst to use.
         /// </summary>
         ///
-        private EncogAnalyst analyst;
+        private EncogAnalyst _analyst;
 
         /// <summary>
         /// The headers.
         /// </summary>
         ///
-        private CSVHeaders analystHeaders;
+        private CSVHeaders _analystHeaders;
 
         /// <summary>
         /// The training data used to send to KMeans.
         /// </summary>
         ///
-        private BasicMLDataSet data;
+        private BasicMLDataSet _data;
 
         /// <summary>
         /// Analyze the data. This counts the records and prepares the data to be
@@ -54,23 +54,23 @@ namespace Encog.App.Analyst.CSV
             InputFormat = format;
 
             Analyzed = true;
-            analyst = theAnalyst;
+            _analyst = theAnalyst;
 
             if (OutputFormat == null)
             {
                 OutputFormat = InputFormat;
             }
 
-            data = new BasicMLDataSet();
+            _data = new BasicMLDataSet();
             ResetStatus();
             int recordCount = 0;
 
-            int outputLength = analyst.DetermineUniqueColumns();
+            int outputLength = _analyst.DetermineUniqueColumns();
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
             ReadHeaders(csv);
 
-            analystHeaders = new CSVHeaders(InputHeadings);
+            _analystHeaders = new CSVHeaders(InputHeadings);
 
             while (csv.Next() && !ShouldStop())
             {
@@ -79,9 +79,9 @@ namespace Encog.App.Analyst.CSV
                 var row = new LoadedRow(csv, 1);
 
                 double[] inputArray = AnalystNormalizeCSV.ExtractFields(
-                    analyst, analystHeaders, csv, outputLength, true);
+                    _analyst, _analystHeaders, csv, outputLength, true);
                 var input = new ClusterRow(inputArray, row);
-                data.Add(input);
+                _data.Add(input);
 
                 recordCount++;
             }
@@ -98,11 +98,8 @@ namespace Encog.App.Analyst.CSV
         /// </summary>
         ///
         /// <param name="outputFile">The output file.</param>
-        /// <param name="input">The number of input columns.</param>
-        /// <param name="output">The number of output columns.</param>
-        /// <returns>The file to be written to.</returns>
-        private StreamWriter PrepareOutputFile(FileInfo outputFile,
-                                               int input, int output)
+        ///<returns>The file to be written to.</returns>
+        private new StreamWriter PrepareOutputFile(FileInfo outputFile)
         {
             try
             {
@@ -149,12 +146,12 @@ namespace Encog.App.Analyst.CSV
         public void Process(FileInfo outputFile, int clusters,
                             EncogAnalyst theAnalyst, int iterations)
         {
-            StreamWriter tw = PrepareOutputFile(outputFile, analyst.Script.Normalize.CountActiveFields() - 1, 1);
+            StreamWriter tw = PrepareOutputFile(outputFile);
 
             ResetStatus();
 
             var cluster = new KMeansClustering(clusters,
-                                               data);
+                                               _data);
             cluster.Iteration(iterations);
 
             int clusterNum = 0;

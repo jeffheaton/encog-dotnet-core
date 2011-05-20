@@ -14,13 +14,13 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// Used internally to hold the target filename.
         /// </summary>
         ///
-        private FileInfo filename;
+        private FileInfo _filename;
 
         /// <summary>
         /// Percent that this target should get.
         /// </summary>
         ///
-        private int percent;
+        private int _percent;
 
         /// <summary>
         /// Construct the object.
@@ -30,16 +30,16 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// <param name="thePercent">The target percent.</param>
         public SegregateTargetPercent(FileInfo outputFile, int thePercent)
         {
-            percent = thePercent;
-            filename = outputFile;
+            _percent = thePercent;
+            _filename = outputFile;
         }
 
 
         /// <value>the filename to set</value>
         public FileInfo Filename
         {
-            get { return filename; }
-            set { filename = value; }
+            get { return _filename; }
+            set { _filename = value; }
         }
 
 
@@ -50,8 +50,8 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// <value>the percent to set</value>
         public int Percent 
         {
-            get { return percent; }
-            set { percent = value; }
+            get { return _percent; }
+            set { _percent = value; }
         }
 
 
@@ -61,9 +61,9 @@ namespace Encog.App.Analyst.CSV.Segregate
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" filename=");
-            result.Append(filename.ToString());
+            result.Append(_filename.ToString());
             result.Append(", percent=");
-            result.Append(percent);
+            result.Append(_percent);
 
             result.Append("]");
             return result.ToString();

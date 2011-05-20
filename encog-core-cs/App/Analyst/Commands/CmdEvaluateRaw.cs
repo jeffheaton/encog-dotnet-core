@@ -21,7 +21,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of the command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "EVALUATE-RAW";
+        public const String CommandName = "EVALUATE-RAW";
 
         /// <summary>
         /// Construct an evaluate raw command.
@@ -35,7 +35,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -43,12 +43,12 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String evalID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_EVAL_FILE);
+                ScriptProperties.MlConfigEvalFile);
             String resourceID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_MACHINE_LEARNING_FILE);
+                ScriptProperties.MlConfigMachineLearningFile);
 
             String outputID = Prop.GetPropertyString(
-                ScriptProperties.ML_CONFIG_OUTPUT_FILE);
+                ScriptProperties.MlConfigOutputFile);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning evaluate raw");
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "evaluate file:" + evalID);
@@ -66,12 +66,11 @@ namespace Encog.App.Analyst.Commands
 
             bool headers = Script.ExpectInputHeaders(evalID);
 
-            var eval = new AnalystEvaluateRawCSV();
-            eval.Script = Script;
+            var eval = new AnalystEvaluateRawCSV {Script = Script};
             Analyst.CurrentQuantTask = eval;
             eval.Report = new AnalystReportBridge(Analyst);
             eval.Analyze(Analyst, evalFile, headers, Prop
-                                                         .GetPropertyCSVFormat(ScriptProperties.SETUP_CONFIG_CSV_FORMAT));
+                                                         .GetPropertyCSVFormat(ScriptProperties.SetupConfigCSVFormat));
             eval.Process(outputFile, method);
             Analyst.CurrentQuantTask = null;
             return eval.ShouldStop();

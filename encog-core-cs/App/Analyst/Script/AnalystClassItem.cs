@@ -14,19 +14,19 @@ namespace Encog.App.Analyst.Script
         /// THe code for the class item.
         /// </summary>
         ///
-        private String code;
+        private String _code;
 
         /// <summary>
         /// THe count.
         /// </summary>
         ///
-        private int count;
+        private int _count;
 
         /// <summary>
         /// The name for the class item.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// Construct a class item.
@@ -38,32 +38,32 @@ namespace Encog.App.Analyst.Script
         public AnalystClassItem(String theCode, String theName,
                                 int theCount)
         {
-            code = theCode;
-            name = theName;
-            count = theCount;
+            _code = theCode;
+            _name = theName;
+            _count = theCount;
         }
 
 
         /// <value>the code to set</value>
         public String Code
         {
-            get { return code; }
-            set { code = value; }
+            get { return _code; }
+            set { _code = value; }
         }
 
 
         /// <value>The count.</value>
         public int Count
         {
-            get { return count; }
+            get { return _count; }
         }
 
 
         /// <value>the name to set</value>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         #region IComparable<AnalystClassItem> Members
@@ -74,7 +74,7 @@ namespace Encog.App.Analyst.Script
         ///
         public int CompareTo(AnalystClassItem o)
         {
-            return String.CompareOrdinal(code, o.Code);
+            return String.CompareOrdinal(_code, o.Code);
         }
 
         #endregion
@@ -85,7 +85,7 @@ namespace Encog.App.Analyst.Script
         ///
         public void IncreaseCount()
         {
-            count++;
+            _count++;
         }
 
         /// <inheritdoc/>
@@ -94,9 +94,9 @@ namespace Encog.App.Analyst.Script
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", code=");
-            result.Append(code);
+            result.Append(_code);
             result.Append("]");
             return result.ToString();
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Encog.App.Analyst.Script;
 using Encog.App.Analyst.Script.Prop;
@@ -20,31 +21,31 @@ namespace Encog.App.Analyst.Analyze
         /// A mapping between the class names that the class items.
         /// </summary>
         ///
-        private readonly IDictionary<String, AnalystClassItem> classMap;
+        private readonly IDictionary<String, AnalystClassItem> _classMap;
 
         /// <summary>
         /// The analyst script that the results are saved to.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// The total for standard deviation calculation.
         /// </summary>
         ///
-        private double devTotal;
+        private double _devTotal;
 
         /// <summary>
         /// The number of instances of this field.
         /// </summary>
         ///
-        private int instances;
+        private int _instances;
 
         /// <summary>
         /// Tge sum of all values of this field.
         /// </summary>
         ///
-        private double total;
+        private double _total;
 
         /// <summary>
         /// Construct an analyzed field.
@@ -54,9 +55,9 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="name">The name of the field.</param>
         public AnalyzedField(AnalystScript theScript, String name) : base(name)
         {
-            classMap = new Dictionary<String, AnalystClassItem>();
-            instances = 0;
-            script = theScript;
+            _classMap = new Dictionary<String, AnalystClassItem>();
+            _instances = 0;
+            _script = theScript;
         }
 
         /// <summary>
@@ -66,22 +67,11 @@ namespace Encog.App.Analyst.Analyze
         {
             get
             {
-                var sorted = new List<String>();
-                foreach (string item in classMap.Keys)
-                {
-                    sorted.Add(item);
-                }
+                var sorted = _classMap.Keys.ToList();
 
                 sorted.Sort();
 
-                IList<AnalystClassItem> result = new List<AnalystClassItem>();
-
-                foreach (String str  in  sorted)
-                {
-                    result.Add(classMap[str]);
-                }
-
-                return result;
+                return sorted.Select(str => _classMap[str]).ToList();
             }
         }
 
@@ -100,7 +90,7 @@ namespace Encog.App.Analyst.Analyze
                 return;
             }
 
-            instances++;
+            _instances++;
 
             if (Real)
             {
@@ -109,10 +99,10 @@ namespace Encog.App.Analyst.Analyze
                     double d = CSVFormat.EG_FORMAT.Parse(str);
                     Max = Math.Max(d, Max);
                     Min = Math.Min(d, Min);
-                    total += d;
+                    _total += d;
                     accountedFor = true;
                 }
-                catch (FormatException )
+                catch (FormatException)
                 {
                     Real = false;
                     if (!Integer)
@@ -133,10 +123,10 @@ namespace Encog.App.Analyst.Analyze
                     Min = Math.Min(i, Min);
                     if (!accountedFor)
                     {
-                        total += i;
+                        _total += i;
                     }
                 }
-                catch (FormatException )
+                catch (FormatException)
                 {
                     Integer = false;
                     if (!Real)
@@ -153,22 +143,22 @@ namespace Encog.App.Analyst.Analyze
                 AnalystClassItem item;
 
                 // is this a new class?
-                if (!classMap.ContainsKey(str))
+                if (!_classMap.ContainsKey(str))
                 {
                     item = new AnalystClassItem(str, str, 1);
-                    classMap[str] = item;
+                    _classMap[str] = item;
 
                     // do we have too many different classes?
-                    int max = script.Properties.GetPropertyInt(
-                        ScriptProperties.SETUP_CONFIG_MAX_CLASS_COUNT);
-                    if (classMap.Count > max)
+                    int max = _script.Properties.GetPropertyInt(
+                        ScriptProperties.SetupConfigMaxClassCount);
+                    if (_classMap.Count > max)
                     {
                         Class = false;
                     }
                 }
                 else
                 {
-                    item = classMap[str];
+                    item = _classMap[str];
                     item.IncreaseCount();
                 }
             }
@@ -191,7 +181,7 @@ namespace Encog.App.Analyst.Analyze
                 if (!str.Equals("") && !str.Equals("?"))
                 {
                     double d = CSVFormat.EG_FORMAT.Parse(str);
-                    devTotal += Math.Pow((d - Mean), 2);
+                    _devTotal += Math.Pow((d - Mean), 2);
                 }
             }
         }
@@ -202,15 +192,15 @@ namespace Encog.App.Analyst.Analyze
         ///
         public void CompletePass1()
         {
-            devTotal = 0;
+            _devTotal = 0;
 
-            if (instances == 0)
+            if (_instances == 0)
             {
                 Mean = 0;
             }
             else
             {
-                Mean = total/instances;
+                Mean = _total/_instances;
             }
         }
 
@@ -220,7 +210,7 @@ namespace Encog.App.Analyst.Analyze
         ///
         public void CompletePass2()
         {
-            StandardDeviation = Math.Sqrt(devTotal/instances);
+            StandardDeviation = Math.Sqrt(_devTotal/_instances);
         }
 
         /// <summary>
@@ -230,17 +220,18 @@ namespace Encog.App.Analyst.Analyze
         /// <returns>The new DataField.</returns>
         public DataField FinalizeField()
         {
-            var result = new DataField(Name);
-
-            result.Name = Name;
-            result.Min = Min;
-            result.Max = Max;
-            result.Mean = Mean;
-            result.StandardDeviation = StandardDeviation;
-            result.Integer = Integer;
-            result.Real = Real;
-            result.Class = Class;
-            result.Complete = Complete;
+            var result = new DataField(Name)
+                             {
+                                 Name = Name,
+                                 Min = Min,
+                                 Max = Max,
+                                 Mean = Mean,
+                                 StandardDeviation = StandardDeviation,
+                                 Integer = Integer,
+                                 Real = Real,
+                                 Class = Class,
+                                 Complete = Complete
+                             };
 
             result.ClassMembers.Clear();
 
@@ -266,9 +257,9 @@ namespace Encog.App.Analyst.Analyze
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" total=");
-            result.Append(total);
+            result.Append(_total);
             result.Append(", instances=");
-            result.Append(instances);
+            result.Append(_instances);
             result.Append("]");
             return result.ToString();
         }

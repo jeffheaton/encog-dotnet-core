@@ -50,7 +50,7 @@ namespace Encog.App.Quant.Indicators.Predictive
         public override sealed void Calculate(IDictionary<String, BaseCachedColumn> data,
                                               int length)
         {
-            double[] close = data[FileData.CLOSE].Data;
+            double[] close = data[FileData.Close].Data;
             double[] output = Data;
 
             int stop = length - periods;

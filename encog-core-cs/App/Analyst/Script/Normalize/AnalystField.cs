@@ -21,73 +21,73 @@ namespace Encog.App.Analyst.Script.Normalize
         /// Minimum classes for encode using equilateral.
         /// </summary>
         ///
-        public const int MIN_EQ_CLASSES = 3;
+        public const int MinEqClasses = 3;
 
         /// <summary>
         /// The list of classes.
         /// </summary>
         ///
-        private readonly IList<ClassItem> classes;
+        private readonly IList<ClassItem> _classes;
 
         /// <summary>
         /// Allows the index of a field to be looked up.
         /// </summary>
         ///
-        private readonly IDictionary<String, Int32> lookup;
+        private readonly IDictionary<String, Int32> _lookup;
 
         /// <summary>
         /// The action that should be taken on this column.
         /// </summary>
         ///
-        private NormalizationAction action;
+        private NormalizationAction _action;
 
         /// <summary>
         /// The actual high from the sample data.
         /// </summary>
         ///
-        private double actualHigh;
+        private double _actualHigh;
 
         /// <summary>
         /// The actual low from the sample data.
         /// </summary>
         ///
-        private double actualLow;
+        private double _actualLow;
 
         /// <summary>
         /// If equilateral classification is used, this is the Equilateral object.
         /// </summary>
         ///
-        private Equilateral eq;
+        private Equilateral _eq;
 
         /// <summary>
         /// The name of this column.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// The desired normalized high.
         /// </summary>
         ///
-        private double normalizedHigh;
+        private double _normalizedHigh;
 
         /// <summary>
         /// The desired normalized low from the sample data.
         /// </summary>
         ///
-        private double normalizedLow;
+        private double _normalizedLow;
 
         /// <summary>
         /// True, if this is an output field.
         /// </summary>
         ///
-        private bool output;
+        private bool _output;
 
         /// <summary>
         /// The time slice number.
         /// </summary>
         ///
-        private int timeSlice;
+        private int _timeSlice;
 
         /// <summary>
         /// Construct the object with a range of 1 and -1.
@@ -104,16 +104,16 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <param name="field">The field to clone.</param>
         public AnalystField(AnalystField field)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            actualHigh = field.actualHigh;
-            actualLow = field.actualLow;
-            normalizedHigh = field.normalizedHigh;
-            normalizedLow = field.normalizedLow;
-            action = field.action;
-            name = field.name;
-            output = field.output;
-            timeSlice = field.timeSlice;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _actualHigh = field._actualHigh;
+            _actualLow = field._actualLow;
+            _normalizedHigh = field._normalizedHigh;
+            _normalizedLow = field._normalizedLow;
+            _action = field._action;
+            _name = field._name;
+            _output = field._output;
+            _timeSlice = field._timeSlice;
         }
 
         /// <summary>
@@ -125,13 +125,13 @@ namespace Encog.App.Analyst.Script.Normalize
         public AnalystField(double theNormalizedHigh,
                             double theNormalizedLow)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            normalizedHigh = theNormalizedHigh;
-            normalizedLow = theNormalizedLow;
-            actualHigh = Double.MinValue;
-            actualLow = Double.MaxValue;
-            action = NormalizationAction.Normalize;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _normalizedHigh = theNormalizedHigh;
+            _normalizedLow = theNormalizedLow;
+            _actualHigh = Double.MinValue;
+            _actualLow = Double.MaxValue;
+            _action = NormalizationAction.Normalize;
         }
 
         /// <summary>
@@ -159,14 +159,14 @@ namespace Encog.App.Analyst.Script.Normalize
                             String theName, double ahigh, double alow,
                             double nhigh, double nlow)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            action = theAction;
-            actualHigh = ahigh;
-            actualLow = alow;
-            normalizedHigh = nhigh;
-            normalizedLow = nlow;
-            name = theName;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _action = theAction;
+            _actualHigh = ahigh;
+            _actualLow = alow;
+            _normalizedHigh = nhigh;
+            _normalizedLow = nlow;
+            _name = theName;
         }
 
         /// <summary>
@@ -181,12 +181,12 @@ namespace Encog.App.Analyst.Script.Normalize
                             NormalizationAction theAction, double high,
                             double low)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            name = theName;
-            action = theAction;
-            normalizedHigh = high;
-            normalizedLow = low;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _name = theName;
+            _action = theAction;
+            _normalizedHigh = high;
+            _normalizedLow = low;
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public NormalizationAction Action
         {
-            get { return action; }
-            set { action = value; }
+            get { return _action; }
+            set { _action = value; }
         }
 
 
@@ -204,8 +204,8 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public double ActualHigh
         {
-            get { return actualHigh; }
-            set { actualHigh = value; }
+            get { return _actualHigh; }
+            set { _actualHigh = value; }
         }
 
 
@@ -214,15 +214,15 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public double ActualLow
         {
-            get { return actualLow; }
-            set { actualLow = value; }
+            get { return _actualLow; }
+            set { _actualLow = value; }
         }
 
 
         /// <value>The classes.</value>
         public IList<ClassItem> Classes
         {
-            get { return classes; }
+            get { return _classes; }
         }
 
 
@@ -233,14 +233,14 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             get
             {
-                switch (action)
+                switch (_action)
                 {
                     case NormalizationAction.Ignore:
                         return 0;
                     case NormalizationAction.Equilateral:
-                        return classes.Count - 1;
+                        return _classes.Count - 1;
                     case NormalizationAction.OneOf:
-                        return classes.Count;
+                        return _classes.Count;
                     default:
                         return 1;
                 }
@@ -251,7 +251,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>The equilateral utility.</value>
         public Equilateral Eq
         {
-            get { return eq; }
+            get { return _eq; }
         }
 
 
@@ -260,8 +260,8 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
 
@@ -270,8 +270,8 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public double NormalizedHigh
         {
-            get { return normalizedHigh; }
-            set { normalizedHigh = value; }
+            get { return _normalizedHigh; }
+            set { _normalizedHigh = value; }
         }
 
 
@@ -282,16 +282,16 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>The normalized low for the field.</value>
         public double NormalizedLow
         {
-            get { return normalizedLow; }
-            set { normalizedLow = value; }
+            get { return _normalizedLow; }
+            set { _normalizedLow = value; }
         }
 
 
         /// <value>the timeSlice to set</value>
         public int TimeSlice
         {
-            get { return timeSlice; }
-            set { timeSlice = value; }
+            get { return _timeSlice; }
+            set { _timeSlice = value; }
         }
 
 
@@ -300,9 +300,9 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             get
             {
-                return (action == NormalizationAction.Equilateral)
-                       || (action == NormalizationAction.OneOf)
-                       || (action == NormalizationAction.SingleField);
+                return (_action == NormalizationAction.Equilateral)
+                       || (_action == NormalizationAction.OneOf)
+                       || (_action == NormalizationAction.SingleField);
             }
         }
 
@@ -310,14 +310,14 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>Is this field ignored.</value>
         public bool Ignored
         {
-            get { return action == NormalizationAction.Ignore; }
+            get { return _action == NormalizationAction.Ignore; }
         }
 
 
         /// <value>Is this field input.</value>
         public bool Input
         {
-            get { return !output; }
+            get { return !_output; }
         }
 
 
@@ -326,8 +326,8 @@ namespace Encog.App.Analyst.Script.Normalize
         /// </summary>
         public bool Output
         {
-            get { return output; }
-            set { output = value; }
+            get { return _output; }
+            set { _output = value; }
         }
 
         /// <summary>
@@ -344,8 +344,8 @@ namespace Encog.App.Analyst.Script.Normalize
 
             for (int i = 0; i < subFields; i++)
             {
-                String str = CSVHeaders.TagColumn(name, i,
-                                                  timeSlice, subFields > 1);
+                String str = CSVHeaders.TagColumn(_name, i,
+                                                  _timeSlice, subFields > 1);
                 BasicFile.AppendSeparator(line, format);
                 line.Append('\"');
                 if (prefix != null)
@@ -365,22 +365,22 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <param name="d">The value to analyze.</param>
         public void Analyze(double d)
         {
-            actualHigh = Math.Max(actualHigh, d);
-            actualLow = Math.Min(actualLow, d);
+            _actualHigh = Math.Max(_actualHigh, d);
+            _actualLow = Math.Min(_actualLow, d);
         }
 
         /// <summary>
         /// Denormalize the specified value.
         /// </summary>
         ///
-        /// <param name="value_ren">The value to normalize.</param>
+        /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
-        public double DeNormalize(double value_ren)
+        public double DeNormalize(double v)
         {
-            double result = ((actualLow - actualHigh)*value_ren
-                             - normalizedHigh*actualLow + actualHigh
-                             *normalizedLow)
-                            /(normalizedLow - normalizedHigh);
+            double result = ((_actualLow - _actualHigh)*v
+                             - _normalizedHigh*_actualLow + _actualHigh
+                             *_normalizedLow)
+                            /(_normalizedLow - _normalizedHigh);
             return result;
         }
 
@@ -394,10 +394,10 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             int resultIndex = 0;
 
-            switch (action)
+            switch (_action)
             {
                 case NormalizationAction.Equilateral:
-                    resultIndex = eq.Decode(data);
+                    resultIndex = _eq.Decode(data);
                     break;
                 case NormalizationAction.OneOf:
                     resultIndex = EngineArray.IndexOfLargest(data);
@@ -406,10 +406,10 @@ namespace Encog.App.Analyst.Script.Normalize
                     resultIndex = (int) data[0];
                     break;
                 default:
-                    throw new AnalystError("Unknown action: " + action);
+                    throw new AnalystError("Unknown action: " + _action);
             }
 
-            return classes[resultIndex];
+            return _classes[resultIndex];
         }
 
         /// <summary>
@@ -425,10 +425,10 @@ namespace Encog.App.Analyst.Script.Normalize
             var d = new double[ColumnsNeeded];
             EngineArray.ArrayCopy(data, pos, d, 0, d.Length);
 
-            switch (action)
+            switch (_action)
             {
                 case NormalizationAction.Equilateral:
-                    resultIndex = eq.Decode(d);
+                    resultIndex = _eq.Decode(d);
                     break;
                 case NormalizationAction.OneOf:
                     resultIndex = EngineArray.IndexOfLargest(d);
@@ -437,7 +437,7 @@ namespace Encog.App.Analyst.Script.Normalize
                     resultIndex = (int) d[0];
                     break;
                 default:
-                    throw new AnalystError("Invalid action: " + action);
+                    throw new AnalystError("Invalid action: " + _action);
             }
 
             if (resultIndex < 0)
@@ -445,7 +445,7 @@ namespace Encog.App.Analyst.Script.Normalize
                 return null;
             }
 
-            return classes[resultIndex];
+            return _classes[resultIndex];
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <returns>The encoded class.</returns>
         public double[] Encode(int classNumber)
         {
-            switch (action)
+            switch (_action)
             {
                 case NormalizationAction.OneOf:
                     return EncodeOneOf(classNumber);
@@ -500,7 +500,7 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <returns>The class to encode.</returns>
         public double[] EncodeEquilateral(int classNumber)
         {
-            return eq.Encode(classNumber);
+            return _eq.Encode(classNumber);
         }
 
         /// <summary>
@@ -513,15 +513,15 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             var result = new double[ColumnsNeeded];
 
-            for (int i = 0; i < classes.Count; i++)
+            for (int i = 0; i < _classes.Count; i++)
             {
                 if (i == classNumber)
                 {
-                    result[i] = normalizedHigh;
+                    result[i] = _normalizedHigh;
                 }
                 else
                 {
-                    result[i] = normalizedLow;
+                    result[i] = _normalizedLow;
                 }
             }
             return result;
@@ -547,12 +547,12 @@ namespace Encog.App.Analyst.Script.Normalize
         ///
         public void FixSingleValue()
         {
-            if (action == NormalizationAction.Normalize)
+            if (_action == NormalizationAction.Normalize)
             {
-                if (Math.Abs(actualHigh - actualLow) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                if (Math.Abs(_actualHigh - _actualLow) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
                 {
-                    actualHigh += 1;
-                    actualLow -= 1;
+                    _actualHigh += 1;
+                    _actualLow -= 1;
                 }
             }
         }
@@ -563,23 +563,23 @@ namespace Encog.App.Analyst.Script.Normalize
         ///
         public void Init()
         {
-            if (action == NormalizationAction.Equilateral)
+            if (_action == NormalizationAction.Equilateral)
             {
-                if (classes.Count < MIN_EQ_CLASSES)
+                if (_classes.Count < MinEqClasses)
                 {
                     throw new QuantError(
                         "There must be at least three classes to make "
                         + "use of equilateral normalization.");
                 }
 
-                eq = new Equilateral(classes.Count, normalizedHigh,
-                                     normalizedLow);
+                _eq = new Equilateral(_classes.Count, _normalizedHigh,
+                                     _normalizedLow);
             }
 
             // build lookup map
-            for (int i = 0; i < classes.Count; i++)
+            for (int i = 0; i < _classes.Count; i++)
             {
-                lookup[classes[i].Name] = classes[i].Index;
+                _lookup[_classes[i].Name] = _classes[i].Index;
             }
         }
 
@@ -592,11 +592,11 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <returns>The index of the field, or -1 if not found.</returns>
         public int Lookup(String str)
         {
-            if (!lookup.ContainsKey(str))
+            if (!_lookup.ContainsKey(str))
             {
                 return -1;
             }
-            return lookup[str];
+            return _lookup[str];
         }
 
         /// <summary>
@@ -612,24 +612,24 @@ namespace Encog.App.Analyst.Script.Normalize
                               int classFrom, int classTo, int high,
                               int low)
         {
-            if ((action != NormalizationAction.Equilateral)
-                && (action != NormalizationAction.OneOf)
-                && (action != NormalizationAction.SingleField))
+            if ((_action != NormalizationAction.Equilateral)
+                && (_action != NormalizationAction.OneOf)
+                && (_action != NormalizationAction.SingleField))
             {
                 throw new QuantError("Unsupported normalization type");
             }
 
-            action = theAction;
-            classes.Clear();
-            normalizedHigh = high;
-            normalizedLow = low;
-            actualHigh = 0;
-            actualLow = 0;
+            _action = theAction;
+            _classes.Clear();
+            _normalizedHigh = high;
+            _normalizedLow = low;
+            _actualHigh = 0;
+            _actualLow = 0;
 
             int index = 0;
             for (int i = classFrom; i < classTo; i++)
             {
-                classes.Add(new ClassItem("" + i, index++));
+                _classes.Add(new ClassItem("" + i, index++));
             }
         }
 
@@ -644,23 +644,23 @@ namespace Encog.App.Analyst.Script.Normalize
         public void MakeClass(NormalizationAction theAction,
                               String[] cls, double high, double low)
         {
-            if ((action != NormalizationAction.Equilateral)
-                && (action != NormalizationAction.OneOf)
-                && (action != NormalizationAction.SingleField))
+            if ((_action != NormalizationAction.Equilateral)
+                && (_action != NormalizationAction.OneOf)
+                && (_action != NormalizationAction.SingleField))
             {
                 throw new QuantError("Unsupported normalization type");
             }
 
-            action = theAction;
-            classes.Clear();
-            normalizedHigh = high;
-            normalizedLow = low;
-            actualHigh = 0;
-            actualLow = 0;
+            _action = theAction;
+            _classes.Clear();
+            _normalizedHigh = high;
+            _normalizedLow = low;
+            _actualHigh = 0;
+            _actualLow = 0;
 
             for (int i = 0; i < cls.Length; i++)
             {
-                classes.Add(new ClassItem(cls[i], i));
+                _classes.Add(new ClassItem(cls[i], i));
             }
         }
 
@@ -670,11 +670,11 @@ namespace Encog.App.Analyst.Script.Normalize
         ///
         public void MakePassThrough()
         {
-            normalizedHigh = 0;
-            normalizedLow = 0;
-            actualHigh = 0;
-            actualLow = 0;
-            action = NormalizationAction.PassThrough;
+            _normalizedHigh = 0;
+            _normalizedLow = 0;
+            _actualHigh = 0;
+            _actualLow = 0;
+            _action = NormalizationAction.PassThrough;
         }
 
         /// <summary>
@@ -685,9 +685,9 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <returns>The normalized value.</returns>
         public double Normalize(double value_ren)
         {
-            return ((value_ren - actualLow)/(actualHigh - actualLow))
-                   *(normalizedHigh - normalizedLow)
-                   + normalizedLow;
+            return ((value_ren - _actualLow)/(_actualHigh - _actualLow))
+                   *(_normalizedHigh - _normalizedLow)
+                   + _normalizedLow;
         }
 
         /// <inheritdoc/>
@@ -696,11 +696,11 @@ namespace Encog.App.Analyst.Script.Normalize
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", actualHigh=");
-            result.Append(actualHigh);
+            result.Append(_actualHigh);
             result.Append(", actualLow=");
-            result.Append(actualLow);
+            result.Append(_actualLow);
 
             result.Append("]");
             return result.ToString();

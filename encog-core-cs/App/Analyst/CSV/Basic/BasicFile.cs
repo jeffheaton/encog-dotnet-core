@@ -19,94 +19,94 @@ namespace Encog.App.Analyst.CSV.Basic
         /// The default report interval.
         /// </summary>
         ///
-        public const int REPORT_INTERVAL = 10000;
+        private const int REPORT_INTERVAL = 10000;
 
         /// <summary>
         /// Most Encog CSV classes must analyze a CSV file before actually processing
         /// it. This property specifies if the file has been analyzed yet.
         /// </summary>
         ///
-        private bool analyzed;
+        private bool _analyzed;
 
         /// <summary>
         /// True, if the process should stop.
         /// </summary>
         ///
-        private bool cancel;
+        private bool _cancel;
 
         /// <summary>
         /// The number of columns in the input file.
         /// </summary>
         ///
-        private int columnCount;
+        private int _columnCount;
 
         /// <summary>
         /// The current record.
         /// </summary>
         ///
-        private int currentRecord;
+        private int _currentRecord;
 
         /// <summary>
         /// True, if input headers should be expected.
         /// </summary>
         ///
-        private bool expectInputHeaders;
+        private bool _expectInputHeaders;
 
         /// <summary>
         /// The input filename. This is the file being analyzed/processed.
         /// </summary>
         ///
-        private FileInfo inputFilename;
+        private FileInfo _inputFilename;
 
         /// <summary>
         /// The format of the input file.
         /// </summary>
         ///
-        private CSVFormat inputFormat;
+        private CSVFormat _inputFormat;
 
         /// <summary>
         /// The column headings from the input file.
         /// </summary>
         ///
-        private String[] inputHeadings;
+        private String[] _inputHeadings;
 
         /// <summary>
         /// The last time status was updated.
         /// </summary>
         ///
-        private int lastUpdate;
+        private int _lastUpdate;
 
         /// <summary>
         /// The output format, usually, the same as the input format.
         /// </summary>
         ///
-        private CSVFormat outputFormat;
+        private CSVFormat _outputFormat;
 
         /// <summary>
         /// Should output headers be produced?
         /// </summary>
         ///
-        private bool produceOutputHeaders;
+        private bool _produceOutputHeaders;
 
         /// <summary>
         /// The number of records to process. This is determined when the file is
         /// analyzed.
         /// </summary>
         ///
-        private int recordCount;
+        private int _recordCount;
 
         /// <summary>
         /// Allows status to be reported. Defaults to no status reported.
         /// </summary>
         ///
-        private IStatusReportable report;
+        private IStatusReportable _report;
 
         /// <summary>
         /// The number of records to process before status is updated. Defaults to
         /// 10k.
         /// </summary>
         ///
-        private int reportInterval;
+        private int _reportInterval;
 
         /// <summary>
         /// Construct the object, and set the defaults.
@@ -115,9 +115,9 @@ namespace Encog.App.Analyst.CSV.Basic
         public BasicFile()
         {
             Precision = EncogFramework.DEFAULT_PRECISION;
-            report = new NullStatusReportable();
-            reportInterval = REPORT_INTERVAL;
-            produceOutputHeaders = true;
+            _report = new NullStatusReportable();
+            _reportInterval = REPORT_INTERVAL;
+            _produceOutputHeaders = true;
             ResetStatus();
         }
 
@@ -126,8 +126,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public int Count
         {
-            get { return columnCount; }
-            set { columnCount = value; }
+            get { return _columnCount; }
+            set { _columnCount = value; }
         }
 
 
@@ -136,8 +136,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public FileInfo InputFilename
         {
-            get { return inputFilename; }
-            set { inputFilename = value; }
+            get { return _inputFilename; }
+            set { _inputFilename = value; }
         }
 
 
@@ -146,8 +146,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public CSVFormat InputFormat
         {
-            get { return inputFormat; }
-            set { inputFormat = value; }
+            get { return _inputFormat; }
+            set { _inputFormat = value; }
         }
 
 
@@ -156,16 +156,16 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public String[] InputHeadings
         {
-            get { return inputHeadings; }
-            set { inputHeadings = value; }
+            get { return _inputHeadings; }
+            set { _inputHeadings = value; }
         }
 
 
         /// <value>the outputFormat to set</value>
         public CSVFormat OutputFormat
         {
-            get { return outputFormat; }
-            set { outputFormat = value; }
+            get { return _outputFormat; }
+            set { _outputFormat = value; }
         }
 
 
@@ -182,13 +182,13 @@ namespace Encog.App.Analyst.CSV.Basic
         {
             get
             {
-                if (!analyzed)
+                if (!_analyzed)
                 {
                     throw new QuantError("Must analyze file first.");
                 }
-                return recordCount;
+                return _recordCount;
             }
-            set { recordCount = value; }
+            set { _recordCount = value; }
         }
 
 
@@ -197,8 +197,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public IStatusReportable Report
         {
-            get { return report; }
-            set { report = value; }
+            get { return _report; }
+            set { _report = value; }
         }
 
 
@@ -207,8 +207,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public int ReportInterval
         {
-            get { return reportInterval; }
-            set { reportInterval = value; }
+            get { return _reportInterval; }
+            set { _reportInterval = value; }
         }
 
 
@@ -217,8 +217,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public bool Analyzed
         {
-            get { return analyzed; }
-            set { analyzed = value; }
+            get { return _analyzed; }
+            set { _analyzed = value; }
         }
 
 
@@ -227,16 +227,16 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public bool ExpectInputHeaders
         {
-            get { return expectInputHeaders; }
-            set { expectInputHeaders = value; }
+            get { return _expectInputHeaders; }
+            set { _expectInputHeaders = value; }
         }
 
 
         /// <value>the produceOutputHeaders to set</value>
         public bool ProduceOutputHeaders
         {
-            get { return produceOutputHeaders; }
-            set { produceOutputHeaders = value; }
+            get { return _produceOutputHeaders; }
+            set { _produceOutputHeaders = value; }
         }
 
         /// <value>the script to set</value>
@@ -250,13 +250,13 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public void RequestStop()
         {
-            cancel = true;
+            _cancel = true;
         }
 
         /// <returns>Should we stop?</returns>
         public bool ShouldStop()
         {
-            return cancel;
+            return _cancel;
         }
 
         #endregion
@@ -286,22 +286,22 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public void PerformBasicCounts()
         {
-            if (outputFormat == null)
+            if (_outputFormat == null)
             {
-                outputFormat = inputFormat;
+                _outputFormat = _inputFormat;
             }
 
             ResetStatus();
             int rc = 0;
-            var csv = new ReadCSV(inputFilename.ToString(),
-                                  expectInputHeaders, inputFormat);
-            while (csv.Next() && !cancel)
+            var csv = new ReadCSV(_inputFilename.ToString(),
+                                  _expectInputHeaders, _inputFormat);
+            while (csv.Next() && !_cancel)
             {
                 UpdateStatus(true);
                 rc++;
             }
-            recordCount = rc;
-            columnCount = csv.ColumnCount;
+            _recordCount = rc;
+            _columnCount = csv.ColumnCount;
 
             ReadHeaders(csv);
             csv.Close();
@@ -320,34 +320,32 @@ namespace Encog.App.Analyst.CSV.Basic
             {
                 outputFile.Delete();
                 var tw = new StreamWriter(outputFile.OpenWrite());
-                if (outputFormat == null)
+                if (_outputFormat == null)
                 {
-                    outputFormat = inputFormat;
+                    _outputFormat = _inputFormat;
                 }
 
                 // write headers, if needed
-                if (produceOutputHeaders)
+                if (_produceOutputHeaders)
                 {
-                    int index = 0;
                     var line = new StringBuilder();
 
-                    if (inputHeadings != null)
+                    if (_inputHeadings != null)
                     {
-                        foreach (String str  in  inputHeadings)
+                        foreach (String str  in  _inputHeadings)
                         {
                             if (line.Length > 0)
                             {
-                                line.Append(outputFormat.Separator);
+                                line.Append(_outputFormat.Separator);
                             }
                             line.Append("\"");
                             line.Append(str);
-                            line.Append("\"");
-                            index++;
+                            line.Append("\"");                            
                         }
                     }
                     else
                     {
-                        for (int i = 0; i < columnCount; i++)
+                        for (int i = 0; i < _columnCount; i++)
                         {
                             line.Append("\"field:");
                             line.Append(i + 1);
@@ -372,31 +370,31 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="csv">The CSV file to read from.</param>
         public void ReadHeaders(ReadCSV csv)
         {
-            if (expectInputHeaders)
+            if (_expectInputHeaders)
             {
-                inputHeadings = new String[csv.ColumnCount];
+                _inputHeadings = new String[csv.ColumnCount];
                 for (int i = 0; i < csv.ColumnCount; i++)
                 {
-                    inputHeadings[i] = csv.ColumnNames[i];
+                    _inputHeadings[i] = csv.ColumnNames[i];
                 }
             }
             else
             {
-                inputHeadings = new String[csv.ColumnCount];
+                _inputHeadings = new String[csv.ColumnCount];
 
-                int i_0 = 0;
+                int i = 0;
                 if (Script != null)
                 {
                     foreach (DataField field  in  Script.Fields)
                     {
-                        inputHeadings[i_0++] = field.Name;
+                        _inputHeadings[i++] = field.Name;
                     }
                 }
 
-                while (i_0 < csv.ColumnCount)
+                while (i < csv.ColumnCount)
                 {
-                    inputHeadings[i_0] = "field:" + i_0;
-                    i_0++;
+                    _inputHeadings[i] = "field:" + i;
+                    i++;
                 }
             }
         }
@@ -408,16 +406,8 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="isAnalyzing">True if we are analyzing.</param>
         public void ReportDone(bool isAnalyzing)
         {
-            if (isAnalyzing)
-            {
-                report.Report(recordCount, recordCount,
-                              "Done analyzing");
-            }
-            else
-            {
-                report.Report(recordCount, recordCount,
-                              "Done processing");
-            }
+            _report.Report(_recordCount, _recordCount,
+                           isAnalyzing ? "Done analyzing" : "Done processing");
         }
 
         /// <summary>
@@ -427,7 +417,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="task">The message.</param>
         public void ReportDone(String task)
         {
-            report.Report(recordCount, recordCount, task);
+            _report.Report(_recordCount, _recordCount, task);
         }
 
         /// <summary>
@@ -436,8 +426,8 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public void ResetStatus()
         {
-            lastUpdate = 0;
-            currentRecord = 0;
+            _lastUpdate = 0;
+            _currentRecord = 0;
         }
 
 
@@ -447,9 +437,9 @@ namespace Encog.App.Analyst.CSV.Basic
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" inputFilename=");
-            result.Append(inputFilename);
+            result.Append(_inputFilename);
             result.Append(", recordCount=");
-            result.Append(recordCount);
+            result.Append(_recordCount);
             result.Append("]");
             return result.ToString();
         }
@@ -461,14 +451,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="isAnalyzing">True if we are in the process of analyzing.</param>
         public void UpdateStatus(bool isAnalyzing)
         {
-            if (isAnalyzing)
-            {
-                UpdateStatus("Analyzing");
-            }
-            else
-            {
-                UpdateStatus("Processing");
-            }
+            UpdateStatus(isAnalyzing ? "Analyzing" : "Processing");
         }
 
         /// <summary>
@@ -480,23 +463,23 @@ namespace Encog.App.Analyst.CSV.Basic
         {
             bool shouldDisplay = false;
 
-            if (currentRecord == 0)
+            if (_currentRecord == 0)
             {
                 shouldDisplay = true;
             }
 
-            currentRecord++;
-            lastUpdate++;
+            _currentRecord++;
+            _lastUpdate++;
 
-            if (lastUpdate > reportInterval)
+            if (_lastUpdate > _reportInterval)
             {
-                lastUpdate = 0;
+                _lastUpdate = 0;
                 shouldDisplay = true;
             }
 
             if (shouldDisplay)
             {
-                report.Report(recordCount, currentRecord, task);
+                _report.Report(_recordCount, _currentRecord, task);
             }
         }
 
@@ -506,7 +489,7 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public void ValidateAnalyzed()
         {
-            if (!analyzed)
+            if (!_analyzed)
             {
                 throw new QuantError("File must be analyzed first.");
             }
@@ -522,10 +505,10 @@ namespace Encog.App.Analyst.CSV.Basic
         {
             var line = new StringBuilder();
 
-            for (int i = 0; i < row.Data.Length; i++)
+            foreach (string t in row.Data)
             {
-                AppendSeparator(line, outputFormat);
-                line.Append(row.Data[i]);
+                AppendSeparator(line, _outputFormat);
+                line.Append(t);
             }
 
             tw.WriteLine(line.ToString());

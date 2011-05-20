@@ -14,7 +14,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// The data for this column.
         /// </summary>
         ///
-        private double[] data;
+        private double[] _data;
 
         /// <summary>
         /// Construct the cached column.
@@ -36,7 +36,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The data for this column.</value>
         public double[] Data
         {
-            get { return data; }
+            get { return _data; }
         }
 
 
@@ -68,7 +68,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         public void Allocate(int length)
         {
-            data = new double[length];
+            _data = new double[length];
         }
     }
 }

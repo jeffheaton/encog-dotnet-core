@@ -20,7 +20,7 @@ namespace Encog.App.Analyst.Commands
         /// The name of this command.
         /// </summary>
         ///
-        public const String COMMAND_NAME = "BALANCE";
+        public const String CommandName = "BALANCE";
 
         /// <summary>
         /// Construct the balance command.
@@ -34,7 +34,7 @@ namespace Encog.App.Analyst.Commands
         /// <inheritdoc/>
         public override String Name
         {
-            get { return COMMAND_NAME; }
+            get { return CommandName; }
         }
 
         /// <inheritdoc/>
@@ -42,9 +42,9 @@ namespace Encog.App.Analyst.Commands
         {
             // get filenames
             String sourceID = Prop.GetPropertyString(
-                ScriptProperties.BALANCE_CONFIG_SOURCE_FILE);
+                ScriptProperties.BalanceConfigSourceFile);
             String targetID = Prop.GetPropertyString(
-                ScriptProperties.BALANCE_CONFIG_TARGET_FILE);
+                ScriptProperties.BalanceConfigTargetFile);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning balance");
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
@@ -55,24 +55,24 @@ namespace Encog.App.Analyst.Commands
 
             // get other config data
             int countPer = Prop.GetPropertyInt(
-                ScriptProperties.BALANCE_CONFIG_COUNT_PER);
+                ScriptProperties.BalanceConfigCountPer);
             String targetFieldStr = Prop.GetPropertyString(
-                ScriptProperties.BALANCE_CONFIG_BALANCE_FIELD);
-            DataField targetFieldDF = Analyst.Script.FindDataField(
+                ScriptProperties.BalanceConfigBalanceField);
+            DataField targetFieldDf = Analyst.Script.FindDataField(
                 targetFieldStr);
-            if (targetFieldDF == null)
+            if (targetFieldDf == null)
             {
                 throw new AnalystError("Can't find balance target field: "
                                        + targetFieldStr);
             }
-            if (!targetFieldDF.Class)
+            if (!targetFieldDf.Class)
             {
                 throw new AnalystError("Can't balance on non-class field: "
                                        + targetFieldStr);
             }
 
             int targetFieldIndex = Analyst.Script
-                .FindDataFieldIndex(targetFieldDF);
+                .FindDataFieldIndex(targetFieldDf);
 
             // mark generated
             Script.MarkGenerated(targetID);
@@ -83,8 +83,7 @@ namespace Encog.App.Analyst.Commands
             CSVFormat outputFormat = Script.DetermineOutputFormat();
 
             // prepare to normalize
-            var balance = new BalanceCSV();
-            balance.Script = Script;
+            var balance = new BalanceCSV {Script = Script};
             Analyst.CurrentQuantTask = balance;
             balance.Report = new AnalystReportBridge(Analyst);
 

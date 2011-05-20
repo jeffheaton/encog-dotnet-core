@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using Encog.App.Analyst.Analyze;
@@ -32,43 +33,43 @@ namespace Encog.App.Analyst
         /// The name of the task that SHOULD everything.
         /// </summary>
         ///
-        public const String TASK_FULL = "task-full";
+        public const String TaskFull = "task-full";
 
         /// <summary>
         /// The update time for a download.
         /// </summary>
         ///
-        public const int UPDATE_TIME = 10;
+        public const int UpdateTime = 10;
 
         /// <summary>
         /// The commands.
         /// </summary>
         ///
-        private readonly IDictionary<String, Cmd> commands;
+        private readonly IDictionary<String, Cmd> _commands;
 
         /// <summary>
         /// The listeners.
         /// </summary>
         ///
-        private readonly IList<AnalystListener> listeners;
+        private readonly IList<IAnalystListener> _listeners;
 
         /// <summary>
         /// The analyst script.
         /// </summary>
         ///
-        private readonly AnalystScript script;
+        private readonly AnalystScript _script;
 
         /// <summary>
         /// The current task.
         /// </summary>
         ///
-        private QuantTask currentQuantTask;
+        private QuantTask _currentQuantTask;
 
         /// <summary>
         /// Holds a copy of the original property data, used to revert.
         /// </summary>
         ///
-        private IDictionary<String, String> revertData;
+        private IDictionary<String, String> _revertData;
 
         /// <summary>
         /// Construct the Encog analyst.
@@ -76,10 +77,10 @@ namespace Encog.App.Analyst
         ///
         public EncogAnalyst()
         {
-            script = new AnalystScript();
-            listeners = new List<AnalystListener>();
-            currentQuantTask = null;
-            commands = new Dictionary<String, Cmd>();
+            _script = new AnalystScript();
+            _listeners = new List<IAnalystListener>();
+            _currentQuantTask = null;
+            _commands = new Dictionary<String, Cmd>();
             MaxIteration = -1;
             AddCommand(new CmdCreate(this));
             AddCommand(new CmdEvaluate(this));
@@ -100,16 +101,7 @@ namespace Encog.App.Analyst
         {
             get
             {
-                int result = 0;
-
-                foreach (AnalystField field  in  script.Normalize.NormalizedFields)
-                {
-                    if (field.TimeSlice < 0)
-                    {
-                        result = Math.Max(result, Math.Abs(field.TimeSlice));
-                    }
-                }
-                return result;
+                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice < 0).Aggregate(0, (current, field) => Math.Max(current, Math.Abs(field.TimeSlice)));
             }
         }
 
@@ -119,24 +111,15 @@ namespace Encog.App.Analyst
         {
             get
             {
-                int result = 0;
-
-                foreach (AnalystField field  in  script.Normalize.NormalizedFields)
-                {
-                    if (field.TimeSlice > 0)
-                    {
-                        result = Math.Max(result, field.TimeSlice);
-                    }
-                }
-                return result;
+                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice > 0).Aggregate(0, (current, field) => Math.Max(current, field.TimeSlice));
             }
         }
 
 
         /// <value>the listeners</value>
-        public IList<AnalystListener> Listeners
+        public IList<IAnalystListener> Listeners
         {
-            get { return listeners; }
+            get { return _listeners; }
         }
 
 
@@ -149,14 +132,14 @@ namespace Encog.App.Analyst
         /// <value>The reverted data.</value>
         public IDictionary<String, String> RevertData
         {
-            get { return revertData; }
+            get { return _revertData; }
         }
 
 
         /// <value>the script</value>
         public AnalystScript Script
         {
-            get { return script; }
+            get { return _script; }
         }
 
         /// <summary>
@@ -164,23 +147,13 @@ namespace Encog.App.Analyst
         /// </summary>
         public QuantTask CurrentQuantTask
         {
-            set { currentQuantTask = value; }
+            set { _currentQuantTask = value; }
         }
 
         /// <value>True, if any field has a time slice.</value>
         public bool TimeSeries
         {
-            get
-            {
-                foreach (AnalystField field  in  script.Normalize.NormalizedFields)
-                {
-                    if (field.TimeSlice != 0)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
+            get { return _script.Normalize.NormalizedFields.Any(field => field.TimeSlice != 0); }
         }
 
         /// <summary>
@@ -188,9 +161,9 @@ namespace Encog.App.Analyst
         /// </summary>
         ///
         /// <param name="listener">The listener to add.</param>
-        public void AddAnalystListener(AnalystListener listener)
+        public void AddAnalystListener(IAnalystListener listener)
         {
-            listeners.Add(listener);
+            _listeners.Add(listener);
         }
 
         /// <summary>
@@ -200,7 +173,7 @@ namespace Encog.App.Analyst
         /// <param name="cmd">The command to add.</param>
         public void AddCommand(Cmd cmd)
         {
-            commands[cmd.Name] = cmd;
+            _commands[cmd.Name] = cmd;
         }
 
         /// <summary>
@@ -213,13 +186,13 @@ namespace Encog.App.Analyst
         public void Analyze(FileInfo file, bool headers,
                             AnalystFileFormat format)
         {
-            script.Properties.SetFilename(AnalystWizard.FILE_RAW,
+            _script.Properties.SetFilename(AnalystWizard.FileRaw,
                                           file.ToString());
 
-            script.Properties.SetProperty(
-                ScriptProperties.SETUP_CONFIG_INPUT_HEADERS, headers);
+            _script.Properties.SetProperty(
+                ScriptProperties.SetupConfigInputHeaders, headers);
 
-            var a = new PerformAnalysis(script,
+            var a = new PerformAnalysis(_script,
                                         file.ToString(), headers, format);
             a.Process(this);
         }
@@ -233,7 +206,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (field.Input && !field.Ignored)
                 {
@@ -253,7 +226,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (field.Input && !field.Ignored)
                 {
@@ -273,7 +246,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (field.Output && !field.Ignored)
                 {
@@ -293,7 +266,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (field.Output && !field.Ignored)
                 {
@@ -315,7 +288,7 @@ namespace Encog.App.Analyst
             int result = 0;
 
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (!field.Ignored)
                 {
@@ -341,7 +314,7 @@ namespace Encog.App.Analyst
 
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (!map.ContainsKey(field.Name))
                 {
@@ -366,7 +339,7 @@ namespace Encog.App.Analyst
             IDictionary<String, Object> map = new Dictionary<String, Object>();
             int result = 0;
 
-            foreach (AnalystField field  in  script.Normalize.NormalizedFields)
+            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
             {
                 if (!map.ContainsKey(field.Name))
                 {
@@ -386,11 +359,11 @@ namespace Encog.App.Analyst
         ///
         public void Download()
         {
-            Uri sourceURL = script.Properties.GetPropertyURL(
-                ScriptProperties.HEADER_DATASOURCE_SOURCE_FILE);
+            Uri sourceURL = _script.Properties.GetPropertyURL(
+                ScriptProperties.HeaderDatasourceSourceFile);
 
-            String rawFile = script.Properties.GetPropertyFile(
-                ScriptProperties.HEADER_DATASOURCE_RAW_FILE);
+            String rawFile = _script.Properties.GetPropertyFile(
+                ScriptProperties.HeaderDatasourceRawFile);
 
             FileInfo rawFilename = Script.ResolveFilename(rawFile);
 
@@ -433,7 +406,7 @@ namespace Encog.App.Analyst
                             size += length;
                         }
 
-                        if (lastUpdate > UPDATE_TIME)
+                        if (lastUpdate > UpdateTime)
                         {
                             Report(0, (int) (size/Format.MEMORY_MEG),
                                    "Downloading... " + Format.FormatMemory(size));
@@ -485,7 +458,7 @@ namespace Encog.App.Analyst
                     args = "";
                 }
 
-                Cmd cmd = commands[command];
+                Cmd cmd = _commands[command];
 
                 if (cmd != null)
                 {
@@ -516,7 +489,7 @@ namespace Encog.App.Analyst
         {
             EncogLogging.Log(EncogLogging.LEVEL_INFO, "Analyst execute task:"
                                                       + name);
-            AnalystTask task = script.GetTask(name);
+            AnalystTask task = _script.GetTask(name);
             if (task == null)
             {
                 throw new AnalystError("Can't find task: " + name);
@@ -534,7 +507,7 @@ namespace Encog.App.Analyst
         public void Load(FileInfo file)
         {
             Stream fis = null;
-            script.BasePath = file.DirectoryName;
+            _script.BasePath = file.DirectoryName;
 
             try
             {
@@ -568,8 +541,8 @@ namespace Encog.App.Analyst
         /// <param name="stream">The stream to load from.</param>
         public void Load(Stream stream)
         {
-            script.Load(stream);
-            revertData = script.Properties.PrepareRevert();
+            _script.Load(stream);
+            _revertData = _script.Properties.PrepareRevert();
         }
 
         /// <summary>
@@ -587,9 +560,9 @@ namespace Encog.App.Analyst
         /// </summary>
         ///
         /// <param name="listener">The listener to remove.</param>
-        public void RemoveAnalystListener(AnalystListener listener)
+        public void RemoveAnalystListener(IAnalystListener listener)
         {
-            listeners.Remove(listener);
+            _listeners.Remove(listener);
         }
 
         /// <summary>
@@ -601,7 +574,7 @@ namespace Encog.App.Analyst
         /// <param name="message">The message.</param>
         private void Report(int total, int current, String message)
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.Report(total, current, message);
             }
@@ -617,7 +590,7 @@ namespace Encog.App.Analyst
         private void ReportCommandBegin(int total, int current,
                                         String name)
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.ReportCommandBegin(total, current, name);
             }
@@ -630,7 +603,7 @@ namespace Encog.App.Analyst
         /// <param name="canceled">Was the command canceled.</param>
         private void ReportCommandEnd(bool canceled)
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.ReportCommandEnd(canceled);
             }
@@ -643,7 +616,7 @@ namespace Encog.App.Analyst
         /// <param name="train">The trainer.</param>
         public void ReportTraining(MLTrain train)
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.ReportTraining(train);
             }
@@ -655,7 +628,7 @@ namespace Encog.App.Analyst
         ///
         public void ReportTrainingBegin()
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.ReportTrainingBegin();
             }
@@ -667,7 +640,7 @@ namespace Encog.App.Analyst
         ///
         public void ReportTrainingEnd()
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 listener.ReportTrainingEnd();
             }
@@ -684,7 +657,7 @@ namespace Encog.App.Analyst
 
             try
             {
-                script.BasePath = file.DirectoryName;
+                _script.BasePath = file.DirectoryName;
                 fos = file.OpenWrite();
                 Save(fos);
             }
@@ -715,7 +688,7 @@ namespace Encog.App.Analyst
         /// <param name="stream">The stream to save to.</param>
         public void Save(Stream stream)
         {
-            script.Save(stream);
+            _script.Save(stream);
         }
 
         /// <summary>
@@ -736,7 +709,7 @@ namespace Encog.App.Analyst
         /// <returns>True, if all commands should be stopped.</returns>
         private bool ShouldStopAll()
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 if (listener.ShouldShutDown())
                 {
@@ -753,7 +726,7 @@ namespace Encog.App.Analyst
         /// <returns>True if the current command should be stopped.</returns>
         public bool ShouldStopCommand()
         {
-            foreach (AnalystListener listener  in  listeners)
+            foreach (IAnalystListener listener  in  _listeners)
             {
                 if (listener.ShouldStopCommand())
                 {
@@ -770,9 +743,9 @@ namespace Encog.App.Analyst
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void StopCurrentTask()
         {
-            if (currentQuantTask != null)
+            if (_currentQuantTask != null)
             {
-                currentQuantTask.RequestStop();
+                _currentQuantTask.RequestStop();
             }
         }
     }

@@ -81,9 +81,9 @@ namespace Encog.App.Quant.Ninja
 
             var line = new StringBuilder();
 
-            line.Append(FileData.DATE);
+            line.Append(FileData.Date);
             line.Append(format.Separator);
-            line.Append(FileData.TIME);
+            line.Append(FileData.Time);
 
             foreach (String str in columns)
             {

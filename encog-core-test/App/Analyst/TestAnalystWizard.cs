@@ -27,7 +27,7 @@ namespace Encog.App.Analyst
             EncogAnalyst encog = new EncogAnalyst();
             AnalystWizard wiz = new AnalystWizard(encog);
             wiz.Goal = AnalystGoal.Classification;
-            wiz.Wizard(rawFile, true, AnalystFileFormat.DECPNT_COMMA);
+            wiz.Wizard(rawFile, true, AnalystFileFormat.DecpntComma);
 
 
             encog.ExecuteTask("task-full");

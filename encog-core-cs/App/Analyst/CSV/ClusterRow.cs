@@ -14,7 +14,7 @@ namespace Encog.App.Analyst.CSV
         /// The loaded row of data.
         /// </summary>
         ///
-        private readonly LoadedRow row;
+        private readonly LoadedRow _row;
 
         /// <summary>
         /// Construct the cluster row.
@@ -24,14 +24,14 @@ namespace Encog.App.Analyst.CSV
         /// <param name="theRow">The CSV row.</param>
         public ClusterRow(double[] input, LoadedRow theRow) : base(new BasicMLData(input))
         {
-            row = theRow;
+            _row = theRow;
         }
 
 
         /// <value>the row</value>
         public LoadedRow Row
         {
-            get { return row; }
+            get { return _row; }
         }
     }
 }

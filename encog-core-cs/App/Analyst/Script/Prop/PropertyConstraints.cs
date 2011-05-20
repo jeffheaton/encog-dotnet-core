@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Encog.Util.CSV;
 using Encog.Util.File;
 
@@ -18,14 +19,14 @@ namespace Encog.App.Analyst.Script.Prop
         /// The instance.
         /// </summary>
         ///
-        private static PropertyConstraints instance;
+        private static PropertyConstraints _instance;
 
 
         /// <summary>
         /// The property data.
         /// </summary>
         ///
-        private readonly IDictionary<String, List<PropertyEntry>> data;
+        private readonly IDictionary<String, List<PropertyEntry>> _data;
 
         /// <summary>
         /// Private constructor.
@@ -33,7 +34,7 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         private PropertyConstraints()
         {
-            data = new Dictionary<String, List<PropertyEntry>>();
+            _data = new Dictionary<String, List<PropertyEntry>>();
             try
             {
                 Stream mask0 = ResourceLoader.CreateStream("Encog.Resources.analyst.csv");
@@ -46,7 +47,7 @@ namespace Encog.App.Analyst.Script.Prop
                     String typeStr = csv.Get(2);
 
                     // determine type
-                    PropertyType t = default(PropertyType) /* was: null */;
+                    PropertyType t;
                     if ("boolean".Equals(typeStr, StringComparison.InvariantCultureIgnoreCase))
                     {
                         t = PropertyType.TypeBoolean;
@@ -57,7 +58,7 @@ namespace Encog.App.Analyst.Script.Prop
                     }
                     else if ("format".Equals(typeStr, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        t = PropertyType.typeFormat;
+                        t = PropertyType.TypeFormat;
                     }
                     else if ("int".Equals(typeStr, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -81,14 +82,14 @@ namespace Encog.App.Analyst.Script.Prop
                                                   sectionStr);
                     List<PropertyEntry> list;
 
-                    if (data.ContainsKey(sectionStr))
+                    if (_data.ContainsKey(sectionStr))
                     {
-                        list = data[sectionStr];
+                        list = _data[sectionStr];
                     }
                     else
                     {
                         list = new List<PropertyEntry>();
-                        data[sectionStr] = list;
+                        _data[sectionStr] = list;
                     }
 
                     list.Add(entry);
@@ -106,15 +107,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>The instance.</value>
         public static PropertyConstraints Instance
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new PropertyConstraints();
-                }
-
-                return instance;
-            }
+            get { return _instance ?? (_instance = new PropertyConstraints()); }
         }
 
         /// <summary>
@@ -143,7 +136,7 @@ namespace Encog.App.Analyst.Script.Prop
                                               String subSection)
         {
             String key = section + ":" + subSection;
-            return data[key];
+            return _data[key];
         }
 
         /// <summary>
@@ -160,22 +153,14 @@ namespace Encog.App.Analyst.Script.Prop
         {
             String key = section.ToUpper() + ":"
                          + subSection.ToUpper();
-            IList<PropertyEntry> list = data[key];
+            IList<PropertyEntry> list = _data[key];
             if (list == null)
             {
                 throw new AnalystError("Unknown section and subsection: " + section
                                        + "." + subSection);
             }
 
-            foreach (PropertyEntry entry  in  list)
-            {
-                if (entry.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return entry;
-                }
-            }
-
-            return null;
+            return list.FirstOrDefault(entry => entry.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

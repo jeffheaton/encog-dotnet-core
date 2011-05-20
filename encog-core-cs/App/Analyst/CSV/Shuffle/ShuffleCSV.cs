@@ -15,25 +15,25 @@ namespace Encog.App.Analyst.CSV.Shuffle
         /// The default buffer size.
         /// </summary>
         ///
-        public const int DEFAULT_BUFFER_SIZE = 5000;
+        public const int DefaultBufferSize = 5000;
 
         /// <summary>
         /// The buffer.
         /// </summary>
         ///
-        private LoadedRow[] buffer;
+        private LoadedRow[] _buffer;
 
         /// <summary>
         /// The buffer size.
         /// </summary>
         ///
-        private int bufferSize;
+        private int _bufferSize;
 
         /// <summary>
         /// Remaining in the buffer.
         /// </summary>
         ///
-        private int remaining;
+        private int _remaining;
 
         /// <summary>
         /// Construct the object.
@@ -41,7 +41,7 @@ namespace Encog.App.Analyst.CSV.Shuffle
         ///
         public ShuffleCSV()
         {
-            BufferSize = DEFAULT_BUFFER_SIZE;
+            BufferSize = DefaultBufferSize;
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace Encog.App.Analyst.CSV.Shuffle
         /// </summary>
         public int BufferSize
         {
-            get { return bufferSize; }
+            get { return _bufferSize; }
             set
             {
-                bufferSize = value;
-                buffer = new LoadedRow[bufferSize];
+                _bufferSize = value;
+                _buffer = new LoadedRow[_bufferSize];
             }
         }
 
@@ -86,19 +86,19 @@ namespace Encog.App.Analyst.CSV.Shuffle
         /// <returns>The loaded row.</returns>
         private LoadedRow GetNextRow(ReadCSV csv)
         {
-            if (remaining == 0)
+            if (_remaining == 0)
             {
                 LoadBuffer(csv);
             }
 
-            while (remaining > 0)
+            while (_remaining > 0)
             {
-                int index = RangeRandomizer.RandomInt(0, bufferSize - 1);
-                if (buffer[index] != null)
+                int index = RangeRandomizer.RandomInt(0, _bufferSize - 1);
+                if (_buffer[index] != null)
                 {
-                    LoadedRow result = buffer[index];
-                    buffer[index] = null;
-                    remaining--;
+                    LoadedRow result = _buffer[index];
+                    _buffer[index] = null;
+                    _remaining--;
                     return result;
                 }
             }
@@ -112,19 +112,19 @@ namespace Encog.App.Analyst.CSV.Shuffle
         /// <param name="csv">The CSV file to load from.</param>
         private void LoadBuffer(ReadCSV csv)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (int i = 0; i < _buffer.Length; i++)
             {
-                buffer[i] = null;
+                _buffer[i] = null;
             }
 
             int index = 0;
-            while (csv.Next() && (index < bufferSize) && !ShouldStop())
+            while (csv.Next() && (index < _bufferSize) && !ShouldStop())
             {
                 var row = new LoadedRow(csv);
-                buffer[index++] = row;
+                _buffer[index++] = row;
             }
 
-            remaining = index;
+            _remaining = index;
         }
 
         /// <summary>

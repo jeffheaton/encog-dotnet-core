@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 
@@ -16,13 +17,13 @@ namespace Encog.App.Analyst.Util
         /// The column mapping, maps column name to column index.
         /// </summary>
         ///
-        private readonly IDictionary<String, Int32> columnMapping;
+        private readonly IDictionary<String, Int32> _columnMapping;
 
         /// <summary>
         /// The header list.
         /// </summary>
         ///
-        private readonly IList<String> headerList;
+        private readonly IList<String> _headerList;
 
         /// <summary>
         /// Construct the object.
@@ -34,8 +35,8 @@ namespace Encog.App.Analyst.Util
         public CSVHeaders(FileInfo filename, bool headers,
                           CSVFormat format)
         {
-            headerList = new List<String>();
-            columnMapping = new Dictionary<String, Int32>();
+            _headerList = new List<String>();
+            _columnMapping = new Dictionary<String, Int32>();
             ReadCSV csv = null;
             try
             {
@@ -46,14 +47,14 @@ namespace Encog.App.Analyst.Util
                     {
                         foreach (String str  in  csv.ColumnNames)
                         {
-                            headerList.Add(str);
+                            _headerList.Add(str);
                         }
                     }
                     else
                     {
                         for (int i = 0; i < csv.ColumnCount; i++)
                         {
-                            headerList.Add("field:" + (i + 1));
+                            _headerList.Add("field:" + (i + 1));
                         }
                     }
                 }
@@ -74,40 +75,22 @@ namespace Encog.App.Analyst.Util
         /// </summary>
         ///
         /// <param name="inputHeadings">The input headings.</param>
-        public CSVHeaders(IList<String> inputHeadings)
+        public CSVHeaders(IEnumerable<string> inputHeadings)
         {
-            headerList = new List<String>();
-            columnMapping = new Dictionary<String, Int32>();
+            _headerList = new List<String>();
+            _columnMapping = new Dictionary<String, Int32>();
 
             foreach (String header  in  inputHeadings)
             {
-                headerList.Add(header);
+                _headerList.Add(header);
             }
             Init();
         }
-
-        /// <summary>
-        /// Construct the object.
-        /// </summary>
-        ///
-        /// <param name="inputHeadings">The input headings.</param>
-        public CSVHeaders(String[] inputHeadings)
-        {
-            headerList = new List<String>();
-            columnMapping = new Dictionary<String, Int32>();
-
-            foreach (String header  in  inputHeadings)
-            {
-                headerList.Add(header);
-            }
-
-            Init();
-        }
-
+        
         /// <value>The headers.</value>
         public IList<String> Headers
         {
-            get { return headerList; }
+            get { return _headerList; }
         }
 
         /// <summary>
@@ -135,17 +118,9 @@ namespace Encog.App.Analyst.Util
             String list = name.Substring(index1 + 1, (index2) - (index1 + 1));
             String[] values = list.Split(',');
 
-            foreach (String value_ren  in  values)
-            {
-                String str = value_ren.Trim();
-                if (str.ToLower().StartsWith("t"))
-                {
-                    int slice = Int32.Parse(str.Substring(1));
-                    return slice;
-                }
-            }
-
-            return 0;
+            return (from v in values
+                    select v.Trim()
+                    into str where str.ToLower().StartsWith("t") select Int32.Parse(str.Substring(1))).FirstOrDefault();
         }
 
         /// <summary>
@@ -205,12 +180,12 @@ namespace Encog.App.Analyst.Util
         {
             String key = name.ToLower();
 
-            if (!columnMapping.ContainsKey(key))
+            if (!_columnMapping.ContainsKey(key))
             {
                 throw new AnalystError("Can't find column: " + name.ToLower());
             }
 
-            return columnMapping[key];
+            return _columnMapping[key];
         }
 
         /// <summary>
@@ -221,7 +196,7 @@ namespace Encog.App.Analyst.Util
         /// <returns>The base header.</returns>
         public String GetBaseHeader(int index)
         {
-            String result = headerList[index];
+            String result = _headerList[index];
 
             int loc = result.IndexOf('(');
             if (loc != -1)
@@ -240,7 +215,7 @@ namespace Encog.App.Analyst.Util
         /// <returns>The header value.</returns>
         public String GetHeader(int index)
         {
-            return headerList[index];
+            return _headerList[index];
         }
 
 
@@ -252,7 +227,7 @@ namespace Encog.App.Analyst.Util
         /// <returns>The timeslice.</returns>
         public int GetSlice(int currentIndex)
         {
-            String name = headerList[currentIndex];
+            String name = _headerList[currentIndex];
             int index1 = name.IndexOf('(');
             if (index1 == -1)
             {
@@ -270,12 +245,12 @@ namespace Encog.App.Analyst.Util
             String list = name.Substring(index1 + 1, (index2) - (index1 + 1));
             String[] values = list.Split(',');
 
-            foreach (String value_ren  in  values)
+            foreach (String v  in  values)
             {
-                String str = value_ren.Trim();
+                String str = v.Trim();
                 if (str.ToLower().StartsWith("t"))
                 {
-                    str = value_ren.Trim().Substring(1).Trim();
+                    str = v.Trim().Substring(1).Trim();
                     if (str[0] == '+')
                     {
                         // since Integer.parseInt can't handle +1
@@ -297,9 +272,9 @@ namespace Encog.App.Analyst.Util
         {
             int index = 0;
 
-            foreach (String str  in  headerList)
+            foreach (String str  in  _headerList)
             {
-                columnMapping[str.ToLower()] = index++;
+                _columnMapping[str.ToLower()] = index++;
             }
 
             ValidateSameName();
@@ -309,7 +284,7 @@ namespace Encog.App.Analyst.Util
         /// <returns>The number of headers.</returns>
         public int Size()
         {
-            return headerList.Count;
+            return _headerList.Count;
         }
 
         /// <summary>
@@ -318,21 +293,16 @@ namespace Encog.App.Analyst.Util
         ///
         private void ValidateSameName()
         {
-            for (int i = 0; i < headerList.Count; i++)
+            for (int i = 0; i < _headerList.Count; i++)
             {
-                for (int j = 0; j < headerList.Count; j++)
-                {
-                    if (i == j)
-                    {
-                        continue;
-                    }
-
-                    if (headerList[i].Equals(headerList[j], StringComparison.InvariantCultureIgnoreCase))
+                var i1 = i;
+                int i2 = i;
+                if (_headerList.Count > i2)
+                    if (_headerList.Where((t, j) => i1 != j).Any(t => _headerList[i2].Equals(t, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         throw new AnalystError("Multiple fields named: "
-                                               + headerList[i]);
+                                               + _headerList[i]);
                     }
-                }
             }
         }
     }
