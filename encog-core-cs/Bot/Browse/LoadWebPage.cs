@@ -52,22 +52,22 @@ namespace Encog.Bot.Browse
         /// <summary>
         /// The loaded webpage.
         /// </summary>
-        private WebPage page;
+        private WebPage _page;
 
         /// <summary>
         /// The base URL for the page being loaded.
         /// </summary>
-        private readonly Uri baseURL;
+        private readonly Uri _baseURL;
 
         /// <summary>
         /// The last form that was processed.
         /// </summary>
-        private Form lastForm;
+        private Form _lastForm;
 
         /// <summary>
         /// The last hierarchy element that was processed.
         /// </summary>
-        private DocumentRange lastHierarchyElement;
+        private DocumentRange _lastHierarchyElement;
 
         /// <summary>
         /// Construct a web page loader with the specified base URL.
@@ -75,7 +75,7 @@ namespace Encog.Bot.Browse
         /// <param name="baseURL">The base URL to use when loading.</param>
         public LoadWebPage(Uri baseURL)
         {
-            this.baseURL = baseURL;
+            _baseURL = baseURL;
         }
 
         /// <summary>
@@ -84,15 +84,15 @@ namespace Encog.Bot.Browse
         /// <param name="element">The hierarchy element to add.</param>
         private void AddHierarchyElement(DocumentRange element)
         {
-            if (lastHierarchyElement == null)
+            if (_lastHierarchyElement == null)
             {
-                page.AddContent(element);
+                _page.AddContent(element);
             }
             else
             {
-                lastHierarchyElement.AddElement(element);
+                _lastHierarchyElement.AddElement(element);
             }
-            lastHierarchyElement = element;
+            _lastHierarchyElement = element;
         }
 
         /// <summary>
@@ -103,9 +103,8 @@ namespace Encog.Bot.Browse
         {
             if (str.Trim().Length > 0)
             {
-                var d = new CodeDataUnit();
-                d.Code = str;
-                page.AddDataUnit(d);
+                var d = new CodeDataUnit {Code = str};
+                _page.AddDataUnit(d);
             }
         }
 
@@ -115,10 +114,9 @@ namespace Encog.Bot.Browse
         /// <param name="tag">The tag name to create the data unit for.</param>
         private void CreateTagDataUnit(Tag tag)
         {
-            var d = new TagDataUnit();
-            d.Tag = (Tag) tag.Clone();
+            var d = new TagDataUnit {Tag = (Tag) tag.Clone()};
 
-            page.AddDataUnit(d);
+            _page.AddDataUnit(d);
         }
 
         /// <summary>
@@ -129,9 +127,8 @@ namespace Encog.Bot.Browse
         {
             if (str.Trim().Length > 0)
             {
-                var d = new TextDataUnit();
-                d.Text = str;
-                page.AddDataUnit(d);
+                var d = new TextDataUnit {Text = str};
+                _page.AddDataUnit(d);
             }
         }
 
@@ -149,9 +146,9 @@ namespace Encog.Bot.Browse
             int depth = 0;
             int count = index;
 
-            while (count < page.getDataSize())
+            while (count < _page.getDataSize())
             {
-                DataUnit du = page.GetDataUnit(count);
+                DataUnit du = _page.GetDataUnit(count);
 
                 if (du is TagDataUnit)
                 {
@@ -164,10 +161,7 @@ namespace Encog.Bot.Browse
                             {
                                 return count;
                             }
-                            else
-                            {
-                                depth--;
-                            }
+                            depth--;
                         }
                         else if (nextTag.TagType == Tag.Type.BEGIN)
                         {
@@ -187,12 +181,12 @@ namespace Encog.Bot.Browse
         /// <returns>The loaded web page.</returns>
         public WebPage Load(Stream istream)
         {
-            page = new WebPage();
+            _page = new WebPage();
 
             LoadDataUnits(istream);
             LoadContents();
 
-            return page;
+            return _page;
         }
 
         /// <summary>
@@ -230,9 +224,9 @@ namespace Encog.Bot.Browse
         /// </summary>
         protected void LoadContents()
         {
-            for (int index = 0; index < page.getDataSize(); index++)
+            for (int index = 0; index < _page.getDataSize(); index++)
             {
-                DataUnit du = page.GetDataUnit(index);
+                DataUnit du = _page.GetDataUnit(index);
                 if (du is TagDataUnit)
                 {
                     Tag tag = ((TagDataUnit) du).Tag;
@@ -273,18 +267,18 @@ namespace Encog.Bot.Browse
                     {
                         if (string.Compare(tag.Name, "div") == 0)
                         {
-                            if (lastHierarchyElement != null)
+                            if (_lastHierarchyElement != null)
                             {
-                                lastHierarchyElement =
-                                    lastHierarchyElement.Parent;
+                                _lastHierarchyElement =
+                                    _lastHierarchyElement.Parent;
                             }
                         }
                         else if (String.Compare(tag.Name, "span", true) == 0)
                         {
-                            if (lastHierarchyElement != null)
+                            if (_lastHierarchyElement != null)
                             {
-                                lastHierarchyElement =
-                                    lastHierarchyElement.Parent;
+                                _lastHierarchyElement =
+                                    _lastHierarchyElement.Parent;
                             }
                         }
                     }
@@ -353,7 +347,7 @@ namespace Encog.Bot.Browse
         /// <param name="tag">The beginning div tag.</param>
         private void LoadDiv(int index, Tag tag)
         {
-            var div = new Div(page);
+            var div = new Div(_page);
             String classAttribute = tag.GetAttributeValue("class");
             String idAttribute = tag.GetAttributeValue("id");
 
@@ -374,30 +368,30 @@ namespace Encog.Bot.Browse
             String method = tag.GetAttributeValue("method");
             String action = tag.GetAttributeValue("action");
 
-            var form = new Form(page);
+            var form = new Form(_page);
             form.Begin = index;
             form.End = FindEndTag(index + 1, tag);
 
             if ((method == null) || string.Compare(method, "GET", true) == 0)
             {
-                form.Method = Form.FormMethod.GET;
+                form.Method = Form.FormMethod.Get;
             }
             else
             {
-                form.Method = Form.FormMethod.POST;
+                form.Method = Form.FormMethod.Post;
             }
 
             if (action == null)
             {
-                form.Action = new Address(baseURL);
+                form.Action = new Address(_baseURL);
             }
             else
             {
-                form.Action = new Address(baseURL, action);
+                form.Action = new Address(_baseURL, action);
             }
 
-            page.AddContent(form);
-            lastForm = form;
+            _page.AddContent(form);
+            _lastForm = form;
         }
 
         /// <summary>
@@ -411,18 +405,18 @@ namespace Encog.Bot.Browse
             String name = tag.GetAttributeValue("name");
             String value = tag.GetAttributeValue("value");
 
-            var input = new Input(page);
+            var input = new Input(_page);
             input.Type = type;
             input.Name = name;
             input.Value = value;
 
-            if (lastForm != null)
+            if (_lastForm != null)
             {
-                lastForm.AddElement(input);
+                _lastForm.AddElement(input);
             }
             else
             {
-                page.AddContent(input);
+                _page.AddContent(input);
             }
         }
 
@@ -433,15 +427,15 @@ namespace Encog.Bot.Browse
         /// <param name="tag">The beginning tag.</param>
         protected void LoadLink(int index, Tag tag)
         {
-            var link = new Link(page);
+            var link = new Link(_page);
             String href = tag.GetAttributeValue("href");
 
             if (href != null)
             {
-                link.setTarget(new Address(baseURL, href));
+                link.setTarget(new Address(_baseURL, href));
                 link.Begin = index;
                 link.End = FindEndTag(index + 1, tag);
-                page.AddContent(link);
+                _page.AddContent(link);
             }
         }
 
@@ -452,7 +446,7 @@ namespace Encog.Bot.Browse
         /// <param name="tag">The beginning tag.</param>
         private void LoadSpan(int index, Tag tag)
         {
-            var span = new Span(page);
+            var span = new Span(_page);
             String classAttribute = tag.GetAttributeValue("class");
             String idAttribute = tag.GetAttributeValue("id");
 
@@ -470,10 +464,10 @@ namespace Encog.Bot.Browse
         /// <param name="tag">The beginning tag.</param>
         protected void LoadTitle(int index, Tag tag)
         {
-            var title = new DocumentRange(page);
+            var title = new DocumentRange(_page);
             title.Begin = index;
             title.End = FindEndTag(index + 1, tag);
-            page.Title = title;
+            _page.Title = title;
         }
     }
 }

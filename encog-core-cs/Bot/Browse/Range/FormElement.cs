@@ -40,64 +40,59 @@ namespace Encog.Bot.Browse.Range
         /// <summary>
         /// The name of the element.
         /// </summary>
-        private String name;
+        private String _name;
 
         /// <summary>
         /// The owner.
         /// </summary>
-        private Form owner;
+        private Form _owner;
 
         /// <summary>
         /// The value.
         /// </summary>
-        private String value;
+        private String _value;
 
-
-        /**
-         * Construct a form element from the specified web page.
-         * @param source The page that holds this form element.
-         */
-
-        public FormElement(WebPage source)
+        /// <summary>
+        /// Construct a form element from the specified web page. 
+        /// </summary>
+        /// <param name="source">The page that holds this form element.</param>
+        protected FormElement(WebPage source)
             : base(source)
         {
         }
 
-        /**
-         * @return The name of this form.
-         */
-
+        /// <summary>
+        /// The name of this form.
+        /// </summary>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
-        /**
-         * @return The owner of this form element.
-         */
-
+        /// <summary>
+        /// The owner of this form element.
+        /// </summary>
         public Form Owner
         {
-            get { return owner; }
-            set { owner = value; }
+            get { return _owner; }
+            set { _owner = value; }
         }
 
-        /**
-         * @return The value of this form element.
-         */
-
+        /// <summary>
+        /// The value of this form element.
+        /// </summary>
         public String Value
         {
-            get { return value; }
-            set { this.value = value; }
+            get { return _value; }
+            set { this._value = value; }
         }
-
-        /**
-         * @return True if this is autosend, which means that the type is 
-         * NOT submit.  This prevents a form that has multiple submit buttons
-         * from sending ALL of them in a single post.
-         */
+        
+        /// <summary>
+        /// True if this is autosend, which means that the type is 
+        /// NOT submit.  This prevents a form that has multiple submit buttons
+        /// from sending ALL of them in a single post.
+        /// </summary>
         public abstract bool AutoSend { get; }
     }
 }

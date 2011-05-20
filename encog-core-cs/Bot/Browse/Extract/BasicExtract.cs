@@ -42,7 +42,7 @@ namespace Encog.Bot.Browse.Extract
         /// <summary>
         /// The classes registered as listeners for the extraction.
         /// </summary>
-        private readonly ICollection<IExtractListener> listeners =
+        private readonly ICollection<IExtractListener> _listeners =
             new List<IExtractListener>();
 
         #region IExtract Members
@@ -53,7 +53,7 @@ namespace Encog.Bot.Browse.Extract
         /// <param name="listener">The listener to add.</param>
         public void AddListener(IExtractListener listener)
         {
-            listeners.Add(listener);
+            _listeners.Add(listener);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Encog.Bot.Browse.Extract
         /// </summary>
         public ICollection<IExtractListener> Listeners
         {
-            get { return listeners; }
+            get { return _listeners; }
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Encog.Bot.Browse.Extract
         /// <param name="listener">The listener to rmove.</param>
         public void RemoveListener(IExtractListener listener)
         {
-            listeners.Remove(listener);
+            _listeners.Remove(listener);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Encog.Bot.Browse.Extract
         /// <param name="obj">The object to be distributed.</param>
         public void Distribute(Object obj)
         {
-            foreach (IExtractListener listener in listeners)
+            foreach (IExtractListener listener in _listeners)
             {
                 listener.FoundData(obj);
             }

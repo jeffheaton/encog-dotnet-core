@@ -158,7 +158,7 @@ namespace Encog.Util.File
         {
             try
             {
-                var buffer = new byte[BotUtil.BUFFER_SIZE];
+                var buffer = new byte[BotUtil.BufferSize];
                 int length;
                 do
                 {

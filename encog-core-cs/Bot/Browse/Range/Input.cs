@@ -42,7 +42,7 @@ namespace Encog.Bot.Browse.Range
         /// <summary>
         /// The type of input element that this is.
         /// </summary>
-        private String type;
+        private String _type;
 
         /// <summary>
         /// Construct this Input element.
@@ -58,8 +58,8 @@ namespace Encog.Bot.Browse.Range
         /// </summary>
         public String Type
         {
-            get { return type; }
-            set { type = value; }
+            get { return _type; }
+            set { _type = value; }
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Encog.Bot.Browse.Range
         /// </summary>
         public override bool AutoSend
         {
-            get { return string.Compare(type, "submit", true) != 0; }
+            get { return string.Compare(_type, "submit", true) != 0; }
         }
 
         /// <summary>

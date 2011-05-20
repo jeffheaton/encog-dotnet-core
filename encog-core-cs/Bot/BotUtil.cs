@@ -47,7 +47,7 @@ namespace Encog.Bot
         /// <summary>
         /// How much data to read at once.
         /// </summary>
-        public static int BUFFER_SIZE = 8192;
+        public static int BufferSize = 8192;
 
         /// <summary>
         /// This method is very useful for grabbing information from a HTML page.
@@ -61,8 +61,6 @@ namespace Encog.Bot
         public static String ExtractFromIndex(String str, String token1,
                                               String token2, int index, int occurence)
         {
-            int location1, location2;
-
             // convert everything to lower case
             String searchStr = str.ToLower();
             String token1Lower = token1.ToLower();
@@ -71,7 +69,7 @@ namespace Encog.Bot
             int count = occurence;
 
             // now search
-            location1 = location2 = index - 1;
+            int location1 = index - 1;
             do
             {
                 location1 = searchStr.IndexOf(token1Lower, location1 + 1);
@@ -87,7 +85,7 @@ namespace Encog.Bot
 
             // return the result from the original string that has mixed
             // case
-            location2 = searchStr.IndexOf(token2Lower, location1 + 1);
+            int location2 = searchStr.IndexOf(token2Lower, location1 + 1);
             if (location2 == -1)
             {
                 return null;
@@ -107,8 +105,6 @@ namespace Encog.Bot
         public static String Extract(String str, String token1,
                                      String token2, int index)
         {
-            int location1, location2;
-
             // convert everything to lower case
             String searchStr = str.ToLower();
             String token1Lower = token1.ToLower();
@@ -117,7 +113,7 @@ namespace Encog.Bot
             int count = index;
 
             // now search
-            location1 = location2 = -1;
+            int location1 = -1;
             do
             {
                 location1 = searchStr.IndexOf(token1Lower, location1 + 1);
@@ -132,7 +128,7 @@ namespace Encog.Bot
 
             // return the result from the original string that has mixed
             // case
-            location2 = searchStr.IndexOf(token2Lower, location1 + 1);
+            int location2 = searchStr.IndexOf(token2Lower, location1 + 1);
             if (location2 == -1)
             {
                 return null;
@@ -244,7 +240,7 @@ namespace Encog.Bot
             try
             {
                 var result = new StringBuilder();
-                var buffer = new byte[BUFFER_SIZE];
+                var buffer = new byte[BufferSize];
 
                 int length;
 

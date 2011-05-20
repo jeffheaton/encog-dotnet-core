@@ -39,15 +39,15 @@ namespace Encog.Bot.DataUnits
         /// <summary>
         /// The code for this data unit.
         /// </summary>
-        private String code;
+        private String _code;
 
         /// <summary>
         /// The code for this data unit.
         /// </summary>
         public String Code
         {
-            get { return code; }
-            set { code = value; }
+            get { return _code; }
+            set { _code = value; }
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Encog.Bot.DataUnits
         /// <returns>This object as a string.</returns>
         public override String ToString()
         {
-            return code;
+            return _code;
         }
     }
 }

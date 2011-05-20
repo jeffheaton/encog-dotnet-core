@@ -48,11 +48,11 @@ namespace Encog.Bot.Browse.Range
             /// <summary>
             /// This form is to be POSTed.
             /// </summary>
-            POST,
+            Post,
             /// <summary>
             /// This form is to sent using a GET.
             /// </summary>
-            GET
+            Get
         } ;
 
         #endregion

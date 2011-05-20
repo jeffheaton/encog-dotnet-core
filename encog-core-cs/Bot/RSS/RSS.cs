@@ -48,19 +48,19 @@ namespace Encog.Bot.RSS
         /// <summary>
         /// All of the attributes for this RSS document.
         /// </summary>
-        private readonly Dictionary<String, String> attributes = new Dictionary<String, String>();
+        private readonly Dictionary<String, String> _attributes = new Dictionary<String, String>();
 
         /// <summary>
         /// All RSS items, or stories, found.
         /// </summary>
-        private readonly List<RSSItem> items = new List<RSSItem>();
+        private readonly List<RSSItem> _items = new List<RSSItem>();
 
         /// <summary>
         /// All of the attributes for this RSS document.
         /// </summary>
         public Dictionary<String, String> Attributes
         {
-            get { return attributes; }
+            get { return _attributes; }
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Encog.Bot.RSS
         /// </summary>
         public List<RSSItem> Items
         {
-            get { return items; }
+            get { return _items; }
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Encog.Bot.RSS
         {
             var rssItem = new RSSItem();
             rssItem.Load(item);
-            items.Add(rssItem);
+            _items.Add(rssItem);
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Encog.Bot.RSS
                 }
                 else
                 {
-                    attributes.Remove(nodename);
-                    attributes.Add(nodename, channel.InnerText);
+                    _attributes.Remove(nodename);
+                    _attributes.Add(nodename, channel.InnerText);
                 }
             }
         }
@@ -153,15 +153,15 @@ namespace Encog.Bot.RSS
         {
             var str = new StringBuilder();
 
-            foreach (String item in attributes.Keys)
+            foreach (String item in _attributes.Keys)
             {
                 str.Append(item);
                 str.Append('=');
-                str.Append(attributes[item]);
+                str.Append(_attributes[item]);
                 str.Append('\n');
             }
             str.Append("Items:\n");
-            foreach (RSSItem item in items)
+            foreach (RSSItem item in _items)
             {
                 str.Append(item.ToString());
                 str.Append('\n');

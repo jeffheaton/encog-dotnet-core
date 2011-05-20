@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Encog.Bot.Browse.Range;
 using Encog.Bot.DataUnits;
@@ -46,24 +47,24 @@ namespace Encog.Bot.Browse
         /// <summary>
         /// The contents of this page, builds upon the list of DataUnits.
         /// </summary>
-        private readonly IList<DocumentRange> contents = new List<DocumentRange>();
+        private readonly IList<DocumentRange> _contents = new List<DocumentRange>();
 
         /// <summary>
         /// The data units that make up this page.
         /// </summary>
-        private readonly IList<DataUnit> data = new List<DataUnit>();
+        private readonly IList<DataUnit> _data = new List<DataUnit>();
 
         /// <summary>
         /// The title of this HTML page.
         /// </summary>
-        private DocumentRange title;
+        private DocumentRange _title;
 
         /// <summary>
         /// The contents in a list collection.
         /// </summary>
         public IList<DocumentRange> Contents
         {
-            get { return contents; }
+            get { return _contents; }
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace Encog.Bot.Browse
         /// </summary>
         public IList<DataUnit> Data
         {
-            get { return data; }
+            get { return _data; }
         }
 
         /// <summary>
@@ -79,11 +80,11 @@ namespace Encog.Bot.Browse
         /// </summary>
         public DocumentRange Title
         {
-            get { return title; }
+            get { return _title; }
             set
             {
-                title = value;
-                title.Source = this;
+                _title = value;
+                _title.Source = this;
             }
         }
 
@@ -94,7 +95,7 @@ namespace Encog.Bot.Browse
         public void AddContent(DocumentRange span)
         {
             span.Source = this;
-            contents.Add(span);
+            _contents.Add(span);
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Encog.Bot.Browse
         /// <param name="unit">The data unit to load.</param>
         public void AddDataUnit(DataUnit unit)
         {
-            data.Add(unit);
+            _data.Add(unit);
         }
 
         /// <summary>
@@ -136,18 +137,7 @@ namespace Encog.Bot.Browse
         /// <returns>The link found.</returns>
         public Link FindLink(String str)
         {
-            foreach (DocumentRange span in Contents)
-            {
-                if (span is Link)
-                {
-                    var link = (Link) span;
-                    if (link.GetTextOnly().Equals(str))
-                    {
-                        return link;
-                    }
-                }
-            }
-            return null;
+            return Contents.OfType<Link>().FirstOrDefault(link => link.GetTextOnly().Equals(str));
         }
 
         /// <summary>
@@ -156,7 +146,7 @@ namespace Encog.Bot.Browse
         /// <returns>The size of the data unit.</returns>
         public int getDataSize()
         {
-            return data.Count;
+            return _data.Count;
         }
 
         /// <summary>
@@ -166,7 +156,7 @@ namespace Encog.Bot.Browse
         /// <returns>The DataUnit found at the specified index.</returns>
         public DataUnit GetDataUnit(int i)
         {
-            return data[i];
+            return _data[i];
         }
 
 

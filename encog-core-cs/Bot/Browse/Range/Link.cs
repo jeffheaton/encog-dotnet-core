@@ -40,7 +40,7 @@ namespace Encog.Bot.Browse.Range
         /// <summary>
         /// The target address for this link.
         /// </summary>
-        private Address target;
+        private Address _target;
 
         /// <summary>
         /// Construct a link from the specified web page.
@@ -56,19 +56,10 @@ namespace Encog.Bot.Browse.Range
         /// </summary>
         public Address Target
         {
-            get { return target; }
-            set { target = value; }
+            get { return _target; }
+            set { _target = value; }
         }
-
-        /// <summary>
-        /// Set the target of this link.
-        /// </summary>
-        /// <param name="target">The link target.</param>
-        public void setTarget(Address target)
-        {
-            this.target = target;
-        }
-
+        
         /// <summary>
         /// This object as a string.
         /// </summary>
@@ -77,7 +68,7 @@ namespace Encog.Bot.Browse.Range
         {
             var result = new StringBuilder();
             result.Append("[Link:");
-            result.Append(target);
+            result.Append(_target);
             result.Append("|");
             result.Append(GetTextOnly());
             result.Append("]");

@@ -45,12 +45,12 @@ namespace Encog.Bot.Browse.Range
         /// <summary>
         /// Sub elements of this range.
         /// </summary>
-        private readonly IList<DocumentRange> elements = new List<DocumentRange>();
+        private readonly IList<DocumentRange> _elements = new List<DocumentRange>();
 
         /// <summary>
         /// The source page for this range.
         /// </summary>
-        private WebPage source;
+        private WebPage _source;
 
         /// <summary>
         /// Construct a document range from the specified WebPage.
@@ -58,7 +58,7 @@ namespace Encog.Bot.Browse.Range
         /// <param name="source">The web page that this range belongs to.</param>
         public DocumentRange(WebPage source)
         {
-            this.source = source;
+            _source = source;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Encog.Bot.Browse.Range
         /// </summary>
         public IList<DocumentRange> Elements
         {
-            get { return elements; }
+            get { return _elements; }
         }
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace Encog.Bot.Browse.Range
         /// </summary>
         public WebPage Source
         {
-            get { return source; }
-            set { source = value; }
+            get { return _source; }
+            set { _source = value; }
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Encog.Bot.Browse.Range
 
             for (int i = Begin; i < End; i++)
             {
-                DataUnit du = source.Data[i];
+                DataUnit du = _source.Data[i];
                 if (du is TextDataUnit)
                 {
                     result.Append(du.ToString());

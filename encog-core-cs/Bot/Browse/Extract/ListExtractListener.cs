@@ -42,14 +42,14 @@ namespace Encog.Bot.Browse.Extract
         /// <summary>
         /// The list to extract into.
         /// </summary>
-        private readonly IList<Object> list = new List<Object>();
+        private readonly IList<Object> _list = new List<Object>();
 
         /// <summary>
         /// The list of words extracted.
         /// </summary>
         public IList<Object> List
         {
-            get { return list; }
+            get { return _list; }
         }
 
         #region IExtractListener Members
@@ -60,7 +60,7 @@ namespace Encog.Bot.Browse.Extract
         /// <param name="obj">The word found.</param>
         public void FoundData(Object obj)
         {
-            list.Add(obj);
+            _list.Add(obj);
         }
 
         #endregion

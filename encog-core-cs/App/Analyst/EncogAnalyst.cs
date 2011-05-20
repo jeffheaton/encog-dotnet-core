@@ -390,7 +390,7 @@ namespace Encog.App.Analyst
 
                 int length = 0;
                 int size = 0;
-                var buffer = new byte[BotUtil.BUFFER_SIZE];
+                var buffer = new byte[BotUtil.BufferSize];
                 WebRequest http = WebRequest.Create(url);
                 var response = (HttpWebResponse) http.GetResponse();
                 Stream istream = response.GetResponseStream();

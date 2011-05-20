@@ -43,30 +43,30 @@ namespace Encog.Bot.RSS
         /// <summary>
         /// The date this item was published.
         /// </summary>
-        private DateTime date;
+        private DateTime _date;
 
         /// <summary>
         /// The description of this item.
         /// </summary>
-        private String description;
+        private String _description;
 
         /// <summary>
         /// The hyperlink to this item.
         /// </summary>
-        private String link;
+        private String _link;
 
         /// <summary>
         /// The title of this item.
         /// </summary>
-        private String title;
+        private String _title;
 
         /// <summary>
         /// The title of this item.
         /// </summary>
         public String Title
         {
-            get { return title; }
-            set { title = value; }
+            get { return _title; }
+            set { _title = value; }
         }
 
         /// <summary>
@@ -74,8 +74,8 @@ namespace Encog.Bot.RSS
         /// </summary>
         public String Link
         {
-            get { return link; }
-            set { link = value; }
+            get { return _link; }
+            set { _link = value; }
         }
 
 
@@ -84,8 +84,8 @@ namespace Encog.Bot.RSS
         /// </summary>
         public String Description
         {
-            get { return description; }
-            set { description = value; }
+            get { return _description; }
+            set { _description = value; }
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace Encog.Bot.RSS
         /// </summary>
         public DateTime Date
         {
-            get { return date; }
-            set { date = value; }
+            get { return _date; }
+            set { _date = value; }
         }
 
 
@@ -109,16 +109,15 @@ namespace Encog.Bot.RSS
                 String name = n.Name;
 
                 if (String.Compare(name, "title", true) == 0)
-                    title = n.InnerText;
+                    _title = n.InnerText;
                 else if (String.Compare(name, "link", true) == 0)
-                    link = n.InnerText;
+                    _link = n.InnerText;
                 else if (String.Compare(name, "description", true) == 0)
-                    description = n.InnerText;
+                    _description = n.InnerText;
                 else if (String.Compare(name, "pubDate", true) == 0)
                 {
                     String str = n.InnerText;
-                    if (str != null)
-                        date = RSS.ParseDate(str);
+                    _date = RSS.ParseDate(str);
                 }
             }
         }
@@ -133,11 +132,11 @@ namespace Encog.Bot.RSS
             var builder = new StringBuilder();
             builder.Append('[');
             builder.Append("title=\"");
-            builder.Append(title);
+            builder.Append(_title);
             builder.Append("\",link=\"");
-            builder.Append(link);
+            builder.Append(_link);
             builder.Append("\",date=\"");
-            builder.Append(date);
+            builder.Append(_date);
             builder.Append("\"]");
             return builder.ToString();
         }

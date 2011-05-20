@@ -51,7 +51,7 @@ namespace Encog.Bot.Browse
         /// <summary>
         /// The page that is currently being browsed.
         /// </summary>
-        private WebPage currentPage;
+        private WebPage _currentPage;
 
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Encog.Bot.Browse
         /// </summary>
         public WebPage CurrentPage
         {
-            get { return currentPage; }
-            set { currentPage = value; }
+            get { return _currentPage; }
+            set { _currentPage = value; }
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Encog.Bot.Browse
                 Uri targetURL;
                 WebRequest http = null;
 
-                if (form.Method == Form.FormMethod.GET)
+                if (form.Method == Form.FormMethod.Get)
                 {
                     ostream = new MemoryStream();
                 }
@@ -129,7 +129,7 @@ namespace Encog.Bot.Browse
                 }
 
                 // now execute the command
-                if (form.Method == Form.FormMethod.GET)
+                if (form.Method == Form.FormMethod.Get)
                 {
                     String action = form.Action.Url.ToString();
                     ostream.Close();
@@ -232,7 +232,7 @@ namespace Encog.Bot.Browse
             }
 #endif
             var load = new LoadWebPage(url);
-            currentPage = load.Load(istream);
+            _currentPage = load.Load(istream);
         }
     }
 }

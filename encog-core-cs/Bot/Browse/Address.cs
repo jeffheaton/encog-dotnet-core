@@ -39,12 +39,12 @@ namespace Encog.Bot.Browse
         /// <summary>
         /// The original text from the address.
         /// </summary>
-        private readonly String original;
+        private readonly String _original;
 
         /// <summary>
         /// The address as a URL.
         /// </summary>
-        private readonly Uri url;
+        private readonly Uri _url;
 
         /// <summary>
         /// Construct the address from a URL.
@@ -52,8 +52,8 @@ namespace Encog.Bot.Browse
         /// <param name="u">The URL to use.</param>
         public Address(Uri u)
         {
-            url = u;
-            original = u.ToString();
+            _url = u;
+            _original = u.ToString();
         }
 
         /// <summary>
@@ -63,11 +63,8 @@ namespace Encog.Bot.Browse
         /// <param name="original">A full URL or a URL relative to the base.</param>
         public Address(Uri b, String original)
         {
-            this.original = original;
-            if (b == null)
-                url = new Uri(new Uri("http://localhost/"), original);
-            else
-                url = new Uri(b, original);
+            _original = original;
+            _url = b == null ? new Uri(new Uri("http://localhost/"), original) : new Uri(b, original);
         }
 
         /// <summary>
@@ -75,7 +72,7 @@ namespace Encog.Bot.Browse
         /// </summary>
         public String Original
         {
-            get { return original; }
+            get { return _original; }
         }
 
         /// <summary>
@@ -83,7 +80,7 @@ namespace Encog.Bot.Browse
         /// </summary>
         public Uri Url
         {
-            get { return url; }
+            get { return _url; }
         }
 
         /// <summary>
@@ -92,14 +89,7 @@ namespace Encog.Bot.Browse
         /// <returns></returns>
         public override String ToString()
         {
-            if (url != null)
-            {
-                return url.ToString();
-            }
-            else
-            {
-                return original;
-            }
+            return _url != null ? _url.ToString() : _original;
         }
     }
 }
