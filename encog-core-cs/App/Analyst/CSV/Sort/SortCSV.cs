@@ -38,7 +38,6 @@ namespace Encog.App.Analyst.CSV.Sort
         /// <value>Used to specify the sort order.</value>
         public IList<SortedField> SortOrder
         {
-            /// <returns>Used to specify the sort order.</returns>
             get { return sortOrder; }
         }
 

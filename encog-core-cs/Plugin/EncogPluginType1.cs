@@ -11,8 +11,7 @@ namespace Encog.Plugin
     public interface EncogPluginType1 : EncogPluginBase
     {
         /// <value>The current log level.</value>
-        int LogLevel { /// <returns>The current log level.</returns>
-            get; }
+        int LogLevel { get; }
 
         /// <summary>
         /// This allows the plugin to replace Encog's system layer calculation. This

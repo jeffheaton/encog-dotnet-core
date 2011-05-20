@@ -42,16 +42,9 @@ namespace Encog.App.Analyst.Commands
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String Name
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return COMMAND_NAME; }
         }
 
@@ -131,7 +124,7 @@ namespace Encog.App.Analyst.Commands
                 {
                     return Int32.Parse(str);
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     throw new AnalystError("Invalid kfold :" + str);
                 }

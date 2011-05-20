@@ -34,6 +34,11 @@ namespace Encog.App.Analyst
         /// Decimal comma and ; . (non-English usually).
         /// </summary>
         ///
-        DECCOMMA_SEMI
+        DECCOMMA_SEMI,
+
+        /// <summary>
+        /// Unknown, an error.
+        /// </summary>
+        UNKNOWN
     }
 }

@@ -160,7 +160,7 @@ namespace Encog.App.Analyst.Script.Prop
                         CSVFormat.EG_FORMAT.Parse(value_ren);
                         break;
                     case PropertyType.typeFormat:
-                        if (ConvertStringConst.String2AnalystFileFormat(value_ren) == null)
+                        if (ConvertStringConst.String2AnalystFileFormat(value_ren) == AnalystFileFormat.UNKNOWN)
                         {
                             var result_0 = new StringBuilder();
                             result_0.Append("Invalid file format for ");

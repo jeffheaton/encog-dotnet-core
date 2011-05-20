@@ -31,7 +31,6 @@ namespace Encog.Persist
         /// <value>The directory.</value>
         public FileInfo Parent
         {
-            /// <returns>The directory.</returns>
             get { return parent; }
         }
 

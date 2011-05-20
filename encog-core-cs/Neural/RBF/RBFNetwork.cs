@@ -64,7 +64,7 @@ namespace Encog.Neural.RBF
                 SetRBFCentersAndWidthsEqualSpacing(-1, 1, t, volumeNeuronWidth,
                                                    false);
             }
-            catch (EncogError ex)
+            catch (EncogError)
             {
                 // if we have the wrong number of hidden neurons, try this
                 RandomizeRBFCentersAndWidths(-1, 1, t);

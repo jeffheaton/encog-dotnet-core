@@ -21,38 +21,21 @@ namespace Encog.Neural.Rbf
     {
         #region EncogPersistor Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "RBFNetwork"; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public Object Read(Stream mask0)
         {
             var result = new RBFNetwork();
@@ -190,10 +173,7 @@ namespace Encog.Neural.Rbf
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

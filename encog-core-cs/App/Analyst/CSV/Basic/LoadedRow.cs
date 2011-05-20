@@ -45,7 +45,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The row data.</value>
         public String[] Data
         {
-            /// <returns>The row data.</returns>
             get { return data; }
         }
     }

@@ -30,7 +30,6 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <value>the normalizedFields</value>
         public IList<AnalystField> NormalizedFields
         {
-            /// <returns>the normalizedFields</returns>
             get { return normalizedFields; }
         }
 

@@ -15,7 +15,6 @@ namespace Encog.App.Quant.Indicators
         /// <value>Get the beginning index.</value>
         private int BeginningIndex
         {
-            /// <returns>Get the beginning index.</returns>
             get
             {
                 int result = 0;
@@ -38,7 +37,6 @@ namespace Encog.App.Quant.Indicators
         /// <value>Get the ending index.</value>
         private int EndingIndex
         {
-            /// <returns>Get the ending index.</returns>
             get
             {
                 int result = RecordCount - 1;

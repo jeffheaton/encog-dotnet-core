@@ -37,7 +37,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The column mappings.</value>
         public IDictionary<String, BaseCachedColumn> ColumnMapping
         {
-            /// <returns>The column mappings.</returns>
             get { return columnMapping; }
         }
 
@@ -45,7 +44,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <value>The columns.</value>
         public IList<BaseCachedColumn> Columns
         {
-            /// <returns>The columns.</returns>
             get { return columns; }
         }
 

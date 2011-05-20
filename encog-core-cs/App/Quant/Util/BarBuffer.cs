@@ -36,7 +36,6 @@ namespace Encog.App.Quant.Util
         /// <value>The data.</value>
         public IList<double[]> Data
         {
-            /// <returns>The data.</returns>
             get { return data; }
         }
 
@@ -48,11 +47,6 @@ namespace Encog.App.Quant.Util
         /// <value>True if the buffer is full.</value>
         public bool Full
         {
-            /// <summary>
-            /// Determine if the buffer is full.
-            /// </summary>
-            ///
-            /// <returns>True if the buffer is full.</returns>
             get { return data.Count >= periods; }
         }
 

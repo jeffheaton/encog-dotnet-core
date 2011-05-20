@@ -14,38 +14,21 @@ namespace Encog.Neural.SOM
     {
         #region EncogPersistor Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "SOM"; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public Object Read(Stream mask0)
         {
             var result = new SOMNetwork();
@@ -76,10 +59,7 @@ namespace Encog.Neural.SOM
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

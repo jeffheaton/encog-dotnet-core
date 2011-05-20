@@ -37,7 +37,6 @@ namespace Encog.Neural.Prune
         /// <value>The network that is being processed.</value>
         public BasicNetwork Network
         {
-            /// <returns>The network that is being processed.</returns>
             get { return network; }
         }
 

@@ -27,13 +27,12 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <value>The contents.</value>
         public IDictionary<String, Object> Contents
         {
-            /// <returns>The contents.</returns>
             get { return contents; }
         }
 
         /// <value>the trainingType to set</value>
-        public String TrainingType { /// <returns>the trainingType</returns>
-            get; /// <param name="trainingType_0">the trainingType to set</param>
+        public String TrainingType { 
+            get; 
             set; }
 
         /// <summary>

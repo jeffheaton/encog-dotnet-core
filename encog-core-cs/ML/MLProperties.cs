@@ -10,8 +10,7 @@ namespace Encog.ML
     public interface MLProperties : MLMethod
     {
         /// <value>A map of all properties.</value>
-        IDictionary<String, String> Properties { /// <returns>A map of all properties.</returns>
-            get; }
+        IDictionary<String, String> Properties { get; }
 
 
         /// <summary>

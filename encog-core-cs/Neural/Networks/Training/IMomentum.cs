@@ -11,15 +11,8 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// Set the momentum.
         /// </summary>
-        ///
-        /// <value>The new momentum.</value>
-        double Momentum { /// <returns>The momentum.</returns>
+        double Momentum { 
             get;
-            /// <summary>
-            /// Set the momentum.
-            /// </summary>
-            ///
-            /// <param name="m">The new momentum.</param>
             set; }
     }
 }

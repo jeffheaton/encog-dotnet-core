@@ -9,8 +9,7 @@ namespace Encog.ML.Genetic.Innovation
     public interface IInnovationList
     {
         /// <value>A list of innovations.</value>
-        IList<IInnovation> Innovations { /// <returns>A list of innovations.</returns>
-            get; }
+        IList<IInnovation> Innovations { get; }
 
         /// <summary>
         /// Add an innovation.

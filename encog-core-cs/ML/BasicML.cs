@@ -33,7 +33,6 @@ namespace Encog.ML
         /// <value>A map of all properties.</value>
         public IDictionary<String, String> Properties
         {
-            /// <returns>A map of all properties.</returns>
             get { return properties; }
         }
 

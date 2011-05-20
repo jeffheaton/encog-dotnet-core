@@ -37,7 +37,6 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// <value>The segregation targets.</value>
         public IList<SegregateTargetPercent> Targets
         {
-            /// <returns>The segregation targets.</returns>
             get { return targets; }
         }
 

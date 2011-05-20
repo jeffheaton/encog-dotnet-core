@@ -39,16 +39,9 @@ namespace Encog.Neural.Som.Training.Clustercopy
             get { return false; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 

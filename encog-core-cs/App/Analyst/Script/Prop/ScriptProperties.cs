@@ -502,14 +502,7 @@ namespace Encog.App.Analyst.Script.Prop
         public void SetProperty(String name,
                                 AnalystFileFormat format)
         {
-            if (format == null)
-            {
-                data[name] = "";
-            }
-            else
-            {
-                data[name] = ConvertStringConst.AnalystFileFormat2String(format);
-            }
+            data[name] = ConvertStringConst.AnalystFileFormat2String(format);
         }
 
         /// <summary>

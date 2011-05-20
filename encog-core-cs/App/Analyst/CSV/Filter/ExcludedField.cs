@@ -37,9 +37,7 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <value>the fieldNumber to set</value>
         public int FieldNumber
         {
-            /// <returns>the fieldNumber</returns>
             get { return fieldNumber; }
-            /// <param name="theFieldNumber">the fieldNumber to set</param>
             set { fieldNumber = value; }
         }
 
@@ -47,9 +45,7 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <value>the fieldValue to set</value>
         public String FieldValue
         {
-            /// <returns>the fieldValue</returns>
             get { return fieldValue; }
-            /// <param name="theFieldValue">the fieldValue to set</param>
             set { fieldValue = value; }
         }
 

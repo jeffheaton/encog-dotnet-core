@@ -14,38 +14,21 @@ namespace Encog.Neural.BAM
     {
         #region EncogPersistor Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "BAM"; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public Object Read(Stream mask0)
         {
             var result = new BAMNetwork();

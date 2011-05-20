@@ -25,23 +25,13 @@ namespace Encog.App.Analyst.Commands
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String Name
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return COMMAND_NAME; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed bool ExecuteCommand(String args)
         {
             IDictionary<String, String> revertedData = Analyst.RevertData;

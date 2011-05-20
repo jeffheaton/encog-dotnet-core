@@ -39,21 +39,13 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <value>The folded training data.</value>
         public FoldedDataSet Folded
         {
-            /// <returns>The folded training data.</returns>
             get { return folded; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
+        {            
             get { return network; }
         }
     }

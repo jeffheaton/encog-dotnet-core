@@ -45,7 +45,6 @@ namespace Encog.Util.Logging
         /// <value>The current logging level.</value>
         public int CurrentLevel
         {
-            /// <returns>The current logging level.</returns>
             get { return EncogFramework.Instance.LoggingPlugin.LogLevel; }
         }
 

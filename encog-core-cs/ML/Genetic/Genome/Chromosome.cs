@@ -36,11 +36,6 @@ namespace Encog.ML.Genetic.Genome
         /// <value>the genes</value>
         public List<IGene> Genes
         {
-            /// <summary>
-            /// Used the get the entire gene list.
-            /// </summary>
-            ///
-            /// <returns>the genes</returns>
             get { return genes; }
         }
 

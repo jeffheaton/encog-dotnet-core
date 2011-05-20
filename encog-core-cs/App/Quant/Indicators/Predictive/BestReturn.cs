@@ -38,7 +38,6 @@ namespace Encog.App.Quant.Indicators.Predictive
         /// <value>The number of periods.</value>
         public override int Periods
         {
-            /// <returns>The number of periods.</returns>
             get { return periods; }
         }
 

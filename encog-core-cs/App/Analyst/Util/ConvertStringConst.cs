@@ -115,7 +115,7 @@ namespace Encog.App.Analyst.Util
             }
             else
             {
-                return default(AnalystFileFormat) /* was: null */;
+                return AnalystFileFormat.UNKNOWN;
             }
         }
     }

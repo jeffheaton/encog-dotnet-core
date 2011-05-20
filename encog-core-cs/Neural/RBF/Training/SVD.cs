@@ -12,6 +12,14 @@ namespace Encog.Neural.RBF.Training
     ///
     public class SVD
     {
+        /// <summary>
+        /// Perform a SVD fit.
+        /// </summary>
+        /// <param name="x">The X matrix.</param>
+        /// <param name="y">The Y matrix.</param>
+        /// <param name="a">The A matrix.</param>
+        /// <param name="funcs">The RBF functions.</param>
+        /// <returns>The fit.</returns>
         public static double Svdfit(double[][] x, double[][] y, double[][] a,
                                     IRadialBasisFunction[] funcs)
         {

@@ -24,19 +24,19 @@ namespace Encog.App.Quant.Indicators
 
 
         /// <value>the beginningIndex to set</value>
-        public int BeginningIndex { /// <returns>the beginningIndex</returns>
-            get; /// <param name="theBeginningIndex">the beginningIndex to set</param>
+        public int BeginningIndex { 
+            get; 
             set; }
 
 
         /// <value>the endingIndex to set.</value>
-        public int EndingIndex { /// <returns>the endingIndex</returns>
-            get; /// <param name="theEndingIndex">the endingIndex to set.</param>
+        public int EndingIndex { 
+            get; 
             set; }
 
 
         /// <value>The number of periods this indicator is for.</value>
-        public abstract int Periods { /// <returns>The number of periods this indicator is for.</returns>
+        public abstract int Periods { 
             get; }
 
         /// <summary>

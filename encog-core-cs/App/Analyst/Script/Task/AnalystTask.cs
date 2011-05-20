@@ -36,8 +36,7 @@ namespace Encog.App.Analyst.Script.Task
 
         /// <value>the lines</value>
         public IList<String> Lines
-        {
-            /// <returns>the lines</returns>
+        {            
             get { return lines; }
         }
 
@@ -45,9 +44,7 @@ namespace Encog.App.Analyst.Script.Task
         /// <value>the name to set</value>
         public String Name
         {
-            /// <returns>the name</returns>
             get { return name; }
-            /// <param name="theName">the name to set</param>
             set { name = value; }
         }
 

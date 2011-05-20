@@ -10,7 +10,6 @@ namespace Encog.ML
     public interface MLOutput : MLMethod
     {
         /// <value>The output count.</value>
-        int OutputCount { /// <returns>The output count.</returns>
-            get; }
+        int OutputCount { get; }
     }
 }

@@ -36,17 +36,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The radius.</value>
         public virtual double Radius
         {
-            /// <summary>
-            /// The radius for this neighborhood function is always 1.
-            /// </summary>
-            ///
-            /// <returns>The radius.</returns>
             get { return 1; }
-            /// <summary>
-            /// Set the radius.  This type does not use a radius, so this has no effect.
-            /// </summary>
-            ///
-            /// <param name="radius">The radius.</param>
             set
             {
                 // no effect on this type

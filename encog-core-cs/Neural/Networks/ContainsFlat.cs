@@ -11,7 +11,6 @@ namespace Encog.Neural.Networks
     public interface ContainsFlat : MLMethod
     {
         /// <value>The flat network associated with this neural network.</value>
-        FlatNetwork Flat { /// <returns>The flat network associated with this neural network.</returns>
-            get; }
+        FlatNetwork Flat { get; }
     }
 }

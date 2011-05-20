@@ -29,30 +29,16 @@ namespace Encog.Neural.Thermal
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return base.NeuronCount; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return base.NeuronCount; }
         }
 

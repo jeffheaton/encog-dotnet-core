@@ -11,15 +11,8 @@ namespace Encog.Neural.Networks.Training
         /// <summary>
         /// Set the learning rate.
         /// </summary>
-        ///
-        /// <value>The new learning rate</value>
-        double LearningRate { /// <returns>The learning rate.</returns>
+        double LearningRate { 
             get;
-            /// <summary>
-            /// Set the learning rate.
-            /// </summary>
-            ///
-            /// <param name="rate">The new learning rate</param>
             set; }
     }
 }

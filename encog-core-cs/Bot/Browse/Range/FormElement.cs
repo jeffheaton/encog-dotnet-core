@@ -32,28 +32,24 @@ using System;
 
 namespace Encog.Bot.Browse.Range
 {
-    /**
- * A document range that represents one individual component to a form.
- * 
- * @author jheaton
- * 
- */
-
+    /// <summary>
+    /// A document range that represents one individual component to a form.
+    /// </summary>
     public abstract class FormElement : DocumentRange
     {
-        /**
-         * The name of this form element.
-         */
+        /// <summary>
+        /// The name of the element.
+        /// </summary>
         private String name;
 
-        /**
-         * The value held by this form element.
-         */
-
-        /**
-         * The owner of this form element.
-         */
+        /// <summary>
+        /// The owner.
+        /// </summary>
         private Form owner;
+
+        /// <summary>
+        /// The value.
+        /// </summary>
         private String value;
 
 

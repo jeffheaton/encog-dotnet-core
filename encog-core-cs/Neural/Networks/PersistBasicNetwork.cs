@@ -19,35 +19,25 @@ namespace Encog.Neural.Networks
         #region EncogPersistor Members
 
         /// <summary>
-        /// 
+        /// The file version.
         /// </summary>
-        ///
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
         /// <summary>
-        /// 
+        /// The persist class string.
         /// </summary>
-        ///
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "BasicNetwork"; }
         }
 
 
         /// <summary>
-        /// 
+        /// Read an object.
         /// </summary>
         ///
         public Object Read(Stream mask0)
@@ -151,10 +141,7 @@ namespace Encog.Neural.Networks
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

@@ -38,7 +38,6 @@ namespace Encog.App.Quant.Indicators
         /// <value>The number of periods in this indicator.</value>
         public override int Periods
         {
-            /// <returns>The number of periods in this indicator.</returns>
             get { return periods; }
         }
 

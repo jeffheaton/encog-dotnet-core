@@ -236,7 +236,7 @@ namespace Encog.Persist
 
                 return Int32.Parse(value_ren);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 throw new PersistError("Field: " + name + ", "
                                        + "invalid integer: " + value_ren);

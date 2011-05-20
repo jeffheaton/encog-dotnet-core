@@ -15,35 +15,21 @@ namespace Encog.MathUtil.RBF
         /// <summary>
         /// Set the width.
         /// </summary>
-        ///
-        /// <value>The width.</value>
-        double Width { /// <returns>The width of the RBF.</returns>
+        double Width { 
             get;
-            /// <summary>
-            /// Set the width.
-            /// </summary>
-            ///
-            /// <param name="radius">The width.</param>
             set; }
 
 
         /// <value>The dimensions in this RBF.</value>
-        int Dimensions { /// <returns>The dimensions in this RBF.</returns>
+        int Dimensions { 
             get; }
 
 
         /// <summary>
         /// Set the centers.
         /// </summary>
-        ///
-        /// <value>The centers.</value>
-        double[] Centers { /// <returns>Get the centers.</returns>
+        double[] Centers { 
             get;
-            /// <summary>
-            /// Set the centers.
-            /// </summary>
-            ///
-            /// <param name="center">The centers.</param>
             set; }
 
         /// <summary>

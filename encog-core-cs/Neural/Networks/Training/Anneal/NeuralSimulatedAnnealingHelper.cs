@@ -47,11 +47,6 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <value>The array copy created by the owner.</value>
         public override double[] ArrayCopy
         {
-            /// <summary>
-            /// Used to pass the getArrayCopy call on to the parent object.
-            /// </summary>
-            ///
-            /// <returns>The array copy created by the owner.</returns>
             get { return owner.ArrayCopy; }
         }
 

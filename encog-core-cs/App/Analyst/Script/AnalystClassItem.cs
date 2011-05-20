@@ -47,9 +47,7 @@ namespace Encog.App.Analyst.Script
         /// <value>the code to set</value>
         public String Code
         {
-            /// <returns>the code</returns>
             get { return code; }
-            /// <param name="theCode">the code to set</param>
             set { code = value; }
         }
 

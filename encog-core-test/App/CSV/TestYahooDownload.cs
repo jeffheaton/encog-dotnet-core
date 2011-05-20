@@ -29,7 +29,7 @@ namespace Encog.App.CSV
                 // bad!
                 Assert.IsTrue(false);
             }
-            catch (QuantError e)
+            catch (QuantError)
             {
                 // good!
             }

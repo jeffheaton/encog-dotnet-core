@@ -16,37 +16,27 @@ namespace Encog.Neural.Thermal
         #region EncogPersistor Members
 
         /// <summary>
-        /// 
+        /// The file version.
         /// </summary>
-        ///
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
         /// <summary>
-        /// 
+        /// The class string.
         /// </summary>
         ///
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return typeof (HopfieldNetwork).Name; }
         }
 
 
         /// <summary>
-        /// 
+        /// Read a an object.
         /// </summary>
-        ///
         public Object Read(Stream mask0)
         {
             var result = new HopfieldNetwork();

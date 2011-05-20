@@ -11,8 +11,7 @@ namespace Encog.ML
     public interface MLCluster
     {
         /// <value>The data in this cluster.</value>
-        IList<MLData> Data { /// <returns>The data in this cluster.</returns>
-            get; }
+        IList<MLData> Data { get; }
 
         /// <summary>
         /// Add data to this cluster.

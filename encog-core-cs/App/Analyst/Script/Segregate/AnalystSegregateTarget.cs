@@ -31,23 +31,18 @@ namespace Encog.App.Analyst.Script.Segregate
         /// <value>the file to set</value>
         public String File
         {
-            /// <returns>the file</returns>
-            get { return file; }
-            /// <param name="theFile">the file to set</param>
+            get { return file; }         
             set { file = value; }
         }
 
 
         /// <value>the percent to set</value>
-        public int Percent { /// <returns>the percent</returns>
-            get; /// <param name="thePercent">the percent to set</param>
+        public int Percent { 
+            get; 
             set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <imheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

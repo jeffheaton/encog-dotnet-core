@@ -19,10 +19,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         ///
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
@@ -32,24 +28,14 @@ namespace Encog.Neural.Networks.Training.Propagation
             get { return typeof (TrainingContinuation); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "TrainingContinuation"; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public Object Read(Stream mask0)
         {
             var result = new TrainingContinuation();
@@ -82,10 +68,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

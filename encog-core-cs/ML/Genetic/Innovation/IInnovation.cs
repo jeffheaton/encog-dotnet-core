@@ -10,15 +10,8 @@ namespace Encog.ML.Genetic.Innovation
         /// <summary>
         /// Set the innovation id.
         /// </summary>
-        ///
-        /// <value>The innovation id.</value>
-        long InnovationID { /// <returns>The innovation id.</returns>
+        long InnovationID { 
             get;
-            /// <summary>
-            /// Set the innovation id.
-            /// </summary>
-            ///
-            /// <param name="innovationID">The innovation id.</param>
             set; }
     }
 }

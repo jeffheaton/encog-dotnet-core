@@ -28,7 +28,6 @@ namespace Encog.ML.Genetic.Genome
         /// <value>The score calculation object.</value>
         public ICalculateGenomeScore CalculateScore
         {
-            /// <returns>The score calculation object.</returns>
             get { return calculateScore; }
         }
 

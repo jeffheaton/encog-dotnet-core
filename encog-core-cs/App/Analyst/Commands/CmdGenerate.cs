@@ -33,16 +33,9 @@ namespace Encog.App.Analyst.Commands
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String Name
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return COMMAND_NAME; }
         }
 

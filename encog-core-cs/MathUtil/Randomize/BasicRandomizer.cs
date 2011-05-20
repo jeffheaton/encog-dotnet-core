@@ -31,10 +31,7 @@ namespace Encog.MathUtil.Randomize
         /// <value>the random to set</value>
         public Random Random
         {
-            /// <returns>The random number generator in use. Use this to set the seed, if
-            /// desired.</returns>
             get { return random; }
-            /// <param name="theRandom">the random to set</param>
             set { random = value; }
         }
 

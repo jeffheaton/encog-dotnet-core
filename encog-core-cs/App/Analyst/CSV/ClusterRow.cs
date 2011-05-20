@@ -31,7 +31,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the row</value>
         public LoadedRow Row
         {
-            /// <returns>the row</returns>
             get { return row; }
         }
     }

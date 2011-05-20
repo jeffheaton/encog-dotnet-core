@@ -48,7 +48,6 @@ namespace Encog.Util
         /// <value>the params</value>
         public IDictionary<String, String> Params
         {
-            /// <returns>the params</returns>
             get { return paras; }
         }
 
@@ -126,7 +125,7 @@ namespace Encog.Util
             {
                 return format.Parse(str);
             }
-            catch (FormatException ex)
+            catch (FormatException )
             {
                 throw new EncogError("Property " + name
                                      + " has an invalid value of " + str

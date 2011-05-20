@@ -35,12 +35,8 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <value>The from data.</value>
-        public MLData From { /// <returns>The "from" data.</returns>
-            get; /// <summary>
-            /// Set the from data.
-            /// </summary>
-            ///
-            /// <param name="from_0">The from data.</param>
+        public MLData From { 
+            get;
             set; }
 
 
@@ -49,12 +45,8 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <value>The target data.</value>
-        public MLData To { /// <returns>The "to" data.</returns>
-            get; /// <summary>
-            /// Set the target data.
-            /// </summary>
-            ///
-            /// <param name="to_0">The target data.</param>
+        public MLData To { 
+            get; 
             set; }
 
         /// <summary>

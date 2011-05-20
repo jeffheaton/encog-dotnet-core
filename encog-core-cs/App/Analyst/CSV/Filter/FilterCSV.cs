@@ -37,7 +37,6 @@ namespace Encog.App.Analyst.CSV.Filter
         /// <value>A list of the fields and their values, that should be excluded.</value>
         public IList<ExcludedField> Excluded
         {
-            /// <returns>A list of the fields and their values, that should be excluded.</returns>
             get { return excludedFields; }
         }
 
@@ -46,8 +45,6 @@ namespace Encog.App.Analyst.CSV.Filter
         /// for the output CSV.</value>
         public int FilteredRowCount
         {
-            /// <returns>A count of the filtered rows. This is the resulting line count
-            /// for the output CSV.</returns>
             get { return filteredCount; }
         }
 

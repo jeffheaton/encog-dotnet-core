@@ -28,27 +28,270 @@
 // http://www.heatonresearch.com/copyright.html
 
 using System;
+using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Networks;
-using Encog.Neural.Networks.Training;
-using ConsoleExamples.Examples;
-using Encog.Neural.Pattern;
+using Encog.ML.Train;
 using Encog.Neural.CPN;
 using Encog.Neural.CPN.Training;
-using Encog.ML.Train;
-using Encog.Neural.CPN.Training;
+using Encog.Neural.Pattern;
 
 namespace Encog.Examples.CPN
 {
-    public class RocketCPN: IExample
+    public class RocketCPN : IExample
     {
+        public const int WIDTH = 11;
+        public const int HEIGHT = 11;
+
+        public const double HI = 1;
+        public const double LO = 0;
+
+        private readonly String[][] PATTERN2 = {
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "   OOOOO   ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "    O O    ",
+                                                           "    O O    ",
+                                                           "    O O    ",
+                                                           "   O   O   ",
+                                                           "   O   O   ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "           ",
+                                                           "     O     ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "   OOOOO   ",
+                                                           "           ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "           ",
+                                                           "           ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "    OOO    ",
+                                                           "           ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "  O        ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "    OOO    ",
+                                                           "    OO     ",
+                                                           "    OOO   O",
+                                                           "    OOOO   ",
+                                                           "   OOOOO   ",
+                                                           "           ",
+                                                           "       O   "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "     O     ",
+                                                           "     O     ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "   OOOOO   ",
+                                                           "   OOOOO   ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "       O   ",
+                                                           "      O    ",
+                                                           "    OOO    ",
+                                                           "    OOO    ",
+                                                           "   OOO     ",
+                                                           "  OOOOO    ",
+                                                           " OOOOO     ",
+                                                           "           ",
+                                                           "           "
+                                                       },
+                                                   new String[WIDTH]
+                                                       {
+                                                           "           ",
+                                                           "           ",
+                                                           "        O  ",
+                                                           "       O   ",
+                                                           "     OOO   ",
+                                                           "    OOO    ",
+                                                           "   OOO     ",
+                                                           " OOOOO     ",
+                                                           "OOOOO      ",
+                                                           "           ",
+                                                           "           "
+                                                       }
+                                               };
+
+        public String[][] PATTERN1 = {
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "     O     ",
+                                                 "     O     ",
+                                                 "    OOO    ",
+                                                 "    OOO    ",
+                                                 "    OOO    ",
+                                                 "   OOOOO   ",
+                                                 "   OOOOO   ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "        O  ",
+                                                 "       O   ",
+                                                 "     OOO   ",
+                                                 "    OOO    ",
+                                                 "   OOO     ",
+                                                 " OOOOO     ",
+                                                 "OOOOO      ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "           ",
+                                                 "  OO       ",
+                                                 "  OOOOO    ",
+                                                 "  OOOOOOO  ",
+                                                 "  OOOOO    ",
+                                                 "  OO       ",
+                                                 "           ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "OOOOO      ",
+                                                 " OOOOO     ",
+                                                 "   OOO     ",
+                                                 "    OOO    ",
+                                                 "     OOO   ",
+                                                 "       O   ",
+                                                 "        O  ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "   OOOOO   ",
+                                                 "   OOOOO   ",
+                                                 "    OOO    ",
+                                                 "    OOO    ",
+                                                 "    OOO    ",
+                                                 "     O     ",
+                                                 "     O     ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "      OOOOO",
+                                                 "     OOOOO ",
+                                                 "     OOO   ",
+                                                 "    OOO    ",
+                                                 "   OOO     ",
+                                                 "   O       ",
+                                                 "  O        ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "           ",
+                                                 "       OO  ",
+                                                 "    OOOOO  ",
+                                                 "  OOOOOOO  ",
+                                                 "    OOOOO  ",
+                                                 "       OO  ",
+                                                 "           ",
+                                                 "           ",
+                                                 "           "
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "           ",
+                                                 "           ",
+                                                 "  O        ",
+                                                 "   O       ",
+                                                 "   OOO     ",
+                                                 "    OOO    ",
+                                                 "     OOO   ",
+                                                 "     OOOOO ",
+                                                 "      OOOOO",
+                                                 "           ",
+                                                 "           "
+                                             }
+                                     };
+
+        private IExampleInterface app;
+        private double[][] ideal1;
+
+        private double[][] input1;
+        private double[][] input2;
+
+        private int inputNeurons;
+        private int instarNeurons;
+        private int outstarNeurons;
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(RocketCPN),
+                var info = new ExampleInfo(
+                    typeof (RocketCPN),
                     "cpn",
                     "Counter Propagation Neural Network (CPN)",
                     "CPN neural network that learns to determine at which angle a rocket is traveling.");
@@ -56,273 +299,63 @@ namespace Encog.Examples.CPN
             }
         }
 
-        public const int WIDTH = 11;
-        public const int HEIGHT = 11;
+        #region IExample Members
 
-        public String[][] PATTERN1 =  { new String[WIDTH]  { 
-		"           ",
-        "           ",
-        "     O     ",
-        "     O     ",
-        "    OOO    ",
-        "    OOO    ",
-        "    OOO    ",
-        "   OOOOO   ",
-        "   OOOOO   ",
-        "           ",
-        "           "  },
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+            PrepareInput();
+            NormalizeInput();
+            CPNNetwork network = CreateNetwork();
+            MLDataSet training = GenerateTraining(input1, ideal1);
+            TrainInstar(network, training);
+            TrainOutstar(network, training);
+            Test(network, PATTERN1, input1);
+        }
 
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "        O  ",
-        "       O   ",
-        "     OOO   ",
-        "    OOO    ",
-        "   OOO     ",
-        " OOOOO     ",
-        "OOOOO      ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "           ",
-        "  OO       ",
-        "  OOOOO    ",
-        "  OOOOOOO  ",
-        "  OOOOO    ",
-        "  OO       ",
-        "           ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "OOOOO      ",
-        " OOOOO     ",
-        "   OOO     ",
-        "    OOO    ",
-        "     OOO   ",
-        "       O   ",
-        "        O  ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "   OOOOO   ",
-        "   OOOOO   ",
-        "    OOO    ",
-        "    OOO    ",
-        "    OOO    ",
-        "     O     ",
-        "     O     ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "      OOOOO",
-        "     OOOOO ",
-        "     OOO   ",
-        "    OOO    ",
-        "   OOO     ",
-        "   O       ",
-        "  O        ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "           ",
-        "       OO  ",
-        "    OOOOO  ",
-        "  OOOOOOO  ",
-        "    OOOOO  ",
-        "       OO  ",
-        "           ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "  O        ",
-        "   O       ",
-        "   OOO     ",
-        "    OOO    ",
-        "     OOO   ",
-        "     OOOOO ",
-        "      OOOOO",
-        "           ",
-        "           "  } };
-
-        String[][] PATTERN2 = { 
-                          new String[WIDTH]  { 
-		"           ",
-        "           ",
-        "     O     ",
-        "     O     ",
-        "     O     ",
-        "    OOO    ",
-        "    OOO    ",
-        "    OOO    ",
-        "   OOOOO   ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "     O     ",
-        "     O     ",
-        "    O O    ",
-        "    O O    ",
-        "    O O    ",
-        "   O   O   ",
-        "   O   O   ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "           ",
-        "     O     ",
-        "    OOO    ",
-        "    OOO    ",
-        "    OOO    ",
-        "   OOOOO   ",
-        "           ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "           ",
-        "           ",
-        "     O     ",
-        "     O     ",
-        "     O     ",
-        "    OOO    ",
-        "           ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "  O        ",
-        "     O     ",
-        "     O     ",
-        "    OOO    ",
-        "    OO     ",
-        "    OOO   O",
-        "    OOOO   ",
-        "   OOOOO   ",
-        "           ",
-        "       O   "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "     O     ",
-        "     O     ",
-        "    OOO    ",
-        "    OOO    ",
-        "    OOO    ",
-        "   OOOOO   ",
-        "   OOOOO   ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "       O   ",
-        "      O    ",
-        "    OOO    ",
-        "    OOO    ",
-        "   OOO     ",
-        "  OOOOO    ",
-        " OOOOO     ",
-        "           ",
-        "           "  },
-
-      new String[WIDTH]  { 
-        "           ",
-        "           ",
-        "        O  ",
-        "       O   ",
-        "     OOO   ",
-        "    OOO    ",
-        "   OOO     ",
-        " OOOOO     ",
-        "OOOOO      ",
-        "           ",
-        "           "  } };
-
-        public const double HI = 1;
-        public const double LO = 0;
-
-        private double[][] input1;
-        private double[][] input2;
-        private double[][] ideal1;
-
-        private int inputNeurons;
-        private int instarNeurons;
-        private int outstarNeurons;
-
-        private IExampleInterface app;
+        #endregion
 
         public void PrepareInput()
         {
             int n, i, j;
 
-            this.inputNeurons = WIDTH * HEIGHT;
-            this.instarNeurons = PATTERN1.Length;
-            this.outstarNeurons = 2;
+            inputNeurons = WIDTH*HEIGHT;
+            instarNeurons = PATTERN1.Length;
+            outstarNeurons = 2;
 
-            this.input1 = new double[PATTERN1.Length][];
-            this.input2 = new double[PATTERN2.Length][];
-            this.ideal1 = new double[PATTERN1.Length][];
+            input1 = new double[PATTERN1.Length][];
+            input2 = new double[PATTERN2.Length][];
+            ideal1 = new double[PATTERN1.Length][];
 
             for (n = 0; n < PATTERN1.Length; n++)
             {
-                input1[n] = new double[this.inputNeurons];
-                input2[n] = new double[this.inputNeurons];
-                ideal1[n] = new double[this.instarNeurons];
+                input1[n] = new double[inputNeurons];
+                input2[n] = new double[inputNeurons];
+                ideal1[n] = new double[instarNeurons];
                 for (i = 0; i < HEIGHT; i++)
                 {
                     for (j = 0; j < WIDTH; j++)
                     {
-                        input1[n][i * WIDTH + j] = (PATTERN1[n][i][j] == 'O') ? HI : LO;
-                        input2[n][i * WIDTH + j] = (PATTERN2[n][i][j] == 'O') ? HI : LO;
+                        input1[n][i*WIDTH + j] = (PATTERN1[n][i][j] == 'O') ? HI : LO;
+                        input2[n][i*WIDTH + j] = (PATTERN2[n][i][j] == 'O') ? HI : LO;
                     }
                 }
             }
             NormalizeInput();
             for (n = 0; n < PATTERN1.Length; n++)
             {
-                this.ideal1[n][0] = Math.Sin(n * 0.25 * Math.PI);
-                this.ideal1[n][1] = Math.Cos(n * 0.25 * Math.PI);
+                ideal1[n][0] = Math.Sin(n*0.25*Math.PI);
+                ideal1[n][1] = Math.Cos(n*0.25*Math.PI);
             }
-
         }
 
         public double Sqr(double x)
         {
-            return x * x;
+            return x*x;
         }
 
 
-        void NormalizeInput()
+        private void NormalizeInput()
         {
             int n, i;
             double length1, length2;
@@ -331,15 +364,15 @@ namespace Encog.Examples.CPN
             {
                 length1 = 0;
                 length2 = 0;
-                for (i = 0; i < this.inputNeurons; i++)
+                for (i = 0; i < inputNeurons; i++)
                 {
-                    length1 += Sqr(this.input1[n][i]);
-                    length2 += Sqr(this.input2[n][i]);
+                    length1 += Sqr(input1[n][i]);
+                    length2 += Sqr(input2[n][i]);
                 }
                 length1 = Math.Sqrt(length1);
                 length2 = Math.Sqrt(length2);
 
-                for (i = 0; i < this.inputNeurons; i++)
+                for (i = 0; i < inputNeurons; i++)
                 {
                     input1[n][i] /= length1;
                     input2[n][i] /= length2;
@@ -349,12 +382,12 @@ namespace Encog.Examples.CPN
 
         public CPNNetwork CreateNetwork()
         {
-            CPNPattern pattern = new CPNPattern();
-            pattern.InputNeurons = this.inputNeurons;
-            pattern.InstarCount = this.instarNeurons;
-            pattern.OutstarCount = this.outstarNeurons;
+            var pattern = new CPNPattern();
+            pattern.InputNeurons = inputNeurons;
+            pattern.InstarCount = instarNeurons;
+            pattern.OutstarCount = outstarNeurons;
 
-            CPNNetwork network = (CPNNetwork)pattern.Generate();
+            var network = (CPNNetwork) pattern.Generate();
             network.Reset();
 
             return network;
@@ -396,7 +429,7 @@ namespace Encog.Examples.CPN
         {
             double result;
 
-            result = (Math.Atan2(angle[0], angle[1]) / Math.PI) * 180;
+            result = (Math.Atan2(angle[0], angle[1])/Math.PI)*180;
             if (result < 0)
                 result += 360;
 
@@ -415,25 +448,13 @@ namespace Encog.Examples.CPN
                 for (int j = 0; j < HEIGHT; j++)
                 {
                     if (j == HEIGHT - 1)
-                        app.WriteLine("[" + pattern[i][j] + "] -> " + ((int)angle) + " deg");
+                        app.WriteLine("[" + pattern[i][j] + "] -> " + ((int) angle) + " deg");
                     else
                         app.WriteLine("[" + pattern[i][j] + "]");
                 }
 
                 Console.WriteLine();
             }
-        }
-
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-            PrepareInput();
-            NormalizeInput();
-            CPNNetwork network = CreateNetwork();
-            MLDataSet training = GenerateTraining(this.input1, this.ideal1);
-            TrainInstar(network, training);
-            TrainOutstar(network, training);
-            Test(network, PATTERN1, this.input1);
         }
     }
 }

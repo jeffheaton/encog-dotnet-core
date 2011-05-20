@@ -56,6 +56,12 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
         #region INeighborhoodFunction Members
 
+        /// <summary>
+        /// Compute the RBF function.
+        /// </summary>
+        /// <param name="currentNeuron">The current neuron.</param>
+        /// <param name="bestNeuron">The best neuron.</param>
+        /// <returns>The distance.</returns>
         public virtual double Function(int currentNeuron, int bestNeuron)
         {
             var d = new double[1];

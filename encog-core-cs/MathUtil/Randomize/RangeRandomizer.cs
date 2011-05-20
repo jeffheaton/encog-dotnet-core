@@ -37,7 +37,6 @@ namespace Encog.MathUtil.Randomize
         /// <value>the min</value>
         public double Min
         {
-            /// <returns>the min</returns>
             get { return min; }
         }
 
@@ -45,7 +44,6 @@ namespace Encog.MathUtil.Randomize
         /// <value>the max</value>
         public double Max
         {
-            /// <returns>the max</returns>
             get { return max; }
         }
 

@@ -35,7 +35,6 @@ namespace Encog.Neural.Prune
         /// <value>The maximum number of neurons.</value>
         public int Max
         {
-            /// <returns>The maximum number of neurons.</returns>
             get { return max; }
         }
 
@@ -43,7 +42,6 @@ namespace Encog.Neural.Prune
         /// <value>The minimum number of neurons.</value>
         public int Min
         {
-            /// <returns>The minimum number of neurons.</returns>
             get { return min; }
         }
     }

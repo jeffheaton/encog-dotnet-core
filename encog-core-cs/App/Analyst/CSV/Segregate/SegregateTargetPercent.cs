@@ -38,9 +38,7 @@ namespace Encog.App.Analyst.CSV.Segregate
         /// <value>the filename to set</value>
         public FileInfo Filename
         {
-            /// <returns>the filename</returns>
             get { return filename; }
-            /// <param name="theFilename">the filename to set</param>
             set { filename = value; }
         }
 

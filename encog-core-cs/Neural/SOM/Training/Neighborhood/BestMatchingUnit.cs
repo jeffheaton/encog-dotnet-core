@@ -44,8 +44,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// for the entire SOM.</value>
         public double WorstDistance
         {
-            /// <returns>What is the worst BMU distance so far, this becomes the error 
-            /// for the entire SOM.</returns>
             get { return worstDistance; }
         }
 

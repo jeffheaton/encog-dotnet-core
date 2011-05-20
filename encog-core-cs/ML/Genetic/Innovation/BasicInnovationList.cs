@@ -51,7 +51,6 @@ namespace Encog.ML.Genetic.Innovation
         /// <value>A list of innovations.</value>
         public IList<IInnovation> Innovations
         {
-            /// <returns>A list of innovations.</returns>
             get { return list; }
         }
 

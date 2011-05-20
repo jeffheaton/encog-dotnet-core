@@ -39,9 +39,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <value>the learningRate to set</value>
         public double LearningRate
         {
-            /// <returns>the learningRate</returns>
             get { return learningRate; }
-            /// <param name="theLearningRate">the learningRate to set</param>
             set { learningRate = value; }
         }
 

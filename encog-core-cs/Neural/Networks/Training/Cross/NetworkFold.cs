@@ -36,7 +36,6 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <value>The network weights.</value>
         public double[] Weights
         {
-            /// <returns>The network weights.</returns>
             get { return weights; }
         }
 
@@ -44,7 +43,6 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <value>The network output.</value>
         public double[] Output
         {
-            /// <returns>The network output.</returns>
             get { return output; }
         }
 

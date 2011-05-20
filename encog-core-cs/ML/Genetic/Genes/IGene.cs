@@ -14,16 +14,12 @@ namespace Encog.ML.Genetic.Genes
         /// </summary>
         ///
         /// <value>The ID of this gene.</value>
-        long Id { /// <summary>
-            /// Get the ID of this gene, -1 for undefined.
-            /// </summary>
-            ///
-            /// <returns>The ID of this gene.</returns>
+        long Id { 
             get; }
 
 
         /// <value>The innovation ID of this gene.</value>
-        long InnovationId { /// <returns>The innovation ID of this gene.</returns>
+        long InnovationId { 
             get; }
 
 
@@ -32,13 +28,8 @@ namespace Encog.ML.Genetic.Genes
         /// </summary>
         ///
         /// <value>True if this gene is enabled.</value>
-        bool Enabled { /// <returns>True, if this gene is enabled.</returns>
+        bool Enabled { 
             get;
-            /// <summary>
-            /// Determine if this gene is enabled.
-            /// </summary>
-            ///
-            /// <param name="e">True if this gene is enabled.</param>
             set; }
 
         /// <summary>

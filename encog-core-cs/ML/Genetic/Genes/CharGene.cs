@@ -21,13 +21,7 @@ namespace Encog.ML.Genetic.Genes
         /// <value>The new value of this gene.</value>
         public char Value
         {
-            /// <returns>The value of this gene.</returns>
-            get { return value_ren; }
-            /// <summary>
-            /// Set the value of this gene.
-            /// </summary>
-            ///
-            /// <param name="theValue">The new value of this gene.</param>
+            get { return value_ren; }           
             set { value_ren = value; }
         }
 

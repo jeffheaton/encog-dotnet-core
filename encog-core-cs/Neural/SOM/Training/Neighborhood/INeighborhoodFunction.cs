@@ -12,15 +12,8 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Set the radius.
         /// </summary>
-        ///
-        /// <value>The new radius.</value>
-        double Radius { /// <returns>The radius.</returns>
+        double Radius { 
             get;
-            /// <summary>
-            /// Set the radius.
-            /// </summary>
-            ///
-            /// <param name="radius">The new radius.</param>
             set; }
 
         /// <summary>

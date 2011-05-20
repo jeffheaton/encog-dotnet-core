@@ -25,37 +25,26 @@ namespace Encog.Neural.Pnn
         #region EncogPersistor Members
 
         /// <summary>
-        /// 
+        /// File version.
         /// </summary>
-        ///
         public virtual int FileVersion
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
 
         /// <summary>
-        /// 
+        /// File version.
         /// </summary>
-        ///
         public virtual String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "BasicPNN"; }
         }
 
 
         /// <summary>
-        /// 
+        /// Read an object.
         /// </summary>
-        ///
         public Object Read(Stream mask0)
         {
             var ins0 = new EncogReadHelper(mask0);

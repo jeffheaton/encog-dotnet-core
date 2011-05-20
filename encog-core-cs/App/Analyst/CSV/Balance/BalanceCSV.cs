@@ -29,7 +29,6 @@ namespace Encog.App.Analyst.CSV.Balance
         /// <value>Tracks the counts of each class.</value>
         public IDictionary<String, Int32> Counts
         {
-            /// <returns>Tracks the counts of each class.</returns>
             get { return counts; }
         }
 

@@ -11,8 +11,7 @@ namespace Encog.ML
     public interface MLClustering : MLMethod
     {
         /// <value>The clusters.</value>
-        MLCluster[] Clusters { /// <returns>The clusters.</returns>
-            get; }
+        MLCluster[] Clusters { get; }
 
         /// <summary>
         /// Perform the training iteration.

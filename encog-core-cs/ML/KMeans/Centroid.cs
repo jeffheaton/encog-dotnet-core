@@ -32,7 +32,6 @@ namespace Encog.ML.Kmeans
         /// <value>The centers.</value>
         public double[] Centers
         {
-            /// <returns>The centers.</returns>
             get { return centers; }
         }
 
@@ -44,13 +43,7 @@ namespace Encog.ML.Kmeans
         /// <value>The cluster.</value>
         public KMeansCluster Cluster
         {
-            /// <returns>The clusters.</returns>
             get { return cluster; }
-            /// <summary>
-            /// Set the cluster.
-            /// </summary>
-            ///
-            /// <param name="c">The cluster.</param>
             set { cluster = value; }
         }
 
