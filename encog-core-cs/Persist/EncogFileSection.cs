@@ -51,7 +51,6 @@ namespace Encog.Persist
         /// <value>The lines.</value>
         public IList<String> Lines
         {
-            /// <returns>The lines.</returns>
             get { return lines; }
         }
 
@@ -59,7 +58,6 @@ namespace Encog.Persist
         /// <value>All lines separated by a delimiter.</value>
         public String LinesAsString
         {
-            /// <returns>All lines separated by a delimiter.</returns>
             get
             {
                 var result = new StringBuilder();
@@ -77,7 +75,6 @@ namespace Encog.Persist
         /// <value>The section name.</value>
         public String SectionName
         {
-            /// <returns>The section name.</returns>
             get { return sectionName; }
         }
 
@@ -85,7 +82,6 @@ namespace Encog.Persist
         /// <value>The section name.</value>
         public String SubSectionName
         {
-            /// <returns>The section name.</returns>
             get { return subSectionName; }
         }
 
@@ -363,10 +359,7 @@ namespace Encog.Persist
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

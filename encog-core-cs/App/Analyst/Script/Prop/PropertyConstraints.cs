@@ -106,7 +106,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>The instance.</value>
         public static PropertyConstraints Instance
         {
-            /// <returns>The instance.</returns>
             get
             {
                 if (instance == null)

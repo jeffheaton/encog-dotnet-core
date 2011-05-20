@@ -34,15 +34,8 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <summary>
         /// Used to pass the getArray call on to the parent object.
         /// </summary>
-        ///
-        /// <value>The array returned by the owner.</value>
         public override double[] Array
         {
-            /// <summary>
-            /// Used to pass the getArray call on to the parent object.
-            /// </summary>
-            ///
-            /// <returns>The array returned by the owner.</returns>
             get { return owner.Array; }
         }
 

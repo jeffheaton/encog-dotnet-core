@@ -67,7 +67,6 @@ namespace Encog.Neural.PNN
         /// <value>the countPer</value>
         public int[] CountPer
         {
-            /// <returns>the countPer</returns>
             get { return countPer; }
         }
 
@@ -75,17 +74,14 @@ namespace Encog.Neural.PNN
         /// <value>the priors</value>
         public double[] Priors
         {
-            /// <returns>the priors</returns>
             get { return priors; }
         }
 
 
         /// <value>the samples to set</value>
         public BasicMLDataSet Samples
-        {
-            /// <returns>the samples</returns>
+        {        
             get { return samples; }
-            /// <param name="samples_0">the samples to set</param>
             set
             {
                 samples = value;
@@ -120,7 +116,6 @@ namespace Encog.Neural.PNN
         /// <value>the sigma</value>
         public double[] Sigma
         {
-            /// <returns>the sigma</returns>
             get { return sigma; }
         }
 

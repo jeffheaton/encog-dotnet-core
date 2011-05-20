@@ -62,15 +62,8 @@ namespace Encog.App.Analyst.Analyze
         /// <summary>
         /// Get the class members.
         /// </summary>
-        ///
-        /// <value>The class members.</value>
         public IList<AnalystClassItem> AnalyzedClassMembers
         {
-            /// <summary>
-            /// Get the class members.
-            /// </summary>
-            ///
-            /// <returns>The class members.</returns>
             get
             {
                 var sorted = new List<String>();

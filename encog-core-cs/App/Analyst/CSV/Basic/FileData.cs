@@ -68,14 +68,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the index of this field.
         /// </summary>
-        ///
-        /// <value>The index of this field.</value>
-        public int Index { /// <returns>The index of this field.</returns>
-            get; /// <summary>
-            /// Set the index of this field.
-            /// </summary>
-            ///
-            /// <param name="theIndex">The index of this field.</param>
-            set; }
+        public int Index { get; set; }
     }
 }

@@ -25,34 +25,25 @@ namespace Encog.ML.Factory.Parse
 
 
         /// <value>the count to set</value>
-        public int Count { /// <returns>the count.</returns>
-            get; /// <param name="theCount">the count to set</param>
-            set; }
+        public int Count { get; set; }
 
 
         /// <value>the name to set</value>
-        public String Name { /// <returns>the name</returns>
-            get; /// <param name="theName">the name to set</param>
-            set; }
+        public String Name { get; set; }
 
 
         /// <value>the params</value>
         public IDictionary<String, String> Params
         {
-            /// <returns>the params</returns>
             get { return paras; }
         }
 
 
         /// <value>the bias to set</value>
-        public bool Bias { /// <returns>the bias</returns>
-            get; /// <param name="theBias">the bias to set</param>
-            set; }
+        public bool Bias { get; set; }
 
 
         /// <value>the usedDefault to set</value>
-        public bool UsedDefault { /// <returns>the usedDefault</returns>
-            get; /// <param name="theUsedDefault">the usedDefault to set</param>
-            set; }
+        public bool UsedDefault { get; set; }
     }
 }

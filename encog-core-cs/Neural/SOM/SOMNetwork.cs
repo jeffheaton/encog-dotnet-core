@@ -65,15 +65,8 @@ namespace Encog.Neural.SOM
         /// <summary>
         /// Get the input neuron count.
         /// </summary>
-        ///
-        /// <value>The input neuron count.</value>
         public int InputNeuronCount
         {
-            /// <summary>
-            /// Get the input neuron count.
-            /// </summary>
-            ///
-            /// <returns>The input neuron count.</returns>
             get { return inputNeuronCount; }
         }
 
@@ -81,21 +74,9 @@ namespace Encog.Neural.SOM
         /// <summary>
         /// Set the output count.
         /// </summary>
-        ///
-        /// <value>The output count.</value>
         public int OutputNeuronCount
         {
-            /// <summary>
-            /// Get the output neuron count.
-            /// </summary>
-            ///
-            /// <returns>The output neuron count.</returns>
             get { return outputNeuronCount; }
-            /// <summary>
-            /// Set the output count.
-            /// </summary>
-            ///
-            /// <param name="i">The output count.</param>
             set { outputNeuronCount = value; }
         }
 
@@ -103,18 +84,13 @@ namespace Encog.Neural.SOM
         /// <value>the weights to set</value>
         public Matrix Weights
         {
-            /// <returns>the weights</returns>
             get { return weights; }
-            /// <param name="weights_0">the weights to set</param>
             set { weights = value; }
         }
 
         #region MLClassification Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int Classify(MLData input)
         {
             MLData result = Compute(input);
@@ -124,33 +100,15 @@ namespace Encog.Neural.SOM
         /// <summary>
         /// Set the input count.
         /// </summary>
-        ///
-        /// <value>The input count.</value>
         public virtual int InputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return inputNeuronCount; }
-            /// <summary>
-            /// Set the input count.
-            /// </summary>
-            ///
-            /// <param name="i">The input count.</param>
             set { inputNeuronCount = value; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual int OutputCount
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return 1; }
         }
 
@@ -158,10 +116,7 @@ namespace Encog.Neural.SOM
 
         #region MLError Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public double CalculateError(MLDataSet data)
         {
             var bmu = new BestMatchingUnit(this);
@@ -184,19 +139,13 @@ namespace Encog.Neural.SOM
 
         #region MLResettable Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Reset()
         {
             weights.Randomize(-1, 1);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Reset(int seed)
         {
             Reset();
@@ -225,10 +174,7 @@ namespace Encog.Neural.SOM
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed void UpdateProperties()
         {
             // unneeded

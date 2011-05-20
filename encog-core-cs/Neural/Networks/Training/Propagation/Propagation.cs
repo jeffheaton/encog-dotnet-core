@@ -45,9 +45,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <value>the flatTraining to set</value>
         public TrainFlatNetwork FlatTraining
         {
-            /// <returns>the flatTraining</returns>
             get { return flatTraining; }
-            /// <param name="flatTraining_0">the flatTraining to set</param>
             set { flatTraining = value; }
         }
 
@@ -57,19 +55,9 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// determine the best number of threads for the processor. If OpenCL is used
         /// as the target device, then this value is not used.
         /// </summary>
-        ///
-        /// <value>The number of threads.</value>
         public int NumThreads
         {
-            /// <returns>The number of threads.</returns>
             get { return flatTraining.NumThreads; }
-            /// <summary>
-            /// Set the number of threads. Specify zero to tell Encog to automatically
-            /// determine the best number of threads for the processor. If OpenCL is used
-            /// as the target device, then this value is not used.
-            /// </summary>
-            ///
-            /// <param name="numThreads">The number of threads.</param>
             set { flatTraining.NumThreads = value; }
         }
 
@@ -107,16 +95,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             flatTraining.FinishTraining();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 

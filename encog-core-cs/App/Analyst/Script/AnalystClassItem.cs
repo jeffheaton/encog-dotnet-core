@@ -57,7 +57,6 @@ namespace Encog.App.Analyst.Script
         /// <value>The count.</value>
         public int Count
         {
-            /// <returns>The count.</returns>
             get { return count; }
         }
 
@@ -65,9 +64,7 @@ namespace Encog.App.Analyst.Script
         /// <value>the name to set</value>
         public String Name
         {
-            /// <returns>the name</returns>
             get { return name; }
-            /// <param name="theName">the name to set</param>
             set { name = value; }
         }
 
@@ -93,10 +90,7 @@ namespace Encog.App.Analyst.Script
             count++;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

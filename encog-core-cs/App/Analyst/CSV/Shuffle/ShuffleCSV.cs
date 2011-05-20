@@ -45,20 +45,12 @@ namespace Encog.App.Analyst.CSV.Shuffle
         }
 
         /// <summary>
-        /// Set the buffer size.
+        /// The buffer size. This is how many rows of data are loaded(and
+        /// randomized), at a time. The default is 5,000.
         /// </summary>
-        ///
-        /// <value>The new buffer size.</value>
         public int BufferSize
         {
-            /// <returns>The buffer size. This is how many rows of data are loaded(and
-            /// randomized), at a time. The default is 5,000.</returns>
             get { return bufferSize; }
-            /// <summary>
-            /// Set the buffer size.
-            /// </summary>
-            ///
-            /// <param name="s">The new buffer size.</param>
             set
             {
                 bufferSize = value;

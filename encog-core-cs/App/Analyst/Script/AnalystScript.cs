@@ -88,17 +88,9 @@ namespace Encog.App.Analyst.Script
         /// <summary>
         /// Set the base path.
         /// </summary>
-        ///
-        /// <value>The base path.</value>
         public String BasePath
         {
-            /// <returns>The base path.</returns>
             get { return basePath; }
-            /// <summary>
-            /// Set the base path.
-            /// </summary>
-            ///
-            /// <param name="theBasePath">The base path.</param>
             set { basePath = value; }
         }
 
@@ -106,9 +98,7 @@ namespace Encog.App.Analyst.Script
         /// <value>the fields to set</value>
         public DataField[] Fields
         {
-            /// <returns>the data fields.</returns>
             get { return fields; }
-            /// <param name="theFields">the fields to set</param>
             set { fields = value; }
         }
 
@@ -116,7 +106,6 @@ namespace Encog.App.Analyst.Script
         /// <value>the normalize</value>
         public AnalystNormalize Normalize
         {
-            /// <returns>the normalize</returns>
             get { return normalize; }
         }
 
@@ -124,7 +113,6 @@ namespace Encog.App.Analyst.Script
         /// <value>The precision.</value>
         public int Precision
         {
-            /// <returns>The precision.</returns>
             get { return EncogFramework.DEFAULT_PRECISION; }
         }
 
@@ -132,7 +120,6 @@ namespace Encog.App.Analyst.Script
         /// <value>the properties</value>
         public ScriptProperties Properties
         {
-            /// <returns>the properties</returns>
             get { return properties; }
         }
 
@@ -140,22 +127,19 @@ namespace Encog.App.Analyst.Script
         /// <value>the segregate</value>
         public AnalystSegregate Segregate
         {
-            /// <returns>the segregate</returns>
             get { return segregate; }
         }
 
         /// <value>The tasks.</value>
         public IDictionary<String, AnalystTask> Tasks
         {
-            /// <returns>The tasks.</returns>
             get { return tasks; }
         }
 
         /// <summary>
         /// Add a task.
         /// </summary>
-        ///
-        /// <param name="task">The task to add.</param>
+
         public void AddTask(AnalystTask task)
         {
             tasks[task.Name] = task;

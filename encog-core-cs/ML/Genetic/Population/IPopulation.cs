@@ -12,78 +12,39 @@ namespace Encog.ML.Genetic.Population
     public interface IPopulation
     {
         /// <value>The best genome in the population.</value>
-        IGenome Best { /// <returns>The best genome in the population.</returns>
-            get; }
+        IGenome Best { get; }
 
 
         /// <value>The genomes in the population.</value>
-        IList<IGenome> Genomes { /// <returns>The genomes in the population.</returns>
-            get; }
+        IList<IGenome> Genomes { get; }
 
 
         /// <summary>
         /// Set the innovations collection.
         /// </summary>
-        ///
-        /// <value>The innovations collection.</value>
-        IInnovationList Innovations { /// <returns>A list of innovations in this population.</returns>
-            get;
-            /// <summary>
-            /// Set the innovations collection.
-            /// </summary>
-            ///
-            /// <param name="innovations">The innovations collection.</param>
-            set; }
+        IInnovationList Innovations { get; set; }
 
 
         /// <summary>
         /// Set the old age penalty.
         /// </summary>
-        ///
-        /// <value>The old age penalty.</value>
-        double OldAgePenalty { /// <returns>The percent to decrease "old" genom's score by.</returns>
-            get;
-            /// <summary>
-            /// Set the old age penalty.
-            /// </summary>
-            ///
-            /// <param name="oldAgePenalty">The old age penalty.</param>
-            set; }
+        double OldAgePenalty { get; set; }
 
 
         /// <summary>
         /// Set the age at which a genome is considered "old".
         /// </summary>
-        ///
-        /// <value>The old age threshold.</value>
-        int OldAgeThreshold { /// <returns>The age at which to consider a genome "old".</returns>
-            get;
-            /// <summary>
-            /// Set the age at which a genome is considered "old".
-            /// </summary>
-            ///
-            /// <param name="oldAgeThreshold">The old age threshold.</param>
-            set; }
+        int OldAgeThreshold { get; set; }
 
 
         /// <summary>
         /// Set the max population size.
         /// </summary>
-        ///
-        /// <value>The max population size.</value>
-        int PopulationSize { /// <returns>The max population size.</returns>
-            get;
-            /// <summary>
-            /// Set the max population size.
-            /// </summary>
-            ///
-            /// <param name="populationSize">The max population size.</param>
-            set; }
+        int PopulationSize { get; set; }
 
 
         /// <value>A list of species.</value>
-        IList<ISpecies> Species { /// <returns>A list of species.</returns>
-            get; }
+        IList<ISpecies> Species { get; }
 
 
         /// <summary>
@@ -91,34 +52,17 @@ namespace Encog.ML.Genetic.Population
         /// </summary>
         ///
         /// <value>The survival rate.</value>
-        double SurvivalRate { /// <returns>The survival rate.</returns>
-            get;
-            /// <summary>
-            /// Set the survival rate.
-            /// </summary>
-            ///
-            /// <param name="survivalRate">The survival rate.</param>
-            set; }
+        double SurvivalRate { get; set; }
 
 
         /// <value>The age, below which, a genome is considered "young".</value>
-        int YoungBonusAgeThreshold { /// <returns>The age, below which, a genome is considered "young".</returns>
-            get; }
+        int YoungBonusAgeThreshold { get; }
 
 
         /// <summary>
         /// Set the youth score bonus.
         /// </summary>
-        ///
-        /// <value>The bonus.</value>
-        double YoungScoreBonus { /// <returns>The bonus given to "young" genomes.</returns>
-            get;
-            /// <summary>
-            /// Set the youth score bonus.
-            /// </summary>
-            ///
-            /// <param name="youngScoreBonus">The bonus.</param>
-            set; }
+        double YoungScoreBonus { get; set; }
 
 
         /// <summary>
@@ -126,12 +70,7 @@ namespace Encog.ML.Genetic.Population
         /// </summary>
         ///
         /// <value>The age.</value>
-        int YoungBonusAgeThreshhold { /// <summary>
-            /// Set the age at which genoms are considered young.
-            /// </summary>
-            ///
-            /// <param name="youngBonusAgeThreshhold">The age.</param>
-            set; }
+        int YoungBonusAgeThreshhold { set; }
 
         /// <summary>
         /// Add a genome to the population.

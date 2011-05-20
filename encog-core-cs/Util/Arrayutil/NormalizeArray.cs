@@ -47,17 +47,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the high value to normalize to.
         /// </summary>
-        ///
-        /// <value>The high value to normalize to.</value>
         public double NormalizedHigh
         {
-            /// <returns>The high value to normalize to.</returns>
             get { return normalizedHigh; }
-            /// <summary>
-            /// Set the high value to normalize to.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedHigh">The high value to normalize to.</param>
             set { normalizedHigh = value; }
         }
 
@@ -65,17 +57,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the low value to normalize to.
         /// </summary>
-        ///
-        /// <value>The low value to normalize to.</value>
         public double NormalizedLow
         {
-            /// <returns>The low value to normalize to.</returns>
             get { return normalizedLow; }
-            /// <summary>
-            /// Set the low value to normalize to.
-            /// </summary>
-            ///
-            /// <param name="theNormalizedLow">The low value to normalize to.</param>
             set { normalizedLow = value; }
         }
 
@@ -83,7 +67,6 @@ namespace Encog.Util.Arrayutil
         /// <value>Contains stats about the array normalized.</value>
         public NormalizedField Stats
         {
-            /// <returns>Contains stats about the array normalized.</returns>
             get { return stats; }
         }
 

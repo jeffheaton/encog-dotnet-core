@@ -49,8 +49,6 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the network.
         /// </summary>
-        ///
-        /// <returns>The generated network.</returns>
         public MLMethod Generate()
         {
             var network = new BasicNetwork();
@@ -72,15 +70,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Not used, ADALINE does not use custom activation functions.
         /// </summary>
-        ///
-        /// <value>Not used.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Not used, ADALINE does not use custom activation functions.
-            /// </summary>
-            ///
-            /// <param name="activation">Not used.</param>
             set
             {
                 throw new PatternError(
@@ -92,15 +83,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the input neurons.
         /// </summary>
-        ///
-        /// <value>The number of neurons in the input layer.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons in the input layer.</param>
             set { inputNeurons = value; }
         }
 
@@ -108,15 +92,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the output neurons.
         /// </summary>
-        ///
-        /// <value>The number of neurons in the output layer.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons in the output layer.</param>
             set { outputNeurons = value; }
         }
 

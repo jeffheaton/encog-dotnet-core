@@ -127,7 +127,6 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <value>The Jacobian matrix.</value>
         public virtual double[][] Jacobian
         {
-            /// <returns>The Jacobian matrix.</returns>
             get { return jacobian; }
         }
 
@@ -135,7 +134,6 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <value>The errors for each row of the Jacobian.</value>
         public virtual double[] RowErrors
         {
-            /// <returns>The errors for each row of the Jacobian.</returns>
             get { return rowErrors; }
         }
 

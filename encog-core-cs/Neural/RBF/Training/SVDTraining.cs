@@ -49,16 +49,9 @@ namespace Encog.Neural.Rbf.Training
             get { return false; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -142,19 +135,13 @@ namespace Encog.Neural.Rbf.Training
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

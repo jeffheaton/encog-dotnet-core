@@ -116,9 +116,6 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Set the activation function to use on each of the layers.
-            /// </summary>
             set { activationHidden = value; }
         }
 

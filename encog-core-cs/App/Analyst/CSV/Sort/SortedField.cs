@@ -40,9 +40,7 @@ namespace Encog.App.Analyst.CSV.Sort
         /// <value>the index to set</value>
         public int Index
         {
-            /// <returns>the index</returns>
             get { return index; }
-            /// <param name="theIndex">the index to set</param>
             set { index = value; }
         }
 
@@ -50,23 +48,16 @@ namespace Encog.App.Analyst.CSV.Sort
         /// <value>the sortType to set</value>
         public SortType SortType
         {
-            /// <returns>the sortType</returns>
             get { return sortType; }
-            /// <param name="theSortType">the sortType to set</param>
             set { sortType = value; }
         }
 
 
         /// <value>the ascending to set</value>
-        public bool Ascending { /// <returns>the ascending</returns>
-            get; /// <param name="theAscending">the ascending to set</param>
-            set; }
+        public bool Ascending { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

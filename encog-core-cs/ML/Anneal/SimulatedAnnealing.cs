@@ -51,35 +51,21 @@ namespace Encog.ML.Anneal
         /// <summary>
         /// Subclasses must provide access to an array that makes up the solution.
         /// </summary>
-        ///
-        /// <value>An array that makes up the solution.</value>
-        public abstract UNIT_TYPE[] Array { /// <summary>
-            /// Subclasses must provide access to an array that makes up the solution.
-            /// </summary>
-            ///
-            /// <returns>An array that makes up the solution.</returns>
+        public abstract UNIT_TYPE[] Array { 
             get; }
 
 
         /// <summary>
         /// Get a copy of the array.
         /// </summary>
-        ///
-        /// <value>A copy of the array.</value>
-        public abstract UNIT_TYPE[] ArrayCopy { /// <summary>
-            /// Get a copy of the array.
-            /// </summary>
-            ///
-            /// <returns>A copy of the array.</returns>
+        public abstract UNIT_TYPE[] ArrayCopy {
             get; }
 
 
         /// <value>the cycles to set</value>
         public int Cycles
         {
-            /// <returns>the cycles</returns>
             get { return cycles; }
-            /// <param name="theCycles">the cycles to set</param>
             set { cycles = value; }
         }
 
@@ -87,35 +73,21 @@ namespace Encog.ML.Anneal
         /// <summary>
         /// Set the score.
         /// </summary>
-        ///
-        /// <value>The score to set.</value>
-        public double Score { /// <returns>the globalScore</returns>
-            get; /// <summary>
-            /// Set the score.
-            /// </summary>
-            ///
-            /// <param name="theScore">The score to set.</param>
-            set; }
+        public double Score { get; set; }
 
 
         /// <value>the startTemperature to set</value>
-        public double StartTemperature { /// <returns>the startTemperature</returns>
-            get; /// <param name="theStartTemperature">the startTemperature to set</param>
-            set; }
+        public double StartTemperature { get; set; }
 
 
         /// <value>the stopTemperature to set</value>
-        public double StopTemperature { /// <returns>the stopTemperature</returns>
-            get; /// <param name="theStopTemperature">the stopTemperature to set</param>
-            set; }
+        public double StopTemperature { get; set; }
 
 
         /// <value>the temperature to set</value>
         public double Temperature
         {
-            /// <returns>the temperature</returns>
             get { return temperature; }
-            /// <param name="theTemperature">the temperature to set</param>
             set { temperature = value; }
         }
 
@@ -123,17 +95,9 @@ namespace Encog.ML.Anneal
         /// <summary>
         /// Should the score be minimized.
         /// </summary>
-        ///
-        /// <value>True if the score should be minimized.</value>
         public bool ShouldMinimize
         {
-            /// <returns>True if the score should be minimized.</returns>
             get { return shouldMinimize; }
-            /// <summary>
-            /// Should the score be minimized.
-            /// </summary>
-            ///
-            /// <param name="theShouldMinimize">True if the score should be minimized.</param>
             set { shouldMinimize = value; }
         }
 

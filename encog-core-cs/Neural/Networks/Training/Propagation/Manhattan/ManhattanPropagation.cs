@@ -51,17 +51,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <summary>
         /// Set the learning rate.
         /// </summary>
-        ///
-        /// <value>The new learning rate.</value>
         public virtual double LearningRate
         {
-            /// <returns>The learning rate that was specified in the constructor.</returns>
             get { return ((TrainFlatNetworkManhattan) FlatTraining).LearningRate; }
-            /// <summary>
-            /// Set the learning rate.
-            /// </summary>
-            ///
-            /// <param name="rate">The new learning rate.</param>
             set { ((TrainFlatNetworkManhattan) FlatTraining).LearningRate = value; }
         }
 

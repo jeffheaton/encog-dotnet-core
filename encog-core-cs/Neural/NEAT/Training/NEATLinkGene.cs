@@ -73,17 +73,9 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Set the weight of this connection.
         /// </summary>
-        ///
-        /// <value>The connection weight.</value>
         public double Weight
         {
-            /// <returns>The weight of this connection.</returns>
             get { return weight; }
-            /// <summary>
-            /// Set the weight of this connection.
-            /// </summary>
-            ///
-            /// <param name="weight_0">The connection weight.</param>
             set { weight = value; }
         }
 
@@ -130,10 +122,7 @@ namespace Encog.Neural.NEAT.Training
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override String ToString()
         {
             var result = new StringBuilder();

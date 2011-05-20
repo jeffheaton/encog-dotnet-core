@@ -56,14 +56,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
         #region INeighborhoodFunction Members
 
-        /// <summary>
-        /// Determine how much the current neuron should be affected by training
-        /// based on its proximity to the winning neuron.
-        /// </summary>
-        ///
-        /// <param name="currentNeuron">THe current neuron being evaluated.</param>
-        /// <param name="bestNeuron">The winning neuron.</param>
-        /// <returns>The ratio for this neuron's adjustment.</returns>
         public virtual double Function(int currentNeuron, int bestNeuron)
         {
             var d = new double[1];
@@ -78,13 +70,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The new radius.</value>
         public virtual double Radius
         {
-            /// <returns>The radius.</returns>
             get { return radial.Width; }
-            /// <summary>
-            /// Set the radius.
-            /// </summary>
-            ///
-            /// <param name="radius">The new radius.</param>
             set { radial.Width = value; }
         }
 

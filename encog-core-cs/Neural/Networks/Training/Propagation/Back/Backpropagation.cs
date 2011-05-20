@@ -75,7 +75,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <value>Ther last delta values.</value>
         public double[] LastDelta
         {
-            /// <returns>Ther last delta values.</returns>
             get { return ((TrainFlatNetworkBackPropagation) FlatTraining).LastDelta; }
         }
 
@@ -86,21 +85,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// degree to which the gradients are applied to the weight matrix to allow
         /// learning.
         /// </summary>
-        ///
-        /// <value>The learning rate.</value>
         public virtual double LearningRate
         {
-            /// <returns>The learning rate, this is value is essentially a percent. It is
-            /// the degree to which the gradients are applied to the weight
-            /// matrix to allow learning.</returns>
             get { return ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate; }
-            /// <summary>
-            /// Set the learning rate, this is value is essentially a percent. It is the
-            /// degree to which the gradients are applied to the weight matrix to allow
-            /// learning.
-            /// </summary>
-            ///
-            /// <param name="rate">The learning rate.</param>
             set { ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate = value; }
         }
 
@@ -113,21 +100,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// which the previous training iteration will affect this training
         /// iteration. This can be useful to overcome local minima.
         /// </summary>
-        ///
-        /// <value>The momentum.</value>
         public virtual double Momentum
         {
-            /// <returns>The momentum for training. This is the degree to which changes
-            /// from which the previous training iteration will affect this
-            /// training iteration. This can be useful to overcome local minima.</returns>
             get { return ((TrainFlatNetworkBackPropagation) FlatTraining).Momentum; }
-            /// <summary>
-            /// Set the momentum for training. This is the degree to which changes from
-            /// which the previous training iteration will affect this training
-            /// iteration. This can be useful to overcome local minima.
-            /// </summary>
-            ///
-            /// <param name="m">The momentum.</param>
             set { ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate = value; }
         }
 

@@ -46,20 +46,17 @@ namespace Encog.App.Analyst.Commands
         /// <value>The analyst used with this command.</value>
         public EncogAnalyst Analyst
         {
-            /// <returns>The analyst used with this command.</returns>
             get { return analyst; }
         }
 
 
         /// <value>The name of this command.</value>
-        public abstract String Name { /// <returns>The name of this command.</returns>
-            get; }
+        public abstract String Name { get; }
 
 
         /// <value>The properties used with this command.</value>
         public ScriptProperties Prop
         {
-            /// <returns>The properties used with this command.</returns>
             get { return properties; }
         }
 
@@ -67,7 +64,6 @@ namespace Encog.App.Analyst.Commands
         /// <value>The script used with this command.</value>
         public AnalystScript Script
         {
-            /// <returns>The script used with this command.</returns>
             get { return script; }
         }
 
@@ -80,10 +76,7 @@ namespace Encog.App.Analyst.Commands
         public abstract bool ExecuteCommand(String args);
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

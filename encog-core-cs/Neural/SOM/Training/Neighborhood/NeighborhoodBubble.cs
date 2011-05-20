@@ -54,17 +54,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Set the radius.
         /// </summary>
-        ///
-        /// <value>The new radius.</value>
         public virtual double Radius
         {
-            /// <returns>The radius.</returns>
             get { return radius; }
-            /// <summary>
-            /// Set the radius.
-            /// </summary>
-            ///
-            /// <param name="radius_0">The new radius.</param>
             set { radius = value; }
         }
 

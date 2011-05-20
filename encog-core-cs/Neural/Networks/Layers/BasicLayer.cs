@@ -55,8 +55,6 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// Construct this layer with a sigmoid activation function.
         /// </summary>
-        ///
-        /// <param name="neuronCount">How many neurons in this layer.</param>
         public BasicLayer(int neuronCount) : this(new ActivationTANH(), true, neuronCount)
         {
         }
@@ -66,17 +64,9 @@ namespace Encog.Neural.Networks.Layers
         /// <summary>
         /// Set the network for this layer.
         /// </summary>
-        ///
-        /// <value>The network for this layer.</value>
         public virtual BasicNetwork Network
         {
-            /// <returns>The network that owns this layer.</returns>
             get { return network; }
-            /// <summary>
-            /// Set the network for this layer.
-            /// </summary>
-            ///
-            /// <param name="network_0">The network for this layer.</param>
             set { network = value; }
         }
 

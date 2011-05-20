@@ -99,16 +99,8 @@ namespace Encog.Neural.Pattern
         /// This method will throw an error. The CPN network uses predefined
         /// activation functions.
         /// </summary>
-        ///
-        /// <value>NOT USED</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// This method will throw an error. The CPN network uses predefined
-            /// activation functions.
-            /// </summary>
-            ///
-            /// <param name="activation">NOT USED</param>
             set
             {
                 throw new PatternError(
@@ -121,15 +113,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>The input neuron count.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The input neuron count.</param>
             set { inputCount = value; }
         }
 

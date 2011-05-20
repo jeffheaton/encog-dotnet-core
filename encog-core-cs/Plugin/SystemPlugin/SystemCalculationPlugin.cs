@@ -12,10 +12,7 @@ namespace Encog.Plugin.SystemPlugin
     {
         #region EncogPluginType1 Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void CalculateGradient(double[] gradients,
                                       double[] layerOutput, double[] weights,
                                       double[] layerDelta, IActivationFunction af,
@@ -42,10 +39,7 @@ namespace Encog.Plugin.SystemPlugin
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int CalculateLayer(double[] weights,
                                   double[] layerOutput, int startIndex,
                                   int outputIndex, int outputSize, int inputIndex,
@@ -72,29 +66,15 @@ namespace Encog.Plugin.SystemPlugin
         /// <summary>
         /// Not used for this type of plugin.
         /// </summary>
-        ///
-        /// <value>Not used.</value>
         public int LogLevel
         {
-            /// <summary>
-            /// Not used for this type of plugin.
-            /// </summary>
-            ///
-            /// <returns>Not used.</returns>
             get { return 0; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public string PluginDescription
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get
             {
                 return "This is the system plugin that provides regular Java-based "
@@ -103,16 +83,9 @@ namespace Encog.Plugin.SystemPlugin
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public string PluginName
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "HRI-System-Calculation"; }
         }
 
@@ -122,9 +95,6 @@ namespace Encog.Plugin.SystemPlugin
         /// plugin returns SERVICE_TYPE_CALCULATION.</value>
         public int PluginServiceType
         {
-            /// <returns>Returns the service type for this plugin. This plugin provides
-            /// the system calculation for layers and gradients. Therefore, this
-            /// plugin returns SERVICE_TYPE_CALCULATION.</returns>
             get { return EncogPluginType1Const.SERVICE_TYPE_CALCULATION; }
         }
 
@@ -132,7 +102,6 @@ namespace Encog.Plugin.SystemPlugin
         /// <value>This is a type-1 plugin.</value>
         public int PluginType
         {
-            /// <returns>This is a type-1 plugin.</returns>
             get { return 1; }
         }
 

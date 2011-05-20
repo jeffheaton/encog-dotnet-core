@@ -48,7 +48,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>the entryType</value>
         public PropertyType EntryType
         {
-            /// <returns>the entryType</returns>
             get { return entryType; }
         }
 
@@ -56,7 +55,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>The key.</value>
         public String Key
         {
-            /// <returns>The key.</returns>
             get { return section + "_" + name; }
         }
 
@@ -64,7 +62,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>the name</value>
         public String Name
         {
-            /// <returns>the name</returns>
             get { return name; }
         }
 
@@ -72,7 +69,6 @@ namespace Encog.App.Analyst.Script.Prop
         /// <value>the section</value>
         public String Section
         {
-            /// <returns>the section</returns>
             get { return section; }
         }
 

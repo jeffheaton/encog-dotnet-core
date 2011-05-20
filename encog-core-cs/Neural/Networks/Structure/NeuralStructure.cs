@@ -50,8 +50,6 @@ namespace Encog.Neural.Networks.Structure
         /// <summary>
         /// Construct a structure object for the specified network.
         /// </summary>
-        ///
-        /// <param name="network_0">The network to construct a structure for.</param>
         public NeuralStructure(BasicNetwork network_0)
         {
             layers = new List<Layer>();
@@ -62,7 +60,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The connection limit.</value>
         public double ConnectionLimit
         {
-            /// <returns>The connection limit.</returns>
             get { return connectionLimit; }
         }
 
@@ -70,21 +67,13 @@ namespace Encog.Neural.Networks.Structure
         /// <summary>
         /// Set the flat network.
         /// </summary>
-        ///
-        /// <value>The flat network.</value>
         public FlatNetwork Flat
         {
-            /// <returns>The flat network.</returns>
             get
             {
                 RequireFlat();
                 return flat;
             }
-            /// <summary>
-            /// Set the flat network.
-            /// </summary>
-            ///
-            /// <param name="flat_0">The flat network.</param>
             set { flat = value; }
         }
 
@@ -92,7 +81,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The layers in this neural network.</value>
         public IList<Layer> Layers
         {
-            /// <returns>The layers in this neural network.</returns>
             get { return layers; }
         }
 
@@ -100,7 +88,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>The network this structure belongs to.</value>
         public BasicNetwork Network
         {
-            /// <returns>The network this structure belongs to.</returns>
             get { return network; }
         }
 
@@ -108,7 +95,6 @@ namespace Encog.Neural.Networks.Structure
         /// <value>True if this is not a fully connected feedforward network.</value>
         public bool ConnectionLimited
         {
-            /// <returns>True if this is not a fully connected feedforward network.</returns>
             get { return connectionLimited; }
         }
 

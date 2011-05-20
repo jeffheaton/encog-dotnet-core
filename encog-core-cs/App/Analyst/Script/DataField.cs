@@ -39,27 +39,20 @@ namespace Encog.App.Analyst.Script
         /// <value>the classMembers</value>
         public IList<AnalystClassItem> ClassMembers
         {
-            /// <returns>the classMembers</returns>
             get { return classMembers; }
         }
 
 
         /// <value>the max to set</value>
-        public double Max { /// <returns>the max</returns>
-            get; /// <param name="theMax">the max to set</param>
-            set; }
+        public double Max { get; set; }
 
 
         /// <value>the mean to set</value>
-        public double Mean { /// <returns>the mean</returns>
-            get; /// <param name="theMean">the mean to set</param>
-            set; }
+        public double Mean { get; set; }
 
 
         /// <value>the theMin to set</value>
-        public double Min { /// <returns>the min</returns>
-            get; /// <param name="theMin">the theMin to set</param>
-            set; }
+        public double Min { get; set; }
 
 
         /// <summary>
@@ -70,12 +63,6 @@ namespace Encog.App.Analyst.Script
         /// <value>The minimum class count.</value>
         public int MinClassCount
         {
-            /// <summary>
-            /// Determine the minimum class count. This is the count of the
-            /// classification field that is the smallest.
-            /// </summary>
-            ///
-            /// <returns>The minimum class count.</returns>
             get
             {
                 int cmin = Int32.MaxValue;
@@ -90,38 +77,26 @@ namespace Encog.App.Analyst.Script
 
 
         /// <value>the name to set</value>
-        public String Name { /// <returns>the name</returns>
-            get; /// <param name="theName">the name to set</param>
-            set; }
+        public String Name { get; set; }
 
 
         /// <value>the standardDeviation to set</value>
-        public double StandardDeviation { /// <returns>the standardDeviation</returns>
-            get; /// <param name="theStandardDeviation">the standardDeviation to set</param>
-            set; }
+        public double StandardDeviation { get; set; }
 
 
         /// <value>the isClass to set</value>
-        public bool Class { /// <returns>the isClass</returns>
-            get; /// <param name="theClass">the isClass to set</param>
-            set; }
+        public bool Class { get; set; }
 
 
         /// <value>the isComplete to set</value>
-        public bool Complete { /// <returns>the isComplete</returns>
-            get; /// <param name="theComplete">the isComplete to set</param>
-            set; }
+        public bool Complete { get; set; }
 
 
         /// <value>the isInteger to set</value>
-        public bool Integer { /// <returns>the isInteger</returns>
-            get; /// <param name="theInteger">the isInteger to set</param>
-            set; }
+        public bool Integer { get; set; }
 
 
         /// <value>the isReal to set</value>
-        public bool Real { /// <returns>the isReal</returns>
-            get; /// <param name="theReal">the isReal to set</param>
-            set; }
+        public bool Real { get; set; }
     }
 }

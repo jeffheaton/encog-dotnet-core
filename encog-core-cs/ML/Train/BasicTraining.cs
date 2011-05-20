@@ -144,10 +144,7 @@ namespace Encog.ML.Train
         /// from Encog.ml.train.MLTrain
         /// </summary>
         ///
-        public abstract MLMethod Method { /// <summary>
-            /// from Encog.ml.train.MLTrain
-            /// </summary>
-            ///
+        public abstract MLMethod Method {
             get; }
 
 

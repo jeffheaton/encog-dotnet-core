@@ -41,7 +41,6 @@ namespace Encog.ML.Train.Strategy.End
         /// <value>the minutesLeft</value>
         public int MinutesLeft
         {
-            /// <returns>the minutesLeft</returns>
             get
             {
                 lock (this)
@@ -55,16 +54,12 @@ namespace Encog.ML.Train.Strategy.End
         /// <value>the minutes</value>
         public int Minutes
         {
-            /// <returns>the minutes</returns>
             get { return _minutes; }
         }
 
         #region EndTrainingStrategy Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual bool ShouldStop()
         {
             lock (this)
@@ -73,20 +68,14 @@ namespace Encog.ML.Train.Strategy.End
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void Init(MLTrain train)
         {
             _started = true;
             _startedTime = DateTime.Now.Millisecond;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void PostIteration()
         {
             lock (this)
@@ -96,10 +85,7 @@ namespace Encog.ML.Train.Strategy.End
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public virtual void PreIteration()
         {
         }

@@ -9,20 +9,7 @@ namespace Encog.MathUtil.RBF
         /// <summary>
         /// Set the peak.
         /// </summary>
-        ///
-        /// <value>The peak.</value>
-        double Peak { /// <summary>
-            /// Get the center of this RBD.
-            /// </summary>
-            ///
-            /// <returns>The center of the RBF.</returns>
-            get;
-            /// <summary>
-            /// Set the peak.
-            /// </summary>
-            ///
-            /// <param name="peak">The peak.</param>
-            set; }
+        double Peak { get; set; }
 
 
         /// <summary>

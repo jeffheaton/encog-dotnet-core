@@ -43,7 +43,6 @@ namespace Encog.Util.Arrayutil
         /// <value>The fields that are to be processed.</value>
         public TemporalWindowField[] Fields
         {
-            /// <returns>The fields that are to be processed.</returns>
             get { return fields; }
         }
 
@@ -51,9 +50,7 @@ namespace Encog.Util.Arrayutil
         /// <value>the inputWindow to set</value>
         public int InputWindow
         {
-            /// <returns>the inputWindow</returns>
             get { return inputWindow; }
-            /// <param name="theInputWindow">the inputWindow to set</param>
             set { inputWindow = value; }
         }
 
@@ -61,9 +58,7 @@ namespace Encog.Util.Arrayutil
         /// <value>the predictWindow to set</value>
         public int PredictWindow
         {
-            /// <returns>the predictWindow</returns>
             get { return predictWindow; }
-            /// <param name="thePredictWindow">the predictWindow to set</param>
             set { predictWindow = value; }
         }
 

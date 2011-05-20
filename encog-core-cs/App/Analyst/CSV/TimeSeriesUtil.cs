@@ -90,7 +90,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the analyst</value>
         public EncogAnalyst Analyst
         {
-            /// <returns>the analyst</returns>
             get { return analyst; }
         }
 
@@ -98,7 +97,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the buffer</value>
         public IList<double[]> Buffer
         {
-            /// <returns>the buffer</returns>
             get { return buffer; }
         }
 
@@ -106,7 +104,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the headingMap</value>
         public IDictionary<String, Int32> HeadingMap
         {
-            /// <returns>the headingMap</returns>
             get { return headingMap; }
         }
 
@@ -114,7 +111,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the inputSize</value>
         public int InputSize
         {
-            /// <returns>the inputSize</returns>
             get { return inputSize; }
         }
 
@@ -122,7 +118,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the lagDepth</value>
         public int LagDepth
         {
-            /// <returns>the lagDepth</returns>
             get { return lagDepth; }
         }
 
@@ -130,7 +125,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the leadDepth</value>
         public int LeadDepth
         {
-            /// <returns>the leadDepth</returns>
             get { return leadDepth; }
         }
 
@@ -138,7 +132,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the outputSize</value>
         public int OutputSize
         {
-            /// <returns>the outputSize</returns>
             get { return outputSize; }
         }
 
@@ -146,7 +139,6 @@ namespace Encog.App.Analyst.CSV
         /// <value>the totalDepth</value>
         public int TotalDepth
         {
-            /// <returns>the totalDepth</returns>
             get { return totalDepth; }
         }
 

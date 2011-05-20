@@ -71,17 +71,9 @@ namespace Encog.Neural.BAM
         /// <summary>
         /// Set the F1 neuron count.
         /// </summary>
-        ///
-        /// <value>The count.</value>
         public int F1Count
         {
-            /// <returns>the f1Count</returns>
             get { return f1Count; }
-            /// <summary>
-            /// Set the F1 neuron count.
-            /// </summary>
-            ///
-            /// <param name="i">The count.</param>
             set { f1Count = value; }
         }
 
@@ -89,34 +81,18 @@ namespace Encog.Neural.BAM
         /// <summary>
         /// Set the F2 neuron count.
         /// </summary>
-        ///
-        /// <value>The count.</value>
         public int F2Count
         {
-            /// <returns>the f2Count</returns>
             get { return f2Count; }
-            /// <summary>
-            /// Set the F2 neuron count.
-            /// </summary>
-            ///
-            /// <param name="i">The count.</param>
             set { f2Count = value; }
         }
 
         /// <summary>
         /// Set the weights for F1 to F2.
         /// </summary>
-        ///
-        /// <value>The weight matrix.</value>
         public Matrix WeightsF1toF2
         {
-            /// <returns>the weightsF1toF2</returns>
             get { return weightsF1toF2; }
-            /// <summary>
-            /// Set the weights for F1 to F2.
-            /// </summary>
-            ///
-            /// <param name="matrix">The weight matrix.</param>
             set { weightsF1toF2 = value; }
         }
 
@@ -124,17 +100,9 @@ namespace Encog.Neural.BAM
         /// <summary>
         /// Set the weights for F2 to F1.
         /// </summary>
-        ///
-        /// <value>The weight matrix.</value>
         public Matrix WeightsF2toF1
         {
-            /// <returns>the weightsF2toF1</returns>
             get { return weightsF2toF1; }
-            /// <summary>
-            /// Set the weights for F2 to F1.
-            /// </summary>
-            ///
-            /// <param name="matrix">The weight matrix.</param>
             set { weightsF2toF1 = value; }
         }
 

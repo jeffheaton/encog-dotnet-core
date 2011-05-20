@@ -67,36 +67,18 @@ namespace Encog.Neural.CPN.Training
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
         #region ILearningRate Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public double LearningRate
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return learningRate; }
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             set { learningRate = value; }
         }
 
@@ -130,10 +112,7 @@ namespace Encog.Neural.CPN.Training
             mustInit = false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override sealed void Iteration()
         {
             if (mustInit)
@@ -179,19 +158,13 @@ namespace Encog.Neural.CPN.Training
             Error = worstDistance;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override sealed TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc />
         public override void Resume(TrainingContinuation state)
         {
         }

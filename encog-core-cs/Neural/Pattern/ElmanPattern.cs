@@ -104,15 +104,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the activation function to use on each of the layers.
         /// </summary>
-        ///
-        /// <value>The activation function.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Set the activation function to use on each of the layers.
-            /// </summary>
-            ///
-            /// <param name="activation_0">The activation function.</param>
             set { activation = value; }
         }
 
@@ -120,31 +113,15 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>Neuron count.</value>
-        public int InputNeurons
-        {
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">Neuron count.</param>
-            set { inputNeurons = value; }
-        }
+        public int InputNeurons { set { inputNeurons = value; } }
 
 
         /// <summary>
         /// Set the number of output neurons.
         /// </summary>
-        ///
-        /// <value>Neuron count.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">Neuron count.</param>
+
             set { outputNeurons = value; }
         }
 

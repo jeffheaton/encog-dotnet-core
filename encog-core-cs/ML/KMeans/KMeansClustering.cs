@@ -79,7 +79,6 @@ namespace Encog.ML.Kmeans
         /// <value>Within-cluster sum of squares (WCSS).</value>
         public double WCSS
         {
-            /// <returns>Within-cluster sum of squares (WCSS).</returns>
             get { return wcss; }
         }
 
@@ -88,7 +87,6 @@ namespace Encog.ML.Kmeans
         /// <value>The clusters.</value>
         public MLCluster[] Clusters
         {
-            /// <returns>The clusters.</returns>
             get { return clusters; }
         }
 
@@ -141,8 +139,6 @@ namespace Encog.ML.Kmeans
         /// <summary>
         /// The number of iterations to perform.
         /// </summary>
-        ///
-        /// <param name="count">The count of iterations.</param>
         public void Iteration(int count)
         {
             for (int i = 0; i < count; i++)

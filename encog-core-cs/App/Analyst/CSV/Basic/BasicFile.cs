@@ -124,17 +124,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the column count.
         /// </summary>
-        ///
-        /// <value>The new column count.</value>
         public int Count
         {
-            /// <returns>The column count.</returns>
             get { return columnCount; }
-            /// <summary>
-            /// Set the column count.
-            /// </summary>
-            ///
-            /// <param name="theCount">The new column count.</param>
             set { columnCount = value; }
         }
 
@@ -142,17 +134,9 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the input filename.
         /// </summary>
-        ///
-        /// <value>The input filename.</value>
         public FileInfo InputFilename
         {
-            /// <returns>The input filename.</returns>
             get { return inputFilename; }
-            /// <summary>
-            /// Set the input filename.
-            /// </summary>
-            ///
-            /// <param name="theInputFilename">The input filename.</param>
             set { inputFilename = value; }
         }
 
@@ -160,8 +144,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the input format.
         /// </summary>
-        ///
-        /// <value>The new inputFormat format.</value>
         public CSVFormat InputFormat
         {
             get { return inputFormat; }
@@ -172,8 +154,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <summary>
         /// Set the input headings.
         /// </summary>
-        ///
-        /// <value>The new input headings.</value>
         public String[] InputHeadings
         {
             get { return inputHeadings; }
@@ -461,10 +441,7 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

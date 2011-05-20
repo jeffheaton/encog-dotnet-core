@@ -36,13 +36,6 @@ namespace Encog.Neural.Pattern
         /// <value>The number of neurons in the first layer.</value>
         public int F1Neurons
         {
-            /// <summary>
-            /// Set the F1 neurons. The BAM really does not have an input and output
-            /// layer, so this is simply setting the number of neurons that are in the
-            /// first layer.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons in the first layer.</param>
             set { f1Neurons = value; }
         }
 
@@ -52,17 +45,8 @@ namespace Encog.Neural.Pattern
         /// layer, so this is simply setting the number of neurons that are in the
         /// second layer.
         /// </summary>
-        ///
-        /// <value>The number of neurons in the second layer.</value>
         public int F2Neurons
         {
-            /// <summary>
-            /// Set the output neurons. The BAM really does not have an input and output
-            /// layer, so this is simply setting the number of neurons that are in the
-            /// second layer.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons in the second layer.</param>
             set { f2Neurons = value; }
         }
 
@@ -81,7 +65,6 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Clear any settings on the pattern.
         /// </summary>
-        ///
         public void Clear()
         {
             f1Neurons = 0;
@@ -99,15 +82,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Not used, the BAM uses a bipoloar activation function.
         /// </summary>
-        ///
-        /// <value>Not used.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Not used, the BAM uses a bipoloar activation function.
-            /// </summary>
-            ///
-            /// <param name="activation">Not used.</param>
             set
             {
                 throw new PatternError(
@@ -119,15 +95,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>The number of input neurons.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of input neurons.</param>
             set
             {
                 throw new PatternError(
@@ -139,15 +108,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of output neurons.
         /// </summary>
-        ///
-        /// <value>The output neuron count.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The output neuron count.</param>
             set
             {
                 throw new PatternError(

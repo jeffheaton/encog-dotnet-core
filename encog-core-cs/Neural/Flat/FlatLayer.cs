@@ -47,19 +47,14 @@ namespace Encog.Neural.Flat
 
 
         /// <value>the activation to set</value>
-        public IActivationFunction Activation { /// <returns>the activation</returns>
-            get; /// <param name="activation_0">the activation to set</param>
-            set; }
+        public IActivationFunction Activation { get; set; }
 
 
         /// <summary>
         /// Set the bias activation.
         /// </summary>
-        ///
-        /// <value>The bias activation.</value>
         public double BiasActivation
         {
-            /// <returns>Get the bias activation.</returns>
             get
             {
                 if (HasBias())
@@ -71,11 +66,6 @@ namespace Encog.Neural.Flat
                     return 0;
                 }
             }
-            /// <summary>
-            /// Set the bias activation.
-            /// </summary>
-            ///
-            /// <param name="a">The bias activation.</param>
             set { biasActivation = value; }
         }
 
@@ -83,7 +73,6 @@ namespace Encog.Neural.Flat
         /// <value>The number of neurons our context is fed by.</value>
         public int ContextCount
         {
-            /// <returns>The number of neurons our context is fed by.</returns>
             get
             {
                 if (contextFedBy == null)
@@ -101,17 +90,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the layer that this layer's context is fed by.
         /// </summary>
-        ///
-        /// <value>The layer feeding.</value>
         public FlatLayer ContextFedBy
         {
-            /// <returns>The layer that feeds this layer's context.</returns>
             get { return contextFedBy; }
-            /// <summary>
-            /// Set the layer that this layer's context is fed by.
-            /// </summary>
-            ///
-            /// <param name="from">The layer feeding.</param>
             set { contextFedBy = value; }
         }
 
@@ -119,7 +100,6 @@ namespace Encog.Neural.Flat
         /// <value>the count</value>
         public int Count
         {
-            /// <returns>the count</returns>
             get { return count; }
         }
 
@@ -128,8 +108,6 @@ namespace Encog.Neural.Flat
         /// and regular.</value>
         public int TotalCount
         {
-            /// <returns>The total number of neurons on this layer, includes context, bias
-            /// and regular.</returns>
             get
             {
                 if (contextFedBy == null)
@@ -151,10 +129,7 @@ namespace Encog.Neural.Flat
             return Math.Abs(biasActivation) > EncogFramework.DEFAULT_DOUBLE_EQUAL;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder();

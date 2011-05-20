@@ -36,17 +36,9 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the index of the class.
         /// </summary>
-        ///
-        /// <value>The index of the class.</value>
         public int Index
         {
-            /// <returns>The index of the class.</returns>
             get { return index; }
-            /// <summary>
-            /// Set the index of the class.
-            /// </summary>
-            ///
-            /// <param name="theIndex">The index of the class.</param>
             set { index = value; }
         }
 
@@ -54,25 +46,14 @@ namespace Encog.Util.Arrayutil
         /// <summary>
         /// Set the name of the class.
         /// </summary>
-        ///
-        /// <value>The name of the class.</value>
         public String Name
         {
-            /// <returns>The name of the class.</returns>
             get { return name; }
-            /// <summary>
-            /// Set the name of the class.
-            /// </summary>
-            ///
-            /// <param name="theName">The name of the class.</param>
             set { name = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

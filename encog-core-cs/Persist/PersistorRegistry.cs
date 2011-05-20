@@ -34,6 +34,9 @@ namespace Encog.Persist
         ///
         private readonly IDictionary<String, EncogPersistor> map;
 
+        /// <summary>
+        /// The class map, used to lookup native classes to their persistor.
+        /// </summary>
         private readonly IDictionary<Type, EncogPersistor> classMap;
 
         /// <summary>
@@ -62,7 +65,6 @@ namespace Encog.Persist
         /// <value>The singleton instance.</value>
         public static PersistorRegistry Instance
         {
-            /// <returns>The singleton instance.</returns>
             get
             {
                 if (instance == null)

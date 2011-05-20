@@ -98,17 +98,9 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the input neuron count.
         /// </summary>
-        ///
-        /// <value>The number of neurons.</value>
         public int InputNeurons
         {
-            /// <returns>The number of input neurons.</returns>
             get { return inputNeurons; }
-            /// <summary>
-            /// Set the input neuron count.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons.</param>
             set { inputNeurons = value; }
         }
 
@@ -120,13 +112,7 @@ namespace Encog.Neural.Pattern
         /// <value>The number of neurons.</value>
         public int OutputNeurons
         {
-            /// <returns>The number of output neurons.</returns>
             get { return outputNeurons; }
-            /// <summary>
-            /// Set the output neuron count.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons.</param>
             set { outputNeurons = value; }
         }
 
@@ -135,16 +121,8 @@ namespace Encog.Neural.Pattern
         /// Set the activation function. A PNN uses a linear activation function, so
         /// this method throws an error.
         /// </summary>
-        ///
-        /// <value>The activation function to use.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Set the activation function. A PNN uses a linear activation function, so
-            /// this method throws an error.
-            /// </summary>
-            ///
-            /// <param name="activation">The activation function to use.</param>
             set
             {
                 throw new PatternError(

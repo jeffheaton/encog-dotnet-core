@@ -64,16 +64,8 @@ namespace Encog.Neural.Pattern
         /// Set the activation function to use. This function will throw an error,
         /// because the Hopfield network must use the BiPolar activation function.
         /// </summary>
-        ///
-        /// <value>The activation function to use.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Set the activation function to use. This function will throw an error,
-            /// because the Hopfield network must use the BiPolar activation function.
-            /// </summary>
-            ///
-            /// <param name="activation">The activation function to use.</param>
             set
             {
                 throw new PatternError(
@@ -86,15 +78,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons, this must match the output neurons.
         /// </summary>
-        ///
-        /// <value>The number of neurons.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons, this must match the output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons.</param>
             set { neuronCount = value; }
         }
 
@@ -104,17 +89,8 @@ namespace Encog.Neural.Pattern
         /// neural network, because the number of input neurons defines the number of
         /// output neurons.
         /// </summary>
-        ///
-        /// <value>The number of neurons.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons, should not be used with a hopfield
-            /// neural network, because the number of input neurons defines the number of
-            /// output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of neurons.</param>
             set
             {
                 throw new PatternError(

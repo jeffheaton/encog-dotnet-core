@@ -104,16 +104,8 @@ namespace Encog.Neural.Pattern
         /// Set the activation function, this is an error. The activation function
         /// may not be set on a RBF layer.
         /// </summary>
-        ///
-        /// <value>The new activation function.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <summary>
-            /// Set the activation function, this is an error. The activation function
-            /// may not be set on a RBF layer.
-            /// </summary>
-            ///
-            /// <param name="activation">The new activation function.</param>
             set
             {
                 throw new PatternError("Can't set the activation function for "
@@ -125,15 +117,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of input neurons.
         /// </summary>
-        ///
-        /// <value>The number of input neurons.</value>
         public int InputNeurons
         {
-            /// <summary>
-            /// Set the number of input neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of input neurons.</param>
             set { inputNeurons = value; }
         }
 
@@ -141,15 +126,8 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Set the number of output neurons.
         /// </summary>
-        ///
-        /// <value>The number of output neurons.</value>
         public int OutputNeurons
         {
-            /// <summary>
-            /// Set the number of output neurons.
-            /// </summary>
-            ///
-            /// <param name="count">The number of output neurons.</param>
             set { outputNeurons = value; }
         }
 

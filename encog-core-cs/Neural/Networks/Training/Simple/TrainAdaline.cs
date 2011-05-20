@@ -58,16 +58,9 @@ namespace Encog.Neural.Networks.Training.Simple
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -76,29 +69,15 @@ namespace Encog.Neural.Networks.Training.Simple
         /// <summary>
         /// Set the learning rate.
         /// </summary>
-        ///
-        /// <value>The new learning rate.</value>
         public double LearningRate
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return learningRate; }
-            /// <summary>
-            /// Set the learning rate.
-            /// </summary>
-            ///
-            /// <param name="rate">The new learning rate.</param>
             set { learningRate = value; }
         }
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed void Iteration()
         {
             var errorCalculation = new ErrorCalculation();
@@ -140,19 +119,13 @@ namespace Encog.Neural.Networks.Training.Simple
             Error = errorCalculation.Calculate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

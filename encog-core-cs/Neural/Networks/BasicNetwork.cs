@@ -133,7 +133,6 @@ namespace Encog.Neural.Networks
         /// <value>The layer count.</value>
         public int LayerCount
         {
-            /// <returns>The layer count.</returns>
             get
             {
                 structure.RequireFlat();
@@ -146,9 +145,6 @@ namespace Encog.Neural.Networks
         /// network.</value>
         public NeuralStructure Structure
         {
-            /// <returns>Get the structure of the neural network. The structure allows you
-            /// to quickly obtain synapses and layers without traversing the
-            /// network.</returns>
             get { return structure; }
         }
 
@@ -156,8 +152,6 @@ namespace Encog.Neural.Networks
         /// Sets the bias activation for every layer that supports bias. Make sure
         /// that the network structure has been finalized before calling this method.
         /// </summary>
-        ///
-        /// <value>THe new activation.</value>
         public double BiasActivation
         {
             set

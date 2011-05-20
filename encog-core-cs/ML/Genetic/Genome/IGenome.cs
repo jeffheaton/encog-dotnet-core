@@ -14,46 +14,18 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the adjusted score.
         /// </summary>
-        ///
-        /// <value>The adjusted score.</value>
-        double AdjustedScore
-        { /// <summary>
-            /// Get the adjusted score, this considers old-age penalties and youth
-            /// bonuses. If there are no such bonuses or penalties, this is the same as
-            /// the score.
-            /// </summary>
-            ///
-            /// <returns>The adjusted score.</returns>
-            get;
-            /// <summary>
-            /// Set the adjusted score.
-            /// </summary>
-            ///
-            /// <param name="adjustedScore">The adjusted score.</param>
-            set;
-        }
+        double AdjustedScore { get; set; }
 
 
         /// <summary>
         /// Set the amount to spawn.
         /// </summary>
-        ///
-        /// <value>The amount to spawn.</value>
-        double AmountToSpawn
-        { /// <returns>The amount of offspring this genome will have.</returns>
-            get;
-            /// <summary>
-            /// Set the amount to spawn.
-            /// </summary>
-            ///
-            /// <param name="amountToSpawn">The amount to spawn.</param>
-            set;
-        }
+        double AmountToSpawn { get; set; }
 
 
         /// <value>The chromosomes that make up this genome.</value>
         IList<Chromosome> Chromosomes
-        { /// <returns>The chromosomes that make up this genome.</returns>
+        { 
             get;
         }
 
@@ -62,18 +34,9 @@ namespace Encog.ML.Genetic.Genome
         /// Set the GA used by this genome. This is normally a transient field and
         /// only used during training.
         /// </summary>
-        ///
-        /// <value>The GA.</value>
         GeneticAlgorithm GA
-        { /// <returns>Get the GA used by this genome. This is normally a transient
-            /// field and only used during training.</returns>
+        { 
             get;
-            /// <summary>
-            /// Set the GA used by this genome. This is normally a transient field and
-            /// only used during training.
-            /// </summary>
-            ///
-            /// <param name="ga">The GA.</param>
             set;
         }
 
@@ -81,23 +44,16 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the genome ID.
         /// </summary>
-        ///
-        /// <value>The genome id.</value>
         long GenomeID
-        { /// <returns>The genome ID.</returns>
+        { 
             get;
-            /// <summary>
-            /// Set the genome ID.
-            /// </summary>
-            ///
-            /// <param name="genomeID">The genome id.</param>
             set;
         }
 
 
         /// <value>The organism produced by this genome.</value>
         Object Organism
-        { /// <returns>The organism produced by this genome.</returns>
+        {
             get;
         }
 
@@ -105,16 +61,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the population that this genome belongs to.
         /// </summary>
-        ///
-        /// <value>The population that this genome belongs to.</value>
         IPopulation Population
-        { /// <returns>The population that this genome belongs to.</returns>
+        {
             get;
-            /// <summary>
-            /// Set the population that this genome belongs to.
-            /// </summary>
-            ///
-            /// <param name="population">The population that this genome belongs to.</param>
             set;
         }
 
@@ -122,16 +71,9 @@ namespace Encog.ML.Genetic.Genome
         /// <summary>
         /// Set the score.
         /// </summary>
-        ///
-        /// <value>The new score.</value>
         double Score
-        { /// <returns>The score for this genome.</returns>
+        { 
             get;
-            /// <summary>
-            /// Set the score.
-            /// </summary>
-            ///
-            /// <param name="score">The new score.</param>
             set;
         }
 

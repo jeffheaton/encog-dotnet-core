@@ -50,17 +50,9 @@ namespace Encog.Neural.Flat
         /// <summary>
         /// Set the RBF's used.
         /// </summary>
-        ///
-        /// <value>The RBF's used.</value>
         public IRadialBasisFunction[] RBF
         {
-            /// <returns>The RBF's used.</returns>
             get { return rbf; }
-            /// <summary>
-            /// Set the RBF's used.
-            /// </summary>
-            ///
-            /// <param name="rbf_0">The RBF's used.</param>
             set { rbf = value; }
         }
 

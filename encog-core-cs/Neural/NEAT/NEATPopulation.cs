@@ -47,6 +47,9 @@ namespace Encog.Neural.NEAT
         ///
         internal int outputCount;
 
+        /// <summary>
+        /// Are we using snapshot?
+        /// </summary>
         private bool snapshot;
 
         /// <summary>
@@ -97,9 +100,7 @@ namespace Encog.Neural.NEAT
         /// <value>the inputCount to set</value>
         public int InputCount
         {
-            /// <returns>the inputCount</returns>
             get { return inputCount; }
-            /// <param name="inputCount_0">the inputCount to set</param>
             set { inputCount = value; }
         }
 
@@ -107,9 +108,7 @@ namespace Encog.Neural.NEAT
         /// <value>the outputCount to set</value>
         public int OutputCount
         {
-            /// <returns>the outputCount</returns>
             get { return outputCount; }
-            /// <param name="outputCount_0">the outputCount to set</param>
             set { outputCount = value; }
         }
 
@@ -117,9 +116,7 @@ namespace Encog.Neural.NEAT
         /// <value>the neatActivationFunction to set</value>
         public IActivationFunction NeatActivationFunction
         {
-            /// <returns>the neatActivationFunction</returns>
             get { return neatActivationFunction; }
-            /// <param name="neatActivationFunction_0">the neatActivationFunction to set</param>
             set { neatActivationFunction = value; }
         }
 
@@ -127,19 +124,15 @@ namespace Encog.Neural.NEAT
         /// <value>the outputActivationFunction to set</value>
         public IActivationFunction OutputActivationFunction
         {
-            /// <returns>the outputActivationFunction</returns>
             get { return outputActivationFunction; }
-            /// <param name="outputActivationFunction_0">the outputActivationFunction to set</param>
             set { outputActivationFunction = value; }
         }
 
 
         /// <value>the snapshot to set</value>
         public bool Snapshot
-        {
-            /// <returns>the snapshot</returns>
+        {            
             get { return snapshot; }
-            /// <param name="snapshot_0">the snapshot to set</param>
             set { snapshot = value; }
         }
     }

@@ -25,17 +25,9 @@ namespace Encog.ML.Genetic
         /// <summary>
         /// Set the score calculation object.
         /// </summary>
-        ///
-        /// <value>The score calculation object.</value>
         public ICalculateGenomeScore CalculateScore
         {
-            /// <returns>The score calculation object.</returns>
             get { return calculateScore; }
-            /// <summary>
-            /// Set the score calculation object.
-            /// </summary>
-            ///
-            /// <param name="theCalculateScore">The score calculation object.</param>
             set { calculateScore = value; }
         }
 
@@ -43,111 +35,43 @@ namespace Encog.ML.Genetic
         /// <summary>
         /// Set the comparator.
         /// </summary>
-        ///
-        /// <value>The comparator.</value>
-        public GenomeComparator Comparator { /// <returns>The comparator.</returns>
-            get; /// <summary>
-            /// Set the comparator.
-            /// </summary>
-            ///
-            /// <param name="theComparator">The comparator.</param>
-            set; }
+        public GenomeComparator Comparator { get; set; }
 
 
         /// <summary>
         /// Set the crossover object.
         /// </summary>
-        ///
-        /// <value>The crossover object.</value>
-        public ICrossover Crossover { /// <returns>The crossover object.</returns>
-            get; /// <summary>
-            /// Set the crossover object.
-            /// </summary>
-            ///
-            /// <param name="theCrossover">The crossover object.</param>
-            set; }
+        public ICrossover Crossover { get; set; }
 
 
         /// <summary>
         /// Set the mating population percent.
         /// </summary>
-        ///
-        /// <value>The mating population percent.</value>
-        public double MatingPopulation { /// <summary>
-            /// Get the mating population.
-            /// </summary>
-            ///
-            /// <returns>The mating population percent.</returns>
-            get; /// <summary>
-            /// Set the mating population percent.
-            /// </summary>
-            ///
-            /// <param name="theMatingPopulation">The mating population percent.</param>
-            set; }
+        public double MatingPopulation { get; set; }
 
 
         /// <summary>
         /// Set the mutate object.
         /// </summary>
-        ///
-        /// <value>The mutate object.</value>
-        public IMutate Mutate { /// <returns>The mutate object.</returns>
-            get; /// <summary>
-            /// Set the mutate object.
-            /// </summary>
-            ///
-            /// <param name="theMutate">The mutate object.</param>
-            set; }
+        public IMutate Mutate { get; set; }
 
 
         /// <summary>
         /// Set the mutation percent.
         /// </summary>
-        ///
-        /// <value>The percent to mutate.</value>
-        public double MutationPercent { /// <summary>
-            /// Get the mutation percent.
-            /// </summary>
-            ///
-            /// <returns>The mutation percent.</returns>
-            get; /// <summary>
-            /// Set the mutation percent.
-            /// </summary>
-            ///
-            /// <param name="theMutationPercent">The percent to mutate.</param>
-            set; }
+        public double MutationPercent { get; set; }
 
 
         /// <summary>
         /// Set the percent to mate.
         /// </summary>
-        ///
-        /// <value>The percent to mate.</value>
-        public double PercentToMate { /// <summary>
-            /// Get the percent to mate.
-            /// </summary>
-            ///
-            /// <returns>The percent to mate.</returns>
-            get; /// <summary>
-            /// Set the percent to mate.
-            /// </summary>
-            ///
-            /// <param name="thePercentToMate">The percent to mate.</param>
-            set; }
+        public double PercentToMate { get; set; }
 
 
         /// <summary>
         /// Set the population.
         /// </summary>
-        ///
-        /// <value>The population.</value>
-        public IPopulation Population { /// <returns>The population.</returns>
-            get; /// <summary>
-            /// Set the population.
-            /// </summary>
-            ///
-            /// <param name="thePopulation">The population.</param>
-            set; }
+        public IPopulation Population { get; set; }
 
         /// <summary>
         /// Add a genome.

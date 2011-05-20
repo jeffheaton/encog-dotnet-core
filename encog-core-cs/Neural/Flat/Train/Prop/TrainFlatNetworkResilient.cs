@@ -67,7 +67,6 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <value>The RPROP update values.</value>
         public double[] UpdateValues
         {
-            /// <returns>The RPROP update values.</returns>
             get { return updateValues; }
         }
 

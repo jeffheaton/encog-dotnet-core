@@ -60,10 +60,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value></value>
         public double X1
         {
-            /// <returns>X1, which is a gamma to the left(lower) of the best(middle)
-            /// gamma.</returns>
             get { return x1; }
-            /// <param name="x1_0"></param>
             set { x1 = value; }
         }
 
@@ -71,20 +68,16 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>Set X2, which is the middle(best) gamma.</value>
         public double X2
         {
-            /// <returns>X2, which is the middle(best) gamma.</returns>
             get { return x2; }
-            /// <param name="x2_0">Set X2, which is the middle(best) gamma.</param>
             set { x2 = value; }
         }
 
 
-        /// <value></value>
+        /// <value>X3, which is a gamma to the right(higher) of the middle(best)
+        /// gamma.</value>
         public double X3
         {
-            /// <returns>X3, which is a gamma to the right(higher) of the middle(best)
-            /// gamma.</returns>
             get { return x3; }
-            /// <param name="x3_0"></param>
             set { x3 = value; }
         }
 
@@ -92,20 +85,16 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>Set Y1, which is the value y1 is the error for x1.</value>
         public double Y1
         {
-            /// <returns>Y1, which is the value y1 is the error for x1.</returns>
             get { return y1; }
-            /// <param name="y1_0">Set Y1, which is the value y1 is the error for x1.</param>
             set { y1 = value; }
         }
 
 
-        /// <value></value>
+        /// <value>Y2, which is the value y2 is the error for x2. This is the
+        /// best(middle) error.</value>
         public double Y2
         {
-            /// <returns>Y2, which is the value y2 is the error for x2. This is the
-            /// best(middle) error.</returns>
             get { return y2; }
-            /// <param name="y2_0"></param>
             set { y2 = value; }
         }
 
@@ -113,9 +102,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>Set Y3, which is the value y3 is the error for x3.</value>
         public double Y3
         {
-            /// <returns>Y3, which is the value y1 is the error for x1.</returns>
             get { return y3; }
-            /// <param name="y3_0">Set Y3, which is the value y3 is the error for x3.</param>
             set { y3 = value; }
         }
 

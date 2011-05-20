@@ -107,7 +107,6 @@ namespace Encog.App.Analyst.Util
         /// <value>The headers.</value>
         public IList<String> Headers
         {
-            /// <returns>The headers.</returns>
             get { return headerList; }
         }
 

@@ -121,29 +121,19 @@ namespace Encog.ML.SVM
         /// <value>The file version.</value>
         public int FileVersion
         {
-            /// <returns>The file version.</returns>
             get { return 1; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public String PersistClassString
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
+
             get { return "SVM"; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public Object Read(Stream mask0)
         {
             var result = new SupportVectorMachine();
@@ -220,10 +210,7 @@ namespace Encog.ML.SVM
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Save(Stream os, Object obj)
         {
             var xout = new EncogWriteHelper(os);

@@ -46,25 +46,18 @@ namespace Encog.App.Analyst.CSV.Segregate
 
 
         /// <value>the numberRemaining to set</value>
-        public int NumberRemaining { /// <returns>the numberRemaining</returns>
-            get; /// <param name="theNumberRemaining">the numberRemaining to set</param>
-            set; }
+        public int NumberRemaining { get; set; }
 
 
         /// <value>the percent to set</value>
-        public int Percent
+        public int Percent 
         {
-            /// <returns>the percent</returns>
             get { return percent; }
-            /// <param name="thePercent">the percent to set</param>
             set { percent = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

@@ -13,44 +13,27 @@ namespace Encog.ML.Train
     public interface MLTrain
     {
         /// <value>The training implementation type.</value>
-        TrainingImplementationType ImplementationType { /// <returns>The training implementation type.</returns>
-            get; }
+        TrainingImplementationType ImplementationType { get; }
 
 
         /// <value>True if training can progress no further.</value>
-        bool TrainingDone { /// <returns>True if training can progress no further.</returns>
-            get; }
+        bool TrainingDone { get; }
 
 
         /// <value>The training data to use.</value>
-        MLDataSet Training { /// <returns>The training data to use.</returns>
-            get; }
+        MLDataSet Training { get; }
 
 
-        /// <value></value>
-        double Error { /// <summary>
-            /// Get the current error percent from the training.
-            /// </summary>
-            ///
-            /// <returns>The current error.</returns>
-            get;
-            /// <param name="error"></param>
-            set; }
+        /// <summary>
+        /// The current error.
+        /// </summary>
+        double Error { get; set; }
 
 
         /// <summary>
         /// Set the current training iteration.
         /// </summary>
-        ///
-        /// <value>Iteration.</value>
-        int IterationNumber { /// <returns>The current training iteration.</returns>
-            get;
-            /// <summary>
-            /// Set the current training iteration.
-            /// </summary>
-            ///
-            /// <param name="iteration">Iteration.</param>
-            set; }
+        int IterationNumber { get; set; }
 
 
         /// <returns>True if the training can be paused, and later continued.</returns>
@@ -59,19 +42,11 @@ namespace Encog.ML.Train
         /// <summary>
         /// Get the current best machine learning method from the training.
         /// </summary>
-        ///
-        /// <value>The best machine learningm method.</value>
-        MLMethod Method { /// <summary>
-            /// Get the current best machine learning method from the training.
-            /// </summary>
-            ///
-            /// <returns>The best machine learningm method.</returns>
-            get; }
+        MLMethod Method { get; }
 
 
         /// <value>The strategies to use.</value>
-        IList<IStrategy> Strategies { /// <returns>The strategies to use.</returns>
-            get; }
+        IList<IStrategy> Strategies { get; }
 
         /// <summary>
         /// Perform one iteration of training.

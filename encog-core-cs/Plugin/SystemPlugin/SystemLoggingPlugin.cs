@@ -81,34 +81,16 @@ namespace Encog.Plugin.SystemPlugin
         /// <summary>
         /// Set the logging level.
         /// </summary>
-        ///
-        /// <value>The logging level.</value>
         public int LogLevel
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return currentLevel; }
-            /// <summary>
-            /// Set the logging level.
-            /// </summary>
-            ///
-            /// <param name="level">The logging level.</param>
             set { currentLevel = value; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public String PluginDescription
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get
             {
                 return "This is the built in logging for Encog, it logs "
@@ -117,16 +99,9 @@ namespace Encog.Plugin.SystemPlugin
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public String PluginName
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return "HRI-System-Logging"; }
         }
 
@@ -136,9 +111,6 @@ namespace Encog.Plugin.SystemPlugin
         /// plugin returns SERVICE_TYPE_CALCULATION.</value>
         public int PluginServiceType
         {
-            /// <returns>Returns the service type for this plugin. This plugin provides
-            /// the system calculation for layers and gradients. Therefore, this
-            /// plugin returns SERVICE_TYPE_CALCULATION.</returns>
             get { return EncogPluginType1Const.SERVICE_TYPE_LOGGING; }
         }
 
@@ -146,7 +118,6 @@ namespace Encog.Plugin.SystemPlugin
         /// <value>This is a type-1 plugin.</value>
         public int PluginType
         {
-            /// <returns>This is a type-1 plugin.</returns>
             get { return 1; }
         }
 
@@ -202,10 +173,7 @@ namespace Encog.Plugin.SystemPlugin
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Log(int level, Exception t)
         {
             Log(level, t.ToString());

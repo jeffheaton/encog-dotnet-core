@@ -59,7 +59,6 @@ namespace Encog.Persist
         /// <value>The current section.</value>
         public String CurrentSection
         {
-            /// <returns>The current section.</returns>
             get { return currentSection; }
         }
 

@@ -67,7 +67,6 @@ namespace Encog.Neural.NEAT
         /// <value>The source neuron.</value>
         public NEATNeuron FromNeuron
         {
-            /// <returns>The source neuron.</returns>
             get { return fromNeuron; }
         }
 
@@ -75,7 +74,6 @@ namespace Encog.Neural.NEAT
         /// <value>The target neuron.</value>
         public NEATNeuron ToNeuron
         {
-            /// <returns>The target neuron.</returns>
             get { return toNeuron; }
         }
 
@@ -83,7 +81,6 @@ namespace Encog.Neural.NEAT
         /// <value>The weight of the link.</value>
         public double Weight
         {
-            /// <returns>The weight of the link.</returns>
             get { return weight; }
         }
 
@@ -91,7 +88,6 @@ namespace Encog.Neural.NEAT
         /// <value>True if this is a recurrent link.</value>
         public bool Recurrent
         {
-            /// <returns>True if this is a recurrent link.</returns>
             get { return recurrent; }
         }
 

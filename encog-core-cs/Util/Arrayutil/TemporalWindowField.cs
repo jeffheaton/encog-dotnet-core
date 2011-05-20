@@ -36,9 +36,7 @@ namespace Encog.Util.Arrayutil
         /// <value>the action to set</value>
         public TemporalType Action
         {
-            /// <returns>the action</returns>
             get { return action; }
-            /// <param name="theAction">the action to set</param>
             set { action = value; }
         }
 
@@ -47,24 +45,18 @@ namespace Encog.Util.Arrayutil
         /// for a prediction.</value>
         public bool Input
         {
-            /// <returns>Returns true, if this field is to be used as part of the input
-            /// for a prediction.</returns>
             get { return ((action == TemporalType.Input) || (action == TemporalType.InputAndPredict)); }
         }
 
 
         /// <value>the lastValue to set</value>
-        public String LastValue { /// <returns>the lastValue</returns>
-            get; /// <param name="theLastValue">the lastValue to set</param>
-            set; }
+        public String LastValue { get; set; }
 
 
         /// <value>the name to set</value>
         public String Name
         {
-            /// <returns>the name</returns>
             get { return name; }
-            /// <param name="theName">the name to set</param>
             set { name = value; }
         }
 
@@ -72,15 +64,11 @@ namespace Encog.Util.Arrayutil
         /// <value>Returns true, if this field is part of what is being predicted.</value>
         public bool Predict
         {
-            /// <returns>Returns true, if this field is part of what is being predicted.</returns>
             get { return ((action == TemporalType.Predict) || (action == TemporalType.InputAndPredict)); }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

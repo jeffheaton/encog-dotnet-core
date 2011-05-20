@@ -104,7 +104,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The RBF to use.</value>
         public IRadialBasisFunction RBF
         {
-            /// <returns>The RBF to use.</returns>
             get { return rbf; }
         }
 
@@ -133,17 +132,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Set the radius.
         /// </summary>
-        ///
-        /// <value>The radius.</value>
         public virtual double Radius
         {
-            /// <returns>The radius.</returns>
             get { return rbf.Width; }
-            /// <summary>
-            /// Set the radius.
-            /// </summary>
-            ///
-            /// <param name="radius">The radius.</param>
             set { rbf.Width = value; }
         }
 

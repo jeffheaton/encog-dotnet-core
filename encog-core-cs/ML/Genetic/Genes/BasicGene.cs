@@ -39,10 +39,7 @@ namespace Encog.ML.Genetic.Genes
 
         #region IGene Members
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int CompareTo(IGene o)
         {
             return ((int) (InnovationId - o.InnovationId));
@@ -51,17 +48,9 @@ namespace Encog.ML.Genetic.Genes
         /// <summary>
         /// Set the id for this gene.
         /// </summary>
-        ///
-        /// <value>The id for this gene.</value>
         public long Id
         {
-            /// <returns>The id of this gene.</returns>
             get { return id; }
-            /// <summary>
-            /// Set the id for this gene.
-            /// </summary>
-            ///
-            /// <param name="i">The id for this gene.</param>
             set { id = value; }
         }
 
@@ -69,17 +58,9 @@ namespace Encog.ML.Genetic.Genes
         /// <summary>
         /// Set the innovation id for this gene.
         /// </summary>
-        ///
-        /// <value>The innovation id for this gene.</value>
         public long InnovationId
         {
-            /// <returns>The innovation id of this gene.</returns>
             get { return innovationId; }
-            /// <summary>
-            /// Set the innovation id for this gene.
-            /// </summary>
-            ///
-            /// <param name="theInnovationID">The innovation id for this gene.</param>
             set { innovationId = value; }
         }
 
@@ -87,9 +68,7 @@ namespace Encog.ML.Genetic.Genes
         /// <value>True, if this gene is enabled.</value>
         public bool Enabled
         {
-            /// <returns>True, if this gene is enabled.</returns>
             get { return enabled; }
-            /// <param name="e">True, if this gene is enabled.</param>
             set { enabled = value; }
         }
 

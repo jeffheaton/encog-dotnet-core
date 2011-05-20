@@ -40,24 +40,15 @@ namespace Encog.ML.Kmeans
         /// <summary>
         /// Set the centroid.
         /// </summary>
-        ///
-        /// <value>The new centroid.</value>
         public Centroid Centroid
         {
-            /// <returns>The centroid.</returns>
             get { return centroid; }
-            /// <summary>
-            /// Set the centroid.
-            /// </summary>
-            ///
-            /// <param name="c">The new centroid.</param>
             set { centroid = value; }
         }
 
         /// <value>The sum of squares.</value>
         public double SumSqr
         {
-            /// <returns>The sum of squares.</returns>
             get { return sumSqr; }
         }
 
@@ -92,44 +83,28 @@ namespace Encog.ML.Kmeans
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public MLData Get(int pos)
         {
             return data[pos];
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public IList<MLData> Data
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return data; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public void Remove(MLData pair)
         {
             data.Remove(pair);
             CalcSumOfSquares();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public int Size()
         {
             return data.Count;
@@ -140,7 +115,6 @@ namespace Encog.ML.Kmeans
         /// <summary>
         /// Calculate the sum of squares.
         /// </summary>
-        ///
         public void CalcSumOfSquares()
         {
             int size = data.Count;

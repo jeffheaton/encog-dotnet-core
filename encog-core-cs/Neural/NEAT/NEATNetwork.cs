@@ -57,6 +57,9 @@ namespace Encog.Neural.NEAT
         ///
         private IActivationFunction activationFunction;
 
+        /// <summary>
+        /// The input count.
+        /// </summary>
         private int inputCount;
 
         /// <summary>
@@ -65,8 +68,14 @@ namespace Encog.Neural.NEAT
         ///
         private int networkDepth;
 
+        /// <summary>
+        /// The output activation function.
+        /// </summary>
         private IActivationFunction outputActivationFunction;
 
+        /// <summary>
+        /// The output count.
+        /// </summary>
         private int outputCount;
 
         /// <summary>
@@ -135,17 +144,9 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// Set the activation function.
         /// </summary>
-        ///
-        /// <value>The activation function.</value>
         public IActivationFunction ActivationFunction
         {
-            /// <returns>The activation function.</returns>
             get { return activationFunction; }
-            /// <summary>
-            /// Set the activation function.
-            /// </summary>
-            ///
-            /// <param name="activationFunction_0">The activation function.</param>
             set { activationFunction = value; }
         }
 
@@ -169,8 +170,6 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// Sets if snapshot is used.
         /// </summary>
-        ///
-        /// <value>True if snapshot is used.</value>
         public bool Snapshot
         {
             get { return snapshot; }

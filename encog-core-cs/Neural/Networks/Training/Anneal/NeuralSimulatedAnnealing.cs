@@ -80,15 +80,8 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <summary>
         /// Get the network as an array of doubles.
         /// </summary>
-        ///
-        /// <value>The network as an array of doubles.</value>
         public double[] Array
         {
-            /// <summary>
-            /// Get the network as an array of doubles.
-            /// </summary>
-            ///
-            /// <returns>The network as an array of doubles.</returns>
             get
             {
                 return NetworkCODEC
@@ -100,7 +93,6 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <value>A copy of the annealing array.</value>
         public double[] ArrayCopy
         {
-            /// <returns>A copy of the annealing array.</returns>
             get { return Array; }
         }
 
@@ -108,21 +100,13 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <value>The object used to calculate the score.</value>
         public ICalculateScore CalculateScore
         {
-            /// <returns>The object used to calculate the score.</returns>
             get { return calculateScore; }
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override MLMethod Method
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            ///
             get { return network; }
         }
 
@@ -182,10 +166,7 @@ namespace Encog.Neural.Networks.Training.Anneal
                                         network);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }

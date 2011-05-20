@@ -54,17 +54,9 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// Set the neuron count.
         /// </summary>
-        ///
-        /// <value>The neuron count.</value>
         public int NeuronCount
         {
-            /// <returns>Get the neuron count for the network.</returns>
             get { return neuronCount; }
-            /// <summary>
-            /// Set the neuron count.
-            /// </summary>
-            ///
-            /// <param name="c">The neuron count.</param>
             set { neuronCount = value; }
         }
 
@@ -75,13 +67,7 @@ namespace Encog.Neural.Thermal
         /// <value>The weight array.</value>
         public double[] Weights
         {
-            /// <returns>The weights.</returns>
             get { return weights; }
-            /// <summary>
-            /// Set the weight array.
-            /// </summary>
-            ///
-            /// <param name="w">The weight array.</param>
             set { weights = value; }
         }
 
@@ -105,23 +91,14 @@ namespace Encog.Neural.Thermal
         /// <summary>
         /// from Encog.ml.MLInput
         /// </summary>
-        ///
-        public abstract int InputCount { /// <summary>
-            /// from Encog.ml.MLInput
-            /// </summary>
-            ///
-            get; }
+        public abstract int InputCount { get; }
 
 
         /// <summary>
         /// from Encog.ml.MLOutput
         /// </summary>
         ///
-        public abstract int OutputCount { /// <summary>
-            /// from Encog.ml.MLOutput
-            /// </summary>
-            ///
-            get; }
+        public abstract int OutputCount { get; }
 
 
         /// <summary>
