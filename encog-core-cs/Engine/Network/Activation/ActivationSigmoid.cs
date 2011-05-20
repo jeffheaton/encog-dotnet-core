@@ -17,7 +17,7 @@ namespace Encog.Engine.Network.Activation
         /// The parameters.
         /// </summary>
         ///
-        private readonly double[] paras;
+        private readonly double[] _paras;
 
         /// <summary>
         /// Construct a basic sigmoid function, with a slope of 1.
@@ -25,7 +25,7 @@ namespace Encog.Engine.Network.Activation
         ///
         public ActivationSigmoid()
         {
-            paras = new double[0];
+            _paras = new double[0];
         }
 
         /// <summary>
@@ -73,27 +73,9 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public virtual double[] Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
 
-        /// <inheritdoc />
-        public virtual void SetParam(int index, double value_ren)
-        {
-            paras[index] = value_ren;
-        }
-
-        /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative)
-        {
-            if (derivative)
-            {
-                return "(x * (1.0f - x))";
-            }
-            else
-            {
-                return "(1.0f / (1.0f + exp(-1 * x)))";
-            }
-        }
     }
 }

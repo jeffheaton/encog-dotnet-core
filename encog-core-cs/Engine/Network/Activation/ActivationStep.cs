@@ -1,26 +1,3 @@
-/*
- * Encog(tm) Core v2.5 - Java Version
- * http://www.heatonresearch.com/encog/
- * http://code.google.com/p/encog-java/
- 
- * Copyright 2008-2010 Heaton Research, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *   
- * For more information on Heaton Research copyrights, licenses 
- * and trademarks visit:
- * http://www.heatonresearch.com/copyright
- */
 
 using System;
 
@@ -46,25 +23,25 @@ namespace Encog.Engine.Network.Activation
         /// The step center parameter.
         /// </summary>
         ///
-        public const int PARAM_STEP_CENTER = 0;
+        public const int ParamStepCenter = 0;
 
         /// <summary>
         /// The step low parameter.
         /// </summary>
         ///
-        public const int PARAM_STEP_LOW = 1;
+        public const int ParamStepLow = 1;
 
         /// <summary>
         /// The step high parameter.
         /// </summary>
         ///
-        public const int PARAM_STEP_HIGH = 2;
+        public const int ParamStepHigh = 2;
 
         /// <summary>
         /// The parameters.
         /// </summary>
         ///
-        private readonly double[] paras;
+        private readonly double[] _paras;
 
         /// <summary>
         /// Construct a step activation function.
@@ -75,10 +52,10 @@ namespace Encog.Engine.Network.Activation
         /// <param name="high">The high of the function.</param>
         public ActivationStep(double low, double center, double high)
         {
-            paras = new double[3];
-            paras[PARAM_STEP_CENTER] = center;
-            paras[PARAM_STEP_LOW] = low;
-            paras[PARAM_STEP_HIGH] = high;
+            _paras = new double[3];
+            _paras[ParamStepCenter] = center;
+            _paras[ParamStepLow] = low;
+            _paras[ParamStepHigh] = high;
         }
 
         /// <summary>
@@ -95,8 +72,8 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         public double Center
         {
-            get { return paras[PARAM_STEP_CENTER]; }
-            set { SetParam(PARAM_STEP_CENTER, value); }
+            get { return _paras[ParamStepCenter]; }
+            set { _paras[ParamStepCenter] = value; }
         }
 
 
@@ -105,8 +82,8 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         public double Low
         {
-            get { return paras[PARAM_STEP_LOW]; }
-            set { SetParam(PARAM_STEP_LOW, value); }
+            get { return _paras[ParamStepLow]; }
+            set { _paras[ParamStepLow] = value; }
         }
 
 
@@ -115,8 +92,8 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         public double High
         {
-            get { return paras[PARAM_STEP_HIGH]; }
-            set { SetParam(PARAM_STEP_HIGH, value); }
+            get { return _paras[ParamStepHigh]; }
+            set { _paras[ParamStepHigh] = value; }
         }
 
         /// <summary>
@@ -142,13 +119,13 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
-                if (x[i] >= paras[PARAM_STEP_CENTER])
+                if (x[i] >= _paras[ParamStepCenter])
                 {
-                    x[i] = paras[PARAM_STEP_HIGH];
+                    x[i] = _paras[ParamStepHigh];
                 }
                 else
                 {
-                    x[i] = paras[PARAM_STEP_LOW];
+                    x[i] = _paras[ParamStepLow];
                 }
             }
         }
@@ -173,20 +150,8 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public virtual double[] Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
-
-        /// <inheritdoc />
-        public virtual void SetParam(int index, double value_ren)
-        {
-            paras[index] = value_ren;
-        }
-
-        /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative)
-        {
-            return null;
-        }
     }
 }

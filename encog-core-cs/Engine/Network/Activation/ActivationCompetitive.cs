@@ -1,27 +1,3 @@
-/*
- * Encog(tm) Core v2.5 - Java Version
- * http://www.heatonresearch.com/encog/
- * http://code.google.com/p/encog-java/
- 
- * Copyright 2008-2010 Heaton Research, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *   
- * For more information on Heaton Research copyrights, licenses 
- * and trademarks visit:
- * http://www.heatonresearch.com/copyright
- */
-
 using System;
 using Encog.Neural;
 
@@ -42,13 +18,13 @@ namespace Encog.Engine.Network.Activation
         /// The offset to the parameter that holds the max winners.
         /// </summary>
         ///
-        public const int PARAM_COMPETITIVE_MAX_WINNERS = 0;
+        public const int ParamCompetitiveMaxWinners = 0;
 
         /// <summary>
         /// The parameters.
         /// </summary>
         ///
-        private readonly double[] paras;
+        private readonly double[] _paras;
 
         /// <summary>
         /// Create a competitive activation function with one winner allowed.
@@ -67,8 +43,8 @@ namespace Encog.Engine.Network.Activation
         /// <param name="winners">The maximum number of winners that this function supports.</param>
         public ActivationCompetitive(int winners)
         {
-            paras = new double[1];
-            paras[PARAM_COMPETITIVE_MAX_WINNERS] = winners;
+            _paras = new double[1];
+            _paras[ParamCompetitiveMaxWinners] = winners;
         }
 
         /// <inheritdoc />
@@ -79,7 +55,7 @@ namespace Encog.Engine.Network.Activation
             double sumWinners = 0;
 
             // find the desired number of winners
-            for (int i = 0; i < paras[0]; i++)
+            for (int i = 0; i < _paras[0]; i++)
             {
                 double maxFound = Double.NegativeInfinity;
                 int winner = -1;
@@ -98,15 +74,15 @@ namespace Encog.Engine.Network.Activation
             }
 
             // adjust weights for winners and non-winners
-            for (int i_0 = start; i_0 < start + size; i_0++)
+            for (int i = start; i < start + size; i++)
             {
-                if (winners[i_0])
+                if (winners[i])
                 {
-                    x[i_0] = x[i_0]/sumWinners;
+                    x[i] = x[i]/sumWinners;
                 }
                 else
                 {
-                    x[i_0] = 0.0d;
+                    x[i] = 0.0d;
                 }
             }
         }
@@ -118,7 +94,7 @@ namespace Encog.Engine.Network.Activation
         object ICloneable.Clone()
         {
             return new ActivationCompetitive(
-                (int) paras[PARAM_COMPETITIVE_MAX_WINNERS]);
+                (int) _paras[ParamCompetitiveMaxWinners]);
         }
 
         /// <summary>
@@ -142,7 +118,7 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         public int MaxWinners
         {
-            get { return (int) paras[PARAM_COMPETITIVE_MAX_WINNERS]; }
+            get { return (int) _paras[ParamCompetitiveMaxWinners]; }
         }
 
 
@@ -160,7 +136,7 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public virtual double[] Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
 
@@ -168,18 +144,6 @@ namespace Encog.Engine.Network.Activation
         public virtual bool HasDerivative()
         {
             return false;
-        }
-
-        /// <inheritdoc />
-        public virtual void SetParam(int index, double value_ren)
-        {
-            paras[index] = value_ren;
-        }
-
-        /// <inheritdoc />
-        public virtual String GetOpenCLExpression(bool derivative)
-        {
-            return null;
         }
     }
 }
