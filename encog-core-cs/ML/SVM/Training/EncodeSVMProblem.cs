@@ -47,7 +47,7 @@ namespace Encog.ML.SVM.Training
         /// <param name="training">The training data.</param>
         /// <param name="outputIndex"></param>
         /// <returns>The SVM problem.</returns>
-        public static svm_problem Encode(MLDataSet training,
+        public static svm_problem Encode(IMLDataSet training,
                                          int outputIndex)
         {
             try
@@ -66,7 +66,7 @@ namespace Encog.ML.SVM.Training
                 int elementIndex = 0;
 
 
-                foreach (MLDataPair pair  in  training)
+                foreach (IMLDataPair pair  in  training)
                 {
                     IMLData input = pair.Input;
                     IMLData output = pair.Ideal;

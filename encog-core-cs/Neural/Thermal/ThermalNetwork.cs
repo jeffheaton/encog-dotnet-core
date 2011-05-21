@@ -32,8 +32,8 @@ namespace Encog.Neural.Thermal
     /// The thermal network forms the base class for Hopfield and Boltzmann machines.
     /// </summary>
     [Serializable]
-    public abstract class ThermalNetwork : BasicML, MLMethod,
-                                           MLAutoAssocation, MLResettable
+    public abstract class ThermalNetwork : BasicML, IMLMethod,
+                                           IMLAutoAssocation, IMLResettable
     {
         /// <summary>
         /// The current state of the thermal network.

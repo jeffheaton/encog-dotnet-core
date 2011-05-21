@@ -55,7 +55,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <param name="training">The training data to use.</param>
         /// <param name="learnRate">The learning rate.</param>
         public ManhattanPropagation(ContainsFlat network,
-                                    MLDataSet training, double learnRate) : base(network, training)
+                                    IMLDataSet training, double learnRate) : base(network, training)
         {
             FlatTraining = new TrainFlatNetworkManhattan(network.Flat,
                                                          Training, learnRate);

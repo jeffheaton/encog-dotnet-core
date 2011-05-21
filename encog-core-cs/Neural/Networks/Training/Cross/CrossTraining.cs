@@ -42,7 +42,7 @@ namespace Encog.Neural.Networks.Training.Cross
         /// The network to train.
         /// </summary>
         ///
-        private readonly MLMethod network;
+        private readonly IMLMethod network;
 
         /// <summary>
         /// Construct a cross trainer.
@@ -50,7 +50,7 @@ namespace Encog.Neural.Networks.Training.Cross
         ///
         /// <param name="network_0">The network.</param>
         /// <param name="training">The training data.</param>
-        public CrossTraining(MLMethod network_0, FoldedDataSet training) : base(TrainingImplementationType.Iterative)
+        public CrossTraining(IMLMethod network_0, FoldedDataSet training) : base(TrainingImplementationType.Iterative)
         {
             network = network_0;
             Training = training;
@@ -66,7 +66,7 @@ namespace Encog.Neural.Networks.Training.Cross
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {            
             get { return network; }
         }

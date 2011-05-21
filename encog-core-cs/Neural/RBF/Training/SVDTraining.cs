@@ -53,7 +53,7 @@ namespace Encog.Neural.Rbf.Training
         ///
         /// <param name="network_0">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
-        public SVDTraining(RBFNetwork network_0, MLDataSet training) : base(TrainingImplementationType.OnePass)
+        public SVDTraining(RBFNetwork network_0, IMLDataSet training) : base(TrainingImplementationType.OnePass)
         {
             if (network_0.OutputCount != 1)
             {
@@ -72,7 +72,7 @@ namespace Encog.Neural.Rbf.Training
         }
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

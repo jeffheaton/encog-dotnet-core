@@ -38,14 +38,14 @@ namespace Encog.Neural.Networks.Training
         /// The training set.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// Construct a training set score calculation.
         /// </summary>
         ///
         /// <param name="training_0">The training data to use.</param>
-        public TrainingSetScore(MLDataSet training_0)
+        public TrainingSetScore(IMLDataSet training_0)
         {
             training = training_0;
         }
@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training
         ///
         /// <param name="method">The network to calculate for.</param>
         /// <returns>The score.</returns>
-        public double CalculateScore(MLRegression method)
+        public double CalculateScore(IMLRegression method)
         {
             return CalculateRegressionError.CalculateError(method, training);
         }

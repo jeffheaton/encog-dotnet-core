@@ -51,7 +51,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="training">The training data to use.</param>
         /// <param name="theLearningRate">The learning rate to use.</param>
         public TrainFlatNetworkManhattan(FlatNetwork network,
-                                         MLDataSet training, double theLearningRate) : base(network, training)
+                                         IMLDataSet training, double theLearningRate) : base(network, training)
         {
             learningRate = theLearningRate;
             zeroTolerance = RPROPConst.DEFAULT_ZERO_TOLERANCE;

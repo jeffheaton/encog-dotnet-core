@@ -56,7 +56,7 @@ namespace Encog.Examples.JordanNetwork
 
         private IExampleInterface app;
 
-        static MLMethod CreateJordanNetwork()
+        static IMLMethod CreateJordanNetwork()
         {
             // construct an Jordan type network
             JordanPattern pattern = new JordanPattern();
@@ -67,7 +67,7 @@ namespace Encog.Examples.JordanNetwork
             return pattern.Generate();
         }
 
-        private MLMethod CreateFeedforwardNetwork()
+        private IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
 
@@ -80,7 +80,7 @@ namespace Encog.Examples.JordanNetwork
             return network;
         }
 
-        private double TrainNetwork(String what, BasicNetwork network, MLDataSet trainingSet)
+        private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
@@ -109,7 +109,7 @@ namespace Encog.Examples.JordanNetwork
             this.app = app;
 
             TemporalXOR temp = new TemporalXOR();
-            MLDataSet trainingSet = temp.Generate(100);
+            IMLDataSet trainingSet = temp.Generate(100);
 
             BasicNetwork jordanNetwork = (BasicNetwork)CreateJordanNetwork();
             BasicNetwork feedforwardNetwork = (BasicNetwork)CreateFeedforwardNetwork();

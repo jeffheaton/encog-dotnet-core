@@ -37,7 +37,7 @@ namespace Encog.ML.Data
     /// to be used. Typically the add methods are not supported on non-memory based
     /// datasets.
     /// </summary>
-    public interface MLDataSet
+    public interface IMLDataSet
     {
         /// <summary>
         /// The size of the ideal data, 0 if no ideal data.
@@ -83,7 +83,7 @@ namespace Encog.ML.Data
         /// </summary>
         /// <param name="inputData">A NeuralDataPair object that contains both input and ideal
         /// data.</param>
-        void Add(MLDataPair inputData);
+        void Add(IMLDataPair inputData);
 
 
         /// <summary>
@@ -96,19 +96,19 @@ namespace Encog.ML.Data
         /// Get an enumerator to access the data.
         /// </summary>
         /// <returns></returns>
-        IEnumerator<MLDataPair> GetEnumerator();
+        IEnumerator<IMLDataPair> GetEnumerator();
 
         /// <summary>
         /// Get one record from the data set.
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        void GetRecord(long index, MLDataPair pair);
+        void GetRecord(long index, IMLDataPair pair);
 
         /// <summary>
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
-        MLDataSet OpenAdditional();
+        IMLDataSet OpenAdditional();
     }
 }

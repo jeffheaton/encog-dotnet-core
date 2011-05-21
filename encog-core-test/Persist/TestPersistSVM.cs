@@ -43,7 +43,7 @@ namespace Encog.Persist
 
         private SupportVectorMachine Create()
         {
-            MLDataSet training = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet training = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
             SupportVectorMachine result = new SupportVectorMachine(2, SVMType.EpsilonSupportVectorRegression, KernelType.RadialBasisFunction);
             SVMTrain train = new SVMTrain(result, training);
             train.Iteration();

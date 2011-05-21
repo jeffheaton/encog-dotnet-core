@@ -37,7 +37,7 @@ namespace Encog.Neural.RBF
     /// RBF neural network.
     /// </summary>
     [Serializable]
-    public class RBFNetwork : BasicML, MLError, MLRegression,
+    public class RBFNetwork : BasicML, IMLError, IMLRegression,
                               ContainsFlat
     {
         /// <summary>
@@ -134,7 +134,7 @@ namespace Encog.Neural.RBF
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             return EncogUtility.CalculateRegressionError(this, data);
         }

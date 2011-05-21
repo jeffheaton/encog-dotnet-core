@@ -137,7 +137,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public TrainFlatNetworkSCG(FlatNetwork network,
-                                   MLDataSet training) : base(network, training)
+                                   IMLDataSet training) : base(network, training)
         {
             success = true;
 

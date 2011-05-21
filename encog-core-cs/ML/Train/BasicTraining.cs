@@ -106,7 +106,7 @@ namespace Encog.ML.Train
         /// <summary>
         /// Set the training object that this strategy is working with.
         /// </summary>
-        public virtual MLDataSet Training { get; set; }
+        public virtual IMLDataSet Training { get; set; }
 
 
         /// <value>True if training can progress no further.</value>
@@ -166,7 +166,7 @@ namespace Encog.ML.Train
         /// from Encog.ml.train.MLTrain
         /// </summary>
         ///
-        public abstract MLMethod Method {
+        public abstract IMLMethod Method {
             get; }
 
 

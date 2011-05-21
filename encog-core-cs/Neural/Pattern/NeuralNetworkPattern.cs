@@ -77,6 +77,6 @@ namespace Encog.Neural.Pattern
         /// </summary>
         ///
         /// <returns>The resulting neural network.</returns>
-        MLMethod Generate();
+        IMLMethod Generate();
     }
 }

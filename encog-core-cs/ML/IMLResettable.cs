@@ -23,17 +23,24 @@
 namespace Encog.ML
 {
     /// <summary>
-    /// This is a convenience interface that combines MLInput and MLOutput.  
-    /// Together these define a MLMethod that both accepts input and 
-    /// produces output.
-    /// Input and output are defined as a simple array of double values.  
-    /// Many machine learning methods, such as neural networks and 
-    /// support vector machines handle input and output in this way, 
-    /// and thus implement this interface.  Others, such as clustering, 
-    /// do not.
+    /// Defines a Machine Learning Method that can be reset to an untrained 
+    /// starting point.  Most weight based machine learning methods, such
+    /// as neural networks support this.  Support vector machines do not.
     /// </summary>
     ///
-    public interface MLInputOutput : MLInput, MLOutput
+    public interface IMLResettable : IMLMethod
     {
+        /// <summary>
+        /// Reset the weights.
+        /// </summary>
+        ///
+        void Reset();
+
+        /// <summary>
+        /// Reset the weights with a seed.
+        /// </summary>
+        ///
+        /// <param name="seed">The seed value.</param>
+        void Reset(int seed);
     }
 }

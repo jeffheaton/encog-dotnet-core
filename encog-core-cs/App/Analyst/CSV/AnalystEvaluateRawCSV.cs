@@ -164,7 +164,7 @@ namespace Encog.App.Analyst.CSV
         ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="method">The method to use.</param>
-        public void Process(FileInfo outputFile, MLRegression method)
+        public void Process(FileInfo outputFile, IMLRegression method)
         {
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);

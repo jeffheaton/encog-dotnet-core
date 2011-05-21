@@ -56,7 +56,7 @@ namespace Encog.Examples.ElmanNetwork
             }
         }
 
-        private MLMethod CreateElmanNetwork()
+        private IMLMethod CreateElmanNetwork()
         {
             // construct an Elman type network
             ElmanPattern pattern = new ElmanPattern();
@@ -80,7 +80,7 @@ namespace Encog.Examples.ElmanNetwork
             return network;
         }
 
-        private double TrainNetwork(String what, BasicNetwork network, MLDataSet trainingSet)
+        private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
@@ -110,7 +110,7 @@ namespace Encog.Examples.ElmanNetwork
             this.app = app;
 
             TemporalXOR temp = new TemporalXOR();
-            MLDataSet trainingSet = temp.Generate(100);
+            IMLDataSet trainingSet = temp.Generate(100);
 
             BasicNetwork elmanNetwork = (BasicNetwork)CreateElmanNetwork();
             BasicNetwork feedforwardNetwork = CreateFeedforwardNetwork();

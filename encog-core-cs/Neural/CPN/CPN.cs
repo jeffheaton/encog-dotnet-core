@@ -44,7 +44,7 @@ namespace Encog.Neural.CPN
     /// </summary>
     ///
     [Serializable]
-    public class CPNNetwork : BasicML, MLRegression, MLResettable, MLError
+    public class CPNNetwork : BasicML, IMLRegression, IMLResettable, IMLError
     {
         /// <summary>
         /// The number of neurons in the input layer.
@@ -145,7 +145,7 @@ namespace Encog.Neural.CPN
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             return EncogUtility.CalculateRegressionError(this, data);
         }

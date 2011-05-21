@@ -56,11 +56,11 @@ namespace Encog.Neural.Networks.Structure
         /// <param name="array">An array of doubles.</param>
         /// <param name="network">The network to encode.</param>
         public static void ArrayToNetwork(double[] array,
-                                          MLMethod network)
+                                          IMLMethod network)
         {
-            if (network is MLEncodable)
+            if (network is IMLEncodable)
             {
-                ((MLEncodable) network).DecodeFromArray(array);
+                ((IMLEncodable) network).DecodeFromArray(array);
                 return;
             }
             throw new NeuralNetworkError(ERROR
@@ -126,11 +126,11 @@ namespace Encog.Neural.Networks.Structure
         ///
         /// <param name="network">The network.</param>
         /// <returns>The size.</returns>
-        public static int NetworkSize(MLMethod network)
+        public static int NetworkSize(IMLMethod network)
         {
-            if (network is MLEncodable)
+            if (network is IMLEncodable)
             {
-                return ((MLEncodable) network).EncodedArrayLength();
+                return ((IMLEncodable) network).EncodedArrayLength();
             }
             throw new NeuralNetworkError(ERROR
                                          + network.GetType().FullName);
@@ -144,14 +144,14 @@ namespace Encog.Neural.Networks.Structure
         ///
         /// <param name="network">The network to encode.</param>
         /// <returns>The memory of the neuron.</returns>
-        public static double[] NetworkToArray(MLMethod network)
+        public static double[] NetworkToArray(IMLMethod network)
         {
             int size = NetworkSize(network);
 
-            if (network is MLEncodable)
+            if (network is IMLEncodable)
             {
                 var encoded = new double[size];
-                ((MLEncodable) network).EncodeToArray(encoded);
+                ((IMLEncodable) network).EncodeToArray(encoded);
                 return encoded;
             }
             throw new NeuralNetworkError(ERROR

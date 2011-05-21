@@ -42,10 +42,10 @@ namespace Encog.Util.Simple
         /// <param name="inputSize">The input size.  Input always comes first in a file.</param>
         /// <param name="idealSize">The ideal size, 0 for unsupervised.</param>
         /// <returns>A NeuralDataSet that holds the contents of the CSV file.</returns>
-        public static MLDataSet LoadCSVTOMemory(CSVFormat format, String filename,
+        public static IMLDataSet LoadCSVTOMemory(CSVFormat format, String filename,
                                                 bool headers, int inputSize, int idealSize)
         {
-            MLDataSet result = new BasicMLDataSet();
+            IMLDataSet result = new BasicMLDataSet();
             var csv = new ReadCSV(filename, headers, format);
             while (csv.Next())
             {
@@ -70,7 +70,7 @@ namespace Encog.Util.Simple
                     }
                 }
 
-                MLDataPair pair = new BasicMLDataPair(input, ideal);
+                IMLDataPair pair = new BasicMLDataPair(input, ideal);
                 result.Add(pair);
             }
 
@@ -83,7 +83,7 @@ namespace Encog.Util.Simple
         /// <param name="training"></param>
         /// <returns></returns>
         public static ObjectPair<double[][], double[][]> TrainingToArray(
-            MLDataSet training)
+            IMLDataSet training)
         {
             var length = (int) training.Count;
             double[][] a = EngineArray.AllocateDouble2D(length, training.InputSize);
@@ -91,7 +91,7 @@ namespace Encog.Util.Simple
 
             int index = 0;
 
-            foreach (MLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  training)
             {
                 EngineArray.ArrayCopy(pair.InputArray, a[index]);
                 EngineArray.ArrayCopy(pair.IdealArray, b[index]);

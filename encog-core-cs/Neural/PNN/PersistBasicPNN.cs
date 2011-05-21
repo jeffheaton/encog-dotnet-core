@@ -122,7 +122,7 @@ namespace Encog.Neural.Pnn
                             idealData[i_0] =
                                 CSVFormat.EG_FORMAT.Parse(cols[index++]);
                         }
-                        MLDataPair pair = new BasicMLDataPair(inputData,
+                        IMLDataPair pair = new BasicMLDataPair(inputData,
                                                               idealData);
                         samples.Add(pair);
                     }
@@ -169,7 +169,7 @@ namespace Encog.Neural.Pnn
 
             xout.AddSubSection("SAMPLES");
 
-            foreach (MLDataPair pair  in  pnn.Samples)
+            foreach (IMLDataPair pair  in  pnn.Samples)
             {
                 for (int i = 0; i < pair.Input.Count; i++)
                 {

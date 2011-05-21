@@ -45,7 +45,7 @@ namespace Encog.Util
                                                  new[] {0.0}
                                              };
 
-        public static bool VerifyXOR(MLRegression network, double tolerance)
+        public static bool VerifyXOR(IMLRegression network, double tolerance)
         {
             for (int trainingSet = 0; trainingSet < XORIdeal.Length; trainingSet++)
             {
@@ -62,10 +62,10 @@ namespace Encog.Util
             return true;
         }
 
-        public static void TestXORDataSet(MLDataSet set)
+        public static void TestXORDataSet(IMLDataSet set)
         {
             int row = 0;
-            foreach (MLDataPair item in set)
+            foreach (IMLDataPair item in set)
             {
                 for (int i = 0; i < XORInput[0].Length; i++)
                 {
@@ -110,7 +110,7 @@ namespace Encog.Util
             return network;
         }
 
-        public static MLDataSet CreateXORDataSet()
+        public static IMLDataSet CreateXORDataSet()
         {
             return new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
         }

@@ -44,7 +44,7 @@ namespace Encog.Persist
         [TestMethod]
         public void TestPersistEG()
         {
-            MLDataSet trainingSet = XOR.CreateXORDataSet();
+            IMLDataSet trainingSet = XOR.CreateXORDataSet();
             RBFNetwork network = new RBFNetwork(2, 4, 1, RBFEnum.Gaussian);
 
             SVDTraining training = new SVDTraining(network, trainingSet);

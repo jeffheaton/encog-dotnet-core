@@ -77,8 +77,8 @@ namespace Encog.App.Analyst.Commands
         /// <param name="method">The method to use.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <returns>The trainer.</returns>
-        private MLTrain CreateTrainer(MLMethod method,
-                                      MLDataSet trainingSet)
+        private MLTrain CreateTrainer(IMLMethod method,
+                                      IMLDataSet trainingSet)
         {
             var factory = new MLTrainFactory();
 
@@ -107,8 +107,8 @@ namespace Encog.App.Analyst.Commands
         public override sealed bool ExecuteCommand(String args)
         {
             _kfold = ObtainCross();
-            MLDataSet trainingSet = ObtainTrainingSet();
-            MLMethod method = ObtainMethod();
+            IMLDataSet trainingSet = ObtainTrainingSet();
+            IMLMethod method = ObtainMethod();
             MLTrain trainer = CreateTrainer(method, trainingSet);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning training");
@@ -159,7 +159,7 @@ namespace Encog.App.Analyst.Commands
         /// </summary>
         ///
         /// <returns>The method.</returns>
-        private MLMethod ObtainMethod()
+        private IMLMethod ObtainMethod()
         {
             String resourceID = Prop.GetPropertyString(
                 ScriptProperties.MlConfigMachineLearningFile);
@@ -168,14 +168,14 @@ namespace Encog.App.Analyst.Commands
             var method = EncogDirectoryPersistence
                                         .LoadObject(resourceFile);
 
-            if (!(method is MLMethod))
+            if (!(method is IMLMethod))
             {
                 throw new AnalystError(
                     "The object to be trained must be an instance of MLMethod. "
                     + method.GetType().Name);
             }
 
-            return (MLMethod)method;
+            return (IMLMethod)method;
         }
 
         /// <summary>
@@ -183,14 +183,14 @@ namespace Encog.App.Analyst.Commands
         /// </summary>
         ///
         /// <returns>The training set.</returns>
-        private MLDataSet ObtainTrainingSet()
+        private IMLDataSet ObtainTrainingSet()
         {
             String trainingID = Prop.GetPropertyString(
                 ScriptProperties.MlConfigTrainingFile);
 
             FileInfo trainingFile = Script.ResolveFilename(trainingID);
 
-            MLDataSet trainingSet = EncogUtility.LoadEGB2Memory(trainingFile);
+            IMLDataSet trainingSet = EncogUtility.LoadEGB2Memory(trainingFile);
 
             if (_kfold > 0)
             {
@@ -207,8 +207,8 @@ namespace Encog.App.Analyst.Commands
         /// <param name="train">The training method.</param>
         /// <param name="method">The ML method.</param>
         /// <param name="trainingSet">The training set.</param>
-        private void PerformTraining(MLTrain train, MLMethod method,
-                                     MLDataSet trainingSet)
+        private void PerformTraining(MLTrain train, IMLMethod method,
+                                     IMLDataSet trainingSet)
         {
             ValidateNetwork.ValidateMethodToData(method, trainingSet);
             double targetError = Prop.GetPropertyDouble(

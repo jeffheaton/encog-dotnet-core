@@ -43,7 +43,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The network in indexable form.
         /// </summary>
         ///
-        private readonly MLDataSet indexable;
+        private readonly IMLDataSet indexable;
 
         /// <summary>
         /// The last gradients, from the last training iteration.
@@ -61,7 +61,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The training data.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The current error is the average error over all of the threads.
@@ -124,7 +124,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="network_0">The network to train.</param>
         /// <param name="training_1">The training data to use.</param>
         public TrainFlatNetworkProp(FlatNetwork network_0,
-                                    MLDataSet training_1)
+                                    IMLDataSet training_1)
         {
             training = training_1;
             network = network_0;
@@ -183,7 +183,7 @@ namespace Encog.Neural.Flat.Train.Prop
 
 
         /// <inheritdoc/>
-        public MLDataSet Training
+        public IMLDataSet Training
         {
             get { return training; }
         }

@@ -62,7 +62,7 @@ namespace Encog.ML.Train.Strategy
         ///
         private double lastError;
 
-        private MLResettable method;
+        private IMLResettable method;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
@@ -122,13 +122,13 @@ namespace Encog.ML.Train.Strategy
         {
             train = train_0;
 
-            if (!(train_0.Method is MLResettable))
+            if (!(train_0.Method is IMLResettable))
             {
                 throw new TrainingError(
                     "To use the required improvement strategy the machine learning method must support MLResettable.");
             }
 
-            method = (MLResettable) train.Method;
+            method = (IMLResettable) train.Method;
         }
 
         /// <summary>

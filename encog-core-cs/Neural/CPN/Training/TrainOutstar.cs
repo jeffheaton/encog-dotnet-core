@@ -49,7 +49,7 @@ namespace Encog.Neural.CPN.Training
         /// provided.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The learning rate.
@@ -71,7 +71,7 @@ namespace Encog.Neural.CPN.Training
         /// <param name="theNetwork">The network to train.</param>
         /// <param name="theTraining">The training data, must provide ideal outputs.</param>
         /// <param name="theLearningRate">The learning rate.</param>
-        public TrainOutstar(CPNNetwork theNetwork, MLDataSet theTraining,
+        public TrainOutstar(CPNNetwork theNetwork, IMLDataSet theTraining,
                             double theLearningRate) : base(TrainingImplementationType.Iterative)
         {
             mustInit = true;
@@ -88,7 +88,7 @@ namespace Encog.Neural.CPN.Training
 
 
         /// <inheritdoc />
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }
@@ -114,7 +114,7 @@ namespace Encog.Neural.CPN.Training
             {
                 int j = 0;
 
-                foreach (MLDataPair pair  in  training)
+                foreach (IMLDataPair pair  in  training)
                 {
                     network.WeightsInstarToOutstar[j++, i] =
                         pair.Ideal[i];
@@ -134,7 +134,7 @@ namespace Encog.Neural.CPN.Training
             var error = new ErrorCalculation();
 
 
-            foreach (MLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  training)
             {
                 IMLData xout = network.ComputeInstar(pair.Input);
 

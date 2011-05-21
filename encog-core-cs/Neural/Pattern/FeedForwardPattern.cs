@@ -104,7 +104,7 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the feedforward neural network.
         /// </summary>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             if (activationOutput == null)
                 activationOutput = activationHidden;

@@ -44,7 +44,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// THe training set to use. Must be indexable.
         /// </summary>
         ///
-        private readonly MLDataSet indexableTraining;
+        private readonly IMLDataSet indexableTraining;
 
         /// <summary>
         /// The number of training set elements.
@@ -68,7 +68,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// Used to read the training data.
         /// </summary>
         ///
-        private readonly MLDataPair pair;
+        private readonly IMLDataPair pair;
 
         /// <summary>
         /// The number of weights and bias values in the neural network.
@@ -101,7 +101,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="network_0">The network to use.</param>
         /// <param name="indexableTraining_1">The training set to use.</param>
         public JacobianChainRule(BasicNetwork network_0,
-                                 MLDataSet indexableTraining_1)
+                                 IMLDataSet indexableTraining_1)
         {
             indexableTraining = indexableTraining_1;
             network = network_0;
@@ -195,7 +195,7 @@ namespace Encog.Neural.Networks.Training.Lma
         ///
         /// <param name="pair_0">The training set element.</param>
         /// <returns>The sum squared of errors.</returns>
-        private double CalculateDerivatives(MLDataPair pair_0)
+        private double CalculateDerivatives(IMLDataPair pair_0)
         {
             // error values
             double e = 0.0d;

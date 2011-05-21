@@ -33,7 +33,7 @@ namespace Encog.ML.Kmeans
     /// http://en.wikipedia.org/wiki/Kmeans
     /// </summary>
     ///
-    public class KMeansClustering : MLClustering
+    public class KMeansClustering : IMLClustering
     {
         /// <summary>
         /// The clusters.
@@ -45,7 +45,7 @@ namespace Encog.ML.Kmeans
         /// The dataset to cluster.
         /// </summary>
         ///
-        private readonly MLDataSet set;
+        private readonly IMLDataSet set;
 
         /// <summary>
         /// Within-cluster sum of squares (WCSS).
@@ -59,7 +59,7 @@ namespace Encog.ML.Kmeans
         ///
         /// <param name="k">The number of clusters to use.</param>
         /// <param name="theSet">The dataset to cluster.</param>
-        public KMeansClustering(int k, MLDataSet theSet)
+        public KMeansClustering(int k, IMLDataSet theSet)
         {
             clusters = new KMeansCluster[k];
             for (int i = 0; i < k; i++)
@@ -74,7 +74,7 @@ namespace Encog.ML.Kmeans
             int clusterNumber = 0;
 
 
-            foreach (MLDataPair pair  in  set)
+            foreach (IMLDataPair pair  in  set)
             {
                 clusters[clusterNumber].Add(pair.Input);
 
@@ -107,7 +107,7 @@ namespace Encog.ML.Kmeans
         #region MLClustering Members
 
         /// <value>The clusters.</value>
-        public MLCluster[] Clusters
+        public IMLCluster[] Clusters
         {
             get { return clusters; }
         }
@@ -227,7 +227,7 @@ namespace Encog.ML.Kmeans
 
             for (int i = 0; i < count; i++)
             {
-                MLDataPair pair = BasicMLDataPair.CreatePair(
+                IMLDataPair pair = BasicMLDataPair.CreatePair(
                     set.InputSize, set.IdealSize);
                 set.GetRecord(index, pair);
                 result = Math.Max(result, pair.InputArray[index]);
@@ -245,7 +245,7 @@ namespace Encog.ML.Kmeans
         {
             double result = Double.MaxValue;
             long count = set.Count;
-            MLDataPair pair = BasicMLDataPair.CreatePair(
+            IMLDataPair pair = BasicMLDataPair.CreatePair(
                 set.InputSize, set.IdealSize);
 
             for (int i = 0; i < count; i++)

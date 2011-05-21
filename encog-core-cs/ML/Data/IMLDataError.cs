@@ -27,13 +27,13 @@ namespace Encog.ML.Data
     /// <summary>
     /// The base Encog neural data error.
     /// </summary>
-    public class MLDataError : EncogError
+    public class IMLDataError : EncogError
     {
         /// <summary>
         /// Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
-        public MLDataError(String str)
+        public IMLDataError(String str)
             : base(str)
         {
         }
@@ -42,7 +42,7 @@ namespace Encog.ML.Data
         /// Pass on an exception.
         /// </summary>
         /// <param name="e">The other exception.</param>
-        public MLDataError(Exception e)
+        public IMLDataError(Exception e)
             : base(e)
         {
         }

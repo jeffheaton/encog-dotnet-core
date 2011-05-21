@@ -23,18 +23,28 @@
 namespace Encog.ML
 {
     /// <summary>
-    /// Defines a MLMethod that can handle autoassocation.  Autoassociation is a 
-    /// simple form of pattern recognition where the MLMethod echos back the 
-    /// exact pattern that the input most closely matches.  For example, if the 
-    /// autoassociative MLMethod were trained to recognize an 8x8 grid of 
-    /// characters, the return value would be the entire 8x8 grid of the 
-    /// character recognized.
-    /// This is the type of recognition performed by Hopfield Networks.  It is
-    /// also an optional recognition form used by GR/PNN's.  This is a form of
-    /// unsupervised training.
+    /// Defines a Machine Learning Method that can be encoded to a double array.  
+    /// This is very useful for certain training, such as genetic algorithms 
+    /// and simulated annealing. 
     /// </summary>
     ///
-    public interface MLAutoAssocation : MLRegression
+    public interface IMLEncodable : IMLMethod
     {
+        /// <returns>The length of an encoded array.</returns>
+        int EncodedArrayLength();
+
+        /// <summary>
+        /// Encode the object to the specified array.
+        /// </summary>
+        ///
+        /// <param name="encoded">The array.</param>
+        void EncodeToArray(double[] encoded);
+
+        /// <summary>
+        /// Decode an array to this object.
+        /// </summary>
+        ///
+        /// <param name="encoded">The encoded array.</param>
+        void DecodeFromArray(double[] encoded);
     }
 }

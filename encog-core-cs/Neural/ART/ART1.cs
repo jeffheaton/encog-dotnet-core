@@ -49,98 +49,92 @@ namespace Encog.Neural.ART
     /// used. 
     /// </summary>
     [Serializable]
-    public class ART1 : BasicART, MLResettable, MLClassification
+    public class ART1 : BasicART, IMLResettable, IMLClassification
     {
         /// <summary>
         /// A parameter for F1 layer.
         /// </summary>
         ///
-        private double a1;
+        private double _a1;
 
         /// <summary>
         /// B parameter for F1 layer.
         /// </summary>
         ///
-        private double b1;
+        private double _b1;
 
         /// <summary>
         /// C parameter for F1 layer.
         /// </summary>
         ///
-        private double c1;
+        private double _c1;
 
         /// <summary>
         /// D parameter for F1 layer.
         /// </summary>
         ///
-        private double d1;
+        private double _d1;
 
         /// <summary>
         /// The F1 layer neuron count.
         /// </summary>
         ///
-        private int f1Count;
+        private int _f1Count;
 
         /// <summary>
         /// The F2 layer neuron count.
         /// </summary>
         ///
-        private int f2Count;
+        private int _f2Count;
 
         /// <summary>
         /// Allows members of the F2 layer to be inhibited.
         /// </summary>
         [NonSerialized]
-        private bool[] inhibitF2;
+        private bool[] _inhibitF2;
 
         /// <summary>
         /// L parameter for net.
         /// </summary>
         ///
-        private double l;
+        private double _l;
 
         /// <summary>
         /// This is the value that is returned if there is no winner.  
         /// This value is generally set to the number of classes, plus 1.
         /// </summary>
         ///
-        private int noWinner;
+        private int _noWinner;
 
         /// <summary>
         /// The output from the F1 layer.
         /// </summary>
         ///
-        private BiPolarMLData outputF1;
+        private BiPolarMLData _outputF1;
 
         /// <summary>
         /// The output from the F2 layer.
         /// </summary>
         ///
-        private BiPolarMLData outputF2;
+        private BiPolarMLData _outputF2;
 
         /// <summary>
         /// The vigilance parameter.
         /// </summary>
         ///
-        private double vigilance;
+        private double _vigilance;
 
         /// <summary>
         /// Weights from f1 to f2.
         /// </summary>
         ///
-        private Matrix weightsF1toF2;
+        private Matrix _weightsF1ToF2;
 
         /// <summary>
         /// Weights from f2 to f1.
         /// </summary>
         ///
-        private Matrix weightsF2toF1;
-
-        /// <summary>
-        /// last winner in F2 layer.
-        /// </summary>
-        ///
-        private int winner;
+        private Matrix _weightsF2ToF1;
 
         /// <summary>
         /// Default constructor, used mainly for persistence.
@@ -148,12 +142,12 @@ namespace Encog.Neural.ART
         ///
         public ART1()
         {
-            a1 = 1;
-            b1 = 1.5d;
-            c1 = 5;
-            d1 = 0.9d;
-            l = 3;
-            vigilance = 0.9d;
+            _a1 = 1;
+            _b1 = 1.5d;
+            _c1 = 5;
+            _d1 = 0.9d;
+            _l = 3;
+            _vigilance = 0.9d;
         }
 
         /// <summary>
@@ -164,24 +158,24 @@ namespace Encog.Neural.ART
         /// <param name="theF2Count">The neuron count for the f2 layer.</param>
         public ART1(int theF1Count, int theF2Count)
         {
-            a1 = 1;
-            b1 = 1.5d;
-            c1 = 5;
-            d1 = 0.9d;
-            l = 3;
-            vigilance = 0.9d;
-            f1Count = theF1Count;
-            f2Count = theF2Count;
+            _a1 = 1;
+            _b1 = 1.5d;
+            _c1 = 5;
+            _d1 = 0.9d;
+            _l = 3;
+            _vigilance = 0.9d;
+            _f1Count = theF1Count;
+            _f2Count = theF2Count;
 
-            weightsF1toF2 = new Matrix(f1Count, f2Count);
-            weightsF2toF1 = new Matrix(f2Count, f1Count);
+            _weightsF1ToF2 = new Matrix(_f1Count, _f2Count);
+            _weightsF2ToF1 = new Matrix(_f2Count, _f1Count);
 
-            inhibitF2 = new bool[f2Count];
+            _inhibitF2 = new bool[_f2Count];
 
-            outputF1 = new BiPolarMLData(f1Count);
-            outputF2 = new BiPolarMLData(f2Count);
+            _outputF1 = new BiPolarMLData(_f1Count);
+            _outputF2 = new BiPolarMLData(_f2Count);
 
-            noWinner = f2Count;
+            _noWinner = _f2Count;
             Reset();
         }
 
@@ -192,8 +186,8 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double A1
         {
-            get { return a1; }
-            set { a1 = value; }
+            get { return _a1; }
+            set { _a1 = value; }
         }
 
 
@@ -202,8 +196,8 @@ namespace Encog.Neural.ART
         /// </summary>
         public double B1
         {
-            get { return b1; }
-            set { b1 = value; }
+            get { return _b1; }
+            set { _b1 = value; }
         }
 
 
@@ -214,8 +208,8 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double C1
         {
-            get { return c1; }
-            set { c1 = value; }
+            get { return _c1; }
+            set { _c1 = value; }
         }
 
 
@@ -226,8 +220,8 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double D1
         {
-            get { return d1; }
-            set { d1 = value; }
+            get { return _d1; }
+            set { _d1 = value; }
         }
 
 
@@ -236,11 +230,11 @@ namespace Encog.Neural.ART
         /// </summary>
         public int F1Count
         {
-            get { return f1Count; }
+            get { return _f1Count; }
             set
             {
-                f1Count = value;
-                outputF1 = new BiPolarMLData(f1Count);
+                _f1Count = value;
+                _outputF1 = new BiPolarMLData(_f1Count);
             }
         }
 
@@ -252,12 +246,12 @@ namespace Encog.Neural.ART
         /// <value>The count.</value>
         public int F2Count
         {
-            get { return f2Count; }
+            get { return _f2Count; }
             set
             {
-                f2Count = value;
-                inhibitF2 = new bool[f2Count];
-                outputF2 = new BiPolarMLData(f2Count);
+                _f2Count = value;
+                _inhibitF2 = new bool[_f2Count];
+                _outputF2 = new BiPolarMLData(_f2Count);
             }
         }
 
@@ -269,8 +263,8 @@ namespace Encog.Neural.ART
         /// <value>The new value.</value>
         public double L
         {
-            get { return l; }
-            set { l = value; }
+            get { return _l; }
+            set { _l = value; }
         }
 
 
@@ -283,8 +277,8 @@ namespace Encog.Neural.ART
         /// </summary>
         public int NoWinner
         {
-            get { return noWinner; }
-            set { noWinner = value; }
+            get { return _noWinner; }
+            set { _noWinner = value; }
         }
 
 
@@ -293,42 +287,39 @@ namespace Encog.Neural.ART
         /// </summary>
         public double Vigilance
         {
-            get { return vigilance; }
-            set { vigilance = value; }
+            get { return _vigilance; }
+            set { _vigilance = value; }
         }
 
 
         /// <summary>
         /// Set the f1 to f2 matrix.
         /// </summary>
-        public Matrix WeightsF1toF2
+        public Matrix WeightsF1ToF2
         {
-            get { return weightsF1toF2; }
-            set { weightsF1toF2 = value; }
+            get { return _weightsF1ToF2; }
+            set { _weightsF1ToF2 = value; }
         }
 
 
         /// <summary>
         /// Set the f2 to f1 matrix.
         /// </summary>
-        public Matrix WeightsF2toF1
+        public Matrix WeightsF2ToF1
         {
-            get { return weightsF2toF1; }
-            set { weightsF2toF1 = value; }
+            get { return _weightsF2ToF1; }
+            set { _weightsF2ToF1 = value; }
         }
 
 
         /// <value>The winning neuron.</value>
-        public int Winner
-        {
-            get { return winner; }
-        }
+        public int Winner { get; private set; }
 
 
         /// <returns>Does this network have a "winner"?</returns>
         public bool HasWinner
         {
-            get { return winner != noWinner; }
+            get { return Winner != _noWinner; }
         }
 
         /// <summary>
@@ -338,13 +329,11 @@ namespace Encog.Neural.ART
         {
             set
             {
-                double activation;
-
-                for (int i = 0; i < f1Count; i++)
+                for (int i = 0; i < _f1Count; i++)
                 {
-                    activation = ((value.GetBoolean(i)) ? 1 : 0)
-                                 /(1 + a1*(((value.GetBoolean(i)) ? 1 : 0) + b1) + c1);
-                    outputF1.SetBoolean(i, (activation > 0));
+                    double activation = ((value.GetBoolean(i)) ? 1 : 0)
+                                        /(1 + _a1*(((value.GetBoolean(i)) ? 1 : 0) + _b1) + _c1);
+                    _outputF1.SetBoolean(i, (activation > 0));
                 }
             }
         }
@@ -359,8 +348,8 @@ namespace Encog.Neural.ART
         /// <returns>The class that the data belongs to.</returns>
         public int Classify(IMLData input)
         {
-            var input2 = new BiPolarMLData(f1Count);
-            var output = new BiPolarMLData(f2Count);
+            var input2 = new BiPolarMLData(_f1Count);
+            var output = new BiPolarMLData(_f2Count);
 
             if (input.Count != input2.Count)
             {
@@ -374,14 +363,7 @@ namespace Encog.Neural.ART
 
             Compute(input2, output);
 
-            if (HasWinner)
-            {
-                return winner;
-            }
-            else
-            {
-                return -1;
-            }
+            return HasWinner ? Winner : -1;
         }
 
         /// <summary>
@@ -389,14 +371,14 @@ namespace Encog.Neural.ART
         /// </summary>
         public int InputCount
         {
-            get { return f1Count; }
+            get { return _f1Count; }
         }
 
         /// <value>The number of neurons in the output count, which is the f2 layer
         /// count.</value>
         public int OutputCount
         {
-            get { return f2Count; }
+            get { return _f2Count; }
         }
 
         #endregion
@@ -419,13 +401,13 @@ namespace Encog.Neural.ART
         /// <param name="seed">The seed to reset with.</param>
         public void Reset(int seed)
         {
-            for (int i = 0; i < f1Count; i++)
+            for (int i = 0; i < _f1Count; i++)
             {
-                for (int j = 0; j < f2Count; j++)
+                for (int j = 0; j < _f2Count; j++)
                 {
-                    weightsF1toF2[i, j] = (b1 - 1)/d1 + 0.2d;
-                    weightsF2toF1[j, i] = l
-                                          /(l - 1 + f1Count) - 0.1d;
+                    _weightsF1ToF2[i, j] = (_b1 - 1)/_d1 + 0.2d;
+                    _weightsF2ToF1[j, i] = _l
+                                          /(_l - 1 + _f1Count) - 0.1d;
                 }
             }
         }
@@ -438,21 +420,19 @@ namespace Encog.Neural.ART
         ///
         public void AdjustWeights()
         {
-            double magnitudeInput;
-
-            for (int i = 0; i < f1Count; i++)
+            for (int i = 0; i < _f1Count; i++)
             {
-                if (outputF1.GetBoolean(i))
+                if (_outputF1.GetBoolean(i))
                 {
-                    magnitudeInput = Magnitude(outputF1);
-                    weightsF1toF2[i, winner] = 1;
-                    weightsF2toF1[winner, i] = l
-                                               /(l - 1 + magnitudeInput);
+                    double magnitudeInput = Magnitude(_outputF1);
+                    _weightsF1ToF2[i, Winner] = 1;
+                    _weightsF2ToF1[Winner, i] = _l
+                                               /(_l - 1 + magnitudeInput);
                 }
                 else
                 {
-                    weightsF1toF2[i, winner] = 0;
-                    weightsF2toF1[winner, i] = 0;
+                    _weightsF1ToF2[i, Winner] = 0;
+                    _weightsF2ToF1[Winner, i] = 0;
                 }
             }
         }
@@ -469,28 +449,26 @@ namespace Encog.Neural.ART
                             BiPolarMLData output)
         {
             int i;
-            bool resonance, exhausted;
-            double magnitudeInput1, magnitudeInput2;
 
-            for (i = 0; i < f2Count; i++)
+            for (i = 0; i < _f2Count; i++)
             {
-                inhibitF2[i] = false;
+                _inhibitF2[i] = false;
             }
-            resonance = false;
-            exhausted = false;
+            bool resonance = false;
+            bool exhausted = false;
             do
             {
                 Input = input;
                 ComputeF2();
                 GetOutput(output);
-                if (winner != noWinner)
+                if (Winner != _noWinner)
                 {
                     ComputeF1(input);
-                    magnitudeInput1 = Magnitude(input);
-                    magnitudeInput2 = Magnitude(outputF1);
-                    if ((magnitudeInput2/magnitudeInput1) < vigilance)
+                    double magnitudeInput1 = Magnitude(input);
+                    double magnitudeInput2 = Magnitude(_outputF1);
+                    if ((magnitudeInput2/magnitudeInput1) < _vigilance)
                     {
-                        inhibitF2[winner] = true;
+                        _inhibitF2[Winner] = true;
                     }
                     else
                     {
@@ -522,7 +500,7 @@ namespace Encog.Neural.ART
                     "Input to ART1 logic network must be BiPolarNeuralData.");
             }
 
-            var output = new BiPolarMLData(f1Count);
+            var output = new BiPolarMLData(_f1Count);
             Compute((BiPolarMLData) input, output);
             return output;
         }
@@ -534,16 +512,14 @@ namespace Encog.Neural.ART
         /// <param name="input">The input to the F1 layer.</param>
         private void ComputeF1(BiPolarMLData input)
         {
-            double sum, activation;
-
-            for (int i = 0; i < f1Count; i++)
+            for (int i = 0; i < _f1Count; i++)
             {
-                sum = weightsF1toF2[i, winner]
-                      *((outputF2.GetBoolean(winner)) ? 1 : 0);
-                activation = (((input.GetBoolean(i)) ? 1 : 0) + d1*sum - b1)
-                             /(1 + a1
-                                   *(((input.GetBoolean(i)) ? 1 : 0) + d1*sum) + c1);
-                outputF1.SetBoolean(i, activation > 0);
+                double sum = _weightsF1ToF2[i, Winner]
+                             *((_outputF2.GetBoolean(Winner)) ? 1 : 0);
+                double activation = (((input.GetBoolean(i)) ? 1 : 0) + _d1*sum - _b1)
+                                    /(1 + _a1
+                                          *(((input.GetBoolean(i)) ? 1 : 0) + _d1*sum) + _c1);
+                _outputF1.SetBoolean(i, activation > 0);
             }
         }
 
@@ -553,32 +529,32 @@ namespace Encog.Neural.ART
         ///
         private void ComputeF2()
         {
-            int i, j;
-            double sum, maxOut;
+            int i;
 
-            maxOut = Double.NegativeInfinity;
-            winner = noWinner;
-            for (i = 0; i < f2Count; i++)
+            double maxOut = Double.NegativeInfinity;
+            Winner = _noWinner;
+            for (i = 0; i < _f2Count; i++)
             {
-                if (!inhibitF2[i])
+                if (!_inhibitF2[i])
                 {
-                    sum = 0;
-                    for (j = 0; j < f1Count; j++)
+                    double sum = 0;
+                    int j;
+                    for (j = 0; j < _f1Count; j++)
                     {
-                        sum += weightsF2toF1[i, j]
-                               *((outputF1.GetBoolean(j)) ? 1 : 0);
+                        sum += _weightsF2ToF1[i, j]
+                               *((_outputF1.GetBoolean(j)) ? 1 : 0);
                     }
                     if (sum > maxOut)
                     {
                         maxOut = sum;
-                        winner = i;
+                        Winner = i;
                     }
                 }
-                outputF2.SetBoolean(i, false);
+                _outputF2.SetBoolean(i, false);
             }
-            if (winner != noWinner)
+            if (Winner != _noWinner)
             {
-                outputF2.SetBoolean(winner, true);
+                _outputF2.SetBoolean(Winner, true);
             }
         }
 
@@ -589,9 +565,9 @@ namespace Encog.Neural.ART
         /// <param name="output">The target object for the output from the network.</param>
         private void GetOutput(BiPolarMLData output)
         {
-            for (int i = 0; i < f2Count; i++)
+            for (int i = 0; i < _f2Count; i++)
             {
-                output.SetBoolean(i, outputF2.GetBoolean(i));
+                output.SetBoolean(i, _outputF2.GetBoolean(i));
             }
         }
 
@@ -606,7 +582,7 @@ namespace Encog.Neural.ART
             double result;
 
             result = 0;
-            for (int i = 0; i < f1Count; i++)
+            for (int i = 0; i < _f1Count; i++)
             {
                 result += (input.GetBoolean(i)) ? 1 : 0;
             }

@@ -112,7 +112,7 @@ namespace Encog.ML.Factory
         /// <param name="input">The input count.</param>
         /// <param name="output">The output count.</param>
         /// <returns>The newly created machine learning method.</returns>
-        public MLMethod Create(String methodType,
+        public IMLMethod Create(String methodType,
                                String architecture, int input, int output)
         {
             if (TYPE_FEEDFORWARD.Equals(methodType))

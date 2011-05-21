@@ -50,7 +50,7 @@ namespace Encog.Neural.CPN.Training
         /// portion of the training data will be used.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The learning rate.
@@ -73,7 +73,7 @@ namespace Encog.Neural.CPN.Training
         /// <param name="theTraining">The training data.</param>
         /// <param name="theLearningRate">The learning rate.</param>
         /// <param name="theInitWeights">training elements as instar neurons.</param>
-        public TrainInstar(CPNNetwork theNetwork, MLDataSet theTraining,
+        public TrainInstar(CPNNetwork theNetwork, IMLDataSet theTraining,
                            double theLearningRate, bool theInitWeights) : base(TrainingImplementationType.Iterative)
         {
             network = theNetwork;
@@ -90,7 +90,7 @@ namespace Encog.Neural.CPN.Training
 
 
         /// <inheritdoc />
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }
@@ -122,7 +122,7 @@ namespace Encog.Neural.CPN.Training
 
             int i = 0;
 
-            foreach (MLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  training)
             {
                 for (int j = 0; j < network.InputCount; j++)
                 {
@@ -145,7 +145,7 @@ namespace Encog.Neural.CPN.Training
             double worstDistance = Double.NegativeInfinity;
 
 
-            foreach (MLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  training)
             {
                 IMLData xout = network.ComputeInstar(pair.Input);
 

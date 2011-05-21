@@ -45,8 +45,8 @@ namespace Encog.ML.Factory.Train
         /// <param name="training">The training data to use.</param>
         /// <param name="argsStr">The arguments to use.</param>
         /// <returns>The newly created trainer.</returns>
-        public MLTrain Create(MLMethod method,
-                              MLDataSet training, String argsStr)
+        public MLTrain Create(IMLMethod method,
+                              IMLDataSet training, String argsStr)
         {
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);

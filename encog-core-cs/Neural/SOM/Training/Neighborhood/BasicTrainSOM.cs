@@ -160,7 +160,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="training">The training set (unsupervised).</param>
         /// <param name="neighborhood_2">The neighborhood function to use.</param>
         public BasicTrainSOM(SOMNetwork network_0, double learningRate_1,
-                             MLDataSet training, INeighborhoodFunction neighborhood_2)
+                             IMLDataSet training, INeighborhoodFunction neighborhood_2)
             : base(TrainingImplementationType.Iterative)
         {
             neighborhood = neighborhood_2;
@@ -194,7 +194,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return null; }
         }
@@ -396,7 +396,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
 
             // Determine the BMU foreach each training element.
-            foreach (MLDataPair pair  in  Training)
+            foreach (IMLDataPair pair  in  Training)
             {
                 IMLData input = pair.Input;
 

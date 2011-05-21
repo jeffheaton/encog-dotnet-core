@@ -49,8 +49,8 @@ namespace Encog.Neural.NEAT
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
     [Serializable]
-    public class NEATNetwork : BasicML, MLContext, MLRegression,
-                               MLError
+    public class NEATNetwork : BasicML, IMLContext, IMLRegression,
+                               IMLError
     {
         /// <summary>
         /// The depth property.
@@ -230,7 +230,7 @@ namespace Encog.Neural.NEAT
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public virtual double CalculateError(MLDataSet data)
+        public virtual double CalculateError(IMLDataSet data)
         {
             return EncogUtility.CalculateRegressionError(this, data);
         }

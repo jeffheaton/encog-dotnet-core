@@ -300,7 +300,7 @@ namespace Encog.Examples.CPN
             PrepareInput();
             NormalizeInput();
             CPNNetwork network = CreateNetwork();
-            MLDataSet training = GenerateTraining(input1, ideal1);
+            IMLDataSet training = GenerateTraining(input1, ideal1);
             TrainInstar(network, training);
             TrainOutstar(network, training);
             Test(network, PATTERN1, input1);
@@ -386,7 +386,7 @@ namespace Encog.Examples.CPN
             return network;
         }
 
-        public void TrainInstar(CPNNetwork network, MLDataSet training)
+        public void TrainInstar(CPNNetwork network, IMLDataSet training)
         {
             int epoch = 1;
 
@@ -399,7 +399,7 @@ namespace Encog.Examples.CPN
             }
         }
 
-        public void TrainOutstar(CPNNetwork network, MLDataSet training)
+        public void TrainOutstar(CPNNetwork network, IMLDataSet training)
         {
             int epoch = 1;
 
@@ -412,9 +412,9 @@ namespace Encog.Examples.CPN
             }
         }
 
-        public MLDataSet GenerateTraining(double[][] input, double[][] ideal)
+        public IMLDataSet GenerateTraining(double[][] input, double[][] ideal)
         {
-            MLDataSet result = new BasicMLDataSet(input, ideal);
+            IMLDataSet result = new BasicMLDataSet(input, ideal);
             return result;
         }
 

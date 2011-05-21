@@ -75,7 +75,7 @@ namespace Encog.Examples.XOR
             var network = new FlatNetwork(2, 4, 0, 1, false);
             network.Randomize();
 
-            MLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
+            IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
 
             var train = new TrainFlatNetworkResilient(network, trainingSet);
@@ -92,7 +92,7 @@ namespace Encog.Examples.XOR
             var output = new double[1];
             // test the neural network
             Console.WriteLine(@"Neural Network Results:");
-            foreach (MLDataPair pair in trainingSet)
+            foreach (IMLDataPair pair in trainingSet)
             {
                 double[] input = pair.Input.Data;
                 network.Compute(input, output);

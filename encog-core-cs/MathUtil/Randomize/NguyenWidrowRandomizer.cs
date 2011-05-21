@@ -62,7 +62,7 @@ namespace Encog.MathUtil.Randomize
         /// multiplying by beta value
         /// </summary>
         /// <param name="method">The network to randomize.</param>
-        public override sealed void Randomize(MLMethod method)
+        public override sealed void Randomize(IMLMethod method)
         {
             if (!(method is BasicNetwork))
             {

@@ -95,7 +95,7 @@ namespace Encog.Neural.Prune
         /// The training set to use as different neural networks are evaluated.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The number of tries with random weights.
@@ -169,7 +169,7 @@ namespace Encog.Neural.Prune
         /// <param name="weightTries_3">The number of random weights to use.</param>
         /// <param name="numTopResults"></param>
         /// <param name="report_4">Object used to report status to.</param>
-        public PruneIncremental(MLDataSet training_0,
+        public PruneIncremental(IMLDataSet training_0,
                                 NeuralNetworkPattern pattern_1, int iterations_2,
                                 int weightTries_3, int numTopResults,
                                 IStatusReportable report_4) : base(report_4)
@@ -264,7 +264,7 @@ namespace Encog.Neural.Prune
 
 
         /// <value>The training set to use.</value>
-        public MLDataSet Training
+        public IMLDataSet Training
         {
             get { return training; }
         }
@@ -427,7 +427,7 @@ namespace Encog.Neural.Prune
         {
             var network = (BasicNetwork) context.JobUnit;
             BufferedMLDataSet buffer = null;
-            MLDataSet useTraining = training;
+            IMLDataSet useTraining = training;
 
             if (training is BufferedMLDataSet)
             {

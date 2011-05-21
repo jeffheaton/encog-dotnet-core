@@ -91,7 +91,7 @@ namespace Encog.App.Analyst.Commands
             egb.Close();
 
             var factory = new MLMethodFactory();
-            MLMethod obj = factory.Create(type, arch, input, ideal);
+            IMLMethod obj = factory.Create(type, arch, input, ideal);
 
             EncogDirectoryPersistence.SaveObject(resourceFile, obj);
 

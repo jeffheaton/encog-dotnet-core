@@ -34,12 +34,12 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <summary>
         /// The dataset.
         /// </summary>
-        private readonly MLDataSet _dataset;
+        private readonly IMLDataSet _dataset;
 
         /// <summary>
         /// The iterator used to read through the dataset.
         /// </summary>
-        private IEnumerator<MLDataPair> _enumerator;
+        private IEnumerator<IMLDataPair> _enumerator;
 
         /// <summary>
         /// The number of ideal elements.
@@ -55,7 +55,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// Construct a CODEC. 
         /// </summary>
         /// <param name="dataset">The dataset to use.</param>
-        public NeuralDataSetCODEC(MLDataSet dataset)
+        public NeuralDataSetCODEC(IMLDataSet dataset)
         {
             _dataset = dataset;
             _inputSize = dataset.InputSize;
@@ -85,7 +85,7 @@ namespace Encog.ML.Data.Buffer.CODEC
             }
             else
             {
-                MLDataPair pair = _enumerator.Current;
+                IMLDataPair pair = _enumerator.Current;
                 EngineArray.ArrayCopy(pair.Input.Data, input);
                 EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
                 return true;
@@ -95,7 +95,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal)
         {
-            MLDataPair pair = BasicMLDataPair.CreatePair(_inputSize,
+            IMLDataPair pair = BasicMLDataPair.CreatePair(_inputSize,
                                                          _idealSize);
             EngineArray.ArrayCopy(input, pair.Input.Data);
             EngineArray.ArrayCopy(ideal, pair.Ideal.Data);

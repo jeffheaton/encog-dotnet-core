@@ -47,7 +47,7 @@ namespace Encog.ML.Train.Strategy
         ///
         private double[] lastNetwork;
 
-        private MLEncodable method;
+        private IMLEncodable method;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start 
@@ -74,13 +74,13 @@ namespace Encog.ML.Train.Strategy
             train = train_0;
             ready = false;
 
-            if (!(train_0.Method is MLEncodable))
+            if (!(train_0.Method is IMLEncodable))
             {
                 throw new TrainingError(
                     "To make use of the Greedy strategy the machine learning method must support MLEncodable.");
             }
 
-            method = ((MLEncodable) train_0.Method);
+            method = ((IMLEncodable) train_0.Method);
             lastNetwork = new double[method.EncodedArrayLength()];
         }
 

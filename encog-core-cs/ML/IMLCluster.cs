@@ -20,41 +20,53 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+using System.Collections.Generic;
+using Encog.ML.Data;
 
-namespace Encog.ML.Data
+namespace Encog.ML
 {
     /// <summary>
-    /// A neural data pair holds both the input and ideal data.  If this
-    /// is an unsupervised data element, then only input is provided.
+    /// Defines a cluster. Usually used with the MLClustering method to break input
+    /// into clusters.
     /// </summary>
-    public interface MLDataPair : ICloneable
+    ///
+    public interface IMLCluster
     {
-        /// <summary>
-        /// The input that the neural network.
-        /// </summary>
-        IMLData Input { get; }
+        /// <value>The data in this cluster.</value>
+        IList<IMLData> Data { get; }
 
         /// <summary>
-        /// The ideal data that the neural network should produce
-        /// for the specified input.
+        /// Add data to this cluster.
         /// </summary>
-        IMLData Ideal { get; }
+        ///
+        /// <param name="pair">The data to add.</param>
+        void Add(IMLData pair);
 
         /// <summary>
-        /// True if this training pair is supervised.  That is, it has 
-        /// both input and ideal data.
+        /// Create a machine learning dataset from the data.
         /// </summary>
-        bool Supervised { get; }
+        ///
+        /// <returns>A dataset.</returns>
+        IMLDataSet CreateDataSet();
 
         /// <summary>
-        /// The supervised ideal data.
+        /// Get the specified data item by index.
         /// </summary>
-        double[] IdealArray { get; set; }
+        ///
+        /// <param name="pos">The index of the data item to get.</param>
+        /// <returns>The data item.</returns>
+        IMLData Get(int pos);
+
 
         /// <summary>
-        /// The input array.
+        /// Remove the specified item.
         /// </summary>
-        double[] InputArray { get; set; }
+        ///
+        /// <param name="data">The item to remove.</param>
+        void Remove(IMLData data);
+
+
+        /// <returns>The number of items.</returns>
+        int Size();
     }
 }

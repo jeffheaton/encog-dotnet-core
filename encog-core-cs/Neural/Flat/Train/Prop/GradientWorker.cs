@@ -113,13 +113,13 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The pair to use for training.
         /// </summary>
         ///
-        private readonly MLDataPair pair;
+        private readonly IMLDataPair pair;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The index to each layer's weights and thresholds.
@@ -150,7 +150,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="theHigh">The high index to use in the training data.</param>
         /// <param name="theFlatSpots">Holds an array of flat spot constants.</param>
         public GradientWorker(FlatNetwork theNetwork,
-                                 TrainFlatNetworkProp theOwner, MLDataSet theTraining,
+                                 TrainFlatNetworkProp theOwner, IMLDataSet theTraining,
                                  int theLow, int theHigh, double[] theFlatSpots)
         {
             errorCalculation = new ErrorCalculation();

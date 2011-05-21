@@ -350,8 +350,8 @@ namespace Encog.ML.Factory
         /// <param name="type">Type type of trainer.</param>
         /// <param name="args">The training args.</param>
         /// <returns>The new training method.</returns>
-        public MLTrain Create(MLMethod method,
-                              MLDataSet training, String type, String args)
+        public MLTrain Create(IMLMethod method,
+                              IMLDataSet training, String type, String args)
         {
             String args2 = args;
 

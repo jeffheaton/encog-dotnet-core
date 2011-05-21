@@ -443,7 +443,7 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// A network created for the best genome.
         /// </summary>
-        public MLMethod Method
+        public IMLMethod Method
         {
             get { return bestEverNetwork; }
         }
@@ -457,7 +457,7 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Returns null, does not use a training set, rather uses a score function.
         /// </summary>
-        public MLDataSet Training
+        public IMLDataSet Training
         {
             get { return null; }
         }

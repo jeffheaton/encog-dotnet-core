@@ -52,7 +52,7 @@ namespace Encog.Util.Banchmark
         {
             BasicNetwork network = EncogUtility.SimpleFeedForward(input,
                                                                   hidden1, hidden2, output, true);
-            MLDataSet training = RandomTrainingFactory.Generate(1000,
+            IMLDataSet training = RandomTrainingFactory.Generate(1000,
                                                                 10000, input, output, -1, 1);
 
             return EvaluateTrain(network, training);
@@ -67,7 +67,7 @@ namespace Encog.Util.Banchmark
         /// <param name="network">The training data to use.</param>
         /// <param name="training">The number of seconds that it took.</param>
         /// <returns></returns>
-        public static int EvaluateTrain(BasicNetwork network, MLDataSet training)
+        public static int EvaluateTrain(BasicNetwork network, IMLDataSet training)
         {
             // train the neural network
             MLTrain train = train = new ResilientPropagation(network, training);

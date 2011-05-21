@@ -127,7 +127,7 @@ namespace Encog.Neural.Networks.Training.Anneal
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

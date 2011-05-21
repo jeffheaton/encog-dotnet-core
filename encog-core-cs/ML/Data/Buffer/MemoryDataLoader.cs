@@ -67,7 +67,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Convert an external file format, such as CSV, to an Encog memory training set. 
         /// </summary>
-        public MLDataSet External2Memory()
+        public IMLDataSet External2Memory()
         {
             Status.Report(0, 0, "Importing to memory");
 
@@ -93,7 +93,7 @@ namespace Encog.ML.Data.Buffer
                 if (_codec.IdealSize > 0)
                     b = new BasicMLData(ideal);
 
-                MLDataPair pair = new BasicMLDataPair(a, b);
+                IMLDataPair pair = new BasicMLDataPair(a, b);
                 Result.Add(pair);
 
                 currentRecord++;

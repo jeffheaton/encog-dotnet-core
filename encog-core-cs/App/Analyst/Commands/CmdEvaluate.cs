@@ -83,7 +83,7 @@ namespace Encog.App.Analyst.Commands
             FileInfo outputFile = Analyst.Script.ResolveFilename(
                 outputID);
 
-            var method = (MLMethod) EncogDirectoryPersistence
+            var method = (IMLMethod) EncogDirectoryPersistence
                                         .LoadObject(resourceFile);
 
             bool headers = Script.ExpectInputHeaders(evalID);

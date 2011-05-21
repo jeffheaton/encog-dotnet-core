@@ -31,7 +31,7 @@ namespace Encog.ML.Data.Buffer
     /// <summary>
     /// An enumerator to move through the buffered data set.
     /// </summary>
-    public class BufferedNeuralDataSetEnumerator : IEnumerator<MLDataPair>
+    public class BufferedNeuralDataSetEnumerator : IEnumerator<IMLDataPair>
     {
         /// <summary>
         /// The dataset being iterated over.
@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The current record.
         /// </summary>
-        private MLDataPair _currentRecord;
+        private IMLDataPair _currentRecord;
 
         /// <summary>
         /// Construct the buffered enumerator. This is where the file is actually
@@ -64,7 +64,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Get the current record
         /// </summary>
-        public MLDataPair Current
+        public IMLDataPair Current
         {
             get { return _currentRecord; }
         }
@@ -83,7 +83,7 @@ namespace Encog.ML.Data.Buffer
             {
                 if (_currentRecord == null)
                 {
-                    throw new MLDataError("Can't read current record until MoveNext is called once.");
+                    throw new IMLDataError("Can't read current record until MoveNext is called once.");
                 }
                 return _currentRecord;
             }

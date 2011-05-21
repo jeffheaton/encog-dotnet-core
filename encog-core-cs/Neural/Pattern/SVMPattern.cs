@@ -112,7 +112,7 @@ namespace Encog.Neural.Pattern
 
 
         /// <returns>The generated network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             if (outputNeurons != 1)
             {

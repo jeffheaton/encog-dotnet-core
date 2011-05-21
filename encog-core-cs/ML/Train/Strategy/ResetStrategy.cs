@@ -52,7 +52,7 @@ namespace Encog.ML.Train.Strategy
         ///
         private int badCycleCount;
 
-        private MLResettable method;
+        private IMLResettable method;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
@@ -87,13 +87,13 @@ namespace Encog.ML.Train.Strategy
         {
             train = train_0;
 
-            if (!(train_0.Method is MLMethod))
+            if (!(train_0.Method is IMLMethod))
             {
                 throw new TrainingError(
                     "To use the reset strategy the machine learning method must support MLResettable.");
             }
 
-            method = (MLResettable) train.Method;
+            method = (IMLResettable) train.Method;
         }
 
         /// <summary>

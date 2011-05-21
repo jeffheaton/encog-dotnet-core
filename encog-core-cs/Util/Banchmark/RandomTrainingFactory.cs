@@ -88,7 +88,7 @@ namespace Encog.Util.Banchmark
         /// <param name="count">How much data to generate.</param>
         /// <param name="min">The low random value.</param>
         /// <param name="max">The high random value.</param>
-        public static void Generate(MLDataSet training,
+        public static void Generate(IMLDataSet training,
                                     long seed,
                                     int count,
                                     double min, double max)

@@ -37,20 +37,20 @@ namespace Encog.Util.Error
         /// <param name="method">The method to evaluate.</param>
         /// <param name="data">The training data to evaluate with.</param>
         /// <returns>The error.</returns>
-        public static double CalculateError(MLRegression method,
-                                            MLDataSet data)
+        public static double CalculateError(IMLRegression method,
+                                            IMLDataSet data)
         {
             var errorCalculation = new ErrorCalculation();
 
             // clear context
-            if (method is MLContext)
+            if (method is IMLContext)
             {
-                ((MLContext) method).ClearContext();
+                ((IMLContext) method).ClearContext();
             }
 
 
             // calculate error
-            foreach (MLDataPair pair  in  data)
+            foreach (IMLDataPair pair  in  data)
             {
                 IMLData actual = method.Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);

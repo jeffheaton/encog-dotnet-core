@@ -111,7 +111,7 @@ namespace Encog.Neural.Networks.Training.Genetic
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return Genetic.Method; }
         }
@@ -164,7 +164,7 @@ namespace Encog.Neural.Networks.Training.Genetic
             /// <summary>
             /// Get the current best neural network.
             /// </summary>
-            public MLMethod Method
+            public IMLMethod Method
             {
                 get
                 {

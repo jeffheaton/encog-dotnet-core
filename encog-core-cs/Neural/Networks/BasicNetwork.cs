@@ -49,8 +49,8 @@ namespace Encog.Neural.Networks
     /// </summary>
     ///
     [Serializable]
-    public class BasicNetwork : BasicML, ContainsFlat, MLContext,
-                                MLRegression, MLEncodable, MLResettable, MLClassification, MLError
+    public class BasicNetwork : BasicML, ContainsFlat, IMLContext,
+                                IMLRegression, IMLEncodable, IMLResettable, IMLClassification, IMLError
     {
         /// <summary>
         /// Tag used for the connection limit.
@@ -288,7 +288,7 @@ namespace Encog.Neural.Networks
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             return EncogUtility.CalculateRegressionError(this, data);
         }

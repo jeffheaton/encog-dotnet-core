@@ -457,12 +457,12 @@ namespace Encog.Neural.Flat
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             var errorCalculation = new ErrorCalculation();
 
             var actual = new double[outputCount];
-            MLDataPair pair = BasicMLDataPair.CreatePair(data.InputSize,
+            IMLDataPair pair = BasicMLDataPair.CreatePair(data.InputSize,
                                                          data.IdealSize);
 
             for (int i = 0; i < data.Count; i++)

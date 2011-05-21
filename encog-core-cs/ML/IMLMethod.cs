@@ -20,27 +20,18 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using Encog.ML.Data;
-
 namespace Encog.ML
 {
     /// <summary>
-    /// This interface defines a MLMethod that is used for classification.  
-    /// Classification defines the output to be a class.  A MLMethod that uses 
-    /// classification is attempting to use the input to place items into 
-    /// classes.  It is assumed that an item will only be in one single class.  
-    /// If an item can be in multiple classes, one option is to create additional 
-    /// classes that represent the compound classes.
+    /// This interface is the base for all Encog Machine Learning methods.  It 
+    /// defines very little, other than the fact that a subclass is a Machine 
+    /// Learning Method.  A MLMethod is an algorithm that accepts data and 
+    /// provides some sort of insight into it.  This could be a neural network, 
+    /// support vector machine, clustering algorithm, or something else entirely.
+    /// Many MLMethods must be trained by a MLTrain object before they are useful.
     /// </summary>
     ///
-    public interface MLClassification : MLInputOutput
+    public interface IMLMethod
     {
-        /// <summary>
-        /// Classify the input into a group.
-        /// </summary>
-        ///
-        /// <param name="input">The input data to classify.</param>
-        /// <returns>The group that the data was classified into.</returns>
-        int Classify(IMLData input);
     }
 }

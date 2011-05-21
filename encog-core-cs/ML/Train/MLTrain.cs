@@ -43,7 +43,7 @@ namespace Encog.ML.Train
 
 
         /// <value>The training data to use.</value>
-        MLDataSet Training { get; }
+        IMLDataSet Training { get; }
 
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Encog.ML.Train
         /// <summary>
         /// Get the current best machine learning method from the training.
         /// </summary>
-        MLMethod Method { get; }
+        IMLMethod Method { get; }
 
 
         /// <value>The strategies to use.</value>

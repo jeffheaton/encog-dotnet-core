@@ -45,8 +45,8 @@ namespace Encog.ML.SVM
     /// SVMTrain.
     /// </summary>
     [Serializable]
-    public class SupportVectorMachine : BasicML, MLRegression, MLClassification,
-                                        MLError
+    public class SupportVectorMachine : BasicML, IMLRegression, IMLClassification,
+                                        IMLError
     {
         /// <summary>
         /// The default degree.
@@ -319,7 +319,7 @@ namespace Encog.ML.SVM
         ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             switch (SVMType)
             {

@@ -47,7 +47,7 @@ namespace Encog.Util
         /// <param name="network">The network to validate.</param>
         /// <param name="training">The training set to validate.</param>
         public static void ValidateNetworkForTraining(ContainsFlat network,
-                                                      MLDataSet training)
+                                                      IMLDataSet training)
         {
             int inputCount = network.Flat.InputCount;
             int outputCount = network.Flat.OutputCount;

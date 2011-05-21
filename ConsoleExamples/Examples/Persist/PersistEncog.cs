@@ -72,7 +72,7 @@ namespace Encog.Examples.Persist
         public void Execute(IExampleInterface app)
         {
             this.app = app;
-            MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT,XOR_IDEAL);
+            IMLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT,XOR_IDEAL);
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 6, 0, 1, false);
             EncogUtility.TrainToError(network, trainingSet, 0.01);
             double error = network.CalculateError(trainingSet);

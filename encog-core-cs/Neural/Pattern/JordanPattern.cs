@@ -108,7 +108,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         ///
         /// <returns>A Jordan neural network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             BasicLayer hidden, output;
 

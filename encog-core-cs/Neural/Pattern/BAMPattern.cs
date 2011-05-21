@@ -95,7 +95,7 @@ namespace Encog.Neural.Pattern
 
 
         /// <returns>The generated network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             var bam = new BAMNetwork(f1Neurons, f2Neurons);
             return bam;

@@ -160,7 +160,7 @@ namespace Encog.App.Analyst.CSV
         ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="method">THe method to use.</param>
-        public void Process(FileInfo outputFile, MLMethod method)
+        public void Process(FileInfo outputFile, IMLMethod method)
         {
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
@@ -189,18 +189,18 @@ namespace Encog.App.Analyst.CSV
                     IMLData input = new BasicMLData(inputArray);
 
                     // evaluation data
-                    if ((method is MLClassification)
-                        && !(method is MLRegression))
+                    if ((method is IMLClassification)
+                        && !(method is IMLRegression))
                     {
                         // classification only?
                         output = new BasicMLData(1);
                         output[0] =
-                            ((MLClassification) method).Classify(input);
+                            ((IMLClassification) method).Classify(input);
                     }
                     else
                     {
                         // regression
-                        output = ((MLRegression) method).Compute(input);
+                        output = ((IMLRegression) method).Compute(input);
                     }
 
                     // skip file data

@@ -48,7 +48,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestRPROP()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             MLTrain rprop = new ResilientPropagation(network, trainingData);
@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestLMA()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             MLTrain rprop = new LevenbergMarquardtTraining(network, trainingData);
@@ -68,7 +68,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestBPROP()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 
@@ -79,7 +79,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestManhattan()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             MLTrain bprop = new ManhattanPropagation(network, trainingData, 0.01);
@@ -89,7 +89,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestSCG()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             MLTrain bprop = new ScaledConjugateGradient(network, trainingData);
@@ -99,7 +99,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestAnneal()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             ICalculateScore score = new TrainingSetScore(trainingData);
             NeuralSimulatedAnnealing anneal = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
@@ -109,7 +109,7 @@ namespace Encog.Neural.Networks.Training
         [TestMethod]
         public void TestGenetic()
         {
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             ICalculateScore score = new TrainingSetScore(trainingData);
             NeuralGeneticAlgorithm genetic = new NeuralGeneticAlgorithm(network, new RangeRandomizer(-1, 1), score, 500, 0.1, 0.25);
@@ -123,7 +123,7 @@ namespace Encog.Neural.Networks.Training
             PNNOutputMode mode = PNNOutputMode.Regression;
             BasicPNN network = new BasicPNN(PNNKernelType.Gaussian, mode, 2, 1);
 
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             TrainBasicPNN train = new TrainBasicPNN(network, trainingData);
             train.Iteration();
@@ -138,7 +138,7 @@ namespace Encog.Neural.Networks.Training
             PNNOutputMode mode = PNNOutputMode.Classification;
             BasicPNN network = new BasicPNN(PNNKernelType.Gaussian, mode, 2, 2);
 
-            MLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             TrainBasicPNN train = new TrainBasicPNN(network, trainingData);
             train.Iteration();

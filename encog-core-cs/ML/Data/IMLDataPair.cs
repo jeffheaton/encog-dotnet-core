@@ -20,25 +20,41 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using Encog.ML.Data;
+using System;
 
-namespace Encog.ML
+namespace Encog.ML.Data
 {
     /// <summary>
-    /// Defines a Machine Learning Method that supports regression.  Regression 
-    /// takes an input and produces numeric output.  Function approximation 
-    /// uses regression.  Contrast this to classification, which uses the input 
-    /// to assign a class.
+    /// A neural data pair holds both the input and ideal data.  If this
+    /// is an unsupervised data element, then only input is provided.
     /// </summary>
-    ///
-    public interface MLRegression : MLInputOutput
+    public interface IMLDataPair : ICloneable
     {
         /// <summary>
-        /// Compute regression.
+        /// The input that the neural network.
         /// </summary>
-        ///
-        /// <param name="input">The input data.</param>
-        /// <returns>The output data.</returns>
-        IMLData Compute(IMLData input);
+        IMLData Input { get; }
+
+        /// <summary>
+        /// The ideal data that the neural network should produce
+        /// for the specified input.
+        /// </summary>
+        IMLData Ideal { get; }
+
+        /// <summary>
+        /// True if this training pair is supervised.  That is, it has 
+        /// both input and ideal data.
+        /// </summary>
+        bool Supervised { get; }
+
+        /// <summary>
+        /// The supervised ideal data.
+        /// </summary>
+        double[] IdealArray { get; set; }
+
+        /// <summary>
+        /// The input array.
+        /// </summary>
+        double[] InputArray { get; set; }
     }
 }

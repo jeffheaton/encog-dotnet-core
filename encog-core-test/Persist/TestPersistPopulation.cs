@@ -46,7 +46,7 @@ namespace Encog.Persist
 
         private NEATPopulation Generate()
         {
-            MLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             ICalculateScore score = new TrainingSetScore(trainingSet);
             // train the neural network
@@ -90,7 +90,7 @@ namespace Encog.Persist
             Assert.AreEqual(0.3, pop.YoungScoreBonus);
 
             // see if the population can actually be used to train
-            MLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
+            IMLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
             ICalculateScore score = new TrainingSetScore(trainingSet);
             NEATTraining train = new NEATTraining(score, pop);
             train.Iteration();

@@ -32,7 +32,7 @@ namespace Encog.ML
     /// </summary>
     ///
     [Serializable]
-    public abstract class BasicML : MLMethod, MLProperties
+    public abstract class BasicML : IMLProperties
     {
 
         /// <summary>
@@ -40,14 +40,14 @@ namespace Encog.ML
         /// certain properties to be set.
         /// </summary>
         ///
-        private readonly IDictionary<String, String> properties;
+        private readonly IDictionary<String, String> _properties;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
-        public BasicML()
+        protected BasicML()
         {
-            properties = new Dictionary<String, String>();
+            _properties = new Dictionary<String, String>();
         }
 
         #region MLProperties Members
@@ -55,7 +55,7 @@ namespace Encog.ML
         /// <value>A map of all properties.</value>
         public IDictionary<String, String> Properties
         {
-            get { return properties; }
+            get { return _properties; }
         }
 
 
@@ -67,7 +67,7 @@ namespace Encog.ML
         /// <returns>The property as a double.</returns>
         public double GetPropertyDouble(String name)
         {
-            return (CSVFormat.EG_FORMAT.Parse((properties[name])));
+            return (CSVFormat.EG_FORMAT.Parse((_properties[name])));
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Encog.ML
         /// <returns>The value of the specified property.</returns>
         public long GetPropertyLong(String name)
         {
-            return (Int64.Parse(properties[name]));
+            return (Int64.Parse(_properties[name]));
         }
 
         /// <summary>
@@ -89,14 +89,11 @@ namespace Encog.ML
         /// <returns>The value of the property.</returns>
         public String GetPropertyString(String name)
         {
-            if (properties.ContainsKey(name))
+            if (_properties.ContainsKey(name))
             {
-                return (properties[name]);
+                return (_properties[name]);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace Encog.ML
         /// <param name="d">The value of the property.</param>
         public void SetProperty(String name, double d)
         {
-            properties[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
+            _properties[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
             UpdateProperties();
         }
 
@@ -119,7 +116,7 @@ namespace Encog.ML
         /// <param name="l">The value of the property.</param>
         public void SetProperty(String name, long l)
         {
-            properties[name] = "" + l;
+            _properties[name] = "" + l;
             UpdateProperties();
         }
 
@@ -128,10 +125,10 @@ namespace Encog.ML
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value_ren">The value of the property.</param>
-        public void SetProperty(String name, String value_ren)
+        /// <param name="v">The value of the property.</param>
+        public void SetProperty(String name, String v)
         {
-            properties[name] = value_ren;
+            _properties[name] = v;
             UpdateProperties();
         }
 

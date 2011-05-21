@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Buffer
     /// format, and can be used with any Encog platform. Encog binary files are
     /// stored using "little endian" numbers.
     /// </summary>
-    public class BufferedMLDataSet : MLDataSet
+    public class BufferedMLDataSet : IMLDataSet
     {
         /// <summary>
         /// Error message for ADD.
@@ -110,11 +110,11 @@ namespace Encog.ML.Data.Buffer
         /// Create an enumerator.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<MLDataPair> GetEnumerator()
+        public IEnumerator<IMLDataPair> GetEnumerator()
         {
             if (loading)
             {
-                throw new MLDataError(
+                throw new IMLDataError(
                     "Can't create enumerator while loading, call EndLoad first.");
             }
             var result = new BufferedNeuralDataSetEnumerator(this);
@@ -147,7 +147,7 @@ namespace Encog.ML.Data.Buffer
         /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
         /// the second, and so on.</param>
         /// <param name="pair">The data to read.</param>
-        public void GetRecord(long index, MLDataPair pair)
+        public void GetRecord(long index, IMLDataPair pair)
         {
             double[] inputTarget = pair.InputArray;
             double[] idealTarget = pair.IdealArray;
@@ -161,7 +161,7 @@ namespace Encog.ML.Data.Buffer
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>
-        public MLDataSet OpenAdditional()
+        public IMLDataSet OpenAdditional()
         {
             var result = new BufferedMLDataSet(file) {_owner = this};
             additional.Add(result);
@@ -176,7 +176,7 @@ namespace Encog.ML.Data.Buffer
         {
             if (!loading)
             {
-                throw new MLDataError(ERROR_ADD);
+                throw new IMLDataError(ERROR_ADD);
             }
 
             egb.Write(data1.Data);
@@ -192,7 +192,7 @@ namespace Encog.ML.Data.Buffer
         {
             if (!loading)
             {
-                throw new MLDataError(ERROR_ADD);
+                throw new IMLDataError(ERROR_ADD);
             }
 
             egb.Write(inputData.Data);
@@ -203,11 +203,11 @@ namespace Encog.ML.Data.Buffer
         /// Add a data pair of both input and ideal data. 
         /// </summary>
         /// <param name="pair">The pair to add.</param>
-        public void Add(MLDataPair pair)
+        public void Add(IMLDataPair pair)
         {
             if (!loading)
             {
-                throw new MLDataError(ERROR_ADD);
+                throw new IMLDataError(ERROR_ADD);
             }
 
             egb.Write(pair.Input.Data);
@@ -337,11 +337,11 @@ namespace Encog.ML.Data.Buffer
         /// Load the binary dataset to memory.  Memory access is faster. 
         /// </summary>
         /// <returns>A memory dataset.</returns>
-        public MLDataSet LoadToMemory()
+        public IMLDataSet LoadToMemory()
         {
             var result = new BasicMLDataSet();
 
-            foreach (MLDataPair pair in this)
+            foreach (IMLDataPair pair in this)
             {
                 result.Add(pair);
             }
@@ -353,10 +353,10 @@ namespace Encog.ML.Data.Buffer
         /// Load the specified training set. 
         /// </summary>
         /// <param name="training">The training set to load.</param>
-        public void Load(MLDataSet training)
+        public void Load(IMLDataSet training)
         {
             BeginLoad(training.InputSize, training.IdealSize);
-            foreach (MLDataPair pair in training)
+            foreach (IMLDataPair pair in training)
             {
                 Add(pair);
             }

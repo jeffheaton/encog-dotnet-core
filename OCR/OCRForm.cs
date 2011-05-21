@@ -68,7 +68,7 @@ namespace Chapter12OCR
         private Pen blackPen;
         private bool[] downsampled;
         private Dictionary<char, bool[]> letterData = new Dictionary<char, bool[]>();
-        private MLDataSet trainingSet;
+        private IMLDataSet trainingSet;
         private SOMNetwork network;
 
         public OCRForm()

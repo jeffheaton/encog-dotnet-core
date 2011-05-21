@@ -44,7 +44,7 @@ namespace Encog.Neural.Networks.Training.Simple
         /// The training data to use.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// The learning rate.
@@ -59,7 +59,7 @@ namespace Encog.Neural.Networks.Training.Simple
         /// <param name="network_0">The network to train.</param>
         /// <param name="training_1">The training data.</param>
         /// <param name="learningRate_2">The learning rate.</param>
-        public TrainAdaline(BasicNetwork network_0, MLDataSet training_1,
+        public TrainAdaline(BasicNetwork network_0, IMLDataSet training_1,
                             double learningRate_2) : base(TrainingImplementationType.Iterative)
         {
             if (network_0.LayerCount > 2)
@@ -81,7 +81,7 @@ namespace Encog.Neural.Networks.Training.Simple
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }
@@ -105,7 +105,7 @@ namespace Encog.Neural.Networks.Training.Simple
             var errorCalculation = new ErrorCalculation();
 
 
-            foreach (MLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  training)
             {
                 // calculate the error
                 IMLData output = network.Compute(pair.Input);

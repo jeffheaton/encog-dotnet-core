@@ -178,7 +178,7 @@ namespace Encog.App.Analyst.CSV
 
             int clusterNum = 0;
 
-            foreach (MLCluster cl  in  cluster.Clusters)
+            foreach (IMLCluster cl  in  cluster.Clusters)
             {
                 foreach (IMLData item  in  cl.Data)
                 {

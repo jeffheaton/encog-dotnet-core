@@ -42,6 +42,6 @@ namespace Encog.Neural.Networks.Training
         ///
         /// <param name="network">The network.</param>
         /// <returns>The score.</returns>
-        double CalculateScore(MLRegression network);
+        double CalculateScore(IMLRegression network);
     }
 }

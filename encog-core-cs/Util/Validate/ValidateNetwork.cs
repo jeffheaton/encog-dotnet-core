@@ -35,9 +35,9 @@ namespace Encog.Util.Validate
         /// </summary>
         /// <param name="method">The method to validate.</param>
         /// <param name="training">The training data.</param>
-        public static void ValidateMethodToData(MLMethod method, MLDataSet training)
+        public static void ValidateMethodToData(IMLMethod method, IMLDataSet training)
         {
-            if (!(method is MLInput) || !(method is MLOutput))
+            if (!(method is IMLInput) || !(method is IMLOutput))
             {
                 throw new EncogError(
                     "This machine learning method is not compatible with the provided data.");
@@ -48,14 +48,14 @@ namespace Encog.Util.Validate
             int methodInputCount = 0;
             int methodOutputCount = 0;
 
-            if (method is MLInput)
+            if (method is IMLInput)
             {
-                methodInputCount = ((MLInput) method).InputCount;
+                methodInputCount = ((IMLInput) method).InputCount;
             }
 
-            if (method is MLOutput)
+            if (method is IMLOutput)
             {
-                methodOutputCount = ((MLOutput) method).OutputCount;
+                methodOutputCount = ((IMLOutput) method).OutputCount;
             }
 
             if (methodInputCount != trainingInputCount)

@@ -113,7 +113,7 @@ namespace Encog.ML.SVM.Training
         ///
         /// <param name="method">The network to train.</param>
         /// <param name="dataSet">The training data for this network.</param>
-        public SVMTrain(SupportVectorMachine method, MLDataSet dataSet) : base(TrainingImplementationType.OnePass)
+        public SVMTrain(SupportVectorMachine method, IMLDataSet dataSet) : base(TrainingImplementationType.OnePass)
         {
             fold = 0;
             network = method;
@@ -162,7 +162,7 @@ namespace Encog.ML.SVM.Training
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

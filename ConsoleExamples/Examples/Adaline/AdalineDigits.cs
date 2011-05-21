@@ -145,9 +145,9 @@ namespace Encog.Examples.Adaline
         "O   O",
         " OOO "  } };
 
-        public static MLDataSet GenerateTraining()
+        public static IMLDataSet GenerateTraining()
         {
-            MLDataSet result = new BasicMLDataSet();
+            IMLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < DIGITS.Length; i++)
             {
                 BasicMLData ideal = new BasicMLData(DIGITS.Length);
@@ -200,7 +200,7 @@ namespace Encog.Examples.Adaline
             (new RangeRandomizer(-0.5, 0.5)).Randomize(network);
 
             // train it
-            MLDataSet training = GenerateTraining();
+            IMLDataSet training = GenerateTraining();
             MLTrain train = new TrainAdaline(network, training, 0.01);
 
             int epoch = 1;

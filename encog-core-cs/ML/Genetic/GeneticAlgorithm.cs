@@ -122,9 +122,9 @@ namespace Encog.ML.Genetic
         /// <param name="g">The genome to calculate for.</param>
         public void PerformCalculateScore(IGenome g)
         {
-            if (g.Organism is MLContext)
+            if (g.Organism is IMLContext)
             {
-                ((MLContext) g.Organism).ClearContext();
+                ((IMLContext) g.Organism).ClearContext();
             }
             double score = calculateScore.CalculateScore(g);
             g.Score = score;

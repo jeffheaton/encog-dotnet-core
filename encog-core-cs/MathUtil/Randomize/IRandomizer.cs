@@ -39,7 +39,7 @@ namespace Encog.MathUtil.Randomize
         /// </summary>
         ///
         /// <param name="network">A network to randomize.</param>
-        void Randomize(MLMethod network);
+        void Randomize(IMLMethod network);
 
         /// <summary>
         /// Starting with the specified number, randomize it to the degree specified

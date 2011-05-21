@@ -184,7 +184,7 @@ namespace Encog.Util.Banchmark
             long stop = (10*Evaluate.MILIS);
             int record = 0;
 
-            MLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
+            IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
 
             int iterations = 0;
             var watch = new Stopwatch();
@@ -225,7 +225,7 @@ namespace Encog.Util.Banchmark
             long stop = (10*Evaluate.MILIS);
             int record = 0;
 
-            MLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
+            IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
 
             var watch = new Stopwatch();
             watch.Start();

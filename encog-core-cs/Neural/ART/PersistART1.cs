@@ -69,29 +69,29 @@ namespace Encog.Neural.ART
                 if (section.SectionName.Equals("ART1")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
 
-                    result.A1 = EncogFileSection.ParseDouble(params_0,
-                                                             BasicART.PROPERTY_A1);
-                    result.B1 = EncogFileSection.ParseDouble(params_0,
-                                                             BasicART.PROPERTY_B1);
-                    result.C1 = EncogFileSection.ParseDouble(params_0,
-                                                             BasicART.PROPERTY_C1);
-                    result.D1 = EncogFileSection.ParseDouble(params_0,
-                                                             BasicART.PROPERTY_D1);
-                    result.F1Count = EncogFileSection.ParseInt(params_0,
+                    result.A1 = EncogFileSection.ParseDouble(p,
+                                                             BasicART.PropertyA1);
+                    result.B1 = EncogFileSection.ParseDouble(p,
+                                                             BasicART.PropertyB1);
+                    result.C1 = EncogFileSection.ParseDouble(p,
+                                                             BasicART.PropertyC1);
+                    result.D1 = EncogFileSection.ParseDouble(p,
+                                                             BasicART.PropertyD1);
+                    result.F1Count = EncogFileSection.ParseInt(p,
                                                                PersistConst.PROPERTY_F1_COUNT);
-                    result.F2Count = EncogFileSection.ParseInt(params_0,
+                    result.F2Count = EncogFileSection.ParseInt(p,
                                                                PersistConst.PROPERTY_F2_COUNT);
-                    result.NoWinner = EncogFileSection.ParseInt(params_0,
-                                                                BasicART.PROPERTY_NO_WINNER);
+                    result.NoWinner = EncogFileSection.ParseInt(p,
+                                                                BasicART.PropertyNoWinner);
                     result.L = EncogFileSection
-                        .ParseDouble(params_0, BasicART.PROPERTY_L);
-                    result.Vigilance = EncogFileSection.ParseDouble(params_0,
-                                                                    BasicART.PROPERTY_VIGILANCE);
-                    result.WeightsF1toF2 = EncogFileSection.ParseMatrix(params_0,
+                        .ParseDouble(p, BasicART.PropertyL);
+                    result.Vigilance = EncogFileSection.ParseDouble(p,
+                                                                    BasicART.PropertyVigilance);
+                    result.WeightsF1ToF2 = EncogFileSection.ParseMatrix(p,
                                                                         PersistConst.PROPERTY_WEIGHTS_F1_F2);
-                    result.WeightsF2toF1 = EncogFileSection.ParseMatrix(params_0,
+                    result.WeightsF2ToF1 = EncogFileSection.ParseMatrix(p,
                                                                         PersistConst.PROPERTY_WEIGHTS_F2_F1);
                 }
             }
@@ -109,19 +109,19 @@ namespace Encog.Neural.ART
             xout.AddProperties(art1.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(BasicART.PROPERTY_A1, art1.A1);
-            xout.WriteProperty(BasicART.PROPERTY_B1, art1.B1);
-            xout.WriteProperty(BasicART.PROPERTY_C1, art1.C1);
-            xout.WriteProperty(BasicART.PROPERTY_D1, art1.D1);
+            xout.WriteProperty(BasicART.PropertyA1, art1.A1);
+            xout.WriteProperty(BasicART.PropertyB1, art1.B1);
+            xout.WriteProperty(BasicART.PropertyC1, art1.C1);
+            xout.WriteProperty(BasicART.PropertyD1, art1.D1);
             xout.WriteProperty(PersistConst.PROPERTY_F1_COUNT, art1.F1Count);
             xout.WriteProperty(PersistConst.PROPERTY_F2_COUNT, art1.F2Count);
-            xout.WriteProperty(BasicART.PROPERTY_NO_WINNER, art1.NoWinner);
-            xout.WriteProperty(BasicART.PROPERTY_L, art1.L);
-            xout.WriteProperty(BasicART.PROPERTY_VIGILANCE, art1.Vigilance);
+            xout.WriteProperty(BasicART.PropertyNoWinner, art1.NoWinner);
+            xout.WriteProperty(BasicART.PropertyL, art1.L);
+            xout.WriteProperty(BasicART.PropertyVigilance, art1.Vigilance);
             xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F1_F2,
-                               art1.WeightsF1toF2);
+                               art1.WeightsF1ToF2);
             xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F2_F1,
-                               art1.WeightsF2toF1);
+                               art1.WeightsF2ToF1);
 
             xout.Flush();
         }

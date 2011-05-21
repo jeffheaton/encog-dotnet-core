@@ -20,36 +20,25 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using Encog.ML.Data;
+
 namespace Encog.ML
 {
     /// <summary>
-    /// A machine learning method that is used to break data into clusters.  The 
-    /// number of clusters is usually defined beforehand.  This differs from 
-    /// the MLClassification method in that the data is clustered as an entire 
-    /// group.  If additional data must be clustered later, the entire group 
-    /// must be reclustered.
+    /// Defines a Machine Learning Method that supports regression.  Regression 
+    /// takes an input and produces numeric output.  Function approximation 
+    /// uses regression.  Contrast this to classification, which uses the input 
+    /// to assign a class.
     /// </summary>
     ///
-    public interface MLClustering : MLMethod
+    public interface IMLRegression : IMLInputOutput
     {
-        /// <value>The clusters.</value>
-        MLCluster[] Clusters { get; }
-
         /// <summary>
-        /// Perform the training iteration.
+        /// Compute regression.
         /// </summary>
         ///
-        void Iteration();
-
-        /// <summary>
-        /// Perform the specified number of training iterations.
-        /// </summary>
-        ///
-        /// <param name="count">The number of training iterations.</param>
-        void Iteration(int count);
-
-
-        /// <returns>The number of clusters.</returns>
-        int NumClusters();
+        /// <param name="input">The input data.</param>
+        /// <returns>The output data.</returns>
+        IMLData Compute(IMLData input);
     }
 }

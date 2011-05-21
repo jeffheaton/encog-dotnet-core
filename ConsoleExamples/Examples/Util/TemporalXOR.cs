@@ -41,7 +41,7 @@ namespace Encog.Examples.Util
         private double[][] input;
         private double[][] ideal;
 
-        public MLDataSet Generate(int count)
+        public IMLDataSet Generate(int count)
         {
             this.input = new double[count][];
             this.ideal = new double[count][];

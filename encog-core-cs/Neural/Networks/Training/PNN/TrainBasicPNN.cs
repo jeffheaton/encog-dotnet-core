@@ -76,7 +76,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// The training data.
         /// </summary>
         ///
-        private readonly MLDataSet training;
+        private readonly IMLDataSet training;
 
         /// <summary>
         /// Temp storage for derivative computation.
@@ -138,7 +138,7 @@ namespace Encog.Neural.Networks.Training.PNN
         ///
         /// <param name="network_0">The network to train.</param>
         /// <param name="training_1">The training data.</param>
-        public TrainBasicPNN(BasicPNN network_0, MLDataSet training_1) : base(TrainingImplementationType.OnePass)
+        public TrainBasicPNN(BasicPNN network_0, IMLDataSet training_1) : base(TrainingImplementationType.OnePass)
         {
             network = network_0;
             training = training_1;
@@ -167,7 +167,7 @@ namespace Encog.Neural.Networks.Training.PNN
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }
@@ -269,7 +269,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="training_0">Training set to use.</param>
         /// <param name="deriv">Should we find the derivative.</param>
         /// <returns>The error.</returns>
-        public double CalculateError(MLDataSet training_0,
+        public double CalculateError(IMLDataSet training_0,
                                      bool deriv)
         {
             double err, totErr;
@@ -290,7 +290,7 @@ namespace Encog.Neural.Networks.Training.PNN
 
             network.Exclude = (int) training_0.Count;
 
-            MLDataPair pair = BasicMLDataPair.CreatePair(
+            IMLDataPair pair = BasicMLDataPair.CreatePair(
                 training_0.InputSize, training_0.IdealSize);
 
             var xout = new double[network.OutputCount];
@@ -463,7 +463,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
             }
 
-            MLDataPair pair = BasicMLDataPair.CreatePair(network.Samples.InputSize, network.Samples.IdealSize);
+            IMLDataPair pair = BasicMLDataPair.CreatePair(network.Samples.InputSize, network.Samples.IdealSize);
 
             for (int r = 0; r < network.Samples.Count; r++)
             {

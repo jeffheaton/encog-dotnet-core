@@ -84,7 +84,7 @@ namespace Encog.Examples.XOR
             network.Reset();
 
             // create training data
-            MLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
+            IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
             // train the neural network
             MLTrain train = new Backpropagation(network, trainingSet, 0.7, 0.8);
@@ -100,7 +100,7 @@ namespace Encog.Examples.XOR
 
             // test the neural network
             Console.WriteLine(@"Neural Network Results:");
-            foreach (MLDataPair pair in trainingSet)
+            foreach (IMLDataPair pair in trainingSet)
             {
                 IMLData output = network.Compute(pair.Input);
                 Console.WriteLine(pair.Input[0] + @"," + pair.Input[1]

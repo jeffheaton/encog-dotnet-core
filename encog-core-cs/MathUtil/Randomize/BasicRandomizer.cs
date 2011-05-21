@@ -129,7 +129,7 @@ namespace Encog.MathUtil.Randomize
         /// </summary>
         ///
         /// <param name="method">A network to randomize.</param>
-        public virtual void Randomize(MLMethod method)
+        public virtual void Randomize(IMLMethod method)
         {
             if (method is BasicNetwork)
             {
@@ -139,9 +139,9 @@ namespace Encog.MathUtil.Randomize
                     Randomize(network, i);
                 }
             }
-            else if (method is MLEncodable)
+            else if (method is IMLEncodable)
             {
-                var encode = (MLEncodable) method;
+                var encode = (IMLEncodable) method;
                 var encoded = new double[encode.EncodedArrayLength()];
                 encode.EncodeToArray(encoded);
                 Randomize(encoded);

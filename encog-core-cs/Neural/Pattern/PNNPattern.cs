@@ -110,7 +110,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         ///
         /// <returns>The neural network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             var pnn = new BasicPNN(kernel, outmodel,
                                    inputNeurons, outputNeurons);

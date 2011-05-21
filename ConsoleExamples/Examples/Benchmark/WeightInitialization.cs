@@ -62,7 +62,7 @@ namespace Encog.Examples.Benchmark
             new double[1] { 1.0 }, 
             new double[1] { 0.0 } };
 
-        public double Evaluate(BasicNetwork network, MLDataSet training)
+        public double Evaluate(BasicNetwork network, IMLDataSet training)
         {
             ResilientPropagation rprop = new ResilientPropagation(network, training);
             double startingError = network.CalculateError(training);
@@ -75,7 +75,7 @@ namespace Encog.Examples.Benchmark
         }
 
         public double EvaluateRandomizer(IRandomizer randomizer,
-                BasicNetwork network, MLDataSet training)
+                BasicNetwork network, IMLDataSet training)
         {
             double total = 0;
             for (int i = 0; i < SAMPLE_SIZE; i++)

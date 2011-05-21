@@ -34,8 +34,8 @@ namespace Encog.Neural.SOM
     /// A self organizing map neural network.
     /// </summary>
     [Serializable]
-    public class SOMNetwork : BasicML, MLClassification, MLResettable,
-                              MLError
+    public class SOMNetwork : BasicML, IMLClassification, IMLResettable,
+                              IMLError
     {
         /// <summary>
         /// Do not allow patterns to go below this very small number.
@@ -139,7 +139,7 @@ namespace Encog.Neural.SOM
         #region MLError Members
 
         /// <inheritdoc/>
-        public double CalculateError(MLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             var bmu = new BestMatchingUnit(this);
 
@@ -147,7 +147,7 @@ namespace Encog.Neural.SOM
 
 
             // Determine the BMU foreach each training element.
-            foreach (MLDataPair pair  in  data)
+            foreach (IMLDataPair pair  in  data)
             {
                 IMLData input = pair.Input;
                 bmu.CalculateBMU(input);

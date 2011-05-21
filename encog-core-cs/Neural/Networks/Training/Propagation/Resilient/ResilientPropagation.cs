@@ -76,7 +76,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         public ResilientPropagation(ContainsFlat network,
-                                    MLDataSet training)
+                                    IMLDataSet training)
             : this(network, training, RPROPConst.DEFAULT_INITIAL_UPDATE, RPROPConst.DEFAULT_MAX_STEP)
         {
         }
@@ -93,7 +93,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="initialUpdate"></param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
         public ResilientPropagation(ContainsFlat network,
-                                    MLDataSet training, double initialUpdate,
+                                    IMLDataSet training, double initialUpdate,
                                     double maxStep) : base(network, training)
         {
             var rpropFlat = new TrainFlatNetworkResilient(

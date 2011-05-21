@@ -20,20 +20,23 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using Encog.ML.Data;
+
 namespace Encog.ML
 {
     /// <summary>
-    /// Defines a MLMethod that can hold context.  This allows the context to be 
-    /// cleared.  Examples of MLMethod objects that support this are NEAT, 
-    /// Elmann and Jordan.
+    /// Defines Machine Learning Method that can calculate an error based on a 
+    /// data set.
     /// </summary>
     ///
-    public interface MLContext : MLMethod
+    public interface IMLError : IMLMethod
     {
         /// <summary>
-        /// Clear the context.
+        /// Calculate the error of the ML method, given a dataset.
         /// </summary>
         ///
-        void ClearContext();
+        /// <param name="data">The dataset.</param>
+        /// <returns>The error.</returns>
+        double CalculateError(IMLDataSet data);
     }
 }

@@ -71,7 +71,7 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the network.
         /// </summary>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             var network = new BasicNetwork();
 

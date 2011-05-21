@@ -57,7 +57,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="theLearningRate">The learning rate.</param>
         /// <param name="theMomentum">The momentum.</param>
         public TrainFlatNetworkBackPropagation(FlatNetwork network,
-                                               MLDataSet training, double theLearningRate,
+                                               IMLDataSet training, double theLearningRate,
                                                double theMomentum) : base(network, training)
         {
             momentum = theMomentum;

@@ -171,7 +171,7 @@ namespace Encog.ML.SVM.Training
         ///
         /// <param name="method">The method to train.</param>
         /// <param name="training">The training data for this network.</param>
-        public SVMSearchTrain(SupportVectorMachine method, MLDataSet training)
+        public SVMSearchTrain(SupportVectorMachine method, IMLDataSet training)
             : base(TrainingImplementationType.Iterative)
         {
             fold = 0;
@@ -253,7 +253,7 @@ namespace Encog.ML.SVM.Training
 
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

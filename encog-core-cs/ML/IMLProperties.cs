@@ -29,7 +29,7 @@ namespace Encog.ML
     /// Defines a Machine Learning Method that holds properties.
     /// </summary>
     ///
-    public interface MLProperties : MLMethod
+    public interface IMLProperties : IMLMethod
     {
         /// <value>A map of all properties.</value>
         IDictionary<String, String> Properties { get; }
@@ -80,8 +80,8 @@ namespace Encog.ML
         /// </summary>
         ///
         /// <param name="name">The name of the property.</param>
-        /// <param name="value_ren">The value of the property.</param>
-        void SetProperty(String name, String value_ren);
+        /// <param name="v">The value of the property.</param>
+        void SetProperty(String name, String v);
 
         /// <summary>
         /// Update any objeccts when a property changes.

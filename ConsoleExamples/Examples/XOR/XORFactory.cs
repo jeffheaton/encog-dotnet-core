@@ -302,23 +302,23 @@ namespace Encog.Examples.XOR
         {
             // first, create the machine learning method
             var methodFactory = new MLMethodFactory();
-            MLMethod method = methodFactory.Create(methodName, methodArchitecture, 2, outputNeurons);
+            IMLMethod method = methodFactory.Create(methodName, methodArchitecture, 2, outputNeurons);
 
             // second, create the data set		
-            MLDataSet dataSet = new BasicMLDataSet(XORInput, XORIdeal);
+            IMLDataSet dataSet = new BasicMLDataSet(XORInput, XORIdeal);
 
             // third, create the trainer
             var trainFactory = new MLTrainFactory();
             MLTrain train = trainFactory.Create(method, dataSet, trainerName, trainerArgs);
             // reset if improve is less than 1% over 5 cycles
-            if (method is MLResettable && !(train is ManhattanPropagation))
+            if (method is IMLResettable && !(train is ManhattanPropagation))
             {
                 train.AddStrategy(new RequiredImprovementStrategy(50));
             }
 
             // fourth, train and evaluate.
             EncogUtility.TrainToError(train, 0.01);
-            EncogUtility.Evaluate((MLRegression) method, dataSet);
+            EncogUtility.Evaluate((IMLRegression) method, dataSet);
 
             // finally, write out what we did
             Console.WriteLine(@"Machine Learning Type: " + methodName);

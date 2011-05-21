@@ -23,24 +23,33 @@
 namespace Encog.ML
 {
     /// <summary>
-    /// Defines a Machine Learning Method that can be reset to an untrained 
-    /// starting point.  Most weight based machine learning methods, such
-    /// as neural networks support this.  Support vector machines do not.
+    /// A machine learning method that is used to break data into clusters.  The 
+    /// number of clusters is usually defined beforehand.  This differs from 
+    /// the MLClassification method in that the data is clustered as an entire 
+    /// group.  If additional data must be clustered later, the entire group 
+    /// must be reclustered.
     /// </summary>
     ///
-    public interface MLResettable : MLMethod
+    public interface IMLClustering : IMLMethod
     {
-        /// <summary>
-        /// Reset the weights.
-        /// </summary>
-        ///
-        void Reset();
+        /// <value>The clusters.</value>
+        IMLCluster[] Clusters { get; }
 
         /// <summary>
-        /// Reset the weights with a seed.
+        /// Perform the training iteration.
         /// </summary>
         ///
-        /// <param name="seed">The seed value.</param>
-        void Reset(int seed);
+        void Iteration();
+
+        /// <summary>
+        /// Perform the specified number of training iterations.
+        /// </summary>
+        ///
+        /// <param name="count">The number of training iterations.</param>
+        void Iteration(int count);
+
+
+        /// <returns>The number of clusters.</returns>
+        int NumClusters();
     }
 }

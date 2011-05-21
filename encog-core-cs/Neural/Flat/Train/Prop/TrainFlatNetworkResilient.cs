@@ -59,7 +59,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="initialUpdate">The initial update value.</param>
         /// <param name="maxStep_1">The maximum step value.</param>
         public TrainFlatNetworkResilient(FlatNetwork network,
-                                         MLDataSet training, double zeroTolerance_0,
+                                         IMLDataSet training, double zeroTolerance_0,
                                          double initialUpdate, double maxStep_1) : base(network, training)
         {
             updateValues = new double[network.Weights.Length];
@@ -79,7 +79,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="flat">The network to train.</param>
         /// <param name="trainingSet">The training data to use.</param>
         public TrainFlatNetworkResilient(FlatNetwork flat,
-                                         MLDataSet trainingSet)
+                                         IMLDataSet trainingSet)
             : this(
                 flat, trainingSet, RPROPConst.DEFAULT_ZERO_TOLERANCE, RPROPConst.DEFAULT_INITIAL_UPDATE,
                 RPROPConst.DEFAULT_MAX_STEP)

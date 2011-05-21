@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// <returns>The calculated score.</returns>
         public double CalculateScore(IGenome genome)
         {
-            var network = (MLRegression) genome.Organism;
+            var network = (IMLRegression) genome.Organism;
             return calculateScore.CalculateScore(network);
         }
 

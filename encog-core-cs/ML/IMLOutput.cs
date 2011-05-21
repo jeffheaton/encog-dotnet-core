@@ -23,15 +23,15 @@
 namespace Encog.ML
 {
     /// <summary>
-    /// This interface is the base for all Encog Machine Learning methods.  It 
-    /// defines very little, other than the fact that a subclass is a Machine 
-    /// Learning Method.  A MLMethod is an algorithm that accepts data and 
-    /// provides some sort of insight into it.  This could be a neural network, 
-    /// support vector machine, clustering algorithm, or something else entirely.
-    /// Many MLMethods must be trained by a MLTrain object before they are useful.
+    /// Defines a MLMethod that produces output.  Input is defined as a simple 
+    /// array of double values.  Many machine learning methods, such as neural 
+    /// networks and support vector machines produce output this way, and thus 
+    /// implement this interface.  Others, such as clustering, do not.
     /// </summary>
     ///
-    public interface MLMethod
+    public interface IMLOutput : IMLMethod
     {
+        /// <value>The output count.</value>
+        int OutputCount { get; }
     }
 }

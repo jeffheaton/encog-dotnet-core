@@ -31,7 +31,7 @@ namespace Encog.ML.Kmeans
     /// by the KMeansClustering class.
     /// </summary>
     ///
-    public class KMeansCluster : MLCluster
+    public class KMeansCluster : IMLCluster
     {
         /// <summary>
         /// The contents of the cluster.
@@ -92,9 +92,9 @@ namespace Encog.ML.Kmeans
         /// </summary>
         ///
         /// <returns>The dataset.</returns>
-        public MLDataSet CreateDataSet()
+        public IMLDataSet CreateDataSet()
         {
-            MLDataSet result = new BasicMLDataSet();
+            IMLDataSet result = new BasicMLDataSet();
 
 
             foreach (IMLData dataItem  in  data)

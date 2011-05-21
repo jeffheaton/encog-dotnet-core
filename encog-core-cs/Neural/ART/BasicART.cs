@@ -45,43 +45,43 @@ namespace Encog.Neural.ART
         /// Neural network property, the A1 parameter.
         /// </summary>
         ///
-        public const String PROPERTY_A1 = "A1";
+        public const String PropertyA1 = "A1";
 
         /// <summary>
         /// Neural network property, the B1 parameter.
         /// </summary>
         ///
-        public const String PROPERTY_B1 = "B1";
+        public const String PropertyB1 = "B1";
 
         /// <summary>
         /// Neural network property, the C1 parameter.
         /// </summary>
         ///
-        public const String PROPERTY_C1 = "C1";
+        public const String PropertyC1 = "C1";
 
         /// <summary>
         /// Neural network property, the D1 parameter.
         /// </summary>
         ///
-        public const String PROPERTY_D1 = "D1";
+        public const String PropertyD1 = "D1";
 
         /// <summary>
         /// Neural network property, the L parameter.
         /// </summary>
         ///
-        public const String PROPERTY_L = "L";
+        public const String PropertyL = "L";
 
         /// <summary>
         /// Neural network property, the vigilance parameter.
         /// </summary>
         ///
-        public const String PROPERTY_VIGILANCE = "VIGILANCE";
+        public const String PropertyVigilance = "VIGILANCE";
 
         /// <summary>
         /// Neural network property for no winner.
         /// </summary>
         ///
-        public const String PROPERTY_NO_WINNER = "noWinner";
+        public const String PropertyNoWinner = "noWinner";
 
         /// <summary>
         /// 

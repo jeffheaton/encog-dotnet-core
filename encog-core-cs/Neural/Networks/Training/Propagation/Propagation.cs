@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         ///
         /// <param name="network_0">The network.</param>
         /// <param name="training">The training set.</param>
-        public Propagation(ContainsFlat network_0, MLDataSet training) : base(TrainingImplementationType.Iterative)
+        public Propagation(ContainsFlat network_0, IMLDataSet training) : base(TrainingImplementationType.Iterative)
         {
             network = network_0;
             Training = training;
@@ -118,7 +118,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

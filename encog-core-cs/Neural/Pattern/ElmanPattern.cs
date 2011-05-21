@@ -107,7 +107,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         ///
         /// <returns>The Elman neural network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             BasicLayer hidden, input;
 

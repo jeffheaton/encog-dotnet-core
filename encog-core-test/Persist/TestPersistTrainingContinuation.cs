@@ -44,7 +44,7 @@ namespace Encog.Persist
         [TestMethod]
         public void TestRPROPCont()
         {
-            MLDataSet trainingSet = XOR.CreateXORDataSet();
+            IMLDataSet trainingSet = XOR.CreateXORDataSet();
             BasicNetwork net1 = XOR.CreateUnTrainedXOR();
             BasicNetwork net2 = XOR.CreateUnTrainedXOR();
 
@@ -75,7 +75,7 @@ namespace Encog.Persist
         [TestMethod]
         public void TestRPROPContPersistEG()
         {
-            MLDataSet trainingSet = XOR.CreateXORDataSet();
+            IMLDataSet trainingSet = XOR.CreateXORDataSet();
             BasicNetwork net1 = XOR.CreateUnTrainedXOR();
             BasicNetwork net2 = XOR.CreateUnTrainedXOR();
 

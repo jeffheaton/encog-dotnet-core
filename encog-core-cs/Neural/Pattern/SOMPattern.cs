@@ -69,7 +69,7 @@ namespace Encog.Neural.Pattern
         /// <summary>
         /// Generate the RSOM network.
         /// </summary>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             var som = new SOMNetwork(inputNeurons, outputNeurons);
             som.Reset();

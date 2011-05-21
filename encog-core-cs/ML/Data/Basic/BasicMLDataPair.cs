@@ -32,7 +32,7 @@ namespace Encog.ML.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicMLDataPair : MLDataPair
+    public class BasicMLDataPair : IMLDataPair
     {
         /// <summary>
         /// The the expected output from the neural network, or null
@@ -133,9 +133,9 @@ namespace Encog.ML.Data.Basic
         /// <param name="inputSize">The size of the input data.</param>
         /// <param name="idealSize">The size of the ideal data.</param>
         /// <returns>A new neural data pair object.</returns>
-        public static MLDataPair CreatePair(int inputSize, int idealSize)
+        public static IMLDataPair CreatePair(int inputSize, int idealSize)
         {
-            MLDataPair result;
+            IMLDataPair result;
 
             if (idealSize > 0)
             {

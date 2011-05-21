@@ -115,7 +115,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         ///
         /// <returns>The neural network.</returns>
-        public MLMethod Generate()
+        public IMLMethod Generate()
         {
             var result = new RBFNetwork(inputNeurons, hiddenNeurons,
                                         outputNeurons, rbfType);

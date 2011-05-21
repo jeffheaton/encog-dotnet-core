@@ -49,7 +49,7 @@ namespace Encog.ML.Factory.Method
         /// <param name="input">The input count.</param>
         /// <param name="output">The output count.</param>
         /// <returns>The feedforward network.</returns>
-        public MLMethod Create(String architecture, int input,
+        public IMLMethod Create(String architecture, int input,
                                int output)
         {
             if (input <= 0)

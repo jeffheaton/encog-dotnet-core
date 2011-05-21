@@ -74,7 +74,7 @@ namespace Encog.Util.Simple
                                        inputCount, outputCount, false, format);
             var buffer = new BufferedMLDataSet(binFile);
             buffer.BeginLoad(inputCount, outputCount);
-            foreach (MLDataPair pair in csv)
+            foreach (IMLDataPair pair in csv)
             {
                 buffer.Add(pair);
             }
@@ -131,11 +131,11 @@ namespace Encog.Util.Simple
         /// <param name="headers">True, if headers are present.</param>
         /// <param name="format">The loaded dataset.</param>
         /// <returns></returns>
-        public static MLDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
+        public static IMLDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
         {
             IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, input, ideal);
             var load = new MemoryDataLoader(codec);
-            MLDataSet dataset = load.External2Memory();
+            IMLDataSet dataset = load.External2Memory();
             return dataset;
         }
 
@@ -145,10 +145,10 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="network">The network to evaluate.</param>
         /// <param name="training">The training set to evaluate.</param>
-        public static void Evaluate(MLRegression network,
-                                    MLDataSet training)
+        public static void Evaluate(IMLRegression network,
+                                    IMLDataSet training)
         {
-            foreach (MLDataPair pair in training)
+            foreach (IMLDataPair pair in training)
             {
                 IMLData output = network.Compute(pair.Input);
                 Console.WriteLine("Input="
@@ -226,7 +226,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
         public static void TrainConsole(BasicNetwork network,
-                                        MLDataSet trainingSet, int minutes)
+                                        IMLDataSet trainingSet, int minutes)
         {
             Propagation train = new ResilientPropagation(network,
                                                          trainingSet);
@@ -244,7 +244,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
         public static void TrainConsole(MLTrain train,
-                                        BasicNetwork network, MLDataSet trainingSet,
+                                        BasicNetwork network, IMLDataSet trainingSet,
                                         int minutes)
         {
             int epoch = 1;
@@ -277,7 +277,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         public static void TrainDialog(BasicNetwork network,
-                                       MLDataSet trainingSet)
+                                       IMLDataSet trainingSet)
         {
             Propagation train = new ResilientPropagation(network,
                                                          trainingSet);
@@ -295,7 +295,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         public static void TrainDialog(MLTrain train,
-                                       BasicNetwork network, MLDataSet trainingSet)
+                                       BasicNetwork network, IMLDataSet trainingSet)
         {
             var dialog = new TrainingDialog();
             dialog.Train = train;
@@ -310,7 +310,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The error level to train to.</param>
         public static void TrainToError(BasicNetwork network,
-                                        MLDataSet trainingSet, double error)
+                                        IMLDataSet trainingSet, double error)
         {
             Propagation train = new ResilientPropagation(network,
                                                          trainingSet);
@@ -326,7 +326,7 @@ namespace Encog.Util.Simple
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The desired error level.</param>
         public static void TrainToError(MLTrain train,
-                                        MLDataSet trainingSet,
+                                        IMLDataSet trainingSet,
                                         double error)
         {
             int epoch = 1;
@@ -351,15 +351,15 @@ namespace Encog.Util.Simple
         /// <param name="method">The method to check.</param>
         /// <param name="data">The data to check.</param>
         /// <returns>The error.</returns>
-        public static double CalculateRegressionError(MLRegression method,
-                                                      MLDataSet data)
+        public static double CalculateRegressionError(IMLRegression method,
+                                                      IMLDataSet data)
         {
             var errorCalculation = new ErrorCalculation();
-            if (method is MLContext)
-                ((MLContext) method).ClearContext();
+            if (method is IMLContext)
+                ((IMLContext) method).ClearContext();
 
 
-            foreach (MLDataPair pair in data)
+            foreach (IMLDataPair pair in data)
             {
                 IMLData actual = method.Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
@@ -373,13 +373,13 @@ namespace Encog.Util.Simple
         /// <param name="targetFile">The target file.</param>
         /// <param name="format">The format to use.</param>
         /// <param name="set">The data set.</param>
-        public static void SaveCSV(FileInfo targetFile, CSVFormat format, MLDataSet set)
+        public static void SaveCSV(FileInfo targetFile, CSVFormat format, IMLDataSet set)
         {
             try
             {
                 var file = new StreamWriter(targetFile.ToString());
 
-                foreach (MLDataPair data in set)
+                foreach (IMLDataPair data in set)
                 {
                     var line = new StringBuilder();
 
@@ -414,14 +414,14 @@ namespace Encog.Util.Simple
         /// <param name="method">The method to check.</param>
         /// <param name="data">The data to check.</param>
         /// <returns>The error.</returns>
-        public static double CalculateClassificationError(MLClassification method,
-                                                          MLDataSet data)
+        public static double CalculateClassificationError(IMLClassification method,
+                                                          IMLDataSet data)
         {
             int total = 0;
             int correct = 0;
 
 
-            foreach (MLDataPair pair in data)
+            foreach (IMLDataPair pair in data)
             {
                 var ideal = (int) pair.Ideal[0];
                 int actual = method.Classify(pair.Input);
@@ -437,7 +437,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="filename">The file to load.</param>
         /// <returns>A memory data set.</returns>
-        public static MLDataSet LoadEGB2Memory(FileInfo filename)
+        public static IMLDataSet LoadEGB2Memory(FileInfo filename)
         {
             var buffer = new BufferedMLDataSet(filename.ToString());
             return buffer.LoadToMemory();

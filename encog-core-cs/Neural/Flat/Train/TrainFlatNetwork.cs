@@ -40,7 +40,7 @@ namespace Encog.Neural.Flat.Train
         FlatNetwork Network { get; }
 
         /// <value>The data we are training with.</value>
-        MLDataSet Training { get; }
+        IMLDataSet Training { get; }
 
         /// <summary>
         /// Set the number of threads to use.

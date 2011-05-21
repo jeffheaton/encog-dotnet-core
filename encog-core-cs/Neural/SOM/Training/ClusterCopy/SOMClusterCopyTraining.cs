@@ -48,7 +48,7 @@ namespace Encog.Neural.Som.Training.Clustercopy
         ///
         /// <param name="network_0">The network to train.</param>
         /// <param name="training">The training data.</param>
-        public SOMClusterCopyTraining(SOMNetwork network_0, MLDataSet training)
+        public SOMClusterCopyTraining(SOMNetwork network_0, IMLDataSet training)
             : base(TrainingImplementationType.OnePass)
         {
             network = network_0;
@@ -62,7 +62,7 @@ namespace Encog.Neural.Som.Training.Clustercopy
         }
 
         /// <inheritdoc/>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }
@@ -92,7 +92,7 @@ namespace Encog.Neural.Som.Training.Clustercopy
         {
             int outputNeuron = 0;
 
-            foreach (MLDataPair pair  in  Training)
+            foreach (IMLDataPair pair  in  Training)
             {
                 CopyInputPattern(outputNeuron++, pair.Input);
             }

@@ -98,7 +98,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// The training set that we are using to train.
         /// </summary>
         ///
-        private readonly MLDataSet indexableTraining;
+        private readonly IMLDataSet indexableTraining;
 
         /// <summary>
         /// The network that is to be trained.
@@ -110,7 +110,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// The training elements.
         /// </summary>
         ///
-        private readonly MLDataPair pair;
+        private readonly IMLDataPair pair;
 
         /// <summary>
         /// The number of "parameters" in the LMA algorithm. The parameters are what
@@ -177,7 +177,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="network_0">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
         public LevenbergMarquardtTraining(BasicNetwork network_0,
-                                          MLDataSet training) : base(TrainingImplementationType.Iterative)
+                                          IMLDataSet training) : base(TrainingImplementationType.Iterative)
         {
             ValidateNetwork.ValidateMethodToData(network_0, training);
             if (network_0.OutputCount != 1)
@@ -210,7 +210,7 @@ namespace Encog.Neural.Networks.Training.Lma
 
 
         /// <value>The trained network.</value>
-        public override MLMethod Method
+        public override IMLMethod Method
         {
             get { return network; }
         }

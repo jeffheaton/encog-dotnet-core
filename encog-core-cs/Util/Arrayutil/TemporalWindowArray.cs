@@ -161,9 +161,9 @@ namespace Encog.Util.Arrayutil
         ///
         /// <param name="data">The array to process.</param>
         /// <returns>A neural data set that contains the time-series.</returns>
-        public MLDataSet Process(double[] data)
+        public IMLDataSet Process(double[] data)
         {
-            MLDataSet result = new BasicMLDataSet();
+            IMLDataSet result = new BasicMLDataSet();
 
             int totalWindowSize = inputWindow + predictWindow;
             int stopPoint = data.Length - totalWindowSize;
@@ -187,7 +187,7 @@ namespace Encog.Util.Arrayutil
                     idealData[j_0] = data[index++];
                 }
 
-                MLDataPair pair = new BasicMLDataPair(inputData, idealData);
+                IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }
 

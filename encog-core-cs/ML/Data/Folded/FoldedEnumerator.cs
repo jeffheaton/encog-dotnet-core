@@ -59,7 +59,7 @@ namespace Encog.ML.Data.Folded
     /// <summary>
     /// The enumerator for a folded dataset.
     /// </summary>
-    public class FoldedEnumerator : IEnumerator<MLDataPair>
+    public class FoldedEnumerator : IEnumerator<IMLDataPair>
     {
         /// <summary>
         /// The owner.
@@ -74,7 +74,7 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// The current data item.
         /// </summary>
-        private MLDataPair _currentPair;
+        private IMLDataPair _currentPair;
 
         /// <summary>
         /// Construct an enumerator.
@@ -91,7 +91,7 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// The current object.
         /// </summary>
-        public MLDataPair Current
+        public IMLDataPair Current
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Encog.ML.Data.Folded
         {
             if (HasNext())
             {
-                MLDataPair pair = BasicMLDataPair.CreatePair(
+                IMLDataPair pair = BasicMLDataPair.CreatePair(
                     _owner.InputSize, _owner.IdealSize);
                 _owner.GetRecord(_currentIndex++, pair);
                 _currentPair = pair;

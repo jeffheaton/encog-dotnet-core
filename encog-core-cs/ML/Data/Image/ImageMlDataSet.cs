@@ -142,7 +142,7 @@ namespace Encog.ML.Data.Image
         /// Add input and expected output. This is used for supervised training.
         /// </summary>
         /// <param name="inputData">The input data to train on.</param>
-        public override void Add(MLDataPair inputData)
+        public override void Add(IMLDataPair inputData)
         {
             if (!(inputData.Input is ImageMLData))
             {
@@ -163,7 +163,7 @@ namespace Encog.ML.Data.Image
             this.height = height;
             this.width = width;
 
-            foreach (MLDataPair pair in this)
+            foreach (IMLDataPair pair in this)
             {
                 if (!(pair.Input is ImageMLData))
                 {

@@ -29,7 +29,7 @@ namespace Encog.ML
     /// implement this interface.  Others, such as clustering, do not.
     /// </summary>
     ///
-    public interface MLInput : MLMethod
+    public interface IMLInput : IMLMethod
     {
         /// <value>The input.</value>
         int InputCount { get; }

@@ -43,7 +43,7 @@ namespace Encog.Neural.PNN
     /// Inc (Computers); April 3, 1995, ISBN: 0471105880
     /// </summary>
     [Serializable]
-    public class BasicPNN : AbstractPNN, MLRegression
+    public class BasicPNN : AbstractPNN, IMLRegression
     {      
         /// <summary>
         /// The sigma's specify the widths of each kernel used.
@@ -115,7 +115,7 @@ namespace Encog.Neural.PNN
                     priors = new double[OutputCount];
 
 
-                    foreach (MLDataPair pair  in  value)
+                    foreach (IMLDataPair pair  in  value)
                     {
                         var i = (int) pair.Ideal[0];
                         if (i >= countPer.Length)
@@ -157,7 +157,7 @@ namespace Encog.Neural.PNN
 
             int r = -1;
 
-            foreach (MLDataPair pair  in  samples)
+            foreach (IMLDataPair pair  in  samples)
             {
                 r++;
 

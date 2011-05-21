@@ -81,10 +81,10 @@ namespace Encog.Examples.XOR
                     + FormatArray(network.Weights));
         }
 
-        public static void Evaluate(FlatNetwork network, MLDataSet trainingSet)
+        public static void Evaluate(FlatNetwork network, IMLDataSet trainingSet)
         {
             double[] output = new double[1];
-            foreach (MLDataPair pair in trainingSet)
+            foreach (IMLDataPair pair in trainingSet)
             {
                 network.Compute(pair.Input.Data, output);
                 Console.WriteLine(pair.Input.Data[0] + @"," + pair.Input[1]
@@ -116,7 +116,7 @@ namespace Encog.Examples.XOR
         /// <param name="app">Holds arguments and other info.</param>
         public void Execute(IExampleInterface app)
         {
-            MLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
+            IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
             FlatNetwork network = CreateNetwork();
 

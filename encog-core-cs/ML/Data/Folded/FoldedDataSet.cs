@@ -34,7 +34,7 @@ namespace Encog.ML.Data.Folded
     /// This dataset works off of an underlying dataset. By default there are no
     /// folds (fold size 1). Call the fold method to create more folds. 
     /// </summary>
-    public class FoldedDataSet : MLDataSet
+    public class FoldedDataSet : IMLDataSet
     {
         /// <summary>
         /// Error message: adds are not supported.
@@ -44,7 +44,7 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        private readonly MLDataSet _underlying;
+        private readonly IMLDataSet _underlying;
 
         /// <summary>
         /// The fold that we are currently on.
@@ -81,7 +81,7 @@ namespace Encog.ML.Data.Folded
         /// Create a folded dataset. 
         /// </summary>
         /// <param name="underlying">The underlying folded dataset.</param>
-        public FoldedDataSet(MLDataSet underlying)
+        public FoldedDataSet(IMLDataSet underlying)
         {
             _underlying = underlying;
             Fold(1);
@@ -165,7 +165,7 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        public MLDataSet Underlying
+        public IMLDataSet Underlying
         {
             get { return _underlying; }
         }
@@ -195,7 +195,7 @@ namespace Encog.ML.Data.Folded
         /// Not supported.
         /// </summary>
         /// <param name="inputData">Not used.</param>
-        public void Add(MLDataPair inputData)
+        public void Add(IMLDataPair inputData)
         {
             throw new TrainingError(AddNotSupported);
         }
@@ -230,7 +230,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="pair">The record.</param>
-        public void GetRecord(long index, MLDataPair pair)
+        public void GetRecord(long index, IMLDataPair pair)
         {
             _underlying.GetRecord(CurrentFoldOffset + index, pair);
         }
@@ -256,7 +256,7 @@ namespace Encog.ML.Data.Folded
         /// Open an additional dataset.
         /// </summary>
         /// <returns>The dataset.</returns>
-        public MLDataSet OpenAdditional()
+        public IMLDataSet OpenAdditional()
         {
             var folded = new FoldedDataSet(_underlying.OpenAdditional()) {Owner = this};
             return folded;
@@ -267,7 +267,7 @@ namespace Encog.ML.Data.Folded
         /// Get an enumberator.
         /// </summary>
         /// <returns>The enumerator.</returns>
-        public IEnumerator<MLDataPair> GetEnumerator()
+        public IEnumerator<IMLDataPair> GetEnumerator()
         {
             return new FoldedEnumerator(this);
         }
