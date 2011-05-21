@@ -35,28 +35,28 @@ namespace Encog.ML.Genetic.Genes
         /// Is this gene enabled?
         /// </summary>
         ///
-        private bool enabled;
+        private bool _enabled;
 
         /// <summary>
         /// ID of this gene, -1 for unassigned.
         /// </summary>
         ///
-        private long id;
+        private long _id;
 
         /// <summary>
         /// Innovation ID, -1 for unassigned.
         /// </summary>
         ///
-        private long innovationId;
+        private long _innovationId;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
-        public BasicGene()
+        protected BasicGene()
         {
-            enabled = true;
-            id = -1;
-            innovationId = -1;
+            _enabled = true;
+            _id = -1;
+            _innovationId = -1;
         }
 
         #region IGene Members
@@ -72,8 +72,8 @@ namespace Encog.ML.Genetic.Genes
         /// </summary>
         public long Id
         {
-            get { return id; }
-            set { id = value; }
+            get { return _id; }
+            set { _id = value; }
         }
 
 
@@ -82,16 +82,16 @@ namespace Encog.ML.Genetic.Genes
         /// </summary>
         public long InnovationId
         {
-            get { return innovationId; }
-            set { innovationId = value; }
+            get { return _innovationId; }
+            set { _innovationId = value; }
         }
 
 
         /// <value>True, if this gene is enabled.</value>
         public bool Enabled
         {
-            get { return enabled; }
-            set { enabled = value; }
+            get { return _enabled; }
+            set { _enabled = value; }
         }
 
 

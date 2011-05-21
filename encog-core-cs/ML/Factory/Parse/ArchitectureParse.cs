@@ -32,16 +32,8 @@ namespace Encog.ML.Factory.Parse
     /// This class is used to parse a Encog architecture string.
     /// </summary>
     ///
-    public sealed class ArchitectureParse
+    public static class ArchitectureParse
     {
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        ///
-        private ArchitectureParse()
-        {
-        }
-
         /// <summary>
         /// parse a layer.
         /// </summary>
@@ -84,12 +76,9 @@ namespace Encog.ML.Factory.Parse
                 {
                     throw new EncogError("Default (?) in an invalid location.");
                 }
-                else
-                {
-                    layer.Count = defaultValue;
-                    layer.UsedDefault = true;
-                    return layer;
-                }
+                layer.Count = defaultValue;
+                layer.UsedDefault = true;
+                return layer;
             }
 
             // single item, no function
@@ -194,14 +183,11 @@ namespace Encog.ML.Factory.Parse
                 {
                     throw new EncogError("Missing equals(=) operator.");
                 }
-                else
-                {
-                    parser.Advance();
-                }
+                parser.Advance();
 
-                String value_ren = ParseValue(parser);
+                String v = ParseValue(parser);
 
-                result[name.ToUpper()] = value_ren;
+                result[name.ToUpper()] = v;
 
                 if (!parser.ParseThroughComma())
                 {

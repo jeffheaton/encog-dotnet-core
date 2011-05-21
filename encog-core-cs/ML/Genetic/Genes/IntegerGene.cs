@@ -31,26 +31,16 @@ namespace Encog.ML.Genetic.Genes
     public class IntegerGene : BasicGene
     {
         /// <summary>
-        /// The value of this gene.
-        /// </summary>
-        ///
-        private int value_ren;
-
-        /// <summary>
         /// Set the value of this gene.
         /// </summary>
-        public int Value
-        {
-            get { return value_ren; }
-            set { value_ren = value; }
-        }
+        public int Value { get; set; }
 
         /// <summary>
         /// Copy another gene to this one.
         /// </summary>
         public override sealed void Copy(IGene gene)
         {
-            value_ren = ((IntegerGene) gene).Value;
+            Value = ((IntegerGene) gene).Value;
         }
 
         /// <inheritdoc/>
@@ -58,7 +48,7 @@ namespace Encog.ML.Genetic.Genes
         {
             if (obj is IntegerGene)
             {
-                return (((IntegerGene) obj).Value == value_ren);
+                return (((IntegerGene) obj).Value == Value);
             }
             else
             {
@@ -70,13 +60,13 @@ namespace Encog.ML.Genetic.Genes
         /// <returns>a hash code.</returns>
         public override sealed int GetHashCode()
         {
-            return value_ren;
+            return Value;
         }
 
         /// <inheritdoc/>
         public override sealed String ToString()
         {
-            return "" + value_ren;
+            return "" + Value;
         }
     }
 }

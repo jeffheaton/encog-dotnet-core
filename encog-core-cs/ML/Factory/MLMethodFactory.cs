@@ -35,72 +35,72 @@ namespace Encog.ML.Factory
         /// String constant for feedforward neural networks.
         /// </summary>
         ///
-        public const String TYPE_FEEDFORWARD = "feedforward";
+        public const String TypeFeedforward = "feedforward";
 
         /// <summary>
         /// String constant for RBF neural networks.
         /// </summary>
         ///
-        public const String TYPE_RBFNETWORK = "rbfnetwork";
+        public const String TypeRbfnetwork = "rbfnetwork";
 
         /// <summary>
         /// String constant for support vector machines.
         /// </summary>
         ///
-        public const String TYPE_SVM = "svm";
+        public const String TypeSVM = "svm";
 
         /// <summary>
         /// String constant for SOMs.
         /// </summary>
         ///
-        public const String TYPE_SOM = "som";
+        public const String TypeSOM = "som";
 
         /// <summary>
         /// A probabilistic neural network. Supports both PNN and GRNN.
         /// </summary>
         ///
-        public const String TYPE_PNN = "pnn";
+        public const String TypePNN = "pnn";
 
         /// <summary>
         /// A factory used to create feedforward neural networks.
         /// </summary>
         ///
-        private readonly FeedforwardFactory feedforwardFactory;
+        private readonly FeedforwardFactory _feedforwardFactory;
 
         /// <summary>
         /// The factory for PNN's.
         /// </summary>
         ///
-        private readonly PNNFactory pnnFactory;
+        private readonly PNNFactory _pnnFactory;
 
         /// <summary>
         /// A factory used to create RBF networks.
         /// </summary>
         ///
-        private readonly RBFNetworkFactory rbfFactory;
+        private readonly RBFNetworkFactory _rbfFactory;
 
         /// <summary>
         /// A factory used to create SOM's.
         /// </summary>
         ///
-        private readonly SOMFactory somFactory;
+        private readonly SOMFactory _somFactory;
 
         /// <summary>
         /// A factory used to create support vector machines.
         /// </summary>
         ///
-        private readonly SVMFactory svmFactory;
+        private readonly SVMFactory _svmFactory;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public MLMethodFactory()
         {
-            feedforwardFactory = new FeedforwardFactory();
-            svmFactory = new SVMFactory();
-            rbfFactory = new RBFNetworkFactory();
-            pnnFactory = new PNNFactory();
-            somFactory = new SOMFactory();
+            _feedforwardFactory = new FeedforwardFactory();
+            _svmFactory = new SVMFactory();
+            _rbfFactory = new RBFNetworkFactory();
+            _pnnFactory = new PNNFactory();
+            _somFactory = new SOMFactory();
         }
 
         /// <summary>
@@ -115,25 +115,25 @@ namespace Encog.ML.Factory
         public IMLMethod Create(String methodType,
                                String architecture, int input, int output)
         {
-            if (TYPE_FEEDFORWARD.Equals(methodType))
+            if (TypeFeedforward.Equals(methodType))
             {
-                return feedforwardFactory.Create(architecture, input, output);
+                return _feedforwardFactory.Create(architecture, input, output);
             }
-            else if (TYPE_RBFNETWORK.Equals(methodType))
+            if (TypeRbfnetwork.Equals(methodType))
             {
-                return rbfFactory.Create(architecture, input, output);
+                return _rbfFactory.Create(architecture, input, output);
             }
-            else if (TYPE_SVM.Equals(methodType))
+            if (TypeSVM.Equals(methodType))
             {
-                return svmFactory.Create(architecture, input, output);
+                return _svmFactory.Create(architecture, input, output);
             }
-            else if (TYPE_SOM.Equals(methodType))
+            if (TypeSOM.Equals(methodType))
             {
-                return somFactory.Create(architecture, input, output);
+                return _somFactory.Create(architecture, input, output);
             }
-            else if (TYPE_PNN.Equals(methodType))
+            if (TypePNN.Equals(methodType))
             {
-                return pnnFactory.Create(architecture, input, output);
+                return _pnnFactory.Create(architecture, input, output);
             }
             throw new EncogError("Unknown method type: " + methodType);
         }

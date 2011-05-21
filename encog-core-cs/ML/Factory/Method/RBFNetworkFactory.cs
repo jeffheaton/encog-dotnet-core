@@ -40,7 +40,7 @@ namespace Encog.ML.Factory.Method
         /// The max layer count.
         /// </summary>
         ///
-        public const int MAX_LAYERS = 3;
+        public const int MaxLayers = 3;
 
         /// <summary>
         /// Create a RBF network.
@@ -54,7 +54,7 @@ namespace Encog.ML.Factory.Method
                                int output)
         {
             IList<String> layers = ArchitectureParse.ParseLayers(architecture);
-            if (layers.Count != MAX_LAYERS)
+            if (layers.Count != MaxLayers)
             {
                 throw new EncogError(
                     "RBF Networks must have exactly three elements, "

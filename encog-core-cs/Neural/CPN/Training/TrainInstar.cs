@@ -43,27 +43,27 @@ namespace Encog.Neural.CPN.Training
         /// The network being trained.
         /// </summary>
         ///
-        private readonly CPNNetwork network;
+        private readonly CPNNetwork _network;
 
         /// <summary>
         /// The training data. This is unsupervised training, so only the input
         /// portion of the training data will be used.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The learning rate.
         /// </summary>
         ///
-        private double learningRate;
+        private double _learningRate;
 
         /// <summary>
         /// If the weights have not been initialized, then they can be initialized
         /// before training begins. This will be done on the first iteration.
         /// </summary>
         ///
-        private bool mustInit;
+        private bool _mustInit;
 
         /// <summary>
         /// Construct the instar training object.
@@ -76,10 +76,10 @@ namespace Encog.Neural.CPN.Training
         public TrainInstar(CPNNetwork theNetwork, IMLDataSet theTraining,
                            double theLearningRate, bool theInitWeights) : base(TrainingImplementationType.Iterative)
         {
-            network = theNetwork;
-            training = theTraining;
-            learningRate = theLearningRate;
-            mustInit = theInitWeights;
+            _network = theNetwork;
+            _training = theTraining;
+            _learningRate = theLearningRate;
+            _mustInit = theInitWeights;
         }
 
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace Encog.Neural.CPN.Training
         /// <inheritdoc />
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
         #region ILearningRate Members
@@ -100,8 +100,8 @@ namespace Encog.Neural.CPN.Training
         /// <inheritdoc />
         public double LearningRate
         {
-            get { return learningRate; }
-            set { learningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -112,7 +112,7 @@ namespace Encog.Neural.CPN.Training
         ///
         private void InitWeights()
         {
-            if (training.Count != network.InstarCount)
+            if (_training.Count != _network.InstarCount)
             {
                 throw new NeuralNetworkError(
                     "If the weights are to be set from the "
@@ -122,22 +122,22 @@ namespace Encog.Neural.CPN.Training
 
             int i = 0;
 
-            foreach (IMLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  _training)
             {
-                for (int j = 0; j < network.InputCount; j++)
+                for (int j = 0; j < _network.InputCount; j++)
                 {
-                    network.WeightsInputToInstar[j, i] =
+                    _network.WeightsInputToInstar[j, i] =
                         pair.Input[j];
                 }
                 i++;
             }
-            mustInit = false;
+            _mustInit = false;
         }
 
         /// <inheritdoc />
         public override sealed void Iteration()
         {
-            if (mustInit)
+            if (_mustInit)
             {
                 InitWeights();
             }
@@ -145,9 +145,9 @@ namespace Encog.Neural.CPN.Training
             double worstDistance = Double.NegativeInfinity;
 
 
-            foreach (IMLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  _training)
             {
-                IMLData xout = network.ComputeInstar(pair.Input);
+                IMLData xout = _network.ComputeInstar(pair.Input);
 
                 // determine winner
                 int winner = EngineArray.IndexOfLargest(xout.Data);
@@ -157,7 +157,7 @@ namespace Encog.Neural.CPN.Training
                 for (int i = 0; i < pair.Input.Count; i++)
                 {
                     double diff = pair.Input[i]
-                                  - network.WeightsInputToInstar[i, winner];
+                                  - _network.WeightsInputToInstar[i, winner];
                     distance += diff*diff;
                 }
                 distance = BoundMath.Sqrt(distance);
@@ -168,12 +168,12 @@ namespace Encog.Neural.CPN.Training
                 }
 
                 // train
-                for (int j = 0; j < network.InputCount; j++)
+                for (int j = 0; j < _network.InputCount; j++)
                 {
-                    double delta = learningRate
-                                   *(pair.Input[j] - network.WeightsInputToInstar[j, winner]);
+                    double delta = _learningRate
+                                   *(pair.Input[j] - _network.WeightsInputToInstar[j, winner]);
 
-                    network.WeightsInputToInstar.Add(j, winner, delta);
+                    _network.WeightsInputToInstar.Add(j, winner, delta);
                 }
             }
 

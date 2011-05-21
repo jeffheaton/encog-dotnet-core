@@ -41,37 +41,37 @@ namespace Encog.ML.Factory.Train
         /// Property for gamma.
         /// </summary>
         ///
-        public const String PROPERTY_GAMMA1 = "GAMMA1";
+        public const String PropertyGamma1 = "GAMMA1";
 
         /// <summary>
         /// Property for constant.
         /// </summary>
         ///
-        public const String PROPERTY_C1 = "C1";
+        public const String PropertyC1 = "C1";
 
         /// <summary>
         /// Property for gamma.
         /// </summary>
         ///
-        public const String PROPERTY_GAMMA2 = "GAMMA2";
+        public const String PropertyGamma2 = "GAMMA2";
 
         /// <summary>
         /// Property for constant.
         /// </summary>
         ///
-        public const String PROPERTY_C2 = "C2";
+        public const String PropertyC2 = "C2";
 
         /// <summary>
         /// Property for gamma.
         /// </summary>
         ///
-        public const String PROPERTY_GAMMA_STEP = "GAMMASTEP";
+        public const String PropertyGammaStep = "GAMMASTEP";
 
         /// <summary>
         /// Property for constant.
         /// </summary>
         ///
-        public const String PROPERTY_C_STEP = "CSTEP";
+        public const String PropertyCStep = "CSTEP";
 
         /// <summary>
         /// Create a SVM trainer.
@@ -96,29 +96,30 @@ namespace Encog.ML.Factory.Train
 
             var holder = new ParamsHolder(args);
             double gammaStart = holder.GetDouble(
-                PROPERTY_GAMMA1, false,
+                PropertyGamma1, false,
                 SVMSearchTrain.DEFAULT_GAMMA_BEGIN);
-            double cStart = holder.GetDouble(PROPERTY_C1,
+            double cStart = holder.GetDouble(PropertyC1,
                                              false, SVMSearchTrain.DEFAULT_CONST_BEGIN);
             double gammaStop = holder.GetDouble(
-                PROPERTY_GAMMA2, false,
+                PropertyGamma2, false,
                 SVMSearchTrain.DEFAULT_GAMMA_END);
-            double cStop = holder.GetDouble(PROPERTY_C2,
+            double cStop = holder.GetDouble(PropertyC2,
                                             false, SVMSearchTrain.DEFAULT_CONST_END);
             double gammaStep = holder.GetDouble(
-                PROPERTY_GAMMA_STEP, false,
+                PropertyGammaStep, false,
                 SVMSearchTrain.DEFAULT_GAMMA_STEP);
-            double cStep = holder.GetDouble(PROPERTY_C_STEP,
+            double cStep = holder.GetDouble(PropertyCStep,
                                             false, SVMSearchTrain.DEFAULT_CONST_STEP);
 
-            var result = new SVMSearchTrain((SupportVectorMachine) method, training);
-
-            result.GammaBegin = gammaStart;
-            result.GammaEnd = gammaStop;
-            result.GammaStep = gammaStep;
-            result.ConstBegin = cStart;
-            result.ConstEnd = cStop;
-            result.ConstStep = cStep;
+            var result = new SVMSearchTrain((SupportVectorMachine) method, training)
+                             {
+                                 GammaBegin = gammaStart,
+                                 GammaEnd = gammaStop,
+                                 GammaStep = gammaStep,
+                                 ConstBegin = cStart,
+                                 ConstEnd = cStop,
+                                 ConstStep = cStep
+                             };
 
             return result;
         }

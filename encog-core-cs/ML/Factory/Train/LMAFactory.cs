@@ -58,11 +58,10 @@ namespace Encog.ML.Factory.Train
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);
             bool useReg = holder.GetBoolean(
-                MLTrainFactory.PROPERTY_BAYESIAN_REGULARIZATION, false, false);
+                MLTrainFactory.PropertyBayesianRegularization, false, false);
 
             var result = new LevenbergMarquardtTraining(
-                (BasicNetwork) method, training);
-            result.UseBayesianRegularization = useReg;
+                (BasicNetwork) method, training) {UseBayesianRegularization = useReg};
             return result;
         }
     }

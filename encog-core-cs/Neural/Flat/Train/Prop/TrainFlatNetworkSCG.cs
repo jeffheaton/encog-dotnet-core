@@ -37,98 +37,98 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The starting value for sigma.
         /// </summary>
         ///
-        protected internal const double FIRST_SIGMA = 1.0E-4D;
+        protected internal const double FirstSigma = 1.0E-4D;
 
         /// <summary>
         /// The starting value for lambda.
         /// </summary>
         ///
-        protected internal const double FIRST_LAMBDA = 1.0E-6D;
+        protected internal const double FirstLambda = 1.0E-6D;
 
         /// <summary>
         /// The old gradients, used to compare.
         /// </summary>
         ///
-        private readonly double[] oldGradient;
+        private readonly double[] _oldGradient;
 
         /// <summary>
         /// The old weight values, used to restore the neural network.
         /// </summary>
         ///
-        private readonly double[] oldWeights;
+        private readonly double[] _oldWeights;
 
         /// <summary>
         /// Step direction vector.
         /// </summary>
         ///
-        private readonly double[] p;
+        private readonly double[] _p;
 
         /// <summary>
         /// Step direction vector.
         /// </summary>
         ///
-        private readonly double[] r;
+        private readonly double[] _r;
 
         /// <summary>
         /// The neural network weights.
         /// </summary>
         ///
-        private readonly double[] weights;
+        private readonly double[] _weights;
 
         /// <summary>
         /// The current delta.
         /// </summary>
         ///
-        private double delta;
+        private double _delta;
 
         /// <summary>
         /// The number of iterations. The network will reset when this value
         /// increases over the number of weights in the network.
         /// </summary>
         ///
-        private int k;
+        private int _k;
 
         /// <summary>
         /// The first lambda value.
         /// </summary>
         ///
-        private double lambda;
+        private double _lambda;
 
         /// <summary>
         /// The second lambda value.
         /// </summary>
         ///
-        private double lambda2;
+        private double _lambda2;
 
         /// <summary>
         /// The magnitude of p.
         /// </summary>
         ///
-        private double magP;
+        private double _magP;
 
         /// <summary>
         /// Should the initial gradients be calculated.
         /// </summary>
         ///
-        private bool mustInit;
+        private bool _mustInit;
 
         /// <summary>
         /// The old error value, used to make sure an improvement happened.
         /// </summary>
         ///
-        private double oldError;
+        private double _oldError;
 
         /// <summary>
         /// Should we restart?
         /// </summary>
         ///
-        private bool restart;
+        private bool _restart;
 
         /// <summary>
         /// Tracks if the latest training cycle was successful.
         /// </summary>
         ///
-        private bool success;
+        private bool _success;
 
         /// <summary>
         /// Construct the training object.
@@ -139,26 +139,26 @@ namespace Encog.Neural.Flat.Train.Prop
         public TrainFlatNetworkSCG(FlatNetwork network,
                                    IMLDataSet training) : base(network, training)
         {
-            success = true;
+            _success = true;
 
-            success = true;
-            delta = 0;
-            lambda2 = 0;
-            lambda = FIRST_LAMBDA;
-            oldError = 0;
-            magP = 0;
-            restart = false;
+            _success = true;
+            _delta = 0;
+            _lambda2 = 0;
+            _lambda = FirstLambda;
+            _oldError = 0;
+            _magP = 0;
+            _restart = false;
 
-            weights = EngineArray.ArrayCopy(network.Weights);
-            int numWeights = weights.Length;
+            _weights = EngineArray.ArrayCopy(network.Weights);
+            int numWeights = _weights.Length;
 
-            oldWeights = new double[numWeights];
-            oldGradient = new double[numWeights];
+            _oldWeights = new double[numWeights];
+            _oldGradient = new double[numWeights];
 
-            p = new double[numWeights];
-            r = new double[numWeights];
+            _p = new double[numWeights];
+            _r = new double[numWeights];
 
-            mustInit = true;
+            _mustInit = true;
         }
 
         /// <summary>
@@ -173,11 +173,11 @@ namespace Encog.Neural.Flat.Train.Prop
 
             // normalize
 
-            double factor = -2D/gradients.Length/outCount;
+            double factor = -2D/Gradients.Length/outCount;
 
-            for (int i = 0; i < gradients.Length; i++)
+            for (int i = 0; i < Gradients.Length; i++)
             {
-                gradients[i] *= factor;
+                Gradients[i] *= factor;
             }
         }
 
@@ -187,18 +187,18 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         private void Init()
         {
-            int numWeights = weights.Length;
+            int numWeights = _weights.Length;
 
             CalculateGradients();
 
-            k = 1;
+            _k = 1;
 
             for (int i = 0; i < numWeights; ++i)
             {
-                p[i] = r[i] = -gradients[i];
+                _p[i] = _r[i] = -Gradients[i];
             }
 
-            mustInit = false;
+            _mustInit = false;
         }
 
         /// <summary>
@@ -207,89 +207,89 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         public override void Iteration()
         {
-            if (mustInit)
+            if (_mustInit)
             {
                 Init();
             }
-            int numWeights = weights.Length;
+            int numWeights = _weights.Length;
             // Storage space for previous iteration values.
 
-            if (restart)
+            if (_restart)
             {
                 // First time through, set initial values for SCG parameters.
-                lambda = FIRST_LAMBDA;
-                lambda2 = 0;
-                k = 1;
-                success = true;
-                restart = false;
+                _lambda = FirstLambda;
+                _lambda2 = 0;
+                _k = 1;
+                _success = true;
+                _restart = false;
             }
 
             // If an error reduction is possible, calculate 2nd order info.
-            if (success)
+            if (_success)
             {
                 // If the search direction is small, stop.
-                magP = EngineArray.VectorProduct(p, p);
+                _magP = EngineArray.VectorProduct(_p, _p);
 
-                double sigma = FIRST_SIGMA
-                               /Math.Sqrt(magP);
+                double sigma = FirstSigma
+                               /Math.Sqrt(_magP);
 
                 // In order to compute the new step, we need a new gradient.
                 // First, save off the old data.
-                EngineArray.ArrayCopy(gradients, oldGradient);
-                EngineArray.ArrayCopy(weights, oldWeights);
-                oldError = Error;
+                EngineArray.ArrayCopy(Gradients, _oldGradient);
+                EngineArray.ArrayCopy(_weights, _oldWeights);
+                _oldError = Error;
 
                 // Now we move to the new point in weight space.
                 for (int i = 0; i < numWeights; ++i)
                 {
-                    weights[i] += sigma*p[i];
+                    _weights[i] += sigma*_p[i];
                 }
 
-                EngineArray.ArrayCopy(weights, network.Weights);
+                EngineArray.ArrayCopy(_weights, Network.Weights);
 
                 // And compute the new gradient.
                 CalculateGradients();
 
                 // Now we have the new gradient, and we continue the step
                 // computation.
-                delta = 0;
-                for (int i_0 = 0; i_0 < numWeights; ++i_0)
+                _delta = 0;
+                for (int i = 0; i < numWeights; ++i)
                 {
-                    double step = (gradients[i_0] - oldGradient[i_0])
+                    double step = (Gradients[i] - _oldGradient[i])
                                   /sigma;
-                    delta += p[i_0]*step;
+                    _delta += _p[i]*step;
                 }
             }
 
             // Scale delta.
-            delta += (lambda - lambda2)*magP;
+            _delta += (_lambda - _lambda2)*_magP;
 
             // If delta <= 0, make Hessian positive definite.
-            if (delta <= 0)
+            if (_delta <= 0)
             {
-                lambda2 = 2*(lambda - delta/magP);
-                delta = lambda*magP - delta;
-                lambda = lambda2;
+                _lambda2 = 2*(_lambda - _delta/_magP);
+                _delta = _lambda*_magP - _delta;
+                _lambda = _lambda2;
             }
 
             // Calculate step size.
-            double mu = EngineArray.VectorProduct(p, r);
-            double alpha = mu/delta;
+            double mu = EngineArray.VectorProduct(_p, _r);
+            double alpha = mu/_delta;
 
             // Calculate the comparison parameter.
             // We must compute a new gradient, but this time we do not
             // want to keep the old values. They were useful only for
             // approximating the Hessian.
-            for (int i_1 = 0; i_1 < numWeights; ++i_1)
+            for (int i = 0; i < numWeights; ++i)
             {
-                weights[i_1] = oldWeights[i_1] + alpha*p[i_1];
+                _weights[i] = _oldWeights[i] + alpha*_p[i];
             }
 
-            EngineArray.ArrayCopy(weights, network.Weights);
+            EngineArray.ArrayCopy(_weights, Network.Weights);
 
             CalculateGradients();
 
-            double gdelta = 2*delta*(oldError - Error)
+            double gdelta = 2*_delta*(_oldError - Error)
                             /(mu*mu);
 
             // If gdelta >= 0, a successful reduction in error is possible.
@@ -299,39 +299,39 @@ namespace Encog.Neural.Flat.Train.Prop
                 double rsum = 0;
 
                 // Now r = r(k+1).
-                for (int i_2 = 0; i_2 < numWeights; ++i_2)
+                for (int i = 0; i < numWeights; ++i)
                 {
-                    double tmp = -gradients[i_2];
-                    rsum += tmp*r[i_2];
-                    r[i_2] = tmp;
+                    double tmp = -Gradients[i];
+                    rsum += tmp*_r[i];
+                    _r[i] = tmp;
                 }
-                lambda2 = 0;
-                success = true;
+                _lambda2 = 0;
+                _success = true;
 
                 // Do we need to restart?
-                if (k >= numWeights)
+                if (_k >= numWeights)
                 {
-                    restart = true;
-                    EngineArray.ArrayCopy(r, p);
+                    _restart = true;
+                    EngineArray.ArrayCopy(_r, _p);
                 }
                 else
                 {
                     // Compute new conjugate direction.
-                    double beta = (EngineArray.VectorProduct(r, r) - rsum)
+                    double beta = (EngineArray.VectorProduct(_r, _r) - rsum)
                                   /mu;
 
                     // Update direction vector.
-                    for (int i_3 = 0; i_3 < numWeights; ++i_3)
+                    for (int i = 0; i < numWeights; ++i)
                     {
-                        p[i_3] = r[i_3] + beta*p[i_3];
+                        _p[i] = _r[i] + beta*_p[i];
                     }
 
-                    restart = false;
+                    _restart = false;
                 }
 
                 if (gdelta >= 0.75D)
                 {
-                    lambda *= 0.25D;
+                    _lambda *= 0.25D;
                 }
             }
             else
@@ -340,22 +340,22 @@ namespace Encog.Neural.Flat.Train.Prop
                 // under_tolerance = false;
 
                 // Go back to w(k) since w(k) + alpha*p(k) is not better.
-                EngineArray.ArrayCopy(oldWeights, weights);
-                currentError = oldError;
-                lambda2 = lambda;
-                success = false;
+                EngineArray.ArrayCopy(_oldWeights, _weights);
+                CurrentError = _oldError;
+                _lambda2 = _lambda;
+                _success = false;
             }
 
             if (gdelta < 0.25D)
             {
-                lambda += delta*(1 - gdelta)/magP;
+                _lambda += _delta*(1 - gdelta)/_magP;
             }
 
-            lambda = BoundNumbers.Bound(lambda);
+            _lambda = BoundNumbers.Bound(_lambda);
 
-            ++k;
+            ++_k;
 
-            EngineArray.ArrayCopy(weights, network.Weights);
+            EngineArray.ArrayCopy(_weights, Network.Weights);
         }
 
         /// <summary>

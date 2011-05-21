@@ -647,7 +647,7 @@ namespace Encog.App.Analyst.Wizard
             var hidden = (int) ((inputColumns)*1.5d);
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigType,
-                MLMethodFactory.TYPE_FEEDFORWARD);
+                MLMethodFactory.TypeFeedforward);
 
             if (_range == NormalizeRange.NegOne2One)
             {
@@ -827,7 +827,7 @@ namespace Encog.App.Analyst.Wizard
             var hidden = (int) ((inputColumns)*1.5d);
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigType,
-                MLMethodFactory.TYPE_RBFNETWORK);
+                MLMethodFactory.TypeRbfnetwork);
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigArchitecture,
                 "?->GAUSSIAN(c=" + hidden + ")->?");
@@ -958,12 +958,12 @@ namespace Encog.App.Analyst.Wizard
         private void GenerateSOM()
         {
             _script.Properties.SetProperty(
-                ScriptProperties.MlConfigType, MLMethodFactory.TYPE_SOM);
+                ScriptProperties.MlConfigType, MLMethodFactory.TypeSOM);
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigArchitecture, "?->?");
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          MLTrainFactory.TYPE_SOM_NEIGHBORHOOD);
+                                          MLTrainFactory.TypeSOMNeighborhood);
             _script.Properties.SetProperty(
                 ScriptProperties.MlTrainArguments,
                 "ITERATIONS=1000,NEIGHBORHOOD=rbf1d,RBF_TYPE=gaussian");
@@ -984,12 +984,12 @@ namespace Encog.App.Analyst.Wizard
             arch.Append("(type=new,kernel=rbf)->?");
 
             _script.Properties.SetProperty(
-                ScriptProperties.MlConfigType, MLMethodFactory.TYPE_SVM);
+                ScriptProperties.MlConfigType, MLMethodFactory.TypeSVM);
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigArchitecture, arch.ToString());
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          MLTrainFactory.TYPE_SVM_SEARCH);
+                                          MLTrainFactory.TypeSVMSearch);
             _script.Properties.SetProperty(
                 ScriptProperties.MlTrainTargetError, DefaultTrainError);
         }

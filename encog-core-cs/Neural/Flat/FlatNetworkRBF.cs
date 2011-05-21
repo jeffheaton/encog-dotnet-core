@@ -38,7 +38,7 @@ namespace Encog.Neural.Flat
         /// The RBF's used.
         /// </summary>
         ///
-        private IRadialBasisFunction[] rbf;
+        private IRadialBasisFunction[] _rbf;
 
         /// <summary>
         /// Default constructor.
@@ -55,12 +55,12 @@ namespace Encog.Neural.Flat
         /// <param name="inputCount">The number of input neurons. (also the number of dimensions)</param>
         /// <param name="hiddenCount">The number of hidden neurons.</param>
         /// <param name="outputCount">The number of output neurons.</param>
-        /// <param name="rbf_0"></param>
+        /// <param name="rbf"></param>
         public FlatNetworkRBF(int inputCount, int hiddenCount,
-                              int outputCount, IRadialBasisFunction[] rbf_0)
+                              int outputCount, IRadialBasisFunction[] rbf)
         {
             var layers = new FlatLayer[3];
-            rbf = rbf_0;
+            _rbf = rbf;
 
             layers[0] = new FlatLayer(new ActivationLinear(), inputCount, 0.0d);
             layers[1] = new FlatLayer(new ActivationLinear(), hiddenCount, 0.0d);
@@ -74,8 +74,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public IRadialBasisFunction[] RBF
         {
-            get { return rbf; }
-            set { rbf = value; }
+            get { return _rbf; }
+            set { _rbf = value; }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Encog.Neural.Flat
         {
             var result = new FlatNetworkRBF();
             CloneFlatNetwork(result);
-            result.rbf = rbf;
+            result._rbf = _rbf;
             return result;
         }
 
@@ -101,9 +101,9 @@ namespace Encog.Neural.Flat
         {
             int outputIndex = LayerIndex[1];
 
-            for (int i = 0; i < rbf.Length; i++)
+            for (int i = 0; i < _rbf.Length; i++)
             {
-                double o = rbf[i].Calculate(x);
+                double o = _rbf[i].Calculate(x);
                 LayerOutput[outputIndex + i] = o;
             }
 

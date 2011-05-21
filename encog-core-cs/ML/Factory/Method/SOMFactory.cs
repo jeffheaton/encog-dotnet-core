@@ -59,9 +59,7 @@ namespace Encog.ML.Factory.Method
             int inputCount = inputLayer.Count;
             int outputCount = outputLayer.Count;
 
-            var pattern = new SOMPattern();
-            pattern.InputNeurons = inputCount;
-            pattern.OutputNeurons = outputCount;
+            var pattern = new SOMPattern {InputNeurons = inputCount, OutputNeurons = outputCount};
             return pattern.Generate();
         }
     }

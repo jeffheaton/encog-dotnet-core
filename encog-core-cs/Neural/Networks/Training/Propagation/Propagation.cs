@@ -50,7 +50,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// The current flat trainer we are using, or null for none.
         /// </summary>
         ///
-        private TrainFlatNetwork flatTraining;
+        private ITrainFlatNetwork flatTraining;
 
         /// <summary>
         /// Construct a propagation object.
@@ -65,7 +65,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <value>the flatTraining to set</value>
-        public TrainFlatNetwork FlatTraining
+        public ITrainFlatNetwork FlatTraining
         {
             get { return flatTraining; }
             set { flatTraining = value; }

@@ -37,73 +37,73 @@ namespace Encog.Neural.Flat.Train.Prop
     /// to the neural network.
     /// </summary>
     ///
-    public abstract class TrainFlatNetworkProp : TrainFlatNetwork
+    public abstract class TrainFlatNetworkProp : ITrainFlatNetwork
     {
         /// <summary>
         /// The network in indexable form.
         /// </summary>
         ///
-        private readonly IMLDataSet indexable;
+        private readonly IMLDataSet _indexable;
 
         /// <summary>
         /// The last gradients, from the last training iteration.
         /// </summary>
         ///
-        private readonly double[] lastGradient;
+        private readonly double[] _lastGradient;
 
         /// <summary>
         /// The network to train.
         /// </summary>
         ///
-        protected internal readonly FlatNetwork network;
+        private readonly FlatNetwork _network;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The current error is the average error over all of the threads.
         /// </summary>
         ///
-        protected internal double currentError;
+        protected internal double CurrentError;
 
         /// <summary>
         /// The gradients.
         /// </summary>
         ///
-        protected internal double[] gradients;
+        protected internal double[] Gradients;
 
         /// <summary>
         /// The iteration.
         /// </summary>
         ///
-        private int iteration;
+        private int _iteration;
 
         /// <summary>
         /// The number of threads to use.
         /// </summary>
         ///
-        private int numThreads;
+        private int _numThreads;
 
         /// <summary>
         /// Reported exception from the threads.
         /// </summary>
         ///
-        private Exception reportedException;
+        private Exception _reportedException;
 
         /// <summary>
         /// The total error. Used to take the average of.
         /// </summary>
         ///
-        private double totalError;
+        private double _totalError;
 
         /// <summary>
         /// The workers.
         /// </summary>
         ///
-        private GradientWorker[] workers;
+        private GradientWorker[] _workers;
 
         /// <summary>
         /// True (default) if we should fix flatspots on supported activation functions.
@@ -113,7 +113,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <summary>
         /// The flat spot constants.
         /// </summary>
-        private double[] flatSpot;        
+        private double[] _flatSpot;        
 
 
 
@@ -121,27 +121,27 @@ namespace Encog.Neural.Flat.Train.Prop
         /// Train a flat network multithreaded.
         /// </summary>
         ///
-        /// <param name="network_0">The network to train.</param>
-        /// <param name="training_1">The training data to use.</param>
-        public TrainFlatNetworkProp(FlatNetwork network_0,
-                                    IMLDataSet training_1)
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data to use.</param>
+        protected TrainFlatNetworkProp(FlatNetwork network,
+                                    IMLDataSet training)
         {
-            training = training_1;
-            network = network_0;
+            _training = training;
+            _network = network;
 
-            gradients = new double[network.Weights.Length];
-            lastGradient = new double[network.Weights.Length];
+            Gradients = new double[_network.Weights.Length];
+            _lastGradient = new double[_network.Weights.Length];
 
-            indexable = training_1;
-            numThreads = 0;
-            reportedException = null;
+            _indexable = training;
+            _numThreads = 0;
+            _reportedException = null;
             FixFlatSpot = true;
         }
 
         /// <value>The gradients from the last iteration;</value>
         public double[] LastGradient
         {
-            get { return lastGradient; }
+            get { return _lastGradient; }
         }
 
         #region TrainFlatNetwork Members
@@ -155,48 +155,48 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <inheritdoc/>
         public double Error
         {
-            get { return currentError; }
+            get { return CurrentError; }
         }
 
 
         /// <inheritdoc/>
         public int IterationNumber
         {
-            get { return iteration; }
-            set { iteration = value; }
+            get { return _iteration; }
+            set { _iteration = value; }
         }
 
 
         /// <inheritdoc/>
         public FlatNetwork Network
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <inheritdoc/>
         public int NumThreads
         {
-            get { return numThreads; }
-            set { numThreads = value; }
+            get { return _numThreads; }
+            set { _numThreads = value; }
         }
 
 
         /// <inheritdoc/>
         public IMLDataSet Training
         {
-            get { return training; }
+            get { return _training; }
         }
 
 
         /// <inheritdoc/>
         public virtual void Iteration()
         {
-            iteration++;
+            _iteration++;
 
             CalculateGradients();
 
-            if (network.Limited)
+            if (_network.Limited)
             {
                 LearnLimited();
             }
@@ -206,20 +206,20 @@ namespace Encog.Neural.Flat.Train.Prop
             }
 
 
-            foreach (GradientWorker worker in workers)
+            foreach (GradientWorker worker in _workers)
             {
-                EngineArray.ArrayCopy(network.Weights, 0,
-                                      worker.Weights, 0, network.Weights.Length);
+                EngineArray.ArrayCopy(_network.Weights, 0,
+                                      worker.Weights, 0, _network.Weights.Length);
             }
 
-            if (network.HasContext)
+            if (_network.HasContext)
             {
                 CopyContexts();
             }
 
-            if (reportedException != null)
+            if (_reportedException != null)
             {
-                throw (new EncogError(reportedException));
+                throw (new EncogError(_reportedException));
             }
         }
 
@@ -247,25 +247,25 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         public virtual void CalculateGradients()
         {
-            if (workers == null)
+            if (_workers == null)
             {
                 Init();
             }
 
-            if (network.HasContext)
+            if (_network.HasContext)
             {
-                workers[0].Network.ClearContext();
+                _workers[0].Network.ClearContext();
             }
 
-            totalError = 0;
+            _totalError = 0;
 
-            if (workers.Length > 1)
+            if (_workers.Length > 1)
             {
                 TaskGroup group = EngineConcurrency.Instance
                     .CreateTaskGroup();
 
 
-                foreach (GradientWorker worker in workers)
+                foreach (GradientWorker worker in _workers)
                 {
                     EngineConcurrency.Instance.ProcessTask(worker, group);
                 }
@@ -274,10 +274,10 @@ namespace Encog.Neural.Flat.Train.Prop
             }
             else
             {
-                workers[0].Run();
+                _workers[0].Run();
             }
 
-            currentError = totalError / workers.Length;
+            CurrentError = _totalError / _workers.Length;
         }
 
         /// <summary>
@@ -287,15 +287,15 @@ namespace Encog.Neural.Flat.Train.Prop
         private void CopyContexts()
         {
             // copy the contexts(layer outputO from each group to the next group
-            for (int i = 0; i < (workers.Length - 1); i++)
+            for (int i = 0; i < (_workers.Length - 1); i++)
             {
-                double[] src = workers[i].Network.LayerOutput;
-                double[] dst = workers[i + 1].Network.LayerOutput;
+                double[] src = _workers[i].Network.LayerOutput;
+                double[] dst = _workers[i + 1].Network.LayerOutput;
                 EngineArray.ArrayCopy(src, dst);
             }
 
             // copy the contexts from the final group to the real network
-            EngineArray.ArrayCopy(workers[workers.Length - 1].Network.LayerOutput, network.LayerOutput);
+            EngineArray.ArrayCopy(_workers[_workers.Length - 1].Network.LayerOutput, _network.LayerOutput);
         }
 
         /// <summary>
@@ -305,13 +305,13 @@ namespace Encog.Neural.Flat.Train.Prop
         private void Init()
         {
             // fix flat spot, if needed
-            this.flatSpot = new double[this.network.ActivationFunctions.Length];
+            _flatSpot = new double[_network.ActivationFunctions.Length];
 
             if (FixFlatSpot)
             {
-                for (int i = 0; i < this.network.ActivationFunctions.Length; i++)
+                for (int i = 0; i < _network.ActivationFunctions.Length; i++)
                 {
-                    IActivationFunction af = this.network.ActivationFunctions[i];
+                    IActivationFunction af = _network.ActivationFunctions[i];
                     // if the diriv tends to 0 on either -1, 0.0 or 1, then 
                     // add a flat-spot const.
                     double t1 = af.DerivativeFunction(-1.0);
@@ -321,24 +321,24 @@ namespace Encog.Neural.Flat.Train.Prop
                             || (Math.Abs(t2) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
                             || (Math.Abs(t3) < EncogFramework.DEFAULT_DOUBLE_EQUAL))
                     {
-                        this.flatSpot[i] = 0.1;
+                        _flatSpot[i] = 0.1;
                     }
                     else
                     {
-                        this.flatSpot[i] = 0.0;
+                        _flatSpot[i] = 0.0;
                     }
                 }
             }
             else
             {
-                EngineArray.Fill(this.flatSpot, 0.0);
+                EngineArray.Fill(_flatSpot, 0.0);
             }
 
 
             var determine = new DetermineWorkload(
-                numThreads, (int)indexable.Count);
+                _numThreads, (int)_indexable.Count);
 
-            workers = new GradientWorker[determine.ThreadCount];
+            _workers = new GradientWorker[determine.ThreadCount];
 
             int index = 0;
 
@@ -346,9 +346,9 @@ namespace Encog.Neural.Flat.Train.Prop
             // handle CPU
             foreach (IntRange r in determine.CalculateWorkers())
             {
-                workers[index++] = new GradientWorker(((FlatNetwork)network.Clone()),
-                                                         this, indexable.OpenAdditional(), r.Low,
-                                                         r.High, flatSpot);
+                _workers[index++] = new GradientWorker(((FlatNetwork)_network.Clone()),
+                                                         this, _indexable.OpenAdditional(), r.Low,
+                                                         r.High, _flatSpot);
             }
         }
 
@@ -358,11 +358,11 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         protected internal void Learn()
         {
-            double[] weights = network.Weights;
-            for (int i = 0; i < gradients.Length; i++)
+            double[] weights = _network.Weights;
+            for (int i = 0; i < Gradients.Length; i++)
             {
-                weights[i] += UpdateWeight(gradients, lastGradient, i);
-                gradients[i] = 0;
+                weights[i] += UpdateWeight(Gradients, _lastGradient, i);
+                Gradients[i] = 0;
             }
         }
 
@@ -375,9 +375,9 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         protected internal void LearnLimited()
         {
-            double limit = network.ConnectionLimit;
-            double[] weights = network.Weights;
-            for (int i = 0; i < gradients.Length; i++)
+            double limit = _network.ConnectionLimit;
+            double[] weights = _network.Weights;
+            for (int i = 0; i < Gradients.Length; i++)
             {
                 if (Math.Abs(weights[i]) < limit)
                 {
@@ -385,9 +385,9 @@ namespace Encog.Neural.Flat.Train.Prop
                 }
                 else
                 {
-                    weights[i] += UpdateWeight(gradients, lastGradient, i);
+                    weights[i] += UpdateWeight(Gradients, _lastGradient, i);
                 }
-                gradients[i] = 0;
+                Gradients[i] = 0;
             }
         }
 
@@ -395,25 +395,25 @@ namespace Encog.Neural.Flat.Train.Prop
         /// Called by the worker threads to report the progress at each step.
         /// </summary>
         ///
-        /// <param name="gradients_0">The gradients from that worker.</param>
+        /// <param name="gradients">The gradients from that worker.</param>
         /// <param name="error">The error for that worker.</param>
         /// <param name="ex">The exception.</param>
-        public void Report(double[] gradients_0, double error,
+        public void Report(double[] gradients, double error,
                            Exception ex)
         {
             lock (this)
             {
                 if (ex == null)
                 {
-                    for (int i = 0; i < gradients_0.Length; i++)
+                    for (int i = 0; i < gradients.Length; i++)
                     {
-                        gradients[i] += gradients_0[i];
+                        Gradients[i] += gradients[i];
                     }
-                    totalError += error;
+                    _totalError += error;
                 }
                 else
                 {
-                    reportedException = ex;
+                    _reportedException = ex;
                 }
             }
         }
@@ -423,11 +423,11 @@ namespace Encog.Neural.Flat.Train.Prop
         /// the training.
         /// </summary>
         ///
-        /// <param name="gradients_0">The gradients.</param>
-        /// <param name="lastGradient_1">The last gradients.</param>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
         /// <param name="index">The index.</param>
         /// <returns>The update value.</returns>
-        public abstract double UpdateWeight(double[] gradients_0,
-                                            double[] lastGradient_1, int index);
+        public abstract double UpdateWeight(double[] gradients,
+                                            double[] lastGradient, int index);
     }
 }

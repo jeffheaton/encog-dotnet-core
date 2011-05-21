@@ -37,8 +37,8 @@ namespace Encog.Persist
         private BAMNetwork Create()
         {
             var network = new BAMNetwork(6, 3);
-            network.WeightsF1toF2[1, 1] = 2.0;
-            network.WeightsF2toF1[2, 2] = 3.0;
+            network.WeightsF1ToF2[1, 1] = 2.0;
+            network.WeightsF2ToF1[2, 2] = 3.0;
             return network;
         }
 
@@ -68,10 +68,10 @@ namespace Encog.Persist
         {
             Assert.AreEqual(6, network.F1Count);
             Assert.AreEqual(3, network.F2Count);
-            Assert.AreEqual(18, network.WeightsF1toF2.Size);
-            Assert.AreEqual(18, network.WeightsF2toF1.Size);
-            Assert.AreEqual(2.0, network.WeightsF1toF2[1, 1]);
-            Assert.AreEqual(3.0, network.WeightsF2toF1[2, 2]);
+            Assert.AreEqual(18, network.WeightsF1ToF2.Size);
+            Assert.AreEqual(18, network.WeightsF2ToF1.Size);
+            Assert.AreEqual(2.0, network.WeightsF1ToF2[1, 1]);
+            Assert.AreEqual(3.0, network.WeightsF2ToF1[2, 2]);
         }
     }
 }

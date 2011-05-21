@@ -35,13 +35,13 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The zero tolerance to use.
         /// </summary>
         ///
-        private readonly double zeroTolerance;
+        private readonly double _zeroTolerance;
 
         /// <summary>
         /// The learning rate.
         /// </summary>
         ///
-        private double learningRate;
+        private double _learningRate;
 
         /// <summary>
         /// Construct a trainer for flat networks to use the Manhattan update rule.
@@ -53,16 +53,16 @@ namespace Encog.Neural.Flat.Train.Prop
         public TrainFlatNetworkManhattan(FlatNetwork network,
                                          IMLDataSet training, double theLearningRate) : base(network, training)
         {
-            learningRate = theLearningRate;
-            zeroTolerance = RPROPConst.DEFAULT_ZERO_TOLERANCE;
+            _learningRate = theLearningRate;
+            _zeroTolerance = RPROPConst.DefaultZeroTolerance;
         }
 
 
         /// <value>the learningRate to set</value>
         public double LearningRate
         {
-            get { return learningRate; }
-            set { learningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
 
@@ -77,17 +77,17 @@ namespace Encog.Neural.Flat.Train.Prop
         public override sealed double UpdateWeight(double[] gradients,
                                                    double[] lastGradient, int index)
         {
-            if (Math.Abs(gradients[index]) < zeroTolerance)
+            if (Math.Abs(gradients[index]) < _zeroTolerance)
             {
                 return 0;
             }
             else if (gradients[index] > 0)
             {
-                return learningRate;
+                return _learningRate;
             }
             else
             {
-                return -learningRate;
+                return -_learningRate;
             }
         }
     }

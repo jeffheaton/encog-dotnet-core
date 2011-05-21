@@ -41,14 +41,14 @@ namespace Encog.ML.Genetic.Genome
         /// The individual elements of this chromosome.
         /// </summary>
         ///
-        private readonly List<IGene> genes;
+        private readonly List<IGene> _genes;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public Chromosome()
         {
-            genes = new List<IGene>();
+            _genes = new List<IGene>();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Encog.ML.Genetic.Genome
         /// <value>the genes</value>
         public List<IGene> Genes
         {
-            get { return genes; }
+            get { return _genes; }
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Encog.ML.Genetic.Genome
         /// <param name="gene">The gene to add.</param>
         public void Add(IGene gene)
         {
-            genes.Add(gene);
+            _genes.Add(gene);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Encog.ML.Genetic.Genome
         /// <returns>The gene.</returns>
         public IGene Get(int i)
         {
-            return genes[i];
+            return _genes[i];
         }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Encog.ML.Genetic.Genome
         /// <returns>The gene specified.</returns>
         public IGene GetGene(int gene)
         {
-            return genes[gene];
+            return _genes[gene];
         }
 
 
         /// <returns>The number of genes in this chromosome.</returns>
         public int Size()
         {
-            return genes.Count;
+            return _genes.Count;
         }
     }
 }

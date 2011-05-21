@@ -28,7 +28,7 @@ namespace Encog.Neural.Flat.Train
     /// Common interface for training a flat neural network.
     /// </summary>
     ///
-    public interface TrainFlatNetwork
+    public interface ITrainFlatNetwork
     {
         /// <summary>
         /// The error.

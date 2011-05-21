@@ -39,19 +39,19 @@ namespace Encog.Neural.CPN
         /// The input to instar property.
         /// </summary>
         ///
-        internal const String PROPERTY_inputToInstar = "inputToInstar";
+        internal const String PropertyInputToInstar = "inputToInstar";
 
         /// <summary>
         /// The instar to input property.
         /// </summary>
         ///
-        internal const String PROPERTY_instarToInput = "instarToInput";
+        internal const String PropertyInstarToInput = "instarToInput";
 
         /// <summary>
         /// The winner count property.
         /// </summary>
         ///
-        internal const String PROPERTY_winnerCount = "winnerCount";
+        internal const String PropertyWinnerCount = "winnerCount";
 
         /// <inheritdoc/>
         public Type NativeType
@@ -107,11 +107,11 @@ namespace Encog.Neural.CPN
                     outputCount = EncogFileSection.ParseInt(paras,
                                                             PersistConst.OUTPUT_COUNT);
                     winnerCount = EncogFileSection.ParseInt(paras,
-                                                            PROPERTY_winnerCount);
+                                                            PropertyWinnerCount);
                     m1 = EncogFileSection.ParseMatrix(paras,
-                                                      PROPERTY_inputToInstar);
+                                                      PropertyInputToInstar);
                     m2 = EncogFileSection.ParseMatrix(paras,
-                                                      PROPERTY_instarToInput);
+                                                      PropertyInstarToInput);
                 }
             }
 
@@ -136,11 +136,11 @@ namespace Encog.Neural.CPN
             xout.WriteProperty(PersistConst.INPUT_COUNT, cpn.InputCount);
             xout.WriteProperty(PersistConst.INSTAR, cpn.InstarCount);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, cpn.OutputCount);
-            xout.WriteProperty(PROPERTY_inputToInstar,
+            xout.WriteProperty(PropertyInputToInstar,
                                cpn.WeightsInputToInstar);
-            xout.WriteProperty(PROPERTY_instarToInput,
+            xout.WriteProperty(PropertyInstarToInput,
                                cpn.WeightsInstarToOutstar);
-            xout.WriteProperty(PROPERTY_winnerCount, cpn.WinnerCount);
+            xout.WriteProperty(PropertyWinnerCount, cpn.WinnerCount);
 
             xout.Flush();
         }

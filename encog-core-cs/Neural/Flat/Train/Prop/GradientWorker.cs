@@ -25,7 +25,6 @@ using Encog.Engine.Network.Activation;
 using Encog.MathUtil.Error;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Flat.Train.Prop;
 using Encog.Util;
 using Encog.Util.Concurrency;
 
@@ -41,102 +40,102 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The actual values from the neural network.
         /// </summary>
         ///
-        private readonly double[] actual;
+        private readonly double[] _actual;
 
         /// <summary>
         /// The error calculation method.
         /// </summary>
         ///
-        private readonly ErrorCalculation errorCalculation;
+        private readonly ErrorCalculation _errorCalculation;
 
         /// <summary>
         /// The gradients.
         /// </summary>
         ///
-        private readonly double[] gradients;
+        private readonly double[] _gradients;
 
         /// <summary>
         /// The low end of the training.
         /// </summary>
         ///
-        private readonly int high;
+        private readonly int _high;
 
         /// <summary>
         /// The neuron counts, per layer.
         /// </summary>
         ///
-        private readonly int[] layerCounts;
+        private readonly int[] _layerCounts;
 
         /// <summary>
         /// The deltas for each layer.
         /// </summary>
         ///
-        private readonly double[] layerDelta;
+        private readonly double[] _layerDelta;
 
         /// <summary>
         /// The feed counts, per layer.
         /// </summary>
         ///
-        private readonly int[] layerFeedCounts;
+        private readonly int[] _layerFeedCounts;
 
         /// <summary>
         /// The layer indexes.
         /// </summary>
         ///
-        private readonly int[] layerIndex;
+        private readonly int[] _layerIndex;
 
         /// <summary>
         /// The output from each layer.
         /// </summary>
         ///
-        private readonly double[] layerOutput;
+        private readonly double[] _layerOutput;
 
         /// <summary>
         /// The high end of the training data.
         /// </summary>
         ///
-        private readonly int low;
+        private readonly int _low;
 
         /// <summary>
         /// The network to train.
         /// </summary>
         ///
-        private readonly FlatNetwork network;
+        private readonly FlatNetwork _network;
 
         /// <summary>
         /// The owner.
         /// </summary>
         ///
-        private readonly TrainFlatNetworkProp owner;
+        private readonly TrainFlatNetworkProp _owner;
 
         /// <summary>
         /// The pair to use for training.
         /// </summary>
         ///
-        private readonly IMLDataPair pair;
+        private readonly IMLDataPair _pair;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The index to each layer's weights and thresholds.
         /// </summary>
         ///
-        private readonly int[] weightIndex;
+        private readonly int[] _weightIndex;
 
         /// <summary>
         /// The weights and thresholds.
         /// </summary>
         ///
-        private readonly double[] weights;
+        private readonly double[] _weights;
 
         /// <summary>
         /// Derivative add constant.  Used to combat flat spot.
         /// </summary>
-        private double[] _flatSpot;
+        private readonly double[] _flatSpot;
 
 
         /// <summary>
@@ -153,27 +152,27 @@ namespace Encog.Neural.Flat.Train.Prop
                                  TrainFlatNetworkProp theOwner, IMLDataSet theTraining,
                                  int theLow, int theHigh, double[] theFlatSpots)
         {
-            errorCalculation = new ErrorCalculation();
-            network = theNetwork;
-            training = theTraining;
-            low = theLow;
-            high = theHigh;
-            owner = theOwner;
+            _errorCalculation = new ErrorCalculation();
+            _network = theNetwork;
+            _training = theTraining;
+            _low = theLow;
+            _high = theHigh;
+            _owner = theOwner;
             _flatSpot = theFlatSpots;
 
-            layerDelta = new double[network.LayerOutput.Length];
-            gradients = new double[network.Weights.Length];
-            actual = new double[network.OutputCount];
+            _layerDelta = new double[_network.LayerOutput.Length];
+            _gradients = new double[_network.Weights.Length];
+            _actual = new double[_network.OutputCount];
 
-            weights = network.Weights;
-            layerIndex = network.LayerIndex;
-            layerCounts = network.LayerCounts;
-            weightIndex = network.WeightIndex;
-            layerOutput = network.LayerOutput;
-            layerFeedCounts = network.LayerFeedCounts;
+            _weights = _network.Weights;
+            _layerIndex = _network.LayerIndex;
+            _layerCounts = _network.LayerCounts;
+            _weightIndex = _network.WeightIndex;
+            _layerOutput = _network.LayerOutput;
+            _layerFeedCounts = _network.LayerFeedCounts;
 
-            pair = BasicMLDataPair.CreatePair(network.InputCount,
-                                              network.OutputCount);
+            _pair = BasicMLDataPair.CreatePair(_network.InputCount,
+                                              _network.OutputCount);
         }
 
         #region FlatGradientWorker Members
@@ -181,14 +180,14 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <inheritdoc/>
         public FlatNetwork Network
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <value>The weights for this network.</value>
         public double[] Weights
         {
-            get { return weights; }
+            get { return _weights; }
         }
 
         /// <summary>
@@ -199,19 +198,19 @@ namespace Encog.Neural.Flat.Train.Prop
         {
             try
             {
-                errorCalculation.Reset();
-                for (int i = low; i <= high; i++)
+                _errorCalculation.Reset();
+                for (int i = _low; i <= _high; i++)
                 {
-                    training.GetRecord(i, pair);
-                    Process(pair.InputArray, pair.IdealArray);
+                    _training.GetRecord(i, _pair);
+                    Process(_pair.InputArray, _pair.IdealArray);
                 }
-                double error = errorCalculation.Calculate();
-                owner.Report(gradients, error, null);
-                EngineArray.Fill(gradients, 0);
+                double error = _errorCalculation.Calculate();
+                _owner.Report(_gradients, error, null);
+                EngineArray.Fill(_gradients, 0);
             }
             catch (Exception ex)
             {
-                owner.Report(null, 0, ex);
+                _owner.Report(null, 0, ex);
             }
         }
 
@@ -225,18 +224,18 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="ideal">The ideal values.</param>
         private void Process(double[] input, double[] ideal)
         {
-            network.Compute(input, actual);
+            _network.Compute(input, _actual);
 
-            errorCalculation.UpdateError(actual, ideal);
+            _errorCalculation.UpdateError(_actual, ideal);
 
-            for (int i = 0; i < actual.Length; i++)
+            for (int i = 0; i < _actual.Length; i++)
             {
-                layerDelta[i] = (network.ActivationFunctions[0]
-                                    .DerivativeFunction(actual[i])+_flatSpot[0])
-                                *(ideal[i] - actual[i]);
+                _layerDelta[i] = (_network.ActivationFunctions[0]
+                                    .DerivativeFunction(_actual[i])+_flatSpot[0])
+                                *(ideal[i] - _actual[i]);
             }
 
-            for (int i = network.BeginTraining; i < network.EndTraining; i++)
+            for (int i = _network.BeginTraining; i < _network.EndTraining; i++)
             {
                 ProcessLevel(i);
             }
@@ -249,33 +248,33 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="currentLevel">The level.</param>
         private void ProcessLevel(int currentLevel)
         {
-            int fromLayerIndex = layerIndex[currentLevel + 1];
-            int toLayerIndex = layerIndex[currentLevel];
-            int fromLayerSize = layerCounts[currentLevel + 1];
-            int toLayerSize = layerFeedCounts[currentLevel];
+            int fromLayerIndex = _layerIndex[currentLevel + 1];
+            int toLayerIndex = _layerIndex[currentLevel];
+            int fromLayerSize = _layerCounts[currentLevel + 1];
+            int toLayerSize = _layerFeedCounts[currentLevel];
 
-            int index = weightIndex[currentLevel];
-            IActivationFunction activation = network.ActivationFunctions[currentLevel + 1];
+            int index = _weightIndex[currentLevel];
+            IActivationFunction activation = _network.ActivationFunctions[currentLevel + 1];
             double currentFlatSpot = _flatSpot[currentLevel + 1];
 
             // handle weights
             int yi = fromLayerIndex;
             for (int y = 0; y < fromLayerSize; y++)
             {
-                double output = layerOutput[yi];
+                double output = _layerOutput[yi];
                 double sum = 0;
                 int xi = toLayerIndex;
                 int wi = index + y;
                 for (int x = 0; x < toLayerSize; x++)
                 {
-                    gradients[wi] += output*layerDelta[xi];
-                    sum += weights[wi]*layerDelta[xi];
+                    _gradients[wi] += output*_layerDelta[xi];
+                    sum += _weights[wi]*_layerDelta[xi];
                     wi += fromLayerSize;
                     xi++;
                 }
 
-                layerDelta[yi] = sum
-                                 *(activation.DerivativeFunction(layerOutput[yi])+currentFlatSpot);
+                _layerDelta[yi] = sum
+                                 *(activation.DerivativeFunction(_layerOutput[yi])+currentFlatSpot);
                 yi++;
             }
         }

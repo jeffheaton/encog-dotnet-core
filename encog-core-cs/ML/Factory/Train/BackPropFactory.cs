@@ -52,9 +52,9 @@ namespace Encog.ML.Factory.Train
             var holder = new ParamsHolder(args);
 
             double learningRate = holder.GetDouble(
-                MLTrainFactory.PROPERTY_LEARNING_RATE, false, 0.7d);
+                MLTrainFactory.PropertyLearningRate, false, 0.7d);
             double momentum = holder.GetDouble(
-                MLTrainFactory.PROPERTY_LEARNING_MOMENTUM, false, 0.3d);
+                MLTrainFactory.PropertyLearningMomentum, false, 0.3d);
 
             return new Backpropagation((BasicNetwork) method, training,
                                        learningRate, momentum);

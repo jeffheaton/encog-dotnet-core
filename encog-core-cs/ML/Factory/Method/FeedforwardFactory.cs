@@ -39,7 +39,7 @@ namespace Encog.ML.Factory.Method
         /// Error.
         /// </summary>
         ///
-        public const String CANT_DEFINE_ACT = "Can't define activation function before first layer.";
+        public const String CantDefineAct = "Can't define activation function before first layer.";
 
         /// <summary>
         /// Create a feed forward network.
@@ -72,30 +72,15 @@ namespace Encog.ML.Factory.Method
 
             foreach (String layerStr  in  layers)
             {
-                int defaultCount;
                 // determine default
-                if (questionPhase == 0)
-                {
-                    defaultCount = input;
-                }
-                else
-                {
-                    defaultCount = output;
-                }
+                int defaultCount = questionPhase == 0 ? input : output;
 
                 ArchitectureLayer layer = ArchitectureParse.ParseLayer(
                     layerStr, defaultCount);
                 bool bias = layer.Bias;
 
                 String part = layer.Name;
-                if (part != null)
-                {
-                    part = part.Trim();
-                }
-                else
-                {
-                    part = "";
-                }
+                part = part != null ? part.Trim() : "";
 
                 if ("tanh".Equals(part, StringComparison.InvariantCultureIgnoreCase))
                 {

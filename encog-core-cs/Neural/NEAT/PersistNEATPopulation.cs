@@ -182,29 +182,29 @@ namespace Encog.Neural.Neat
                     result.OutputCount = EncogFileSection.ParseInt(paras,
                                                                    PersistConst.OUTPUT_COUNT);
                     result.OldAgePenalty = EncogFileSection.ParseDouble(paras,
-                                                                        PopulationConst.PROPERTY_OLD_AGE_PENALTY);
+                                                                        PopulationConst.PropertyOldAgePenalty);
                     result.OldAgeThreshold = EncogFileSection.ParseInt(paras,
-                                                                       PopulationConst.PROPERTY_OLD_AGE_THRESHOLD);
+                                                                       PopulationConst.PropertyOldAgeThreshold);
                     result.PopulationSize = EncogFileSection.ParseInt(paras,
-                                                                      PopulationConst.PROPERTY_POPULATION_SIZE);
+                                                                      PopulationConst.PropertyPopulationSize);
                     result.SurvivalRate = EncogFileSection.ParseDouble(paras,
-                                                                       PopulationConst.PROPERTY_SURVIVAL_RATE);
+                                                                       PopulationConst.PropertySurvivalRate);
                     result.YoungBonusAgeThreshhold = EncogFileSection.ParseInt(
-                        paras, PopulationConst.PROPERTY_YOUNG_AGE_THRESHOLD);
+                        paras, PopulationConst.PropertyYoungAgeThreshold);
                     result.YoungScoreBonus = EncogFileSection.ParseDouble(paras,
-                                                                          PopulationConst.PROPERTY_YOUNG_AGE_BONUS);
+                                                                          PopulationConst.PropertyYoungAgeBonus);
                     result.GenomeIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
                                                                                   PopulationConst.
-                                                                                      PROPERTY_NEXT_GENOME_ID);
+                                                                                      PropertyNextGenomeID);
                     result.InnovationIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
                                                                                       PopulationConst.
-                                                                                          PROPERTY_NEXT_INNOVATION_ID);
+                                                                                          PropertyNextInnovationID);
                     result.GeneIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
                                                                                 PopulationConst.
-                                                                                    PROPERTY_NEXT_GENE_ID);
+                                                                                    PropertyNextGeneID);
                     result.SpeciesIDGenerate.CurrentID = EncogFileSection.ParseInt(paras,
                                                                                    PopulationConst.
-                                                                                       PROPERTY_NEXT_SPECIES_ID);
+                                                                                       PropertyNextSpeciesID);
                 }
             }
 
@@ -257,22 +257,22 @@ namespace Encog.Neural.Neat
                                pop.NeatActivationFunction);
             xout.WriteProperty(PersistConst.INPUT_COUNT, pop.InputCount);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, pop.OutputCount);
-            xout.WriteProperty(PopulationConst.PROPERTY_OLD_AGE_PENALTY,
+            xout.WriteProperty(PopulationConst.PropertyOldAgePenalty,
                                pop.OldAgePenalty);
-            xout.WriteProperty(PopulationConst.PROPERTY_OLD_AGE_THRESHOLD,
+            xout.WriteProperty(PopulationConst.PropertyOldAgeThreshold,
                                pop.OldAgeThreshold);
-            xout.WriteProperty(PopulationConst.PROPERTY_POPULATION_SIZE,
+            xout.WriteProperty(PopulationConst.PropertyPopulationSize,
                                pop.PopulationSize);
-            xout.WriteProperty(PopulationConst.PROPERTY_SURVIVAL_RATE,
+            xout.WriteProperty(PopulationConst.PropertySurvivalRate,
                                pop.SurvivalRate);
-            xout.WriteProperty(PopulationConst.PROPERTY_YOUNG_AGE_THRESHOLD,
+            xout.WriteProperty(PopulationConst.PropertyYoungAgeThreshold,
                                pop.YoungBonusAgeThreshold);
-            xout.WriteProperty(PopulationConst.PROPERTY_YOUNG_AGE_BONUS,
+            xout.WriteProperty(PopulationConst.PropertyYoungAgeBonus,
                                pop.YoungScoreBonus);
-            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_GENOME_ID, pop.GenomeIDGenerate.CurrentID);
-            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_INNOVATION_ID, pop.InnovationIDGenerate.CurrentID);
-            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_GENE_ID, pop.GeneIDGenerate.CurrentID);
-            xout.WriteProperty(PopulationConst.PROPERTY_NEXT_SPECIES_ID, pop.SpeciesIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PropertyNextGenomeID, pop.GenomeIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PropertyNextInnovationID, pop.InnovationIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PropertyNextGeneID, pop.GeneIDGenerate.CurrentID);
+            xout.WriteProperty(PopulationConst.PropertyNextSpeciesID, pop.SpeciesIDGenerate.CurrentID);
             xout.AddSubSection("INNOVATIONS");
             if (pop.Innovations != null)
             {

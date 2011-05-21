@@ -42,27 +42,27 @@ namespace Encog.Neural.CPN.Training
         /// The network being trained.
         /// </summary>
         ///
-        private readonly CPNNetwork network;
+        private readonly CPNNetwork _network;
 
         /// <summary>
         /// The training data. Supervised training, so both input and ideal must be
         /// provided.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The learning rate.
         /// </summary>
         ///
-        private double learningRate;
+        private double _learningRate;
 
         /// <summary>
         /// If the weights have not been initialized, then they must be initialized
         /// before training begins. This will be done on the first iteration.
         /// </summary>
         ///
-        private bool mustInit;
+        private bool _mustInit;
 
         /// <summary>
         /// Construct the outstar trainer.
@@ -74,10 +74,10 @@ namespace Encog.Neural.CPN.Training
         public TrainOutstar(CPNNetwork theNetwork, IMLDataSet theTraining,
                             double theLearningRate) : base(TrainingImplementationType.Iterative)
         {
-            mustInit = true;
-            network = theNetwork;
-            training = theTraining;
-            learningRate = theLearningRate;
+            _mustInit = true;
+            _network = theNetwork;
+            _training = theTraining;
+            _learningRate = theLearningRate;
         }
 
         /// <inheritdoc />
@@ -90,7 +90,7 @@ namespace Encog.Neural.CPN.Training
         /// <inheritdoc />
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
         #region ILearningRate Members
@@ -98,8 +98,8 @@ namespace Encog.Neural.CPN.Training
         /// <inheritdoc />
         public double LearningRate
         {
-            get { return learningRate; }
-            set { learningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -110,23 +110,23 @@ namespace Encog.Neural.CPN.Training
         ///
         private void InitWeight()
         {
-            for (int i = 0; i < network.OutstarCount; i++)
+            for (int i = 0; i < _network.OutstarCount; i++)
             {
                 int j = 0;
 
-                foreach (IMLDataPair pair  in  training)
+                foreach (IMLDataPair pair  in  _training)
                 {
-                    network.WeightsInstarToOutstar[j++, i] =
+                    _network.WeightsInstarToOutstar[j++, i] =
                         pair.Ideal[i];
                 }
             }
-            mustInit = false;
+            _mustInit = false;
         }
 
         /// <inheritdoc />
         public override sealed void Iteration()
         {
-            if (mustInit)
+            if (_mustInit)
             {
                 InitWeight();
             }
@@ -134,19 +134,19 @@ namespace Encog.Neural.CPN.Training
             var error = new ErrorCalculation();
 
 
-            foreach (IMLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  _training)
             {
-                IMLData xout = network.ComputeInstar(pair.Input);
+                IMLData xout = _network.ComputeInstar(pair.Input);
 
                 int j = EngineArray.IndexOfLargest(xout.Data);
-                for (int i = 0; i < network.OutstarCount; i++)
+                for (int i = 0; i < _network.OutstarCount; i++)
                 {
-                    double delta = learningRate
-                                   *(pair.Ideal[i] - network.WeightsInstarToOutstar[j, i]);
-                    network.WeightsInstarToOutstar.Add(j, i, delta);
+                    double delta = _learningRate
+                                   *(pair.Ideal[i] - _network.WeightsInstarToOutstar[j, i]);
+                    _network.WeightsInstarToOutstar.Add(j, i, delta);
                 }
 
-                IMLData out2 = network.ComputeOutstar(xout);
+                IMLData out2 = _network.ComputeOutstar(xout);
                 error.UpdateError(out2.Data, pair.Ideal.Data);
             }
 

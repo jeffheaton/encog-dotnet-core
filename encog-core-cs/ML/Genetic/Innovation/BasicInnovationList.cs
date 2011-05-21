@@ -36,14 +36,14 @@ namespace Encog.ML.Genetic.Innovation
         /// The list of innovations.
         /// </summary>
         ///
-        private readonly IList<IInnovation> list;
+        private readonly IList<IInnovation> _list;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public BasicInnovationList()
         {
-            list = new List<IInnovation>();
+            _list = new List<IInnovation>();
         }
 
         #region IInnovationList Members
@@ -55,7 +55,7 @@ namespace Encog.ML.Genetic.Innovation
         /// <param name="innovation">The innovation to add.</param>
         public void Add(IInnovation innovation)
         {
-            list.Add(innovation);
+            _list.Add(innovation);
         }
 
         /// <summary>
@@ -66,14 +66,14 @@ namespace Encog.ML.Genetic.Innovation
         /// <returns>The innovation.</returns>
         public IInnovation Get(int id)
         {
-            return list[id];
+            return _list[id];
         }
 
 
         /// <value>A list of innovations.</value>
         public IList<IInnovation> Innovations
         {
-            get { return list; }
+            get { return _list; }
         }
 
         #endregion

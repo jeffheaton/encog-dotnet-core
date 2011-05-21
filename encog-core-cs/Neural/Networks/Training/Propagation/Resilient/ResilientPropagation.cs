@@ -77,7 +77,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="training">The training data to use.</param>
         public ResilientPropagation(ContainsFlat network,
                                     IMLDataSet training)
-            : this(network, training, RPROPConst.DEFAULT_INITIAL_UPDATE, RPROPConst.DEFAULT_MAX_STEP)
+            : this(network, training, RPROPConst.DefaultInitialUpdate, RPROPConst.DefaultMaxStep)
         {
         }
 
@@ -98,7 +98,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         {
             var rpropFlat = new TrainFlatNetworkResilient(
                 network.Flat, Training,
-                RPROPConst.DEFAULT_ZERO_TOLERANCE, initialUpdate, maxStep);
+                RPROPConst.DefaultZeroTolerance, initialUpdate, maxStep);
             FlatTraining = rpropFlat;
         }
 

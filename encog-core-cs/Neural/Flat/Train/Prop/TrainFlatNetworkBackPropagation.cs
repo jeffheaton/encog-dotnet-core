@@ -34,19 +34,19 @@ namespace Encog.Neural.Flat.Train.Prop
         /// The last delta values.
         /// </summary>
         ///
-        private double[] lastDelta;
+        private double[] _lastDelta;
 
         /// <summary>
         /// The learning rate.
         /// </summary>
         ///
-        private double learningRate;
+        private double _learningRate;
 
         /// <summary>
         /// The momentum.
         /// </summary>
         ///
-        private double momentum;
+        private double _momentum;
 
         /// <summary>
         /// Construct a backprop trainer for flat networks.
@@ -60,9 +60,9 @@ namespace Encog.Neural.Flat.Train.Prop
                                                IMLDataSet training, double theLearningRate,
                                                double theMomentum) : base(network, training)
         {
-            momentum = theMomentum;
-            learningRate = theLearningRate;
-            lastDelta = new double[network.Weights.Length];
+            _momentum = theMomentum;
+            _learningRate = theLearningRate;
+            _lastDelta = new double[network.Weights.Length];
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Encog.Neural.Flat.Train.Prop
         /// </summary>
         public double[] LastDelta
         {
-            get { return lastDelta; }
-            set { lastDelta = value; }
+            get { return _lastDelta; }
+            set { _lastDelta = value; }
         }
 
 
@@ -80,8 +80,8 @@ namespace Encog.Neural.Flat.Train.Prop
         /// </summary>
         public double LearningRate
         {
-            get { return learningRate; }
-            set { learningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
 
@@ -90,8 +90,8 @@ namespace Encog.Neural.Flat.Train.Prop
         /// </summary>
         public double Momentum
         {
-            get { return momentum; }
-            set { momentum = value; }
+            get { return _momentum; }
+            set { _momentum = value; }
         }
 
 
@@ -106,9 +106,9 @@ namespace Encog.Neural.Flat.Train.Prop
         public override sealed double UpdateWeight(double[] gradients,
                                                    double[] lastGradient, int index)
         {
-            double delta = (gradients[index]*learningRate)
-                           + (lastDelta[index]*momentum);
-            lastDelta[index] = delta;
+            double delta = (gradients[index]*_learningRate)
+                           + (_lastDelta[index]*_momentum);
+            _lastDelta[index] = delta;
             return delta;
         }
     }

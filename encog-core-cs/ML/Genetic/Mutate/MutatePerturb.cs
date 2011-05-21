@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
 using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
 using Encog.MathUtil;
@@ -37,7 +36,7 @@ namespace Encog.ML.Genetic.Mutate
         /// The amount to perturb by.
         /// </summary>
         ///
-        private readonly double perturbAmount;
+        private readonly double _perturbAmount;
 
         /// <summary>
         /// Construct a perturb mutation.
@@ -46,7 +45,7 @@ namespace Encog.ML.Genetic.Mutate
         /// <param name="thePerturbAmount">The amount to mutate by(percent).</param>
         public MutatePerturb(double thePerturbAmount)
         {
-            perturbAmount = thePerturbAmount;
+            _perturbAmount = thePerturbAmount;
         }
 
         #region IMutate Members
@@ -63,9 +62,9 @@ namespace Encog.ML.Genetic.Mutate
                 if (gene is DoubleGene)
                 {
                     var doubleGene = (DoubleGene) gene;
-                    double value_ren = doubleGene.Value;
-                    value_ren += (perturbAmount - (ThreadSafeRandom.NextDouble()*perturbAmount*2));
-                    doubleGene.Value = value_ren;
+                    double v = doubleGene.Value;
+                    v += (_perturbAmount - (ThreadSafeRandom.NextDouble()*_perturbAmount*2));
+                    doubleGene.Value = v;
                 }
             }
         }

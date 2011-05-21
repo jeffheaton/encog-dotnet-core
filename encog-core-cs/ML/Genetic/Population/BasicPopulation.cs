@@ -39,67 +39,67 @@ namespace Encog.ML.Genetic.Population
         /// Thed default old age penalty.
         /// </summary>
         ///
-        public const double DEFAULT_OLD_AGE_PENALTY = 0.3d;
+        public const double DefaultOldAgePenalty = 0.3d;
 
         /// <summary>
         /// The default old age threshold.
         /// </summary>
         ///
-        public const int DEFAULT_OLD_AGE_THRESHOLD = 50;
+        public const int DefaultOldAgeThreshold = 50;
 
         /// <summary>
         /// The default survival rate.
         /// </summary>
         ///
-        public const double DEFAULT_SURVIVAL_RATE = 0.2d;
+        public const double DefaultSurvivalRate = 0.2d;
 
         /// <summary>
         /// The default youth penalty.
         /// </summary>
         ///
-        public const double DEFAULT_YOUTH_BONUS = 0.3d;
+        public const double DefaultYouthBonus = 0.3d;
 
         /// <summary>
         /// The default youth threshold.
         /// </summary>
         ///
-        public const int DEFAULT_YOUTH_THRESHOLD = 10;
+        public const int DefaultYouthThreshold = 10;
 
         /// <summary>
         /// Generate gene id's.
         /// </summary>
         ///
-        private readonly IGenerateID geneIDGenerate;
+        private readonly IGenerateID _geneIDGenerate;
 
         /// <summary>
         /// Generate genome id's.
         /// </summary>
         ///
-        private readonly IGenerateID genomeIDGenerate;
+        private readonly IGenerateID _genomeIDGenerate;
 
         /// <summary>
         /// The population.
         /// </summary>
         ///
-        private readonly List<IGenome> genomes;
+        private readonly List<IGenome> _genomes;
 
         /// <summary>
         /// Generate innovation id's.
         /// </summary>
         ///
-        private readonly IGenerateID innovationIDGenerate;
+        private readonly IGenerateID _innovationIDGenerate;
        
         /// <summary>
         /// Generate species id's.
         /// </summary>
         ///
-        private readonly IGenerateID speciesIDGenerate;
+        private readonly IGenerateID _speciesIDGenerate;
 
         /// <summary>
         /// The young threshold.
         /// </summary>
         ///
-        private int youngBonusAgeThreshold;
+        private int _youngBonusAgeThreshold;
 
         /// <summary>
         /// Construct an empty population.
@@ -107,17 +107,17 @@ namespace Encog.ML.Genetic.Population
         ///
         public BasicPopulation()
         {
-            geneIDGenerate = new BasicGenerateID();
-            genomeIDGenerate = new BasicGenerateID();
-            genomes = new List<IGenome>();
-            innovationIDGenerate = new BasicGenerateID();
-            OldAgePenalty = DEFAULT_OLD_AGE_PENALTY;
-            OldAgeThreshold = DEFAULT_OLD_AGE_THRESHOLD;
+            _geneIDGenerate = new BasicGenerateID();
+            _genomeIDGenerate = new BasicGenerateID();
+            _genomes = new List<IGenome>();
+            _innovationIDGenerate = new BasicGenerateID();
+            OldAgePenalty = DefaultOldAgePenalty;
+            OldAgeThreshold = DefaultOldAgeThreshold;
             Species = new List<ISpecies>();
-            speciesIDGenerate = new BasicGenerateID();
-            SurvivalRate = DEFAULT_SURVIVAL_RATE;
-            youngBonusAgeThreshold = DEFAULT_YOUTH_THRESHOLD;
-            YoungScoreBonus = DEFAULT_YOUTH_BONUS;
+            _speciesIDGenerate = new BasicGenerateID();
+            SurvivalRate = DefaultSurvivalRate;
+            _youngBonusAgeThreshold = DefaultYouthThreshold;
+            YoungScoreBonus = DefaultYouthBonus;
             PopulationSize = 0;
         }
 
@@ -127,37 +127,37 @@ namespace Encog.ML.Genetic.Population
         /// <param name="thePopulationSize">The population size.</param>
         public BasicPopulation(int thePopulationSize)
         {
-            geneIDGenerate = new BasicGenerateID();
-            genomeIDGenerate = new BasicGenerateID();
-            genomes = new List<IGenome>();
-            innovationIDGenerate = new BasicGenerateID();
-            OldAgePenalty = DEFAULT_OLD_AGE_PENALTY;
-            OldAgeThreshold = DEFAULT_OLD_AGE_THRESHOLD;
+            _geneIDGenerate = new BasicGenerateID();
+            _genomeIDGenerate = new BasicGenerateID();
+            _genomes = new List<IGenome>();
+            _innovationIDGenerate = new BasicGenerateID();
+            OldAgePenalty = DefaultOldAgePenalty;
+            OldAgeThreshold = DefaultOldAgeThreshold;
             Species = new List<ISpecies>();
-            speciesIDGenerate = new BasicGenerateID();
-            SurvivalRate = DEFAULT_SURVIVAL_RATE;
-            youngBonusAgeThreshold = DEFAULT_YOUTH_THRESHOLD;
-            YoungScoreBonus = DEFAULT_YOUTH_BONUS;
+            _speciesIDGenerate = new BasicGenerateID();
+            SurvivalRate = DefaultSurvivalRate;
+            _youngBonusAgeThreshold = DefaultYouthThreshold;
+            YoungScoreBonus = DefaultYouthBonus;
             PopulationSize = thePopulationSize;
         }
 
         /// <value>the geneIDGenerate</value>
         public IGenerateID GeneIDGenerate
         {
-            get { return geneIDGenerate; }
+            get { return _geneIDGenerate; }
         }
 
 
         /// <value>the genomeIDGenerate</value>
         public IGenerateID GenomeIDGenerate
         {
-            get { return genomeIDGenerate; }
+            get { return _genomeIDGenerate; }
         }
 
         /// <value>the innovationIDGenerate</value>
         public IGenerateID InnovationIDGenerate
         {
-            get { return innovationIDGenerate; }
+            get { return _innovationIDGenerate; }
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Encog.ML.Genetic.Population
         /// <value>the speciesIDGenerate</value>
         public IGenerateID SpeciesIDGenerate
         {
-            get { return speciesIDGenerate; }
+            get { return _speciesIDGenerate; }
         }
 
         #region IPopulation Members
@@ -177,38 +177,38 @@ namespace Encog.ML.Genetic.Population
         /// <inheritdoc/>
         public void Add(IGenome genome)
         {
-            genomes.Add(genome);
+            _genomes.Add(genome);
             genome.Population = this;
         }
 
         /// <inheritdoc/>
         public long AssignGeneID()
         {
-            return geneIDGenerate.Generate();
+            return _geneIDGenerate.Generate();
         }
 
         /// <inheritdoc/>
         public long AssignGenomeID()
         {
-            return genomeIDGenerate.Generate();
+            return _genomeIDGenerate.Generate();
         }
 
         /// <inheritdoc/>
         public long AssignInnovationID()
         {
-            return innovationIDGenerate.Generate();
+            return _innovationIDGenerate.Generate();
         }
 
         /// <inheritdoc/>
         public long AssignSpeciesID()
         {
-            return speciesIDGenerate.Generate();
+            return _speciesIDGenerate.Generate();
         }
 
         /// <inheritdoc/>
         public void Claim(GeneticAlgorithm ga)
         {
-            foreach (IGenome genome  in  genomes)
+            foreach (IGenome genome  in  _genomes)
             {
                 genome.GA = ga;
             }
@@ -217,36 +217,26 @@ namespace Encog.ML.Genetic.Population
         /// <inheritdoc/>
         public void Clear()
         {
-            genomes.Clear();
+            _genomes.Clear();
         }
 
         /// <inheritdoc/>
         public IGenome Get(int i)
         {
-            return genomes[i];
+            return _genomes[i];
         }
 
         /// <inheritdoc/>
         public IGenome Best
         {
-            get
-            {
-                if (genomes.Count == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    return genomes[0];
-                }
-            }
+            get { return _genomes.Count == 0 ? null : _genomes[0]; }
         }
 
 
         /// <inheritdoc/>
         public IList<IGenome> Genomes
         {
-            get { return genomes; }
+            get { return _genomes; }
         }
 
 
@@ -277,8 +267,8 @@ namespace Encog.ML.Genetic.Population
         /// <value>the youngBonusAgeThreshold to set</value>
         public int YoungBonusAgeThreshold
         {
-            get { return youngBonusAgeThreshold; }
-            set { youngBonusAgeThreshold = value; }
+            get { return _youngBonusAgeThreshold; }
+            set { _youngBonusAgeThreshold = value; }
         }
 
 
@@ -289,20 +279,20 @@ namespace Encog.ML.Genetic.Population
         /// <inheritdoc/>
         public int YoungBonusAgeThreshhold
         {
-            set { youngBonusAgeThreshold = value; }
+            set { _youngBonusAgeThreshold = value; }
         }
 
 
         /// <inheritdoc/>
         public int Size()
         {
-            return genomes.Count;
+            return _genomes.Count;
         }
 
         /// <inheritdoc/>
         public void Sort()
         {
-            genomes.Sort();
+            _genomes.Sort();
         }
 
         #endregion

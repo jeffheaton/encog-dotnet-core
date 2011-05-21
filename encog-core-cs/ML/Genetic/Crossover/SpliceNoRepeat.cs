@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Encog.MathUtil;
 using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
+using Enumerable = System.Linq.Enumerable;
 
 namespace Encog.ML.Genetic.Crossover
 {
@@ -36,7 +37,7 @@ namespace Encog.ML.Genetic.Crossover
         /// <summary>
         /// The cut length.
         /// </summary>
-        private readonly int cutLength;
+        private readonly int _cutLength;
 
         /// <summary>
         /// Construct a splice crossover.
@@ -44,7 +45,7 @@ namespace Encog.ML.Genetic.Crossover
         /// <param name="cutLength">The cut length.</param>
         public SpliceNoRepeat(int cutLength)
         {
-            this.cutLength = cutLength;
+            _cutLength = cutLength;
         }
 
         #region ICrossover Members
@@ -63,8 +64,8 @@ namespace Encog.ML.Genetic.Crossover
             int geneLength = father.Genes.Count;
 
             // the chromosome must be cut at two positions, determine them
-            var cutpoint1 = (int) (ThreadSafeRandom.NextDouble()*(geneLength - cutLength));
-            int cutpoint2 = cutpoint1 + cutLength;
+            var cutpoint1 = (int) (ThreadSafeRandom.NextDouble()*(geneLength - _cutLength));
+            int cutpoint2 = cutpoint1 + _cutLength;
 
             // keep track of which genes have been taken in each of the two
             // offspring, defaults to false.
@@ -115,15 +116,7 @@ namespace Encog.ML.Genetic.Crossover
             {
                 IGene trial = source.Genes[i];
 
-                bool found = false;
-                foreach (IGene current in taken)
-                {
-                    if (current.Equals(trial))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
+                bool found = Enumerable.Contains(taken, trial);
                 if (!found)
                 {
                     taken.Add(trial);

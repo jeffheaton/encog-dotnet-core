@@ -59,11 +59,11 @@ namespace Encog.ML.Factory.Train
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);
             double initialUpdate = holder.GetDouble(
-                MLTrainFactory.PROPERTY_INITIAL_UPDATE, false,
-                RPROPConst.DEFAULT_INITIAL_UPDATE);
+                MLTrainFactory.PropertyInitialUpdate, false,
+                RPROPConst.DefaultInitialUpdate);
             double maxStep = holder.GetDouble(
-                MLTrainFactory.PROPERTY_MAX_STEP, false,
-                RPROPConst.DEFAULT_MAX_STEP);
+                MLTrainFactory.PropertyMaxStep, false,
+                RPROPConst.DefaultMaxStep);
 
             return new ResilientPropagation((ContainsFlat) method, training,
                                             initialUpdate, maxStep);

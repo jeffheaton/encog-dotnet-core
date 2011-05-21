@@ -68,16 +68,14 @@ namespace Encog.Neural.BAM
                 if (section.SectionName.Equals("BAM")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
 
-                    result.F1Count = EncogFileSection.ParseInt(params_0,
+                    result.F1Count = EncogFileSection.ParseInt(p,
                                                                PersistConst.PROPERTY_F1_COUNT);
-                    result.F2Count = EncogFileSection.ParseInt(params_0,
+                    result.F2Count = EncogFileSection.ParseInt(p,
                                                                PersistConst.PROPERTY_F2_COUNT);
-                    result.WeightsF1toF2 = EncogFileSection.ParseMatrix(params_0,
-                                                                        PersistConst.PROPERTY_WEIGHTS_F1_F2);
-                    result.WeightsF2toF1 = EncogFileSection.ParseMatrix(params_0,
-                                                                        PersistConst.PROPERTY_WEIGHTS_F2_F1);
+                    result.WeightsF1ToF2 = EncogFileSection.ParseMatrix(p,PersistConst.PROPERTY_WEIGHTS_F1_F2);
+                    result.WeightsF2ToF1 = EncogFileSection.ParseMatrix(p,PersistConst.PROPERTY_WEIGHTS_F2_F1);
                 }
             }
 
@@ -100,9 +98,9 @@ namespace Encog.Neural.BAM
             xout.WriteProperty(PersistConst.PROPERTY_F1_COUNT, bam.F1Count);
             xout.WriteProperty(PersistConst.PROPERTY_F2_COUNT, bam.F2Count);
             xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F1_F2,
-                               bam.WeightsF1toF2);
+                               bam.WeightsF1ToF2);
             xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F2_F1,
-                               bam.WeightsF2toF1);
+                               bam.WeightsF2ToF1);
 
             xout.Flush();
         }

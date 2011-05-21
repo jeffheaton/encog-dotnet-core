@@ -47,25 +47,25 @@ namespace Encog.Neural.BAM
         /// Neurons in the F1 layer.
         /// </summary>
         ///
-        private int f1Count;
+        private int _f1Count;
 
         /// <summary>
         /// Neurons in the F2 layer.
         /// </summary>
         ///
-        private int f2Count;
+        private int _f2Count;
 
         /// <summary>
         /// The weights between the F1 and F2 layers.
         /// </summary>
         ///
-        private Matrix weightsF1toF2;
+        private Matrix _weightsF1ToF2;
 
         /// <summary>
         /// The weights between the F1 and F2 layers.
         /// </summary>
         ///
-        private Matrix weightsF2toF1;
+        private Matrix _weightsF2ToF1;
 
         /// <summary>
         /// Default constructor, used mainly for persistence.
@@ -83,11 +83,11 @@ namespace Encog.Neural.BAM
         /// <param name="theF2Count">The F2 count.</param>
         public BAMNetwork(int theF1Count, int theF2Count)
         {
-            f1Count = theF1Count;
-            f2Count = theF2Count;
+            _f1Count = theF1Count;
+            _f2Count = theF2Count;
 
-            weightsF1toF2 = new Matrix(f1Count, f2Count);
-            weightsF2toF1 = new Matrix(f2Count, f1Count);
+            _weightsF1ToF2 = new Matrix(_f1Count, _f2Count);
+            _weightsF2ToF1 = new Matrix(_f2Count, _f1Count);
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace Encog.Neural.BAM
         /// </summary>
         public int F1Count
         {
-            get { return f1Count; }
-            set { f1Count = value; }
+            get { return _f1Count; }
+            set { _f1Count = value; }
         }
 
 
@@ -105,27 +105,27 @@ namespace Encog.Neural.BAM
         /// </summary>
         public int F2Count
         {
-            get { return f2Count; }
-            set { f2Count = value; }
+            get { return _f2Count; }
+            set { _f2Count = value; }
         }
 
         /// <summary>
         /// Set the weights for F1 to F2.
         /// </summary>
-        public Matrix WeightsF1toF2
+        public Matrix WeightsF1ToF2
         {
-            get { return weightsF1toF2; }
-            set { weightsF1toF2 = value; }
+            get { return _weightsF1ToF2; }
+            set { _weightsF1ToF2 = value; }
         }
 
 
         /// <summary>
         /// Set the weights for F2 to F1.
         /// </summary>
-        public Matrix WeightsF2toF1
+        public Matrix WeightsF2ToF1
         {
-            get { return weightsF2toF1; }
-            set { weightsF2toF1 = value; }
+            get { return _weightsF2ToF1; }
+            set { _weightsF2ToF1 = value; }
         }
 
         /// <summary>
@@ -137,15 +137,13 @@ namespace Encog.Neural.BAM
         public void AddPattern(IMLData inputPattern,
                                IMLData outputPattern)
         {
-            int weight;
-
-            for (int i = 0; i < f1Count; i++)
+            for (int i = 0; i < _f1Count; i++)
             {
-                for (int j = 0; j < f2Count; j++)
+                for (int j = 0; j < _f2Count; j++)
                 {
-                    weight = (int) (inputPattern[i]*outputPattern[j]);
-                    weightsF1toF2.Add(i, j, weight);
-                    weightsF2toF1.Add(j, i, weight);
+                    var weight = (int) (inputPattern[i]*outputPattern[j]);
+                    _weightsF1ToF2.Add(i, j, weight);
+                    _weightsF2ToF1.Add(j, i, weight);
                 }
             }
         }
@@ -156,8 +154,8 @@ namespace Encog.Neural.BAM
         ///
         public void Clear()
         {
-            weightsF1toF2.Clear();
-            weightsF2toF1.Clear();
+            _weightsF1ToF2.Clear();
+            _weightsF2ToF1.Clear();
         }
 
         /// <summary>
@@ -182,13 +180,14 @@ namespace Encog.Neural.BAM
         /// <returns>The output from the network.</returns>
         public NeuralDataMapping Compute(NeuralDataMapping input)
         {
-            bool stable1 = true, stable2 = true;
+            bool stable1;
+            bool stable2;
 
             do
             {
-                stable1 = PropagateLayer(weightsF1toF2, input.From,
+                stable1 = PropagateLayer(_weightsF1ToF2, input.From,
                                          input.To);
-                stable2 = PropagateLayer(weightsF2toF1, input.To,
+                stable2 = PropagateLayer(_weightsF2ToF1, input.To,
                                          input.From);
             } while (!stable1 && !stable2);
             return null;
@@ -204,17 +203,14 @@ namespace Encog.Neural.BAM
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>The value from the matrix.</returns>
-        private double GetWeight(Matrix matrix, IMLData input,
+        private static double GetWeight(Matrix matrix, IMLData input,
                                  int x, int y)
         {
             if (matrix.Rows != input.Count)
             {
                 return matrix[x, y];
             }
-            else
-            {
-                return matrix[y, x];
-            }
+            return matrix[y, x];
         }
 
 
@@ -226,25 +222,24 @@ namespace Encog.Neural.BAM
         /// <param name="input">The input pattern.</param>
         /// <param name="output">The output pattern.</param>
         /// <returns>True if the network has become stable.</returns>
-        private bool PropagateLayer(Matrix matrix, IMLData input,
+        private static bool PropagateLayer(Matrix matrix, IMLData input,
                                     IMLData output)
         {
-            int i, j;
-            double sum; // **FIX** ?? int ??
-            int xout = 0;
-            bool stable;
+            int i;
 
-            stable = true;
+            bool stable = true;
 
             for (i = 0; i < output.Count; i++)
             {
-                sum = 0;
+                double sum = 0; // **FIX** ?? int ??
+                int j;
                 for (j = 0; j < input.Count; j++)
                 {
                     sum += GetWeight(matrix, input, i, j)*input[j];
                 }
                 if (sum != 0)
                 {
+                    int xout;
                     if (sum < 0)
                     {
                         xout = -1;

@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
 using Encog.ML.Genetic.Genome;
 using Encog.MathUtil;
 
@@ -37,7 +36,7 @@ namespace Encog.ML.Genetic.Crossover
         /// The cut length.
         /// </summary>
         ///
-        private readonly int cutLength;
+        private readonly int _cutLength;
 
         /// <summary>
         /// Create a slice crossover with the specified cut length.
@@ -46,7 +45,7 @@ namespace Encog.ML.Genetic.Crossover
         /// <param name="theCutLength">The cut length.</param>
         public Splice(int theCutLength)
         {
-            cutLength = theCutLength;
+            _cutLength = theCutLength;
         }
 
         #region ICrossover Members
@@ -66,8 +65,8 @@ namespace Encog.ML.Genetic.Crossover
             int geneLength = mother.Genes.Count;
 
             // the chromosome must be cut at two positions, determine them
-            int cutpoint1 = (int)(ThreadSafeRandom.NextDouble()*(geneLength - cutLength));
-            int cutpoint2 = cutpoint1 + cutLength;
+            var cutpoint1 = (int)(ThreadSafeRandom.NextDouble()*(geneLength - _cutLength));
+            int cutpoint2 = cutpoint1 + _cutLength;
 
             // handle cut section
             for (int i = 0; i < geneLength; i++)
@@ -80,12 +79,12 @@ namespace Encog.ML.Genetic.Crossover
             }
 
             // handle outer sections
-            for (int i_0 = 0; i_0 < geneLength; i_0++)
+            for (int i = 0; i < geneLength; i++)
             {
-                if ((i_0 < cutpoint1) || (i_0 > cutpoint2))
+                if ((i < cutpoint1) || (i > cutpoint2))
                 {
-                    offspring1.GetGene(i_0).Copy(mother.GetGene(i_0));
-                    offspring2.GetGene(i_0).Copy(father.GetGene(i_0));
+                    offspring1.GetGene(i).Copy(mother.GetGene(i));
+                    offspring2.GetGene(i).Copy(father.GetGene(i));
                 }
             }
         }

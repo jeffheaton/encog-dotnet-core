@@ -50,37 +50,37 @@ namespace Encog.Neural.CPN
         /// The number of neurons in the input layer.
         /// </summary>
         ///
-        private readonly int inputCount;
+        private readonly int _inputCount;
 
         /// <summary>
         /// The number of neurons in the instar, or hidden, layer.
         /// </summary>
         ///
-        private readonly int instarCount;
+        private readonly int _instarCount;
 
         /// <summary>
         /// The number of neurons in the outstar, or output, layer.
         /// </summary>
         ///
-        private readonly int outstarCount;
+        private readonly int _outstarCount;
 
         /// <summary>
         /// The weights from the input to the instar layer.
         /// </summary>
         ///
-        private readonly Matrix weightsInputToInstar;
+        private readonly Matrix _weightsInputToInstar;
 
         /// <summary>
         /// The weights from the instar to the outstar layer.
         /// </summary>
         ///
-        private readonly Matrix weightsInstarToOutstar;
+        private readonly Matrix _weightsInstarToOutstar;
 
         /// <summary>
         /// The number of winning neurons.
         /// </summary>
         ///
-        private readonly int winnerCount;
+        private readonly int _winnerCount;
 
         /// <summary>
         /// Construct the counterpropagation neural network.
@@ -93,48 +93,48 @@ namespace Encog.Neural.CPN
         public CPNNetwork(int theInputCount, int theInstarCount,
                           int theOutstarCount, int theWinnerCount)
         {
-            inputCount = theInputCount;
-            instarCount = theInstarCount;
-            outstarCount = theOutstarCount;
+            _inputCount = theInputCount;
+            _instarCount = theInstarCount;
+            _outstarCount = theOutstarCount;
 
-            weightsInputToInstar = new Matrix(inputCount, instarCount);
-            weightsInstarToOutstar = new Matrix(instarCount, outstarCount);
-            winnerCount = theWinnerCount;
+            _weightsInputToInstar = new Matrix(_inputCount, _instarCount);
+            _weightsInstarToOutstar = new Matrix(_instarCount, _outstarCount);
+            _winnerCount = theWinnerCount;
         }
 
 
         /// <value>The instar count, same as the input count.</value>
         public int InstarCount
         {
-            get { return instarCount; }
+            get { return _instarCount; }
         }
 
 
         /// <value>The outstar count, same as the output count.</value>
         public int OutstarCount
         {
-            get { return outstarCount; }
+            get { return _outstarCount; }
         }
 
 
         /// <value>The weights between the input and instar.</value>
         public Matrix WeightsInputToInstar
         {
-            get { return weightsInputToInstar; }
+            get { return _weightsInputToInstar; }
         }
 
 
         /// <value>The weights between the instar and outstar.</value>
         public Matrix WeightsInstarToOutstar
         {
-            get { return weightsInstarToOutstar; }
+            get { return _weightsInstarToOutstar; }
         }
 
 
         /// <value>The winner count.</value>
         public int WinnerCount
         {
-            get { return winnerCount; }
+            get { return _winnerCount; }
         }
 
         #region MLError Members
@@ -164,13 +164,13 @@ namespace Encog.Neural.CPN
         /// <inheritdoc/>
         public int InputCount
         {
-            get { return inputCount; }
+            get { return _inputCount; }
         }
 
         /// <inheritdoc/>
         public int OutputCount
         {
-            get { return outstarCount; }
+            get { return _outstarCount; }
         }
 
         #endregion
@@ -194,8 +194,8 @@ namespace Encog.Neural.CPN
         {
             var randomize = new ConsistentRandomizer(-1, 1,
                                                      seed);
-            randomize.Randomize(weightsInputToInstar);
-            randomize.Randomize(weightsInstarToOutstar);
+            randomize.Randomize(_weightsInputToInstar);
+            randomize.Randomize(_weightsInstarToOutstar);
         }
 
         #endregion
@@ -208,27 +208,27 @@ namespace Encog.Neural.CPN
         /// <returns>The output.</returns>
         public IMLData ComputeInstar(IMLData input)
         {
-            IMLData result = new BasicMLData(instarCount);
-            int w, i, j;
-            double sum, sumWinners, maxOut;
+            IMLData result = new BasicMLData(_instarCount);
+            int w, i;
             int winner = 0;
-            var winners = new bool[instarCount];
+            var winners = new bool[_instarCount];
 
-            for (i = 0; i < instarCount; i++)
+            for (i = 0; i < _instarCount; i++)
             {
-                sum = 0;
-                for (j = 0; j < inputCount; j++)
+                double sum = 0;
+                int j;
+                for (j = 0; j < _inputCount; j++)
                 {
-                    sum += weightsInputToInstar[j, i]*input[j];
+                    sum += _weightsInputToInstar[j, i]*input[j];
                 }
                 result[i] = sum;
                 winners[i] = false;
             }
-            sumWinners = 0;
-            for (w = 0; w < winnerCount; w++)
+            double sumWinners = 0;
+            for (w = 0; w < _winnerCount; w++)
             {
-                maxOut = Double.MinValue;
-                for (i = 0; i < instarCount; i++)
+                double maxOut = Double.MinValue;
+                for (i = 0; i < _instarCount; i++)
                 {
                     if (!winners[i] && (result[i] > maxOut))
                     {
@@ -239,7 +239,7 @@ namespace Encog.Neural.CPN
                 winners[winner] = true;
                 sumWinners += result[winner];
             }
-            for (i = 0; i < instarCount; i++)
+            for (i = 0; i < _instarCount; i++)
             {
                 if (winners[i]
                     && (Math.Abs(sumWinners) > EncogFramework.DEFAULT_DOUBLE_EQUAL))
@@ -263,16 +263,14 @@ namespace Encog.Neural.CPN
         /// <returns>The output.</returns>
         public IMLData ComputeOutstar(IMLData input)
         {
-            IMLData result = new BasicMLData(outstarCount);
+            IMLData result = new BasicMLData(_outstarCount);
 
-            double sum = 0;
-
-            for (int i = 0; i < outstarCount; i++)
+            for (int i = 0; i < _outstarCount; i++)
             {
-                sum = 0;
-                for (int j = 0; j < instarCount; j++)
+                double sum = 0;
+                for (int j = 0; j < _instarCount; j++)
                 {
-                    sum += weightsInstarToOutstar[j, i]*input[j];
+                    sum += _weightsInstarToOutstar[j, i]*input[j];
                 }
                 result[i] = sum;
             }

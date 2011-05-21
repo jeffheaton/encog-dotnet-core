@@ -34,7 +34,7 @@ namespace Encog.ML.Genetic.Genes
         /// The value of this gene.
         /// </summary>
         ///
-        private double value_ren;
+        private double _value;
 
         /// <summary>
         /// Set the value of the gene.
@@ -43,8 +43,8 @@ namespace Encog.ML.Genetic.Genes
         /// <value>The gene's value.</value>
         public double Value
         {
-            get { return value_ren; }
-            set { value_ren = value; }
+            get { return _value; }
+            set { _value = value; }
         }
 
         /// <summary>
@@ -54,17 +54,14 @@ namespace Encog.ML.Genetic.Genes
         /// <param name="gene">The other gene to copy.</param>
         public override sealed void Copy(IGene gene)
         {
-            value_ren = ((DoubleGene) gene).Value;
+            _value = ((DoubleGene)gene).Value;
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
-            return "" + value_ren;
+            return "" + _value;
         }
     }
 }

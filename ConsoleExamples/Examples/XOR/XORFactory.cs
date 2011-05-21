@@ -109,9 +109,9 @@ namespace Encog.Examples.XOR
         public void xorRPROP()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_RPROP,
+                MLTrainFactory.TypeRPROP,
                 "", 1);
         }
 
@@ -122,9 +122,9 @@ namespace Encog.Examples.XOR
         public void xorBiasless()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_BIASLESS_A,
-                MLTrainFactory.TYPE_RPROP,
+                MLTrainFactory.TypeRPROP,
                 "", 1);
         }
 
@@ -135,9 +135,9 @@ namespace Encog.Examples.XOR
         public void xorBackProp()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_BACKPROP,
+                MLTrainFactory.TypeBackprop,
                 "", 1);
         }
 
@@ -148,9 +148,9 @@ namespace Encog.Examples.XOR
         public void xorSVMClassify()
         {
             Process(
-                MLMethodFactory.TYPE_SVM,
+                MLMethodFactory.TypeSVM,
                 METHOD_SVMC_A,
-                MLTrainFactory.TYPE_SVM,
+                MLTrainFactory.TypeSVM,
                 "", 1);
         }
 
@@ -161,9 +161,9 @@ namespace Encog.Examples.XOR
         public void xorSVMRegression()
         {
             Process(
-                MLMethodFactory.TYPE_SVM,
+                MLMethodFactory.TypeSVM,
                 METHOD_SVMR_A,
-                MLTrainFactory.TYPE_SVM,
+                MLTrainFactory.TypeSVM,
                 "", 1);
         }
 
@@ -174,9 +174,9 @@ namespace Encog.Examples.XOR
         public void xorSVMSearchRegression()
         {
             Process(
-                MLMethodFactory.TYPE_SVM,
+                MLMethodFactory.TypeSVM,
                 METHOD_SVMR_A,
-                MLTrainFactory.TYPE_SVM_SEARCH,
+                MLTrainFactory.TypeSVMSearch,
                 "", 1);
         }
 
@@ -187,9 +187,9 @@ namespace Encog.Examples.XOR
         public void xorAnneal()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_ANNEAL,
+                MLTrainFactory.TypeAnneal,
                 "", 1);
         }
 
@@ -200,9 +200,9 @@ namespace Encog.Examples.XOR
         public void xorGenetic()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_GENETIC,
+                MLTrainFactory.TypeGenetic,
                 "", 1);
         }
 
@@ -213,9 +213,9 @@ namespace Encog.Examples.XOR
         public void xorLMA()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_LMA,
+                MLTrainFactory.TypeLma,
                 "", 1);
         }
 
@@ -226,9 +226,9 @@ namespace Encog.Examples.XOR
         public void xorManhattan()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_MANHATTAN,
+                MLTrainFactory.TypeManhattan,
                 "lr=0.0001", 1);
         }
 
@@ -239,9 +239,9 @@ namespace Encog.Examples.XOR
         public void xorSCG()
         {
             Process(
-                MLMethodFactory.TYPE_FEEDFORWARD,
+                MLMethodFactory.TypeFeedforward,
                 METHOD_FEEDFORWARD_A,
-                MLTrainFactory.TYPE_SCG,
+                MLTrainFactory.TypeSCG,
                 "", 1);
         }
 
@@ -252,9 +252,9 @@ namespace Encog.Examples.XOR
         public void xorRBF()
         {
             Process(
-                MLMethodFactory.TYPE_RBFNETWORK,
+                MLMethodFactory.TypeRbfnetwork,
                 METHOD_RBF_A,
-                MLTrainFactory.TYPE_RPROP,
+                MLTrainFactory.TypeRPROP,
                 "", 1);
         }
 
@@ -265,9 +265,9 @@ namespace Encog.Examples.XOR
         public void xorSVD()
         {
             Process(
-                MLMethodFactory.TYPE_RBFNETWORK,
+                MLMethodFactory.TypeRbfnetwork,
                 METHOD_RBF_A,
-                MLTrainFactory.TYPE_SVD,
+                MLTrainFactory.TypeSvd,
                 "", 1);
         }
 
@@ -278,9 +278,9 @@ namespace Encog.Examples.XOR
         public void xorPNNC()
         {
             Process(
-                MLMethodFactory.TYPE_PNN,
+                MLMethodFactory.TypePNN,
                 METHOD_PNNC_A,
-                MLTrainFactory.TYPE_PNN,
+                MLTrainFactory.TypePNN,
                 "", 2);
         }
 
@@ -291,9 +291,9 @@ namespace Encog.Examples.XOR
         public void xorPNNr()
         {
             Process(
-                MLMethodFactory.TYPE_PNN,
+                MLMethodFactory.TypePNN,
                 METHOD_PNNR_A,
-                MLTrainFactory.TYPE_PNN,
+                MLTrainFactory.TypePNN,
                 "", 1);
         }
 

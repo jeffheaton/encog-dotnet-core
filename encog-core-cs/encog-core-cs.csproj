@@ -288,7 +288,7 @@
     <Compile Include="ML\Genetic\Innovation\IInnovation.cs" />
     <Compile Include="ML\Genetic\Innovation\IInnovationList.cs" />
     <Compile Include="ML\Genetic\MateWorker.cs" />
-    <Compile Include="ML\Genetic\Mutate\Mutate.cs" />
+    <Compile Include="ML\Genetic\Mutate\IMutate.cs" />
     <Compile Include="ML\Genetic\Mutate\MutatePerturb.cs" />
     <Compile Include="ML\Genetic\Mutate\MutateShuffle.cs" />
     <Compile Include="ML\Genetic\Population\BasicPopulation.cs" />
@@ -335,7 +335,7 @@
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkProp.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkResilient.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkSCG.cs" />
-    <Compile Include="Neural\Flat\Train\TrainFlatNetwork.cs" />
+    <Compile Include="Neural\Flat\Train\ITrainFlatNetwork.cs" />
     <Compile Include="Neural\NEAT\NEATLink.cs" />
     <Compile Include="Neural\NEAT\NEATNetwork.cs" />
     <Compile Include="Neural\NEAT\NEATNeuron.cs" />
@@ -569,6 +569,7 @@
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <EmbeddedResource Include="Resources\analyst.csv" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

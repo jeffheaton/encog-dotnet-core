@@ -34,7 +34,7 @@ namespace Encog.ML.Genetic.Genes
         /// The character value of the gene.
         /// </summary>
         ///
-        private char value_ren;
+        private char _value;
 
         /// <summary>
         /// Set the value of this gene.
@@ -43,8 +43,8 @@ namespace Encog.ML.Genetic.Genes
         /// <value>The new value of this gene.</value>
         public char Value
         {
-            get { return value_ren; }           
-            set { value_ren = value; }
+            get { return _value; }           
+            set { _value = value; }
         }
 
         /// <summary>
@@ -54,17 +54,14 @@ namespace Encog.ML.Genetic.Genes
         /// <param name="gene">The source gene.</param>
         public override sealed void Copy(IGene gene)
         {
-            value_ren = ((CharGene) gene).Value;
+            _value = ((CharGene) gene).Value;
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
-            return "" + value_ren;
+            return "" + _value;
         }
     }
 }

@@ -62,11 +62,11 @@ namespace Encog.ML.Factory.Train
             var holder = new ParamsHolder(args);
 
             double learningRate = holder.GetDouble(
-                MLTrainFactory.PROPERTY_LEARNING_RATE, false, 0.7d);
+                MLTrainFactory.PropertyLearningRate, false, 0.7d);
             String neighborhoodStr = holder.GetString(
-                MLTrainFactory.PROPERTY_NEIGHBORHOOD, false, "rbf");
+                MLTrainFactory.PropertyNeighborhood, false, "rbf");
             String rbfTypeStr = holder.GetString(
-                MLTrainFactory.PROPERTY_RBF_TYPE, false, "gaussian");
+                MLTrainFactory.PropertyRBFType, false, "gaussian");
 
             RBFEnum t;
 
@@ -100,7 +100,7 @@ namespace Encog.ML.Factory.Train
             else if (neighborhoodStr.Equals("rbf", StringComparison.InvariantCultureIgnoreCase))
             {
                 String str = holder.GetString(
-                    MLTrainFactory.PROPERTY_DIMENSIONS, true, null);
+                    MLTrainFactory.PropertyDimensions, true, null);
                 int[] size = NumberList.FromListInt(CSVFormat.EG_FORMAT, str);
                 nf = new NeighborhoodRBF(size, t);
             }
@@ -116,18 +116,18 @@ namespace Encog.ML.Factory.Train
             var result = new BasicTrainSOM((SOMNetwork) method,
                                            learningRate, training, nf);
 
-            if (args.ContainsKey(MLTrainFactory.PROPERTY_ITERATIONS))
+            if (args.ContainsKey(MLTrainFactory.PropertyIterations))
             {
                 int plannedIterations = holder.GetInt(
-                    MLTrainFactory.PROPERTY_ITERATIONS, false, 1000);
+                    MLTrainFactory.PropertyIterations, false, 1000);
                 double startRate = holder.GetDouble(
-                    MLTrainFactory.PROPERTY_START_LEARNING_RATE, false, 0.05d);
+                    MLTrainFactory.PropertyStartLearningRate, false, 0.05d);
                 double endRate = holder.GetDouble(
-                    MLTrainFactory.PROPERTY_END_LEARNING_RATE, false, 0.05d);
+                    MLTrainFactory.PropertyEndLearningRate, false, 0.05d);
                 double startRadius = holder.GetDouble(
-                    MLTrainFactory.PROPERTY_START_RADIUS, false, 10);
+                    MLTrainFactory.PropertyStartRadius, false, 10);
                 double endRadius = holder.GetDouble(
-                    MLTrainFactory.PROPERTY_END_RADIUS, false, 1);
+                    MLTrainFactory.PropertyEndRadius, false, 1);
                 result.SetAutoDecay(plannedIterations, startRate, endRate,
                                     startRadius, endRadius);
             }

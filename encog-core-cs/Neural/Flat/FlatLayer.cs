@@ -37,34 +37,34 @@ namespace Encog.Neural.Flat
         /// The neuron count.
         /// </summary>
         ///
-        private readonly int count;
+        private readonly int _count;
 
         /// <summary>
         /// The bias activation, usually 1 for bias or 0 for no bias.
         /// </summary>
         ///
-        private double biasActivation;
+        private double _biasActivation;
 
         /// <summary>
         /// The layer that feeds this layer's context.
         /// </summary>
         ///
-        private FlatLayer contextFedBy;
+        private FlatLayer _contextFedBy;
 
         /// <summary>
         /// Construct a flat layer.
         /// </summary>
         ///
-        /// <param name="activation_0">The activation function.</param>
-        /// <param name="count_1">The neuron count.</param>
-        /// <param name="biasActivation_2">The bias activation.</param>
-        public FlatLayer(IActivationFunction activation_0, int count_1,
-                         double biasActivation_2)
+        /// <param name="activation">The activation function.</param>
+        /// <param name="count">The neuron count.</param>
+        /// <param name="biasActivation">The bias activation.</param>
+        public FlatLayer(IActivationFunction activation, int count,
+                         double biasActivation)
         {
-            Activation = activation_0;
-            count = count_1;
-            biasActivation = biasActivation_2;
-            contextFedBy = null;
+            Activation = activation;
+            _count = count;
+            _biasActivation = biasActivation;
+            _contextFedBy = null;
         }
 
 
@@ -81,14 +81,11 @@ namespace Encog.Neural.Flat
             {
                 if (HasBias())
                 {
-                    return biasActivation;
+                    return _biasActivation;
                 }
-                else
-                {
-                    return 0;
-                }
+                return 0;
             }
-            set { biasActivation = value; }
+            set { _biasActivation = value; }
         }
 
 
@@ -97,14 +94,11 @@ namespace Encog.Neural.Flat
         {
             get
             {
-                if (contextFedBy == null)
+                if (_contextFedBy == null)
                 {
                     return 0;
                 }
-                else
-                {
-                    return contextFedBy.Count;
-                }
+                return _contextFedBy.Count;
             }
         }
 
@@ -114,15 +108,15 @@ namespace Encog.Neural.Flat
         /// </summary>
         public FlatLayer ContextFedBy
         {
-            get { return contextFedBy; }
-            set { contextFedBy = value; }
+            get { return _contextFedBy; }
+            set { _contextFedBy = value; }
         }
 
 
         /// <value>the count</value>
         public int Count
         {
-            get { return count; }
+            get { return _count; }
         }
 
 
@@ -132,15 +126,12 @@ namespace Encog.Neural.Flat
         {
             get
             {
-                if (contextFedBy == null)
+                if (_contextFedBy == null)
                 {
                     return Count + ((HasBias()) ? 1 : 0);
                 }
-                else
-                {
-                    return Count + ((HasBias()) ? 1 : 0)
-                           + contextFedBy.Count;
-                }
+                return Count + ((HasBias()) ? 1 : 0)
+                       + _contextFedBy.Count;
             }
         }
 
@@ -148,7 +139,7 @@ namespace Encog.Neural.Flat
         /// <returns>the bias</returns>
         public bool HasBias()
         {
-            return Math.Abs(biasActivation) > EncogFramework.DEFAULT_DOUBLE_EQUAL;
+            return Math.Abs(_biasActivation) > EncogFramework.DEFAULT_DOUBLE_EQUAL;
         }
 
         /// <inheritdoc/>
@@ -158,27 +149,27 @@ namespace Encog.Neural.Flat
             result.Append("[");
             result.Append(GetType().Name);
             result.Append(": count=");
-            result.Append(count);
+            result.Append(_count);
             result.Append(",bias=");
 
             if (HasBias())
             {
-                result.Append(biasActivation);
+                result.Append(_biasActivation);
             }
             else
             {
                 result.Append("false");
             }
-            if (contextFedBy != null)
+            if (_contextFedBy != null)
             {
                 result.Append(",contextFed=");
-                if (contextFedBy == this)
+                if (_contextFedBy == this)
                 {
                     result.Append("itself");
                 }
                 else
                 {
-                    result.Append(contextFedBy);
+                    result.Append(_contextFedBy);
                 }
             }
             result.Append("]");

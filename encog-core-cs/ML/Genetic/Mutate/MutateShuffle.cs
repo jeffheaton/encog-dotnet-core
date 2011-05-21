@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
 using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
 using Encog.MathUtil;
@@ -44,8 +43,8 @@ namespace Encog.ML.Genetic.Mutate
         public void PerformMutation(Chromosome chromosome)
         {
             int length = chromosome.Genes.Count;
-            int iswap1 = (int)(ThreadSafeRandom.NextDouble()*length);
-            int iswap2 = (int)(ThreadSafeRandom.NextDouble() * length);
+            var iswap1 = (int)(ThreadSafeRandom.NextDouble()*length);
+            var iswap2 = (int)(ThreadSafeRandom.NextDouble() * length);
 
             // can't be equal
             if (iswap1 == iswap2)

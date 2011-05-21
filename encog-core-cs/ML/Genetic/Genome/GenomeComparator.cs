@@ -35,7 +35,7 @@ namespace Encog.ML.Genetic.Genome
         /// The method to calculate the score.
         /// </summary>
         ///
-        private readonly ICalculateGenomeScore calculateScore;
+        private readonly ICalculateGenomeScore _calculateScore;
 
         /// <summary>
         /// Construct the genome comparator.
@@ -44,13 +44,13 @@ namespace Encog.ML.Genetic.Genome
         /// <param name="theCalculateScore">The score calculation object to use.</param>
         public GenomeComparator(ICalculateGenomeScore theCalculateScore)
         {
-            calculateScore = theCalculateScore;
+            _calculateScore = theCalculateScore;
         }
 
         /// <value>The score calculation object.</value>
         public ICalculateGenomeScore CalculateScore
         {
-            get { return calculateScore; }
+            get { return _calculateScore; }
         }
 
         #region IComparer<IGenome> Members
@@ -75,20 +75,17 @@ namespace Encog.ML.Genetic.Genome
         /// specified by the "should minimize" property of the score function.
         /// </summary>
         ///
-        /// <param name="value_ren">The current value.</param>
+        /// <param name="v">The current value.</param>
         /// <param name="bonus">The bonus.</param>
         /// <returns>The resulting value.</returns>
-        public double ApplyBonus(double value_ren, double bonus)
+        public double ApplyBonus(double v, double bonus)
         {
-            double amount = value_ren*bonus;
-            if (calculateScore.ShouldMinimize)
+            double amount = v*bonus;
+            if (_calculateScore.ShouldMinimize)
             {
-                return value_ren - amount;
+                return v - amount;
             }
-            else
-            {
-                return value_ren + amount;
-            }
+            return v + amount;
         }
 
         /// <summary>
@@ -97,20 +94,13 @@ namespace Encog.ML.Genetic.Genome
         /// function.
         /// </summary>
         ///
-        /// <param name="value_ren">The current value.</param>
+        /// <param name="v">The current value.</param>
         /// <param name="bonus">The penalty.</param>
         /// <returns>The resulting value.</returns>
-        public double ApplyPenalty(double value_ren, double bonus)
+        public double ApplyPenalty(double v, double bonus)
         {
-            double amount = value_ren*bonus;
-            if (calculateScore.ShouldMinimize)
-            {
-                return value_ren - amount;
-            }
-            else
-            {
-                return value_ren + amount;
-            }
+            double amount = v*bonus;
+            return _calculateScore.ShouldMinimize ? v - amount : v + amount;
         }
 
         /// <summary>
@@ -123,14 +113,7 @@ namespace Encog.ML.Genetic.Genome
         /// <returns>The best score.</returns>
         public double BestScore(double d1, double d2)
         {
-            if (calculateScore.ShouldMinimize)
-            {
-                return Math.Min(d1, d2);
-            }
-            else
-            {
-                return Math.Max(d1, d2);
-            }
+            return _calculateScore.ShouldMinimize ? Math.Min(d1, d2) : Math.Max(d1, d2);
         }
 
 
@@ -143,14 +126,7 @@ namespace Encog.ML.Genetic.Genome
         /// <returns>True if d1 is better than d2.</returns>
         public bool IsBetterThan(double d1, double d2)
         {
-            if (calculateScore.ShouldMinimize)
-            {
-                return d1 < d2;
-            }
-            else
-            {
-                return d1 > d2;
-            }
+            return _calculateScore.ShouldMinimize ? d1 < d2 : d1 > d2;
         }
     }
 }

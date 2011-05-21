@@ -22,6 +22,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Encog.Engine.Network.Activation;
 using Encog.MathUtil.Error;
 using Encog.ML.Data;
@@ -50,38 +51,38 @@ namespace Encog.Neural.Flat
         /// The default bias activation.
         /// </summary>
         ///
-        public const double DEFAULT_BIAS_ACTIVATION = 1.0d;
+        public const double DefaultBiasActivation = 1.0d;
 
         /// <summary>
         /// The value that indicates that there is no bias activation.
         /// </summary>
         ///
-        public const double NO_BIAS_ACTIVATION = 0.0d;
+        public const double NoBiasActivation = 0.0d;
 
         /// <summary>
         /// The activation types.
         /// </summary>
         ///
-        private IActivationFunction[] activationFunctions;
+        private IActivationFunction[] _activationFunctions;
 
         /// <summary>
         /// The layer that training should begin on.
         /// </summary>
         ///
-        private int beginTraining;
+        private int _beginTraining;
 
         /// <summary>
         /// The bias activation for each layer. This is usually either 1, for a bias,
         /// or zero for no bias.
         /// </summary>
         ///
-        private double[] biasActivation;
+        private double[] _biasActivation;
 
         /// <summary>
         /// The limit, under which, all a cconnection is not considered to exist.
         /// </summary>
         ///
-        private double connectionLimit;
+        private double _connectionLimit;
 
         /// <summary>
         /// The context target for each layer. This is how the backwards connections
@@ -90,7 +91,7 @@ namespace Encog.Neural.Flat
         /// target layer.
         /// </summary>
         ///
-        private int[] contextTargetOffset;
+        private int[] _contextTargetOffset;
 
         /// <summary>
         /// The size of each of the context targets. If a layer's contextTargetOffset
@@ -98,44 +99,44 @@ namespace Encog.Neural.Flat
         /// should always match the feed count of the targeted context layer.
         /// </summary>
         ///
-        private int[] contextTargetSize;
+        private int[] _contextTargetSize;
 
         /// <summary>
         /// The layer that training should end on.
         /// </summary>
         ///
-        private int endTraining;
+        private int _endTraining;
 
         /// <summary>
         /// True if the network has context.
         /// </summary>
         ///
-        private bool hasContext;
+        private bool _hasContext;
 
         /// <summary>
         /// The number of input neurons in this network.
         /// </summary>
         ///
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// Does this network have some connections disabled.
         /// </summary>
         ///
-        private bool isLimited;
+        private bool _isLimited;
 
         /// <summary>
         /// The number of context neurons in each layer. These context neurons will
         /// feed the next layer.
         /// </summary>
         ///
-        private int[] layerContextCount;
+        private int[] _layerContextCount;
 
         /// <summary>
         /// The number of neurons in each of the layers.
         /// </summary>
         ///
-        private int[] layerCounts;
+        private int[] _layerCounts;
 
         /// <summary>
         /// The number of neurons in each layer that are actually fed by neurons in
@@ -143,38 +144,38 @@ namespace Encog.Neural.Flat
         /// from the previous layer.
         /// </summary>
         ///
-        private int[] layerFeedCounts;
+        private int[] _layerFeedCounts;
 
         /// <summary>
         /// An index to where each layer begins (based on the number of neurons in
         /// each layer).
         /// </summary>
         ///
-        private int[] layerIndex;
+        private int[] _layerIndex;
 
         /// <summary>
         /// The outputs from each of the neurons.
         /// </summary>
         ///
-        private double[] layerOutput;
+        private double[] _layerOutput;
 
         /// <summary>
         /// The number of output neurons in this network.
         /// </summary>
         ///
-        private int outputCount;
+        private int _outputCount;
 
         /// <summary>
         /// The index to where the weights that are stored at for a given layer.
         /// </summary>
         ///
-        private int[] weightIndex;
+        private int[] _weightIndex;
 
         /// <summary>
         /// The weights for a neural network.
         /// </summary>
         ///
-        private double[] weights;
+        private double[] _weights;
 
         /// <summary>
         /// Default constructor.
@@ -216,36 +217,36 @@ namespace Encog.Neural.Flat
             {
                 layers = new FlatLayer[2];
                 layers[0] = new FlatLayer(linearAct, input,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[1] = new FlatLayer(act, output,
-                                          NO_BIAS_ACTIVATION);
+                                          NoBiasActivation);
             }
             else if ((hidden1 == 0) || (hidden2 == 0))
             {
                 int count = Math.Max(hidden1, hidden2);
                 layers = new FlatLayer[3];
                 layers[0] = new FlatLayer(linearAct, input,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[1] = new FlatLayer(act, count,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[2] = new FlatLayer(act, output,
-                                          NO_BIAS_ACTIVATION);
+                                          NoBiasActivation);
             }
             else
             {
                 layers = new FlatLayer[4];
                 layers[0] = new FlatLayer(linearAct, input,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[1] = new FlatLayer(act, hidden1,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[2] = new FlatLayer(act, hidden2,
-                                          DEFAULT_BIAS_ACTIVATION);
+                                          DefaultBiasActivation);
                 layers[3] = new FlatLayer(act, output,
-                                          NO_BIAS_ACTIVATION);
+                                          NoBiasActivation);
             }
 
-            isLimited = false;
-            connectionLimit = 0.0d;
+            _isLimited = false;
+            _connectionLimit = 0.0d;
 
             Init(layers);
         }
@@ -255,16 +256,16 @@ namespace Encog.Neural.Flat
         /// </summary>
         public IActivationFunction[] ActivationFunctions
         {
-            get { return activationFunctions; }
-            set { activationFunctions = value; }
+            get { return _activationFunctions; }
+            set { _activationFunctions = value; }
         }
 
 
         /// <value>the beginTraining to set</value>
         public int BeginTraining
         {
-            get { return beginTraining; }
-            set { beginTraining = value; }
+            get { return _beginTraining; }
+            set { _beginTraining = value; }
         }
 
 
@@ -273,22 +274,22 @@ namespace Encog.Neural.Flat
         /// </summary>
         public double[] BiasActivation
         {
-            get { return biasActivation; }
-            set { biasActivation = value; }
+            get { return _biasActivation; }
+            set { _biasActivation = value; }
         }
 
 
         /// <value>the connectionLimit to set</value>
         public double ConnectionLimit
         {
-            get { return connectionLimit; }
+            get { return _connectionLimit; }
             set
             {
-                connectionLimit = value;
-                if (Math.Abs(connectionLimit
+                _connectionLimit = value;
+                if (Math.Abs(_connectionLimit
                              - BasicNetwork.DEFAULT_CONNECTION_LIMIT) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
                 {
-                    isLimited = true;
+                    _isLimited = true;
                 }
             }
         }
@@ -299,8 +300,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] ContextTargetOffset
         {
-            get { return contextTargetOffset; }
-            set { contextTargetOffset = value; }
+            get { return _contextTargetOffset; }
+            set { _contextTargetOffset = value; }
         }
 
 
@@ -309,23 +310,23 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] ContextTargetSize
         {
-            get { return contextTargetSize; }
-            set { contextTargetSize = value; }
+            get { return _contextTargetSize; }
+            set { _contextTargetSize = value; }
         }
 
 
         /// <value>The length of the array the network would encode to.</value>
         public int EncodeLength
         {
-            get { return weights.Length; }
+            get { return _weights.Length; }
         }
 
 
         /// <value>the endTraining to set</value>
         public int EndTraining
         {
-            get { return endTraining; }
-            set { endTraining = value; }
+            get { return _endTraining; }
+            set { _endTraining = value; }
         }
 
 
@@ -334,8 +335,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public bool HasContext
         {
-            get { return hasContext; }
-            set { hasContext = value; }
+            get { return _hasContext; }
+            set { _hasContext = value; }
         }
 
 
@@ -344,8 +345,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int InputCount
         {
-            get { return inputCount; }
-            set { inputCount = value; }
+            get { return _inputCount; }
+            set { _inputCount = value; }
         }
 
 
@@ -354,8 +355,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] LayerContextCount
         {
-            get { return layerContextCount; }
-            set { layerContextCount = value; }
+            get { return _layerContextCount; }
+            set { _layerContextCount = value; }
         }
 
 
@@ -364,8 +365,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] LayerCounts
         {
-            get { return layerCounts; }
-            set { layerCounts = value; }
+            get { return _layerCounts; }
+            set { _layerCounts = value; }
         }
 
         /// <summary>
@@ -374,8 +375,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] LayerFeedCounts
         {
-            get { return layerFeedCounts; }
-            set { layerFeedCounts = value; }
+            get { return _layerFeedCounts; }
+            set { _layerFeedCounts = value; }
         }
 
 
@@ -384,8 +385,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] LayerIndex
         {
-            get { return layerIndex; }
-            set { layerIndex = value; }
+            get { return _layerIndex; }
+            set { _layerIndex = value; }
         }
 
 
@@ -394,8 +395,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public double[] LayerOutput
         {
-            get { return layerOutput; }
-            set { layerOutput = value; }
+            get { return _layerOutput; }
+            set { _layerOutput = value; }
         }
 
 
@@ -404,13 +405,7 @@ namespace Encog.Neural.Flat
         {
             get
             {
-                int result = 0;
-
-                foreach (int element  in  layerCounts)
-                {
-                    result += element;
-                }
-                return result;
+                return _layerCounts.Sum();
             }
         }
 
@@ -420,8 +415,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int OutputCount
         {
-            get { return outputCount; }
-            set { outputCount = value; }
+            get { return _outputCount; }
+            set { _outputCount = value; }
         }
 
 
@@ -430,8 +425,8 @@ namespace Encog.Neural.Flat
         /// </summary>
         public int[] WeightIndex
         {
-            get { return weightIndex; }
-            set { weightIndex = value; }
+            get { return _weightIndex; }
+            set { _weightIndex = value; }
         }
 
 
@@ -440,14 +435,14 @@ namespace Encog.Neural.Flat
         /// </summary>
         public double[] Weights
         {
-            get { return weights; }
-            set { weights = value; }
+            get { return _weights; }
+            set { _weights = value; }
         }
 
         /// <value>the isLimited</value>
         public bool Limited
         {
-            get { return isLimited; }
+            get { return _isLimited; }
         }
 
         /// <summary>
@@ -461,7 +456,7 @@ namespace Encog.Neural.Flat
         {
             var errorCalculation = new ErrorCalculation();
 
-            var actual = new double[outputCount];
+            var actual = new double[_outputCount];
             IMLDataPair pair = BasicMLDataPair.CreatePair(data.InputSize,
                                                          data.IdealSize);
 
@@ -480,8 +475,8 @@ namespace Encog.Neural.Flat
         ///
         public void ClearConnectionLimit()
         {
-            connectionLimit = 0.0d;
-            isLimited = false;
+            _connectionLimit = 0.0d;
+            _isLimited = false;
         }
 
         /// <summary>
@@ -492,26 +487,26 @@ namespace Encog.Neural.Flat
         {
             int index = 0;
 
-            for (int i = 0; i < layerIndex.Length; i++)
+            for (int i = 0; i < _layerIndex.Length; i++)
             {
-                bool hasBias = (layerContextCount[i] + layerFeedCounts[i]) != layerCounts[i];
+                bool hasBias = (_layerContextCount[i] + _layerFeedCounts[i]) != _layerCounts[i];
 
                 // fill in regular neurons
-                for (int j = 0; j < layerFeedCounts[i]; j++)
+                for (int j = 0; j < _layerFeedCounts[i]; j++)
                 {
-                    layerOutput[index++] = 0;
+                    _layerOutput[index++] = 0;
                 }
 
                 // fill in the bias
                 if (hasBias)
                 {
-                    layerOutput[index++] = biasActivation[i];
+                    _layerOutput[index++] = _biasActivation[i];
                 }
 
                 // fill in context
-                for (int j_0 = 0; j_0 < layerContextCount[i]; j_0++)
+                for (int j = 0; j < _layerContextCount[i]; j++)
                 {
-                    layerOutput[index++] = 0;
+                    _layerOutput[index++] = 0;
                 }
             }
         }
@@ -535,30 +530,30 @@ namespace Encog.Neural.Flat
         /// <param name="result">The network to copy into.</param>
         public void CloneFlatNetwork(FlatNetwork result)
         {
-            result.inputCount = inputCount;
-            result.layerCounts = EngineArray.ArrayCopy(layerCounts);
-            result.layerIndex = EngineArray.ArrayCopy(layerIndex);
-            result.layerOutput = EngineArray.ArrayCopy(layerOutput);
-            result.layerFeedCounts = EngineArray.ArrayCopy(layerFeedCounts);
-            result.contextTargetOffset = EngineArray
-                .ArrayCopy(contextTargetOffset);
-            result.contextTargetSize = EngineArray
-                .ArrayCopy(contextTargetSize);
-            result.layerContextCount = EngineArray
-                .ArrayCopy(layerContextCount);
-            result.biasActivation = EngineArray.ArrayCopy(biasActivation);
-            result.outputCount = outputCount;
-            result.weightIndex = weightIndex;
-            result.weights = weights;
+            result._inputCount = _inputCount;
+            result._layerCounts = EngineArray.ArrayCopy(_layerCounts);
+            result._layerIndex = EngineArray.ArrayCopy(_layerIndex);
+            result._layerOutput = EngineArray.ArrayCopy(_layerOutput);
+            result._layerFeedCounts = EngineArray.ArrayCopy(_layerFeedCounts);
+            result._contextTargetOffset = EngineArray
+                .ArrayCopy(_contextTargetOffset);
+            result._contextTargetSize = EngineArray
+                .ArrayCopy(_contextTargetSize);
+            result._layerContextCount = EngineArray
+                .ArrayCopy(_layerContextCount);
+            result._biasActivation = EngineArray.ArrayCopy(_biasActivation);
+            result._outputCount = _outputCount;
+            result._weightIndex = _weightIndex;
+            result._weights = _weights;
 
-            result.activationFunctions = new IActivationFunction[activationFunctions.Length];
-            for (int i = 0; i < result.activationFunctions.Length; i++)
+            result._activationFunctions = new IActivationFunction[_activationFunctions.Length];
+            for (int i = 0; i < result._activationFunctions.Length; i++)
             {
-                result.activationFunctions[i] = (IActivationFunction) activationFunctions[i].Clone();
+                result._activationFunctions[i] = (IActivationFunction) _activationFunctions[i].Clone();
             }
 
-            result.beginTraining = beginTraining;
-            result.endTraining = endTraining;
+            result._beginTraining = _beginTraining;
+            result._endTraining = _endTraining;
         }
 
         /// <summary>
@@ -569,18 +564,18 @@ namespace Encog.Neural.Flat
         /// <param name="output">Output will be placed here.</param>
         public virtual void Compute(double[] input, double[] output)
         {
-            int sourceIndex = layerOutput.Length
-                              - layerCounts[layerCounts.Length - 1];
+            int sourceIndex = _layerOutput.Length
+                              - _layerCounts[_layerCounts.Length - 1];
 
-            EngineArray.ArrayCopy(input, 0, layerOutput, sourceIndex,
-                                  inputCount);
+            EngineArray.ArrayCopy(input, 0, _layerOutput, sourceIndex,
+                                  _inputCount);
 
-            for (int i = layerIndex.Length - 1; i > 0; i--)
+            for (int i = _layerIndex.Length - 1; i > 0; i--)
             {
                 ComputeLayer(i);
             }
 
-            EngineArray.ArrayCopy(layerOutput, 0, output, 0, outputCount);
+            EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
         }
 
         /// <summary>
@@ -590,12 +585,12 @@ namespace Encog.Neural.Flat
         /// <param name="currentLayer">The layer to calculate.</param>
         protected internal void ComputeLayer(int currentLayer)
         {
-            int inputIndex = layerIndex[currentLayer];
-            int outputIndex = layerIndex[currentLayer - 1];
-            int inputSize = layerCounts[currentLayer];
-            int outputSize = layerFeedCounts[currentLayer - 1];
+            int inputIndex = _layerIndex[currentLayer];
+            int outputIndex = _layerIndex[currentLayer - 1];
+            int inputSize = _layerCounts[currentLayer];
+            int outputSize = _layerFeedCounts[currentLayer - 1];
 
-            int index = weightIndex[currentLayer - 1];
+            int index = _weightIndex[currentLayer - 1];
 
             int limitX = outputIndex + outputSize;
             int limitY = inputIndex + inputSize;
@@ -606,20 +601,20 @@ namespace Encog.Neural.Flat
                 double sum = 0;
                 for (int y = inputIndex; y < limitY; y++)
                 {
-                    sum += weights[index++]*layerOutput[y];
+                    sum += _weights[index++]*_layerOutput[y];
                 }
-                layerOutput[x] = sum;
+                _layerOutput[x] = sum;
             }
 
-            activationFunctions[currentLayer - 1].ActivationFunction(
-                layerOutput, outputIndex, outputSize);
+            _activationFunctions[currentLayer - 1].ActivationFunction(
+                _layerOutput, outputIndex, outputSize);
 
             // update context values
-            int offset = contextTargetOffset[currentLayer];
+            int offset = _contextTargetOffset[currentLayer];
 
-            for (int x = 0; x < contextTargetSize[currentLayer]; x++)
+            for (int x = 0; x < _contextTargetSize[currentLayer]; x++)
             {
-                layerOutput[offset + x] = layerOutput[outputIndex + x];
+                _layerOutput[offset + x] = _layerOutput[outputIndex + x];
             }
         }
 
@@ -631,13 +626,13 @@ namespace Encog.Neural.Flat
         /// <param name="data">The data to be decoded.</param>
         public void DecodeNetwork(double[] data)
         {
-            if (data.Length != weights.Length)
+            if (data.Length != _weights.Length)
             {
                 throw new EncogError(
                     "Incompatable weight sizes, can't assign length="
                     + data.Length + " to length=" + data.Length);
             }
-            weights = data;
+            _weights = data;
         }
 
         /// <summary>
@@ -649,7 +644,7 @@ namespace Encog.Neural.Flat
         /// <returns>The encoded network.</returns>
         public double[] EncodeNetwork()
         {
-            return weights;
+            return _weights;
         }
 
 
@@ -667,7 +662,7 @@ namespace Encog.Neural.Flat
             IList<Type> map = new List<Type>();
 
 
-            foreach (IActivationFunction activation  in  activationFunctions)
+            foreach (IActivationFunction activation  in  _activationFunctions)
             {
                 if (!map.Contains(activation.GetType()))
                 {
@@ -679,10 +674,7 @@ namespace Encog.Neural.Flat
             {
                 return null;
             }
-            else
-            {
-                return map[0];
-            }
+            return map[0];
         }
 
         /// <summary>
@@ -694,18 +686,18 @@ namespace Encog.Neural.Flat
         {
             int layerCount = layers.Length;
 
-            inputCount = layers[0].Count;
-            outputCount = layers[layerCount - 1].Count;
+            _inputCount = layers[0].Count;
+            _outputCount = layers[layerCount - 1].Count;
 
-            layerCounts = new int[layerCount];
-            layerContextCount = new int[layerCount];
-            weightIndex = new int[layerCount];
-            layerIndex = new int[layerCount];
-            activationFunctions = new IActivationFunction[layerCount];
-            layerFeedCounts = new int[layerCount];
-            contextTargetOffset = new int[layerCount];
-            contextTargetSize = new int[layerCount];
-            biasActivation = new double[layerCount];
+            _layerCounts = new int[layerCount];
+            _layerContextCount = new int[layerCount];
+            _weightIndex = new int[layerCount];
+            _layerIndex = new int[layerCount];
+            _activationFunctions = new IActivationFunction[layerCount];
+            _layerFeedCounts = new int[layerCount];
+            _contextTargetOffset = new int[layerCount];
+            _contextTargetSize = new int[layerCount];
+            _biasActivation = new double[layerCount];
 
             int index = 0;
             int neuronCount = 0;
@@ -721,11 +713,11 @@ namespace Encog.Neural.Flat
                     nextLayer = layers[i - 1];
                 }
 
-                biasActivation[index] = layer.BiasActivation;
-                layerCounts[index] = layer.TotalCount;
-                layerFeedCounts[index] = layer.Count;
-                layerContextCount[index] = layer.ContextCount;
-                activationFunctions[index] = layer.Activation;
+                _biasActivation[index] = layer.BiasActivation;
+                _layerCounts[index] = layer.TotalCount;
+                _layerFeedCounts[index] = layer.Count;
+                _layerContextCount[index] = layer.ContextCount;
+                _activationFunctions[index] = layer.Activation;
 
                 neuronCount += layer.TotalCount;
 
@@ -736,15 +728,15 @@ namespace Encog.Neural.Flat
 
                 if (index == 0)
                 {
-                    weightIndex[index] = 0;
-                    layerIndex[index] = 0;
+                    _weightIndex[index] = 0;
+                    _layerIndex[index] = 0;
                 }
                 else
                 {
-                    weightIndex[index] = weightIndex[index - 1]
-                                         + (layerCounts[index]*layerFeedCounts[index - 1]);
-                    layerIndex[index] = layerIndex[index - 1]
-                                        + layerCounts[index - 1];
+                    _weightIndex[index] = _weightIndex[index - 1]
+                                         + (_layerCounts[index]*_layerFeedCounts[index - 1]);
+                    _layerIndex[index] = _layerIndex[index - 1]
+                                        + _layerCounts[index - 1];
                 }
 
                 int neuronIndex = 0;
@@ -752,9 +744,9 @@ namespace Encog.Neural.Flat
                 {
                     if (layers[j].ContextFedBy == layer)
                     {
-                        hasContext = true;
-                        contextTargetSize[index] = layers[j].ContextCount;
-                        contextTargetOffset[index] = neuronIndex
+                        _hasContext = true;
+                        _contextTargetSize[index] = layers[j].ContextCount;
+                        _contextTargetOffset[index] = neuronIndex
                                                      + (layers[j].TotalCount - layers[j].ContextCount);
                     }
                     neuronIndex += layers[j].TotalCount;
@@ -763,11 +755,11 @@ namespace Encog.Neural.Flat
                 index++;
             }
 
-            beginTraining = 0;
-            endTraining = layerCounts.Length - 1;
+            _beginTraining = 0;
+            _endTraining = _layerCounts.Length - 1;
 
-            weights = new double[weightCount];
-            layerOutput = new double[neuronCount];
+            _weights = new double[weightCount];
+            _layerOutput = new double[neuronCount];
 
             ClearContext();
         }
@@ -792,9 +784,9 @@ namespace Encog.Neural.Flat
         /// <param name="lo">The network low.</param>
         public void Randomize(double hi, double lo)
         {
-            for (int i = 0; i < weights.Length; i++)
+            for (int i = 0; i < _weights.Length; i++)
             {
-                weights[i] = (ThreadSafeRandom.NextDouble()*(hi - lo)) + lo;
+                _weights[i] = (ThreadSafeRandom.NextDouble()*(hi - lo)) + lo;
             }
         }
     }

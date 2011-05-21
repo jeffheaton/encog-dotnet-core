@@ -35,14 +35,14 @@ namespace Encog.ML.Factory.Parse
         /// Holds any paramaters that were specified for the layer.
         /// </summary>
         ///
-        private readonly IDictionary<String, String> paras;
+        private readonly IDictionary<String, String> _paras;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public ArchitectureLayer()
         {
-            paras = new Dictionary<String, String>();
+            _paras = new Dictionary<String, String>();
         }
 
 
@@ -57,7 +57,7 @@ namespace Encog.ML.Factory.Parse
         /// <value>the params</value>
         public IDictionary<String, String> Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
 

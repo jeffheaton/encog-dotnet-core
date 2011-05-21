@@ -60,9 +60,9 @@ namespace Encog.ML.Factory.Train
 
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);
-            double gamma = holder.GetDouble(MLTrainFactory.PROPERTY_GAMMA,
+            double gamma = holder.GetDouble(MLTrainFactory.PropertyGamma,
                                             false, defaultGamma);
-            double c = holder.GetDouble(MLTrainFactory.PROPERTY_C, false,
+            double c = holder.GetDouble(MLTrainFactory.PropertyC, false,
                                         defaultC);
 
             var result = new SVMTrain((SupportVectorMachine) method, training);

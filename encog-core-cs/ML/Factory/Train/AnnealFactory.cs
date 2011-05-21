@@ -60,11 +60,11 @@ namespace Encog.ML.Factory.Train
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);
             double startTemp = holder.GetDouble(
-                MLTrainFactory.PROPERTY_TEMPERATURE_START, false, 10);
+                MLTrainFactory.PropertyTemperatureStart, false, 10);
             double stopTemp = holder.GetDouble(
-                MLTrainFactory.PROPERTY_TEMPERATURE_STOP, false, 2);
+                MLTrainFactory.PropertyTemperatureStop, false, 2);
 
-            int cycles = holder.GetInt(MLTrainFactory.CYCLES, false, 100);
+            int cycles = holder.GetInt(MLTrainFactory.Cycles, false, 100);
 
             MLTrain train = new NeuralSimulatedAnnealing(
                 (BasicNetwork) method, score, startTemp, stopTemp, cycles);

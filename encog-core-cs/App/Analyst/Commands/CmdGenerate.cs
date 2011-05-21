@@ -74,7 +74,7 @@ namespace Encog.App.Analyst.Commands
                 ScriptProperties.MlConfigType);
 
             // is it non-supervised?
-            if (type.Equals(MLMethodFactory.TYPE_SOM))
+            if (type.Equals(MLMethodFactory.TypeSOM))
             {
                 result = new int[0];
                 return result;
