@@ -37,26 +37,26 @@ namespace Encog.ML.Kmeans
         /// The contents of the cluster.
         /// </summary>
         ///
-        private readonly IList<IMLData> data;
+        private readonly IList<IMLData> _data;
 
         /// <summary>
         /// The centroid.
         /// </summary>
         ///
-        private Centroid centroid;
+        private Centroid _centroid;
 
         /// <summary>
         /// The sum square.
         /// </summary>
         ///
-        private double sumSqr;
+        private double _sumSqr;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public KMeansCluster()
         {
-            data = new List<IMLData>();
+            _data = new List<IMLData>();
         }
 
         /// <summary>
@@ -64,14 +64,14 @@ namespace Encog.ML.Kmeans
         /// </summary>
         public Centroid Centroid
         {
-            get { return centroid; }
-            set { centroid = value; }
+            get { return _centroid; }
+            set { _centroid = value; }
         }
 
         /// <value>The sum of squares.</value>
         public double SumSqr
         {
-            get { return sumSqr; }
+            get { return _sumSqr; }
         }
 
         #region MLCluster Members
@@ -83,7 +83,7 @@ namespace Encog.ML.Kmeans
         /// <param name="pair">The pair to add.</param>
         public void Add(IMLData pair)
         {
-            data.Add(pair);
+            _data.Add(pair);
             CalcSumOfSquares();
         }
 
@@ -97,7 +97,7 @@ namespace Encog.ML.Kmeans
             IMLDataSet result = new BasicMLDataSet();
 
 
-            foreach (IMLData dataItem  in  data)
+            foreach (IMLData dataItem  in  _data)
             {
                 result.Add(dataItem);
             }
@@ -108,28 +108,28 @@ namespace Encog.ML.Kmeans
         /// <inheritdoc/>
         public IMLData Get(int pos)
         {
-            return data[pos];
+            return _data[pos];
         }
 
 
         /// <inheritdoc/>
         public IList<IMLData> Data
         {
-            get { return data; }
+            get { return _data; }
         }
 
 
         /// <inheritdoc/>
         public void Remove(IMLData pair)
         {
-            data.Remove(pair);
+            _data.Remove(pair);
             CalcSumOfSquares();
         }
 
         /// <inheritdoc/>
         public int Size()
         {
-            return data.Count;
+            return _data.Count;
         }
 
         #endregion
@@ -139,14 +139,14 @@ namespace Encog.ML.Kmeans
         /// </summary>
         public void CalcSumOfSquares()
         {
-            int size = data.Count;
+            int size = _data.Count;
             double temp = 0;
             for (int i = 0; i < size; i++)
             {
-                temp += KMeansClustering.CalculateEuclideanDistance(centroid,
-                                                                    (data[i]));
+                temp += KMeansClustering.CalculateEuclideanDistance(_centroid,
+                                                                    (_data[i]));
             }
-            sumSqr = temp;
+            _sumSqr = temp;
         }
     }
 }

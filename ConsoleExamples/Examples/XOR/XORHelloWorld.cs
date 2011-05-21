@@ -87,7 +87,7 @@ namespace Encog.Examples.XOR
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
             // train the neural network
-            MLTrain train = new Backpropagation(network, trainingSet, 0.7, 0.8);
+            IMLTrain train = new Backpropagation(network, trainingSet, 0.7, 0.8);
 
             int epoch = 1;
 

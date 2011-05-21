@@ -46,7 +46,7 @@ namespace Encog.Neural.NEAT.Training
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
     ///
-    public class NEATTraining : GeneticAlgorithm, MLTrain
+    public class NEATTraining : GeneticAlgorithm, IMLTrain
     {        
         /// <summary>
         /// The number of inputs.

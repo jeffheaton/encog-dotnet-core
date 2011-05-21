@@ -40,25 +40,25 @@ namespace Encog.Neural.NEAT
         /// The source neuron.
         /// </summary>
         ///
-        private readonly NEATNeuron fromNeuron;
+        private readonly NEATNeuron _fromNeuron;
 
         /// <summary>
         /// Is this link recurrent.
         /// </summary>
         ///
-        private readonly bool recurrent;
+        private readonly bool _recurrent;
 
         /// <summary>
         /// The target neuron.
         /// </summary>
         ///
-        private readonly NEATNeuron toNeuron;
+        private readonly NEATNeuron _toNeuron;
 
         /// <summary>
         /// The weight between the two neurons.
         /// </summary>
         ///
-        private readonly double weight;
+        private readonly double _weight;
 
         /// <summary>
         /// Default constructor, used mainly for persistance.
@@ -72,45 +72,45 @@ namespace Encog.Neural.NEAT
         /// Construct a NEAT link.
         /// </summary>
         ///
-        /// <param name="weight_0">The weight between the two neurons.</param>
-        /// <param name="fromNeuron_1">The source neuron.</param>
-        /// <param name="toNeuron_2">The target neuron.</param>
-        /// <param name="recurrent_3">Is this a recurrent link.</param>
-        public NEATLink(double weight_0, NEATNeuron fromNeuron_1,
-                        NEATNeuron toNeuron_2, bool recurrent_3)
+        /// <param name="weight">The weight between the two neurons.</param>
+        /// <param name="fromNeuron">The source neuron.</param>
+        /// <param name="toNeuron">The target neuron.</param>
+        /// <param name="recurrent">Is this a recurrent link.</param>
+        public NEATLink(double weight, NEATNeuron fromNeuron,
+                        NEATNeuron toNeuron, bool recurrent)
         {
-            weight = weight_0;
-            fromNeuron = fromNeuron_1;
-            toNeuron = toNeuron_2;
-            recurrent = recurrent_3;
+            _weight = weight;
+            _fromNeuron = fromNeuron;
+            _toNeuron = toNeuron;
+            _recurrent = recurrent;
         }
 
 
         /// <value>The source neuron.</value>
         public NEATNeuron FromNeuron
         {
-            get { return fromNeuron; }
+            get { return _fromNeuron; }
         }
 
 
         /// <value>The target neuron.</value>
         public NEATNeuron ToNeuron
         {
-            get { return toNeuron; }
+            get { return _toNeuron; }
         }
 
 
         /// <value>The weight of the link.</value>
         public double Weight
         {
-            get { return weight; }
+            get { return _weight; }
         }
 
 
         /// <value>True if this is a recurrent link.</value>
         public bool Recurrent
         {
-            get { return recurrent; }
+            get { return _recurrent; }
         }
 
         /// <inheritdoc/>

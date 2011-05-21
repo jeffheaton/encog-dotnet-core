@@ -29,7 +29,7 @@ namespace Encog.Neural.Networks.Training
     /// MLTrain.  Newer code should use MLTrain in place of this class.
     /// </summary>
     ///
-    public interface Train : MLTrain
+    public interface Train : IMLTrain
     {
     }
 }

@@ -52,61 +52,61 @@ namespace Encog.ML.SVM
         /// The default degree.
         /// </summary>
         ///
-        public const int DEFAULT_DEGREE = 3;
+        public const int DefaultDegree = 3;
 
         /// <summary>
         /// The default COEF0.
         /// </summary>
         ///
-        public const int DEFAULT_COEF0 = 0;
+        public const int DefaultCoef0 = 0;
 
         /// <summary>
         /// The default NU.
         /// </summary>
         ///
-        public const double DEFAULT_NU = 0.5d;
+        public const double DefaultNu = 0.5d;
 
         /// <summary>
         /// The default cache size.
         /// </summary>
         ///
-        public const int DEFAULT_CACHE_SIZE = 100;
+        public const int DefaultCacheSize = 100;
 
         /// <summary>
         /// The default C.
         /// </summary>
         ///
-        public const int DEFAULT_C = 1;
+        public const int DefaultC = 1;
 
         /// <summary>
         /// The default EPS.
         /// </summary>
         ///
-        public const double DEFAULT_EPS = 1e-3d;
+        public const double DefaultEps = 1e-3d;
 
         /// <summary>
         /// The default P.
         /// </summary>
         ///
-        public const double DEFAULT_P = 0.1d;
+        public const double DefaultP = 0.1d;
 
         /// <summary>
         /// The params for the model.
         /// </summary>
         ///
-        private readonly svm_parameter paras;
+        private readonly svm_parameter _paras;
 
         /// <summary>
         /// The input count.
         /// </summary>
         ///
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// The SVM model to use.
         /// </summary>
         ///
-        private svm_model model;
+        private svm_model _model;
 
         /// <summary>
         /// Construct the SVM.
@@ -114,7 +114,7 @@ namespace Encog.ML.SVM
         ///
         public SupportVectorMachine()
         {
-            paras = new svm_parameter();
+            _paras = new svm_parameter();
         }
 
         /// <summary>
@@ -142,26 +142,26 @@ namespace Encog.ML.SVM
         public SupportVectorMachine(int theInputCount, SVMType svmType,
                                     KernelType kernelType)
         {
-            inputCount = theInputCount;
+            _inputCount = theInputCount;
 
-            paras = new svm_parameter();
+            _paras = new svm_parameter();
 
             switch (svmType)
             {
                 case SVMType.SupportVectorClassification:
-                    paras.svm_type = svm_parameter.C_SVC;
+                    _paras.svm_type = svm_parameter.C_SVC;
                     break;
                 case SVMType.NewSupportVectorClassification:
-                    paras.svm_type = svm_parameter.NU_SVC;
+                    _paras.svm_type = svm_parameter.NU_SVC;
                     break;
                 case SVMType.SupportVectorOneClass:
-                    paras.svm_type = svm_parameter.ONE_CLASS;
+                    _paras.svm_type = svm_parameter.ONE_CLASS;
                     break;
                 case SVMType.EpsilonSupportVectorRegression:
-                    paras.svm_type = svm_parameter.EPSILON_SVR;
+                    _paras.svm_type = svm_parameter.EPSILON_SVR;
                     break;
                 case SVMType.NewSupportVectorRegression:
-                    paras.svm_type = svm_parameter.NU_SVR;
+                    _paras.svm_type = svm_parameter.NU_SVR;
                     break;
                 default:
                     throw new NeuralNetworkError("Invalid svm type");
@@ -170,16 +170,16 @@ namespace Encog.ML.SVM
             switch (kernelType)
             {
                 case KernelType.Linear:
-                    paras.kernel_type = svm_parameter.LINEAR;
+                    _paras.kernel_type = svm_parameter.LINEAR;
                     break;
                 case KernelType.Poly:
-                    paras.kernel_type = svm_parameter.POLY;
+                    _paras.kernel_type = svm_parameter.POLY;
                     break;
                 case KernelType.RadialBasisFunction:
-                    paras.kernel_type = svm_parameter.RBF;
+                    _paras.kernel_type = svm_parameter.RBF;
                     break;
                 case KernelType.Sigmoid:
-                    paras.kernel_type = svm_parameter.SIGMOID;
+                    _paras.kernel_type = svm_parameter.SIGMOID;
                     break;
                     /*case Encog.ML.SVM.KernelType.Precomputed:
                 this.paras.kernel_type = Encog.MathUtil.LIBSVM.svm_parameter.PRECOMPUTED;
@@ -189,19 +189,19 @@ namespace Encog.ML.SVM
             }
 
             // params[i].kernel_type = svm_parameter.RBF;
-            paras.degree = DEFAULT_DEGREE;
-            paras.coef0 = 0;
-            paras.nu = DEFAULT_NU;
-            paras.cache_size = DEFAULT_CACHE_SIZE;
-            paras.C = 1;
-            paras.eps = DEFAULT_EPS;
-            paras.p = DEFAULT_P;
-            paras.shrinking = 1;
-            paras.probability = 0;
-            paras.nr_weight = 0;
-            paras.weight_label = new int[0];
-            paras.weight = new double[0];
-            paras.gamma = 1.0d/inputCount;
+            _paras.degree = DefaultDegree;
+            _paras.coef0 = 0;
+            _paras.nu = DefaultNu;
+            _paras.cache_size = DefaultCacheSize;
+            _paras.C = 1;
+            _paras.eps = DefaultEps;
+            _paras.p = DefaultP;
+            _paras.shrinking = 1;
+            _paras.probability = 0;
+            _paras.nr_weight = 0;
+            _paras.weight_label = new int[0];
+            _paras.weight = new double[0];
+            _paras.gamma = 1.0d/_inputCount;
         }
 
         /// <summary>
@@ -211,17 +211,17 @@ namespace Encog.ML.SVM
         /// <param name="theModel">The model.</param>
         public SupportVectorMachine(svm_model theModel)
         {
-            model = theModel;
-            paras = model.param;
-            inputCount = 0;
+            _model = theModel;
+            _paras = _model.param;
+            _inputCount = 0;
 
 
             // determine the input count
-            foreach (var element  in  model.SV)
+            foreach (var element  in  _model.SV)
             {
-                for (int col = 0; col < element.Length; col++)
+                foreach (svm_node t in element)
                 {
-                    inputCount = Math.Max(element[col].index, inputCount);
+                    _inputCount = Math.Max(t.index, _inputCount);
                 }
             }
 
@@ -234,7 +234,7 @@ namespace Encog.ML.SVM
         {
             get
             {
-                switch (paras.kernel_type)
+                switch (_paras.kernel_type)
                 {
                     case svm_parameter.LINEAR:
                         return KernelType.Linear;
@@ -258,15 +258,15 @@ namespace Encog.ML.SVM
         /// </summary>
         public svm_model Model
         {
-            get { return model; }
-            set { model = value; }
+            get { return _model; }
+            set { _model = value; }
         }
 
 
         /// <value>The SVM params for each of the outputs.</value>
         public svm_parameter Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
 
@@ -275,7 +275,7 @@ namespace Encog.ML.SVM
         {
             get
             {
-                switch (paras.svm_type)
+                switch (_paras.svm_type)
                 {
                     case svm_parameter.C_SVC:
                         return SVMType.SupportVectorClassification;
@@ -298,7 +298,7 @@ namespace Encog.ML.SVM
         /// <inheritdoc/>
         public int Classify(IMLData input)
         {
-            if (model == null)
+            if (_model == null)
             {
                 throw new EncogError(
                     "Can't use the SVM yet, it has not been trained, "
@@ -306,7 +306,7 @@ namespace Encog.ML.SVM
             }
 
             svm_node[] formattedInput = MakeSparse(input);
-            return (int) svm.svm_predict(model, formattedInput);
+            return (int) svm.svm_predict(_model, formattedInput);
         }
 
         #endregion
@@ -347,7 +347,7 @@ namespace Encog.ML.SVM
         /// <returns>The results from the SVM.</returns>
         public IMLData Compute(IMLData input)
         {
-            if (model == null)
+            if (_model == null)
             {
                 throw new EncogError(
                     "Can't use the SVM yet, it has not been trained, "
@@ -358,7 +358,7 @@ namespace Encog.ML.SVM
 
             svm_node[] formattedInput = MakeSparse(input);
 
-            double d = svm.svm_predict(model, formattedInput);
+            double d = svm.svm_predict(_model, formattedInput);
             result[0] = d;
 
             return result;
@@ -371,8 +371,8 @@ namespace Encog.ML.SVM
         /// <value>The new input count.</value>
         public int InputCount
         {
-            get { return inputCount; }
-            set { inputCount = value; }
+            get { return _inputCount; }
+            set { _inputCount = value; }
         }
 
         /// <value>For a SVM, the output count is always one.</value>
@@ -394,9 +394,7 @@ namespace Encog.ML.SVM
             var result = new svm_node[data.Count];
             for (int i = 0; i < data.Count; i++)
             {
-                result[i] = new svm_node();
-                result[i].index = i + 1;
-                result[i].value_Renamed = data[i];
+                result[i] = new svm_node {index = i + 1, value_Renamed = data[i]};
             }
 
             return result;

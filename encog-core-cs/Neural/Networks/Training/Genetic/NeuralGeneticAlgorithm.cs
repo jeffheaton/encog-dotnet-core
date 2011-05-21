@@ -54,7 +54,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// genetic algorithm.
         /// </summary>
         ///
-        private NeuralGeneticAlgorithmHelper genetic;
+        private NeuralGeneticAlgorithmHelper _genetic;
 
         /// <summary>
         /// Construct a neural genetic algorithm.
@@ -71,8 +71,8 @@ namespace Encog.Neural.Networks.Training.Genetic
                                       int populationSize, double mutationPercent,
                                       double percentToMate) : base(TrainingImplementationType.Iterative)
         {
-            genetic = new NeuralGeneticAlgorithmHelper();
-            genetic.CalculateScore = new GeneticScoreAdapter(calculateScore);
+            _genetic = new NeuralGeneticAlgorithmHelper();
+            _genetic.CalculateScore = new GeneticScoreAdapter(calculateScore);
             IPopulation population = new BasicPopulation(populationSize);
             Genetic.MutationPercent = mutationPercent;
             Genetic.MatingPopulation = percentToMate*2;
@@ -105,8 +105,8 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// </summary>
         public NeuralGeneticAlgorithmHelper Genetic
         {
-            get { return genetic; }
-            set { genetic = value; }
+            get { return _genetic; }
+            set { _genetic = value; }
         }
 
 

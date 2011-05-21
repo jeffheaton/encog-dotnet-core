@@ -51,7 +51,7 @@ namespace Encog.Neural.Networks.Training
             IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
-            MLTrain rprop = new ResilientPropagation(network, trainingData);
+            IMLTrain rprop = new ResilientPropagation(network, trainingData);
             NetworkUtil.TestTraining(rprop, 0.03);
         }
 
@@ -61,7 +61,7 @@ namespace Encog.Neural.Networks.Training
             IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
-            MLTrain rprop = new LevenbergMarquardtTraining(network, trainingData);
+            IMLTrain rprop = new LevenbergMarquardtTraining(network, trainingData);
             NetworkUtil.TestTraining(rprop, 0.03);
         }
 
@@ -72,7 +72,7 @@ namespace Encog.Neural.Networks.Training
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
 
-            MLTrain bprop = new Backpropagation(network, trainingData, 0.7, 0.9);
+            IMLTrain bprop = new Backpropagation(network, trainingData, 0.7, 0.9);
             NetworkUtil.TestTraining(bprop, 0.01);
         }
 
@@ -82,7 +82,7 @@ namespace Encog.Neural.Networks.Training
             IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
-            MLTrain bprop = new ManhattanPropagation(network, trainingData, 0.01);
+            IMLTrain bprop = new ManhattanPropagation(network, trainingData, 0.01);
             NetworkUtil.TestTraining(bprop, 0.01);
         }
 
@@ -92,7 +92,7 @@ namespace Encog.Neural.Networks.Training
             IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
             BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
-            MLTrain bprop = new ScaledConjugateGradient(network, trainingData);
+            IMLTrain bprop = new ScaledConjugateGradient(network, trainingData);
             NetworkUtil.TestTraining(bprop, 0.04);
         }
 

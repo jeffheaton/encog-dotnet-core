@@ -66,7 +66,7 @@ namespace Encog.Util
             return network;
         }
 
-        public static void TestTraining(MLTrain train, double requiredImprove)
+        public static void TestTraining(IMLTrain train, double requiredImprove)
         {
             train.Iteration();
             double error1 = train.Error;

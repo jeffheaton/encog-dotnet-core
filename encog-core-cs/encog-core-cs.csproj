@@ -354,7 +354,7 @@
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\ContainsFlat.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
-    <Compile Include="Neural\Networks\Layers\Layer.cs" />
+    <Compile Include="Neural\Networks\Layers\ILayer.cs" />
     <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
     <Compile Include="Neural\Networks\PersistBasicNetwork.cs" />
     <Compile Include="Neural\Networks\Structure\AnalyzeNetwork.cs" />
@@ -392,11 +392,11 @@
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
     <Compile Include="ML\Train\BasicTraining.cs" />
-    <Compile Include="ML\Train\MLTrain.cs" />
+    <Compile Include="ML\Train\IMLTrain.cs" />
     <Compile Include="ML\Train\Strategy\End\EndIterationsStrategy.cs" />
     <Compile Include="ML\Train\Strategy\End\EndMaxErrorStrategy.cs" />
     <Compile Include="ML\Train\Strategy\End\EndMinutesStrategy.cs" />
-    <Compile Include="ML\Train\Strategy\End\EndTrainingStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\End\IEndTrainingStrategy.cs" />
     <Compile Include="ML\Train\Strategy\Greedy.cs" />
     <Compile Include="ML\Train\Strategy\HybridStrategy.cs" />
     <Compile Include="ML\Train\Strategy\RequiredImprovementStrategy.cs" />

@@ -38,29 +38,32 @@ namespace Encog.ML.Train.Strategy
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
         /// <summary>
         /// The last state of the network, so that we can restore to this
         /// state if needed.
         /// </summary>
         ///
-        private double[] lastNetwork;
+        private double[] _lastNetwork;
 
-        private IMLEncodable method;
+        /// <summary>
+        /// The method training.
+        /// </summary>
+        private IMLEncodable _method;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start 
         /// evaluation.
         /// </summary>
         ///
-        private bool ready;
+        private bool _ready;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain _train;
 
         #region IStrategy Members
 
@@ -68,20 +71,20 @@ namespace Encog.ML.Train.Strategy
         /// Initialize this strategy.
         /// </summary>
         ///
-        /// <param name="train_0">The training algorithm.</param>
-        public virtual void Init(MLTrain train_0)
+        /// <param name="train">The training algorithm.</param>
+        public virtual void Init(IMLTrain train)
         {
-            train = train_0;
-            ready = false;
+            _train = train;
+            _ready = false;
 
-            if (!(train_0.Method is IMLEncodable))
+            if (!(train.Method is IMLEncodable))
             {
                 throw new TrainingError(
                     "To make use of the Greedy strategy the machine learning method must support MLEncodable.");
             }
 
-            method = ((IMLEncodable) train_0.Method);
-            lastNetwork = new double[method.EncodedArrayLength()];
+            _method = ((IMLEncodable) train.Method);
+            _lastNetwork = new double[_method.EncodedArrayLength()];
         }
 
         /// <summary>
@@ -90,19 +93,19 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PostIteration()
         {
-            if (ready)
+            if (_ready)
             {
-                if (train.Error > lastError)
+                if (_train.Error > _lastError)
                 {
                     EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                      "Greedy strategy dropped last iteration.");
-                    train.Error = lastError;
-                    method.DecodeFromArray(lastNetwork);
+                    _train.Error = _lastError;
+                    _method.DecodeFromArray(_lastNetwork);
                 }
             }
             else
             {
-                ready = true;
+                _ready = true;
             }
         }
 
@@ -112,11 +115,11 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PreIteration()
         {
-            if (method != null)
+            if (_method != null)
             {
-                lastError = train.Error;
-                method.EncodeToArray(lastNetwork);
-                train.Error = lastError;
+                _lastError = _train.Error;
+                _method.EncodeToArray(_lastNetwork);
+                _train.Error = _lastError;
             }
         }
 

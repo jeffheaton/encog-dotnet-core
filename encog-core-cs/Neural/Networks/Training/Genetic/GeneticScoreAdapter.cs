@@ -36,16 +36,16 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// The calculate score object to use.
         /// </summary>
         ///
-        private readonly ICalculateScore calculateScore;
+        private readonly ICalculateScore _calculateScore;
 
         /// <summary>
         /// Construct the adapter.
         /// </summary>
         ///
-        /// <param name="calculateScore_0">The CalculateScore object to use.</param>
-        public GeneticScoreAdapter(ICalculateScore calculateScore_0)
+        /// <param name="calculateScore">The CalculateScore object to use.</param>
+        public GeneticScoreAdapter(ICalculateScore calculateScore)
         {
-            calculateScore = calculateScore_0;
+            _calculateScore = calculateScore;
         }
 
         #region ICalculateGenomeScore Members
@@ -59,14 +59,14 @@ namespace Encog.Neural.Networks.Training.Genetic
         public double CalculateScore(IGenome genome)
         {
             var network = (IMLRegression) genome.Organism;
-            return calculateScore.CalculateScore(network);
+            return _calculateScore.CalculateScore(network);
         }
 
 
         /// <returns>True, if the score should be minimized.</returns>
         public bool ShouldMinimize
         {
-            get { return calculateScore.ShouldMinimize; }
+            get { return _calculateScore.ShouldMinimize; }
         }
 
         #endregion

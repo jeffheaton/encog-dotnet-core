@@ -70,7 +70,7 @@ namespace Encog.Util.Banchmark
         public static int EvaluateTrain(BasicNetwork network, IMLDataSet training)
         {
             // train the neural network
-            MLTrain train = train = new ResilientPropagation(network, training);
+            IMLTrain train = train = new ResilientPropagation(network, training);
 
             int iterations = 0;
             var watch = new Stopwatch();

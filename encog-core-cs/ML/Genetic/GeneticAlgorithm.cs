@@ -42,15 +42,15 @@ namespace Encog.ML.Genetic
         /// The score calculation object.
         /// </summary>
         ///
-        private ICalculateGenomeScore calculateScore;
+        private ICalculateGenomeScore _calculateScore;
 
         /// <summary>
         /// Set the score calculation object.
         /// </summary>
         public ICalculateGenomeScore CalculateScore
         {
-            get { return calculateScore; }
-            set { calculateScore = value; }
+            get { return _calculateScore; }
+            set { _calculateScore = value; }
         }
 
 
@@ -126,7 +126,7 @@ namespace Encog.ML.Genetic
             {
                 ((IMLContext) g.Organism).ClearContext();
             }
-            double score = calculateScore.CalculateScore(g);
+            double score = _calculateScore.CalculateScore(g);
             g.Score = score;
         }
 

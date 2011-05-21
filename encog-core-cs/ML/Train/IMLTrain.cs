@@ -32,7 +32,7 @@ namespace Encog.ML.Train
     /// objects need to be trained in some way before they are ready for use.
     /// </summary>
     ///
-    public interface MLTrain
+    public interface IMLTrain
     {
         /// <value>The training implementation type.</value>
         TrainingImplementationType ImplementationType { get; }

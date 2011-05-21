@@ -81,7 +81,7 @@ namespace Encog.ML.Factory.Train
         /// <param name="training">The training data to use.</param>
         /// <param name="argsStr">The arguments to use.</param>
         /// <returns>The newly created trainer.</returns>
-        public MLTrain Create(IMLMethod method,
+        public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String argsStr)
         {
             if (!(method is SupportVectorMachine))
@@ -97,19 +97,19 @@ namespace Encog.ML.Factory.Train
             var holder = new ParamsHolder(args);
             double gammaStart = holder.GetDouble(
                 PropertyGamma1, false,
-                SVMSearchTrain.DEFAULT_GAMMA_BEGIN);
+                SVMSearchTrain.DefaultGammaBegin);
             double cStart = holder.GetDouble(PropertyC1,
-                                             false, SVMSearchTrain.DEFAULT_CONST_BEGIN);
+                                             false, SVMSearchTrain.DefaultConstBegin);
             double gammaStop = holder.GetDouble(
                 PropertyGamma2, false,
-                SVMSearchTrain.DEFAULT_GAMMA_END);
+                SVMSearchTrain.DefaultGammaEnd);
             double cStop = holder.GetDouble(PropertyC2,
-                                            false, SVMSearchTrain.DEFAULT_CONST_END);
+                                            false, SVMSearchTrain.DefaultConstEnd);
             double gammaStep = holder.GetDouble(
                 PropertyGammaStep, false,
-                SVMSearchTrain.DEFAULT_GAMMA_STEP);
+                SVMSearchTrain.DefaultGammaStep);
             double cStep = holder.GetDouble(PropertyCStep,
-                                            false, SVMSearchTrain.DEFAULT_CONST_STEP);
+                                            false, SVMSearchTrain.DefaultConstStep);
 
             var result = new SVMSearchTrain((SupportVectorMachine) method, training)
                              {

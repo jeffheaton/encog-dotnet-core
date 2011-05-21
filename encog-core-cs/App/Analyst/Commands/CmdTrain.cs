@@ -77,7 +77,7 @@ namespace Encog.App.Analyst.Commands
         /// <param name="method">The method to use.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <returns>The trainer.</returns>
-        private MLTrain CreateTrainer(IMLMethod method,
+        private IMLTrain CreateTrainer(IMLMethod method,
                                       IMLDataSet trainingSet)
         {
             var factory = new MLTrainFactory();
@@ -90,7 +90,7 @@ namespace Encog.App.Analyst.Commands
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training type:" + type);
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training args:" + args);
 
-            MLTrain train = factory.Create(method, trainingSet, type, args);
+            IMLTrain train = factory.Create(method, trainingSet, type, args);
 
             if (_kfold > 0)
             {
@@ -109,7 +109,7 @@ namespace Encog.App.Analyst.Commands
             _kfold = ObtainCross();
             IMLDataSet trainingSet = ObtainTrainingSet();
             IMLMethod method = ObtainMethod();
-            MLTrain trainer = CreateTrainer(method, trainingSet);
+            IMLTrain trainer = CreateTrainer(method, trainingSet);
 
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning training");
 
@@ -207,7 +207,7 @@ namespace Encog.App.Analyst.Commands
         /// <param name="train">The training method.</param>
         /// <param name="method">The ML method.</param>
         /// <param name="trainingSet">The training set.</param>
-        private void PerformTraining(MLTrain train, IMLMethod method,
+        private void PerformTraining(IMLTrain train, IMLMethod method,
                                      IMLDataSet trainingSet)
         {
             ValidateNetwork.ValidateMethodToData(method, trainingSet);

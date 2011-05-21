@@ -104,7 +104,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain train;
 
         #region IStrategy Members
 
@@ -113,7 +113,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         ///
         /// <param name="train_0">The training algorithm.</param>
-        public void Init(MLTrain train_0)
+        public void Init(IMLTrain train_0)
         {
             train = train_0;
             setter = (IMomentum) train_0;

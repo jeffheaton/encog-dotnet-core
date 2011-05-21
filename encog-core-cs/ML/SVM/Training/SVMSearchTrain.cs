@@ -37,133 +37,133 @@ namespace Encog.ML.SVM.Training
         /// The default starting number for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_BEGIN = -5;
+        public const double DefaultConstBegin = -5;
 
         /// <summary>
         /// The default ending number for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_END = 15;
+        public const double DefaultConstEnd = 15;
 
         /// <summary>
         /// The default step for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_STEP = 2;
+        public const double DefaultConstStep = 2;
 
         /// <summary>
         /// The default gamma begin.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_BEGIN = -10;
+        public const double DefaultGammaBegin = -10;
 
         /// <summary>
         /// The default gamma end.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_END = 10;
+        public const double DefaultGammaEnd = 10;
 
         /// <summary>
         /// The default gamma step.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_STEP = 1;
+        public const double DefaultGammaStep = 1;
 
         /// <summary>
         /// The internal training object, used for the search.
         /// </summary>
         ///
-        private readonly SVMTrain internalTrain;
+        private readonly SVMTrain _internalTrain;
 
         /// <summary>
         /// The network that is to be trained.
         /// </summary>
         ///
-        private readonly SupportVectorMachine network;
+        private readonly SupportVectorMachine _network;
 
         /// <summary>
         /// The best values found for C.
         /// </summary>
         ///
-        private double bestConst;
+        private double _bestConst;
 
         /// <summary>
         /// The best error.
         /// </summary>
         ///
-        private double bestError;
+        private double _bestError;
 
         /// <summary>
         /// The best values found for gamma.
         /// </summary>
         ///
-        private double bestGamma;
+        private double _bestGamma;
 
         /// <summary>
         /// The beginning value for C.
         /// </summary>
         ///
-        private double constBegin;
+        private double _constBegin;
 
         /// <summary>
         /// The ending value for C.
         /// </summary>
         ///
-        private double constEnd;
+        private double _constEnd;
 
         /// <summary>
         /// The step value for C.
         /// </summary>
         ///
-        private double constStep;
+        private double _constStep;
 
         /// <summary>
         /// The current C.
         /// </summary>
         ///
-        private double currentConst;
+        private double _currentConst;
 
         /// <summary>
         /// The current gamma.
         /// </summary>
         ///
-        private double currentGamma;
+        private double _currentGamma;
 
         /// <summary>
         /// The number of folds.
         /// </summary>
         ///
-        private int fold;
+        private int _fold;
 
         /// <summary>
         /// The beginning value for gamma.
         /// </summary>
         ///
-        private double gammaBegin;
+        private double _gammaBegin;
 
         /// <summary>
         /// The ending value for gamma.
         /// </summary>
         ///
-        private double gammaEnd;
+        private double _gammaEnd;
 
         /// <summary>
         /// The step value for gamma.
         /// </summary>
         ///
-        private double gammaStep;
+        private double _gammaStep;
 
         /// <summary>
         /// Is the network setup.
         /// </summary>
         ///
-        private bool isSetup;
+        private bool _isSetup;
 
         /// <summary>
         /// Is the training done.
         /// </summary>
         ///
-        private bool trainingDone;
+        private bool _trainingDone;
 
         /// <summary>
         /// Construct a trainer for an SVM network.
@@ -174,19 +174,19 @@ namespace Encog.ML.SVM.Training
         public SVMSearchTrain(SupportVectorMachine method, IMLDataSet training)
             : base(TrainingImplementationType.Iterative)
         {
-            fold = 0;
-            constBegin = DEFAULT_CONST_BEGIN;
-            constStep = DEFAULT_CONST_STEP;
-            constEnd = DEFAULT_CONST_END;
-            gammaBegin = DEFAULT_GAMMA_BEGIN;
-            gammaEnd = DEFAULT_GAMMA_END;
-            gammaStep = DEFAULT_GAMMA_STEP;
-            network = method;
+            _fold = 0;
+            _constBegin = DefaultConstBegin;
+            _constStep = DefaultConstStep;
+            _constEnd = DefaultConstEnd;
+            _gammaBegin = DefaultGammaBegin;
+            _gammaEnd = DefaultGammaEnd;
+            _gammaStep = DefaultGammaStep;
+            _network = method;
             Training = training;
-            isSetup = false;
-            trainingDone = false;
+            _isSetup = false;
+            _trainingDone = false;
 
-            internalTrain = new SVMTrain(network, training);
+            _internalTrain = new SVMTrain(_network, training);
         }
 
         /// <inheritdoc/>
@@ -199,78 +199,78 @@ namespace Encog.ML.SVM.Training
         /// <value>the constBegin to set</value>
         public double ConstBegin
         {
-            get { return constBegin; }
-            set { constBegin = value; }
+            get { return _constBegin; }
+            set { _constBegin = value; }
         }
 
 
         /// <value>the constEnd to set</value>
         public double ConstEnd
         {
-            get { return constEnd; }
-            set { constEnd = value; }
+            get { return _constEnd; }
+            set { _constEnd = value; }
         }
 
 
         /// <value>the constStep to set</value>
         public double ConstStep
         {
-            get { return constStep; }
-            set { constStep = value; }
+            get { return _constStep; }
+            set { _constStep = value; }
         }
 
 
         /// <value>the fold to set</value>
         public int Fold
         {
-            get { return fold; }
-            set { fold = value; }
+            get { return _fold; }
+            set { _fold = value; }
         }
 
 
         /// <value>the gammaBegin to set</value>
         public double GammaBegin
         {
-            get { return gammaBegin; }
-            set { gammaBegin = value; }
+            get { return _gammaBegin; }
+            set { _gammaBegin = value; }
         }
 
 
         /// <value>the gammaEnd to set.</value>
         public double GammaEnd
         {
-            get { return gammaEnd; }
-            set { gammaEnd = value; }
+            get { return _gammaEnd; }
+            set { _gammaEnd = value; }
         }
 
 
         /// <value>the gammaStep to set</value>
         public double GammaStep
         {
-            get { return gammaStep; }
-            set { gammaStep = value; }
+            get { return _gammaStep; }
+            set { _gammaStep = value; }
         }
 
 
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <value>True if the training is done.</value>
         public override bool TrainingDone
         {
-            get { return trainingDone; }
+            get { return _trainingDone; }
         }
 
         /// <inheritdoc/>
         public override sealed void FinishTraining()
         {
-            internalTrain.Gamma = bestGamma;
-            internalTrain.C = bestConst;
-            internalTrain.Iteration();
+            _internalTrain.Gamma = _bestGamma;
+            _internalTrain.C = _bestConst;
+            _internalTrain.Iteration();
         }
 
 
@@ -279,23 +279,23 @@ namespace Encog.ML.SVM.Training
         /// </summary>
         public override sealed void Iteration()
         {
-            if (!trainingDone)
+            if (!_trainingDone)
             {
-                if (!isSetup)
+                if (!_isSetup)
                 {
                     Setup();
                 }
 
                 PreIteration();
 
-                internalTrain.Fold = fold;
+                _internalTrain.Fold = _fold;
 
-                if (network.KernelType == KernelType.RadialBasisFunction)
+                if (_network.KernelType == KernelType.RadialBasisFunction)
                 {
-                    internalTrain.Gamma = currentGamma;
-                    internalTrain.C = currentConst;
-                    internalTrain.Iteration();
-                    double e = internalTrain.Error;
+                    _internalTrain.Gamma = _currentGamma;
+                    _internalTrain.C = _currentConst;
+                    _internalTrain.Iteration();
+                    double e = _internalTrain.Error;
 
                     //System.out.println(this.currentGamma + "," + this.currentConst
                     //		+ "," + e);
@@ -303,33 +303,33 @@ namespace Encog.ML.SVM.Training
                     // new best error?
                     if (!Double.IsNaN(e))
                     {
-                        if (e < bestError)
+                        if (e < _bestError)
                         {
-                            bestConst = currentConst;
-                            bestGamma = currentGamma;
-                            bestError = e;
+                            _bestConst = _currentConst;
+                            _bestGamma = _currentGamma;
+                            _bestError = e;
                         }
                     }
 
                     // advance
-                    currentConst += constStep;
-                    if (currentConst > constEnd)
+                    _currentConst += _constStep;
+                    if (_currentConst > _constEnd)
                     {
-                        currentConst = constBegin;
-                        currentGamma += gammaStep;
-                        if (currentGamma > gammaEnd)
+                        _currentConst = _constBegin;
+                        _currentGamma += _gammaStep;
+                        if (_currentGamma > _gammaEnd)
                         {
-                            trainingDone = true;
+                            _trainingDone = true;
                         }
                     }
 
-                    Error = bestError;
+                    Error = _bestError;
                 }
                 else
                 {
-                    internalTrain.Gamma = currentGamma;
-                    internalTrain.C = currentConst;
-                    internalTrain.Iteration();
+                    _internalTrain.Gamma = _currentGamma;
+                    _internalTrain.C = _currentConst;
+                    _internalTrain.Iteration();
                 }
 
                 PostIteration();
@@ -353,10 +353,10 @@ namespace Encog.ML.SVM.Training
         ///
         private void Setup()
         {
-            currentConst = constBegin;
-            currentGamma = gammaBegin;
-            bestError = Double.PositiveInfinity;
-            isSetup = true;
+            _currentConst = _constBegin;
+            _currentGamma = _gammaBegin;
+            _bestError = Double.PositiveInfinity;
+            _isSetup = true;
         }
     }
 }

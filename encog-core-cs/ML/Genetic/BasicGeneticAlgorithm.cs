@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
 using Encog.ML.Genetic.Genome;
 using Encog.Util.Concurrency;
 using Encog.MathUtil;
@@ -37,14 +36,14 @@ namespace Encog.ML.Genetic
         /// Is this the first iteration.
         /// </summary>
         ///
-        private bool first;
+        private bool _first;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public BasicGeneticAlgorithm()
         {
-            first = true;
+            _first = true;
         }
 
         /// <summary>
@@ -53,10 +52,10 @@ namespace Encog.ML.Genetic
         /// </summary>
         public override sealed void Iteration()
         {
-            if (first)
+            if (_first)
             {
                 Population.Claim(this);
-                first = false;
+                _first = false;
             }
 
             var countToMate = (int) (Population.PopulationSize*PercentToMate);
@@ -72,7 +71,7 @@ namespace Encog.ML.Genetic
             for (int i = 0; i < countToMate; i++)
             {
                 IGenome mother = Population.Genomes[i];
-                int fatherInt = (int)(ThreadSafeRandom.NextDouble()*matingPopulationSize);
+                var fatherInt = (int)(ThreadSafeRandom.NextDouble()*matingPopulationSize);
                 IGenome father = Population.Genomes[fatherInt];
                 IGenome child1 = Population.Genomes[offspringIndex];
                 IGenome child2 = Population.Genomes[offspringIndex + 1];

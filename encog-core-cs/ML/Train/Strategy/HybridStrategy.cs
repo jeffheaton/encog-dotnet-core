@@ -40,85 +40,85 @@ namespace Encog.ML.Train.Strategy
         /// training method.
         /// </summary>
         ///
-        public const double DEFAULT_MIN_IMPROVEMENT = 0.00001d;
+        public const double DefaultMinImprovement = 0.00001d;
 
         /// <summary>
         /// The default number of cycles to tolerate bad improvement for.
         /// </summary>
         ///
-        public const int DEFAULT_TOLERATE_CYCLES = 10;
+        public const int DefaultTolerateCycles = 10;
 
         /// <summary>
         /// The default number of cycles to use the alternate training for.
         /// </summary>
         ///
-        public const int DEFAULT_ALTERNATE_CYCLES = 5;
+        public const int DefaultAlternateCycles = 5;
 
         /// <summary>
         /// The alternate training method.
         /// </summary>
         ///
-        private readonly MLTrain altTrain;
+        private readonly IMLTrain _altTrain;
 
         /// <summary>
         /// How many cycles to engage the alternate algorithm for.
         /// </summary>
         ///
-        private readonly int alternateCycles;
+        private readonly int _alternateCycles;
 
         /// <summary>
         /// The minimum improvement before the alternate training 
         /// algorithm is considered.
         /// </summary>
         ///
-        private readonly double minImprovement;
+        private readonly double _minImprovement;
 
         /// <summary>
         /// The number of minimal improvement to tolerate before the
         /// alternate training algorithm is used.
         /// </summary>
         ///
-        private readonly int tolerateMinImprovement;
+        private readonly int _tolerateMinImprovement;
 
         /// <summary>
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
         /// <summary>
         /// The last time the alternate training algorithm was used.
         /// </summary>
         ///
-        private int lastHybrid;
+        private int _lastHybrid;
 
         /// <summary>
         /// The last improvement.
         /// </summary>
         ///
-        private double lastImprovement;
+        private double _lastImprovement;
 
         /// <summary>
         /// The primary training method.
         /// </summary>
         ///
-        private MLTrain mainTrain;
+        private IMLTrain _mainTrain;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start 
         /// evaluation.
         /// </summary>
         ///
-        private bool ready;
+        private bool _ready;
 
         /// <summary>
         /// Construct a hybrid strategy with the default minimum improvement
         /// and toleration cycles.
         /// </summary>
         ///
-        /// <param name="altTrain_0">The alternative training strategy.</param>
-        public HybridStrategy(MLTrain altTrain_0)
-            : this(altTrain_0, DEFAULT_MIN_IMPROVEMENT, DEFAULT_TOLERATE_CYCLES, DEFAULT_ALTERNATE_CYCLES)
+        /// <param name="altTrain">The alternative training strategy.</param>
+        public HybridStrategy(IMLTrain altTrain)
+            : this(altTrain, DefaultMinImprovement, DefaultTolerateCycles, DefaultAlternateCycles)
         {
         }
 
@@ -126,19 +126,19 @@ namespace Encog.ML.Train.Strategy
         /// Create a hybrid strategy.
         /// </summary>
         ///
-        /// <param name="altTrain_0">The alternate training algorithm.</param>
-        /// <param name="minImprovement_1">The minimum improvement to switch algorithms.</param>
-        /// <param name="tolerateMinImprovement_2"></param>
-        /// <param name="alternateCycles_3"></param>
-        public HybridStrategy(MLTrain altTrain_0, double minImprovement_1,
-                              int tolerateMinImprovement_2, int alternateCycles_3)
+        /// <param name="altTrain">The alternate training algorithm.</param>
+        /// <param name="minImprovement">The minimum improvement to switch algorithms.</param>
+        /// <param name="tolerateMinImprovement"></param>
+        /// <param name="alternateCycles"></param>
+        public HybridStrategy(IMLTrain altTrain, double minImprovement,
+                              int tolerateMinImprovement, int alternateCycles)
         {
-            altTrain = altTrain_0;
-            ready = false;
-            lastHybrid = 0;
-            minImprovement = minImprovement_1;
-            tolerateMinImprovement = tolerateMinImprovement_2;
-            alternateCycles = alternateCycles_3;
+            _altTrain = altTrain;
+            _ready = false;
+            _lastHybrid = 0;
+            _minImprovement = minImprovement;
+            _tolerateMinImprovement = tolerateMinImprovement;
+            _alternateCycles = alternateCycles;
         }
 
         #region IStrategy Members
@@ -148,9 +148,9 @@ namespace Encog.ML.Train.Strategy
         /// </summary>
         ///
         /// <param name="train">The training algorithm.</param>
-        public virtual void Init(MLTrain train)
+        public virtual void Init(IMLTrain train)
         {
-            mainTrain = train;
+            _mainTrain = train;
         }
 
         /// <summary>
@@ -159,36 +159,36 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PostIteration()
         {
-            if (ready)
+            if (_ready)
             {
-                double currentError = mainTrain.Error;
-                lastImprovement = (currentError - lastError)
-                                  /lastError;
+                double currentError = _mainTrain.Error;
+                _lastImprovement = (currentError - _lastError)
+                                  /_lastError;
                 EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Last improvement: "
-                                                           + lastImprovement);
+                                                           + _lastImprovement);
 
-                if ((lastImprovement > 0)
-                    || (Math.Abs(lastImprovement) < minImprovement))
+                if ((_lastImprovement > 0)
+                    || (Math.Abs(_lastImprovement) < _minImprovement))
                 {
-                    lastHybrid++;
+                    _lastHybrid++;
 
-                    if (lastHybrid > tolerateMinImprovement)
+                    if (_lastHybrid > _tolerateMinImprovement)
                     {
-                        lastHybrid = 0;
+                        _lastHybrid = 0;
 
                         EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                          "Performing hybrid cycle");
 
-                        for (int i = 0; i < alternateCycles; i++)
+                        for (int i = 0; i < _alternateCycles; i++)
                         {
-                            altTrain.Iteration();
+                            _altTrain.Iteration();
                         }
                     }
                 }
             }
             else
             {
-                ready = true;
+                _ready = true;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PreIteration()
         {
-            lastError = mainTrain.Error;
+            _lastError = _mainTrain.Error;
         }
 
         #endregion

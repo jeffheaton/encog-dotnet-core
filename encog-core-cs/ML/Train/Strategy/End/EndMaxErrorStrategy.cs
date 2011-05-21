@@ -25,31 +25,31 @@ namespace Encog.ML.Train.Strategy.End
     /// <summary>
     /// End training once the error falls below a specified level.
     /// </summary>
-    public class EndMaxErrorStrategy : EndTrainingStrategy
+    public class EndMaxErrorStrategy : IEndTrainingStrategy
     {
         /// <summary>
         /// The max error.
         /// </summary>
-        private readonly double maxError;
+        private readonly double _maxError;
 
         /// <summary>
         /// Has training started.
         /// </summary>
-        private bool started;
+        private bool _started;
 
         /// <summary>
         /// The trainer.
         /// </summary>
-        private MLTrain train;
+        private IMLTrain _train;
 
         /// <summary>
         /// Construct the object, specify the max error.
         /// </summary>
-        /// <param name="maxError_0">The max error.</param>
-        public EndMaxErrorStrategy(double maxError_0)
+        /// <param name="maxError">The max error.</param>
+        public EndMaxErrorStrategy(double maxError)
         {
-            maxError = maxError_0;
-            started = false;
+            _maxError = maxError;
+            _started = false;
         }
 
         #region EndTrainingStrategy Members
@@ -60,17 +60,17 @@ namespace Encog.ML.Train.Strategy.End
         ///
         public virtual bool ShouldStop()
         {
-            return started && train.Error < maxError;
+            return _started && _train.Error < _maxError;
         }
 
         /// <summary>
         /// 
         /// </summary>
         ///
-        public virtual void Init(MLTrain train_0)
+        public virtual void Init(IMLTrain train_0)
         {
-            train = train_0;
-            started = false;
+            _train = train_0;
+            _started = false;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Encog.ML.Train.Strategy.End
         ///
         public virtual void PostIteration()
         {
-            started = true;
+            _started = true;
         }
 
         /// <summary>

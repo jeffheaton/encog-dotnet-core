@@ -61,8 +61,7 @@ namespace Encog.Neural.Neat
         public virtual Object Read(Stream mask0)
         {
             var result = new NEATPopulation();
-            var innovationList = new NEATInnovationList();
-            innovationList.Population = result;
+            var innovationList = new NEATInnovationList {Population = result};
             result.Innovations = innovationList;
             var ins0 = new EncogReadHelper(mask0);
             IDictionary<Int32, ISpecies> speciesMap = new Dictionary<Int32, ISpecies>();
@@ -78,35 +77,39 @@ namespace Encog.Neural.Neat
                     foreach (String line  in  section.Lines)
                     {
                         IList<String> cols = EncogFileSection.SplitColumns(line);
-                        var innovation = new NEATInnovation();
-                        innovation.InnovationID = Int32.Parse(cols[0]);
-                        innovation.InnovationType = StringToInnovationType(cols[1]);
-                        innovation.NeuronType = StringToNeuronType(cols[2]);
-                        innovation.SplitX = CSVFormat.EG_FORMAT.Parse(cols[3]);
-                        innovation.SplitY = CSVFormat.EG_FORMAT.Parse(cols[4]);
-                        innovation.NeuronID = Int32.Parse(cols[5]);
-                        innovation.FromNeuronID = Int32.Parse(cols[6]);
-                        innovation.ToNeuronID = Int32.Parse(cols[7]);
+                        var innovation = new NEATInnovation
+                                             {
+                                                 InnovationID = Int32.Parse(cols[0]),
+                                                 InnovationType = StringToInnovationType(cols[1]),
+                                                 NeuronType = StringToNeuronType(cols[2]),
+                                                 SplitX = CSVFormat.EG_FORMAT.Parse(cols[3]),
+                                                 SplitY = CSVFormat.EG_FORMAT.Parse(cols[4]),
+                                                 NeuronID = Int32.Parse(cols[5]),
+                                                 FromNeuronID = Int32.Parse(cols[6]),
+                                                 ToNeuronID = Int32.Parse(cols[7])
+                                             };
                         result.Innovations.Add(innovation);
                     }
                 }
                 else if (section.SectionName.Equals("NEAT-POPULATION")
                          && section.SubSectionName.Equals("SPECIES"))
                 {
-                    foreach (String line_0  in  section.Lines)
+                    foreach (String line  in  section.Lines)
                     {
-                        String[] cols_1 = line_0.Split(',');
-                        var species = new BasicSpecies();
+                        String[] cols = line.Split(',');
+                        var species = new BasicSpecies
+                                          {
+                                              SpeciesID = Int32.Parse(cols[0]),
+                                              Age = Int32.Parse(cols[1]),
+                                              BestScore = CSVFormat.EG_FORMAT.Parse(cols[2]),
+                                              GensNoImprovement = Int32.Parse(cols[3]),
+                                              SpawnsRequired = CSVFormat.EG_FORMAT
+                                                  .Parse(cols[4])
+                                          };
 
-                        species.SpeciesID = Int32.Parse(cols_1[0]);
-                        species.Age = Int32.Parse(cols_1[1]);
-                        species.BestScore = CSVFormat.EG_FORMAT.Parse(cols_1[2]);
-                        species.GensNoImprovement = Int32.Parse(cols_1[3]);
                         species.SpawnsRequired = CSVFormat.EG_FORMAT
-                            .Parse(cols_1[4]);
-                        species.SpawnsRequired = CSVFormat.EG_FORMAT
-                            .Parse(cols_1[5]);
-                        leaderMap[(species)] = (Int32.Parse(cols_1[6]));
+                            .Parse(cols[5]);
+                        leaderMap[(species)] = (Int32.Parse(cols[6]));
                         result.Species.Add(species);
                         speciesMap[((int) species.SpeciesID)] = (species);
                     }
@@ -116,50 +119,54 @@ namespace Encog.Neural.Neat
                 {
                     NEATGenome lastGenome = null;
 
-                    foreach (String line_2  in  section.Lines)
+                    foreach (String line  in  section.Lines)
                     {
-                        IList<String> cols_3 = EncogFileSection.SplitColumns(line_2);
-                        if (cols_3[0].Equals("g", StringComparison.InvariantCultureIgnoreCase))
+                        IList<String> cols = EncogFileSection.SplitColumns(line);
+                        if (cols[0].Equals("g", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            lastGenome = new NEATGenome();
-                            lastGenome.NeuronsChromosome = new Chromosome();
-                            lastGenome.LinksChromosome = new Chromosome();
+                            lastGenome = new NEATGenome
+                                             {
+                                                 NeuronsChromosome = new Chromosome(),
+                                                 LinksChromosome = new Chromosome()
+                                             };
                             lastGenome.Chromosomes.Add(lastGenome.NeuronsChromosome);
                             lastGenome.Chromosomes.Add(lastGenome.LinksChromosome);
-                            lastGenome.GenomeID = Int32.Parse(cols_3[1]);
-                            lastGenome.SpeciesID = Int32.Parse(cols_3[2]);
+                            lastGenome.GenomeID = Int32.Parse(cols[1]);
+                            lastGenome.SpeciesID = Int32.Parse(cols[2]);
                             lastGenome.AdjustedScore = CSVFormat.EG_FORMAT
-                                .Parse(cols_3[3]);
+                                .Parse(cols[3]);
                             lastGenome.AmountToSpawn = CSVFormat.EG_FORMAT
-                                .Parse(cols_3[4]);
-                            lastGenome.NetworkDepth = Int32.Parse(cols_3[5]);
-                            lastGenome.Score = CSVFormat.EG_FORMAT.Parse(cols_3[6]);
+                                .Parse(cols[4]);
+                            lastGenome.NetworkDepth = Int32.Parse(cols[5]);
+                            lastGenome.Score = CSVFormat.EG_FORMAT.Parse(cols[6]);
                             result.Add(lastGenome);
                             genomeMap[(int) lastGenome.GenomeID] = lastGenome;
                         }
-                        else if (cols_3[0].Equals("n", StringComparison.InvariantCultureIgnoreCase))
+                        else if (cols[0].Equals("n", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            var neuronGene = new NEATNeuronGene();
-                            neuronGene.Id = Int32.Parse(cols_3[1]);
-                            neuronGene.NeuronType = StringToNeuronType(cols_3[2]);
-                            neuronGene.Enabled = Int32.Parse(cols_3[3]) > 0;
-                            neuronGene.InnovationId = Int32.Parse(cols_3[4]);
-                            neuronGene.ActivationResponse = CSVFormat.EG_FORMAT
-                                .Parse(cols_3[5]);
-                            neuronGene.SplitX = CSVFormat.EG_FORMAT.Parse(cols_3[6]);
-                            neuronGene.SplitY = CSVFormat.EG_FORMAT.Parse(cols_3[7]);
+                            var neuronGene = new NEATNeuronGene
+                                                 {
+                                                     Id = Int32.Parse(cols[1]),
+                                                     NeuronType = StringToNeuronType(cols[2]),
+                                                     Enabled = Int32.Parse(cols[3]) > 0,
+                                                     InnovationId = Int32.Parse(cols[4]),
+                                                     ActivationResponse = CSVFormat.EG_FORMAT
+                                                         .Parse(cols[5]),
+                                                     SplitX = CSVFormat.EG_FORMAT.Parse(cols[6]),
+                                                     SplitY = CSVFormat.EG_FORMAT.Parse(cols[7])
+                                                 };
                             lastGenome.Neurons.Add(neuronGene);
                         }
-                        else if (cols_3[0].Equals("l", StringComparison.InvariantCultureIgnoreCase))
+                        else if (cols[0].Equals("l", StringComparison.InvariantCultureIgnoreCase))
                         {
                             var linkGene = new NEATLinkGene();
-                            linkGene.Id = Int32.Parse(cols_3[1]);
-                            linkGene.Enabled = Int32.Parse(cols_3[2]) > 0;
-                            linkGene.Recurrent = Int32.Parse(cols_3[3]) > 0;
-                            linkGene.FromNeuronID = Int32.Parse(cols_3[4]);
-                            linkGene.ToNeuronID = Int32.Parse(cols_3[5]);
-                            linkGene.Weight = CSVFormat.EG_FORMAT.Parse(cols_3[6]);
-                            linkGene.InnovationId = Int32.Parse(cols_3[7]);
+                            linkGene.Id = Int32.Parse(cols[1]);
+                            linkGene.Enabled = Int32.Parse(cols[2]) > 0;
+                            linkGene.Recurrent = Int32.Parse(cols[3]) > 0;
+                            linkGene.FromNeuronID = Int32.Parse(cols[4]);
+                            linkGene.ToNeuronID = Int32.Parse(cols[5]);
+                            linkGene.Weight = CSVFormat.EG_FORMAT.Parse(cols[6]);
+                            linkGene.InnovationId = Int32.Parse(cols[7]);
                             lastGenome.Links.Add(linkGene);
                         }
                     }
@@ -171,10 +178,10 @@ namespace Encog.Neural.Neat
 
                     result.NeatActivationFunction = EncogFileSection
                         .ParseActivationFunction(paras,
-                                                 NEATPopulation.PROPERTY_NEAT_ACTIVATION);
+                                                 NEATPopulation.PropertyNEATActivation);
                     result.OutputActivationFunction = EncogFileSection
                         .ParseActivationFunction(paras,
-                                                 NEATPopulation.PROPERTY_OUTPUT_ACTIVATION);
+                                                 NEATPopulation.PropertyOutputActivation);
                     result.Snapshot = EncogFileSection.ParseBoolean(paras,
                                                                     PersistConst.SNAPSHOT);
                     result.InputCount = EncogFileSection.ParseInt(paras,
@@ -228,12 +235,12 @@ namespace Encog.Neural.Neat
 
 
             // set the species leader links
-            foreach (ISpecies species_5  in  leaderMap.Keys)
+            foreach (ISpecies species  in  leaderMap.Keys)
             {
-                int leaderID = leaderMap[species_5];
+                int leaderID = leaderMap[species];
                 IGenome leader = genomeMap[leaderID];
-                species_5.Leader = leader;
-                ((BasicSpecies) species_5).Population = result;
+                species.Leader = leader;
+                ((BasicSpecies) species).Population = result;
             }
 
             return result;
@@ -251,9 +258,9 @@ namespace Encog.Neural.Neat
             xout.AddSection("NEAT-POPULATION");
             xout.AddSubSection("CONFIG");
             xout.WriteProperty(PersistConst.SNAPSHOT, pop.Snapshot);
-            xout.WriteProperty(NEATPopulation.PROPERTY_OUTPUT_ACTIVATION,
+            xout.WriteProperty(NEATPopulation.PropertyOutputActivation,
                                pop.OutputActivationFunction);
-            xout.WriteProperty(NEATPopulation.PROPERTY_NEAT_ACTIVATION,
+            xout.WriteProperty(NEATPopulation.PropertyNEATActivation,
                                pop.NeatActivationFunction);
             xout.WriteProperty(PersistConst.INPUT_COUNT, pop.InputCount);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, pop.OutputCount);
@@ -412,14 +419,11 @@ namespace Encog.Neural.Neat
             {
                 return NEATInnovationType.NewLink;
             }
-            else if (t.Equals("n", StringComparison.InvariantCultureIgnoreCase))
+            if (t.Equals("n", StringComparison.InvariantCultureIgnoreCase))
             {
                 return NEATInnovationType.NewNeuron;
             }
-            else
-            {
-                return default(NEATInnovationType) /* was: null */;
-            }
+            return default(NEATInnovationType) /* was: null */;
         }
 
         /// <summary>
@@ -433,26 +437,23 @@ namespace Encog.Neural.Neat
             {
                 return NEATNeuronType.Bias;
             }
-            else if (t.Equals("h"))
+            if (t.Equals("h"))
             {
                 return NEATNeuronType.Hidden;
             }
-            else if (t.Equals("i"))
+            if (t.Equals("i"))
             {
                 return NEATNeuronType.Input;
             }
-            else if (t.Equals("n"))
+            if (t.Equals("n"))
             {
                 return NEATNeuronType.None;
             }
-            else if (t.Equals("o"))
+            if (t.Equals("o"))
             {
                 return NEATNeuronType.Output;
             }
-            else
-            {
-                return default(NEATNeuronType) /* was: null */;
-            }
+            throw new EncogError("Unknonw neuron type: " + t);            
         }
 
         /// <inheritdoc/>

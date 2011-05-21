@@ -32,13 +32,13 @@ namespace Encog.ML.Kmeans
         /// The center for each dimension in the input.
         /// </summary>
         ///
-        private readonly double[] centers;
+        private readonly double[] _centers;
 
         /// <summary>
         /// The cluster.
         /// </summary>
         ///
-        private KMeansCluster cluster;
+        private KMeansCluster _cluster;
 
         /// <summary>
         /// Construct the centroid.
@@ -47,14 +47,14 @@ namespace Encog.ML.Kmeans
         /// <param name="theCenters">The centers.</param>
         public Centroid(double[] theCenters)
         {
-            centers = theCenters;
+            _centers = theCenters;
         }
 
 
         /// <value>The centers.</value>
         public double[] Centers
         {
-            get { return centers; }
+            get { return _centers; }
         }
 
 
@@ -65,8 +65,8 @@ namespace Encog.ML.Kmeans
         /// <value>The cluster.</value>
         public KMeansCluster Cluster
         {
-            get { return cluster; }
-            set { cluster = value; }
+            get { return _cluster; }
+            set { _cluster = value; }
         }
 
         /// <summary>
@@ -76,25 +76,25 @@ namespace Encog.ML.Kmeans
         public void CalcCentroid()
         {
             // only called by CAInstance
-            int numDP = cluster.Size();
+            int numDp = _cluster.Size();
 
-            var temp = new double[centers.Length];
+            var temp = new double[_centers.Length];
 
             // caluclating the new Centroid
-            for (int i = 0; i < numDP; i++)
+            for (int i = 0; i < numDp; i++)
             {
                 for (int j = 0; j < temp.Length; j++)
                 {
-                    temp[j] += cluster.Get(i)[j];
+                    temp[j] += _cluster.Get(i)[j];
                 }
             }
 
-            for (int i_0 = 0; i_0 < temp.Length; i_0++)
+            for (int i = 0; i < temp.Length; i++)
             {
-                centers[i_0] = temp[i_0]/numDP;
+                _centers[i] = temp[i]/numDp;
             }
 
-            cluster.CalcSumOfSquares();
+            _cluster.CalcSumOfSquares();
         }
     }
 }

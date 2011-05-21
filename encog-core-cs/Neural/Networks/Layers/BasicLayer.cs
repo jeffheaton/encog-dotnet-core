@@ -52,13 +52,13 @@ namespace Encog.Neural.Networks.Layers
     /// </summary>
     ///
     [Serializable]
-    public class BasicLayer : FlatLayer, Layer
+    public class BasicLayer : FlatLayer, ILayer
     {
         /// <summary>
         /// The network that this layer belongs to.
         /// </summary>
         ///
-        private BasicNetwork network;
+        private BasicNetwork _network;
 
         /// <summary>
         /// Construct this layer with a non-default activation function, also
@@ -88,8 +88,8 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         public virtual BasicNetwork Network
         {
-            get { return network; }
-            set { network = value; }
+            get { return _network; }
+            set { _network = value; }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Encog.Neural.Networks.Layers
         /// </summary>
         public virtual IActivationFunction ActivationFunction
         {
-            get { return base.Activation; }
+            get { return Activation; }
         }
 
         #endregion

@@ -636,7 +636,7 @@ namespace Encog.App.Analyst
         /// </summary>
         ///
         /// <param name="train">The trainer.</param>
-        public void ReportTraining(MLTrain train)
+        public void ReportTraining(IMLTrain train)
         {
             foreach (IAnalystListener listener  in  _listeners)
             {

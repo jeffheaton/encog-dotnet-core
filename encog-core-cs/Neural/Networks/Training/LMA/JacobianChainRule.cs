@@ -38,84 +38,84 @@ namespace Encog.Neural.Networks.Training.Lma
     /// Copyright 2009 by Cesar Roberto de Souza, Released under the LGPL.
     /// </summary>
     ///
-    public class JacobianChainRule : ComputeJacobian
+    public class JacobianChainRule : IComputeJacobian
     {
         /// <summary>
         /// THe training set to use. Must be indexable.
         /// </summary>
         ///
-        private readonly IMLDataSet indexableTraining;
+        private readonly IMLDataSet _indexableTraining;
 
         /// <summary>
         /// The number of training set elements.
         /// </summary>
         ///
-        private readonly int inputLength;
+        private readonly int _inputLength;
 
         /// <summary>
         /// The Jacobian matrix that was calculated.
         /// </summary>
         ///
-        private readonly double[][] jacobian;
+        private readonly double[][] _jacobian;
 
         /// <summary>
         /// The network that is to be trained.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// Used to read the training data.
         /// </summary>
         ///
-        private readonly IMLDataPair pair;
+        private readonly IMLDataPair _pair;
 
         /// <summary>
         /// The number of weights and bias values in the neural network.
         /// </summary>
         ///
-        private readonly int parameterSize;
+        private readonly int _parameterSize;
 
         /// <summary>
         /// The errors for each row in the Jacobian.
         /// </summary>
         ///
-        private readonly double[] rowErrors;
+        private readonly double[] _rowErrors;
 
         /// <summary>
         /// The current column in the Jacobian matrix.
         /// </summary>
         ///
-        private int jacobianCol;
+        private int _jacobianCol;
 
         /// <summary>
         /// The current row in the Jacobian matrix.
         /// </summary>
         ///
-        private int jacobianRow;
+        private int _jacobianRow;
 
         /// <summary>
         /// Construct the chain rule calculation.
         /// </summary>
         ///
-        /// <param name="network_0">The network to use.</param>
-        /// <param name="indexableTraining_1">The training set to use.</param>
-        public JacobianChainRule(BasicNetwork network_0,
-                                 IMLDataSet indexableTraining_1)
+        /// <param name="network">The network to use.</param>
+        /// <param name="indexableTraining">The training set to use.</param>
+        public JacobianChainRule(BasicNetwork network,
+                                 IMLDataSet indexableTraining)
         {
-            indexableTraining = indexableTraining_1;
-            network = network_0;
-            parameterSize = network_0.Structure.CalculateSize();
-            inputLength = (int) indexableTraining.Count;
-            jacobian = EngineArray.AllocateDouble2D(inputLength, parameterSize);
+            _indexableTraining = indexableTraining;
+            _network = network;
+            _parameterSize = network.Structure.CalculateSize();
+            _inputLength = (int) _indexableTraining.Count;
+            _jacobian = EngineArray.AllocateDouble2D(_inputLength, _parameterSize);
 
-            rowErrors = new double[inputLength];
+            _rowErrors = new double[_inputLength];
 
             var input = new BasicMLData(
-                indexableTraining.InputSize);
+                _indexableTraining.InputSize);
             var ideal = new BasicMLData(
-                indexableTraining.IdealSize);
-            pair = new BasicMLDataPair(input, ideal);
+                _indexableTraining.IdealSize);
+            _pair = new BasicMLDataPair(input, ideal);
         }
 
         #region ComputeJacobian Members
@@ -130,15 +130,15 @@ namespace Encog.Neural.Networks.Training.Lma
         {
             double result = 0.0d;
 
-            for (int i = 0; i < inputLength; i++)
+            for (int i = 0; i < _inputLength; i++)
             {
-                jacobianRow = i;
-                jacobianCol = 0;
+                _jacobianRow = i;
+                _jacobianCol = 0;
 
-                indexableTraining.GetRecord(i, pair);
+                _indexableTraining.GetRecord(i, _pair);
 
-                double e = CalculateDerivatives(pair);
-                rowErrors[i] = e;
+                double e = CalculateDerivatives(_pair);
+                _rowErrors[i] = e;
                 result += e*e;
             }
 
@@ -149,14 +149,14 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <value>The Jacobian matrix.</value>
         public virtual double[][] Jacobian
         {
-            get { return jacobian; }
+            get { return _jacobian; }
         }
 
 
         /// <value>The errors for each row of the Jacobian.</value>
         public virtual double[] RowErrors
         {
-            get { return rowErrors; }
+            get { return _rowErrors; }
         }
 
         #endregion
@@ -168,7 +168,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="a">The activation function.</param>
         /// <param name="d">The value to calculate for.</param>
         /// <returns>The derivative.</returns>
-        private double CalcDerivative(IActivationFunction a, double d)
+        private static double CalcDerivative(IActivationFunction a, double d)
         {
             return a.DerivativeFunction(d);
         }
@@ -180,7 +180,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="a">The activation function.</param>
         /// <param name="d">The value to calculate for.</param>
         /// <returns>The derivative.</returns>
-        private double CalcDerivative2(IActivationFunction a, double d)
+        private static double CalcDerivative2(IActivationFunction a, double d)
         {
             var temp = new double[1];
             temp[0] = d;
@@ -193,54 +193,54 @@ namespace Encog.Neural.Networks.Training.Lma
         /// Calculate the derivatives for this training set element.
         /// </summary>
         ///
-        /// <param name="pair_0">The training set element.</param>
+        /// <param name="pair">The training set element.</param>
         /// <returns>The sum squared of errors.</returns>
-        private double CalculateDerivatives(IMLDataPair pair_0)
+        private double CalculateDerivatives(IMLDataPair pair)
         {
             // error values
             double e = 0.0d;
             double sum = 0.0d;
 
-            network.Compute(pair_0.Input);
+            _network.Compute(pair.Input);
 
-            int fromLayer = network.LayerCount - 2;
-            int toLayer = network.LayerCount - 1;
-            int fromNeuronCount = network.GetLayerTotalNeuronCount(fromLayer);
-            int toNeuronCount = network.GetLayerNeuronCount(toLayer);
+            int fromLayer = _network.LayerCount - 2;
+            int toLayer = _network.LayerCount - 1;
+            int fromNeuronCount = _network.GetLayerTotalNeuronCount(fromLayer);
+            int toNeuronCount = _network.GetLayerNeuronCount(toLayer);
 
-            double output = network.Structure.Flat.LayerOutput[0];
-            e = pair_0.Ideal[0] - output;
+            double output = _network.Structure.Flat.LayerOutput[0];
+            e = pair.Ideal[0] - output;
 
             for (int i = 0; i < fromNeuronCount; i++)
             {
-                double lastOutput = network.GetLayerOutput(fromLayer, i);
+                double lastOutput = _network.GetLayerOutput(fromLayer, i);
 
-                jacobian[jacobianRow][jacobianCol++] = CalcDerivative(
-                    network.GetActivation(toLayer), output)*lastOutput;
+                _jacobian[_jacobianRow][_jacobianCol++] = CalcDerivative(
+                    _network.GetActivation(toLayer), output)*lastOutput;
             }
 
             while (fromLayer > 0)
             {
                 fromLayer--;
                 toLayer--;
-                fromNeuronCount = network.GetLayerTotalNeuronCount(fromLayer);
-                toNeuronCount = network.GetLayerNeuronCount(toLayer);
+                fromNeuronCount = _network.GetLayerTotalNeuronCount(fromLayer);
+                toNeuronCount = _network.GetLayerNeuronCount(toLayer);
 
                 // this.network.getLayerOutput(fromLayer, neuronNumber) holder.getResult().get(lastSynapse);
 
                 // for each neuron in the input layer
                 for (int neuron = 0; neuron < toNeuronCount; neuron++)
                 {
-                    output = network.GetLayerOutput(toLayer, neuron);
+                    output = _network.GetLayerOutput(toLayer, neuron);
 
-                    IActivationFunction function = network.GetActivation(toLayer);
+                    IActivationFunction function = _network.GetActivation(toLayer);
 
-                    double w = network.GetWeight(toLayer, neuron, 0);
+                    double w = _network.GetWeight(toLayer, neuron, 0);
                     double val = CalcDerivative(function, output)
                                  *CalcDerivative2(function, sum)*w;
 
                     // for each weight of the input neuron
-                    for (int i_1 = 0; i_1 < fromNeuronCount; i_1++)
+                    for (int i = 0; i < fromNeuronCount; i++)
                     {
                         sum = 0.0d;
                         // for each neuron in the next layer
@@ -249,12 +249,12 @@ namespace Encog.Neural.Networks.Training.Lma
                             // for each weight of the next neuron
                             for (int k = 0; k < fromNeuronCount; k++)
                             {
-                                sum += network.GetWeight(fromLayer, k, j)*output;
+                                sum += _network.GetWeight(fromLayer, k, j)*output;
                             }
                         }
 
-                        jacobian[jacobianRow][jacobianCol++] = val
-                                                               *network.GetLayerOutput(fromLayer, i_1);
+                        _jacobian[_jacobianRow][_jacobianCol++] = val
+                                                               *_network.GetLayerOutput(fromLayer, i);
                     }
                 }
             }

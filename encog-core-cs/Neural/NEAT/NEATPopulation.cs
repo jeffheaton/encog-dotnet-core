@@ -36,58 +36,44 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// NEAT activation function tag.
         /// </summary>
-        public const String PROPERTY_NEAT_ACTIVATION = "neatAct";
+        public const String PropertyNEATActivation = "neatAct";
 
         /// <summary>
         /// NEAT output activation function.
         /// </summary>
-        public const String PROPERTY_OUTPUT_ACTIVATION = "outAct";
-
-        /// <summary>
-        /// The number of input units. All members of the population must agree with
-        /// this number.
-        /// </summary>
-        ///
-        internal int inputCount;
+        public const String PropertyOutputActivation = "outAct";
 
         /// <summary>
         /// The activation function for neat to use.
         /// </summary>
         ///
-        private IActivationFunction neatActivationFunction;
+        private IActivationFunction _neatActivationFunction;
 
         /// <summary>
         /// The activation function to use on the output layer of Encog.
         /// </summary>
         ///
-        private IActivationFunction outputActivationFunction;
-
-        /// <summary>
-        /// The number of output units. All members of the population must agree with
-        /// this number.
-        /// </summary>
-        ///
-        internal int outputCount;
+        private IActivationFunction _outputActivationFunction;
 
         /// <summary>
         /// Are we using snapshot?
         /// </summary>
-        private bool snapshot;
+        private bool _snapshot;
 
         /// <summary>
         /// Construct a starting NEAT population.
         /// </summary>
         ///
-        /// <param name="inputCount_0">The input neuron count.</param>
-        /// <param name="outputCount_1">The output neuron count.</param>
+        /// <param name="inputCount">The input neuron count.</param>
+        /// <param name="outputCount">The output neuron count.</param>
         /// <param name="populationSize">The population size.</param>
-        public NEATPopulation(int inputCount_0, int outputCount_1,
+        public NEATPopulation(int inputCount, int outputCount,
                               int populationSize) : base(populationSize)
         {
-            neatActivationFunction = new ActivationSigmoid();
-            outputActivationFunction = new ActivationLinear();
-            inputCount = inputCount_0;
-            outputCount = outputCount_1;
+            _neatActivationFunction = new ActivationSigmoid();
+            _outputActivationFunction = new ActivationLinear();
+            InputCount = inputCount;
+            OutputCount = outputCount;
 
             if (populationSize == 0)
             {
@@ -98,15 +84,15 @@ namespace Encog.Neural.NEAT
             // create the initial population
             for (int i = 0; i < populationSize; i++)
             {
-                var genome = new NEATGenome(AssignGenomeID(), inputCount_0,
-                                            outputCount_1);
+                var genome = new NEATGenome(AssignGenomeID(), inputCount,
+                                            outputCount);
                 Add(genome);
             }
 
             // create initial innovations
-            var genome_2 = (NEATGenome) Genomes[0];
-            Innovations = new NEATInnovationList(this, genome_2.Links,
-                                                 genome_2.Neurons);
+            var genome2 = (NEATGenome) Genomes[0];
+            Innovations = new NEATInnovationList(this, genome2.Links,
+                                                 genome2.Neurons);
         }
 
         /// <summary>
@@ -114,48 +100,40 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public NEATPopulation()
         {
-            neatActivationFunction = new ActivationSigmoid();
-            outputActivationFunction = new ActivationLinear();
+            _neatActivationFunction = new ActivationSigmoid();
+            _outputActivationFunction = new ActivationLinear();
         }
 
 
         /// <value>the inputCount to set</value>
-        public int InputCount
-        {
-            get { return inputCount; }
-            set { inputCount = value; }
-        }
+        public int InputCount { get; set; }
 
 
         /// <value>the outputCount to set</value>
-        public int OutputCount
-        {
-            get { return outputCount; }
-            set { outputCount = value; }
-        }
+        public int OutputCount { get; set; }
 
 
         /// <value>the neatActivationFunction to set</value>
         public IActivationFunction NeatActivationFunction
         {
-            get { return neatActivationFunction; }
-            set { neatActivationFunction = value; }
+            get { return _neatActivationFunction; }
+            set { _neatActivationFunction = value; }
         }
 
 
         /// <value>the outputActivationFunction to set</value>
         public IActivationFunction OutputActivationFunction
         {
-            get { return outputActivationFunction; }
-            set { outputActivationFunction = value; }
+            get { return _outputActivationFunction; }
+            set { _outputActivationFunction = value; }
         }
 
 
         /// <value>the snapshot to set</value>
         public bool Snapshot
         {            
-            get { return snapshot; }
-            set { snapshot = value; }
+            get { return _snapshot; }
+            set { _snapshot = value; }
         }
     }
 }

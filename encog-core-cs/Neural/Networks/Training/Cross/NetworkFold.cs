@@ -35,13 +35,13 @@ namespace Encog.Neural.Networks.Training.Cross
         /// The output for this fold.
         /// </summary>
         ///
-        private readonly double[] output;
+        private readonly double[] _output;
 
         /// <summary>
         /// The weights for this fold.
         /// </summary>
         ///
-        private readonly double[] weights;
+        private readonly double[] _weights;
 
         /// <summary>
         /// Construct a fold from the specified flat network.
@@ -50,22 +50,22 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <param name="flat">THe flat network.</param>
         public NetworkFold(FlatNetwork flat)
         {
-            weights = EngineArray.ArrayCopy(flat.Weights);
-            output = EngineArray.ArrayCopy(flat.LayerOutput);
+            _weights = EngineArray.ArrayCopy(flat.Weights);
+            _output = EngineArray.ArrayCopy(flat.LayerOutput);
         }
 
 
         /// <value>The network weights.</value>
         public double[] Weights
         {
-            get { return weights; }
+            get { return _weights; }
         }
 
 
         /// <value>The network output.</value>
         public double[] Output
         {
-            get { return output; }
+            get { return _output; }
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <param name="target">The network to copy to.</param>
         public void CopyToNetwork(FlatNetwork target)
         {
-            EngineArray.ArrayCopy(weights, target.Weights);
-            EngineArray.ArrayCopy(output, target.LayerOutput);
+            EngineArray.ArrayCopy(_weights, target.Weights);
+            EngineArray.ArrayCopy(_output, target.LayerOutput);
         }
 
         /// <summary>
@@ -86,8 +86,8 @@ namespace Encog.Neural.Networks.Training.Cross
         /// <param name="source">The network to copy from.</param>
         public void CopyFromNetwork(FlatNetwork source)
         {
-            EngineArray.ArrayCopy(source.Weights, weights);
-            EngineArray.ArrayCopy(source.LayerOutput, output);
+            EngineArray.ArrayCopy(source.Weights, _weights);
+            EngineArray.ArrayCopy(source.LayerOutput, _output);
         }
     }
 }

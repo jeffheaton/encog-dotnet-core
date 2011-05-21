@@ -62,55 +62,55 @@ namespace Encog.Neural.Networks.Training.Lma
         /// The amount to scale the lambda by.
         /// </summary>
         ///
-        public const double SCALE_LAMBDA = 10.0d;
+        public const double ScaleLambda = 10.0d;
 
         /// <summary>
         /// The max amount for the LAMBDA.
         /// </summary>
         ///
-        public const double LAMBDA_MAX = 1e25d;
+        public const double LambdaMax = 1e25d;
 
         /// <summary>
         /// The diagonal of the hessian.
         /// </summary>
         ///
-        private readonly double[] diagonal;
+        private readonly double[] _diagonal;
 
         /// <summary>
         /// The calculated gradients.
         /// </summary>
         ///
-        private readonly double[] gradient;
+        private readonly double[] _gradient;
 
         /// <summary>
         /// The "hessian" matrix as a 2d array.
         /// </summary>
         ///
-        private readonly double[][] hessian;
+        private readonly double[][] _hessian;
 
         /// <summary>
         /// The "hessian" matrix, used by the LMA.
         /// </summary>
         ///
-        private readonly Matrix hessianMatrix;
+        private readonly Matrix _hessianMatrix;
 
         /// <summary>
         /// The training set that we are using to train.
         /// </summary>
         ///
-        private readonly IMLDataSet indexableTraining;
+        private readonly IMLDataSet _indexableTraining;
 
         /// <summary>
         /// The network that is to be trained.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// The training elements.
         /// </summary>
         ///
-        private readonly IMLDataPair pair;
+        private readonly IMLDataPair _pair;
 
         /// <summary>
         /// The number of "parameters" in the LMA algorithm. The parameters are what
@@ -118,101 +118,101 @@ namespace Encog.Neural.Networks.Training.Lma
         /// optimization, the parameters are the weights and bias values.
         /// </summary>
         ///
-        private readonly int parametersLength;
+        private readonly int _parametersLength;
 
         /// <summary>
         /// The training set length.
         /// </summary>
         ///
-        private readonly int trainingLength;
+        private readonly int _trainingLength;
 
         /// <summary>
         /// The alpha is multiplied by sum squared of weights. This scales the effect
         /// that the sum squared of the weights has.
         /// </summary>
         ///
-        private double alpha;
+        private double _alpha;
 
         /// <summary>
         /// The beta is multiplied by the sum squared of the errors.
         /// </summary>
         ///
-        private double beta;
+        private double _beta;
 
         /// <summary>
         /// The amount to change the weights by.
         /// </summary>
         ///
-        private double[] deltas;
+        private double[] _deltas;
 
         /// <summary>
         /// Gamma, used for Bayesian regularization.
         /// </summary>
         ///
-        private double gamma;
+        private double _gamma;
 
         /// <summary>
         /// The lambda, or damping factor. This is increased until a desirable
         /// adjustment is found.
         /// </summary>
         ///
-        private double lambda;
+        private double _lambda;
 
         /// <summary>
         /// Should we use Bayesian regularization.
         /// </summary>
         ///
-        private bool useBayesianRegularization;
+        private bool _useBayesianRegularization;
 
         /// <summary>
         /// The neural network weights and bias values.
         /// </summary>
         ///
-        private double[] weights;
+        private double[] _weights;
 
         /// <summary>
         /// Construct the LMA object.
         /// </summary>
         ///
-        /// <param name="network_0">The network to train. Must have a single output neuron.</param>
+        /// <param name="network">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
-        public LevenbergMarquardtTraining(BasicNetwork network_0,
+        public LevenbergMarquardtTraining(BasicNetwork network,
                                           IMLDataSet training) : base(TrainingImplementationType.Iterative)
         {
-            ValidateNetwork.ValidateMethodToData(network_0, training);
-            if (network_0.OutputCount != 1)
+            ValidateNetwork.ValidateMethodToData(network, training);
+            if (network.OutputCount != 1)
             {
                 throw new TrainingError(
                     "Levenberg Marquardt requires an output layer with a single neuron.");
             }
 
             Training = training;
-            indexableTraining = Training;
-            network = network_0;
-            trainingLength = (int) indexableTraining.Count;
-            parametersLength = network.Structure.CalculateSize();
-            hessianMatrix = new Matrix(parametersLength,
-                                       parametersLength);
-            hessian = hessianMatrix.Data;
-            alpha = 0.0d;
-            beta = 1.0d;
-            lambda = 0.1d;
-            deltas = new double[parametersLength];
-            gradient = new double[parametersLength];
-            diagonal = new double[parametersLength];
+            _indexableTraining = Training;
+            _network = network;
+            _trainingLength = (int) _indexableTraining.Count;
+            _parametersLength = _network.Structure.CalculateSize();
+            _hessianMatrix = new Matrix(_parametersLength,
+                                       _parametersLength);
+            _hessian = _hessianMatrix.Data;
+            _alpha = 0.0d;
+            _beta = 1.0d;
+            _lambda = 0.1d;
+            _deltas = new double[_parametersLength];
+            _gradient = new double[_parametersLength];
+            _diagonal = new double[_parametersLength];
 
             var input = new BasicMLData(
-                indexableTraining.InputSize);
+                _indexableTraining.InputSize);
             var ideal = new BasicMLData(
-                indexableTraining.IdealSize);
-            pair = new BasicMLDataPair(input, ideal);
+                _indexableTraining.IdealSize);
+            _pair = new BasicMLDataPair(input, ideal);
         }
 
 
         /// <value>The trained network.</value>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
@@ -221,8 +221,8 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         public bool UseBayesianRegularization
         {
-            get { return useBayesianRegularization; }
-            set { useBayesianRegularization = value; }
+            get { return _useBayesianRegularization; }
+            set { _useBayesianRegularization = value; }
         }
 
         /// <inheritdoc />
@@ -256,31 +256,31 @@ namespace Encog.Neural.Networks.Training.Lma
         public void CalculateHessian(double[][] jacobian,
                                      double[] errors)
         {
-            for (int i = 0; i < parametersLength; i++)
+            for (int i = 0; i < _parametersLength; i++)
             {
                 // Compute Jacobian Matrix Errors
                 double s = 0.0d;
-                for (int j = 0; j < trainingLength; j++)
+                for (int j = 0; j < _trainingLength; j++)
                 {
                     s += jacobian[j][i]*errors[j];
                 }
-                gradient[i] = s;
+                _gradient[i] = s;
 
                 // Compute Quasi-Hessian Matrix using Jacobian (H = J'J)
-                for (int j_0 = 0; j_0 < parametersLength; j_0++)
+                for (int j = 0; j < _parametersLength; j++)
                 {
                     double c = 0.0d;
-                    for (int k = 0; k < trainingLength; k++)
+                    for (int k = 0; k < _trainingLength; k++)
                     {
-                        c += jacobian[k][i]*jacobian[k][j_0];
+                        c += jacobian[k][i]*jacobian[k][j];
                     }
-                    hessian[i][j_0] = beta*c;
+                    _hessian[i][j] = _beta*c;
                 }
             }
 
-            for (int i_1 = 0; i_1 < parametersLength; i_1++)
+            for (int i = 0; i < _parametersLength; i++)
             {
-                diagonal[i_1] = hessian[i_1][i_1];
+                _diagonal[i] = _hessian[i][i];
             }
         }
 
@@ -294,7 +294,7 @@ namespace Encog.Neural.Networks.Training.Lma
             double result = 0;
 
 
-            foreach (double weight  in  weights)
+            foreach (double weight  in  _weights)
             {
                 result += weight*weight;
             }
@@ -310,16 +310,15 @@ namespace Encog.Neural.Networks.Training.Lma
         public override void Iteration()
         {
             LUDecomposition decomposition = null;
-            double trace = 0;
 
             PreIteration();
 
-            weights = NetworkCODEC.NetworkToArray(network);
+            _weights = NetworkCODEC.NetworkToArray(_network);
 
-            ComputeJacobian j = new JacobianChainRule(network,
-                                                      indexableTraining);
+            IComputeJacobian j = new JacobianChainRule(_network,
+                                                      _indexableTraining);
 
-            double sumOfSquaredErrors = j.Calculate(weights);
+            double sumOfSquaredErrors = j.Calculate(_weights);
             double sumOfSquaredWeights = CalculateSumOfSquaredWeights();
 
             // this.setError(j.getError());
@@ -327,29 +326,29 @@ namespace Encog.Neural.Networks.Training.Lma
 
             // Define the objective function
             // bayesian regularization objective function
-            double objective = beta*sumOfSquaredErrors + alpha
+            double objective = _beta*sumOfSquaredErrors + _alpha
                                *sumOfSquaredWeights;
             double current = objective + 1.0d;
 
             // Start the main Levenberg-Macquardt method
-            lambda /= SCALE_LAMBDA;
+            _lambda /= ScaleLambda;
 
             // We'll try to find a direction with less error
             // (or where the objective function is smaller)
             while ((current >= objective)
-                   && (lambda < LAMBDA_MAX))
+                   && (_lambda < LambdaMax))
             {
-                lambda *= SCALE_LAMBDA;
+                _lambda *= ScaleLambda;
 
                 // Update diagonal (Levenberg-Marquardt formula)
-                for (int i = 0; i < parametersLength; i++)
+                for (int i = 0; i < _parametersLength; i++)
                 {
-                    hessian[i][i] = diagonal[i]
-                                    + (lambda + alpha);
+                    _hessian[i][i] = _diagonal[i]
+                                    + (_lambda + _alpha);
                 }
 
                 // Decompose to solve the linear system
-                decomposition = new LUDecomposition(hessianMatrix);
+                decomposition = new LUDecomposition(_hessianMatrix);
 
                 // Check if the Jacobian has become non-invertible
                 if (!decomposition.IsNonsingular)
@@ -358,26 +357,26 @@ namespace Encog.Neural.Networks.Training.Lma
                 }
 
                 // Solve using LU (or SVD) decomposition
-                deltas = decomposition.Solve(gradient);
+                _deltas = decomposition.Solve(_gradient);
 
                 // Update weights using the calculated deltas
                 sumOfSquaredWeights = UpdateWeights();
 
                 // Calculate the new error
                 sumOfSquaredErrors = 0.0d;
-                for (int i_0 = 0; i_0 < trainingLength; i_0++)
+                for (int i = 0; i < _trainingLength; i++)
                 {
-                    indexableTraining.GetRecord(i_0, pair);
-                    IMLData actual = network
-                        .Compute(pair.Input);
-                    double e = pair.Ideal[0]
+                    _indexableTraining.GetRecord(i, _pair);
+                    IMLData actual = _network
+                        .Compute(_pair.Input);
+                    double e = _pair.Ideal[0]
                                - actual[0];
                     sumOfSquaredErrors += e*e;
                 }
                 sumOfSquaredErrors /= 2.0d;
 
                 // Update the objective function
-                current = beta*sumOfSquaredErrors + alpha
+                current = _beta*sumOfSquaredErrors + _alpha
                           *sumOfSquaredWeights;
 
                 // If the object function is bigger than before, the method
@@ -386,18 +385,18 @@ namespace Encog.Neural.Networks.Training.Lma
 
             // If this iteration caused a error drop, then next iteration
             // will use a smaller damping factor.
-            lambda /= SCALE_LAMBDA;
+            _lambda /= ScaleLambda;
 
-            if (useBayesianRegularization && (decomposition != null))
+            if (_useBayesianRegularization && (decomposition != null))
             {
                 // Compute the trace for the inverse Hessian
-                trace = Trace(decomposition.Inverse());
+                double trace = Trace(decomposition.Inverse());
 
                 // Poland update's formula:
-                gamma = parametersLength - (alpha*trace);
-                alpha = parametersLength
+                _gamma = _parametersLength - (_alpha*trace);
+                _alpha = _parametersLength
                         /(2.0d*sumOfSquaredWeights + trace);
-                beta = Math.Abs((trainingLength - gamma)
+                _beta = Math.Abs((_trainingLength - _gamma)
                                 /(2.0d*sumOfSquaredErrors));
             }
 
@@ -414,15 +413,15 @@ namespace Encog.Neural.Networks.Training.Lma
         public double UpdateWeights()
         {
             double result = 0;
-            var w = (double[]) weights.Clone();
+            var w = (double[]) _weights.Clone();
 
             for (int i = 0; i < w.Length; i++)
             {
-                w[i] += deltas[i];
+                w[i] += _deltas[i];
                 result += w[i]*w[i];
             }
 
-            NetworkCODEC.ArrayToNetwork(w, network);
+            NetworkCODEC.ArrayToNetwork(w, _network);
 
             return result/2.0d;
         }

@@ -38,83 +38,73 @@ namespace Encog.Neural.NEAT
     ///
     [Serializable]
     public class NEATNeuron
-    {
-        /// <summary>
-        /// The neuron id property.
-        /// </summary>
-        public const String NEURON_ID = "neuronID";
-
-        /// <summary>
-        /// The activation response property.
-        /// </summary>
-        public const String ACTIVATION_RESPONSE = "aresp";
-
+    {        
         /// <summary>
         /// The activation response. This is evolved to allow NEAT to scale the slope
         /// of the activation function.
         /// </summary>
         ///
-        private readonly double activationResponse;
+        private readonly double _activationResponse;
 
         /// <summary>
         /// Inbound links to this neuron.
         /// </summary>
         ///
-        private readonly IList<NEATLink> inboundLinks;
+        private readonly IList<NEATLink> _inboundLinks;
 
         /// <summary>
         /// The neuron id.
         /// </summary>
         ///
-        private readonly long neuronID;
+        private readonly long _neuronID;
 
         /// <summary>
         /// The type of neuron this is.
         /// </summary>
         ///
-        private readonly NEATNeuronType neuronType;
+        private readonly NEATNeuronType _neuronType;
 
         /// <summary>
         /// The outbound links for this neuron.
         /// </summary>
         ///
-        private readonly IList<NEATLink> outputboundLinks;
+        private readonly IList<NEATLink> _outputboundLinks;
 
         /// <summary>
         /// The x-position of this neuron. Used to split links, as well as display.
         /// </summary>
         ///
-        private readonly int posX;
+        private readonly int _posX;
 
         /// <summary>
         /// The y-position of this neuron. Used to split links, as well as display.
         /// </summary>
         ///
-        private readonly int posY;
+        private readonly int _posY;
 
         /// <summary>
         /// The split value for X. Used to track splits.
         /// </summary>
         ///
-        private readonly double splitX;
+        private readonly double _splitX;
 
         /// <summary>
         /// The split value for Y. Used to track splits.
         /// </summary>
         ///
-        private readonly double splitY;
+        private readonly double _splitY;
 
         /// <summary>
         /// The sum activation.
         /// </summary>
         ///
-        private readonly double sumActivation;
+        private readonly double _sumActivation;
 
         /// <summary>
         /// The output from the neuron.
         /// </summary>
         ///
-        private double output;
+        private double _output;
 
         /// <summary>
         /// Default constructor, used for persistance.
@@ -122,8 +112,8 @@ namespace Encog.Neural.NEAT
         ///
         public NEATNeuron()
         {
-            inboundLinks = new List<NEATLink>();
-            outputboundLinks = new List<NEATLink>();
+            _inboundLinks = new List<NEATLink>();
+            _outputboundLinks = new List<NEATLink>();
         }
 
         /// <summary>
@@ -139,95 +129,95 @@ namespace Encog.Neural.NEAT
                           double splitY_2, double splitX_3,
                           double activationResponse_4)
         {
-            inboundLinks = new List<NEATLink>();
-            outputboundLinks = new List<NEATLink>();
-            neuronType = neuronType_0;
-            neuronID = neuronID_1;
-            splitY = splitY_2;
-            splitX = splitX_3;
-            activationResponse = activationResponse_4;
-            posX = 0;
-            posY = 0;
-            output = 0;
-            sumActivation = 0;
+            _inboundLinks = new List<NEATLink>();
+            _outputboundLinks = new List<NEATLink>();
+            _neuronType = neuronType_0;
+            _neuronID = neuronID_1;
+            _splitY = splitY_2;
+            _splitX = splitX_3;
+            _activationResponse = activationResponse_4;
+            _posX = 0;
+            _posY = 0;
+            _output = 0;
+            _sumActivation = 0;
         }
 
 
         /// <value>the activation response.</value>
         public double ActivationResponse
         {
-            get { return activationResponse; }
+            get { return _activationResponse; }
         }
 
 
         /// <value>the inbound links.</value>
         public IList<NEATLink> InboundLinks
         {
-            get { return inboundLinks; }
+            get { return _inboundLinks; }
         }
 
 
         /// <value>The neuron id.</value>
         public long NeuronID
         {
-            get { return neuronID; }
+            get { return _neuronID; }
         }
 
 
         /// <value>the neuron type.</value>
         public NEATNeuronType NeuronType
         {
-            get { return neuronType; }
+            get { return _neuronType; }
         }
 
 
         /// <value>The output of the neuron.</value>
         public double Output
         {
-            get { return output; }
-            set { output = value; }
+            get { return _output; }
+            set { _output = value; }
         }
 
 
         /// <value>The outbound links.</value>
         public IList<NEATLink> OutputboundLinks
         {
-            get { return outputboundLinks; }
+            get { return _outputboundLinks; }
         }
 
 
         /// <value>The x position.</value>
         public int PosX
         {
-            get { return posX; }
+            get { return _posX; }
         }
 
 
         /// <value>The y position.</value>
         public int PosY
         {
-            get { return posY; }
+            get { return _posY; }
         }
 
 
         /// <value>The split x.</value>
         public double SplitX
         {
-            get { return splitX; }
+            get { return _splitX; }
         }
 
 
         /// <value>The split y.</value>
         public double SplitY
         {
-            get { return splitY; }
+            get { return _splitY; }
         }
 
 
         /// <value>The sum activation.</value>
         public double SumActivation
         {
-            get { return sumActivation; }
+            get { return _sumActivation; }
         }
 
 
@@ -236,9 +226,9 @@ namespace Encog.Neural.NEAT
         {
             var result = new StringBuilder();
             result.Append("[NEATNeuron:id=");
-            result.Append(neuronID);
+            result.Append(_neuronID);
             result.Append(",type=");
-            switch (neuronType)
+            switch (_neuronType)
             {
                 case NEATNeuronType.Input:
                     result.Append("I");

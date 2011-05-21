@@ -28,7 +28,7 @@ namespace Encog.Neural.Networks.Layers
     /// This interface defines all necessary methods for a neural network layer.
     /// </summary>
     ///
-    public interface Layer
+    public interface ILayer
     {
         /// <value>The activation function used for this layer.</value>
         IActivationFunction ActivationFunction { get; }

@@ -201,7 +201,7 @@ namespace Encog.Examples.Adaline
 
             // train it
             IMLDataSet training = GenerateTraining();
-            MLTrain train = new TrainAdaline(network, training, 0.01);
+            IMLTrain train = new TrainAdaline(network, training, 0.01);
 
             int epoch = 1;
             do

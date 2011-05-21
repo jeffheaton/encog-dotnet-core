@@ -132,7 +132,7 @@ namespace Encog.App.Analyst
         /// 
         /// </summary>
         ///
-        public void ReportTraining(MLTrain train)
+        public void ReportTraining(IMLTrain train)
         {
             Console.Out.WriteLine("Iteration #"
                                   + Format.FormatInteger(train.IterationNumber)

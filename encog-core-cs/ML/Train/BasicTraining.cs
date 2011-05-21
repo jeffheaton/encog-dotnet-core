@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System.Collections.Generic;
+using System.Linq;
 using Encog.ML.Data;
 using Encog.ML.Train.Strategy;
 using Encog.ML.Train.Strategy.End;
@@ -34,30 +35,30 @@ namespace Encog.ML.Train
     /// training.
     /// </summary>
     ///
-    public abstract class BasicTraining : MLTrain
+    public abstract class BasicTraining : IMLTrain
     {
-        private readonly TrainingImplementationType implementationType;
+        private readonly TrainingImplementationType _implementationType;
 
         /// <summary>
         /// The training strategies to use.
         /// </summary>
         ///
-        private readonly IList<IStrategy> strategies;
+        private readonly IList<IStrategy> _strategies;
 
         /// <summary>
         /// The current iteration.
         /// </summary>
         ///
-        private int iteration;
+        private int _iteration;
 
         /// <summary>
         /// Construct the object, specify the implementation type.
         /// </summary>
-        /// <param name="implementationType_0"></param>
-        public BasicTraining(TrainingImplementationType implementationType_0)
+        /// <param name="implementationType"></param>
+        protected BasicTraining(TrainingImplementationType implementationType)
         {
-            strategies = new List<IStrategy>();
-            implementationType = implementationType_0;
+            _strategies = new List<IStrategy>();
+            _implementationType = implementationType;
         }
 
         #region MLTrain Members
@@ -71,7 +72,7 @@ namespace Encog.ML.Train
         public virtual void AddStrategy(IStrategy strategy)
         {
             strategy.Init(this);
-            strategies.Add(strategy);
+            _strategies.Add(strategy);
         }
 
         /// <summary>
@@ -91,15 +92,15 @@ namespace Encog.ML.Train
         /// <value>the iteration to set</value>
         public virtual int IterationNumber
         {
-            get { return iteration; }
-            set { iteration = value; }
+            get { return _iteration; }
+            set { _iteration = value; }
         }
 
 
         /// <value>The strategies to use.</value>
         public virtual IList<IStrategy> Strategies
         {
-            get { return strategies; }
+            get { return _strategies; }
         }
 
 
@@ -112,22 +113,7 @@ namespace Encog.ML.Train
         /// <value>True if training can progress no further.</value>
         public virtual bool TrainingDone
         {
-            get
-            {
-                foreach (IStrategy strategy  in  strategies)
-                {
-                    if (strategy is EndTrainingStrategy)
-                    {
-                        var end = (EndTrainingStrategy) strategy;
-                        if (end.ShouldStop())
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
+            get { return _strategies.OfType<IEndTrainingStrategy>().Any(end => end.ShouldStop()); }
         }
 
 
@@ -152,7 +138,7 @@ namespace Encog.ML.Train
         /// </summary>
         public virtual TrainingImplementationType ImplementationType
         {
-            get { return implementationType; }
+            get { return _implementationType; }
         }
 
 
@@ -197,7 +183,7 @@ namespace Encog.ML.Train
         ///
         public void PostIteration()
         {
-            foreach (IStrategy strategy  in  strategies)
+            foreach (IStrategy strategy  in  _strategies)
             {
                 strategy.PostIteration();
             }
@@ -209,10 +195,10 @@ namespace Encog.ML.Train
         ///
         public void PreIteration()
         {
-            iteration++;
+            _iteration++;
 
 
-            foreach (IStrategy strategy  in  strategies)
+            foreach (IStrategy strategy  in  _strategies)
             {
                 strategy.PreIteration();
             }

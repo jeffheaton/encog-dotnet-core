@@ -86,7 +86,7 @@ namespace Encog.App.Analyst
         /// </summary>
         ///
         /// <param name="train">The training object.</param>
-        void ReportTraining(MLTrain train);
+        void ReportTraining(IMLTrain train);
 
         /// <summary>
         /// Report progress on a task.

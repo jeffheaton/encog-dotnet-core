@@ -243,7 +243,7 @@ namespace Encog.Util.Simple
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set.</param>
         /// <param name="minutes">The number of minutes to train for.</param>
-        public static void TrainConsole(MLTrain train,
+        public static void TrainConsole(IMLTrain train,
                                         BasicNetwork network, IMLDataSet trainingSet,
                                         int minutes)
         {
@@ -294,7 +294,7 @@ namespace Encog.Util.Simple
         /// <param name="train">The training method to use.</param>
         /// <param name="network">The network to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
-        public static void TrainDialog(MLTrain train,
+        public static void TrainDialog(IMLTrain train,
                                        BasicNetwork network, IMLDataSet trainingSet)
         {
             var dialog = new TrainingDialog();
@@ -325,7 +325,7 @@ namespace Encog.Util.Simple
         /// <param name="train">The training method.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The desired error level.</param>
-        public static void TrainToError(MLTrain train,
+        public static void TrainToError(IMLTrain train,
                                         IMLDataSet trainingSet,
                                         double error)
         {
@@ -450,7 +450,7 @@ namespace Encog.Util.Simple
         ///
         /// <param name="train">The training method.</param>
         /// <param name="error">The desired error level.</param>
-        public static void TrainToError(MLTrain train, double error)
+        public static void TrainToError(IMLTrain train, double error)
         {
 
             int epoch = 1;

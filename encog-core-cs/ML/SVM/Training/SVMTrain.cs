@@ -39,73 +39,73 @@ namespace Encog.ML.SVM.Training
         /// The default starting number for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_BEGIN = -5;
+        public const double DefaultConstBegin = -5;
 
         /// <summary>
         /// The default ending number for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_END = 15;
+        public const double DefaultConstEnd = 15;
 
         /// <summary>
         /// The default step for C.
         /// </summary>
         ///
-        public const double DEFAULT_CONST_STEP = 2;
+        public const double DefaultConstStep = 2;
 
         /// <summary>
         /// The default gamma begin.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_BEGIN = -10;
+        public const double DefaultGammaBegin = -10;
 
         /// <summary>
         /// The default gamma end.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_END = 10;
+        public const double DefaultGammaEnd = 10;
 
         /// <summary>
         /// The default gamma step.
         /// </summary>
         ///
-        public const double DEFAULT_GAMMA_STEP = 1;
+        public const double DefaultGammaStep = 1;
 
         /// <summary>
         /// The network that is to be trained.
         /// </summary>
         ///
-        private readonly SupportVectorMachine network;
+        private readonly SupportVectorMachine _network;
 
         /// <summary>
         /// The problem to train for.
         /// </summary>
         ///
-        private readonly svm_problem problem;
+        private readonly svm_problem _problem;
 
         /// <summary>
         /// The const c value.
         /// </summary>
         ///
-        private double c;
+        private double _c;
 
         /// <summary>
         /// The number of folds.
         /// </summary>
         ///
-        private int fold;
+        private int _fold;
 
         /// <summary>
         /// The gamma value.
         /// </summary>
         ///
-        private double gamma;
+        private double _gamma;
 
         /// <summary>
         /// Is the training done.
         /// </summary>
         ///
-        private bool trainingDone;
+        private bool _trainingDone;
 
         /// <summary>
         /// Construct a trainer for an SVM network.
@@ -115,14 +115,14 @@ namespace Encog.ML.SVM.Training
         /// <param name="dataSet">The training data for this network.</param>
         public SVMTrain(SupportVectorMachine method, IMLDataSet dataSet) : base(TrainingImplementationType.OnePass)
         {
-            fold = 0;
-            network = method;
+            _fold = 0;
+            _network = method;
             Training = dataSet;
-            trainingDone = false;
+            _trainingDone = false;
 
-            problem = EncodeSVMProblem.Encode(dataSet, 0);
-            gamma = 1.0d/network.InputCount;
-            c = 1.0d;
+            _problem = EncodeSVMProblem.Encode(dataSet, 0);
+            _gamma = 1.0d/_network.InputCount;
+            _c = 1.0d;
         }
 
         /// <inheritdoc/>
@@ -136,8 +136,8 @@ namespace Encog.ML.SVM.Training
         /// </summary>
         public double C
         {
-            get { return c; }
-            set { c = value; }
+            get { return _c; }
+            set { _c = value; }
         }
 
 
@@ -146,8 +146,8 @@ namespace Encog.ML.SVM.Training
         /// </summary>
         public int Fold
         {
-            get { return fold; }
-            set { fold = value; }
+            get { return _fold; }
+            set { _fold = value; }
         }
 
 
@@ -156,29 +156,29 @@ namespace Encog.ML.SVM.Training
         /// </summary>
         public double Gamma
         {
-            get { return gamma; }
-            set { gamma = value; }
+            get { return _gamma; }
+            set { _gamma = value; }
         }
 
 
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <value>The problem being trained.</value>
         public svm_problem Problem
         {
-            get { return problem; }
+            get { return _problem; }
         }
 
 
         /// <value>True if the training is done.</value>
         public override bool TrainingDone
         {
-            get { return trainingDone; }
+            get { return _trainingDone; }
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Encog.ML.SVM.Training
         /// <param name="prob">The problem to evaluate.</param>
         /// <param name="target">The output values from the SVN.</param>
         /// <returns>The calculated error.</returns>
-        private double Evaluate(svm_parameter param, svm_problem prob,
+        private static double Evaluate(svm_parameter param, svm_problem prob,
                                 double[] target)
         {
             int totalCorrect = 0;
@@ -207,18 +207,15 @@ namespace Encog.ML.SVM.Training
                 }
                 return error.Calculate();
             }
-            else
+            for (int i = 0; i < prob.l; i++)
             {
-                for (int i_0 = 0; i_0 < prob.l; i_0++)
+                if (target[i] == prob.y[i])
                 {
-                    if (target[i_0] == prob.y[i_0])
-                    {
-                        ++totalCorrect;
-                    }
+                    ++totalCorrect;
                 }
-
-                return Format.HUNDRED_PERCENT*totalCorrect/prob.l;
             }
+
+            return Format.HUNDRED_PERCENT*totalCorrect/prob.l;
         }
 
 
@@ -232,30 +229,30 @@ namespace Encog.ML.SVM.Training
         ///
         public override sealed void Iteration()
         {
-            network.Params.C = c;
-            network.Params.gamma = gamma;
+            _network.Params.C = _c;
+            _network.Params.gamma = _gamma;
 
-            if (fold > 1)
+            if (_fold > 1)
             {
                 // cross validate
-                var target = new double[problem.l];
+                var target = new double[_problem.l];
 
-                svm.svm_cross_validation(problem, network.Params,
-                                         fold, target);
-                network.Model = null;
+                svm.svm_cross_validation(_problem, _network.Params,
+                                         _fold, target);
+                _network.Model = null;
 
-                Error = Evaluate(network.Params, problem, target);
+                Error = Evaluate(_network.Params, _problem, target);
             }
             else
             {
                 // train
-                network.Model = svm.svm_train(problem,
-                                              network.Params);
+                _network.Model = svm.svm_train(_problem,
+                                              _network.Params);
 
-                Error = network.CalculateError(Training);
+                Error = _network.CalculateError(Training);
             }
 
-            trainingDone = true;
+            _trainingDone = true;
         }
 
         /// <inheritdoc/>

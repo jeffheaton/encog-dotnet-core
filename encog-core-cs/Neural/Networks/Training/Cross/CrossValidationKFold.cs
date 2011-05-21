@@ -46,37 +46,37 @@ namespace Encog.Neural.Networks.Training.Cross
         /// The flat network to train.
         /// </summary>
         ///
-        private readonly FlatNetwork flatNetwork;
+        private readonly FlatNetwork _flatNetwork;
 
         /// <summary>
         /// The network folds.
         /// </summary>
         ///
-        private readonly NetworkFold[] networks;
+        private readonly NetworkFold[] _networks;
 
         /// <summary>
         /// The underlying trainer to use. This trainer does the actual training.
         /// </summary>
         ///
-        private readonly MLTrain train;
+        private readonly IMLTrain _train;
 
         /// <summary>
         /// Construct a cross validation trainer.
         /// </summary>
         ///
-        /// <param name="train_0">The training</param>
+        /// <param name="train">The training</param>
         /// <param name="k">The number of folds.</param>
-        public CrossValidationKFold(MLTrain train_0, int k) : base(train_0.Method, (FoldedDataSet) train_0.Training)
+        public CrossValidationKFold(IMLTrain train, int k) : base(train.Method, (FoldedDataSet) train.Training)
         {
-            train = train_0;
+            _train = train;
             Folded.Fold(k);
 
-            flatNetwork = ((BasicNetwork) train_0.Method).Structure.Flat;
+            _flatNetwork = ((BasicNetwork) train.Method).Structure.Flat;
 
-            networks = new NetworkFold[k];
-            for (int i = 0; i < networks.Length; i++)
+            _networks = new NetworkFold[k];
+            for (int i = 0; i < _networks.Length; i++)
             {
-                networks[i] = new NetworkFold(flatNetwork);
+                _networks[i] = new NetworkFold(_flatNetwork);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Encog.Neural.Networks.Training.Cross
             for (int valFold = 0; valFold < Folded.NumFolds; valFold++)
             {
                 // restore the correct network
-                networks[valFold].CopyToNetwork(flatNetwork);
+                _networks[valFold].CopyToNetwork(_flatNetwork);
 
                 // train with non-validation folds
                 for (int curFold = 0; curFold < Folded.NumFolds; curFold++)
@@ -105,16 +105,16 @@ namespace Encog.Neural.Networks.Training.Cross
                     if (curFold != valFold)
                     {
                         Folded.CurrentFold = curFold;
-                        train.Iteration();
+                        _train.Iteration();
                     }
                 }
 
                 // evaluate with the validation fold			
                 Folded.CurrentFold = valFold;
-                double e = flatNetwork.CalculateError(Folded);
+                double e = _flatNetwork.CalculateError(Folded);
                 //System.out.println("Fold " + valFold + ", " + e);
                 error += e;
-                networks[valFold].CopyFromNetwork(flatNetwork);
+                _networks[valFold].CopyFromNetwork(_flatNetwork);
             }
 
             Error = error/Folded.NumFolds;

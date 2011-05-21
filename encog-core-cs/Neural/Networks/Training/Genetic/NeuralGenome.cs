@@ -38,7 +38,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// The chromosome.
         /// </summary>
         ///
-        private readonly Chromosome networkChromosome;
+        private readonly Chromosome _networkChromosome;
 
         /// <summary>
         /// Construct a neural genome.
@@ -49,17 +49,17 @@ namespace Encog.Neural.Networks.Training.Genetic
         {
             Organism = network;
 
-            networkChromosome = new Chromosome();
+            _networkChromosome = new Chromosome();
 
             // create an array of "double genes"
             int size = network.Structure.CalculateSize();
             for (int i = 0; i < size; i++)
             {
                 IGene gene = new DoubleGene();
-                networkChromosome.Genes.Add(gene);
+                _networkChromosome.Genes.Add(gene);
             }
 
-            Chromosomes.Add(networkChromosome);
+            Chromosomes.Add(_networkChromosome);
 
             Encode();
         }
@@ -70,10 +70,10 @@ namespace Encog.Neural.Networks.Training.Genetic
         ///
         public override sealed void Decode()
         {
-            var net = new double[networkChromosome.Genes.Count];
+            var net = new double[_networkChromosome.Genes.Count];
             for (int i = 0; i < net.Length; i++)
             {
-                var gene = (DoubleGene) networkChromosome.Genes[i];
+                var gene = (DoubleGene) _networkChromosome.Genes[i];
                 net[i] = gene.Value;
             }
             NetworkCODEC.ArrayToNetwork(net, (BasicNetwork) Organism);
@@ -90,7 +90,7 @@ namespace Encog.Neural.Networks.Training.Genetic
 
             for (int i = 0; i < net.Length; i++)
             {
-                ((DoubleGene) networkChromosome.GetGene(i)).Value = net[i];
+                ((DoubleGene) _networkChromosome.GetGene(i)).Value = net[i];
             }
         }
     }

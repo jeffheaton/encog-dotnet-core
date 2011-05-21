@@ -55,56 +55,56 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// The depth property.
         /// </summary>
-        public const String PROPERTY_NETWORK_DEPTH = "depth";
+        public const String PropertyNetworkDepth = "depth";
 
         /// <summary>
         /// The links property.
         /// </summary>
-        public const String PROPERTY_LINKS = "links";
+        public const String PropertyLinks = "links";
 
         /// <summary>
         /// The snapshot property.
         /// </summary>
-        public const String PROPERTY_SNAPSHOT = "snapshot";
+        public const String PropertySnapshot = "snapshot";
 
         /// <summary>
         /// The neurons that make up this network.
         /// </summary>
         ///
-        private readonly IList<NEATNeuron> neurons;
+        private readonly IList<NEATNeuron> _neurons;
 
         /// <summary>
         /// The activation function.
         /// </summary>
         ///
-        private IActivationFunction activationFunction;
+        private IActivationFunction _activationFunction;
 
         /// <summary>
         /// The input count.
         /// </summary>
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// The depth of the network.
         /// </summary>
         ///
-        private int networkDepth;
+        private int _networkDepth;
 
         /// <summary>
         /// The output activation function.
         /// </summary>
-        private IActivationFunction outputActivationFunction;
+        private IActivationFunction _outputActivationFunction;
 
         /// <summary>
         /// The output count.
         /// </summary>
-        private int outputCount;
+        private int _outputCount;
 
         /// <summary>
         /// Should snapshot be used to calculate the output of the neural network.
         /// </summary>
         ///
-        private bool snapshot;
+        private bool _snapshot;
 
         /// <summary>
         /// Default constructor.
@@ -112,55 +112,55 @@ namespace Encog.Neural.NEAT
         ///
         public NEATNetwork()
         {
-            neurons = new List<NEATNeuron>();
-            snapshot = false;
+            _neurons = new List<NEATNeuron>();
+            _snapshot = false;
         }
 
         /// <summary>
         /// Construct a NEAT synapse.
         /// </summary>
         ///
-        /// <param name="inputCount_0">The number of input neurons.</param>
-        /// <param name="outputCount_1">The number of output neurons.</param>
-        /// <param name="neurons_2">The neurons in this synapse.</param>
-        /// <param name="activationFunction_3">The activation function to use.</param>
-        /// <param name="outputActivationFunction_4">The output activation function.</param>
-        /// <param name="networkDepth_5">The depth of the network.</param>
-        public NEATNetwork(int inputCount_0, int outputCount_1,
-                           IList<NEATNeuron> neurons_2,
-                           IActivationFunction activationFunction_3,
-                           IActivationFunction outputActivationFunction_4,
-                           int networkDepth_5)
+        /// <param name="inputCount">The number of input neurons.</param>
+        /// <param name="outputCount">The number of output neurons.</param>
+        /// <param name="neurons">The neurons in this synapse.</param>
+        /// <param name="activationFunction">The activation function to use.</param>
+        /// <param name="outputActivationFunction">The output activation function.</param>
+        /// <param name="networkDepth">The depth of the network.</param>
+        public NEATNetwork(int inputCount, int outputCount,
+                           IEnumerable<NEATNeuron> neurons,
+                           IActivationFunction activationFunction,
+                           IActivationFunction outputActivationFunction,
+                           int networkDepth)
         {
-            neurons = new List<NEATNeuron>();
-            snapshot = false;
-            inputCount = inputCount_0;
-            outputCount = outputCount_1;
-            outputActivationFunction = outputActivationFunction_4;
+            _neurons = new List<NEATNeuron>();
+            _snapshot = false;
+            _inputCount = inputCount;
+            _outputCount = outputCount;
+            _outputActivationFunction = outputActivationFunction;
 
-            foreach (NEATNeuron neuron in neurons_2)
+            foreach (NEATNeuron neuron in neurons)
             {
-                neurons.Add(neuron);
+                _neurons.Add(neuron);
             }
 
-            networkDepth = networkDepth_5;
-            activationFunction = activationFunction_3;
+            _networkDepth = networkDepth;
+            _activationFunction = activationFunction;
         }
 
         /// <summary>
         /// Construct a NEAT network.
         /// </summary>
         ///
-        /// <param name="inputCount_0">The input count.</param>
-        /// <param name="outputCount_1">The output count.</param>
-        public NEATNetwork(int inputCount_0, int outputCount_1)
+        /// <param name="inputCount">The input count.</param>
+        /// <param name="outputCount">The output count.</param>
+        public NEATNetwork(int inputCount, int outputCount)
         {
-            neurons = new List<NEATNeuron>();
-            snapshot = false;
-            inputCount = inputCount_0;
-            outputCount = outputCount_1;
-            networkDepth = 0;
-            activationFunction = new ActivationSigmoid();
+            _neurons = new List<NEATNeuron>();
+            _snapshot = false;
+            _inputCount = inputCount;
+            _outputCount = outputCount;
+            _networkDepth = 0;
+            _activationFunction = new ActivationSigmoid();
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public IActivationFunction ActivationFunction
         {
-            get { return activationFunction; }
-            set { activationFunction = value; }
+            get { return _activationFunction; }
+            set { _activationFunction = value; }
         }
 
         /// <summary>
@@ -177,15 +177,15 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public int NetworkDepth
         {
-            get { return networkDepth; }
-            set { networkDepth = value; }
+            get { return _networkDepth; }
+            set { _networkDepth = value; }
         }
 
 
         /// <value>The NEAT neurons.</value>
         public IList<NEATNeuron> Neurons
         {
-            get { return neurons; }
+            get { return _neurons; }
         }
 
 
@@ -194,15 +194,15 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public bool Snapshot
         {
-            get { return snapshot; }
-            set { snapshot = value; }
+            get { return _snapshot; }
+            set { _snapshot = value; }
         }
 
         /// <value>the outputActivationFunction to set</value>
         public IActivationFunction OutputActivationFunction
         {
-            get { return outputActivationFunction; }
-            set { outputActivationFunction = value; }
+            get { return _outputActivationFunction; }
+            set { _outputActivationFunction = value; }
         }
 
         #region MLContext Members
@@ -214,7 +214,7 @@ namespace Encog.Neural.NEAT
         ///
         public virtual void ClearContext()
         {
-            foreach (NEATNeuron neuron  in  neurons)
+            foreach (NEATNeuron neuron  in  _neurons)
             {
                 neuron.Output = 0;
             }
@@ -247,9 +247,9 @@ namespace Encog.Neural.NEAT
         /// <returns>The output from this synapse.</returns>
         public virtual IMLData Compute(IMLData input)
         {
-            IMLData result = new BasicMLData(outputCount);
+            IMLData result = new BasicMLData(_outputCount);
 
-            if (neurons.Count == 0)
+            if (_neurons.Count == 0)
             {
                 throw new NeuralNetworkError(
                     "This network has not been evolved yet, it has no neurons in the NEAT synapse.");
@@ -257,9 +257,9 @@ namespace Encog.Neural.NEAT
 
             int flushCount = 1;
 
-            if (snapshot)
+            if (_snapshot)
             {
-                flushCount = networkDepth;
+                flushCount = _networkDepth;
             }
 
             // iterate through the network FlushCount times
@@ -271,19 +271,19 @@ namespace Encog.Neural.NEAT
                 result.Clear();
 
                 // populate the input neurons
-                while (neurons[index].NeuronType == NEATNeuronType.Input)
+                while (_neurons[index].NeuronType == NEATNeuronType.Input)
                 {
-                    neurons[index].Output = input[index];
+                    _neurons[index].Output = input[index];
 
                     index++;
                 }
 
                 // set the bias neuron
-                neurons[index++].Output = 1;
+                _neurons[index++].Output = 1;
 
-                while (index < neurons.Count)
+                while (index < _neurons.Count)
                 {
-                    NEATNeuron currentNeuron = neurons[index];
+                    NEATNeuron currentNeuron = _neurons[index];
 
                     double sum = 0;
 
@@ -297,9 +297,9 @@ namespace Encog.Neural.NEAT
 
                     var d = new double[1];
                     d[0] = sum/currentNeuron.ActivationResponse;
-                    activationFunction.ActivationFunction(d, 0, d.Length);
+                    _activationFunction.ActivationFunction(d, 0, d.Length);
 
-                    neurons[index].Output = d[0];
+                    _neurons[index].Output = d[0];
 
                     if (currentNeuron.NeuronType == NEATNeuronType.Output)
                     {
@@ -309,7 +309,7 @@ namespace Encog.Neural.NEAT
                 }
             }
 
-            outputActivationFunction.ActivationFunction(result.Data, 0,
+            _outputActivationFunction.ActivationFunction(result.Data, 0,
                                                         result.Count);
 
             return result;
@@ -320,8 +320,8 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public virtual int InputCount
         {
-            get { return inputCount; }
-            set { inputCount = value; }
+            get { return _inputCount; }
+            set { _inputCount = value; }
         }
 
         /// <summary>
@@ -329,8 +329,8 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public virtual int OutputCount
         {
-            get { return outputCount; }
-            set { outputCount = value; }
+            get { return _outputCount; }
+            set { _outputCount = value; }
         }
 
         #endregion

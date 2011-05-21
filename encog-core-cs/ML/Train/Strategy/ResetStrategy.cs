@@ -38,27 +38,30 @@ namespace Encog.ML.Train.Strategy
         /// The number of cycles to reach the required minimum error.
         /// </summary>
         ///
-        private readonly int cycles;
+        private readonly int _cycles;
 
         /// <summary>
         /// The required minimum error.
         /// </summary>
         ///
-        private readonly double required;
+        private readonly double _required;
 
         /// <summary>
         /// How many bad cycles have there been so far.
         /// </summary>
         ///
-        private int badCycleCount;
+        private int _badCycleCount;
 
-        private IMLResettable method;
+        /// <summary>
+        /// The method being trained.
+        /// </summary>
+        private IMLResettable _method;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain _train;
 
         /// <summary>
         /// Construct a reset strategy.  The error rate must fall
@@ -67,13 +70,13 @@ namespace Encog.ML.Train.Strategy
         /// bias values.
         /// </summary>
         ///
-        /// <param name="required_0">The required error rate.</param>
-        /// <param name="cycles_1">The number of cycles to reach that rate.</param>
-        public ResetStrategy(double required_0, int cycles_1)
+        /// <param name="required">The required error rate.</param>
+        /// <param name="cycles">The number of cycles to reach that rate.</param>
+        public ResetStrategy(double required, int cycles)
         {
-            required = required_0;
-            cycles = cycles_1;
-            badCycleCount = 0;
+            _required = required;
+            _cycles = cycles;
+            _badCycleCount = 0;
         }
 
         #region IStrategy Members
@@ -82,18 +85,18 @@ namespace Encog.ML.Train.Strategy
         /// Initialize this strategy.
         /// </summary>
         ///
-        /// <param name="train_0">The training algorithm.</param>
-        public virtual void Init(MLTrain train_0)
+        /// <param name="train">The training algorithm.</param>
+        public virtual void Init(IMLTrain train)
         {
-            train = train_0;
+            _train = train;
 
-            if (!(train_0.Method is IMLMethod))
+            if (!(train.Method is IMLResettable))
             {
                 throw new TrainingError(
                     "To use the reset strategy the machine learning method must support MLResettable.");
             }
 
-            method = (IMLResettable) train.Method;
+            _method = (IMLResettable) _train.Method;
         }
 
         /// <summary>
@@ -110,20 +113,20 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PreIteration()
         {
-            if (train.Error > required)
+            if (_train.Error > _required)
             {
-                badCycleCount++;
-                if (badCycleCount > cycles)
+                _badCycleCount++;
+                if (_badCycleCount > _cycles)
                 {
                     EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                      "Failed to imrove network, resetting.");
-                    method.Reset();
-                    badCycleCount = 0;
+                    _method.Reset();
+                    _badCycleCount = 0;
                 }
             }
             else
             {
-                badCycleCount = 0;
+                _badCycleCount = 0;
             }
         }
 

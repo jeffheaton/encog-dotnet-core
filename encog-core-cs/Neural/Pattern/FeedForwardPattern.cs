@@ -109,7 +109,7 @@ namespace Encog.Neural.Pattern
             if (activationOutput == null)
                 activationOutput = activationHidden;
 
-            Layer input = new BasicLayer(null, true, inputNeurons);
+            ILayer input = new BasicLayer(null, true, inputNeurons);
 
             var result = new BasicNetwork();
             result.AddLayer(input);
@@ -117,13 +117,13 @@ namespace Encog.Neural.Pattern
 
             foreach (Int32 count  in  hidden)
             {
-                Layer hidden_0 = new BasicLayer(activationHidden, true,
+                ILayer hidden_0 = new BasicLayer(activationHidden, true,
                                                 (count));
 
                 result.AddLayer(hidden_0);
             }
 
-            Layer output = new BasicLayer(activationOutput, false,
+            ILayer output = new BasicLayer(activationOutput, false,
                                           outputNeurons);
             result.AddLayer(output);
 

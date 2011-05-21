@@ -26,7 +26,7 @@ namespace Encog.Neural.Networks.Training.Lma
     /// Calculate the Jacobian.
     /// </summary>
     ///
-    public interface ComputeJacobian
+    public interface IComputeJacobian
     {
         /// <value>The Jacobian matrix after it is calculated.</value>
         double[][] Jacobian { get; }

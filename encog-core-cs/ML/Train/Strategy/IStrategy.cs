@@ -38,7 +38,7 @@ namespace Encog.ML.Train.Strategy
         /// </summary>
         ///
         /// <param name="train">The training algorithm.</param>
-        void Init(MLTrain train);
+        void Init(IMLTrain train);
 
         /// <summary>
         /// Called just before a training iteration.

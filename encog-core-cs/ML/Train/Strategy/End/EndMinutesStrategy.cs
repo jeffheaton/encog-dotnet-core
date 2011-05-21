@@ -27,7 +27,7 @@ namespace Encog.ML.Train.Strategy.End
     /// <summary>
     /// End training when a specified number of minutes is up.
     /// </summary>
-    public class EndMinutesStrategy : EndTrainingStrategy
+    public class EndMinutesStrategy : IEndTrainingStrategy
     {
         /// <summary>
         /// The number of minutes to train for.
@@ -91,7 +91,7 @@ namespace Encog.ML.Train.Strategy.End
         }
 
         /// <inheritdoc/>
-        public virtual void Init(MLTrain train)
+        public virtual void Init(IMLTrain train)
         {
             _started = true;
             _startedTime = DateTime.Now.Millisecond;

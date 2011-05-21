@@ -182,7 +182,7 @@ namespace Encog.Neural.Networks
                 // finalized, set the layers
                 if (structure.Flat == null)
                 {
-                    foreach (Layer layer  in  structure.Layers)
+                    foreach (ILayer layer  in  structure.Layers)
                     {
                         if (layer.HasBias())
                         {
@@ -386,7 +386,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <param name="layer">The layer to be added to the network.</param>
-        public void AddLayer(Layer layer)
+        public void AddLayer(ILayer layer)
         {
             layer.Network = this;
             structure.Layers.Add(layer);
@@ -416,7 +416,7 @@ namespace Encog.Neural.Networks
         {
             int result = 0;
 
-            foreach (Layer layer  in  structure.Layers)
+            foreach (ILayer layer  in  structure.Layers)
             {
                 result += layer.NeuronCount;
             }

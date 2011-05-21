@@ -309,7 +309,7 @@ namespace Encog.Examples.XOR
 
             // third, create the trainer
             var trainFactory = new MLTrainFactory();
-            MLTrain train = trainFactory.Create(method, dataSet, trainerName, trainerArgs);
+            IMLTrain train = trainFactory.Create(method, dataSet, trainerName, trainerArgs);
             // reset if improve is less than 1% over 5 cycles
             if (method is IMLResettable && !(train is ManhattanPropagation))
             {

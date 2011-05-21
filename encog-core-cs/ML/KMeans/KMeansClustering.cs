@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using System.Linq;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 
@@ -39,19 +40,19 @@ namespace Encog.ML.Kmeans
         /// The clusters.
         /// </summary>
         ///
-        private readonly KMeansCluster[] clusters;
+        private readonly KMeansCluster[] _clusters;
 
         /// <summary>
         /// The dataset to cluster.
         /// </summary>
         ///
-        private readonly IMLDataSet set;
+        private readonly IMLDataSet _set;
 
         /// <summary>
         /// Within-cluster sum of squares (WCSS).
         /// </summary>
         ///
-        private double wcss;
+        private double _wcss;
 
         /// <summary>
         /// Construct the K-Means object.
@@ -61,12 +62,12 @@ namespace Encog.ML.Kmeans
         /// <param name="theSet">The dataset to cluster.</param>
         public KMeansClustering(int k, IMLDataSet theSet)
         {
-            clusters = new KMeansCluster[k];
+            _clusters = new KMeansCluster[k];
             for (int i = 0; i < k; i++)
             {
-                clusters[i] = new KMeansCluster();
+                _clusters[i] = new KMeansCluster();
             }
-            set = theSet;
+            _set = theSet;
 
             SetInitialCentroids();
 
@@ -74,34 +75,34 @@ namespace Encog.ML.Kmeans
             int clusterNumber = 0;
 
 
-            foreach (IMLDataPair pair  in  set)
+            foreach (IMLDataPair pair  in  _set)
             {
-                clusters[clusterNumber].Add(pair.Input);
+                _clusters[clusterNumber].Add(pair.Input);
 
                 clusterNumber++;
 
-                if (clusterNumber >= clusters.Length)
+                if (clusterNumber >= _clusters.Length)
                 {
                     clusterNumber = 0;
                 }
             }
 
-            CalcWCSS();
+            CalcWcss();
 
 
-            foreach (KMeansCluster element  in  clusters)
+            foreach (KMeansCluster element  in  _clusters)
             {
                 element.Centroid.CalcCentroid();
             }
 
-            CalcWCSS();
+            CalcWcss();
         }
 
 
         /// <value>Within-cluster sum of squares (WCSS).</value>
         public double WCSS
         {
-            get { return wcss; }
+            get { return _wcss; }
         }
 
         #region MLClustering Members
@@ -109,7 +110,7 @@ namespace Encog.ML.Kmeans
         /// <value>The clusters.</value>
         public IMLCluster[] Clusters
         {
-            get { return clusters; }
+            get { return _clusters; }
         }
 
 
@@ -120,7 +121,7 @@ namespace Encog.ML.Kmeans
         public void Iteration()
         {
             // loop over all clusters
-            foreach (KMeansCluster element  in  clusters)
+            foreach (KMeansCluster element  in  _clusters)
             {
                 for (int k = 0; k < element.Size(); k++)
                 {
@@ -131,7 +132,7 @@ namespace Encog.ML.Kmeans
                     bool match = false;
 
 
-                    foreach (KMeansCluster cluster  in  clusters)
+                    foreach (KMeansCluster cluster  in  _clusters)
                     {
                         double d = CalculateEuclideanDistance(cluster.Centroid,
                                                               element.Get(k));
@@ -148,11 +149,11 @@ namespace Encog.ML.Kmeans
                         tempCluster.Add(element.Get(k));
                         element.Remove(element.Get(k));
 
-                        foreach (KMeansCluster element2  in  clusters)
+                        foreach (KMeansCluster element2  in  _clusters)
                         {
                             element2.Centroid.CalcCentroid();
                         }
-                        CalcWCSS();
+                        CalcWcss();
                     }
                 }
             }
@@ -173,7 +174,7 @@ namespace Encog.ML.Kmeans
         /// <returns>The number of clusters.</returns>
         public int NumClusters()
         {
-            return clusters.Length;
+            return _clusters.Length;
         }
 
         #endregion
@@ -189,12 +190,7 @@ namespace Encog.ML.Kmeans
                                                         IMLData data)
         {
             double[] d = data.Data;
-            double sum = 0;
-
-            for (int i = 0; i < c.Centers.Length; i++)
-            {
-                sum += Math.Pow(d[i] - c.Centers[i], 2);
-            }
+            double sum = c.Centers.Select((t, i) => Math.Pow(d[i] - t, 2)).Sum();
 
             return Math.Sqrt(sum);
         }
@@ -203,15 +199,11 @@ namespace Encog.ML.Kmeans
         /// Calculate the within-cluster sum of squares (WCSS).
         /// </summary>
         ///
-        private void CalcWCSS()
+        private void CalcWcss()
         {
-            double temp = 0;
+            double temp = _clusters.Aggregate<KMeansCluster, double>(0, (current, element) => current + element.SumSqr);
 
-            foreach (KMeansCluster element  in  clusters)
-            {
-                temp = temp + element.SumSqr;
-            }
-            wcss = temp;
+            _wcss = temp;
         }
 
         /// <summary>
@@ -223,13 +215,13 @@ namespace Encog.ML.Kmeans
         private double GetMaxValue(int index)
         {
             double result = Double.MinValue;
-            long count = set.Count;
+            long count = _set.Count;
 
             for (int i = 0; i < count; i++)
             {
                 IMLDataPair pair = BasicMLDataPair.CreatePair(
-                    set.InputSize, set.IdealSize);
-                set.GetRecord(index, pair);
+                    _set.InputSize, _set.IdealSize);
+                _set.GetRecord(index, pair);
                 result = Math.Max(result, pair.InputArray[index]);
             }
             return result;
@@ -244,13 +236,13 @@ namespace Encog.ML.Kmeans
         private double GetMinValue(int index)
         {
             double result = Double.MaxValue;
-            long count = set.Count;
+            long count = _set.Count;
             IMLDataPair pair = BasicMLDataPair.CreatePair(
-                set.InputSize, set.IdealSize);
+                _set.InputSize, _set.IdealSize);
 
             for (int i = 0; i < count; i++)
             {
-                set.GetRecord(index, pair);
+                _set.GetRecord(index, pair);
                 result = Math.Min(result, pair.InputArray[index]);
             }
             return result;
@@ -262,17 +254,17 @@ namespace Encog.ML.Kmeans
         ///
         private void SetInitialCentroids()
         {
-            for (int n = 1; n <= clusters.Length; n++)
+            for (int n = 1; n <= _clusters.Length; n++)
             {
-                var temp = new double[set.InputSize];
+                var temp = new double[_set.InputSize];
                 for (int j = 0; j < temp.Length; j++)
                 {
-                    temp[j] = (((GetMaxValue(j) - GetMinValue(j))/(clusters.Length + 1))*n)
+                    temp[j] = (((GetMaxValue(j) - GetMinValue(j))/(_clusters.Length + 1))*n)
                               + GetMinValue(j);
                 }
                 var c1 = new Centroid(temp);
-                clusters[n - 1].Centroid = c1;
-                c1.Cluster = clusters[n - 1];
+                _clusters[n - 1].Centroid = c1;
+                c1.Cluster = _clusters[n - 1];
             }
         }
     }

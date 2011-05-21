@@ -25,20 +25,20 @@ namespace Encog.ML.Train.Strategy.End
     /// <summary>
     /// End the training when a specified number of iterations has been reached.
     /// </summary>
-    public class EndIterationsStrategy : EndTrainingStrategy
+    public class EndIterationsStrategy : IEndTrainingStrategy
     {
-        private readonly int maxIterations;
-        private int currentIteration;
-        private MLTrain train;
+        private readonly int _maxIterations;
+        private int _currentIteration;
+        private IMLTrain _train;
 
         /// <summary>
         /// Construct the object, specify the max number of iterations.
         /// </summary>
-        /// <param name="maxIterations_0">The number of iterations.</param>
-        public EndIterationsStrategy(int maxIterations_0)
+        /// <param name="maxIterations">The number of iterations.</param>
+        public EndIterationsStrategy(int maxIterations)
         {
-            maxIterations = maxIterations_0;
-            currentIteration = 0;
+            _maxIterations = maxIterations;
+            _currentIteration = 0;
         }
 
         #region EndTrainingStrategy Members
@@ -49,16 +49,16 @@ namespace Encog.ML.Train.Strategy.End
         ///
         public virtual bool ShouldStop()
         {
-            return (currentIteration >= maxIterations);
+            return (_currentIteration >= _maxIterations);
         }
 
         /// <summary>
         /// 
         /// </summary>
         ///
-        public virtual void Init(MLTrain train_0)
+        public virtual void Init(IMLTrain train_0)
         {
-            train = train_0;
+            _train = train_0;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Encog.ML.Train.Strategy.End
         ///
         public virtual void PostIteration()
         {
-            currentIteration = train.IterationNumber;
+            _currentIteration = _train.IterationNumber;
         }
 
         /// <summary>

@@ -43,46 +43,46 @@ namespace Encog.Neural.Networks.Structure
         /// The layers in this neural network.
         /// </summary>
         ///
-        private readonly IList<Layer> layers;
+        private readonly IList<ILayer> _layers;
 
         /// <summary>
         /// The neural network this class belongs to.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// The limit, below which a connection is treated as zero.
         /// </summary>
         ///
-        private double connectionLimit;
+        private double _connectionLimit;
 
         /// <summary>
         /// Are connections limited?
         /// </summary>
         ///
-        private bool connectionLimited;
+        private bool _connectionLimited;
 
         /// <summary>
         /// The flattened form of the network.
         /// </summary>
         ///
-        private FlatNetwork flat;
+        private FlatNetwork _flat;
 
         /// <summary>
         /// Construct a structure object for the specified network.
         /// </summary>
-        public NeuralStructure(BasicNetwork network_0)
+        public NeuralStructure(BasicNetwork network)
         {
-            layers = new List<Layer>();
-            network = network_0;
+            _layers = new List<ILayer>();
+            _network = network;
         }
 
 
         /// <value>The connection limit.</value>
         public double ConnectionLimit
         {
-            get { return connectionLimit; }
+            get { return _connectionLimit; }
         }
 
 
@@ -94,30 +94,30 @@ namespace Encog.Neural.Networks.Structure
             get
             {
                 RequireFlat();
-                return flat;
+                return _flat;
             }
-            set { flat = value; }
+            set { _flat = value; }
         }
 
 
         /// <value>The layers in this neural network.</value>
-        public IList<Layer> Layers
+        public IList<ILayer> Layers
         {
-            get { return layers; }
+            get { return _layers; }
         }
 
 
         /// <value>The network this structure belongs to.</value>
         public BasicNetwork Network
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <value>True if this is not a fully connected feedforward network.</value>
         public bool ConnectionLimited
         {
-            get { return connectionLimited; }
+            get { return _connectionLimited; }
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Encog.Neural.Networks.Structure
         /// <returns>The size of the calculated array.</returns>
         public int CalculateSize()
         {
-            return NetworkCODEC.NetworkSize(network);
+            return NetworkCODEC.NetworkSize(_network);
         }
 
         /// <summary>
@@ -138,16 +138,16 @@ namespace Encog.Neural.Networks.Structure
         ///
         public void EnforceLimit()
         {
-            if (!connectionLimited)
+            if (!_connectionLimited)
             {
                 return;
             }
 
-            double[] weights = flat.Weights;
+            double[] weights = _flat.Weights;
 
             for (int i = 0; i < weights.Length; i++)
             {
-                if (Math.Abs(weights[i]) < connectionLimit)
+                if (Math.Abs(weights[i]) < _connectionLimit)
                 {
                     weights[i] = 0;
                 }
@@ -161,14 +161,14 @@ namespace Encog.Neural.Networks.Structure
         private void FinalizeLimit()
         {
             // see if there is a connection limit imposed
-            String limit = network
+            String limit = _network
                 .GetPropertyString(BasicNetwork.TAG_LIMIT);
             if (limit != null)
             {
                 try
                 {
-                    connectionLimited = true;
-                    connectionLimit = CSVFormat.EG_FORMAT.Parse(limit);
+                    _connectionLimited = true;
+                    _connectionLimit = CSVFormat.EG_FORMAT.Parse(limit);
                 }
                 catch (FormatException )
                 {
@@ -178,8 +178,8 @@ namespace Encog.Neural.Networks.Structure
             }
             else
             {
-                connectionLimited = false;
-                connectionLimit = 0;
+                _connectionLimited = false;
+                _connectionLimit = 0;
             }
         }
 
@@ -191,17 +191,17 @@ namespace Encog.Neural.Networks.Structure
         ///
         public void FinalizeStructure()
         {
-            if (layers.Count < 2)
+            if (_layers.Count < 2)
             {
                 throw new NeuralNetworkError(
                     "There must be at least two layers before the structure is finalized.");
             }
 
-            var flatLayers = new FlatLayer[layers.Count];
+            var flatLayers = new FlatLayer[_layers.Count];
 
-            for (int i = 0; i < layers.Count; i++)
+            for (int i = 0; i < _layers.Count; i++)
             {
-                var layer = (BasicLayer) layers[i];
+                var layer = (BasicLayer) _layers[i];
                 if (layer.Activation == null)
                 {
                     layer.Activation = new ActivationLinear();
@@ -210,10 +210,10 @@ namespace Encog.Neural.Networks.Structure
                 flatLayers[i] = layer;
             }
 
-            flat = new FlatNetwork(flatLayers);
+            _flat = new FlatNetwork(flatLayers);
 
             FinalizeLimit();
-            layers.Clear();
+            _layers.Clear();
             EnforceLimit();
         }
 
@@ -224,7 +224,7 @@ namespace Encog.Neural.Networks.Structure
         ///
         public void RequireFlat()
         {
-            if (flat == null)
+            if (_flat == null)
             {
                 throw new NeuralNetworkError(
                     "Must call finalizeStructure before using this network.");
@@ -237,21 +237,21 @@ namespace Encog.Neural.Networks.Structure
         ///
         public void UpdateProperties()
         {
-            if (network.Properties.ContainsKey(BasicNetwork.TAG_LIMIT))
+            if (_network.Properties.ContainsKey(BasicNetwork.TAG_LIMIT))
             {
-                connectionLimit = network
+                _connectionLimit = _network
                     .GetPropertyDouble(BasicNetwork.TAG_LIMIT);
-                connectionLimited = true;
+                _connectionLimited = true;
             }
             else
             {
-                connectionLimited = false;
-                connectionLimit = 0;
+                _connectionLimited = false;
+                _connectionLimit = 0;
             }
 
-            if (flat != null)
+            if (_flat != null)
             {
-                flat.ConnectionLimit = connectionLimit;
+                _flat.ConnectionLimit = _connectionLimit;
             }
         }
     }

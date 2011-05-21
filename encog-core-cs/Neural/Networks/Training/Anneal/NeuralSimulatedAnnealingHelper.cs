@@ -40,17 +40,17 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// The class that this class should report to.
         /// </summary>
         ///
-        private readonly NeuralSimulatedAnnealing owner;
+        private readonly NeuralSimulatedAnnealing _owner;
 
         /// <summary>
         /// Constructs this object.
         /// </summary>
         ///
-        /// <param name="owner_0">The owner of this class, that recieves all messages.</param>
-        public NeuralSimulatedAnnealingHelper(NeuralSimulatedAnnealing owner_0)
+        /// <param name="owner">The owner of this class, that recieves all messages.</param>
+        public NeuralSimulatedAnnealingHelper(NeuralSimulatedAnnealing owner)
         {
-            owner = owner_0;
-            ShouldMinimize = owner.CalculateScore.ShouldMinimize;
+            _owner = owner;
+            ShouldMinimize = _owner.CalculateScore.ShouldMinimize;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// </summary>
         public override double[] Array
         {
-            get { return owner.Array; }
+            get { return _owner.Array; }
         }
 
 
@@ -69,7 +69,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <value>The array copy created by the owner.</value>
         public override double[] ArrayCopy
         {
-            get { return owner.ArrayCopy; }
+            get { return _owner.ArrayCopy; }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <returns>The error returned by the owner.</returns>
         public override sealed double PerformCalculateScore()
         {
-            return owner.CalculateScore.CalculateScore(((BasicNetwork) owner.Method));
+            return _owner.CalculateScore.CalculateScore(((BasicNetwork) _owner.Method));
         }
 
 
@@ -90,7 +90,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <param name="array">The array.</param>
         public override sealed void PutArray(double[] array)
         {
-            owner.PutArray(array);
+            _owner.PutArray(array);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         ///
         public override sealed void Randomize()
         {
-            owner.Randomize();
+            _owner.Randomize();
         }
     }
 }

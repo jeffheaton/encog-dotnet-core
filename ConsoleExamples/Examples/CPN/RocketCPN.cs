@@ -390,7 +390,7 @@ namespace Encog.Examples.CPN
         {
             int epoch = 1;
 
-            MLTrain train = new TrainInstar(network, training, 0.1, true);
+            IMLTrain train = new TrainInstar(network, training, 0.1, true);
             for (int i = 0; i < 1000; i++)
             {
                 train.Iteration();
@@ -403,7 +403,7 @@ namespace Encog.Examples.CPN
         {
             int epoch = 1;
 
-            MLTrain train = new TrainOutstar(network, training, 0.1);
+            IMLTrain train = new TrainOutstar(network, training, 0.1);
             for (int i = 0; i < 1000; i++)
             {
                 train.Iteration();

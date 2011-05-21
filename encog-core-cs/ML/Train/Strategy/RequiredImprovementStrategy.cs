@@ -36,39 +36,42 @@ namespace Encog.ML.Train.Strategy
         /// If the error is below this, then never reset.
         /// </summary>
         ///
-        private readonly double acceptableThreshold;
+        private readonly double _acceptableThreshold;
 
         /// <summary>
         /// The number of cycles to reach the required minimum error.
         /// </summary>
         ///
-        private readonly int cycles;
+        private readonly int _cycles;
 
         /// <summary>
         /// The required minimum error.
         /// </summary>
         ///
-        private readonly double required;
+        private readonly double _required;
 
         /// <summary>
         /// How many bad cycles have there been so far.
         /// </summary>
         ///
-        private int badCycleCount;
+        private int _badCycleCount;
 
         /// <summary>
         /// The last error.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
-        private IMLResettable method;
+        /// <summary>
+        /// The method being trained.
+        /// </summary>
+        private IMLResettable _method;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain _train;
 
         /// <summary>
         /// Construct a reset strategy. The error rate must fall below the required
@@ -76,9 +79,9 @@ namespace Encog.ML.Train.Strategy
         /// reset to random weights and bias values.
         /// </summary>
         ///
-        /// <param name="required_0">The required error rate.</param>
-        /// <param name="cycles_1">The number of cycles to reach that rate.</param>
-        public RequiredImprovementStrategy(double required_0, int cycles_1) : this(required_0, 0.10d, cycles_1)
+        /// <param name="required">The required error rate.</param>
+        /// <param name="cycles">The number of cycles to reach that rate.</param>
+        public RequiredImprovementStrategy(double required, int cycles) : this(required, 0.10d, cycles)
         {
         }
 
@@ -88,17 +91,17 @@ namespace Encog.ML.Train.Strategy
         /// reset to random weights and bias values.
         /// </summary>
         ///
-        /// <param name="required_0">The required error rate.</param>
+        /// <param name="required">The required error rate.</param>
         /// <param name="threshold">The accepted threshold, don't reset if error is below this.</param>
-        /// <param name="cycles_1">The number of cycles to reach that rate.</param>
-        public RequiredImprovementStrategy(double required_0,
-                                           double threshold, int cycles_1)
+        /// <param name="cycles">The number of cycles to reach that rate.</param>
+        public RequiredImprovementStrategy(double required,
+                                           double threshold, int cycles)
         {
-            lastError = Double.NaN;
-            required = required_0;
-            cycles = cycles_1;
-            badCycleCount = 0;
-            acceptableThreshold = threshold;
+            _lastError = Double.NaN;
+            _required = required;
+            _cycles = cycles;
+            _badCycleCount = 0;
+            _acceptableThreshold = threshold;
         }
 
         /// <summary>
@@ -106,8 +109,8 @@ namespace Encog.ML.Train.Strategy
         /// if below 10%.
         /// </summary>
         ///
-        /// <param name="cycles_0"></param>
-        public RequiredImprovementStrategy(int cycles_0) : this(0.01d, 0.10d, cycles_0)
+        /// <param name="cycles"></param>
+        public RequiredImprovementStrategy(int cycles) : this(0.01d, 0.10d, cycles)
         {
         }
 
@@ -117,18 +120,18 @@ namespace Encog.ML.Train.Strategy
         /// Initialize this strategy.
         /// </summary>
         ///
-        /// <param name="train_0">The training algorithm.</param>
-        public virtual void Init(MLTrain train_0)
+        /// <param name="train">The training algorithm.</param>
+        public virtual void Init(IMLTrain train)
         {
-            train = train_0;
+            _train = train;
 
-            if (!(train_0.Method is IMLResettable))
+            if (!(train.Method is IMLResettable))
             {
                 throw new TrainingError(
                     "To use the required improvement strategy the machine learning method must support MLResettable.");
             }
 
-            method = (IMLResettable) train.Method;
+            _method = (IMLResettable) _train.Method;
         }
 
         /// <summary>
@@ -145,33 +148,33 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PreIteration()
         {
-            if (train.Error > acceptableThreshold)
+            if (_train.Error > _acceptableThreshold)
             {
-                if (!Double.IsNaN(lastError))
+                if (!Double.IsNaN(_lastError))
                 {
-                    double improve = (lastError - train.Error);
-                    if (improve < required)
+                    double improve = (_lastError - _train.Error);
+                    if (improve < _required)
                     {
-                        badCycleCount++;
-                        if (badCycleCount > cycles)
+                        _badCycleCount++;
+                        if (_badCycleCount > _cycles)
                         {
                             EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                              "Failed to improve network, resetting.");
-                            method.Reset();
-                            badCycleCount = 0;
-                            lastError = Double.NaN;
+                            _method.Reset();
+                            _badCycleCount = 0;
+                            _lastError = Double.NaN;
                         }
                     }
                     else
                     {
-                        badCycleCount = 0;
+                        _badCycleCount = 0;
                     }
                 }
                 else
-                    lastError = train.Error;
+                    _lastError = _train.Error;
             }
 
-            lastError = Math.Min(train.Error, lastError);
+            _lastError = Math.Min(_train.Error, _lastError);
         }
 
         #endregion

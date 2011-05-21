@@ -20,7 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using Encog.ML;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Structure;
@@ -51,46 +51,48 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// The cutoff for random data.
         /// </summary>
         ///
-        public const double CUT = 0.5d;
+        public const double Cut = 0.5d;
 
         /// <summary>
         /// This class actually performs the training.
         /// </summary>
         ///
-        private readonly NeuralSimulatedAnnealingHelper anneal;
+        private readonly NeuralSimulatedAnnealingHelper _anneal;
 
         /// <summary>
         /// Used to calculate the score.
         /// </summary>
         ///
-        private readonly ICalculateScore calculateScore;
+        private readonly ICalculateScore _calculateScore;
 
         /// <summary>
         /// The neural network that is to be trained.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// Construct a simulated annleaing trainer for a feedforward neural network.
         /// </summary>
         ///
-        /// <param name="network_0">The neural network to be trained.</param>
-        /// <param name="calculateScore_1">Used to calculate the score for a neural network.</param>
+        /// <param name="network">The neural network to be trained.</param>
+        /// <param name="calculateScore">Used to calculate the score for a neural network.</param>
         /// <param name="startTemp">The starting temperature.</param>
         /// <param name="stopTemp">The ending temperature.</param>
         /// <param name="cycles">The number of cycles in a training iteration.</param>
-        public NeuralSimulatedAnnealing(BasicNetwork network_0,
-                                        ICalculateScore calculateScore_1, double startTemp,
+        public NeuralSimulatedAnnealing(BasicNetwork network,
+                                        ICalculateScore calculateScore, double startTemp,
                                         double stopTemp, int cycles) : base(TrainingImplementationType.Iterative)
         {
-            network = network_0;
-            calculateScore = calculateScore_1;
-            anneal = new NeuralSimulatedAnnealingHelper(this);
-            anneal.Temperature = startTemp;
-            anneal.StartTemperature = startTemp;
-            anneal.StopTemperature = stopTemp;
-            anneal.Cycles = cycles;
+            _network = network;
+            _calculateScore = calculateScore;
+            _anneal = new NeuralSimulatedAnnealingHelper(this)
+                          {
+                              Temperature = startTemp,
+                              StartTemperature = startTemp,
+                              StopTemperature = stopTemp,
+                              Cycles = cycles
+                          };
         }
 
         /// <inheritdoc />
@@ -107,7 +109,7 @@ namespace Encog.Neural.Networks.Training.Anneal
             get
             {
                 return NetworkCODEC
-                    .NetworkToArray(network);
+                    .NetworkToArray(_network);
             }
         }
 
@@ -122,14 +124,14 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <value>The object used to calculate the score.</value>
         public ICalculateScore CalculateScore
         {
-            get { return calculateScore; }
+            get { return _calculateScore; }
         }
 
 
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
@@ -142,8 +144,8 @@ namespace Encog.Neural.Networks.Training.Anneal
             EncogLogging.Log(EncogLogging.LEVEL_INFO,
                              "Performing Simulated Annealing iteration.");
             PreIteration();
-            anneal.Iteration();
-            Error = anneal.PerformCalculateScore();
+            _anneal.Iteration();
+            Error = _anneal.PerformCalculateScore();
             PostIteration();
         }
 
@@ -161,7 +163,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         public void PutArray(double[] array)
         {
             NetworkCODEC.ArrayToNetwork(array,
-                                        network);
+                                        _network);
         }
 
         /// <summary>
@@ -174,18 +176,18 @@ namespace Encog.Neural.Networks.Training.Anneal
         public void Randomize()
         {
             double[] array = NetworkCODEC
-                .NetworkToArray(network);
+                .NetworkToArray(_network);
 
             for (int i = 0; i < array.Length; i++)
             {
-                double add = CUT - ThreadSafeRandom.NextDouble();
-                add /= anneal.StartTemperature;
-                add *= anneal.Temperature;
+                double add = Cut - ThreadSafeRandom.NextDouble();
+                add /= _anneal.StartTemperature;
+                add *= _anneal.Temperature;
                 array[i] = array[i] + add;
             }
 
             NetworkCODEC.ArrayToNetwork(array,
-                                        network);
+                                        _network);
         }
 
         /// <inheritdoc/>

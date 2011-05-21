@@ -36,25 +36,25 @@ namespace Encog.ML.Genetic
         /// The first child.
         /// </summary>
         ///
-        private readonly IGenome child1;
+        private readonly IGenome _child1;
 
         /// <summary>
         /// The second child.
         /// </summary>
         ///
-        private readonly IGenome child2;
+        private readonly IGenome _child2;
 
         /// <summary>
         /// The father.
         /// </summary>
         ///
-        private readonly IGenome father;
+        private readonly IGenome _father;
 
         /// <summary>
         /// The mother.
         /// </summary>
         ///
-        private readonly IGenome mother;
+        private readonly IGenome _mother;
 
 
         /// <param name="theMother">The mother.</param>
@@ -64,10 +64,10 @@ namespace Encog.ML.Genetic
         public MateWorker(IGenome theMother, IGenome theFather,
                           IGenome theChild1, IGenome theChild2)
         {
-            mother = theMother;
-            father = theFather;
-            child1 = theChild1;
-            child2 = theChild2;
+            _mother = theMother;
+            _father = theFather;
+            _child1 = theChild1;
+            _child2 = theChild2;
         }
 
         #region IEngineTask Members
@@ -78,7 +78,7 @@ namespace Encog.ML.Genetic
         ///
         public void Run()
         {
-            mother.Mate(father, child1, child2);
+            _mother.Mate(_father, _child1, _child2);
         }
 
         #endregion

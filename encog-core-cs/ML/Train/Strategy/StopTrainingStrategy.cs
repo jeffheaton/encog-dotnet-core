@@ -31,73 +31,73 @@ namespace Encog.ML.Train.Strategy
     /// the program to automatically determine when to stop training.
     /// </summary>
     ///
-    public class StopTrainingStrategy : EndTrainingStrategy
+    public class StopTrainingStrategy : IEndTrainingStrategy
     {
         /// <summary>
         /// The default minimum improvement before training stops.
         /// </summary>
         ///
-        public const double DEFAULT_MIN_IMPROVEMENT = 0.0000001d;
+        public const double DefaultMinImprovement = 0.0000001d;
 
         /// <summary>
         /// The default number of cycles to tolerate.
         /// </summary>
         ///
-        public const int DEFAULT_TOLERATE_CYCLES = 100;
+        public const int DefaultTolerateCycles = 100;
 
         /// <summary>
         /// The minimum improvement before training stops.
         /// </summary>
         ///
-        private readonly double minImprovement;
+        private readonly double _minImprovement;
 
         /// <summary>
         /// The number of cycles to tolerate the minimum improvement.
         /// </summary>
         ///
-        private readonly int toleratedCycles;
+        private readonly int _toleratedCycles;
 
         /// <summary>
         /// The number of bad training cycles.
         /// </summary>
         ///
-        private int badCycles;
+        private int _badCycles;
 
         /// <summary>
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double bestError;
+        private double _bestError;
 
         /// <summary>
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start evaluation.
         /// </summary>
         ///
-        private bool ready;
+        private bool _ready;
 
         /// <summary>
         /// Flag to indicate if training should stop.
         /// </summary>
         ///
-        private bool shouldStop;
+        private bool _shouldStop;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain _train;
 
         /// <summary>
         /// Construct the strategy with default options.
         /// </summary>
         ///
-        public StopTrainingStrategy() : this(DEFAULT_MIN_IMPROVEMENT, DEFAULT_TOLERATE_CYCLES)
+        public StopTrainingStrategy() : this(DefaultMinImprovement, DefaultTolerateCycles)
         {
         }
 
@@ -105,15 +105,15 @@ namespace Encog.ML.Train.Strategy
         /// Construct the strategy with the specified parameters.
         /// </summary>
         ///
-        /// <param name="minImprovement_0">The minimum accepted improvement.</param>
-        /// <param name="toleratedCycles_1">The number of cycles to tolerate before stopping.</param>
-        public StopTrainingStrategy(double minImprovement_0,
-                                    int toleratedCycles_1)
+        /// <param name="minImprovement">The minimum accepted improvement.</param>
+        /// <param name="toleratedCycles">The number of cycles to tolerate before stopping.</param>
+        public StopTrainingStrategy(double minImprovement,
+                                    int toleratedCycles)
         {
-            minImprovement = minImprovement_0;
-            toleratedCycles = toleratedCycles_1;
-            badCycles = 0;
-            bestError = Double.MaxValue;
+            _minImprovement = minImprovement;
+            _toleratedCycles = toleratedCycles;
+            _badCycles = 0;
+            _bestError = Double.MaxValue;
         }
 
         #region EndTrainingStrategy Members
@@ -122,11 +122,11 @@ namespace Encog.ML.Train.Strategy
         /// 
         /// </summary>
         ///
-        public virtual void Init(MLTrain train_0)
+        public virtual void Init(IMLTrain train)
         {
-            train = train_0;
-            shouldStop = false;
-            ready = false;
+            _train = train;
+            _shouldStop = false;
+            _ready = false;
         }
 
         /// <summary>
@@ -135,28 +135,28 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual void PostIteration()
         {
-            if (ready)
+            if (_ready)
             {
-                if (Math.Abs(bestError - train.Error) < minImprovement)
+                if (Math.Abs(_bestError - _train.Error) < _minImprovement)
                 {
-                    badCycles++;
-                    if (badCycles > toleratedCycles)
+                    _badCycles++;
+                    if (_badCycles > _toleratedCycles)
                     {
-                        shouldStop = true;
+                        _shouldStop = true;
                     }
                 }
                 else
                 {
-                    badCycles = 0;
+                    _badCycles = 0;
                 }
             }
             else
             {
-                ready = true;
+                _ready = true;
             }
 
-            lastError = train.Error;
-            bestError = Math.Min(lastError, bestError);
+            _lastError = _train.Error;
+            _bestError = Math.Min(_lastError, _bestError);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Encog.ML.Train.Strategy
         ///
         public virtual bool ShouldStop()
         {
-            return shouldStop;
+            return _shouldStop;
         }
 
         #endregion

@@ -69,7 +69,7 @@ namespace Encog.Util.Simple
         /// <summary>
         /// The training alog.
         /// </summary>
-        public MLTrain Train { get; set; }
+        public IMLTrain Train { get; set; }
 
         /// <summary>
         /// Called to update the stats.

@@ -75,9 +75,9 @@ namespace Encog.Neural.Pattern
         {
             var network = new BasicNetwork();
 
-            Layer inputLayer = new BasicLayer(new ActivationLinear(), true,
+            ILayer inputLayer = new BasicLayer(new ActivationLinear(), true,
                                               inputNeurons);
-            Layer outputLayer = new BasicLayer(new ActivationLinear(), false,
+            ILayer outputLayer = new BasicLayer(new ActivationLinear(), false,
                                                outputNeurons);
 
             network.AddLayer(inputLayer);

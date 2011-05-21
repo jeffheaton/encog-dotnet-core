@@ -33,21 +33,13 @@ namespace Encog.Neural.Networks.Structure
     /// simulated annealing, as well as genetic algorithms.
     /// </summary>
     ///
-    public sealed class NetworkCODEC
+    public static class NetworkCODEC
     {
         /// <summary>
         /// Error message.
         /// </summary>
         ///
-        private const String ERROR = "This machine learning method cannot be encoded:";
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        ///
-        private NetworkCODEC()
-        {
-        }
+        private const String Error = "This machine learning method cannot be encoded:";
 
         /// <summary>
         /// Use an array to populate the memory of the neural network.
@@ -63,7 +55,7 @@ namespace Encog.Neural.Networks.Structure
                 ((IMLEncodable) network).DecodeFromArray(array);
                 return;
             }
-            throw new NeuralNetworkError(ERROR
+            throw new NeuralNetworkError(Error
                                          + network.GetType().FullName);
         }
 
@@ -132,7 +124,7 @@ namespace Encog.Neural.Networks.Structure
             {
                 return ((IMLEncodable) network).EncodedArrayLength();
             }
-            throw new NeuralNetworkError(ERROR
+            throw new NeuralNetworkError(Error
                                          + network.GetType().FullName);
         }
 
@@ -154,7 +146,7 @@ namespace Encog.Neural.Networks.Structure
                 ((IMLEncodable) network).EncodeToArray(encoded);
                 return encoded;
             }
-            throw new NeuralNetworkError(ERROR
+            throw new NeuralNetworkError(Error
                                          + network.GetType().FullName);
         }
     }

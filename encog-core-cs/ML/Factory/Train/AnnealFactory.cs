@@ -46,7 +46,7 @@ namespace Encog.ML.Factory.Train
         /// <param name="training">The training data to use.</param>
         /// <param name="argsStr">The arguments to use.</param>
         /// <returns>The newly created trainer.</returns>
-        public MLTrain Create(IMLMethod method,
+        public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String argsStr)
         {
             if (!(method is BasicNetwork))
@@ -66,7 +66,7 @@ namespace Encog.ML.Factory.Train
 
             int cycles = holder.GetInt(MLTrainFactory.Cycles, false, 100);
 
-            MLTrain train = new NeuralSimulatedAnnealing(
+            IMLTrain train = new NeuralSimulatedAnnealing(
                 (BasicNetwork) method, score, startTemp, stopTemp, cycles);
 
             return train;

@@ -39,55 +39,55 @@ namespace Encog.ML.Genetic.Species
         /// The list of genomes.
         /// </summary>
         ///
-        private readonly IList<IGenome> members;
+        private readonly IList<IGenome> _members;
 
         /// <summary>
         /// The age of this species.
         /// </summary>
         ///
-        private int age;
+        private int _age;
 
         /// <summary>
         /// The best score.
         /// </summary>
         ///
-        private double bestScore;
+        private double _bestScore;
 
         /// <summary>
         /// The number of generations with no improvement.
         /// </summary>
         ///
-        private int gensNoImprovement;
+        private int _gensNoImprovement;
 
         /// <summary>
         /// The leader.
         /// </summary>
         ///
-        private IGenome leader;
+        private IGenome _leader;
 
         /// <summary>
         /// The id of the leader.
         /// </summary>
         [NonSerialized]
-        private long leaderID;
+        private long _leaderID;
 
         /// <summary>
         /// The owner class.
         /// </summary>
         ///
-        private IPopulation population;
+        private IPopulation _population;
 
         /// <summary>
         /// The number of spawns required.
         /// </summary>
         ///
-        private double spawnsRequired;
+        private double _spawnsRequired;
 
         /// <summary>
         /// The species id.
         /// </summary>
         ///
-        private long speciesID;
+        private long _speciesID;
 
         /// <summary>
         /// Default constructor, used mainly for persistence.
@@ -95,7 +95,7 @@ namespace Encog.ML.Genetic.Species
         ///
         public BasicSpecies()
         {
-            members = new List<IGenome>();
+            _members = new List<IGenome>();
         }
 
         /// <summary>
@@ -108,22 +108,22 @@ namespace Encog.ML.Genetic.Species
         public BasicSpecies(IPopulation thePopulation, IGenome theFirst,
                             long theSpeciesID)
         {
-            members = new List<IGenome>();
-            population = thePopulation;
-            speciesID = theSpeciesID;
-            bestScore = theFirst.Score;
-            gensNoImprovement = 0;
-            age = 0;
-            leader = theFirst;
-            spawnsRequired = 0;
-            members.Add(theFirst);
+            _members = new List<IGenome>();
+            _population = thePopulation;
+            _speciesID = theSpeciesID;
+            _bestScore = theFirst.Score;
+            _gensNoImprovement = 0;
+            _age = 0;
+            _leader = theFirst;
+            _spawnsRequired = 0;
+            _members.Add(theFirst);
         }
 
         /// <value>the population to set</value>
         public IPopulation Population
         {
-            get { return population; }
-            set { population = value; }
+            get { return _population; }
+            set { _population = value; }
         }
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace Encog.ML.Genetic.Species
         /// <value>the leaderID to set</value>
         public long TempLeaderID
         {
-            get { return leaderID; }
-            set { leaderID = value; }
+            get { return _leaderID; }
+            set { _leaderID = value; }
         }
 
         #region ISpecies Members
@@ -146,11 +146,11 @@ namespace Encog.ML.Genetic.Species
         ///
         public void CalculateSpawnAmount()
         {
-            spawnsRequired = 0;
+            _spawnsRequired = 0;
 
-            foreach (IGenome genome  in  members)
+            foreach (IGenome genome  in  _members)
             {
-                spawnsRequired += genome.AmountToSpawn;
+                _spawnsRequired += genome.AmountToSpawn;
             }
         }
 
@@ -165,18 +165,18 @@ namespace Encog.ML.Genetic.Species
             IGenome baby;
 
             // If there is a single member, then choose that one.
-            if (members.Count == 1)
+            if (_members.Count == 1)
             {
-                baby = members[0];
+                baby = _members[0];
             }
             else
             {
                 // If there are many, then choose the population based on survival
                 // rate
                 // and select a random genome.
-                int maxIndexSize = (int) (population.SurvivalRate*members.Count) + 1;
+                int maxIndexSize = (int) (_population.SurvivalRate*_members.Count) + 1;
                 var theOne = (int) RangeRandomizer.Randomize(0, maxIndexSize);
-                baby = members[theOne];
+                baby = _members[theOne];
             }
 
             return baby;
@@ -189,8 +189,8 @@ namespace Encog.ML.Genetic.Species
         /// <value>The age of this species.</value>
         public int Age
         {
-            get { return age; }
-            set { age = value; }
+            get { return _age; }
+            set { _age = value; }
         }
 
 
@@ -201,8 +201,8 @@ namespace Encog.ML.Genetic.Species
         /// <value>The best score.</value>
         public double BestScore
         {
-            get { return bestScore; }
-            set { bestScore = value; }
+            get { return _bestScore; }
+            set { _bestScore = value; }
         }
 
 
@@ -213,8 +213,8 @@ namespace Encog.ML.Genetic.Species
         /// <value>The number of generations.</value>
         public int GensNoImprovement
         {
-            get { return gensNoImprovement; }
-            set { gensNoImprovement = value; }
+            get { return _gensNoImprovement; }
+            set { _gensNoImprovement = value; }
         }
 
 
@@ -225,22 +225,22 @@ namespace Encog.ML.Genetic.Species
         /// <value>The new leader.</value>
         public IGenome Leader
         {
-            get { return leader; }
-            set { leader = value; }
+            get { return _leader; }
+            set { _leader = value; }
         }
 
 
         /// <value>The members of this species.</value>
         public IList<IGenome> Members
         {
-            get { return members; }
+            get { return _members; }
         }
 
 
         /// <value>The number to spawn.</value>
         public double NumToSpawn
         {
-            get { return spawnsRequired; }
+            get { return _spawnsRequired; }
         }
 
 
@@ -249,8 +249,8 @@ namespace Encog.ML.Genetic.Species
         /// </summary>
         public double SpawnsRequired
         {
-            get { return spawnsRequired; }
-            set { spawnsRequired = value; }
+            get { return _spawnsRequired; }
+            set { _spawnsRequired = value; }
         }
 
 
@@ -261,10 +261,10 @@ namespace Encog.ML.Genetic.Species
         ///
         public void Purge()
         {
-            members.Clear();
-            age++;
-            gensNoImprovement++;
-            spawnsRequired = 0;
+            _members.Clear();
+            _age++;
+            _gensNoImprovement++;
+            _spawnsRequired = 0;
         }
 
         /// <summary>
@@ -272,8 +272,8 @@ namespace Encog.ML.Genetic.Species
         /// </summary>
         public long SpeciesID
         {
-            get { return speciesID; }
-            set { speciesID = value; }
+            get { return _speciesID; }
+            set { _speciesID = value; }
         }
 
         #endregion

@@ -80,21 +80,21 @@ namespace Encog.Neural.NEAT
                 if (section.SectionName.Equals("NEAT")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
 
-                    result.InputCount = EncogFileSection.ParseInt(params_0,
+                    result.InputCount = EncogFileSection.ParseInt(p,
                                                                   PersistConst.INPUT_COUNT);
-                    result.OutputCount = EncogFileSection.ParseInt(params_0,
+                    result.OutputCount = EncogFileSection.ParseInt(p,
                                                                    PersistConst.OUTPUT_COUNT);
                     result.ActivationFunction = EncogFileSection
-                        .ParseActivationFunction(params_0,
+                        .ParseActivationFunction(p,
                                                  PersistConst.ACTIVATION_FUNCTION);
                     result.OutputActivationFunction = EncogFileSection
-                        .ParseActivationFunction(params_0,
-                                                 NEATPopulation.PROPERTY_OUTPUT_ACTIVATION);
-                    result.NetworkDepth = EncogFileSection.ParseInt(params_0,
+                        .ParseActivationFunction(p,
+                                                 NEATPopulation.PropertyOutputActivation);
+                    result.NetworkDepth = EncogFileSection.ParseInt(p,
                                                                     PersistConst.DEPTH);
-                    result.Snapshot = EncogFileSection.ParseBoolean(params_0,
+                    result.Snapshot = EncogFileSection.ParseBoolean(p,
                                                                     PersistConst.SNAPSHOT);
                 }
                 else if (section.SectionName.Equals("NEAT")
@@ -123,13 +123,13 @@ namespace Encog.Neural.NEAT
                 else if (section.SectionName.Equals("NEAT")
                          && section.SubSectionName.Equals("LINKS"))
                 {
-                    foreach (String line_1  in  section.Lines)
+                    foreach (String line  in  section.Lines)
                     {
-                        IList<String> cols_2 = EncogFileSection.SplitColumns(line_1);
-                        int fromID = Int32.Parse(cols_2[0]);
-                        int toID = Int32.Parse(cols_2[1]);
-                        bool recurrent = Int32.Parse(cols_2[2]) > 0;
-                        double weight = CSVFormat.EG_FORMAT.Parse(cols_2[3]);
+                        IList<String> cols = EncogFileSection.SplitColumns(line);
+                        int fromID = Int32.Parse(cols[0]);
+                        int toID = Int32.Parse(cols[1]);
+                        bool recurrent = Int32.Parse(cols[2]) > 0;
+                        double weight = CSVFormat.EG_FORMAT.Parse(cols[3]);
                         NEATNeuron fromNeuron = (neuronMap[fromID]);
                         NEATNeuron toNeuron = (neuronMap[toID]);
                         var neatLink = new NEATLink(weight, fromNeuron,
@@ -161,7 +161,7 @@ namespace Encog.Neural.NEAT
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, neat.OutputCount);
             xout.WriteProperty(PersistConst.ACTIVATION_FUNCTION,
                                neat.ActivationFunction);
-            xout.WriteProperty(NEATPopulation.PROPERTY_OUTPUT_ACTIVATION,
+            xout.WriteProperty(NEATPopulation.PropertyOutputActivation,
                                neat.OutputActivationFunction);
             xout.WriteProperty(PersistConst.DEPTH, neat.NetworkDepth);
             xout.WriteProperty(PersistConst.SNAPSHOT, neat.Snapshot);
@@ -180,9 +180,9 @@ namespace Encog.Neural.NEAT
 
             xout.AddSubSection("LINKS");
 
-            foreach (NEATNeuron neatNeuron_0  in  neat.Neurons)
+            foreach (NEATNeuron neatNeuron  in  neat.Neurons)
             {
-                foreach (NEATLink link  in  neatNeuron_0.OutputboundLinks)
+                foreach (NEATLink link  in  neatNeuron.OutputboundLinks)
                 {
                     WriteLink(xout, link);
                 }
@@ -193,7 +193,12 @@ namespace Encog.Neural.NEAT
 
         #endregion
 
-        private void WriteLink(EncogWriteHelper xout, NEATLink link)
+        /// <summary>
+        /// Write a link.
+        /// </summary>
+        /// <param name="xout">The output file.</param>
+        /// <param name="link">The link.</param>
+        private static void WriteLink(EncogWriteHelper xout, NEATLink link)
         {
             xout.AddColumn((int)link.FromNeuron.NeuronID);
             xout.AddColumn((int)link.ToNeuron.NeuronID);

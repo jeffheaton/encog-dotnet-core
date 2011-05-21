@@ -84,11 +84,11 @@ namespace Encog.Examples.ElmanNetwork
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
-            MLTrain trainAlt = new NeuralSimulatedAnnealing(
+            IMLTrain trainAlt = new NeuralSimulatedAnnealing(
                     network, score, 10, 2, 100);
 
 
-            MLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
+            IMLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
 
             StopTrainingStrategy stop = new StopTrainingStrategy();
             trainMain.AddStrategy(new Greedy());

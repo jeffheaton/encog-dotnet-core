@@ -67,7 +67,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private MLTrain train;
+        private IMLTrain train;
 
         /// <summary>
         /// The training set size, this is used to pick an initial learning rate.
@@ -82,7 +82,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// </summary>
         ///
         /// <param name="train_0">The training algorithm.</param>
-        public void Init(MLTrain train_0)
+        public void Init(IMLTrain train_0)
         {
             train = train_0;
             ready = false;

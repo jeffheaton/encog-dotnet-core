@@ -47,7 +47,7 @@ namespace Encog.ML.Factory.Train
         /// <param name="training">The training data to use.</param>
         /// <param name="argsStr">The arguments to use.</param>
         /// <returns>The newly created trainer.</returns>
-        public MLTrain Create(IMLMethod method,
+        public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String argsStr)
         {
             if (!(method is BasicNetwork))
@@ -67,7 +67,7 @@ namespace Encog.ML.Factory.Train
             double mate = holder.GetDouble(MLTrainFactory.PropertyMate,
                                            false, 0.25d);
 
-            MLTrain train = new NeuralGeneticAlgorithm((BasicNetwork) method,
+            IMLTrain train = new NeuralGeneticAlgorithm((BasicNetwork) method,
                                                        new RangeRandomizer(-1, 1), score, populationSize, mutation,
                                                        mate);
 

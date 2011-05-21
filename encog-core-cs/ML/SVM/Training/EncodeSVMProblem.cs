@@ -30,16 +30,8 @@ namespace Encog.ML.SVM.Training
     /// Encode an Encog dataset as a SVM problem.
     /// </summary>
     ///
-    public sealed class EncodeSVMProblem
+    public static class EncodeSVMProblem
     {
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        ///
-        private EncodeSVMProblem()
-        {
-        }
-
         /// <summary>
         /// Encode the Encog dataset.
         /// </summary>
@@ -52,9 +44,7 @@ namespace Encog.ML.SVM.Training
         {
             try
             {
-                var result = new svm_problem();
-
-                result.l = (int) training.Count;
+                var result = new svm_problem {l = (int) training.Count};
 
                 result.y = new double[result.l];
                 result.x = new svm_node[result.l][];
@@ -74,9 +64,7 @@ namespace Encog.ML.SVM.Training
 
                     for (int i = 0; i < input.Count; i++)
                     {
-                        result.x[elementIndex][i] = new svm_node();
-                        result.x[elementIndex][i].index = i + 1;
-                        result.x[elementIndex][i].value_Renamed = input[i];
+                        result.x[elementIndex][i] = new svm_node {index = i + 1, value_Renamed = input[i]};
                     }
 
                     result.y[elementIndex] = output[outputIndex];
