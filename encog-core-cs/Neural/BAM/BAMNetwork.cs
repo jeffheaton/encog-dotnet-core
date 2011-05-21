@@ -134,8 +134,8 @@ namespace Encog.Neural.BAM
         ///
         /// <param name="inputPattern">The input pattern.</param>
         /// <param name="outputPattern">The output pattern(for this input).</param>
-        public void AddPattern(MLData inputPattern,
-                               MLData outputPattern)
+        public void AddPattern(IMLData inputPattern,
+                               IMLData outputPattern)
         {
             int weight;
 
@@ -167,7 +167,7 @@ namespace Encog.Neural.BAM
         ///
         /// <param name="input">NOT USED</param>
         /// <returns>NOT USED</returns>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
             throw new NeuralNetworkError(
                 "Compute on BasicNetwork cannot be used, rather call"
@@ -204,7 +204,7 @@ namespace Encog.Neural.BAM
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>The value from the matrix.</returns>
-        private double GetWeight(Matrix matrix, MLData input,
+        private double GetWeight(Matrix matrix, IMLData input,
                                  int x, int y)
         {
             if (matrix.Rows != input.Count)
@@ -226,8 +226,8 @@ namespace Encog.Neural.BAM
         /// <param name="input">The input pattern.</param>
         /// <param name="output">The output pattern.</param>
         /// <returns>True if the network has become stable.</returns>
-        private bool PropagateLayer(Matrix matrix, MLData input,
-                                    MLData output)
+        private bool PropagateLayer(Matrix matrix, IMLData input,
+                                    IMLData output)
         {
             int i, j;
             double sum; // **FIX** ?? int ??

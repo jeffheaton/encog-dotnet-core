@@ -272,7 +272,7 @@ namespace Chapter12OCR
             }
 
             int sampleSize = OCRForm.DOWNSAMPLE_HEIGHT * OCRForm.DOWNSAMPLE_WIDTH;
-            MLData input = new BasicMLData(sampleSize);
+            IMLData input = new BasicMLData(sampleSize);
 
             for (int i = 0; i < sampleSize; i++)
             {

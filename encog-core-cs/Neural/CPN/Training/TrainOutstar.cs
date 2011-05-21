@@ -136,7 +136,7 @@ namespace Encog.Neural.CPN.Training
 
             foreach (MLDataPair pair  in  training)
             {
-                MLData xout = network.ComputeInstar(pair.Input);
+                IMLData xout = network.ComputeInstar(pair.Input);
 
                 int j = EngineArray.IndexOfLargest(xout.Data);
                 for (int i = 0; i < network.OutstarCount; i++)
@@ -146,7 +146,7 @@ namespace Encog.Neural.CPN.Training
                     network.WeightsInstarToOutstar.Add(j, i, delta);
                 }
 
-                MLData out2 = network.ComputeOutstar(xout);
+                IMLData out2 = network.ComputeOutstar(xout);
                 error.UpdateError(out2.Data, pair.Ideal.Data);
             }
 

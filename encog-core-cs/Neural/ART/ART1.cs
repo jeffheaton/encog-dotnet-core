@@ -357,7 +357,7 @@ namespace Encog.Neural.ART
         ///
         /// <param name="input">The input data.</param>
         /// <returns>The class that the data belongs to.</returns>
-        public int Classify(MLData input)
+        public int Classify(IMLData input)
         {
             var input2 = new BiPolarMLData(f1Count);
             var output = new BiPolarMLData(f2Count);
@@ -514,7 +514,7 @@ namespace Encog.Neural.ART
         ///
         /// <param name="input">The input to the network.</param>
         /// <returns>The output from the network.</returns>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
             if (!(input is BiPolarMLData))
             {

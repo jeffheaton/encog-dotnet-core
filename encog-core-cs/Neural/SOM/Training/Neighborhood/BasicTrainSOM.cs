@@ -275,7 +275,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="outputNeuron">The output neuron to set.</param>
         /// <param name="input">The input pattern to copy.</param>
         private void CopyInputPattern(Matrix matrix, int outputNeuron,
-                                      MLData input)
+                                      IMLData input)
         {
             for (int inputNeuron = 0; inputNeuron < inputNeuronCount; inputNeuron++)
             {
@@ -336,12 +336,12 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="matrix">The synapse to modify.</param>
         /// <returns>True if a winner was forced.</returns>
         private bool ForceWinners(Matrix matrix, int[] won,
-                                  MLData leastRepresented)
+                                  IMLData leastRepresented)
         {
             double maxActivation = Double.MinValue;
             int maxActivationNeuron = -1;
 
-            MLData output = network.Compute(leastRepresented);
+            IMLData output = network.Compute(leastRepresented);
 
             // Loop over all of the output neurons. Consider any neurons that were
             // not the BMU (winner) for any pattern. Track which of these
@@ -389,7 +389,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             bmuUtil.Reset();
             var won = new int[outputNeuronCount];
             double leastRepresentedActivation = Double.MaxValue;
-            MLData leastRepresented = null;
+            IMLData leastRepresented = null;
 
             // Reset the correction matrix for this synapse and iteration.
             correctionMatrix.Clear();
@@ -398,7 +398,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             // Determine the BMU foreach each training element.
             foreach (MLDataPair pair  in  Training)
             {
-                MLData input = pair.Input;
+                IMLData input = pair.Input;
 
                 int bmu = bmuUtil.CalculateBMU(input);
 
@@ -410,7 +410,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
                     // Get the "output" from the network for this pattern. This
                     // gets the activation level of the BMU.
-                    MLData output = network.Compute(pair.Input);
+                    IMLData output = network.Compute(pair.Input);
 
                     // Track which training entry produces the least BMU. This
                     // pattern is the least represented by the network.
@@ -518,7 +518,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="bmu">The best matching unit for this input.</param>
         /// <param name="matrix">The synapse to train.</param>
         /// <param name="input">The input to train for.</param>
-        private void Train(int bmu, Matrix matrix, MLData input)
+        private void Train(int bmu, Matrix matrix, IMLData input)
         {
             // adjust the weight for the BMU and its neighborhood
             for (int outputNeuron = 0; outputNeuron < outputNeuronCount; outputNeuron++)
@@ -535,7 +535,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="input">The input pattern to train for.</param>
         /// <param name="current">The current output neuron being trained.</param>
         /// <param name="bmu">The best matching unit, or winning output neuron.</param>
-        private void TrainPattern(Matrix matrix, MLData input,
+        private void TrainPattern(Matrix matrix, IMLData input,
                                   int current, int bmu)
         {
             for (int inputNeuron = 0; inputNeuron < inputNeuronCount; inputNeuron++)
@@ -556,9 +556,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// </summary>
         ///
         /// <param name="pattern">The pattern to train.</param>
-        public void TrainPattern(MLData pattern)
+        public void TrainPattern(IMLData pattern)
         {
-            MLData input = pattern;
+            IMLData input = pattern;
             int bmu = bmuUtil.CalculateBMU(input);
             Train(bmu, network.Weights, input);
             ApplyCorrection();

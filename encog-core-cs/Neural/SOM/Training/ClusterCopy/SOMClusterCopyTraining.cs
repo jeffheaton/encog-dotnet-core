@@ -75,7 +75,7 @@ namespace Encog.Neural.Som.Training.Clustercopy
         ///
         /// <param name="outputNeuron">The output neuron to set.</param>
         /// <param name="input">The input pattern to copy.</param>
-        private void CopyInputPattern(int outputNeuron, MLData input)
+        private void CopyInputPattern(int outputNeuron, IMLData input)
         {
             for (int inputNeuron = 0; inputNeuron < network.InputCount; inputNeuron++)
             {

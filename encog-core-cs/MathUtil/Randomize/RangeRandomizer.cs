@@ -20,8 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-
 namespace Encog.MathUtil.Randomize
 {
     /// <summary>
@@ -35,38 +33,38 @@ namespace Encog.MathUtil.Randomize
         /// The maximum value for the random range.
         /// </summary>
         ///
-        private readonly double max;
+        private readonly double _max;
 
         /// <summary>
         /// The minimum value for the random range.
         /// </summary>
         ///
-        private readonly double min;
+        private readonly double _min;
 
         /// <summary>
         /// Construct a range randomizer.
         /// </summary>
         ///
-        /// <param name="min_0">The minimum random value.</param>
-        /// <param name="max_1">The maximum random value.</param>
-        public RangeRandomizer(double min_0, double max_1)
+        /// <param name="min">The minimum random value.</param>
+        /// <param name="max">The maximum random value.</param>
+        public RangeRandomizer(double min, double max)
         {
-            max = max_1;
-            min = min_0;
+            _max = max;
+            _min = min;
         }
 
 
         /// <value>the min</value>
         public double Min
         {
-            get { return min; }
+            get { return _min; }
         }
 
 
         /// <value>the max</value>
         public double Max
         {
-            get { return max; }
+            get { return _max; }
         }
 
         /// <summary>
@@ -101,7 +99,7 @@ namespace Encog.MathUtil.Randomize
         /// <returns>The random number.</returns>
         public override double Randomize(double d)
         {
-            return NextDouble(min, max);
+            return NextDouble(_min, _max);
         }
     }
 }

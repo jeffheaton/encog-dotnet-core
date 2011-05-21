@@ -165,7 +165,7 @@ namespace Encog.App.Analyst.CSV
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
 
-            MLData output;
+            IMLData output;
 
             int outputLength = _analyst.DetermineUniqueColumns();
 
@@ -186,7 +186,7 @@ namespace Encog.App.Analyst.CSV
 
                 if (inputArray != null)
                 {
-                    MLData input = new BasicMLData(inputArray);
+                    IMLData input = new BasicMLData(inputArray);
 
                     // evaluation data
                     if ((method is MLClassification)

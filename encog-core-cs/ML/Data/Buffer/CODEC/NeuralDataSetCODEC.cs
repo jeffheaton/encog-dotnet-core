@@ -34,22 +34,22 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <summary>
         /// The dataset.
         /// </summary>
-        private readonly MLDataSet dataset;
+        private readonly MLDataSet _dataset;
 
         /// <summary>
         /// The iterator used to read through the dataset.
         /// </summary>
-        private IEnumerator<MLDataPair> enumerator;
+        private IEnumerator<MLDataPair> _enumerator;
 
         /// <summary>
         /// The number of ideal elements.
         /// </summary>
-        private int idealSize;
+        private int _idealSize;
 
         /// <summary>
         /// The number of input elements.
         /// </summary>
-        private int inputSize;
+        private int _inputSize;
 
         /// <summary>
         /// Construct a CODEC. 
@@ -57,9 +57,9 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <param name="dataset">The dataset to use.</param>
         public NeuralDataSetCODEC(MLDataSet dataset)
         {
-            this.dataset = dataset;
-            inputSize = dataset.InputSize;
-            idealSize = dataset.IdealSize;
+            _dataset = dataset;
+            _inputSize = dataset.InputSize;
+            _idealSize = dataset.IdealSize;
         }
 
         #region IDataSetCODEC Members
@@ -67,25 +67,25 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public int InputSize
         {
-            get { return inputSize; }
+            get { return _inputSize; }
         }
 
         /// <inheritdoc/>
         public int IdealSize
         {
-            get { return idealSize; }
+            get { return _idealSize; }
         }
 
         /// <inheritdoc/>
         public bool Read(double[] input, double[] ideal)
         {
-            if (!enumerator.MoveNext())
+            if (!_enumerator.MoveNext())
             {
                 return false;
             }
             else
             {
-                MLDataPair pair = enumerator.Current;
+                MLDataPair pair = _enumerator.Current;
                 EngineArray.ArrayCopy(pair.Input.Data, input);
                 EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
                 return true;
@@ -95,8 +95,8 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal)
         {
-            MLDataPair pair = BasicMLDataPair.CreatePair(inputSize,
-                                                         idealSize);
+            MLDataPair pair = BasicMLDataPair.CreatePair(_inputSize,
+                                                         _idealSize);
             EngineArray.ArrayCopy(input, pair.Input.Data);
             EngineArray.ArrayCopy(ideal, pair.Ideal.Data);
         }
@@ -105,14 +105,14 @@ namespace Encog.ML.Data.Buffer.CODEC
         public void PrepareWrite(int recordCount,
                                  int inputSize, int idealSize)
         {
-            this.inputSize = inputSize;
-            this.idealSize = idealSize;
+            _inputSize = inputSize;
+            _idealSize = idealSize;
         }
 
         /// <inheritdoc/>
         public void PrepareRead()
         {
-            enumerator = dataset.GetEnumerator();
+            _enumerator = _dataset.GetEnumerator();
         }
 
         /// <inheritdoc/>

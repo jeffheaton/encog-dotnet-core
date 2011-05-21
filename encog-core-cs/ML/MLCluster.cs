@@ -33,14 +33,14 @@ namespace Encog.ML
     public interface MLCluster
     {
         /// <value>The data in this cluster.</value>
-        IList<MLData> Data { get; }
+        IList<IMLData> Data { get; }
 
         /// <summary>
         /// Add data to this cluster.
         /// </summary>
         ///
         /// <param name="pair">The data to add.</param>
-        void Add(MLData pair);
+        void Add(IMLData pair);
 
         /// <summary>
         /// Create a machine learning dataset from the data.
@@ -55,7 +55,7 @@ namespace Encog.ML
         ///
         /// <param name="pos">The index of the data item to get.</param>
         /// <returns>The data item.</returns>
-        MLData Get(int pos);
+        IMLData Get(int pos);
 
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Encog.ML
         /// </summary>
         ///
         /// <param name="data">The item to remove.</param>
-        void Remove(MLData data);
+        void Remove(IMLData data);
 
 
         /// <returns>The number of items.</returns>

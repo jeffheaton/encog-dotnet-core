@@ -25,18 +25,11 @@ namespace Encog.MathUtil
     /// <summary>
     /// Math constants needed by Encog.
     /// </summary>
-    public sealed class MathConst
+    public static class MathConst
     {
         /// <summary>
         /// Euler's number.
         /// </summary>
-        public const double EULERS_NUMBER = 2.718281828;
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        private MathConst()
-        {
-        }
+        public const double EulersNumber = 2.718281828;
     }
 }

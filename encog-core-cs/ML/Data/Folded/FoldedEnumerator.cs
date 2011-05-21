@@ -64,17 +64,17 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// The owner.
         /// </summary>
-        private readonly FoldedDataSet owner;
+        private readonly FoldedDataSet _owner;
 
         /// <summary>
         /// The current index.
         /// </summary>
-        private int currentIndex;
+        private int _currentIndex;
 
         /// <summary>
         /// The current data item.
         /// </summary>
-        private MLDataPair currentPair;
+        private MLDataPair _currentPair;
 
         /// <summary>
         /// Construct an enumerator.
@@ -82,8 +82,8 @@ namespace Encog.ML.Data.Folded
         /// <param name="owner">The owner.</param>
         public FoldedEnumerator(FoldedDataSet owner)
         {
-            this.owner = owner;
-            currentIndex = -1;
+            _owner = owner;
+            _currentIndex = -1;
         }
 
         #region IEnumerator<MLDataPair> Members
@@ -95,17 +95,18 @@ namespace Encog.ML.Data.Folded
         {
             get
             {
-                if (currentIndex < 0)
+                if (_currentIndex < 0)
                 {
                     throw new InvalidOperationException("Must call MoveNext before reading Current.");
                 }
-                return currentPair;
+                return _currentPair;
             }
         }
 
         /// <summary>
         /// Not supported.
         /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -120,16 +121,13 @@ namespace Encog.ML.Data.Folded
             if (HasNext())
             {
                 MLDataPair pair = BasicMLDataPair.CreatePair(
-                    owner.InputSize, owner.IdealSize);
-                owner.GetRecord(currentIndex++, pair);
-                currentPair = pair;
+                    _owner.InputSize, _owner.IdealSize);
+                _owner.GetRecord(_currentIndex++, pair);
+                _currentPair = pair;
                 return true;
             }
-            else
-            {
-                currentPair = null;
-                return false;
-            }
+            _currentPair = null;
+            return false;
         }
 
         /// <summary>
@@ -147,11 +145,11 @@ namespace Encog.ML.Data.Folded
         {
             get
             {
-                if (currentIndex < 0)
+                if (_currentIndex < 0)
                 {
                     throw new InvalidOperationException("Must call MoveNext before reading Current.");
                 }
-                return currentPair;
+                return _currentPair;
             }
         }
 
@@ -163,7 +161,7 @@ namespace Encog.ML.Data.Folded
         /// <returns>True, if there is a next record.</returns>
         public bool HasNext()
         {
-            return currentIndex < owner.CurrentFoldSize;
+            return _currentIndex < _owner.CurrentFoldSize;
         }
     }
 }

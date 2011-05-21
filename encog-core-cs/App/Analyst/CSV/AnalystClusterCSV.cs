@@ -180,7 +180,7 @@ namespace Encog.App.Analyst.CSV
 
             foreach (MLCluster cl  in  cluster.Clusters)
             {
-                foreach (MLData item  in  cl.Data)
+                foreach (IMLData item  in  cl.Data)
                 {
                     var row = (ClusterRow) item;
                     int clsIndex = row.Input.Count - 1;

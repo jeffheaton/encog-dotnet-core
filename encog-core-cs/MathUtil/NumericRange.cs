@@ -22,6 +22,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Encog.Util;
 
@@ -36,32 +37,32 @@ namespace Encog.MathUtil
         /// <summary>
         /// The high number in the range.
         /// </summary>
-        private readonly double high;
+        private readonly double _high;
 
         /// <summary>
         /// The low number in the range.
         /// </summary>
-        private readonly double low;
+        private readonly double _low;
 
         /// <summary>
         /// The mean value.
         /// </summary>
-        private readonly double mean;
+        private readonly double _mean;
 
         /// <summary>
         /// The root mean square of the range.
         /// </summary>
-        private readonly double rms;
+        private readonly double _rms;
 
         /// <summary>
         /// The number of values in this range.
         /// </summary>
-        private readonly int samples;
+        private readonly int _samples;
 
         /// <summary>
         /// The standard deviation of the range.
         /// </summary>
-        private readonly double standardDeviation;
+        private readonly double _standardDeviation;
 
         /// <summary>
         /// Create a numeric range from a list of values. 
@@ -84,20 +85,16 @@ namespace Encog.MathUtil
                 rmsTotal += d*d;
             }
 
-            samples = values.Count;
-            high = assignedHigh;
-            low = assignedLow;
-            mean = total/samples;
-            rms = Math.Sqrt(rmsTotal/samples);
+            _samples = values.Count;
+            _high = assignedHigh;
+            _low = assignedLow;
+            _mean = total/_samples;
+            _rms = Math.Sqrt(rmsTotal/_samples);
 
             // now get the standard deviation
-            double devTotal = 0;
+            double devTotal = values.Sum(d => Math.Pow(d - _mean, 2));
 
-            foreach (double d in values)
-            {
-                devTotal += Math.Pow(d - mean, 2);
-            }
-            standardDeviation = Math.Sqrt(devTotal/samples);
+            _standardDeviation = Math.Sqrt(devTotal/_samples);
         }
 
         /// <summary>
@@ -105,7 +102,7 @@ namespace Encog.MathUtil
         /// </summary>
         public double High
         {
-            get { return high; }
+            get { return _high; }
         }
 
         /// <summary>
@@ -113,15 +110,15 @@ namespace Encog.MathUtil
         /// </summary>
         public double Low
         {
-            get { return low; }
+            get { return _low; }
         }
 
         /// <summary>
         /// The mean in the range.
         /// </summary>
-        public double getMean
+        public double Mean
         {
-            get { return mean; }
+            get { return _mean; }
         }
 
         /// <summary>
@@ -129,7 +126,7 @@ namespace Encog.MathUtil
         /// </summary>
         public double RMS
         {
-            get { return rms; }
+            get { return _rms; }
         }
 
         /// <summary>
@@ -137,7 +134,7 @@ namespace Encog.MathUtil
         /// </summary>
         public double StandardDeviation
         {
-            get { return standardDeviation; }
+            get { return _standardDeviation; }
         }
 
         /// <summary>
@@ -145,7 +142,7 @@ namespace Encog.MathUtil
         /// </summary>
         public int Samples
         {
-            get { return samples; }
+            get { return _samples; }
         }
 
         /// <summary>
@@ -156,17 +153,17 @@ namespace Encog.MathUtil
         {
             var result = new StringBuilder();
             result.Append("Range: ");
-            result.Append(Format.FormatDouble(low, 5));
+            result.Append(Format.FormatDouble(_low, 5));
             result.Append(" to ");
-            result.Append(Format.FormatDouble(high, 5));
+            result.Append(Format.FormatDouble(_high, 5));
             result.Append(",samples: ");
-            result.Append(Format.FormatInteger(samples));
+            result.Append(Format.FormatInteger(_samples));
             result.Append(",mean: ");
-            result.Append(Format.FormatDouble(mean, 5));
+            result.Append(Format.FormatDouble(_mean, 5));
             result.Append(",rms: ");
-            result.Append(Format.FormatDouble(rms, 5));
+            result.Append(Format.FormatDouble(_rms, 5));
             result.Append(",s.deviation: ");
-            result.Append(Format.FormatDouble(standardDeviation, 5));
+            result.Append(Format.FormatDouble(_standardDeviation, 5));
 
             return result.ToString();
         }

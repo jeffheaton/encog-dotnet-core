@@ -416,7 +416,7 @@ namespace Encog.Util.Arrayutil
         {
             if (action == NormalizationAction.Equilateral)
             {
-                if (classes.Count < Equilateral.MIN_EQ)
+                if (classes.Count < Equilateral.MinEq)
                 {
                     throw new QuantError("There must be at least three classes "
                                          + "to make use of equilateral normalization.");

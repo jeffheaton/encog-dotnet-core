@@ -124,7 +124,7 @@ namespace Encog.ML.Kmeans
             {
                 for (int k = 0; k < element.Size(); k++)
                 {
-                    MLData data = element.Get(k);
+                    IMLData data = element.Get(k);
                     double distance = CalculateEuclideanDistance(
                         element.Centroid, data);
                     KMeansCluster tempCluster = null;
@@ -186,7 +186,7 @@ namespace Encog.ML.Kmeans
         /// <param name="data">The data to use.</param>
         /// <returns>The distance.</returns>
         public static double CalculateEuclideanDistance(Centroid c,
-                                                        MLData data)
+                                                        IMLData data)
         {
             double[] d = data.Data;
             double sum = 0;

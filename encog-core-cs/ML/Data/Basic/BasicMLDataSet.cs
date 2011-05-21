@@ -49,12 +49,12 @@ namespace Encog.ML.Data.Basic
             /// <summary>
             /// The current index.
             /// </summary>
-            private int current;
+            private int _current;
 
             /// <summary>
             /// The owner.
             /// </summary>
-            private readonly BasicMLDataSet owner;
+            private readonly BasicMLDataSet _owner;
 
             /// <summary>
             /// Construct an enumerator.
@@ -62,8 +62,8 @@ namespace Encog.ML.Data.Basic
             /// <param name="owner">The owner of the enumerator.</param>
             public BasicNeuralEnumerator(BasicMLDataSet owner)
             {
-                current = -1;
-                this.owner = owner;
+                _current = -1;
+                _owner = owner;
             }
 
             /// <summary>
@@ -71,7 +71,7 @@ namespace Encog.ML.Data.Basic
             /// </summary>
             public MLDataPair Current
             {
-                get { return owner.data[current]; }
+                get { return _owner._data[_current]; }
             }
 
             /// <summary>
@@ -89,11 +89,11 @@ namespace Encog.ML.Data.Basic
             {
                 get
                 {
-                    if (current < 0)
+                    if (_current < 0)
                     {
                         throw new InvalidOperationException("Must call MoveNext before reading Current.");
                     }
-                    return owner.data[current];
+                    return _owner._data[_current];
                 }
             }
 
@@ -103,8 +103,8 @@ namespace Encog.ML.Data.Basic
             /// <returns>True if there is a next item.</returns>
             public bool MoveNext()
             {
-                current++;
-                if (current >= owner.data.Count)
+                _current++;
+                if (_current >= _owner._data.Count)
                     return false;
                 return true;
             }
@@ -114,30 +114,24 @@ namespace Encog.ML.Data.Basic
             /// </summary>
             public void Reset()
             {
-                current = -1;
+                _current = -1;
             }
         }
 
         /// <summary>
         /// Access to the list of data items.
         /// </summary>
-        public virtual IList<MLDataPair> Data
+        public IList<MLDataPair> Data
         {
-            get { return data; }
-            set { data = value; }
+            get { return _data; }
+            set { _data = value; }
         }
 
 
         /// <summary>
         /// The data held by this object.
         /// </summary>
-        private IList<MLDataPair> data = new List<MLDataPair>();
-
-        /// <summary>
-        /// The enumerators created for this list.
-        /// </summary>
-        private IList<BasicNeuralEnumerator> enumerators =
-            new List<BasicNeuralEnumerator>();
+        private IList<MLDataPair> _data = new List<MLDataPair>();
 
         /// <summary>
         /// Construct a data set from an already created list. Mostly used to
@@ -146,7 +140,7 @@ namespace Encog.ML.Data.Basic
         /// <param name="data">The data to use.</param>
         public BasicMLDataSet(IList<MLDataPair> data)
         {
-            this.data = data;
+            _data = data;
         }
 
         /// <summary>
@@ -156,7 +150,7 @@ namespace Encog.ML.Data.Basic
         /// <param name="set">The dataset to copy.</param>
         public BasicMLDataSet(MLDataSet set)
         {
-            data = new List<MLDataPair>();
+            _data = new List<MLDataPair>();
             int inputCount = set.InputSize;
             int idealCount = set.IdealSize;
 
@@ -193,7 +187,7 @@ namespace Encog.ML.Data.Basic
             for (int i = 0; i < input.Length; i++)
             {
                 var tempInput = new double[input[0].Length];
-                double[] tempIdeal = null;
+                double[] tempIdeal;
 
                 for (int j = 0; j < tempInput.Length; j++)
                 {
@@ -232,9 +226,9 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                if (data == null || data.Count == 0)
+                if (_data == null || _data.Count == 0)
                     return 0;
-                MLDataPair pair = data[0];
+                MLDataPair pair = _data[0];
                 return pair.Ideal.Count;
             }
         }
@@ -246,9 +240,9 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                if (data == null || data.Count == 0)
+                if (_data == null || _data.Count == 0)
                     return 0;
-                MLDataPair pair = data[0];
+                MLDataPair pair = _data[0];
                 return pair.Input.Count;
             }
         }
@@ -257,10 +251,10 @@ namespace Encog.ML.Data.Basic
         /// Add the specified data to the set.  Add unsupervised data.
         /// </summary>
         /// <param name="data1">The data to add to the set.</param>
-        public virtual void Add(MLData data1)
+        public virtual void Add(IMLData data1)
         {
             MLDataPair pair = new BasicMLDataPair(data1, null);
-            data.Add(pair);
+            _data.Add(pair);
         }
 
         /// <summary>
@@ -268,10 +262,10 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         /// <param name="inputData">The input data.</param>
         /// <param name="idealData">The ideal data.</param>
-        public virtual void Add(MLData inputData, MLData idealData)
+        public virtual void Add(IMLData inputData, IMLData idealData)
         {
             MLDataPair pair = new BasicMLDataPair(inputData, idealData);
-            data.Add(pair);
+            _data.Add(pair);
         }
 
         /// <summary>
@@ -280,13 +274,13 @@ namespace Encog.ML.Data.Basic
         /// <param name="inputData">The pair to add to the set.</param>
         public virtual void Add(MLDataPair inputData)
         {
-            data.Add(inputData);
+            _data.Add(inputData);
         }
 
         /// <summary>
         /// Close the neural data set.
         /// </summary>
-        public virtual void Close()
+        public void Close()
         {
             // not needed
         }
@@ -319,9 +313,9 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                if (data.Count == 0)
+                if (_data.Count == 0)
                     return false;
-                return (data[0].Supervised);
+                return (_data[0].Supervised);
             }
         }
 
@@ -344,7 +338,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public long Count
         {
-            get { return data.Count; }
+            get { return _data.Count; }
         }
 
         /// <summary>
@@ -354,7 +348,7 @@ namespace Encog.ML.Data.Basic
         /// <param name="pair">The pair to read into.</param>
         public void GetRecord(long index, MLDataPair pair)
         {
-            MLDataPair source = data[(int) index];
+            MLDataPair source = _data[(int) index];
             pair.InputArray = source.Input.Data;
             if (pair.IdealArray != null)
             {
@@ -379,14 +373,11 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                if (data.Count == 0)
+                if (_data.Count == 0)
                 {
                     return false;
                 }
-                else
-                {
-                    return data[0].Supervised;
-                }
+                return _data[0].Supervised;
             }
         }
     }

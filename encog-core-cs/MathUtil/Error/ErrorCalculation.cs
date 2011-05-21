@@ -33,17 +33,17 @@ namespace Encog.MathUtil.Error
         /// <summary>
         /// The current error calculation mode.
         /// </summary>
-        private static ErrorCalculationMode mode = ErrorCalculationMode.MSE;
+        private static ErrorCalculationMode _mode = ErrorCalculationMode.MSE;
 
         /// <summary>
         /// The overall error.
         /// </summary>
-        private double globalError;
+        private double _globalError;
 
         /// <summary>
         /// The size of a set.
         /// </summary>
-        private int setSize;
+        private int _setSize;
 
         /// <summary>
         /// The error calculation mode, this is static and therefore global to
@@ -57,8 +57,8 @@ namespace Encog.MathUtil.Error
         /// </summary>
         public static ErrorCalculationMode Mode
         {
-            get { return mode; }
-            set { mode = value; }
+            get { return _mode; }
+            set { _mode = value; }
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Encog.MathUtil.Error
         /// <returns>The current error for the neural network.</returns>
         public double Calculate()
         {
-            if (setSize == 0)
+            if (_setSize == 0)
             {
                 return 0;
             }
@@ -90,11 +90,11 @@ namespace Encog.MathUtil.Error
         /// <returns>The current error for the neural network.</returns>
         public double CalculateMSE()
         {
-            if (setSize == 0)
+            if (_setSize == 0)
             {
                 return 0;
             }
-            double err = globalError/setSize;
+            double err = _globalError/_setSize;
             return err;
         }
 
@@ -105,31 +105,23 @@ namespace Encog.MathUtil.Error
         /// <returns>The current error for the neural network.</returns>
         public double CalculateRMS()
         {
-            if (setSize == 0)
+            if (_setSize == 0)
             {
                 return 0;
             }
-            double err = Math.Sqrt(globalError/setSize);
+            double err = Math.Sqrt(_globalError/_setSize);
             return err;
         }
 
 
-        /// <summary>
-        /// Calculate the error with ARCTAN. 
-        /// </summary>
-        /// <returns>The current error for the neural network.</returns>
-        public double CalculateARCTAN()
-        {
-            return CalculateMSE();
-        }
 
         /// <summary>
         /// Reset the error accumulation to zero.
         /// </summary>
         public void Reset()
         {
-            globalError = 0;
-            setSize = 0;
+            _globalError = 0;
+            _setSize = 0;
         }
 
         /// <summary>
@@ -143,10 +135,10 @@ namespace Encog.MathUtil.Error
             {
                 double delta = ideal[i] - actual[i];
 
-                globalError += delta*delta;
+                _globalError += delta*delta;
             }
 
-            setSize += ideal.Length;
+            _setSize += ideal.Length;
         }
 
         /// <summary>
@@ -158,9 +150,9 @@ namespace Encog.MathUtil.Error
         {
             double delta = ideal - actual;
 
-            globalError += delta*delta;
+            _globalError += delta*delta;
 
-            setSize++;
+            _setSize++;
         }
     }
 }

@@ -41,37 +41,37 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <summary>
         /// The external CSV file.
         /// </summary>
-        private readonly String file;
+        private readonly String _file;
 
         /// <summary>
         /// The CSV format to use.
         /// </summary>
-        private readonly CSVFormat format;
+        private readonly CSVFormat _format;
 
         /// <summary>
         /// True, if headers are present in the CSV file.
         /// </summary>
-        private readonly bool headers;
+        private readonly bool _headers;
 
         /// <summary>
         /// The size of the ideal data.
         /// </summary>
-        private int idealCount;
+        private int _idealCount;
 
         /// <summary>
         /// The size of the input data.
         /// </summary>
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// A file used to output the CSV file.
         /// </summary>
-        private TextWriter output;
+        private TextWriter _output;
 
         /// <summary>
         /// The utility to assist in reading the CSV file.
         /// </summary>
-        private ReadCSV readCSV;
+        private ReadCSV _readCSV;
 
         /// <summary>
         /// Create a CODEC to load data from CSV to binary. 
@@ -87,16 +87,16 @@ namespace Encog.ML.Data.Buffer.CODEC
             bool headers,
             int inputCount, int idealCount)
         {
-            if (this.inputCount != 0)
+            if (_inputCount != 0)
             {
                 throw new BufferedDataError(
                     "To export CSV, you must use the CSVDataCODEC constructor that does not specify input or ideal sizes.");
             }
-            this.file = file;
-            this.format = format;
-            this.inputCount = inputCount;
-            this.idealCount = idealCount;
-            this.headers = headers;
+            _file = file;
+            _format = format;
+            _inputCount = inputCount;
+            _idealCount = idealCount;
+            _headers = headers;
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <param name="format">The format for that CSV file.</param>
         public CSVDataCODEC(String file, CSVFormat format)
         {
-            this.file = file;
-            this.format = format;
+            _file = file;
+            _format = format;
         }
 
         #region IDataSetCODEC Members
@@ -120,24 +120,21 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <returns>True, if there is more data to be read.</returns>
         public bool Read(double[] input, double[] ideal)
         {
-            if (readCSV.Next())
+            if (_readCSV.Next())
             {
                 int index = 0;
                 for (int i = 0; i < input.Length; i++)
                 {
-                    input[i] = readCSV.GetDouble(index++);
+                    input[i] = _readCSV.GetDouble(index++);
                 }
 
                 for (int i = 0; i < ideal.Length; i++)
                 {
-                    ideal[i] = readCSV.GetDouble(index++);
+                    ideal[i] = _readCSV.GetDouble(index++);
                 }
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
 
@@ -152,8 +149,8 @@ namespace Encog.ML.Data.Buffer.CODEC
             EngineArray.ArrayCopy(input, record);
             EngineArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
             var result = new StringBuilder();
-            NumberList.ToList(format, result, record);
-            output.WriteLine(result.ToString());
+            NumberList.ToList(_format, result, record);
+            _output.WriteLine(result.ToString());
         }
 
         /// <summary>
@@ -169,9 +166,9 @@ namespace Encog.ML.Data.Buffer.CODEC
         {
             try
             {
-                inputCount = inputSize;
-                idealCount = idealSize;
-                output = new StreamWriter(new FileStream(file, FileMode.Create));
+                _inputCount = inputSize;
+                _idealCount = idealSize;
+                _output = new StreamWriter(new FileStream(_file, FileMode.Create));
             }
             catch (IOException ex)
             {
@@ -184,40 +181,40 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         public void PrepareRead()
         {
-            if (inputCount == 0)
+            if (_inputCount == 0)
             {
                 throw new BufferedDataError(
                     "To import CSV, you must use the CSVDataCODEC constructor that specifies input and ideal sizes.");
             }
-            readCSV = new ReadCSV(file, headers,
-                                  format);
+            _readCSV = new ReadCSV(_file, _headers,
+                                  _format);
         }
 
         /// <inheritDoc/>
         public int InputSize
         {
-            get { return inputCount; }
+            get { return _inputCount; }
         }
 
         /// <inheritDoc/>
         public int IdealSize
         {
-            get { return idealCount; }
+            get { return _idealCount; }
         }
 
         /// <inheritDoc/>
         public void Close()
         {
-            if (readCSV != null)
+            if (_readCSV != null)
             {
-                readCSV.Close();
-                readCSV = null;
+                _readCSV.Close();
+                _readCSV = null;
             }
 
-            if (output != null)
+            if (_output != null)
             {
-                output.Close();
-                output = null;
+                _output.Close();
+                _output = null;
             }
         }
 

@@ -34,7 +34,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The CODEC to use.
         /// </summary>
-        private readonly IDataSetCODEC codec;
+        private readonly IDataSetCODEC _codec;
 
         /// <summary>
         /// Construct a loader with the specified CODEC. 
@@ -42,7 +42,7 @@ namespace Encog.ML.Data.Buffer
         /// <param name="codec">The codec to use.</param>
         public MemoryDataLoader(IDataSetCODEC codec)
         {
-            this.codec = codec;
+            _codec = codec;
             Status = new NullStatusReportable();
         }
 
@@ -61,7 +61,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public IDataSetCODEC CODEC
         {
-            get { return codec; }
+            get { return _codec; }
         }
 
         /// <summary>
@@ -76,21 +76,21 @@ namespace Encog.ML.Data.Buffer
                 Result = new BasicMLDataSet();
             }
 
-            var input = new double[codec.InputSize];
-            var ideal = new double[codec.IdealSize];
+            var input = new double[_codec.InputSize];
+            var ideal = new double[_codec.IdealSize];
 
-            codec.PrepareRead();
+            _codec.PrepareRead();
 
             int currentRecord = 0;
             int lastUpdate = 0;
 
-            while (codec.Read(input, ideal))
+            while (_codec.Read(input, ideal))
             {
-                MLData a = null, b = null;
+                IMLData b = null;
 
-                a = new BasicMLData(input);
+                IMLData a = new BasicMLData(input);
 
-                if (codec.IdealSize > 0)
+                if (_codec.IdealSize > 0)
                     b = new BasicMLData(ideal);
 
                 MLDataPair pair = new BasicMLDataPair(a, b);
@@ -105,7 +105,7 @@ namespace Encog.ML.Data.Buffer
                 }
             }
 
-            codec.Close();
+            _codec.Close();
             Status.Report(0, 0, "Done importing to memory");
             return Result;
         }

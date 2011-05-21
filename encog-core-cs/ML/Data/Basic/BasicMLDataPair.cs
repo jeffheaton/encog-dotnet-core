@@ -38,12 +38,12 @@ namespace Encog.ML.Data.Basic
         /// The the expected output from the neural network, or null
         /// for unsupervised training.
         /// </summary>
-        private readonly MLData ideal;
+        private readonly IMLData _ideal;
 
         /// <summary>
         /// The training input to the neural network.
         /// </summary>
-        private readonly MLData input;
+        private readonly IMLData _input;
 
         /// <summary>
         /// Construct a BasicMLDataPair class with the specified input
@@ -51,36 +51,36 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         /// <param name="input">The input to the neural network.</param>
         /// <param name="ideal">The expected results from the neural network.</param>
-        public BasicMLDataPair(MLData input, MLData ideal)
+        public BasicMLDataPair(IMLData input, IMLData ideal)
         {
-            this.input = input;
-            this.ideal = ideal;
+            _input = input;
+            _ideal = ideal;
         }
 
         /// <summary>
         /// Construct a data pair that only includes input. (unsupervised)
         /// </summary>
         /// <param name="input">The input data.</param>
-        public BasicMLDataPair(MLData input)
+        public BasicMLDataPair(IMLData input)
         {
-            this.input = input;
-            ideal = null;
+            _input = input;
+            _ideal = null;
         }
 
         /// <summary>
         /// The input data.
         /// </summary>
-        public virtual MLData Input
+        public virtual IMLData Input
         {
-            get { return input; }
+            get { return _input; }
         }
 
         /// <summary>
         /// The ideal data.
         /// </summary>
-        public virtual MLData Ideal
+        public virtual IMLData Ideal
         {
-            get { return ideal; }
+            get { return _ideal; }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>True if this is a supervised pair.</returns>
         public bool IsSupervised
         {
-            get { return ideal != null; }
+            get { return _ideal != null; }
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace Encog.ML.Data.Basic
             Object result;
 
             if (Ideal == null)
-                result = new BasicMLDataPair((MLData) input.Clone());
+                result = new BasicMLDataPair((IMLData) _input.Clone());
             else
-                result = new BasicMLDataPair((MLData) input.Clone(),
-                                             (MLData) ideal.Clone());
+                result = new BasicMLDataPair((IMLData) _input.Clone(),
+                                             (IMLData) _ideal.Clone());
 
             return result;
         }
@@ -155,14 +155,10 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public double[] IdealArray
         {
-            get
-            {
-                if (ideal == null)
-                    return null;
-                else
-                    return ideal.Data;
+            get {
+                return _ideal == null ? null : _ideal.Data;
             }
-            set { ideal.Data = value; }
+            set { _ideal.Data = value; }
         }
 
         /// <summary>
@@ -170,8 +166,8 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public double[] InputArray
         {
-            get { return input.Data; }
-            set { input.Data = value; }
+            get { return _input.Data; }
+            set { _input.Data = value; }
         }
 
         /// <summary>
@@ -179,7 +175,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public bool Supervised
         {
-            get { return ideal != null; }
+            get { return _ideal != null; }
         }
     }
 }

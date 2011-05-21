@@ -59,14 +59,14 @@ namespace Encog.Util.Banchmark
             var result = new BasicMLDataSet();
             for (int i = 0; i < count; i++)
             {
-                MLData inputData = new BasicMLData(inputCount);
+                IMLData inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData.Data[j] = rand.Range(min, max);
                 }
 
-                MLData idealData = new BasicMLData(idealCount);
+                IMLData idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {
@@ -101,14 +101,14 @@ namespace Encog.Util.Banchmark
 
             for (int i = 0; i < count; i++)
             {
-                MLData inputData = new BasicMLData(inputCount);
+                IMLData inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData[j] = rand.Range(min, max);
                 }
 
-                MLData idealData = new BasicMLData(idealCount);
+                IMLData idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {

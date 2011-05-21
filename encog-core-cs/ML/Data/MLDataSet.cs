@@ -65,7 +65,7 @@ namespace Encog.ML.Data
         /// support the add methods. 
         /// </summary>
         /// <param name="data1">The data to add.</param>
-        void Add(MLData data1);
+        void Add(IMLData data1);
 
         /// <summary>
         /// Add a set of input and ideal data to the dataset. This is used with
@@ -74,7 +74,7 @@ namespace Encog.ML.Data
         /// </summary>
         /// <param name="inputData">Input data.</param>
         /// <param name="idealData">Ideal data.</param>
-        void Add(MLData inputData, MLData idealData);
+        void Add(IMLData inputData, IMLData idealData);
 
         /// <summary>
         /// Add a NeuralData object to the dataset. This is used with unsupervised

@@ -102,7 +102,7 @@ namespace Encog.Examples.Image
         private IDictionary<String, String> args = new Dictionary<String, String>();
         private IDictionary<String, int> identity2neuron = new Dictionary<String, int>();
         private IDictionary<int, String> neuron2identity = new Dictionary<int, String>();
-        private ImageMlDataSet training;
+        private ImageMLDataSet training;
         private String line;
         private int outputCount;
         private int downsampleWidth;
@@ -211,7 +211,7 @@ namespace Encog.Examples.Image
                 this.downsample = new SimpleIntensityDownsample();
             }
 
-            this.training = new ImageMlDataSet(this.downsample, false, 1, -1);
+            this.training = new ImageMLDataSet(this.downsample, false, 1, -1);
             this.app.WriteLine("Training set created");
         }
 
@@ -234,7 +234,7 @@ namespace Encog.Examples.Image
 
             foreach (ImagePair pair in this.imageList)
             {
-                MLData ideal = new BasicMLData(this.outputCount);
+                IMLData ideal = new BasicMLData(this.outputCount);
                 int idx = pair.Identity;
                 for (int i = 0; i < this.outputCount; i++)
                 {
@@ -251,7 +251,7 @@ namespace Encog.Examples.Image
                 try
                 {
                     Bitmap img = new Bitmap(pair.File);
-                    ImageMlData data = new ImageMlData(img);
+                    ImageMLData data = new ImageMLData(img);
                     this.training.Add(data, ideal);
                 }
                 catch (Exception e)
@@ -319,7 +319,7 @@ namespace Encog.Examples.Image
             try
             {
                 Bitmap img = new Bitmap(filename);
-                ImageMlData input = new ImageMlData(img);
+                ImageMLData input = new ImageMLData(img);
                 input.Downsample(this.downsample, false, this.downsampleHeight,
                         this.downsampleWidth, 1, -1);
                 int winner = this.network.Winner(input);

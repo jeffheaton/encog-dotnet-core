@@ -45,7 +45,7 @@ namespace SOMColors
 
         private SOMNetwork network;
         private INeighborhoodFunction gaussian;
-        private IList<MLData> samples;
+        private IList<IMLData> samples;
         private int iteration;
         private BasicTrainSOM train;
 
@@ -59,10 +59,10 @@ namespace SOMColors
 
             train.ForceWinner = false;
 
-            samples = new List<MLData>();
+            samples = new List<IMLData>();
             for (int i = 0; i < 15; i++)
             {
-                MLData data = new BasicMLData(3);
+                IMLData data = new BasicMLData(3);
                 data.Data[0] = RangeRandomizer.Randomize(-1, 1);
                 data.Data[1] = RangeRandomizer.Randomize(-1, 1);
                 data.Data[2] = RangeRandomizer.Randomize(-1, 1);
@@ -87,7 +87,7 @@ namespace SOMColors
 
 
             int idx = (int)(ThreadSafeRandom.NextDouble()*samples.Count);
-			MLData c = samples[idx];
+			IMLData c = samples[idx];
 			
 			this.train.TrainPattern(c);
 			this.train.AutoDecay();

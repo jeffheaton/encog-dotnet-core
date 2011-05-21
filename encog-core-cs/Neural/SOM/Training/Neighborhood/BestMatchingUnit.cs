@@ -76,7 +76,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         ///
         /// <param name="input">The input vector.</param>
         /// <returns>The output neuron number that is the BMU.</returns>
-        public int CalculateBMU(MLData input)
+        public int CalculateBMU(IMLData input)
         {
             int result = 0;
 
@@ -116,7 +116,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="outputNeuron">The neuron we are calculating the distance for.</param>
         /// <returns>The Euclidean distance.</returns>
         public double CalculateEuclideanDistance(Matrix matrix,
-                                                 MLData input, int outputNeuron)
+                                                 IMLData input, int outputNeuron)
         {
             double result = 0;
 

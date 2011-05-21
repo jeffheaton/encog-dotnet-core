@@ -177,7 +177,7 @@ namespace Encog.App.Analyst.CSV
                                        + " inputs.");
             }
 
-            MLData input = new BasicMLData(method.InputCount);
+            IMLData input = new BasicMLData(method.InputCount);
 
             StreamWriter tw = AnalystPrepareOutputFile(outputFile);
 
@@ -201,7 +201,7 @@ namespace Encog.App.Analyst.CSV
                 dataIndex += _idealCount;
 
                 // compute the result
-                MLData output = method.Compute(input);
+                IMLData output = method.Compute(input);
 
                 // display the computed result
                 for (int i = 0; i < _outputCount; i++)

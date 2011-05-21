@@ -165,7 +165,7 @@ namespace Encog.Neural.Thermal
         ///
         /// <param name="input">The input pattern.</param>
         /// <returns>The new current state.</returns>
-        public override sealed MLData Compute(MLData input)
+        public override sealed IMLData Compute(IMLData input)
         {
             var result = new BiPolarMLData(input.Count);
             EngineArray.ArrayCopy(input.Data, CurrentState.Data);

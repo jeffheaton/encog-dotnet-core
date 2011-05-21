@@ -147,7 +147,7 @@ namespace Encog.Neural.CPN.Training
 
             foreach (MLDataPair pair  in  training)
             {
-                MLData xout = network.ComputeInstar(pair.Input);
+                IMLData xout = network.ComputeInstar(pair.Input);
 
                 // determine winner
                 int winner = EngineArray.IndexOfLargest(xout.Data);

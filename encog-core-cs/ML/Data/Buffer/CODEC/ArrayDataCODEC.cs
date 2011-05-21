@@ -32,27 +32,27 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <summary>
         /// The ideal array.
         /// </summary>
-        private double[][] ideal;
+        private double[][] _ideal;
 
         /// <summary>
         /// The number of ideal elements.
         /// </summary>
-        private int idealSize;
+        private int _idealSize;
 
         /// <summary>
         /// The current index.
         /// </summary>
-        private int index;
+        private int _index;
 
         /// <summary>
         /// The input array.
         /// </summary>
-        private double[][] input;
+        private double[][] _input;
 
         /// <summary>
         /// The number of input elements.
         /// </summary>
-        private int inputSize;
+        private int _inputSize;
 
         /// <summary>
         /// Construct an array CODEC. 
@@ -61,11 +61,11 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <param name="ideal">The ideal array.</param>
         public ArrayDataCODEC(double[][] input, double[][] ideal)
         {
-            this.input = input;
-            this.ideal = ideal;
-            inputSize = input[0].Length;
-            idealSize = ideal[0].Length;
-            index = 0;
+            _input = input;
+            _ideal = ideal;
+            _inputSize = input[0].Length;
+            _idealSize = ideal[0].Length;
+            _index = 0;
         }
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public double[][] Input
         {
-            get { return input; }
+            get { return _input; }
         }
 
         /// <inheritdoc/>
         public double[][] Ideal
         {
-            get { return ideal; }
+            get { return _ideal; }
         }
 
         #region IDataSetCODEC Members
@@ -92,48 +92,45 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public int InputSize
         {
-            get { return inputSize; }
+            get { return _inputSize; }
         }
 
         /// <inheritdoc/>
         public int IdealSize
         {
-            get { return idealSize; }
+            get { return _idealSize; }
         }
 
         /// <inheritdoc/>
         public bool Read(double[] input, double[] ideal)
         {
-            if (index >= this.input.Length)
+            if (_index >= _input.Length)
             {
                 return false;
             }
-            else
-            {
-                EngineArray.ArrayCopy(this.input[index], input);
-                EngineArray.ArrayCopy(this.ideal[index], ideal);
-                index++;
-                return true;
-            }
+            EngineArray.ArrayCopy(_input[_index], input);
+            EngineArray.ArrayCopy(_ideal[_index], ideal);
+            _index++;
+            return true;
         }
 
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal)
         {
-            EngineArray.ArrayCopy(input, this.input[index]);
-            EngineArray.ArrayCopy(ideal, this.ideal[index]);
-            index++;
+            EngineArray.ArrayCopy(input, _input[_index]);
+            EngineArray.ArrayCopy(ideal, _ideal[_index]);
+            _index++;
         }
 
         /// <inheritdoc/>
         public void PrepareWrite(int recordCount,
                                  int inputSize, int idealSize)
         {
-            input = EngineArray.AllocateDouble2D(recordCount, inputSize);
-            ideal = EngineArray.AllocateDouble2D(recordCount, idealSize);
-            this.inputSize = inputSize;
-            this.idealSize = idealSize;
-            index = 0;
+            _input = EngineArray.AllocateDouble2D(recordCount, inputSize);
+            _ideal = EngineArray.AllocateDouble2D(recordCount, idealSize);
+            _inputSize = inputSize;
+            _idealSize = idealSize;
+            _index = 0;
         }
 
         /// <inheritdoc/>

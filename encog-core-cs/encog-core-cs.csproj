@@ -235,8 +235,8 @@
     <Compile Include="ML\Data\Buffer\MemoryDataLoader.cs" />
     <Compile Include="ML\Data\Folded\FoldedDataSet.cs" />
     <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
-    <Compile Include="ML\Data\Image\ImageMlData.cs" />
-    <Compile Include="ML\Data\Image\ImageMlDataSet.cs" />
+    <Compile Include="ML\Data\Image\ImageMLData.cs" />
+    <Compile Include="ML\Data\Image\ImageMLDataSet.cs" />
     <Compile Include="ML\Data\MLData.cs" />
     <Compile Include="ML\Data\MLDataError.cs" />
     <Compile Include="ML\Data\MLDataPair.cs" />

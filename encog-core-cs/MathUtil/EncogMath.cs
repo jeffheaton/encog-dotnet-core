@@ -61,7 +61,7 @@ namespace Encog.MathUtil
         /// </summary>
         /// <param name="deg">Degrees</param>
         /// <returns>Radians</returns>
-        public static double Deg2rad(double deg)
+        public static double Deg2Rad(double deg)
         {
             return deg*(Math.PI/180.0);
         }
@@ -72,7 +72,7 @@ namespace Encog.MathUtil
         /// </summary>
         /// <param name="rad">Radians.</param>
         /// <returns>Degrees.</returns>
-        public static double Rad2deg(double rad)
+        public static double Rad2Deg(double rad)
         {
             return rad*(180.0/Math.PI);
         }

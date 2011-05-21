@@ -68,8 +68,8 @@ namespace Encog.ML.SVM.Training
 
                 foreach (MLDataPair pair  in  training)
                 {
-                    MLData input = pair.Input;
-                    MLData output = pair.Ideal;
+                    IMLData input = pair.Input;
+                    IMLData output = pair.Ideal;
                     result.x[elementIndex] = new svm_node[input.Count];
 
                     for (int i = 0; i < input.Count; i++)

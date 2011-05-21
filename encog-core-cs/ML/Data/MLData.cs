@@ -27,7 +27,7 @@ namespace Encog.ML.Data
     /// <summary>
     /// Neural data, basically an array of values.
     /// </summary>
-    public interface MLData : ICloneable
+    public interface IMLData : ICloneable
     {
         /// <summary>
         /// Get or set the specified index.

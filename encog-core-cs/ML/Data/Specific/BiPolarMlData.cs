@@ -33,12 +33,12 @@ namespace Encog.ML.Data.Specific
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BiPolarMLData : MLData
+    public class BiPolarMLData : IMLData
     {
         /// <summary>
         /// The data held by this object.
         /// </summary>
-        private bool[] data;
+        private bool[] _data;
 
         /// <summary>
         /// Construct this object with the specified data. 
@@ -46,10 +46,10 @@ namespace Encog.ML.Data.Specific
         /// <param name="d">The data to create this object with.</param>
         public BiPolarMLData(bool[] d)
         {
-            data = new bool[d.Length];
+            _data = new bool[d.Length];
             for (int i = 0; i < d.Length; i++)
             {
-                data[i] = d[i];
+                _data[i] = d[i];
             }
         }
 
@@ -59,7 +59,7 @@ namespace Encog.ML.Data.Specific
         /// <param name="size">The size of this data object.</param>
         public BiPolarMLData(int size)
         {
-            data = new bool[size];
+            _data = new bool[size];
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Encog.ML.Data.Specific
         /// <returns>The value at the specified index.</returns>
         public double this[int x]
         {
-            get { return BiPolarUtil.Bipolar2double(data[x]); }
-            set { data[x] = BiPolarUtil.Double2bipolar(value); }
+            get { return BiPolarUtil.Bipolar2double(_data[x]); }
+            set { _data[x] = BiPolarUtil.Double2bipolar(value); }
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public double[] Data
         {
-            get { return BiPolarUtil.Bipolar2double(data); }
-            set { data = BiPolarUtil.Double2bipolar(value); }
+            get { return BiPolarUtil.Bipolar2double(_data); }
+            set { _data = BiPolarUtil.Double2bipolar(value); }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public int Count
         {
-            get { return data.Length; }
+            get { return _data.Length; }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Encog.ML.Data.Specific
         /// <returns></returns>
         public bool GetBoolean(int i)
         {
-            return data[i];
+            return _data[i];
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Encog.ML.Data.Specific
         /// <returns>A clone of this object.</returns>
         public virtual object Clone()
         {
-            return new BiPolarMLData(data);
+            return new BiPolarMLData(_data);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Encog.ML.Data.Specific
         /// <param name="b">The boolean value.</param>
         public void SetBoolean(int index, bool b)
         {
-            data[index] = b;
+            _data[index] = b;
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public void Clear()
         {
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < _data.Length; i++)
             {
-                data[i] = false;
+                _data[i] = false;
             }
         }
     }

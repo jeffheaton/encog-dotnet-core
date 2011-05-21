@@ -170,8 +170,8 @@ namespace Encog.Util.Arrayutil
 
             for (int i = 0; i < stopPoint; i++)
             {
-                MLData inputData = new BasicMLData(inputWindow);
-                MLData idealData = new BasicMLData(predictWindow);
+                IMLData inputData = new BasicMLData(inputWindow);
+                IMLData idealData = new BasicMLData(predictWindow);
 
                 int index = i;
 

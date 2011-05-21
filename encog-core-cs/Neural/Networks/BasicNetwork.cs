@@ -216,7 +216,7 @@ namespace Encog.Neural.Networks
         #region MLClassification Members
 
         /// <inheritdoc/>
-        public int Classify(MLData input)
+        public int Classify(IMLData input)
         {
             return Winner(input);
         }
@@ -303,11 +303,11 @@ namespace Encog.Neural.Networks
         ///
         /// <param name="input">The input to the neural network.</param>
         /// <returns>The output from the neural network.</returns>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
             try
             {
-                MLData result = new BasicMLData(structure.Flat.OutputCount);
+                IMLData result = new BasicMLData(structure.Flat.OutputCount);
                 structure.Flat.Compute(input.Data, result.Data);
                 return result;
             }
@@ -444,7 +444,7 @@ namespace Encog.Neural.Networks
         public void Compute(double[] input, double[] output)
         {
             var input2 = new BasicMLData(input);
-            MLData output2 = Compute(input2);
+            IMLData output2 = Compute(input2);
             EngineArray.ArrayCopy(output2.Data, output);
         }
 
@@ -785,9 +785,9 @@ namespace Encog.Neural.Networks
         ///
         /// <param name="input">The input patter to present to the neural network.</param>
         /// <returns>The winning neuron.</returns>
-        public int Winner(MLData input)
+        public int Winner(IMLData input)
         {
-            MLData output = Compute(input);
+            IMLData output = Compute(input);
             return EngineArray.MaxIndex(output.Data);
         }
     }

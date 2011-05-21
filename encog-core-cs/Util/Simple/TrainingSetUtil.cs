@@ -49,8 +49,8 @@ namespace Encog.Util.Simple
             var csv = new ReadCSV(filename, headers, format);
             while (csv.Next())
             {
-                MLData input = null;
-                MLData ideal = null;
+                IMLData input = null;
+                IMLData ideal = null;
                 int index = 0;
 
                 input = new BasicMLData(inputSize);

@@ -33,9 +33,9 @@ namespace Encog.ML.Data.Basic
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class BasicMLData : MLData
+    public class BasicMLData : IMLData
     {
-        private double[] data;
+        private double[] _data;
 
         /// <summary>
         /// Construct this object with the specified data. 
@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Basic
         {
             for (int i = 0; i < d.Length; i++)
             {
-                data[i] = d[i];
+                _data[i] = d[i];
             }
         }
 
@@ -57,7 +57,7 @@ namespace Encog.ML.Data.Basic
         /// <param name="size">The amount of data to store.</param>
         public BasicMLData(int size)
         {
-            data = new double[size];
+            _data = new double[size];
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Encog.ML.Data.Basic
         /// <returns></returns>
         public virtual double this[int x]
         {
-            get { return data[x]; }
-            set { data[x] = value; }
+            get { return _data[x]; }
+            set { _data[x] = value; }
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public virtual double[] Data
         {
-            get { return data; }
-            set { data = value; }
+            get { return _data; }
+            set { _data = value; }
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public virtual int Count
         {
-            get { return data.Length; }
+            get { return _data.Length; }
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>A clone of this object.</returns>
         public object Clone()
         {
-            var result = new BasicMLData(data);
+            var result = new BasicMLData(_data);
             return result;
         }
 
@@ -121,7 +121,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public void Clear()
         {
-            EngineArray.Fill(data, 0);
+            EngineArray.Fill(_data, 0);
         }
     }
 }

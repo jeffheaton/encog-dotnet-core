@@ -296,7 +296,7 @@ namespace Encog.ML.SVM
         #region MLClassification Members
 
         /// <inheritdoc/>
-        public int Classify(MLData input)
+        public int Classify(IMLData input)
         {
             if (model == null)
             {
@@ -345,7 +345,7 @@ namespace Encog.ML.SVM
         ///
         /// <param name="input">The input to the SVM.</param>
         /// <returns>The results from the SVM.</returns>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
             if (model == null)
             {
@@ -354,7 +354,7 @@ namespace Encog.ML.SVM
                     + "and no model exists.");
             }
 
-            MLData result = new BasicMLData(1);
+            IMLData result = new BasicMLData(1);
 
             svm_node[] formattedInput = MakeSparse(input);
 
@@ -389,7 +389,7 @@ namespace Encog.ML.SVM
         ///
         /// <param name="data">The data to convert.</param>
         /// <returns>The SVM sparse data.</returns>
-        public svm_node[] MakeSparse(MLData data)
+        public svm_node[] MakeSparse(IMLData data)
         {
             var result = new svm_node[data.Count];
             for (int i = 0; i < data.Count; i++)

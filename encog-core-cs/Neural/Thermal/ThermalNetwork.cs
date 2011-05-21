@@ -127,8 +127,8 @@ namespace Encog.Neural.Thermal
         /// from Encog.ml.MLRegression
         /// </summary>
         ///
-        public abstract MLData Compute(
-            MLData input);
+        public abstract IMLData Compute(
+            IMLData input);
 
         #endregion
 

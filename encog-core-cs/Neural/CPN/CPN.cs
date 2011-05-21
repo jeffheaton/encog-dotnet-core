@@ -155,9 +155,9 @@ namespace Encog.Neural.CPN
         #region MLRegression Members
 
         /// <inheritdoc/>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
-            MLData temp = ComputeInstar(input);
+            IMLData temp = ComputeInstar(input);
             return ComputeOutstar(temp);
         }
 
@@ -206,9 +206,9 @@ namespace Encog.Neural.CPN
         ///
         /// <param name="input">The input.</param>
         /// <returns>The output.</returns>
-        public MLData ComputeInstar(MLData input)
+        public IMLData ComputeInstar(IMLData input)
         {
-            MLData result = new BasicMLData(instarCount);
+            IMLData result = new BasicMLData(instarCount);
             int w, i, j;
             double sum, sumWinners, maxOut;
             int winner = 0;
@@ -261,9 +261,9 @@ namespace Encog.Neural.CPN
         ///
         /// <param name="input">The input.</param>
         /// <returns>The output.</returns>
-        public MLData ComputeOutstar(MLData input)
+        public IMLData ComputeOutstar(IMLData input)
         {
-            MLData result = new BasicMLData(outstarCount);
+            IMLData result = new BasicMLData(outstarCount);
 
             double sum = 0;
 

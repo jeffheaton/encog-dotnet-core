@@ -37,7 +37,7 @@ namespace Encog.ML.Kmeans
         /// The contents of the cluster.
         /// </summary>
         ///
-        private readonly IList<MLData> data;
+        private readonly IList<IMLData> data;
 
         /// <summary>
         /// The centroid.
@@ -56,7 +56,7 @@ namespace Encog.ML.Kmeans
         /// </summary>
         public KMeansCluster()
         {
-            data = new List<MLData>();
+            data = new List<IMLData>();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Encog.ML.Kmeans
         /// </summary>
         ///
         /// <param name="pair">The pair to add.</param>
-        public void Add(MLData pair)
+        public void Add(IMLData pair)
         {
             data.Add(pair);
             CalcSumOfSquares();
@@ -97,7 +97,7 @@ namespace Encog.ML.Kmeans
             MLDataSet result = new BasicMLDataSet();
 
 
-            foreach (MLData dataItem  in  data)
+            foreach (IMLData dataItem  in  data)
             {
                 result.Add(dataItem);
             }
@@ -106,21 +106,21 @@ namespace Encog.ML.Kmeans
         }
 
         /// <inheritdoc/>
-        public MLData Get(int pos)
+        public IMLData Get(int pos)
         {
             return data[pos];
         }
 
 
         /// <inheritdoc/>
-        public IList<MLData> Data
+        public IList<IMLData> Data
         {
             get { return data; }
         }
 
 
         /// <inheritdoc/>
-        public void Remove(MLData pair)
+        public void Remove(IMLData pair)
         {
             data.Remove(pair);
             CalcSumOfSquares();

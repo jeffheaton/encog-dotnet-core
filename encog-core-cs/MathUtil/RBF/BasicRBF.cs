@@ -35,25 +35,25 @@ namespace Encog.MathUtil.RBF
         /// <summary>
         /// The centers.
         /// </summary>
-        private double[] center;
+        private double[] _center;
 
         /// <summary>
         /// The peak.
         /// </summary>
-        private double peak;
+        private double _peak;
 
         /// <summary>
         /// The width.
         /// </summary>
-        private double width;
+        private double _width;
 
         /// <summary>
         /// The centers.
         /// </summary>
         public double[] Centers
         {
-            get { return center; }
-            set { center = value; }
+            get { return _center; }
+            set { _center = value; }
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Encog.MathUtil.RBF
         /// </summary>
         public int Dimensions
         {
-            get { return center.Length; }
+            get { return _center.Length; }
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Encog.MathUtil.RBF
         /// </summary>
         public double Peak
         {
-            get { return peak; }
-            set { peak = value; }
+            get { return _peak; }
+            set { _peak = value; }
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace Encog.MathUtil.RBF
         /// </summary>
         public double Width
         {
-            get { return width; }
-            set { width = value; }
+            get { return _width; }
+            set { _width = value; }
         }
 
 

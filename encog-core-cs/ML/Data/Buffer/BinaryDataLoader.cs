@@ -36,7 +36,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The CODEC to use.
         /// </summary>
-        private readonly IDataSetCODEC codec;
+        private readonly IDataSetCODEC _codec;
 
         /// <summary>
         /// Construct a loader with the specified CODEC. 
@@ -44,7 +44,7 @@ namespace Encog.ML.Data.Buffer
         /// <param name="codec">The codec to use.</param>
         public BinaryDataLoader(IDataSetCODEC codec)
         {
-            this.codec = codec;
+            _codec = codec;
             Status = new NullStatusReportable();
         }
 
@@ -58,7 +58,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public IDataSetCODEC CODEC
         {
-            get { return codec; }
+            get { return _codec; }
         }
 
         /// <summary>
@@ -73,24 +73,21 @@ namespace Encog.ML.Data.Buffer
 
             var egb = new EncogEGBFile(binaryFile);
 
-            egb.Create(codec.InputSize, codec.IdealSize);
+            egb.Create(_codec.InputSize, _codec.IdealSize);
 
-            var input = new double[codec.InputSize];
-            var ideal = new double[codec.IdealSize];
+            var input = new double[_codec.InputSize];
+            var ideal = new double[_codec.IdealSize];
 
-            codec.PrepareRead();
+            _codec.PrepareRead();
 
-            int index = 3;
             int currentRecord = 0;
             int lastUpdate = 0;
 
-            while (codec.Read(input, ideal))
+            while (_codec.Read(input, ideal))
             {
                 egb.Write(input);
                 egb.Write(ideal);
 
-                index += input.Length;
-                index += ideal.Length;
                 currentRecord++;
                 lastUpdate++;
                 if (lastUpdate >= 10000)
@@ -101,7 +98,7 @@ namespace Encog.ML.Data.Buffer
             }
 
             egb.Close();
-            codec.Close();
+            _codec.Close();
             Status.Report(0, 0, "Done importing to binary file: "
                                 + binaryFile);
         }
@@ -117,7 +114,7 @@ namespace Encog.ML.Data.Buffer
             var egb = new EncogEGBFile(binaryFile);
             egb.Open();
 
-            codec.PrepareWrite(egb.NumberOfRecords, egb.InputCount,
+            _codec.PrepareWrite(egb.NumberOfRecords, egb.InputCount,
                                egb.IdealCount);
 
             int inputCount = egb.InputCount;
@@ -142,7 +139,7 @@ namespace Encog.ML.Data.Buffer
                     ideal[j] = egb.Read();
                 }
 
-                codec.Write(input, ideal);
+                _codec.Write(input, ideal);
 
                 currentRecord++;
                 lastUpdate++;
@@ -155,7 +152,7 @@ namespace Encog.ML.Data.Buffer
             }
 
             egb.Close();
-            codec.Close();
+            _codec.Close();
             Status.Report(0, 0, "Done exporting binary file: "
                                 + binaryFile);
         }

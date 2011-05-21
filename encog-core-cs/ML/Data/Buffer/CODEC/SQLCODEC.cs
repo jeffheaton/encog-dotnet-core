@@ -34,27 +34,27 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <summary>
         /// The database connection.
         /// </summary>
-        private readonly DbConnection connection;
+        private readonly DbConnection _connection;
 
         /// <summary>
         /// What is the size of the ideal data?
         /// </summary>
-        private readonly int idealSize;
+        private readonly int _idealSize;
 
         /// <summary>
         /// What is the size of the input data?
         /// </summary>
-        private readonly int inputSize;
+        private readonly int _inputSize;
 
         /// <summary>
         /// The SQL statement being used.
         /// </summary>
-        private readonly DbCommand statement;
+        private readonly DbCommand _statement;
 
         /// <summary>
         /// Holds results from the SQL query.
         /// </summary>
-        private DbDataReader results;
+        private DbDataReader _results;
 
         /// <summary>
         /// Create a SQL neural data set.
@@ -66,14 +66,14 @@ namespace Encog.ML.Data.Buffer.CODEC
         public SQLCODEC(String sql, int inputSize,
                         int idealSize, String connectString)
         {
-            this.inputSize = inputSize;
-            this.idealSize = idealSize;
-            connection = new OleDbConnection(connectString);
-            connection.Open();
-            statement = connection.CreateCommand();
-            statement.CommandText = sql;
-            statement.Prepare();
-            statement.Connection = connection;
+            _inputSize = inputSize;
+            _idealSize = idealSize;
+            _connection = new OleDbConnection(connectString);
+            _connection.Open();
+            _statement = _connection.CreateCommand();
+            _statement.CommandText = sql;
+            _statement.Prepare();
+            _statement.Connection = _connection;
         }
 
         #region IDataSetCODEC Members
@@ -86,20 +86,20 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <returns></returns>
         public bool Read(double[] input, double[] ideal)
         {
-            if (!results.NextResult())
+            if (!_results.NextResult())
                 return false;
 
-            for (int i = 1; i <= inputSize; i++)
+            for (int i = 1; i <= _inputSize; i++)
             {
-                input[i - 1] = results.GetDouble(i);
+                input[i - 1] = _results.GetDouble(i);
             }
 
-            if (idealSize > 0)
+            if (_idealSize > 0)
             {
-                for (int i = 1; i <= idealSize; i++)
+                for (int i = 1; i <= _idealSize; i++)
                 {
                     ideal[i - 1] =
-                        results.GetDouble(i + inputSize);
+                        _results.GetDouble(i + _inputSize);
                 }
             }
 
@@ -132,7 +132,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         public void PrepareRead()
         {
-            results = statement.ExecuteReader();
+            _results = _statement.ExecuteReader();
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         public int InputSize
         {
-            get { return inputSize; }
+            get { return _inputSize; }
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         public int IdealSize
         {
-            get { return idealSize; }
+            get { return _idealSize; }
         }
 
         /// <summary>
@@ -156,13 +156,13 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         public void Close()
         {
-            if (connection != null)
+            if (_connection != null)
             {
-                connection.Close();
+                _connection.Close();
             }
-            if (results != null)
+            if (_results != null)
             {
-                results.Close();
+                _results.Close();
             }
         }
 

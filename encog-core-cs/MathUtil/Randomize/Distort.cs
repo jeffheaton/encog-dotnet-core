@@ -32,16 +32,16 @@ namespace Encog.MathUtil.Randomize
         /// The factor to use to distort the numbers.
         /// </summary>
         ///
-        private readonly double factor;
+        private readonly double _factor;
 
         /// <summary>
         /// Construct a distort randomizer for the specified factor.
         /// </summary>
         ///
-        /// <param name="factor_0">The randomizer factor.</param>
-        public Distort(double factor_0)
+        /// <param name="f">The randomizer factor.</param>
+        public Distort(double f)
         {
-            factor = factor_0;
+            _factor = f;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Encog.MathUtil.Randomize
         /// <returns>The result.</returns>
         public override double Randomize(double d)
         {
-            return d + (factor - (NextDouble()*factor*2));
+            return d + (_factor - (NextDouble()*_factor*2));
         }
     }
 }

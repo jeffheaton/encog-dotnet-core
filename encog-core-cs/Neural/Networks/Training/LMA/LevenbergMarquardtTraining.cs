@@ -368,7 +368,7 @@ namespace Encog.Neural.Networks.Training.Lma
                 for (int i_0 = 0; i_0 < trainingLength; i_0++)
                 {
                     indexableTraining.GetRecord(i_0, pair);
-                    MLData actual = network
+                    IMLData actual = network
                         .Compute(pair.Input);
                     double e = pair.Ideal[0]
                                - actual[0];

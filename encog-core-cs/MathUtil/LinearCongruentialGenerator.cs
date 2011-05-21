@@ -40,7 +40,7 @@ namespace Encog.MathUtil
         /// <summary>
         /// The maximum rand number that the standard GCC based LCG will generate.
         /// </summary>
-        public const long MAX_RAND = 4294967295L;
+        public const long MaxRand = 4294967295L;
 
         /// <summary>
         /// Construct the default LCG.  You need only specify a seed.
@@ -101,7 +101,7 @@ namespace Encog.MathUtil
         /// <returns>The next double.</returns>
         public double NextDouble()
         {
-            return (double) NextLong()/MAX_RAND;
+            return (double) NextLong()/MaxRand;
         }
 
         /// <summary>

@@ -108,7 +108,7 @@ namespace Encog.Neural.Networks.Training.Simple
             foreach (MLDataPair pair  in  training)
             {
                 // calculate the error
-                MLData output = network.Compute(pair.Input);
+                IMLData output = network.Compute(pair.Input);
 
                 for (int currentAdaline = 0; currentAdaline < output.Count; currentAdaline++)
                 {

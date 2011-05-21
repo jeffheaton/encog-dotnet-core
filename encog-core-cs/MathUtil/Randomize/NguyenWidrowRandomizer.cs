@@ -32,11 +32,10 @@ namespace Encog.MathUtil.Randomize
     /// most trainable neural network.
     /// </summary>
     ///
-    public class NguyenWidrowRandomizer : RangeRandomizer,
-                                          IRandomizer
+    public class NguyenWidrowRandomizer : RangeRandomizer
     {
-        private double beta;
-        private int inputCount;
+        private double _beta;
+        private int _inputCount;
 
         /// <summary>
         /// Construct a Nguyen-Widrow randomizer.
@@ -87,8 +86,8 @@ namespace Encog.MathUtil.Randomize
                 return;
             }
 
-            inputCount = network.InputCount;
-            beta = 0.7d*Math.Pow(hiddenNeurons, 1.0d/network.InputCount);
+            _inputCount = network.InputCount;
+            _beta = 0.7d*Math.Pow(hiddenNeurons, 1.0d/network.InputCount);
 
             base.Randomize(network);
         }
@@ -111,7 +110,7 @@ namespace Encog.MathUtil.Randomize
                 for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
                 {
                     double v = network.GetWeight(fromLayer, fromNeuron, toNeuron);
-                    v = (beta*v)/inputCount;
+                    v = (_beta*v)/_inputCount;
                     network.SetWeight(fromLayer, fromNeuron, toNeuron, v);
                 }
             }

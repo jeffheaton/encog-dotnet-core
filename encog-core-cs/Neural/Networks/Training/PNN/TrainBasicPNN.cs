@@ -302,14 +302,14 @@ namespace Encog.Neural.Networks.Training.PNN
 
                 err = 0.0d;
 
-                MLData input = pair.Input;
-                MLData target = pair.Ideal;
+                IMLData input = pair.Input;
+                IMLData target = pair.Ideal;
 
                 if (network.OutputMode == PNNOutputMode.Unsupervised)
                 {
                     if (deriv)
                     {
-                        MLData output = ComputeDeriv(input, target);
+                        IMLData output = ComputeDeriv(input, target);
                         for (int z = 0; z < network.OutputCount; z++)
                         {
                             xout[z] = output[z];
@@ -317,7 +317,7 @@ namespace Encog.Neural.Networks.Training.PNN
                     }
                     else
                     {
-                        MLData output_1 = network.Compute(input);
+                        IMLData output_1 = network.Compute(input);
                         for (int z_2 = 0; z_2 < network.OutputCount; z_2++)
                         {
                             xout[z_2] = output_1[z_2];
@@ -332,7 +332,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 else if (network.OutputMode == PNNOutputMode.Classification)
                 {
                     var tclass = (int) target[0];
-                    MLData output_4;
+                    IMLData output_4;
 
                     if (deriv)
                     {
@@ -365,7 +365,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 {
                     if (deriv)
                     {
-                        MLData output_6 = network.Compute(input);
+                        IMLData output_6 = network.Compute(input);
                         for (int z_7 = 0; z_7 < network.OutputCount; z_7++)
                         {
                             xout[z_7] = output_6[z_7];
@@ -373,7 +373,7 @@ namespace Encog.Neural.Networks.Training.PNN
                     }
                     else
                     {
-                        MLData output_8 = network.Compute(input);
+                        IMLData output_8 = network.Compute(input);
                         for (int z_9 = 0; z_9 < network.OutputCount; z_9++)
                         {
                             xout[z_9] = output_8[z_9];
@@ -426,7 +426,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="input">The input.</param>
         /// <param name="target">The target data.</param>
         /// <returns>The output.</returns>
-        public MLData ComputeDeriv(MLData input, MLData target)
+        public IMLData ComputeDeriv(IMLData input, IMLData target)
         {
             int pop, ivar;
             int ibest = 0;
@@ -656,7 +656,7 @@ namespace Encog.Neural.Networks.Training.PNN
 
             if (network.OutputMode == PNNOutputMode.Classification)
             {
-                MLData result = new BasicMLData(1);
+                IMLData result = new BasicMLData(1);
                 result[0] = ibest;
                 return result;
             }

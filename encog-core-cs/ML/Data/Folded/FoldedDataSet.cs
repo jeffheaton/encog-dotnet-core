@@ -39,43 +39,43 @@ namespace Encog.ML.Data.Folded
         /// <summary>
         /// Error message: adds are not supported.
         /// </summary>
-        public const String ADD_NOT_SUPPORTED = "Direct adds to the folded dataset are not supported.";
+        public const String AddNotSupported = "Direct adds to the folded dataset are not supported.";
 
         /// <summary>
         /// The underlying dataset.
         /// </summary>
-        private readonly MLDataSet underlying;
+        private readonly MLDataSet _underlying;
 
         /// <summary>
         /// The fold that we are currently on.
         /// </summary>
-        private int currentFold;
+        private int _currentFold;
 
         /// <summary>
         /// The offset to the current fold.
         /// </summary>
-        private int currentFoldOffset;
+        private int _currentFoldOffset;
 
         /// <summary>
         /// The size of the current fold.
         /// </summary>
-        private int currentFoldSize;
+        private int _currentFoldSize;
 
         /// <summary>
         /// The size of all folds, except the last fold, the last fold may have a
         /// different number.
         /// </summary>
-        private int foldSize;
+        private int _foldSize;
 
         /// <summary>
         /// The size of the last fold.
         /// </summary>
-        private int lastFoldSize;
+        private int _lastFoldSize;
 
         /// <summary>
         /// The total number of folds. Or 0 if the data has not been folded yet.
         /// </summary>
-        private int numFolds;
+        private int _numFolds;
 
         /// <summary>
         /// Create a folded dataset. 
@@ -83,7 +83,7 @@ namespace Encog.ML.Data.Folded
         /// <param name="underlying">The underlying folded dataset.</param>
         public FoldedDataSet(MLDataSet underlying)
         {
-            this.underlying = underlying;
+            _underlying = underlying;
             Fold(1);
         }
 
@@ -103,10 +103,7 @@ namespace Encog.ML.Data.Folded
                 {
                     return Owner.CurrentFold;
                 }
-                else
-                {
-                    return currentFold;
-                }
+                return _currentFold;
             }
             set
             {
@@ -115,22 +112,15 @@ namespace Encog.ML.Data.Folded
                     throw new TrainingError("Can't set the fold on a non-top-level set.");
                 }
 
-                if (value >= numFolds)
+                if (value >= _numFolds)
                 {
                     throw new TrainingError(
                         "Can't set the current fold to be greater than the number of folds.");
                 }
-                currentFold = value;
-                currentFoldOffset = foldSize*currentFold;
+                _currentFold = value;
+                _currentFoldOffset = _foldSize*_currentFold;
 
-                if (currentFold == (numFolds - 1))
-                {
-                    currentFoldSize = lastFoldSize;
-                }
-                else
-                {
-                    currentFoldSize = foldSize;
-                }
+                _currentFoldSize = _currentFold == (_numFolds - 1) ? _lastFoldSize : _foldSize;
             }
         }
 
@@ -145,10 +135,7 @@ namespace Encog.ML.Data.Folded
                 {
                     return Owner.CurrentFoldOffset;
                 }
-                else
-                {
-                    return currentFoldOffset;
-                }
+                return _currentFoldOffset;
             }
         }
 
@@ -163,10 +150,7 @@ namespace Encog.ML.Data.Folded
                 {
                     return Owner.CurrentFoldSize;
                 }
-                else
-                {
-                    return currentFoldSize;
-                }
+                return _currentFoldSize;
             }
         }
 
@@ -175,7 +159,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public int NumFolds
         {
-            get { return numFolds; }
+            get { return _numFolds; }
         }
 
         /// <summary>
@@ -183,7 +167,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public MLDataSet Underlying
         {
-            get { return underlying; }
+            get { return _underlying; }
         }
 
         #region MLDataSet Members
@@ -192,9 +176,9 @@ namespace Encog.ML.Data.Folded
         /// Not supported.
         /// </summary>
         /// <param name="data1">Not used.</param>
-        public void Add(MLData data1)
+        public void Add(IMLData data1)
         {
-            throw new TrainingError(ADD_NOT_SUPPORTED);
+            throw new TrainingError(AddNotSupported);
         }
 
         /// <summary>
@@ -202,9 +186,9 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         /// <param name="inputData">Not used.</param>
         /// <param name="idealData">Not used.</param>
-        public void Add(MLData inputData, MLData idealData)
+        public void Add(IMLData inputData, IMLData idealData)
         {
-            throw new TrainingError(ADD_NOT_SUPPORTED);
+            throw new TrainingError(AddNotSupported);
         }
 
         /// <summary>
@@ -213,7 +197,7 @@ namespace Encog.ML.Data.Folded
         /// <param name="inputData">Not used.</param>
         public void Add(MLDataPair inputData)
         {
-            throw new TrainingError(ADD_NOT_SUPPORTED);
+            throw new TrainingError(AddNotSupported);
         }
 
         /// <summary>
@@ -221,7 +205,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public void Close()
         {
-            underlying.Close();
+            _underlying.Close();
         }
 
 
@@ -230,7 +214,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public int IdealSize
         {
-            get { return underlying.IdealSize; }
+            get { return _underlying.IdealSize; }
         }
 
         /// <summary>
@@ -238,7 +222,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public int InputSize
         {
-            get { return underlying.InputSize; }
+            get { return _underlying.InputSize; }
         }
 
         /// <summary>
@@ -248,7 +232,7 @@ namespace Encog.ML.Data.Folded
         /// <param name="pair">The record.</param>
         public void GetRecord(long index, MLDataPair pair)
         {
-            underlying.GetRecord(CurrentFoldOffset + index, pair);
+            _underlying.GetRecord(CurrentFoldOffset + index, pair);
         }
 
         /// <summary>
@@ -264,7 +248,7 @@ namespace Encog.ML.Data.Folded
         /// </summary>
         public bool Supervised
         {
-            get { return underlying.Supervised; }
+            get { return _underlying.Supervised; }
         }
 
 
@@ -274,8 +258,7 @@ namespace Encog.ML.Data.Folded
         /// <returns>The dataset.</returns>
         public MLDataSet OpenAdditional()
         {
-            var folded = new FoldedDataSet(underlying.OpenAdditional());
-            folded.Owner = this;
+            var folded = new FoldedDataSet(_underlying.OpenAdditional()) {Owner = this};
             return folded;
         }
 
@@ -297,10 +280,10 @@ namespace Encog.ML.Data.Folded
         /// <param name="numFolds">The number of folds.</param>
         public void Fold(int numFolds)
         {
-            this.numFolds = (int) Math.Min(numFolds, underlying
+            _numFolds = (int) Math.Min(numFolds, _underlying
                                                          .Count);
-            foldSize = (int) (underlying.Count/this.numFolds);
-            lastFoldSize = (int) (underlying.Count - (foldSize*this.numFolds));
+            _foldSize = (int) (_underlying.Count/_numFolds);
+            _lastFoldSize = (int) (_underlying.Count - (_foldSize*_numFolds));
             CurrentFold = 0;
         }
     }

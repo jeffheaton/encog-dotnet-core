@@ -29,7 +29,7 @@ using Encog.Util.CSV;
 namespace Encog.ML.Data.Specific
 {
     /// <summary>
-    /// An implementation of the NeuralDataSet interface designed to provide a CSV
+    /// An implementation of the MLDataSet interface designed to provide a CSV
     /// file to the neural network. This implementation uses the BasicMLData to
     /// hold the data being read. This class has no ability to write CSV files.
     /// The columns of the CSV file will specify both the input and ideal 
@@ -43,27 +43,27 @@ namespace Encog.ML.Data.Specific
         /// <summary>
         /// The CSV filename to read from.
         /// </summary>
-        private readonly String filename;
+        private readonly String _filename;
 
         /// <summary>
         /// The format that separates the columns, defaults to a comma.
         /// </summary>
-        private readonly CSVFormat format;
+        private readonly CSVFormat _format;
 
         /// <summary>
         /// Specifies if headers are present on the first row.
         /// </summary>
-        private readonly bool headers;
+        private readonly bool _headers;
 
         /// <summary>
         /// The number of columns of ideal data.
         /// </summary>
-        private readonly int idealSize;
+        private readonly int _idealSize;
 
         /// <summary>
         /// The number of columns of input data.
         /// </summary>
-        private readonly int inputSize;
+        private readonly int _inputSize;
 
         /// <summary>
         /// Construct this data set using a comma as a delimiter.
@@ -89,15 +89,14 @@ namespace Encog.ML.Data.Specific
         public CSVMLDataSet(String filename, int inputSize,
                             int idealSize, bool headers, CSVFormat format)
         {
-            this.filename = filename;
-            this.inputSize = inputSize;
-            this.idealSize = idealSize;
-            this.format = format;
-            this.headers = headers;
+            _filename = filename;
+            _inputSize = inputSize;
+            _idealSize = idealSize;
+            _format = format;
+            _headers = headers;
 
             IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, inputSize, idealSize);
-            var load = new MemoryDataLoader(codec);
-            load.Result = this;
+            var load = new MemoryDataLoader(codec) {Result = this};
             load.External2Memory();
         }
 
@@ -106,7 +105,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public String Filename
         {
-            get { return filename; }
+            get { return _filename; }
         }
 
         /// <summary>
@@ -114,7 +113,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public CSVFormat Format
         {
-            get { return format; }
+            get { return _format; }
         }
 
         /// <summary>
@@ -122,7 +121,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public bool Headers
         {
-            get { return headers; }
+            get { return _headers; }
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public override int IdealSize
         {
-            get { return idealSize; }
+            get { return _idealSize; }
         }
 
         /// <summary>
@@ -138,7 +137,7 @@ namespace Encog.ML.Data.Specific
         /// </summary>
         public override int InputSize
         {
-            get { return inputSize; }
+            get { return _inputSize; }
         }
     }
 }

@@ -110,13 +110,13 @@ namespace Encog.Neural.Pnn
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
                         int index = 0;
-                        MLData inputData = new BasicMLData(inputCount);
+                        IMLData inputData = new BasicMLData(inputCount);
                         for (int i = 0; i < inputCount; i++)
                         {
                             inputData[i] =
                                 CSVFormat.EG_FORMAT.Parse(cols[index++]);
                         }
-                        MLData idealData = new BasicMLData(inputCount);
+                        IMLData idealData = new BasicMLData(inputCount);
                         for (int i_0 = 0; i_0 < outputCount; i_0++)
                         {
                             idealData[i_0] =

@@ -31,15 +31,8 @@ namespace Encog.MathUtil
     /// This class imposes a very large and small ceiling and floor to keep the
     /// numbers within range.
     /// </summary>
-    public sealed class BoundMath
+    public static class BoundMath
     {
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        private BoundMath()
-        {
-        }
-
         /// <summary>
         /// Calculate the cos.
         /// </summary>

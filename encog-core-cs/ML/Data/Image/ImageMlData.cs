@@ -38,13 +38,13 @@ namespace Encog.ML.Data.Image
     /// dataset. These images will be downsampled to the resolution specified in the
     /// ImageNeuralData set class that they are added to.
     /// </summary>
-    public class ImageMlData : BasicMLData
+    public class ImageMLData : BasicMLData
     {
         /// <summary>
         /// Construct an object based on an image.
         /// </summary>
         /// <param name="image">The image to use.</param>
-        public ImageMlData(Bitmap image)
+        public ImageMLData(Bitmap image)
             : base(1)
         {
             Image = image;

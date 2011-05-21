@@ -149,7 +149,7 @@ namespace Encog.Neural.PNN
         ///
         /// <param name="input">The input to the network.</param>
         /// <returns>The output from the network.</returns>
-        public override sealed MLData Compute(MLData input)
+        public override sealed IMLData Compute(IMLData input)
         {
             var xout = new double[OutputCount];
 
@@ -234,7 +234,7 @@ namespace Encog.Neural.PNN
                     xout[i_3] /= psum;
                 }
 
-                MLData result = new BasicMLData(1);
+                IMLData result = new BasicMLData(1);
                 result[0] = EngineArray.MaxIndex(xout);
                 return result;
             }

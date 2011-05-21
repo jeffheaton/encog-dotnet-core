@@ -113,9 +113,9 @@ namespace Encog.Neural.SOM
         #region MLClassification Members
 
         /// <inheritdoc/>
-        public int Classify(MLData input)
+        public int Classify(IMLData input)
         {
-            MLData result = Compute(input);
+            IMLData result = Compute(input);
             return EngineArray.MaxIndex(result.Data);
         }
 
@@ -149,7 +149,7 @@ namespace Encog.Neural.SOM
             // Determine the BMU foreach each training element.
             foreach (MLDataPair pair  in  data)
             {
-                MLData input = pair.Input;
+                IMLData input = pair.Input;
                 bmu.CalculateBMU(input);
             }
 
@@ -182,9 +182,9 @@ namespace Encog.Neural.SOM
         ///
         /// <param name="input">The input pattern.</param>
         /// <returns>The winning neuron.</returns>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
-            MLData result = new BasicMLData(outputNeuronCount);
+            IMLData result = new BasicMLData(outputNeuronCount);
 
             for (int i = 0; i < outputNeuronCount; i++)
             {
@@ -209,9 +209,9 @@ namespace Encog.Neural.SOM
         ///
         /// <param name="input">The input pattern.</param>
         /// <returns>The winning neuron.</returns>
-        public int Winner(MLData input)
+        public int Winner(IMLData input)
         {
-            MLData output = Compute(input);
+            IMLData output = Compute(input);
             int win = EngineArray.IndexOfLargest(output.Data);
             return win;
         }

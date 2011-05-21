@@ -150,7 +150,7 @@ namespace Encog.Util.Simple
         {
             foreach (MLDataPair pair in training)
             {
-                MLData output = network.Compute(pair.Input);
+                IMLData output = network.Compute(pair.Input);
                 Console.WriteLine("Input="
                                   + FormatNeuralData(pair.Input)
                                   + ", Actual=" + FormatNeuralData(output)
@@ -164,7 +164,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="data">The neural data to format.</param>
         /// <returns>The formatted neural data.</returns>
-        private static String FormatNeuralData(MLData data)
+        private static String FormatNeuralData(IMLData data)
         {
             var result = new StringBuilder();
             for (int i = 0; i < data.Count; i++)
@@ -361,7 +361,7 @@ namespace Encog.Util.Simple
 
             foreach (MLDataPair pair in data)
             {
-                MLData actual = method.Compute(pair.Input);
+                IMLData actual = method.Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
             }
             return errorCalculation.Calculate();

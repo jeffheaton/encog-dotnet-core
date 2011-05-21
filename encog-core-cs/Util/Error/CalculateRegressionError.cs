@@ -52,7 +52,7 @@ namespace Encog.Util.Error
             // calculate error
             foreach (MLDataPair pair  in  data)
             {
-                MLData actual = method.Compute(pair.Input);
+                IMLData actual = method.Compute(pair.Input);
                 errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
             }
             return errorCalculation.Calculate();

@@ -153,7 +153,7 @@ namespace Encog.Examples.Adaline
                 BasicMLData ideal = new BasicMLData(DIGITS.Length);
 
                 // setup input
-                MLData input = Image2data(DIGITS[i]);
+                IMLData input = Image2data(DIGITS[i]);
 
                 // setup ideal
                 for (int j = 0; j < DIGITS.Length; j++)
@@ -170,9 +170,9 @@ namespace Encog.Examples.Adaline
             return result;
         }
 
-        public static MLData Image2data(String[] image)
+        public static IMLData Image2data(String[] image)
         {
-            MLData result = new BasicMLData(CHAR_WIDTH * CHAR_HEIGHT);
+            IMLData result = new BasicMLData(CHAR_WIDTH * CHAR_HEIGHT);
 
             for (int row = 0; row < CHAR_HEIGHT; row++)
             {

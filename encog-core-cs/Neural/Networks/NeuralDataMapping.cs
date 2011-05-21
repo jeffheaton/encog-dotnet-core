@@ -46,7 +46,7 @@ namespace Encog.Neural.Networks
         ///
         /// <param name="from_0">The source data.</param>
         /// <param name="to_1">The target data.</param>
-        public NeuralDataMapping(MLData from_0, MLData to_1)
+        public NeuralDataMapping(IMLData from_0, IMLData to_1)
         {
             From = from_0;
             To = to_1;
@@ -57,7 +57,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <value>The from data.</value>
-        public MLData From { 
+        public IMLData From { 
             get;
             set; }
 
@@ -67,7 +67,7 @@ namespace Encog.Neural.Networks
         /// </summary>
         ///
         /// <value>The target data.</value>
-        public MLData To { 
+        public IMLData To { 
             get; 
             set; }
 

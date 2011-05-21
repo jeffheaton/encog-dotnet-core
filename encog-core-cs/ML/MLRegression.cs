@@ -39,6 +39,6 @@ namespace Encog.ML
         ///
         /// <param name="input">The input data.</param>
         /// <returns>The output data.</returns>
-        MLData Compute(MLData input);
+        IMLData Compute(IMLData input);
     }
 }

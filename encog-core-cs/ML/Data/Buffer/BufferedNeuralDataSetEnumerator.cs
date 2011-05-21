@@ -36,17 +36,17 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The dataset being iterated over.
         /// </summary>
-        private readonly BufferedMLDataSet data;
+        private readonly BufferedMLDataSet _data;
 
         /// <summary>
         /// The current record.
         /// </summary>
-        private int current;
+        private int _current;
 
         /// <summary>
         /// The current record.
         /// </summary>
-        private MLDataPair currentRecord;
+        private MLDataPair _currentRecord;
 
         /// <summary>
         /// Construct the buffered enumerator. This is where the file is actually
@@ -55,8 +55,8 @@ namespace Encog.ML.Data.Buffer
         /// <param name="owner">The object that created this enumeration.</param>
         public BufferedNeuralDataSetEnumerator(BufferedMLDataSet owner)
         {
-            data = owner;
-            current = 0;
+            _data = owner;
+            _current = 0;
         }
 
         #region IEnumerator<MLDataPair> Members
@@ -66,7 +66,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public MLDataPair Current
         {
-            get { return currentRecord; }
+            get { return _currentRecord; }
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                if (currentRecord == null)
+                if (_currentRecord == null)
                 {
                     throw new MLDataError("Can't read current record until MoveNext is called once.");
                 }
-                return currentRecord;
+                return _currentRecord;
             }
         }
 
@@ -97,12 +97,12 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                if (current >= data.Count)
+                if (_current >= _data.Count)
                     return false;
 
-                currentRecord = BasicMLDataPair.CreatePair(data
-                                                               .InputSize, data.IdealSize);
-                data.GetRecord(current++, currentRecord);
+                _currentRecord = BasicMLDataPair.CreatePair(_data
+                                                               .InputSize, _data.IdealSize);
+                _data.GetRecord(_current++, _currentRecord);
                 return true;
             }
             catch (EndOfStreamException)
@@ -114,6 +114,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Not implemented.
         /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         public void Reset()
         {
             throw new NotImplementedException();

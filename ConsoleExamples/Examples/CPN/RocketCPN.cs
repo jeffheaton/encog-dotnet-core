@@ -418,7 +418,7 @@ namespace Encog.Examples.CPN
             return result;
         }
 
-        public double DetermineAngle(MLData angle)
+        public double DetermineAngle(IMLData angle)
         {
             double result;
 
@@ -433,8 +433,8 @@ namespace Encog.Examples.CPN
         {
             for (int i = 0; i < pattern.Length; i++)
             {
-                MLData inputData = new BasicMLData(input[i]);
-                MLData outputData = network.Compute(inputData);
+                IMLData inputData = new BasicMLData(input[i]);
+                IMLData outputData = network.Compute(inputData);
                 double angle = DetermineAngle(outputData);
 
                 // display image

@@ -41,54 +41,54 @@ namespace Encog.ML.Anneal
     /// the initial one.
     /// </summary>
     ///
-    /// <typeparam name="UNIT_TYPE">What type of data makes up the solution.</typeparam>
-    public abstract class SimulatedAnnealing<UNIT_TYPE>
+    /// <typeparam name="TUnitType">What type of data makes up the solution.</typeparam>
+    public abstract class SimulatedAnnealing<TUnitType>
     {
         /// <summary>
         /// The number of cycles that will be used.
         /// </summary>
         ///
-        private int cycles;
+        private int _cycles;
 
         /// <summary>
         /// Should the score be minimized.
         /// </summary>
         ///
-        private bool shouldMinimize;
+        private bool _shouldMinimize;
 
         /// <summary>
         /// The current temperature.
         /// </summary>
         ///
-        private double temperature;
+        private double _temperature;
 
         /// <summary>
         /// Construct the object.  Default ShouldMinimize to true.
         /// </summary>
-        public SimulatedAnnealing()
+        protected SimulatedAnnealing()
         {
-            shouldMinimize = true;
+            _shouldMinimize = true;
         }
 
         /// <summary>
         /// Subclasses must provide access to an array that makes up the solution.
         /// </summary>
-        public abstract UNIT_TYPE[] Array { 
+        public abstract TUnitType[] Array { 
             get; }
 
 
         /// <summary>
         /// Get a copy of the array.
         /// </summary>
-        public abstract UNIT_TYPE[] ArrayCopy {
+        public abstract TUnitType[] ArrayCopy {
             get; }
 
 
         /// <value>the cycles to set</value>
         public int Cycles
         {
-            get { return cycles; }
-            set { cycles = value; }
+            get { return _cycles; }
+            set { _cycles = value; }
         }
 
 
@@ -109,8 +109,8 @@ namespace Encog.ML.Anneal
         /// <value>the temperature to set</value>
         public double Temperature
         {
-            get { return temperature; }
-            set { temperature = value; }
+            get { return _temperature; }
+            set { _temperature = value; }
         }
 
 
@@ -119,8 +119,8 @@ namespace Encog.ML.Anneal
         /// </summary>
         public bool ShouldMinimize
         {
-            get { return shouldMinimize; }
-            set { shouldMinimize = value; }
+            get { return _shouldMinimize; }
+            set { _shouldMinimize = value; }
         }
 
         /// <summary>
@@ -138,20 +138,17 @@ namespace Encog.ML.Anneal
         ///
         public void Iteration()
         {
-            UNIT_TYPE[] bestArray;
-
             Score = PerformCalculateScore();
-            bestArray = ArrayCopy;
+            TUnitType[] bestArray = ArrayCopy;
 
-            temperature = StartTemperature;
+            _temperature = StartTemperature;
 
-            for (int i = 0; i < cycles; i++)
+            for (int i = 0; i < _cycles; i++)
             {
-                double curScore;
                 Randomize();
-                curScore = PerformCalculateScore();
+                double curScore = PerformCalculateScore();
 
-                if (shouldMinimize)
+                if (_shouldMinimize)
                 {
                     if (curScore < Score)
                     {
@@ -172,7 +169,7 @@ namespace Encog.ML.Anneal
                 double ratio = Math.Exp(Math.Log(StopTemperature
                                                  /StartTemperature)
                                         /(Cycles - 1));
-                temperature *= ratio;
+                _temperature *= ratio;
             }
         }
 
@@ -181,7 +178,7 @@ namespace Encog.ML.Anneal
         /// </summary>
         ///
         /// <param name="array">The array to be stored.</param>
-        public abstract void PutArray(UNIT_TYPE[] array);
+        public abstract void PutArray(TUnitType[] array);
 
         /// <summary>
         /// Randomize the weight matrix.

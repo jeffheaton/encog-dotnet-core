@@ -33,13 +33,13 @@ namespace Encog.ML.Data
         /// <summary>
         /// The input that the neural network.
         /// </summary>
-        MLData Input { get; }
+        IMLData Input { get; }
 
         /// <summary>
         /// The ideal data that the neural network should produce
         /// for the specified input.
         /// </summary>
-        MLData Ideal { get; }
+        IMLData Ideal { get; }
 
         /// <summary>
         /// True if this training pair is supervised.  That is, it has 

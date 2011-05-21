@@ -33,57 +33,57 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The size of a double.
         /// </summary>
-        public const int DOUBLE_SIZE = sizeof (double);
+        public const int DoubleSize = sizeof (double);
 
         /// <summary>
         /// The size of the file header.
         /// </summary>
-        public const int HEADER_SIZE = DOUBLE_SIZE*3;
+        public const int HeaderSize = DoubleSize*3;
 
         /// <summary>
         /// The file that we are working with.
         /// </summary>
-        private readonly String file;
+        private readonly String _file;
 
         /// <summary>
         /// The binary reader.
         /// </summary>
-        private BinaryReader binaryReader;
+        private BinaryReader _binaryReader;
 
         /// <summary>
         /// The binary writer.
         /// </summary>
-        private BinaryWriter binaryWriter;
+        private BinaryWriter _binaryWriter;
 
         /// <summary>
         /// The number of ideal values per record.
         /// </summary>
-        private int idealCount;
+        private int _idealCount;
 
         /// <summary>
         /// The number of input values per record.
         /// </summary>
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// The number of records int he file.
         /// </summary>
-        private int numberOfRecords;
+        private int _numberOfRecords;
 
         /// <summary>
         /// The number of values in a record, this is the input and ideal combined.
         /// </summary>
-        private int recordCount;
+        private int _recordCount;
 
         /// <summary>
         /// The size of a record.
         /// </summary>
-        private int recordSize;
+        private int _recordSize;
 
         /// <summary>
         /// The underlying file.
         /// </summary>
-        private FileStream stream;
+        private FileStream _stream;
 
         /// <summary>
         /// Construct an EGB file. 
@@ -91,7 +91,7 @@ namespace Encog.ML.Data.Buffer
         /// <param name="file">The file.</param>
         public EncogEGBFile(String file)
         {
-            this.file = file;
+            _file = file;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public int InputCount
         {
-            get { return inputCount; }
+            get { return _inputCount; }
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public int IdealCount
         {
-            get { return idealCount; }
+            get { return _idealCount; }
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public FileStream Stream
         {
-            get { return stream; }
+            get { return _stream; }
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public int RecordCount
         {
-            get { return recordCount; }
+            get { return _recordCount; }
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public int RecordSize
         {
-            get { return recordSize; }
+            get { return _recordSize; }
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public int NumberOfRecords
         {
-            get { return numberOfRecords; }
+            get { return _numberOfRecords; }
         }
 
         /// <summary>
@@ -151,31 +151,31 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                this.inputCount = inputCount;
-                this.idealCount = idealCount;
+                _inputCount = inputCount;
+                _idealCount = idealCount;
 
                 var input = new double[inputCount];
                 var ideal = new double[idealCount];
 
-                stream = new FileStream(file, FileMode.Create, FileAccess.ReadWrite);
-                binaryWriter = new BinaryWriter(stream);
-                binaryReader = null;
+                _stream = new FileStream(_file, FileMode.Create, FileAccess.ReadWrite);
+                _binaryWriter = new BinaryWriter(_stream);
+                _binaryReader = null;
 
-                binaryWriter.Write((byte) 'E');
-                binaryWriter.Write((byte) 'N');
-                binaryWriter.Write((byte) 'C');
-                binaryWriter.Write((byte) 'O');
-                binaryWriter.Write((byte) 'G');
-                binaryWriter.Write((byte) '-');
-                binaryWriter.Write((byte) '0');
-                binaryWriter.Write((byte) '0');
+                _binaryWriter.Write((byte) 'E');
+                _binaryWriter.Write((byte) 'N');
+                _binaryWriter.Write((byte) 'C');
+                _binaryWriter.Write((byte) 'O');
+                _binaryWriter.Write((byte) 'G');
+                _binaryWriter.Write((byte) '-');
+                _binaryWriter.Write((byte) '0');
+                _binaryWriter.Write((byte) '0');
 
-                binaryWriter.Write((double) input.Length);
-                binaryWriter.Write((double) ideal.Length);
+                _binaryWriter.Write((double) input.Length);
+                _binaryWriter.Write((double) ideal.Length);
 
-                numberOfRecords = 0;
-                recordCount = this.inputCount + this.idealCount;
-                recordSize = recordCount*DOUBLE_SIZE;
+                _numberOfRecords = 0;
+                _recordCount = _inputCount + _idealCount;
+                _recordSize = _recordCount*DoubleSize;
             }
             catch (IOException ex)
             {
@@ -190,28 +190,28 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream = new FileStream(file, FileMode.Open, FileAccess.Read);
-                binaryReader = new BinaryReader(stream);
-                binaryWriter = null;
+                _stream = new FileStream(_file, FileMode.Open, FileAccess.Read);
+                _binaryReader = new BinaryReader(_stream);
+                _binaryWriter = null;
 
                 bool isEncogFile = true;
 
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == 'E' : false;
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == 'N' : false;
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == 'C' : false;
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == 'O' : false;
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == 'G' : false;
-                isEncogFile = isEncogFile ? binaryReader.ReadByte() == '-' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == 'E' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == 'N' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == 'C' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == 'O' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == 'G' : false;
+                isEncogFile = isEncogFile ? _binaryReader.ReadByte() == '-' : false;
 
                 if (!isEncogFile)
                 {
                     throw new BufferedDataError(
                         "File is not a valid Encog binary file:"
-                        + file);
+                        + _file);
                 }
 
-                var v1 = (char) binaryReader.ReadByte();
-                var v2 = (char) binaryReader.ReadByte();
+                var v1 = (char) _binaryReader.ReadByte();
+                var v2 = (char) _binaryReader.ReadByte();
                 String versionStr = "" + v1 + v2;
 
                 try
@@ -228,12 +228,12 @@ namespace Encog.ML.Data.Buffer
                     throw new BufferedDataError("File has invalid version number.");
                 }
 
-                inputCount = (int) binaryReader.ReadDouble();
-                idealCount = (int) binaryReader.ReadDouble();
+                _inputCount = (int) _binaryReader.ReadDouble();
+                _idealCount = (int) _binaryReader.ReadDouble();
 
-                recordCount = inputCount + idealCount;
-                recordSize = recordCount*DOUBLE_SIZE;
-                numberOfRecords = (int) ((stream.Length - HEADER_SIZE)/recordSize);
+                _recordCount = _inputCount + _idealCount;
+                _recordSize = _recordCount*DoubleSize;
+                _numberOfRecords = (int) ((_stream.Length - HeaderSize)/_recordSize);
             }
             catch (IOException ex)
             {
@@ -248,22 +248,22 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                if (binaryWriter != null)
+                if (_binaryWriter != null)
                 {
-                    binaryWriter.Close();
-                    binaryWriter = null;
+                    _binaryWriter.Close();
+                    _binaryWriter = null;
                 }
 
-                if (binaryReader != null)
+                if (_binaryReader != null)
                 {
-                    binaryReader.Close();
-                    binaryReader = null;
+                    _binaryReader.Close();
+                    _binaryReader = null;
                 }
 
-                if (stream != null)
+                if (_stream != null)
                 {
-                    stream.Close();
-                    stream = null;
+                    _stream.Close();
+                    _stream = null;
                 }
             }
             catch (IOException ex)
@@ -279,7 +279,7 @@ namespace Encog.ML.Data.Buffer
         /// <returns>The index.</returns>
         private int CalculateIndex(int row)
         {
-            return HEADER_SIZE + (row*recordSize);
+            return HeaderSize + (row*_recordSize);
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace Encog.ML.Data.Buffer
         /// <returns>THe value read.</returns>
         private int CalculateIndex(int row, int col)
         {
-            return HEADER_SIZE + (row*recordSize)
-                   + (col*DOUBLE_SIZE);
+            return HeaderSize + (row*_recordSize)
+                   + (col*DoubleSize);
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream.Position = CalculateIndex(row);
+                _stream.Position = CalculateIndex(row);
             }
             catch (IOException ex)
             {
@@ -320,8 +320,8 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream.Position = CalculateIndex(row, col);
-                binaryWriter.Write(v);
+                _stream.Position = CalculateIndex(row, col);
+                _binaryWriter.Write(v);
             }
             catch (IOException ex)
             {
@@ -338,10 +338,10 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream.Position = CalculateIndex(row, 0);
-                for (int i = 0; i < v.Length; i++)
+                _stream.Position = CalculateIndex(row, 0);
+                foreach (double t in v)
                 {
-                    binaryWriter.Write(v[i]);
+                    _binaryWriter.Write(t);
                 }
             }
             catch (IOException ex)
@@ -358,9 +358,9 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                for (int i = 0; i < v.Length; i++)
+                foreach (double t in v)
                 {
-                    binaryWriter.Write(v[i]);
+                    _binaryWriter.Write(t);
                 }
             }
             catch (IOException ex)
@@ -377,7 +377,7 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                binaryWriter.Write(b);
+                _binaryWriter.Write(b);
             }
             catch (IOException ex)
             {
@@ -395,8 +395,8 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream.Position = CalculateIndex(row, col);
-                return binaryReader.ReadDouble();
+                _stream.Position = CalculateIndex(row, col);
+                return _binaryReader.ReadDouble();
             }
             catch (IOException ex)
             {
@@ -413,11 +413,11 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                stream.Position = CalculateIndex(row, 0);
+                _stream.Position = CalculateIndex(row, 0);
 
-                for (int i = 0; i < recordCount; i++)
+                for (int i = 0; i < _recordCount; i++)
                 {
-                    d[i] = binaryReader.ReadDouble();
+                    d[i] = _binaryReader.ReadDouble();
                 }
             }
             catch (IOException ex)
@@ -436,7 +436,7 @@ namespace Encog.ML.Data.Buffer
             {
                 for (int i = 0; i < d.Length; i++)
                 {
-                    d[i] = binaryReader.ReadDouble();
+                    d[i] = _binaryReader.ReadDouble();
                 }
             }
             catch (IOException ex)
@@ -453,7 +453,7 @@ namespace Encog.ML.Data.Buffer
         {
             try
             {
-                return binaryReader.ReadDouble();
+                return _binaryReader.ReadDouble();
             }
             catch (IOException ex)
             {

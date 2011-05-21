@@ -245,9 +245,9 @@ namespace Encog.Neural.NEAT
         ///
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        public virtual MLData Compute(MLData input)
+        public virtual IMLData Compute(IMLData input)
         {
-            MLData result = new BasicMLData(outputCount);
+            IMLData result = new BasicMLData(outputCount);
 
             if (neurons.Count == 0)
             {

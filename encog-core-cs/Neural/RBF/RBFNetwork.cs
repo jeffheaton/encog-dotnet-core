@@ -144,9 +144,9 @@ namespace Encog.Neural.RBF
         #region MLRegression Members
 
         /// <inheritdoc/>
-        public MLData Compute(MLData input)
+        public IMLData Compute(IMLData input)
         {
-            MLData output = new BasicMLData(OutputCount);
+            IMLData output = new BasicMLData(OutputCount);
             flat.Compute(input.Data, output.Data);
             return output;
         }

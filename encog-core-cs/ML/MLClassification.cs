@@ -41,6 +41,6 @@ namespace Encog.ML
         ///
         /// <param name="input">The input data to classify.</param>
         /// <returns>The group that the data was classified into.</returns>
-        int Classify(MLData input);
+        int Classify(IMLData input);
     }
 }

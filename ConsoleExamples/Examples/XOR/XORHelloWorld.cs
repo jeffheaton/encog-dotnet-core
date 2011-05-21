@@ -102,7 +102,7 @@ namespace Encog.Examples.XOR
             Console.WriteLine(@"Neural Network Results:");
             foreach (MLDataPair pair in trainingSet)
             {
-                MLData output = network.Compute(pair.Input);
+                IMLData output = network.Compute(pair.Input);
                 Console.WriteLine(pair.Input[0] + @"," + pair.Input[1]
                                   + @", actual=" + output[0] + @",ideal=" + pair.Ideal[0]);
             }

@@ -57,7 +57,7 @@ namespace Encog.Examples.Hopfield.Simple
         /// </summary>
         /// <param name="b">A boolen array.</param>
         /// <returns>The boolen array in string form.</returns>
-        public String FormatBoolean(MLData b)
+        public String FormatBoolean(IMLData b)
         {
             StringBuilder result = new StringBuilder();
             result.Append('[');
@@ -93,7 +93,7 @@ namespace Encog.Examples.Hopfield.Simple
             bool[] pattern1 = { true, true, false, false };
             // This pattern will be presented
             bool[] pattern2 = { true, false, false, false };
-            MLData result;
+            IMLData result;
 
             BiPolarMLData data1 = new BiPolarMLData(pattern1);
             BiPolarMLData data2 = new BiPolarMLData(pattern2);

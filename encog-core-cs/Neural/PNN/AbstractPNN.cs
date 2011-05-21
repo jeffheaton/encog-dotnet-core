@@ -176,7 +176,7 @@ namespace Encog.Neural.PNN
         ///
         /// <param name="input">The input to the network.</param>
         /// <returns>The output from the network.</returns>
-        public abstract MLData Compute(MLData input);
+        public abstract IMLData Compute(IMLData input);
 
         /// <summary>
         /// Reset the confusion.

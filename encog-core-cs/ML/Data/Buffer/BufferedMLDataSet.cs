@@ -88,7 +88,7 @@ namespace Encog.ML.Data.Buffer
 #if !SILVERLIGHT
         [NonSerialized]
 #endif
-            private BufferedMLDataSet owner;
+            private BufferedMLDataSet _owner;
 
 
         /// <summary>
@@ -137,14 +137,7 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                if (egb == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return egb.NumberOfRecords;
-                }
+                return egb == null ? 0 : egb.NumberOfRecords;
             }
         }
 
@@ -170,8 +163,7 @@ namespace Encog.ML.Data.Buffer
         /// <returns>An additional training set.</returns>
         public MLDataSet OpenAdditional()
         {
-            var result = new BufferedMLDataSet(file);
-            result.owner = this;
+            var result = new BufferedMLDataSet(file) {_owner = this};
             additional.Add(result);
             return result;
         }
@@ -180,7 +172,7 @@ namespace Encog.ML.Data.Buffer
         /// Add only input data, for an unsupervised dataset. 
         /// </summary>
         /// <param name="data1">The data to be added.</param>
-        public void Add(MLData data1)
+        public void Add(IMLData data1)
         {
             if (!loading)
             {
@@ -196,7 +188,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         /// <param name="inputData">The input data.</param>
         /// <param name="idealData">The ideal data.</param>
-        public void Add(MLData inputData, MLData idealData)
+        public void Add(IMLData inputData, IMLData idealData)
         {
             if (!loading)
             {
@@ -229,17 +221,16 @@ namespace Encog.ML.Data.Buffer
         {
             Object[] obj = additional.ToArray();
 
-            for (int i = 0; i < obj.Length; i++)
+            foreach (var set in obj.Cast<BufferedMLDataSet>())
             {
-                var set = (BufferedMLDataSet) obj[i];
                 set.Close();
             }
 
             additional.Clear();
 
-            if (owner != null)
+            if (_owner != null)
             {
-                owner.RemoveAdditional(this);
+                _owner.RemoveAdditional(this);
             }
 
             egb.Close();
@@ -253,14 +244,7 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                if (egb == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return egb.IdealCount;
-                }
+                return egb == null ? 0 : egb.IdealCount;
             }
         }
 
@@ -271,14 +255,7 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                if (egb == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return egb.InputCount;
-                }
+                return egb == null ? 0 : egb.InputCount;
             }
         }
 
@@ -293,10 +270,7 @@ namespace Encog.ML.Data.Buffer
                 {
                     return false;
                 }
-                else
-                {
-                    return egb.IdealCount > 0;
-                }
+                return egb.IdealCount > 0;
             }
         }
 
@@ -394,8 +368,8 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public BufferedMLDataSet Owner
         {
-            get { return owner; }
-            set { owner = value; }
+            get { return _owner; }
+            set { _owner = value; }
         }
     }
 }

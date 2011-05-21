@@ -33,16 +33,16 @@ namespace Encog.MathUtil.Randomize
         /// The constant value.
         /// </summary>
         ///
-        private readonly double value_ren;
+        private readonly double value;
 
         /// <summary>
         /// Construct a range randomizer.
         /// </summary>
         ///
-        /// <param name="value_ren">The constant value.</param>
-        public ConstRandomizer(double value_ren)
+        /// <param name="v">The constant value.</param>
+        public ConstRandomizer(double v)
         {
-            this.value_ren = value_ren;
+            this.value = v;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Encog.MathUtil.Randomize
         /// <returns>The random number.</returns>
         public override double Randomize(double d)
         {
-            return value_ren;
+            return value;
         }
     }
 }

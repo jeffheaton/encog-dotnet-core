@@ -28,22 +28,15 @@ namespace Encog.MathUtil
     /// This class is used to convert strings into numeric values.  If the
     /// string holds a non-numeric value, a zero is returned.
     /// </summary>
-    public sealed class Convert
+    public static class Convert
     {
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        private Convert()
-        {
-        }
-
         /// <summary>
         /// Convert a string to a double.  Just make the number a zero
         /// if the string is invalid.
         /// </summary>
         /// <param name="str">The string.</param>
         /// <returns>The string converted to numeric.</returns>
-        public static double String2double(String str)
+        public static double String2Double(String str)
         {
             double result = 0;
             try
@@ -66,7 +59,7 @@ namespace Encog.MathUtil
         /// </summary>
         /// <param name="str">The string.</param>
         /// <returns>The string converted to numeric.</returns>
-        public static int String2int(String str)
+        public static int String2Int(String str)
         {
             int result = 0;
             try

@@ -34,12 +34,12 @@ namespace Encog.MathUtil
         /// <summary>
         /// Minimum number of classes for equilateral.
         /// </summary>
-        public const int MIN_EQ = 3;
+        public const int MinEq = 3;
 
         /// <summary>
         /// The matrix of values that was generated.
         /// </summary>
-        private readonly double[][] matrix;
+        private readonly double[][] _matrix;
 
         /// <summary>
         /// Construct an equilateral matrix.
@@ -49,7 +49,7 @@ namespace Encog.MathUtil
         /// <param name="low">The low value for the outputs.</param>
         public Equilateral(int count, double high, double low)
         {
-            matrix = Equilat(count, high, low);
+            _matrix = Equilat(count, high, low);
         }
 
 
@@ -64,7 +64,7 @@ namespace Encog.MathUtil
             double minValue = double.PositiveInfinity;
             int minSet = -1;
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < _matrix.GetLength(0); i++)
             {
                 double dist = GetDistance(activations, i);
                 if (dist < minValue)
@@ -83,7 +83,7 @@ namespace Encog.MathUtil
         /// <returns>The activations for the specified sets.</returns>
         public double[] Encode(int set)
         {
-            return matrix[set];
+            return _matrix[set];
         }
 
         /// <summary>
@@ -93,11 +93,9 @@ namespace Encog.MathUtil
         /// <param name="high">The high end of the range of values to generate.</param>
         /// <param name="low"> The low end of the range of values to generate.</param>
         /// <returns>One row for each set, the columns are the activations for that set.</returns>
-        private double[][] Equilat(int n,
+        private static double[][] Equilat(int n,
                                    double high, double low)
         {
-            double r, f;
-
             var result = new double[n][]; // n - 1
             for (int i = 0; i < n; i++)
             {
@@ -110,8 +108,8 @@ namespace Encog.MathUtil
             for (int k = 2; k < n; k++)
             {
                 // scale the matrix so far
-                r = k;
-                f = Math.Sqrt(r*r - 1.0)/r;
+                double r = k;
+                double f = Math.Sqrt(r*r - 1.0)/r;
                 for (int i = 0; i < k; i++)
                 {
                     for (int j = 0; j < k - 1; j++)
@@ -138,8 +136,8 @@ namespace Encog.MathUtil
             {
                 for (int col = 0; col < result[0].GetLength(0); col++)
                 {
-                    double min = -1;
-                    double max = 1;
+                    const double min = -1;
+                    const double max = 1;
                     result[row][col] = ((result[row][col] - min)/(max - min))
                                        *(high - low) + low;
                 }
@@ -159,7 +157,7 @@ namespace Encog.MathUtil
             double result = 0;
             for (int i = 0; i < data.GetLength(0); i++)
             {
-                result += Math.Pow(data[i] - matrix[set][i], 2);
+                result += Math.Pow(data[i] - _matrix[set][i], 2);
             }
             return Math.Sqrt(result);
         }
@@ -174,7 +172,7 @@ namespace Encog.MathUtil
             int bestSet = -1;
             double bestDistance = double.MaxValue;
 
-            for (int i = 0; i < matrix.Length; i++)
+            for (int i = 0; i < _matrix.Length; i++)
             {
                 double d = GetDistance(data, i);
                 if (bestSet == -1 || d < bestDistance)

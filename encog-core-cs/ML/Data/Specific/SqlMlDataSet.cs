@@ -22,7 +22,6 @@
 //
 #if !SILVERLIGHT
 using System;
-using System.Data.Common;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Buffer;
 using Encog.ML.Data.Buffer.CODEC;
@@ -47,8 +46,7 @@ namespace Encog.ML.Data.Specific
                             int idealSize, String connectString)
         {
             IDataSetCODEC codec = new SQLCODEC(sql, inputSize, idealSize, connectString);
-            var load = new MemoryDataLoader(codec);
-            load.Result = this;
+            var load = new MemoryDataLoader(codec) {Result = this};
             load.External2Memory();
         }
     }

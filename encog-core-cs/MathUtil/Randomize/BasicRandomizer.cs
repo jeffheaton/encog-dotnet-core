@@ -37,24 +37,24 @@ namespace Encog.MathUtil.Randomize
         /// The random number generator.
         /// </summary>
         ///
-        private Random random;
+        private Random _random;
 
         /// <summary>
         /// Construct a random number generator with a random(current time) seed. If
         /// you want to set your own seed, just call "getRandom().setSeed".
         /// </summary>
         ///
-        public BasicRandomizer()
+        protected BasicRandomizer()
         {
-            random = new Random((int) (DateTime.Now.Ticks*100));
+            _random = new Random((int) (DateTime.Now.Ticks*100));
         }
 
 
         /// <value>the random to set</value>
         public Random Random
         {
-            get { return random; }
-            set { random = value; }
+            get { return _random; }
+            set { _random = value; }
         }
 
         #region IRandomizer Members
@@ -95,11 +95,11 @@ namespace Encog.MathUtil.Randomize
         /// <param name="d">An array to randomize.</param>
         public virtual void Randomize(double[][] d)
         {
-            for (int r = 0; r < d.Length; r++)
+            foreach (double[] t in d)
             {
-                for (int c = 0; c < d[0].Length; c++)
+                for (var c = 0; c < d[0].Length; c++)
                 {
-                    d[r][c] = Randomize(d[r][c]);
+                    t[c] = Randomize(t[c]);
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace Encog.MathUtil.Randomize
         /// <returns>The next double.</returns>
         public double NextDouble()
         {
-            return random.NextDouble();
+            return _random.NextDouble();
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Encog.MathUtil.Randomize
         public double NextDouble(double min, double max)
         {
             double range = max - min;
-            return (range*random.NextDouble()) + min;
+            return (range*_random.NextDouble()) + min;
         }
 
         /// <summary>

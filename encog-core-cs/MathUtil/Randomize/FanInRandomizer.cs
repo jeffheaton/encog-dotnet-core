@@ -42,38 +42,38 @@ namespace Encog.Mathutil.Randomize
         /// Error message. Can't use fan-in on a single number.
         /// </summary>
         ///
-        internal const String ERROR = "To use FanInRandomizer you must "
+        internal const String Error = "To use FanInRandomizer you must "
                                       + "present a Matrix or 2D array type value.";
 
         /// <summary>
         /// The default boundary.
         /// </summary>
         ///
-        private const double DEFAULT_BOUNDARY = 2.4d;
+        private const double DefaultBoundary = 2.4d;
 
         /// <summary>
         /// The lower bound. 
         /// </summary>
         ///
-        private readonly double lowerBound;
+        private readonly double _lowerBound;
 
         /// <summary>
         /// Should the square root of the number of rows be used?
         /// </summary>
         ///
-        private readonly bool sqrt;
+        private readonly bool _sqrt;
 
         /// <summary>
         /// The upper bound. 
         /// </summary>
         ///
-        private readonly double upperBound;
+        private readonly double _upperBound;
 
         /// <summary>
         /// Create a fan-in randomizer with default values.
         /// </summary>
         ///
-        public FanInRandomizer() : this(-DEFAULT_BOUNDARY, DEFAULT_BOUNDARY, false)
+        public FanInRandomizer() : this(-DefaultBoundary, DefaultBoundary, false)
         {
         }
 
@@ -83,8 +83,8 @@ namespace Encog.Mathutil.Randomize
         /// </summary>
         ///
         /// <param name="boundary">The boundary for the fan-in.</param>
-        /// <param name="sqrt_0"></param>
-        public FanInRandomizer(double boundary, bool sqrt_0) : this(-boundary, boundary, sqrt_0)
+        /// <param name="sqrt"></param>
+        public FanInRandomizer(double boundary, bool sqrt) : this(-boundary, boundary, sqrt)
         {
         }
 
@@ -94,13 +94,13 @@ namespace Encog.Mathutil.Randomize
         ///
         /// <param name="aLowerBound">The lower bound.</param>
         /// <param name="anUpperBound">The upper bound.</param>
-        /// <param name="sqrt_0"></param>
+        /// <param name="sqrt"></param>
         public FanInRandomizer(double aLowerBound, double anUpperBound,
-                               bool sqrt_0)
+                               bool sqrt)
         {
-            lowerBound = aLowerBound;
-            upperBound = anUpperBound;
-            sqrt = sqrt_0;
+            _lowerBound = aLowerBound;
+            _upperBound = anUpperBound;
+            _sqrt = sqrt;
         }
 
         /// <summary>
@@ -111,28 +111,19 @@ namespace Encog.Mathutil.Randomize
         /// <returns>The fan-in value.</returns>
         private double CalculateValue(int rows)
         {
-            double rowValue;
+            double rowValue = _sqrt ? Math.Sqrt(rows) : rows;
 
-            if (sqrt)
-            {
-                rowValue = Math.Sqrt(rows);
-            }
-            else
-            {
-                rowValue = rows;
-            }
-
-            return (lowerBound/rowValue) + NextDouble()
-                   *((upperBound - lowerBound)/rowValue);
+            return (_lowerBound/rowValue) + NextDouble()
+                   *((_upperBound - _lowerBound)/rowValue);
         }
 
         /// <summary>
         /// Throw an error if this class is used improperly.
         /// </summary>
         ///
-        private void CauseError()
+        private static void CauseError()
         {
-            throw new EncogError(ERROR);
+            throw new EncogError(Error);
         }
 
         /// <summary>
@@ -172,11 +163,11 @@ namespace Encog.Mathutil.Randomize
         /// <param name="d">An array to randomize.</param>
         public override void Randomize(double[][] d)
         {
-            for (int row = 0; row < d.Length; row++)
+            foreach (double[] t in d)
             {
-                for (int col = 0; col < d[0].Length; col++)
+                for (var col = 0; col < d[0].Length; col++)
                 {
-                    d[row][col] = CalculateValue(d.Length);
+                    t[col] = CalculateValue(d.Length);
                 }
             }
         }
@@ -213,8 +204,7 @@ namespace Encog.Mathutil.Randomize
             {
                 for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
                 {
-                    double v = network.GetWeight(fromLayer, fromNeuron, toNeuron);
-                    v = CalculateValue(toCount);
+                    double v = CalculateValue(toCount);
                     network.SetWeight(fromLayer, fromNeuron, toNeuron, v);
                 }
             }
