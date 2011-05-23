@@ -39,50 +39,50 @@ namespace Encog.Neural.Thermal
         /// The property for run cycles.
         /// </summary>
         ///
-        public const String PARAM_RUN_CYCLES = "runCycles";
+        public const String ParamRunCycles = "runCycles";
 
         /// <summary>
         /// The property for anneal cycles.
         /// </summary>
         ///
-        public const String PARAM_ANNEAL_CYCLES = "annealCycles";
+        public const String ParamAnnealCycles = "annealCycles";
 
         /// <summary>
         /// The number of cycles to anneal for.
         /// </summary>
         ///
-        private int annealCycles;
+        private int _annealCycles;
 
         /// <summary>
         /// Count used to internally determine if a neuron is "off".
         /// </summary>
         [NonSerialized]
-        private int[] off;
+        private int[] _off;
 
         /// <summary>
         /// Count used to internally determine if a neuron is "on".
         /// </summary>
         [NonSerialized]
-        private int[] on;
+        private int[] _on;
 
         /// <summary>
         /// The number of cycles to run the network through before annealing.
         /// </summary>
         ///
-        private int runCycles;
+        private int _runCycles;
 
         /// <summary>
         /// The current temperature of the neural network. The higher the
         /// temperature, the more random the network will behave.
         /// </summary>
         ///
-        private double temperature;
+        private double _temperature;
 
         /// <summary>
         /// The thresholds.
         /// </summary>
         ///
-        private double[] threshold;
+        private double[] _threshold;
 
         /// <summary>
         /// Default constructors.
@@ -90,8 +90,8 @@ namespace Encog.Neural.Thermal
         ///
         public BoltzmannMachine()
         {
-            annealCycles = 100;
-            runCycles = 1000;
+            _annealCycles = 100;
+            _runCycles = 1000;
         }
 
         /// <summary>
@@ -99,18 +99,18 @@ namespace Encog.Neural.Thermal
         /// </summary>
         public BoltzmannMachine(int neuronCount) : base(neuronCount)
         {
-            annealCycles = 100;
-            runCycles = 1000;
+            _annealCycles = 100;
+            _runCycles = 1000;
 
-            threshold = new double[neuronCount];
+            _threshold = new double[neuronCount];
         }
 
 
         /// <value>the annealCycles to set</value>
         public int AnnealCycles
         {
-            get { return annealCycles; }
-            set { annealCycles = value; }
+            get { return _annealCycles; }
+            set { _annealCycles = value; }
         }
 
 
@@ -132,8 +132,8 @@ namespace Encog.Neural.Thermal
         /// <value>the runCycles to set</value>
         public int RunCycles
         {
-            get { return runCycles; }
-            set { runCycles = value; }
+            get { return _runCycles; }
+            set { _runCycles = value; }
         }
 
 
@@ -142,8 +142,8 @@ namespace Encog.Neural.Thermal
         /// </summary>
         public double Temperature
         {
-            get { return temperature; }
-            set { temperature = value; }
+            get { return _temperature; }
+            set { _temperature = value; }
         }
 
 
@@ -152,8 +152,8 @@ namespace Encog.Neural.Thermal
         /// </summary>
         public double[] Threshold
         {
-            get { return threshold; }
-            set { threshold = value; }
+            get { return _threshold; }
+            set { _threshold = value; }
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Encog.Neural.Thermal
         /// <param name="d">The amount to decrease by.</param>
         public void DecreaseTemperature(double d)
         {
-            temperature *= d;
+            _temperature *= d;
         }
 
         /// <summary>
@@ -192,39 +192,39 @@ namespace Encog.Neural.Thermal
         {
             int count = NeuronCount;
 
-            if (on == null)
+            if (_on == null)
             {
-                on = new int[count];
-                off = new int[count];
+                _on = new int[count];
+                _off = new int[count];
             }
 
             for (int i = 0; i < count; i++)
             {
-                on[i] = 0;
-                off[i] = 0;
+                _on[i] = 0;
+                _off[i] = 0;
             }
 
-            for (int n = 0; n < runCycles*count; n++)
+            for (int n = 0; n < _runCycles*count; n++)
             {
                 Run((int) RangeRandomizer.Randomize(0, count - 1));
             }
-            for (int n_0 = 0; n_0 < annealCycles*count; n_0++)
+            for (int n = 0; n < _annealCycles*count; n++)
             {
-                var i_1 = (int) RangeRandomizer.Randomize(0, count - 1);
-                Run(i_1);
-                if (CurrentState.GetBoolean(i_1))
+                var i = (int) RangeRandomizer.Randomize(0, count - 1);
+                Run(i);
+                if (CurrentState.GetBoolean(i))
                 {
-                    on[i_1]++;
+                    _on[i]++;
                 }
                 else
                 {
-                    off[i_1]++;
+                    _off[i]++;
                 }
             }
 
-            for (int i_2 = 0; i_2 < count; i_2++)
+            for (int i = 0; i < count; i++)
             {
-                CurrentState.SetBoolean(i_2, on[i_2] > off[i_2]);
+                CurrentState.SetBoolean(i, _on[i] > _off[i]);
             }
         }
 
@@ -250,25 +250,17 @@ namespace Encog.Neural.Thermal
         public void Run(int i)
         {
             int j;
-            double sum, probability;
 
             int count = NeuronCount;
 
-            sum = 0;
+            double sum = 0;
             for (j = 0; j < count; j++)
             {
                 sum += GetWeight(i, j)*((CurrentState.GetBoolean(j)) ? 1 : 0);
             }
-            sum -= threshold[i];
-            probability = 1/(1 + BoundMath.Exp(-sum/temperature));
-            if (RangeRandomizer.Randomize(0, 1) <= probability)
-            {
-                CurrentState.SetBoolean(i, true);
-            }
-            else
-            {
-                CurrentState.SetBoolean(i, false);
-            }
+            sum -= _threshold[i];
+            double probability = 1/(1 + BoundMath.Exp(-sum/_temperature));
+            CurrentState.SetBoolean(i, RangeRandomizer.Randomize(0, 1) <= probability);
         }
 
         /// <summary>

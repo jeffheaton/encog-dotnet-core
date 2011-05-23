@@ -22,6 +22,7 @@
 //
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Encog.Parse
 {
@@ -36,17 +37,17 @@ namespace Encog.Parse
         /// <summary>
         /// The underlying stream.
         /// </summary>
-        private readonly Stream stream;
+        private readonly Stream _stream;
 
         /// <summary>
         /// Bytes that have been peeked at.
         /// </summary>
-        private byte[] peekBytes;
+        private byte[] _peekBytes;
 
         /// <summary>
         /// How many bytes have been peeked at.
         /// </summary>
-        private int peekLength;
+        private int _peekLength;
 
         /// <summary>
         /// Construct a peekable input stream based on the specified stream.
@@ -54,9 +55,9 @@ namespace Encog.Parse
         /// <param name="stream">The underlying stream.</param>
         public PeekableInputStream(Stream stream)
         {
-            this.stream = stream;
-            peekBytes = new byte[10];
-            peekLength = 0;
+            _stream = stream;
+            _peekBytes = new byte[10];
+            _peekLength = 0;
         }
 
         /// <summary>
@@ -111,8 +112,8 @@ namespace Encog.Parse
         /// <summary>
         /// Not supported.
         /// </summary>
-        /// <param name="value_ren">The length.</param>
-        public override void SetLength(long value_ren)
+        /// <param name="v">The length.</param>
+        public override void SetLength(long v)
         {
             throw new NotSupportedException();
         }
@@ -137,9 +138,9 @@ namespace Encog.Parse
         /// <returns>The number of bytes read.</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (peekLength == 0)
+            if (_peekLength == 0)
             {
-                return stream.Read(buffer, offset, count);
+                return _stream.Read(buffer, offset, count);
             }
 
             for (int i = 0; i < count; i++)
@@ -170,8 +171,7 @@ namespace Encog.Parse
             int count = Read(b, 0, 1);
             if (count < 1)
                 return -1;
-            else
-                return b[0];
+            return b[0];
         }
 
         /// <summary>
@@ -182,41 +182,41 @@ namespace Encog.Parse
         public int Peek(int depth)
         {
             // does the size of the peek buffer need to be extended?
-            if (peekBytes.Length <= depth)
+            if (_peekBytes.Length <= depth)
             {
                 var temp = new byte[depth + 10];
-                for (int i = 0; i < peekBytes.Length; i++)
+                for (int i = 0; i < _peekBytes.Length; i++)
                 {
-                    temp[i] = peekBytes[i];
+                    temp[i] = _peekBytes[i];
                 }
-                peekBytes = temp;
+                _peekBytes = temp;
             }
 
             // does more data need to be read?
-            if (depth >= peekLength)
+            if (depth >= _peekLength)
             {
-                int offset = peekLength;
-                int length = (depth - peekLength) + 1;
-                int lengthRead = stream.Read(peekBytes, offset, length);
+                int offset = _peekLength;
+                int length = (depth - _peekLength) + 1;
+                int lengthRead = _stream.Read(_peekBytes, offset, length);
 
                 if (lengthRead < 1)
                 {
                     return -1;
                 }
 
-                peekLength = depth + 1;
+                _peekLength = depth + 1;
             }
 
-            return peekBytes[depth];
+            return _peekBytes[depth];
         }
 
         private byte Pop()
         {
-            byte result = peekBytes[0];
-            peekLength--;
-            for (int i = 0; i < peekLength; i++)
+            byte result = _peekBytes[0];
+            _peekLength--;
+            for (int i = 0; i < _peekLength; i++)
             {
-                peekBytes[i] = peekBytes[i + 1];
+                _peekBytes[i] = _peekBytes[i + 1];
             }
 
             return result;
@@ -239,14 +239,7 @@ namespace Encog.Parse
         /// <returns>True if the string was found.</returns>
         public bool Peek(String str)
         {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (Peek(i) != str[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            return !str.Where((t, i) => Peek(i) != t).Any();
         }
 
 

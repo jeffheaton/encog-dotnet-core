@@ -28,308 +28,300 @@ namespace Encog.Persist
     /// Some common persistance constants.
     /// </summary>
     ///
-    public sealed class PersistConst
+    public static class PersistConst
     {
         /// <summary>
         /// A Hopfield neural network.
         /// </summary>
         ///
-        public const String TYPE_HOPFIELD = "HopfieldNetwork";
+        public const String TypeHopfield = "HopfieldNetwork";
 
         /// <summary>
         /// A Boltzmann machine.
         /// </summary>
         ///
-        public const String TYPE_BOLTZMANN = "BoltzmannMachine";
+        public const String TypeBoltzmann = "BoltzmannMachine";
 
         /// <summary>
         /// An ART1 neural network.
         /// </summary>
         ///
-        public const String TYPE_ART1 = "ART1";
+        public const String TypeART1 = "ART1";
 
         /// <summary>
         /// A BAM neural network.
         /// </summary>
         ///
-        public const String TYPE_BAM = "BAM";
+        public const String TypeBAM = "BAM";
 
         /// <summary>
         /// A SOM neural network.
         /// </summary>
         ///
-        public const String TYPE_SOM = "SOM";
+        public const String TypeSOM = "SOM";
 
         /// <summary>
         /// A NEAT neural network.
         /// </summary>
         ///
-        public const String TYPE_NEAT = "NEATNetwork";
+        public const String TypeNEAT = "NEATNetwork";
 
         /// <summary>
         /// A NEAT population.
         /// </summary>
         ///
-        public const String TYPE_NEAT_POPULATION = "NEATPopulation";
+        public const String TypeNEATPopulation = "NEATPopulation";
 
         /// <summary>
         /// A species.
         /// </summary>
         ///
-        public const String TYPE_BASIC_SPECIES = "BasicSpecies";
+        public const String TypeBasicSpecies = "BasicSpecies";
 
         /// <summary>
         /// A neuron gene.
         /// </summary>
         ///
-        public const String TYPE_NEAT_NEURON_GENE = "NEATNeuronGene";
+        public const String TypeNEATNeuronGene = "NEATNeuronGene";
 
         /// <summary>
         /// A support vector machine.
         /// </summary>
         ///
-        public const String TYPE_SVM = "SVM";
+        public const String TypeSVM = "SVM";
 
         /// <summary>
         /// A neural network.
         /// </summary>
         ///
-        public const String TYPE_BASIC_NETWORK = "BasicNetwork";
+        public const String TypeBasicNetwork = "BasicNetwork";
 
         /// <summary>
         /// A RBF network.
         /// </summary>
         ///
-        public const String TYPE_RBF_NETWORK = "RBFNetwork";
+        public const String TypeRBFNetwork = "RBFNetwork";
 
         /// <summary>
         /// A name.
         /// </summary>
         ///
-        public const String NAME = "name";
+        public const String Name = "name";
 
         /// <summary>
         /// A description.
         /// </summary>
         ///
-        public const String DESCRIPTION = "description";
+        public const String Description = "description";
 
         /// <summary>
         /// Neurons.
         /// </summary>
         ///
-        public const String NEURON_COUNT = "neurons";
+        public const String NeuronCount = "neurons";
 
         /// <summary>
         /// Thresholds.
         /// </summary>
         ///
-        public const String THRESHOLDS = "thresholds";
+        public const String Thresholds = "thresholds";
 
         /// <summary>
         /// Weights.
         /// </summary>
         ///
-        public const String WEIGHTS = "weights";
+        public const String Weights = "weights";
 
         /// <summary>
         /// Output.
         /// </summary>
         ///
-        public const String OUTPUT = "output";
+        public const String Output = "output";
 
         /// <summary>
         /// Native.
         /// </summary>
         ///
-        public const String NATIVE = "native";
+        public const String Native = "native";
 
         /// <summary>
         /// Temperature.
         /// </summary>
         ///
-        public const String TEMPERATURE = "temperature";
+        public const String Temperature = "temperature";
 
         /// <summary>
         /// The input count.
         /// </summary>
         ///
-        public const String INPUT_COUNT = "inputCount";
+        public const String InputCount = "inputCount";
 
         /// <summary>
         /// The output count.
         /// </summary>
         ///
-        public const String OUTPUT_COUNT = "outputCount";
+        public const String OutputCount = "outputCount";
 
         /// <summary>
         /// List.
         /// </summary>
         ///
-        public const String LIST = "list";
+        public const String List = "list";
 
         /// <summary>
         /// Data.
         /// </summary>
         ///
-        public const String DATA = "data";
+        public const String Data = "data";
 
         /// <summary>
         /// matrix.
         /// </summary>
         ///
-        public const String MATRIX = "matrix";
+        public const String Matrix = "matrix";
 
         /// <summary>
         /// An activation function.
         /// </summary>
         ///
-        public const String ACTIVATION_TYPE = "af";
+        public const String ActivationType = "af";
 
         /// <summary>
         /// The F1 count.
         /// </summary>
         ///
-        public const String PROPERTY_F1_COUNT = "f1Count";
+        public const String PropertyF1Count = "f1Count";
 
         /// <summary>
         /// The F2 count.
         /// </summary>
         ///
-        public const String PROPERTY_F2_COUNT = "f2Count";
+        public const String PropertyF2Count = "f2Count";
 
         /// <summary>
         /// The weights from F1 to F2.
         /// </summary>
         ///
-        public const String PROPERTY_WEIGHTS_F1_F2 = "weightsF1F2";
+        public const String PropertyWeightsF1F2 = "weightsF1F2";
 
         /// <summary>
         /// The weights from F2 to F1.
         /// </summary>
         ///
-        public const String PROPERTY_WEIGHTS_F2_F1 = "weightsF2F1";
+        public const String PropertyWeightsF2F1 = "weightsF2F1";
 
         /// <summary>
         /// Activation function.
         /// </summary>
         ///
-        public const String ACTIVATION_FUNCTION = "activationFunction";
+        public const String ActivationFunction = "activationFunction";
 
         /// <summary>
         /// Neuron count.
         /// </summary>
         ///
-        public const String NEURONS = "neurons";
+        public const String Neurons = "neurons";
 
         /// <summary>
         /// Type.
         /// </summary>
         ///
-        public const String TYPE = "type";
+        public const String Type = "type";
 
         /// <summary>
         /// Recurrent.
         /// </summary>
         ///
-        public const String RECURRENT = "recurrent";
+        public const String Recurrent = "recurrent";
 
         /// <summary>
         /// Weight.
         /// </summary>
         ///
-        public const String WEIGHT = "weight";
+        public const String Weight = "weight";
 
         /// <summary>
         /// Links.
         /// </summary>
         ///
-        public const String LINKS = "links";
+        public const String Links = "links";
 
         /// <summary>
         /// NEAT innovation.
         /// </summary>
         ///
-        public const String TYPE_NEAT_INNOVATION = "NEATInnovation";
+        public const String TypeNEATInnovation = "NEATInnovation";
 
         /// <summary>
         /// Property id.
         /// </summary>
         ///
-        public const String PROPERTY_ID = "id";
+        public const String PropertyID = "id";
 
         /// <summary>
         /// NEAT genome.
         /// </summary>
         ///
-        public const String TYPE_NEAT_GENOME = "NEATGenome";
+        public const String TypeNEATGenome = "NEATGenome";
 
         /// <summary>
         /// Enabled.
         /// </summary>
         ///
-        public const String ENABLED = "enabled";
+        public const String Enabled = "enabled";
 
         /// <summary>
         /// idata.
         /// </summary>
         ///
-        public const String IDATA = "idata";
+        public const String Idata = "idata";
 
         /// <summary>
         /// Properties.
         /// </summary>
         ///
-        public const String PROPERTIES = "properties";
+        public const String Properties = "properties";
 
         /// <summary>
         /// Version.
         /// </summary>
         ///
-        public const String VERSION = "ver";
+        public const String Version = "ver";
 
         /// <summary>
         /// Depth.
         /// </summary>
         ///
-        public const String DEPTH = "depth";
+        public const String Depth = "depth";
 
         /// <summary>
         /// Snapshot.
         /// </summary>
         ///
-        public const String SNAPSHOT = "snapshot";
+        public const String Snapshot = "snapshot";
 
         /// <summary>
         /// Error.
         /// </summary>
         ///
-        public const String ERROR = "error";
+        public const String Error = "error";
 
         /// <summary>
         /// Sigma.
         /// </summary>
         ///
-        public const String SIGMA = "sigma";
+        public const String Sigma = "sigma";
 
         /// <summary>
         /// Kernel.
         /// </summary>
         ///
-        public const String KERNEL = "kernel";
+        public const String Kernel = "kernel";
 
         /// <summary>
         /// Instar.
         /// </summary>
         ///
-        public const String INSTAR = "instar";
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        ///
-        private PersistConst()
-        {
-        }
+        public const String Instar = "instar";
     }
 }

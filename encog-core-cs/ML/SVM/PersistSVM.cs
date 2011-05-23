@@ -34,7 +34,7 @@ namespace Encog.ML.SVM
     /// Persist a SVM.
     /// </summary>
     ///
-    public class PersistSVM : EncogPersistor
+    public class PersistSVM : IEncogPersistor
     {
         /// <summary>
         /// The parameter to hold the const C.
@@ -175,7 +175,7 @@ namespace Encog.ML.SVM
                 {
                     IDictionary<String, String> p = section.ParseParams();
                     result.InputCount = EncogFileSection.ParseInt(p,
-                                                                  PersistConst.INPUT_COUNT);
+                                                                  PersistConst.InputCount);
                     result.Params.C = EncogFileSection.ParseDouble(p,
                                                                    ParamC);
                     result.Params.cache_size = EncogFileSection.ParseDouble(
@@ -241,7 +241,7 @@ namespace Encog.ML.SVM
             xout.AddSubSection("PARAMS");
             xout.AddProperties(svm2.Properties);
             xout.AddSubSection("SVM-PARAM");
-            xout.WriteProperty(PersistConst.INPUT_COUNT, svm2.InputCount);
+            xout.WriteProperty(PersistConst.InputCount, svm2.InputCount);
             xout.WriteProperty(ParamC, svm2.Params.C);
             xout.WriteProperty(ParamCacheSize,
                                svm2.Params.cache_size);

@@ -33,7 +33,7 @@ namespace Encog.Neural.ART
     /// </summary>
     ///
     [Serializable]
-    public class PersistART1 : EncogPersistor
+    public class PersistART1 : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -80,9 +80,9 @@ namespace Encog.Neural.ART
                     result.D1 = EncogFileSection.ParseDouble(p,
                                                              BasicART.PropertyD1);
                     result.F1Count = EncogFileSection.ParseInt(p,
-                                                               PersistConst.PROPERTY_F1_COUNT);
+                                                               PersistConst.PropertyF1Count);
                     result.F2Count = EncogFileSection.ParseInt(p,
-                                                               PersistConst.PROPERTY_F2_COUNT);
+                                                               PersistConst.PropertyF2Count);
                     result.NoWinner = EncogFileSection.ParseInt(p,
                                                                 BasicART.PropertyNoWinner);
                     result.L = EncogFileSection
@@ -90,9 +90,9 @@ namespace Encog.Neural.ART
                     result.Vigilance = EncogFileSection.ParseDouble(p,
                                                                     BasicART.PropertyVigilance);
                     result.WeightsF1ToF2 = EncogFileSection.ParseMatrix(p,
-                                                                        PersistConst.PROPERTY_WEIGHTS_F1_F2);
+                                                                        PersistConst.PropertyWeightsF1F2);
                     result.WeightsF2ToF1 = EncogFileSection.ParseMatrix(p,
-                                                                        PersistConst.PROPERTY_WEIGHTS_F2_F1);
+                                                                        PersistConst.PropertyWeightsF2F1);
                 }
             }
 
@@ -113,14 +113,14 @@ namespace Encog.Neural.ART
             xout.WriteProperty(BasicART.PropertyB1, art1.B1);
             xout.WriteProperty(BasicART.PropertyC1, art1.C1);
             xout.WriteProperty(BasicART.PropertyD1, art1.D1);
-            xout.WriteProperty(PersistConst.PROPERTY_F1_COUNT, art1.F1Count);
-            xout.WriteProperty(PersistConst.PROPERTY_F2_COUNT, art1.F2Count);
+            xout.WriteProperty(PersistConst.PropertyF1Count, art1.F1Count);
+            xout.WriteProperty(PersistConst.PropertyF2Count, art1.F2Count);
             xout.WriteProperty(BasicART.PropertyNoWinner, art1.NoWinner);
             xout.WriteProperty(BasicART.PropertyL, art1.L);
             xout.WriteProperty(BasicART.PropertyVigilance, art1.Vigilance);
-            xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F1_F2,
+            xout.WriteProperty(PersistConst.PropertyWeightsF1F2,
                                art1.WeightsF1ToF2);
-            xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F2_F1,
+            xout.WriteProperty(PersistConst.PropertyWeightsF2F1,
                                art1.WeightsF2ToF1);
 
             xout.Flush();

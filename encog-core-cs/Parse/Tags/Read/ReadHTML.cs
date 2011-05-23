@@ -43,7 +43,7 @@ namespace Encog.Parse.Tags.Read
         /// Parse the attribute name.
         /// </summary>
         /// <returns>The attribute name.</returns>
-        protected String parseAttributeName()
+        protected String ParseAttributeName()
         {
             String result = base.ParseAttributeName();
             return result.ToLower();

@@ -45,15 +45,15 @@ namespace Encog.Parse.Tags
             /// <summary>
             /// A beginning tag.
             /// </summary>
-            BEGIN,
+            Begin,
             /// <summary>
             /// An ending tag.
             /// </summary>
-            END,
+            End,
             /// <summary>
             /// A comment.
             /// </summary>
-            COMMENT,
+            Comment,
             /// <summary>
             /// A CDATA section.
             /// </summary>
@@ -64,27 +64,27 @@ namespace Encog.Parse.Tags
         /// <summary>
         /// The tag's attributes.
         /// </summary>
-        private readonly IDictionary<String, String> attributes =
+        private readonly IDictionary<String, String> _attributes =
             new Dictionary<String, String>();
 
         /// <summary>
         /// The tag name.
         /// </summary>
-        private String name = "";
+        private String _name = "";
 
         /// <summary>
         /// The tag type.
         /// </summary>
-        private Type type;
+        private Type _type;
 
         /// <summary>
         /// Clear the name, type and attributes.
         /// </summary>
         public void Clear()
         {
-            attributes.Clear();
-            name = "";
-            type = Type.BEGIN;
+            _attributes.Clear();
+            _name = "";
+            _type = Type.Begin;
         }
 
         /// <summary>
@@ -93,12 +93,10 @@ namespace Encog.Parse.Tags
         /// <returns>A cloned copy of the object.</returns>
         public virtual object Clone()
         {
-            var result = new Tag();
-            result.Name = Name;
-            result.TagType = TagType;
-            foreach (String key in attributes.Keys)
+            var result = new Tag {Name = Name, TagType = TagType};
+            foreach (String key in _attributes.Keys)
             {
-                String value = attributes[key];
+                String value = _attributes[key];
                 result.Attributes[key] = value;
             }
             return result;
@@ -134,7 +132,7 @@ namespace Encog.Parse.Tags
         /// </summary>
         public IDictionary<String, String> Attributes
         {
-            get { return attributes; }
+            get { return _attributes; }
         }
 
         /// <summary>
@@ -144,10 +142,10 @@ namespace Encog.Parse.Tags
         /// <returns>The value of the specified attribute.</returns>
         public String GetAttributeValue(String name)
         {
-            if (!attributes.ContainsKey(name))
+            if (!_attributes.ContainsKey(name))
                 return null;
 
-            return attributes[name];
+            return _attributes[name];
         }
 
 
@@ -156,8 +154,8 @@ namespace Encog.Parse.Tags
         /// </summary>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         /// <summary>
@@ -165,18 +163,18 @@ namespace Encog.Parse.Tags
         /// </summary>
         public Type TagType
         {
-            get { return type; }
-            set { type = value; }
+            get { return _type; }
+            set { _type = value; }
         }
 
         /// <summary>
         /// Set a HTML attribute.
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
-        /// <param name="value_ren">The value of the attribute.</param>
-        public void SetAttribute(String name, String value_ren)
+        /// <param name="valueRen">The value of the attribute.</param>
+        public void SetAttribute(String name, String valueRen)
         {
-            attributes[name] = value_ren;
+            _attributes[name] = valueRen;
         }
 
         /// <summary>
@@ -188,17 +186,17 @@ namespace Encog.Parse.Tags
         {
             var buffer = new StringBuilder("<");
 
-            if (type == Type.END)
+            if (_type == Type.End)
             {
                 buffer.Append("/");
             }
 
-            buffer.Append(name);
+            buffer.Append(_name);
 
-            ICollection<String> set = attributes.Keys;
+            ICollection<String> set = _attributes.Keys;
             foreach (String key in set)
             {
-                String value = attributes[key];
+                String value = _attributes[key];
                 buffer.Append(' ');
 
                 if (value == null)

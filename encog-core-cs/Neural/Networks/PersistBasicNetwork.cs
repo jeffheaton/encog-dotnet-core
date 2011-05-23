@@ -36,7 +36,7 @@ namespace Encog.Neural.Networks
     /// Persist a basic network.
     /// </summary>
     ///
-    public class PersistBasicNetwork : EncogPersistor
+    public class PersistBasicNetwork : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -95,7 +95,7 @@ namespace Encog.Neural.Networks
                     flat.HasContext = EncogFileSection.ParseBoolean(p,
                                                                     BasicNetwork.TagHasContext);
                     flat.InputCount = EncogFileSection.ParseInt(p,
-                                                                PersistConst.INPUT_COUNT);
+                                                                PersistConst.InputCount);
                     flat.LayerCounts = EncogFileSection.ParseIntArray(p,
                                                                       BasicNetwork.TagLayerCounts);
                     flat.LayerFeedCounts = EncogFileSection.ParseIntArray(p,
@@ -105,13 +105,13 @@ namespace Encog.Neural.Networks
                     flat.LayerIndex = EncogFileSection.ParseIntArray(p,
                                                                      BasicNetwork.TagLayerIndex);
                     flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
-                                                                         PersistConst.OUTPUT);
+                                                                         PersistConst.Output);
                     flat.OutputCount = EncogFileSection.ParseInt(p,
-                                                                 PersistConst.OUTPUT_COUNT);
+                                                                 PersistConst.OutputCount);
                     flat.WeightIndex = EncogFileSection.ParseIntArray(p,
                                                                       BasicNetwork.TagWeightIndex);
                     flat.Weights = EncogFileSection.ParseDoubleArray(p,
-                                                                     PersistConst.WEIGHTS);
+                                                                     PersistConst.Weights);
                     flat.BiasActivation = EncogFileSection.ParseDoubleArray(
                         p, BasicNetwork.TagBiasActivation);
                 }
@@ -184,17 +184,17 @@ namespace Encog.Neural.Networks
                                flat.ContextTargetSize);
             xout.WriteProperty(BasicNetwork.TagEndTraining, flat.EndTraining);
             xout.WriteProperty(BasicNetwork.TagHasContext, flat.HasContext);
-            xout.WriteProperty(PersistConst.INPUT_COUNT, flat.InputCount);
+            xout.WriteProperty(PersistConst.InputCount, flat.InputCount);
             xout.WriteProperty(BasicNetwork.TagLayerCounts, flat.LayerCounts);
             xout.WriteProperty(BasicNetwork.TagLayerFeedCounts,
                                flat.LayerFeedCounts);
             xout.WriteProperty(BasicNetwork.TagLayerContextCount,
                                flat.LayerContextCount);
             xout.WriteProperty(BasicNetwork.TagLayerIndex, flat.LayerIndex);
-            xout.WriteProperty(PersistConst.OUTPUT, flat.LayerOutput);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, flat.OutputCount);
+            xout.WriteProperty(PersistConst.Output, flat.LayerOutput);
+            xout.WriteProperty(PersistConst.OutputCount, flat.OutputCount);
             xout.WriteProperty(BasicNetwork.TagWeightIndex, flat.WeightIndex);
-            xout.WriteProperty(PersistConst.WEIGHTS, flat.Weights);
+            xout.WriteProperty(PersistConst.Weights, flat.Weights);
             xout.WriteProperty(BasicNetwork.TagBiasActivation,
                                flat.BiasActivation);
             xout.AddSubSection("ACTIVATION");

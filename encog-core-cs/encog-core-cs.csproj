@@ -448,7 +448,7 @@
     <Compile Include="Neural\Thermal\ThermalNetwork.cs" />
     <Compile Include="Persist\EncogDirectoryPersistence.cs" />
     <Compile Include="Persist\EncogFileSection.cs" />
-    <Compile Include="Persist\EncogPersistor.cs" />
+    <Compile Include="Persist\IEncogPersistor.cs" />
     <Compile Include="Persist\EncogReadHelper.cs" />
     <Compile Include="Persist\EncogWriteHelper.cs" />
     <Compile Include="Persist\PersistConst.cs" />
@@ -565,9 +565,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <EmbeddedResource Include="Resources\analyst.csv" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

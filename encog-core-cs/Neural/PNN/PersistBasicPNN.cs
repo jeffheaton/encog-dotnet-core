@@ -36,7 +36,7 @@ namespace Encog.Neural.Pnn
     /// Persist a PNN.
     /// </summary>
     ///
-    public class PersistBasicPNN : EncogPersistor
+    public class PersistBasicPNN : IEncogPersistor
     {
         /// <summary>
         /// The output mode property.
@@ -92,15 +92,15 @@ namespace Encog.Neural.Pnn
                 {
                     IDictionary<String, String> paras = section.ParseParams();
                     inputCount = EncogFileSection.ParseInt(paras,
-                                                           PersistConst.INPUT_COUNT);
+                                                           PersistConst.InputCount);
                     outputCount = EncogFileSection.ParseInt(paras,
-                                                            PersistConst.OUTPUT_COUNT);
-                    kernel = StringToKernel(paras[PersistConst.KERNEL]);
+                                                            PersistConst.OutputCount);
+                    kernel = StringToKernel(paras[PersistConst.Kernel]);
                     outmodel = StringToOutputMode(paras[PropertyOutputMode]);
                     error = EncogFileSection
-                        .ParseDouble(paras, PersistConst.ERROR);
+                        .ParseDouble(paras, PersistConst.Error);
                     sigma = EncogFileSection.ParseDoubleArray(paras,
-                                                              PersistConst.SIGMA);
+                                                              PersistConst.Sigma);
                 }
                 if (section.SectionName.Equals("PNN")
                     && section.SubSectionName.Equals("SAMPLES"))
@@ -158,14 +158,14 @@ namespace Encog.Neural.Pnn
             xout.AddProperties(pnn.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(PersistConst.ERROR, pnn.Error);
-            xout.WriteProperty(PersistConst.INPUT_COUNT, pnn.InputCount);
-            xout.WriteProperty(PersistConst.KERNEL,
+            xout.WriteProperty(PersistConst.Error, pnn.Error);
+            xout.WriteProperty(PersistConst.InputCount, pnn.InputCount);
+            xout.WriteProperty(PersistConst.Kernel,
                                KernelToString(pnn.Kernel));
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, pnn.OutputCount);
+            xout.WriteProperty(PersistConst.OutputCount, pnn.OutputCount);
             xout.WriteProperty(PropertyOutputMode,
                                OutputModeToString(pnn.OutputMode));
-            xout.WriteProperty(PersistConst.SIGMA, pnn.Sigma);
+            xout.WriteProperty(PersistConst.Sigma, pnn.Sigma);
 
             xout.AddSubSection("SAMPLES");
 

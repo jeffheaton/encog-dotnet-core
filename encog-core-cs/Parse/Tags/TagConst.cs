@@ -32,22 +32,22 @@ namespace Encog.Parse.Tags
         /// <summary>
         /// The beginning of a comment.
         /// </summary>
-        public const String COMMENT_BEGIN = "!--";
+        public const String CommentBegin = "!--";
 
         /// <summary>
         /// The end of a comment.
         /// </summary>
-        public const String COMMENT_END = "-->";
+        public const String CommentEnd = "-->";
 
         /// <summary>
         /// The beginning of a CDATA section.
         /// </summary>
-        public const String CDATA_BEGIN = "![CDATA[";
+        public const String CDATABegin = "![CDATA[";
 
         /// <summary>
         /// The end of a CDATA section.
         /// </summary>
-        public const String CDATA_END = "]]";
+        public const String CDATAEnd = "]]";
 
         /// <summary>
         /// Private constructor.

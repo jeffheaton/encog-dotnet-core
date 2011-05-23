@@ -30,7 +30,7 @@ namespace Encog.Persist
     /// Encog object to an EG file.
     /// </summary>
     ///
-    public interface EncogPersistor
+    public interface IEncogPersistor
     {
         /// <summary>
         /// The native type.

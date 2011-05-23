@@ -38,22 +38,22 @@ namespace Encog.Persist
         /// The directory that holds the EG files.
         /// </summary>
         ///
-        private readonly FileInfo parent;
+        private readonly FileInfo _parent;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         ///
-        /// <param name="parent_0">The directory to use.</param>
-        public EncogDirectoryPersistence(FileInfo parent_0)
+        /// <param name="parent">The directory to use.</param>
+        public EncogDirectoryPersistence(FileInfo parent)
         {
-            parent = parent_0;
+            _parent = parent;
         }
 
         /// <value>The directory.</value>
         public FileInfo Parent
         {
-            get { return parent; }
+            get { return _parent; }
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Encog.Persist
 
             String name = paras[1];
 
-            EncogPersistor p = PersistorRegistry.Instance.GetPersistor(
+            IEncogPersistor p = PersistorRegistry.Instance.GetPersistor(
                 name);
 
             if (p == null)
@@ -213,7 +213,7 @@ namespace Encog.Persist
         {
             try
             {
-                EncogPersistor p = PersistorRegistry.Instance
+                IEncogPersistor p = PersistorRegistry.Instance
                     .GetPersistor(obj.GetType());
 
                 if (p == null)
@@ -248,7 +248,7 @@ namespace Encog.Persist
         {
             try
             {
-                var path = new FileInfo(Path.Combine(parent.FullName, name));
+                var path = new FileInfo(Path.Combine(_parent.FullName, name));
                 TextReader br = new StreamReader(path.OpenRead());
                 String header = br.ReadLine();
                 String[] paras = header.Split(',');
@@ -270,7 +270,7 @@ namespace Encog.Persist
         /// <returns>The object.</returns>
         public Object LoadFromDirectory(String name)
         {
-            var path = new FileInfo(Path.Combine(parent.FullName, name));
+            var path = new FileInfo(Path.Combine(_parent.FullName, name));
             return LoadObject(path);
         }
 
@@ -282,7 +282,7 @@ namespace Encog.Persist
         /// <param name="obj">The object.</param>
         public void SaveToDirectory(String name, Object obj)
         {
-            var path = new FileInfo(Path.Combine(parent.FullName, name));
+            var path = new FileInfo(Path.Combine(_parent.FullName, name));
             SaveObject(path, obj);
         }
     }

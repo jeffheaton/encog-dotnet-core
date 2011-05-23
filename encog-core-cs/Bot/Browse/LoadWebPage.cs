@@ -148,7 +148,7 @@ namespace Encog.Bot.Browse
                     Tag nextTag = ((TagDataUnit) du).Tag;
                     if (String.Compare(tag.Name, nextTag.Name, true) == 0)
                     {
-                        if (nextTag.TagType == Tag.Type.END)
+                        if (nextTag.TagType == Tag.Type.End)
                         {
                             if (depth == 0)
                             {
@@ -156,7 +156,7 @@ namespace Encog.Bot.Browse
                             }
                             depth--;
                         }
-                        else if (nextTag.TagType == Tag.Type.BEGIN)
+                        else if (nextTag.TagType == Tag.Type.Begin)
                         {
                             depth++;
                         }
@@ -224,7 +224,7 @@ namespace Encog.Bot.Browse
                 {
                     Tag tag = ((TagDataUnit) du).Tag;
 
-                    if (tag.TagType != Tag.Type.END)
+                    if (tag.TagType != Tag.Type.End)
                     {
                         if (string.Compare(tag.Name, "a", true) == 0)
                         {
@@ -244,7 +244,7 @@ namespace Encog.Bot.Browse
                         }
                     }
 
-                    if (tag.TagType == Tag.Type.BEGIN)
+                    if (tag.TagType == Tag.Type.Begin)
                     {
                         if (String.Compare(tag.Name, "div", true) == 0)
                         {
@@ -256,7 +256,7 @@ namespace Encog.Bot.Browse
                         }
                     }
 
-                    if (tag.TagType == Tag.Type.END)
+                    if (tag.TagType == Tag.Type.End)
                     {
                         if (string.Compare(tag.Name, "div") == 0)
                         {

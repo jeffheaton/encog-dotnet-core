@@ -32,7 +32,7 @@ namespace Encog.Neural.SOM
     /// Persist the SOM.
     /// </summary>
     ///
-    public class PersistSOM : EncogPersistor
+    public class PersistSOM : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -70,11 +70,11 @@ namespace Encog.Neural.SOM
                 {
                     IDictionary<String, String> p = section.ParseParams();
                     result.Weights = EncogFileSection.ParseMatrix(p,
-                                                                  PersistConst.WEIGHTS);
+                                                                  PersistConst.Weights);
                     result.OutputCount = EncogFileSection.ParseInt(p,
-                                                                         PersistConst.OUTPUT_COUNT);
+                                                                         PersistConst.OutputCount);
                     result.InputCount = EncogFileSection.ParseInt(p,
-                                                                  PersistConst.INPUT_COUNT);
+                                                                  PersistConst.InputCount);
                 }
             }
 
@@ -90,9 +90,9 @@ namespace Encog.Neural.SOM
             xout.AddSubSection("PARAMS");
             xout.AddProperties(som.Properties);
             xout.AddSubSection("NETWORK");
-            xout.WriteProperty(PersistConst.WEIGHTS, som.Weights);
-            xout.WriteProperty(PersistConst.INPUT_COUNT, som.InputCount);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, som.OutputCount);
+            xout.WriteProperty(PersistConst.Weights, som.Weights);
+            xout.WriteProperty(PersistConst.InputCount, som.InputCount);
+            xout.WriteProperty(PersistConst.OutputCount, som.OutputCount);
             xout.Flush();
         }
 

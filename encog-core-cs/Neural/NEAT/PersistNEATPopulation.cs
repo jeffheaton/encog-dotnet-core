@@ -40,7 +40,7 @@ namespace Encog.Neural.Neat
     /// Persist the NEAT population.
     /// </summary>
     [Serializable]
-    public class PersistNEATPopulation : EncogPersistor
+    public class PersistNEATPopulation : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -183,11 +183,11 @@ namespace Encog.Neural.Neat
                         .ParseActivationFunction(paras,
                                                  NEATPopulation.PropertyOutputActivation);
                     result.Snapshot = EncogFileSection.ParseBoolean(paras,
-                                                                    PersistConst.SNAPSHOT);
+                                                                    PersistConst.Snapshot);
                     result.InputCount = EncogFileSection.ParseInt(paras,
-                                                                  PersistConst.INPUT_COUNT);
+                                                                  PersistConst.InputCount);
                     result.OutputCount = EncogFileSection.ParseInt(paras,
-                                                                   PersistConst.OUTPUT_COUNT);
+                                                                   PersistConst.OutputCount);
                     result.OldAgePenalty = EncogFileSection.ParseDouble(paras,
                                                                         PopulationConst.PropertyOldAgePenalty);
                     result.OldAgeThreshold = EncogFileSection.ParseInt(paras,
@@ -257,13 +257,13 @@ namespace Encog.Neural.Neat
             var pop = (NEATPopulation) obj;
             xout.AddSection("NEAT-POPULATION");
             xout.AddSubSection("CONFIG");
-            xout.WriteProperty(PersistConst.SNAPSHOT, pop.Snapshot);
+            xout.WriteProperty(PersistConst.Snapshot, pop.Snapshot);
             xout.WriteProperty(NEATPopulation.PropertyOutputActivation,
                                pop.OutputActivationFunction);
             xout.WriteProperty(NEATPopulation.PropertyNEATActivation,
                                pop.NeatActivationFunction);
-            xout.WriteProperty(PersistConst.INPUT_COUNT, pop.InputCount);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, pop.OutputCount);
+            xout.WriteProperty(PersistConst.InputCount, pop.InputCount);
+            xout.WriteProperty(PersistConst.OutputCount, pop.OutputCount);
             xout.WriteProperty(PopulationConst.PropertyOldAgePenalty,
                                pop.OldAgePenalty);
             xout.WriteProperty(PopulationConst.PropertyOldAgeThreshold,

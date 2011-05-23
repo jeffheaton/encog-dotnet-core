@@ -59,7 +59,7 @@ namespace Encog.Parse.Tags.Read
                 if (beginTag)
                 {
                     if (LastTag.Name.Equals(name)
-                        && (LastTag.TagType == Tag.Type.BEGIN))
+                        && (LastTag.TagType == Tag.Type.Begin))
                     {
                         return true;
                     }
@@ -67,7 +67,7 @@ namespace Encog.Parse.Tags.Read
                 else
                 {
                     if (LastTag.Name.Equals(name)
-                        && (LastTag.TagType == Tag.Type.END))
+                        && (LastTag.TagType == Tag.Type.End))
                     {
                         return true;
                     }
@@ -115,7 +115,7 @@ namespace Encog.Parse.Tags.Read
             while (ReadToTag())
             {
                 if (LastTag.Name.Equals(endingBlock)
-                    && (LastTag.TagType == Tag.Type.END))
+                    && (LastTag.TagType == Tag.Type.End))
                 {
                     break;
                 }

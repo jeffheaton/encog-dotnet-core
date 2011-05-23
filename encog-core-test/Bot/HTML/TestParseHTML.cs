@@ -43,13 +43,13 @@ namespace Encog.Bot.HTML
             Assert.IsTrue(parse.Read() == '2');
             Assert.IsTrue(parse.Read() == 0);
             Assert.IsTrue(parse.LastTag.Name.Equals("b"));
-            Assert.IsTrue(parse.LastTag.TagType == Tag.Type.BEGIN);
+            Assert.IsTrue(parse.LastTag.TagType == Tag.Type.Begin);
             Assert.IsTrue(parse.Read() == '1');
             Assert.IsTrue(parse.Read() == '2');
             Assert.IsTrue(parse.Read() == 0);
             Tag tag = parse.LastTag;
             Assert.IsTrue(tag.Name.Equals("b"));
-            Assert.IsTrue(tag.TagType == Tag.Type.END);
+            Assert.IsTrue(tag.TagType == Tag.Type.End);
             Assert.AreEqual(tag.ToString(), "</b>");
             Assert.IsTrue(parse.Read() == '1');
         }
@@ -96,12 +96,12 @@ namespace Encog.Bot.HTML
             Assert.IsTrue(parse.Read() == 0);
             Tag tag = parse.LastTag;
             Assert.IsNotNull(tag);
-            Assert.IsTrue(tag.TagType == Tag.Type.BEGIN);
+            Assert.IsTrue(tag.TagType == Tag.Type.Begin);
             Assert.IsTrue(tag.Name.Equals(htmlName));
             parse.ReadToTag();
             tag = parse.LastTag;
             Assert.IsNotNull(tag);
-            Assert.IsTrue(tag.TagType == Tag.Type.END);
+            Assert.IsTrue(tag.TagType == Tag.Type.End);
             Assert.IsTrue(tag.Name.Equals(htmlName));
         }
 

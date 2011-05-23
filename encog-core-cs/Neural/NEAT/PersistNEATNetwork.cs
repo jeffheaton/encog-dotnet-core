@@ -33,7 +33,7 @@ namespace Encog.Neural.NEAT
     /// Persist a NEAT network.
     /// </summary>
     [Serializable]
-    public class PersistNEATNetwork : EncogPersistor
+    public class PersistNEATNetwork : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -83,19 +83,19 @@ namespace Encog.Neural.NEAT
                     IDictionary<String, String> p = section.ParseParams();
 
                     result.InputCount = EncogFileSection.ParseInt(p,
-                                                                  PersistConst.INPUT_COUNT);
+                                                                  PersistConst.InputCount);
                     result.OutputCount = EncogFileSection.ParseInt(p,
-                                                                   PersistConst.OUTPUT_COUNT);
+                                                                   PersistConst.OutputCount);
                     result.ActivationFunction = EncogFileSection
                         .ParseActivationFunction(p,
-                                                 PersistConst.ACTIVATION_FUNCTION);
+                                                 PersistConst.ActivationFunction);
                     result.OutputActivationFunction = EncogFileSection
                         .ParseActivationFunction(p,
                                                  NEATPopulation.PropertyOutputActivation);
                     result.NetworkDepth = EncogFileSection.ParseInt(p,
-                                                                    PersistConst.DEPTH);
+                                                                    PersistConst.Depth);
                     result.Snapshot = EncogFileSection.ParseBoolean(p,
-                                                                    PersistConst.SNAPSHOT);
+                                                                    PersistConst.Snapshot);
                 }
                 else if (section.SectionName.Equals("NEAT")
                          && section.SubSectionName.Equals("NEURONS"))
@@ -157,14 +157,14 @@ namespace Encog.Neural.NEAT
             xout.AddProperties(neat.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(PersistConst.INPUT_COUNT, neat.InputCount);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, neat.OutputCount);
-            xout.WriteProperty(PersistConst.ACTIVATION_FUNCTION,
+            xout.WriteProperty(PersistConst.InputCount, neat.InputCount);
+            xout.WriteProperty(PersistConst.OutputCount, neat.OutputCount);
+            xout.WriteProperty(PersistConst.ActivationFunction,
                                neat.ActivationFunction);
             xout.WriteProperty(NEATPopulation.PropertyOutputActivation,
                                neat.OutputActivationFunction);
-            xout.WriteProperty(PersistConst.DEPTH, neat.NetworkDepth);
-            xout.WriteProperty(PersistConst.SNAPSHOT, neat.Snapshot);
+            xout.WriteProperty(PersistConst.Depth, neat.NetworkDepth);
+            xout.WriteProperty(PersistConst.Snapshot, neat.Snapshot);
 
             xout.AddSubSection("NEURONS");
 

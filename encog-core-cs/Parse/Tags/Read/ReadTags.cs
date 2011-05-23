@@ -45,47 +45,47 @@ namespace Encog.Parse.Tags.Read
         /// <summary>
         /// The bullet character.
         /// </summary>
-        public int CHAR_BULLET = 149;
+        public int CharBullet = 149;
 
         /// <summary>
         /// The bullet character.
         /// </summary>
-        public int CHAR_TRADEMARK = 129;
+        public int CharTrademark = 129;
 
         /// <summary>
         /// Maximum length string to read.
         /// </summary>
-        public int MAX_LENGTH = 10000;
+        public int MaxLength = 10000;
 
         /// <summary>
         /// A mapping of certain HTML encoded values to their actual
         /// character values.
         /// </summary>
-        private static IDictionary<string, char> charMap;
+        private static IDictionary<string, char> _charMap;
 
         /// <summary>
         /// The stream that we are parsing from.
         /// </summary>
-        private readonly PeekableInputStream source;
+        private readonly PeekableInputStream _source;
 
         /// <summary>
         /// The current HTML tag. Access this property if the read function returns
         /// 0.
         /// </summary>
-        private readonly Tag tag = new Tag();
+        private readonly Tag _tag = new Tag();
 
 
         /// <summary>
         /// Are we locked, looking for an end tag?  Such as the end of a
         /// comment?
         /// </summary>
-        private string lockedEndTag;
+        private string _lockedEndTag;
 
         /// <summary>
         /// Does a "fake" end-tag need to be added, because of a compound
         /// tag (i.e. <br/>)?  If so, this will hold a string for that tag.
         /// </summary>
-        private string insertEndTag;
+        private string _insertEndTag;
 
         /// <summary>
         /// The constructor should be passed an InputStream that we will parse from.
@@ -93,18 +93,18 @@ namespace Encog.Parse.Tags.Read
         /// <param name="istream">A stream to parse from.</param>
         public ReadTags(Stream istream)
         {
-            source = new PeekableInputStream(istream);
+            _source = new PeekableInputStream(istream);
 
-            if (charMap == null)
+            if (_charMap == null)
             {
-                charMap = new Dictionary<string, char>();
-                charMap["nbsp"] = ' ';
-                charMap["lt"] = '<';
-                charMap["gt"] = '>';
-                charMap["amp"] = '&';
-                charMap["quot"] = '\"';
-                charMap["bull"] = (char) CHAR_BULLET;
-                charMap["trade"] = (char) CHAR_TRADEMARK;
+                _charMap = new Dictionary<string, char>();
+                _charMap["nbsp"] = ' ';
+                _charMap["lt"] = '<';
+                _charMap["gt"] = '>';
+                _charMap["amp"] = '&';
+                _charMap["quot"] = '\"';
+                _charMap["bull"] = (char) CharBullet;
+                _charMap["trade"] = (char) CharTrademark;
             }
         }
 
@@ -113,9 +113,9 @@ namespace Encog.Parse.Tags.Read
         /// </summary>
         protected void EatWhitespace()
         {
-            while (char.IsWhiteSpace((char) source.Peek()))
+            while (char.IsWhiteSpace((char) _source.Peek()))
             {
-                source.Read();
+                _source.Read();
             }
         }
 
@@ -125,7 +125,7 @@ namespace Encog.Parse.Tags.Read
         /// </summary>
         public Tag LastTag
         {
-            get { return tag; }
+            get { return _tag; }
         }
 
         /// <summary>
@@ -143,12 +143,9 @@ namespace Encog.Parse.Tags.Read
 
             if (start)
             {
-                return LastTag.TagType == Tag.Type.BEGIN;
+                return LastTag.TagType == Tag.Type.Begin;
             }
-            else
-            {
-                return LastTag.TagType == Tag.Type.END;
-            }
+            return LastTag.TagType == Tag.Type.End;
         }
 
         /// <summary>
@@ -159,23 +156,20 @@ namespace Encog.Parse.Tags.Read
         {
             EatWhitespace();
 
-            if ("\"\'".IndexOf((char) source.Peek()) == -1)
+            if ("\"\'".IndexOf((char) _source.Peek()) == -1)
             {
                 var buffer = new StringBuilder();
-                while (!char.IsWhiteSpace((char) source.Peek())
-                       && (source.Peek() != '=')
-                       && (source.Peek() != '>')
-                       && (source.Peek() != -1))
+                while (!char.IsWhiteSpace((char) _source.Peek())
+                       && (_source.Peek() != '=')
+                       && (_source.Peek() != '>')
+                       && (_source.Peek() != -1))
                 {
                     int ch = ParseSpecialCharacter();
                     buffer.Append((char) ch);
                 }
                 return buffer.ToString();
             }
-            else
-            {
-                return (ParseString());
-            }
+            return (ParseString());
         }
 
         /// <summary>
@@ -184,19 +178,19 @@ namespace Encog.Parse.Tags.Read
         /// <returns>The character that was parsed.</returns>
         private char ParseSpecialCharacter()
         {
-            var result = (char) source.Read();
+            var result = (char) _source.Read();
             int advanceBy = 0;
 
             // is there a special character?
             if (result == '&')
             {
-                int ch = 0;
+                int ch;
                 var buffer = new StringBuilder();
 
                 // loop through and read special character
                 do
                 {
-                    ch = source.Peek(advanceBy++);
+                    ch = _source.Peek(advanceBy++);
                     if ((ch != '&') && (ch != ';') && !char.IsWhiteSpace((char) ch))
                     {
                         buffer.Append((char) ch);
@@ -221,9 +215,9 @@ namespace Encog.Parse.Tags.Read
                     }
                     else
                     {
-                        if (charMap.ContainsKey(b))
+                        if (_charMap.ContainsKey(b))
                         {
-                            result = charMap[b];
+                            result = _charMap[b];
                         }
                         else
                         {
@@ -254,13 +248,13 @@ namespace Encog.Parse.Tags.Read
         {
             var result = new StringBuilder();
             EatWhitespace();
-            if ("\"\'".IndexOf((char) source.Peek()) != -1)
+            if ("\"\'".IndexOf((char) _source.Peek()) != -1)
             {
-                int delim = source.Read();
-                while ((source.Peek() != delim)
-                       && (source.Peek() != -1))
+                int delim = _source.Read();
+                while ((_source.Peek() != delim)
+                       && (_source.Peek() != -1))
                 {
-                    if (result.Length > MAX_LENGTH)
+                    if (result.Length > MaxLength)
                     {
                         break;
                     }
@@ -271,16 +265,16 @@ namespace Encog.Parse.Tags.Read
                     }
                     result.Append((char) ch);
                 }
-                if ("\"\'".IndexOf((char) source.Peek()) != -1)
+                if ("\"\'".IndexOf((char) _source.Peek()) != -1)
                 {
-                    source.Read();
+                    _source.Read();
                 }
             }
             else
             {
-                while (!char.IsWhiteSpace((char) source.Peek())
-                       && (source.Peek() != -1)
-                       && (source.Peek() != '>'))
+                while (!char.IsWhiteSpace((char) _source.Peek())
+                       && (_source.Peek() != -1)
+                       && (_source.Peek() != '>'))
                 {
                     result.Append(ParseSpecialCharacter());
                 }
@@ -294,19 +288,19 @@ namespace Encog.Parse.Tags.Read
         /// </summary>
         protected void ParseTag()
         {
-            tag.Clear();
-            insertEndTag = null;
+            _tag.Clear();
+            _insertEndTag = null;
             var tagName = new StringBuilder();
 
-            source.Read();
+            _source.Read();
 
             // Is it a comment?
-            if (source.Peek(TagConst.COMMENT_BEGIN))
+            if (_source.Peek(TagConst.CommentBegin))
             {
-                source.Skip(TagConst.COMMENT_BEGIN.Length);
-                while (!source.Peek(TagConst.COMMENT_END))
+                _source.Skip(TagConst.CommentBegin.Length);
+                while (!_source.Peek(TagConst.CommentEnd))
                 {
-                    int ch = source.Read();
+                    int ch = _source.Read();
                     if (ch != -1)
                     {
                         tagName.Append((char) ch);
@@ -316,19 +310,19 @@ namespace Encog.Parse.Tags.Read
                         break;
                     }
                 }
-                source.Skip(TagConst.COMMENT_END.Length);
-                tag.TagType = Tag.Type.COMMENT;
-                tag.Name = tagName.ToString();
+                _source.Skip(TagConst.CommentEnd.Length);
+                _tag.TagType = Tag.Type.Comment;
+                _tag.Name = tagName.ToString();
                 return;
             }
 
             // Is it CDATA?
-            if (source.Peek(TagConst.CDATA_BEGIN))
+            if (_source.Peek(TagConst.CDATABegin))
             {
-                source.Skip(TagConst.CDATA_BEGIN.Length);
-                while (!source.Peek(TagConst.CDATA_END))
+                _source.Skip(TagConst.CDATABegin.Length);
+                while (!_source.Peek(TagConst.CDATAEnd))
                 {
-                    int ch = source.Read();
+                    int ch = _source.Read();
                     if (ch != -1)
                     {
                         tagName.Append((char) ch);
@@ -338,46 +332,46 @@ namespace Encog.Parse.Tags.Read
                         break;
                     }
                 }
-                source.Skip(TagConst.CDATA_END.Length);
-                tag.TagType = Tag.Type.CDATA;
-                tag.Name = tagName.ToString();
+                _source.Skip(TagConst.CDATAEnd.Length);
+                _tag.TagType = Tag.Type.CDATA;
+                _tag.Name = tagName.ToString();
                 return;
             }
 
             // Find the tag name
-            while (source.Peek() != -1)
+            while (_source.Peek() != -1)
             {
                 // if this is the end of the tag, then stop
-                if (char.IsWhiteSpace((char) source.Peek())
-                    || (source.Peek() == '>'))
+                if (char.IsWhiteSpace((char) _source.Peek())
+                    || (_source.Peek() == '>'))
                 {
                     break;
                 }
 
                 // if this is both a begin and end tag then stop
-                if ((tagName.Length > 0) && (source.Peek() == '/'))
+                if ((tagName.Length > 0) && (_source.Peek() == '/'))
                 {
                     break;
                 }
 
-                tagName.Append((char) source.Read());
+                tagName.Append((char) _source.Read());
             }
 
             EatWhitespace();
 
             if (tagName[0] == '/')
             {
-                tag.Name = tagName.ToString().Substring(1);
-                tag.TagType = Tag.Type.END;
+                _tag.Name = tagName.ToString().Substring(1);
+                _tag.TagType = Tag.Type.End;
             }
             else
             {
-                tag.Name = tagName.ToString();
-                tag.TagType = Tag.Type.BEGIN;
+                _tag.Name = tagName.ToString();
+                _tag.TagType = Tag.Type.Begin;
             }
             // get the attributes
 
-            while ((source.Peek() != '>') && (source.Peek() != -1))
+            while ((_source.Peek() != '>') && (_source.Peek() != -1))
             {
                 string attributeName = ParseAttributeName();
                 string attributeValue = null;
@@ -385,24 +379,24 @@ namespace Encog.Parse.Tags.Read
                 if (attributeName.Equals("/"))
                 {
                     EatWhitespace();
-                    if (source.Peek() == '>')
+                    if (_source.Peek() == '>')
                     {
-                        insertEndTag = tag.Name;
+                        _insertEndTag = _tag.Name;
                         break;
                     }
                 }
 
                 // is there a value?
                 EatWhitespace();
-                if (source.Peek() == '=')
+                if (_source.Peek() == '=')
                 {
-                    source.Read();
+                    _source.Read();
                     attributeValue = ParseString();
                 }
 
-                tag.SetAttribute(attributeName, attributeValue);
+                _tag.SetAttribute(attributeName, attributeValue);
             }
-            source.Read();
+            _source.Read();
         }
 
         /// <summary>
@@ -410,56 +404,50 @@ namespace Encog.Parse.Tags.Read
         /// </summary>
         /// <param name="name">The type of end tag being sought.</param>
         /// <returns>True if the ending tag was found.</returns>
-        private bool PeekEndTag(string name)
+        private bool PeekEndTag(IEnumerable<char> name)
         {
             int i = 0;
 
             // pass any whitespace
-            while ((source.Peek(i) != -1)
-                   && char.IsWhiteSpace((char) source.Peek(i)))
+            while ((_source.Peek(i) != -1)
+                   && char.IsWhiteSpace((char) _source.Peek(i)))
             {
                 i++;
             }
 
             // is a tag beginning
-            if (source.Peek(i) != '<')
+            if (_source.Peek(i) != '<')
             {
                 return false;
             }
-            else
-            {
-                i++;
-            }
+            i++;
 
             // pass any whitespace
-            while ((source.Peek(i) != -1)
-                   && char.IsWhiteSpace((char) source.Peek(i)))
+            while ((_source.Peek(i) != -1)
+                   && char.IsWhiteSpace((char) _source.Peek(i)))
             {
                 i++;
             }
 
             // is it an end tag
-            if (source.Peek(i) != '/')
+            if (_source.Peek(i) != '/')
             {
                 return false;
             }
-            else
-            {
-                i++;
-            }
+            i++;
 
             // pass any whitespace
-            while ((source.Peek(i) != -1)
-                   && char.IsWhiteSpace((char) source.Peek(i)))
+            while ((_source.Peek(i) != -1)
+                   && char.IsWhiteSpace((char) _source.Peek(i)))
             {
                 i++;
             }
 
             // does the name match
-            for (int j = 0; j < name.Length; j++)
+            foreach (char t in name)
             {
-                if (char.ToLower((char) source.Peek(i)) != char
-                                                               .ToLower(name[j]))
+                if (char.ToLower((char) _source.Peek(i)) != char
+                                                                .ToLower(t))
                 {
                     return false;
                 }
@@ -479,49 +467,46 @@ namespace Encog.Parse.Tags.Read
         public int Read()
         {
             // handle inserting a "virtual" end tag
-            if (insertEndTag != null)
+            if (_insertEndTag != null)
             {
-                tag.Clear();
-                tag.Name = insertEndTag;
-                tag.TagType = Tag.Type.END;
-                insertEndTag = null;
+                _tag.Clear();
+                _tag.Name = _insertEndTag;
+                _tag.TagType = Tag.Type.End;
+                _insertEndTag = null;
                 return 0;
             }
 
             // handle locked end tag
-            if (lockedEndTag != null)
+            if (_lockedEndTag != null)
             {
-                if (PeekEndTag(lockedEndTag))
+                if (PeekEndTag(_lockedEndTag))
                 {
-                    lockedEndTag = null;
+                    _lockedEndTag = null;
                 }
                 else
                 {
-                    return source.Read();
+                    return _source.Read();
                 }
             }
 
             // look for next tag
-            if (source.Peek() == '<')
+            if (_source.Peek() == '<')
             {
                 ParseTag();
 
-                if ((tag.TagType == Tag.Type.BEGIN)
-                    && ((StringUtil.EqualsIgnoreCase(tag.Name, "script"))
-                        || (StringUtil.EqualsIgnoreCase(tag.Name, "style"))))
+                if ((_tag.TagType == Tag.Type.Begin)
+                    && ((StringUtil.EqualsIgnoreCase(_tag.Name, "script"))
+                        || (StringUtil.EqualsIgnoreCase(_tag.Name, "style"))))
                 {
-                    lockedEndTag = tag.Name.ToLower();
+                    _lockedEndTag = _tag.Name.ToLower();
                 }
                 return 0;
             }
-            else if (source.Peek() == '&')
+            if (_source.Peek() == '&')
             {
                 return ParseSpecialCharacter();
             }
-            else
-            {
-                return (source.Read());
-            }
+            return (_source.Read());
         }
 
         /// <summary>
@@ -549,9 +534,9 @@ namespace Encog.Parse.Tags.Read
         {
             var result = new StringBuilder();
             result.Append("[ReadTags: currentTag=");
-            if (tag != null)
+            if (_tag != null)
             {
-                result.Append(tag.ToString());
+                result.Append(_tag.ToString());
             }
             result.Append("]");
             return result.ToString();

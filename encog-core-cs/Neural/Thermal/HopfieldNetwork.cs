@@ -54,14 +54,14 @@ namespace Encog.Neural.Thermal
         /// <inheritdoc/>
         public override int InputCount
         {
-            get { return base.NeuronCount; }
+            get { return NeuronCount; }
         }
 
 
         /// <inheritdoc/>
         public override int OutputCount
         {
-            get { return base.NeuronCount; }
+            get { return NeuronCount; }
         }
 
         /// <summary>
@@ -168,7 +168,6 @@ namespace Encog.Neural.Thermal
         public int RunUntilStable(int max)
         {
             bool done = false;
-            String lastStateStr = (CurrentState.ToString());
             String currentStateStr = (CurrentState.ToString());
 
             int cycle = 0;
@@ -177,7 +176,7 @@ namespace Encog.Neural.Thermal
                 Run();
                 cycle++;
 
-                lastStateStr = (CurrentState.ToString());
+                String lastStateStr = (CurrentState.ToString());
 
                 if (!currentStateStr.Equals(lastStateStr))
                 {

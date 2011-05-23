@@ -32,32 +32,32 @@ namespace Encog.Neural.Thermal
     /// The thermal network forms the base class for Hopfield and Boltzmann machines.
     /// </summary>
     [Serializable]
-    public abstract class ThermalNetwork : BasicML, IMLMethod,
+    public abstract class ThermalNetwork : BasicML,
                                            IMLAutoAssocation, IMLResettable
     {
         /// <summary>
         /// The current state of the thermal network.
         /// </summary>
         ///
-        private BiPolarMLData currentState;
+        private BiPolarMLData _currentState;
 
         /// <summary>
         /// The neuron count.
         /// </summary>
         ///
-        private int neuronCount;
+        private int _neuronCount;
 
         /// <summary>
         /// The weights.
         /// </summary>
         ///
-        private double[] weights;
+        private double[] _weights;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         ///
-        public ThermalNetwork()
+        protected ThermalNetwork()
         {
         }
 
@@ -65,12 +65,12 @@ namespace Encog.Neural.Thermal
         /// Construct the network with the specicified neuron count.
         /// </summary>
         ///
-        /// <param name="neuronCount_0">The number of neurons.</param>
-        public ThermalNetwork(int neuronCount_0)
+        /// <param name="neuronCount">The number of neurons.</param>
+        protected ThermalNetwork(int neuronCount)
         {
-            neuronCount = neuronCount_0;
-            weights = new double[neuronCount_0*neuronCount_0];
-            currentState = new BiPolarMLData(neuronCount_0);
+            _neuronCount = neuronCount;
+            _weights = new double[neuronCount*neuronCount];
+            _currentState = new BiPolarMLData(neuronCount);
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace Encog.Neural.Thermal
         /// </summary>
         public int NeuronCount
         {
-            get { return neuronCount; }
-            set { neuronCount = value; }
+            get { return _neuronCount; }
+            set { _neuronCount = value; }
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace Encog.Neural.Thermal
         /// <value>The weight array.</value>
         public double[] Weights
         {
-            get { return weights; }
-            set { weights = value; }
+            get { return _weights; }
+            set { _weights = value; }
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Encog.Neural.Thermal
         /// </summary>
         public BiPolarMLData CurrentState
         {
-            get { return currentState; }
+            get { return _currentState; }
             set
             {
                 for (int i = 0; i < value.Count; i++)
                 {
-                    currentState[i] = value[i];
+                    _currentState[i] = value[i];
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace Encog.Neural.Thermal
         public void Reset(int seed)
         {
             CurrentState.Clear();
-            EngineArray.Fill(weights, 0.0d);
+            EngineArray.Fill(_weights, 0.0d);
         }
 
         #endregion
@@ -161,17 +161,17 @@ namespace Encog.Neural.Thermal
         ///
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value_ren">The value to add.</param>
+        /// <param name="v">The value to add.</param>
         public void AddWeight(int fromNeuron, int toNeuron,
-                              double value_ren)
+                              double v)
         {
-            int index = (toNeuron*neuronCount) + fromNeuron;
-            if (index >= weights.Length)
+            int index = (toNeuron*_neuronCount) + fromNeuron;
+            if (index >= _weights.Length)
             {
                 throw new NeuralNetworkError("Out of range: fromNeuron:"
                                              + fromNeuron + ", toNeuron: " + toNeuron);
             }
-            weights[index] += value_ren;
+            _weights[index] += v;
         }
 
 
@@ -180,16 +180,16 @@ namespace Encog.Neural.Thermal
         public double CalculateEnergy()
         {
             double tempE = 0;
-            int neuronCount_0 = NeuronCount;
+            int neuronCount = NeuronCount;
 
-            for (int i = 0; i < neuronCount_0; i++)
+            for (int i = 0; i < neuronCount; i++)
             {
-                for (int j = 0; j < neuronCount_0; j++)
+                for (int j = 0; j < neuronCount; j++)
                 {
                     if (i != j)
                     {
-                        tempE += GetWeight(i, j)*currentState[i]
-                                 *currentState[j];
+                        tempE += GetWeight(i, j)*_currentState[i]
+                                 *_currentState[j];
                     }
                 }
             }
@@ -202,7 +202,7 @@ namespace Encog.Neural.Thermal
         ///
         public void Clear()
         {
-            EngineArray.Fill(weights, 0);
+            EngineArray.Fill(_weights, 0);
         }
 
 
@@ -215,8 +215,8 @@ namespace Encog.Neural.Thermal
         /// <returns>The weight.</returns>
         public double GetWeight(int fromNeuron, int toNeuron)
         {
-            int index = (toNeuron*neuronCount) + fromNeuron;
-            return weights[index];
+            int index = (toNeuron*_neuronCount) + fromNeuron;
+            return _weights[index];
         }
 
 
@@ -224,29 +224,28 @@ namespace Encog.Neural.Thermal
         /// Init the network.
         /// </summary>
         ///
-        /// <param name="neuronCount_0">The neuron count.</param>
-        /// <param name="weights_1">The weights.</param>
+        /// <param name="neuronCount">The neuron count.</param>
+        /// <param name="weights">The weights.</param>
         /// <param name="output">The toutpu</param>
-        public void Init(int neuronCount_0, double[] weights_1,
+        public void Init(int neuronCount, double[] weights,
                          double[] output)
         {
-            if (neuronCount_0 != output.Length)
+            if (neuronCount != output.Length)
             {
-                throw new NeuralNetworkError("Neuron count(" + neuronCount_0
+                throw new NeuralNetworkError("Neuron count(" + neuronCount
                                              + ") must match output count(" + output.Length + ").");
             }
 
-            if ((neuronCount_0*neuronCount_0) != weights_1.Length)
+            if ((neuronCount*neuronCount) != weights.Length)
             {
-                throw new NeuralNetworkError("Weight count(" + weights_1.Length
-                                             + ") must be the square of the neuron count(" + neuronCount_0
+                throw new NeuralNetworkError("Weight count(" + weights.Length
+                                             + ") must be the square of the neuron count(" + neuronCount
                                              + ").");
             }
 
-            neuronCount = neuronCount_0;
-            weights = weights_1;
-            currentState = new BiPolarMLData(neuronCount_0);
-            currentState.Data = output;
+            _neuronCount = neuronCount;
+            _weights = weights;
+            _currentState = new BiPolarMLData(neuronCount) {Data = output};
         }
 
         /// <summary>
@@ -255,8 +254,8 @@ namespace Encog.Neural.Thermal
         /// <param name="s">The new current state.</param>
         public void SetCurrentState(double[] s)
         {
-            currentState = new BiPolarMLData(s.Length);
-            EngineArray.ArrayCopy(s, currentState.Data);
+            _currentState = new BiPolarMLData(s.Length);
+            EngineArray.ArrayCopy(s, _currentState.Data);
         }
 
         /// <summary>
@@ -265,12 +264,12 @@ namespace Encog.Neural.Thermal
         ///
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value_ren">The value.</param>
+        /// <param name="v">The value.</param>
         public void SetWeight(int fromNeuron, int toNeuron,
-                              double value_ren)
+                              double v)
         {
-            int index = (toNeuron*neuronCount) + fromNeuron;
-            weights[index] = value_ren;
+            int index = (toNeuron*_neuronCount) + fromNeuron;
+            _weights[index] = v;
         }
     }
 }

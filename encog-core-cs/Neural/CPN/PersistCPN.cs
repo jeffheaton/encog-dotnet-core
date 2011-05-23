@@ -33,7 +33,7 @@ namespace Encog.Neural.CPN
     /// Persist a CPN network.
     /// </summary>
     ///
-    public class PersistCPN : EncogPersistor
+    public class PersistCPN : IEncogPersistor
     {
         /// <summary>
         /// The input to instar property.
@@ -101,11 +101,11 @@ namespace Encog.Neural.CPN
                     IDictionary<String, String> paras = section.ParseParams();
 
                     inputCount = EncogFileSection.ParseInt(paras,
-                                                           PersistConst.INPUT_COUNT);
+                                                           PersistConst.InputCount);
                     instarCount = EncogFileSection.ParseInt(paras,
-                                                            PersistConst.INSTAR);
+                                                            PersistConst.Instar);
                     outputCount = EncogFileSection.ParseInt(paras,
-                                                            PersistConst.OUTPUT_COUNT);
+                                                            PersistConst.OutputCount);
                     winnerCount = EncogFileSection.ParseInt(paras,
                                                             PropertyWinnerCount);
                     m1 = EncogFileSection.ParseMatrix(paras,
@@ -133,9 +133,9 @@ namespace Encog.Neural.CPN
             xout.AddProperties(cpn.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(PersistConst.INPUT_COUNT, cpn.InputCount);
-            xout.WriteProperty(PersistConst.INSTAR, cpn.InstarCount);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, cpn.OutputCount);
+            xout.WriteProperty(PersistConst.InputCount, cpn.InputCount);
+            xout.WriteProperty(PersistConst.Instar, cpn.InstarCount);
+            xout.WriteProperty(PersistConst.OutputCount, cpn.OutputCount);
             xout.WriteProperty(PropertyInputToInstar,
                                cpn.WeightsInputToInstar);
             xout.WriteProperty(PropertyInstarToInput,

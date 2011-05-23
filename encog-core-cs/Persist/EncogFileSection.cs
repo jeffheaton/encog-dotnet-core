@@ -41,19 +41,19 @@ namespace Encog.Persist
         /// The lines in this section/subsection.
         /// </summary>
         ///
-        private readonly IList<String> lines;
+        private readonly IList<String> _lines;
 
         /// <summary>
         /// The name of this section.
         /// </summary>
         ///
-        private readonly String sectionName;
+        private readonly String _sectionName;
 
         /// <summary>
         /// The name of this subsection.
         /// </summary>
         ///
-        private readonly String subSectionName;
+        private readonly String _subSectionName;
 
         /// <summary>
         /// Construct the object.
@@ -64,16 +64,16 @@ namespace Encog.Persist
         public EncogFileSection(String theSectionName,
                                 String theSubSectionName)
         {
-            lines = new List<String>();
-            sectionName = theSectionName;
-            subSectionName = theSubSectionName;
+            _lines = new List<String>();
+            _sectionName = theSectionName;
+            _subSectionName = theSubSectionName;
         }
 
 
         /// <value>The lines.</value>
         public IList<String> Lines
         {
-            get { return lines; }
+            get { return _lines; }
         }
 
 
@@ -84,7 +84,7 @@ namespace Encog.Persist
             {
                 var result = new StringBuilder();
 
-                foreach (String line  in  lines)
+                foreach (String line  in  _lines)
                 {
                     result.Append(line);
                     result.Append("\n");
@@ -97,14 +97,14 @@ namespace Encog.Persist
         /// <value>The section name.</value>
         public String SectionName
         {
-            get { return sectionName; }
+            get { return _sectionName; }
         }
 
 
         /// <value>The section name.</value>
         public String SubSectionName
         {
-            get { return subSectionName; }
+            get { return _subSectionName; }
         }
 
         /// <summary>
@@ -117,17 +117,17 @@ namespace Encog.Persist
         public static IActivationFunction ParseActivationFunction(
             IDictionary<String, String> paras, String name)
         {
-            String value_ren = null;
+            String v;
             try
             {
-                value_ren = paras[name];
-                if (value_ren == null)
+                v = paras[name];
+                if (v == null)
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                IActivationFunction af = null;
-                String[] cols = value_ren.Split('|');
+                IActivationFunction af;
+                String[] cols = v.Split('|');
 
                 String afName = ReflectionUtil.AF_PATH
                                 + cols[0];
@@ -163,21 +163,21 @@ namespace Encog.Persist
         public static bool ParseBoolean(IDictionary<String, String> paras,
                                         String name)
         {
-            String value_ren = null;
+            String v = null;
             try
             {
-                value_ren = paras[name];
-                if (value_ren == null)
+                v = paras[name];
+                if (v == null)
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return value_ren.Trim().ToLower()[0] == 't';
+                return v.Trim().ToLower()[0] == 't';
             }
             catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
-                                       + "invalid integer: " + value_ren);
+                                       + "invalid integer: " + v);
             }
         }
 
@@ -191,21 +191,21 @@ namespace Encog.Persist
         public static double ParseDouble(IDictionary<String, String> paras,
                                          String name)
         {
-            String value_ren = null;
+            String v = null;
             try
             {
-                value_ren = paras[name];
-                if (value_ren == null)
+                v = paras[name];
+                if (v == null)
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return CSVFormat.EG_FORMAT.Parse(value_ren);
+                return CSVFormat.EG_FORMAT.Parse(v);
             }
             catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
-                                       + "invalid integer: " + value_ren);
+                                       + "invalid integer: " + v);
             }
         }
 
@@ -247,21 +247,21 @@ namespace Encog.Persist
         public static int ParseInt(IDictionary<String, String> paras,
                                    String name)
         {
-            String value_ren = null;
+            String v = null;
             try
             {
-                value_ren = paras[name];
-                if (value_ren == null)
+                v = paras[name];
+                if (v == null)
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return Int32.Parse(value_ren);
+                return Int32.Parse(v);
             }
             catch (FormatException)
             {
                 throw new PersistError("Field: " + name + ", "
-                                       + "invalid integer: " + value_ren);
+                                       + "invalid integer: " + v);
             }
         }
 
@@ -275,21 +275,21 @@ namespace Encog.Persist
         public static int[] ParseIntArray(IDictionary<String, String> paras,
                                           String name)
         {
-            String value_ren = null;
+            String v = null;
             try
             {
-                value_ren = paras[name];
-                if (value_ren == null)
+                v = paras[name];
+                if (v == null)
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return NumberList.FromListInt(CSVFormat.EG_FORMAT, value_ren);
+                return NumberList.FromListInt(CSVFormat.EG_FORMAT, v);
             }
             catch (FormatException )
             {
                 throw new PersistError("Field: " + name + ", "
-                                       + "invalid integer: " + value_ren);
+                                       + "invalid integer: " + v);
             }
         }
 
@@ -338,9 +338,9 @@ namespace Encog.Persist
         {
             IList<String> result = new List<String>();
             string[] tok = line.Split(',');
-            for (int i = 0; i < tok.Length; i++)
+            foreach (string t in tok)
             {
-                String str = tok[i].Trim();
+                String str = t.Trim();
                 if ((str.Length > 0) && (str[0] == '\"'))
                 {
                     str = str.Substring(1);
@@ -361,7 +361,7 @@ namespace Encog.Persist
             IDictionary<String, String> result = new Dictionary<String, String>();
 
 
-            foreach (String line  in  lines)
+            foreach (String line  in  _lines)
             {
                 String line2 = line.Trim();
                 if (line2.Length > 0)
@@ -372,9 +372,9 @@ namespace Encog.Persist
                         throw new EncogError("Invalid setup item: " + line);
                     }
                     String name = line2.Substring(0, (idx) - (0)).Trim();
-                    String value_ren = line2.Substring(idx + 1).Trim();
+                    String v = line2.Substring(idx + 1).Trim();
 
-                    result[name] = value_ren;
+                    result[name] = v;
                 }
             }
 
@@ -387,9 +387,9 @@ namespace Encog.Persist
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" sectionName=");
-            result.Append(sectionName);
+            result.Append(_sectionName);
             result.Append(", subSectionName=");
-            result.Append(subSectionName);
+            result.Append(_subSectionName);
             result.Append("]");
             return result.ToString();
         }

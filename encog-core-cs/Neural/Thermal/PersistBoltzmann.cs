@@ -33,7 +33,7 @@ namespace Encog.Neural.Thermal
     /// Persist the Boltzmann machine.
     /// </summary>
     ///
-    public class PersistBoltzmann : EncogPersistor
+    public class PersistBoltzmann : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -69,22 +69,22 @@ namespace Encog.Neural.Thermal
                 if (section.SectionName.Equals("BOLTZMANN")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
                     result.Weights = NumberList.FromList(CSVFormat.EG_FORMAT,
-                                                         (params_0[PersistConst.WEIGHTS]));
+                                                         (p[PersistConst.Weights]));
                     result.SetCurrentState(NumberList.FromList(CSVFormat.EG_FORMAT,
-                                                               (params_0[PersistConst.OUTPUT])));
-                    result.NeuronCount = EncogFileSection.ParseInt(params_0,
-                                                                   PersistConst.NEURON_COUNT);
+                                                               (p[PersistConst.Output])));
+                    result.NeuronCount = EncogFileSection.ParseInt(p,
+                                                                   PersistConst.NeuronCount);
 
                     result.Threshold = NumberList.FromList(CSVFormat.EG_FORMAT,
-                                                           (params_0[PersistConst.THRESHOLDS]));
-                    result.AnnealCycles = EncogFileSection.ParseInt(params_0,
-                                                                    BoltzmannMachine.ANNEAL_CYCLES);
-                    result.RunCycles = EncogFileSection.ParseInt(params_0,
-                                                                 BoltzmannMachine.RUN_CYCLES);
-                    result.Temperature = EncogFileSection.ParseDouble(params_0,
-                                                                      PersistConst.TEMPERATURE);
+                                                           (p[PersistConst.Thresholds]));
+                    result.AnnealCycles = EncogFileSection.ParseInt(p,
+                                                                    BoltzmannMachine.ParamAnnealCycles);
+                    result.RunCycles = EncogFileSection.ParseInt(p,
+                                                                 BoltzmannMachine.ParamRunCycles);
+                    result.Temperature = EncogFileSection.ParseDouble(p,
+                                                                      PersistConst.Temperature);
                 }
             }
 
@@ -100,15 +100,15 @@ namespace Encog.Neural.Thermal
             xout.AddSubSection("PARAMS");
             xout.AddProperties(boltz.Properties);
             xout.AddSubSection("NETWORK");
-            xout.WriteProperty(PersistConst.WEIGHTS, boltz.Weights);
-            xout.WriteProperty(PersistConst.OUTPUT, boltz.CurrentState.Data);
-            xout.WriteProperty(PersistConst.NEURON_COUNT, boltz.NeuronCount);
+            xout.WriteProperty(PersistConst.Weights, boltz.Weights);
+            xout.WriteProperty(PersistConst.Output, boltz.CurrentState.Data);
+            xout.WriteProperty(PersistConst.NeuronCount, boltz.NeuronCount);
 
-            xout.WriteProperty(PersistConst.THRESHOLDS, boltz.Threshold);
-            xout.WriteProperty(BoltzmannMachine.ANNEAL_CYCLES,
+            xout.WriteProperty(PersistConst.Thresholds, boltz.Threshold);
+            xout.WriteProperty(BoltzmannMachine.ParamAnnealCycles,
                                boltz.AnnealCycles);
-            xout.WriteProperty(BoltzmannMachine.RUN_CYCLES, boltz.RunCycles);
-            xout.WriteProperty(PersistConst.TEMPERATURE, boltz.Temperature);
+            xout.WriteProperty(BoltzmannMachine.ParamRunCycles, boltz.RunCycles);
+            xout.WriteProperty(PersistConst.Temperature, boltz.Temperature);
 
             xout.Flush();
         }

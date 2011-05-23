@@ -44,14 +44,14 @@ namespace Encog.Bot.Browse
             var tagDu = (TagDataUnit) page.GetDataUnit(1);
             Assert.AreEqual("b", tagDu.Tag.Name);
             Assert.AreEqual("<b>", tagDu.Tag.ToString());
-            Assert.AreEqual(Tag.Type.BEGIN, tagDu.Tag.TagType);
+            Assert.AreEqual(Tag.Type.Begin, tagDu.Tag.TagType);
             // Index 2 (text)
             textDu = (TextDataUnit) page.GetDataUnit(2);
             Assert.AreEqual("b", textDu.ToString());
             // Index 3 (tag)
             tagDu = (TagDataUnit) page.GetDataUnit(3);
             Assert.AreEqual("b", tagDu.Tag.Name);
-            Assert.AreEqual(Tag.Type.END, tagDu.Tag.TagType);
+            Assert.AreEqual(Tag.Type.End, tagDu.Tag.TagType);
             // Index 4 (text)
             textDu = (TextDataUnit) page.GetDataUnit(4);
             Assert.AreEqual("c", textDu.ToString());

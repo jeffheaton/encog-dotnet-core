@@ -47,19 +47,19 @@ namespace Encog.Persist
         /// The instance.
         /// </summary>
         ///
-        private static PersistorRegistry instance;
+        private static PersistorRegistry _instance;
 
 
         /// <summary>
         /// The mapping between name and persistor.
         /// </summary>
         ///
-        private readonly IDictionary<String, EncogPersistor> map;
+        private readonly IDictionary<String, IEncogPersistor> _map;
 
         /// <summary>
         /// The class map, used to lookup native classes to their persistor.
         /// </summary>
-        private readonly IDictionary<Type, EncogPersistor> classMap;
+        private readonly IDictionary<Type, IEncogPersistor> _classMap;
 
         /// <summary>
         /// Construct the object.
@@ -67,8 +67,8 @@ namespace Encog.Persist
         ///
         private PersistorRegistry()
         {
-            map = new Dictionary<String, EncogPersistor>();
-            classMap = new Dictionary<Type, EncogPersistor>();
+            _map = new Dictionary<String, IEncogPersistor>();
+            _classMap = new Dictionary<Type, IEncogPersistor>();
             Add(new PersistSVM());
             Add(new PersistHopfield());
             Add(new PersistBoltzmann());
@@ -87,15 +87,7 @@ namespace Encog.Persist
         /// <value>The singleton instance.</value>
         public static PersistorRegistry Instance
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new PersistorRegistry();
-                }
-
-                return instance;
-            }
+            get { return _instance ?? (_instance = new PersistorRegistry()); }
         }
 
         /// <summary>
@@ -103,10 +95,10 @@ namespace Encog.Persist
         /// </summary>
         ///
         /// <param name="persistor">The persistor to add.</param>
-        public void Add(EncogPersistor persistor)
+        public void Add(IEncogPersistor persistor)
         {
-            map[persistor.PersistClassString] = persistor;
-            classMap[persistor.NativeType] = persistor;
+            _map[persistor.PersistClassString] = persistor;
+            _classMap[persistor.NativeType] = persistor;
         }
 
         /// <summary>
@@ -115,9 +107,9 @@ namespace Encog.Persist
         ///
         /// <param name="clazz">The class to get the persistor for.</param>
         /// <returns>Return the persistor.</returns>
-        public EncogPersistor GetPersistor(Type clazz)
+        public IEncogPersistor GetPersistor(Type clazz)
         {
-            return classMap[clazz];
+            return _classMap[clazz];
         }
 
         /// <summary>
@@ -126,17 +118,9 @@ namespace Encog.Persist
         ///
         /// <param name="name">The name of the persistor.</param>
         /// <returns>The persistor.</returns>
-        public EncogPersistor GetPersistor(String name)
+        public IEncogPersistor GetPersistor(String name)
         {
-            if( map.ContainsKey(name))
-            {
-                return map[name];    
-            }
-            else
-            {
-                return null;
-            }
-            
+            return _map.ContainsKey(name) ? _map[name] : null;
         }
     }
 }

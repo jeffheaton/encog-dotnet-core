@@ -31,7 +31,7 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// Persist the training continuation.
     /// </summary>
     ///
-    public class PersistTrainingContinuation : EncogPersistor
+    public class PersistTrainingContinuation : IEncogPersistor
     {
         #region EncogPersistor Members
 

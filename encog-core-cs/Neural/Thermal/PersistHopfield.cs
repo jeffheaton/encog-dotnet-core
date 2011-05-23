@@ -33,7 +33,7 @@ namespace Encog.Neural.Thermal
     /// Persist the Hopfield network.
     /// </summary>
     ///
-    public class PersistHopfield : EncogPersistor
+    public class PersistHopfield : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -76,13 +76,13 @@ namespace Encog.Neural.Thermal
                 if (section.SectionName.Equals("HOPFIELD")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
                     result.Weights = NumberList.FromList(CSVFormat.EG_FORMAT,
-                                                         (params_0[PersistConst.WEIGHTS]));
+                                                         (p[PersistConst.Weights]));
                     result.SetCurrentState(NumberList.FromList(CSVFormat.EG_FORMAT,
-                                                               (params_0[PersistConst.OUTPUT])));
-                    result.NeuronCount = EncogFileSection.ParseInt(params_0,
-                                                                   PersistConst.NEURON_COUNT);
+                                                               (p[PersistConst.Output])));
+                    result.NeuronCount = EncogFileSection.ParseInt(p,
+                                                                   PersistConst.NeuronCount);
                 }
             }
 
@@ -101,9 +101,9 @@ namespace Encog.Neural.Thermal
             xout.AddSubSection("PARAMS");
             xout.AddProperties(hopfield.Properties);
             xout.AddSubSection("NETWORK");
-            xout.WriteProperty(PersistConst.WEIGHTS, hopfield.Weights);
-            xout.WriteProperty(PersistConst.OUTPUT, hopfield.CurrentState.Data);
-            xout.WriteProperty(PersistConst.NEURON_COUNT, hopfield.NeuronCount);
+            xout.WriteProperty(PersistConst.Weights, hopfield.Weights);
+            xout.WriteProperty(PersistConst.Output, hopfield.CurrentState.Data);
+            xout.WriteProperty(PersistConst.NeuronCount, hopfield.NeuronCount);
             xout.Flush();
         }
 

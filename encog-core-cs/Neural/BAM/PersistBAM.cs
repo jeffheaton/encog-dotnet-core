@@ -32,7 +32,7 @@ namespace Encog.Neural.BAM
     /// Persist the BAM network.
     /// </summary>
     ///
-    public class PersistBAM : EncogPersistor
+    public class PersistBAM : IEncogPersistor
     {
         #region EncogPersistor Members
 
@@ -71,11 +71,11 @@ namespace Encog.Neural.BAM
                     IDictionary<String, String> p = section.ParseParams();
 
                     result.F1Count = EncogFileSection.ParseInt(p,
-                                                               PersistConst.PROPERTY_F1_COUNT);
+                                                               PersistConst.PropertyF1Count);
                     result.F2Count = EncogFileSection.ParseInt(p,
-                                                               PersistConst.PROPERTY_F2_COUNT);
-                    result.WeightsF1ToF2 = EncogFileSection.ParseMatrix(p,PersistConst.PROPERTY_WEIGHTS_F1_F2);
-                    result.WeightsF2ToF1 = EncogFileSection.ParseMatrix(p,PersistConst.PROPERTY_WEIGHTS_F2_F1);
+                                                               PersistConst.PropertyF2Count);
+                    result.WeightsF1ToF2 = EncogFileSection.ParseMatrix(p,PersistConst.PropertyWeightsF1F2);
+                    result.WeightsF2ToF1 = EncogFileSection.ParseMatrix(p,PersistConst.PropertyWeightsF2F1);
                 }
             }
 
@@ -95,11 +95,11 @@ namespace Encog.Neural.BAM
             xout.AddProperties(bam.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(PersistConst.PROPERTY_F1_COUNT, bam.F1Count);
-            xout.WriteProperty(PersistConst.PROPERTY_F2_COUNT, bam.F2Count);
-            xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F1_F2,
+            xout.WriteProperty(PersistConst.PropertyF1Count, bam.F1Count);
+            xout.WriteProperty(PersistConst.PropertyF2Count, bam.F2Count);
+            xout.WriteProperty(PersistConst.PropertyWeightsF1F2,
                                bam.WeightsF1ToF2);
-            xout.WriteProperty(PersistConst.PROPERTY_WEIGHTS_F2_F1,
+            xout.WriteProperty(PersistConst.PropertyWeightsF2F1,
                                bam.WeightsF2ToF1);
 
             xout.Flush();

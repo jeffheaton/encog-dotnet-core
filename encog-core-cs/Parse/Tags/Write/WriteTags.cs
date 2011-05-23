@@ -39,22 +39,22 @@ namespace Encog.Parse.Tags.Write
         /// <summary>
         /// The output stream to write to.
         /// </summary>
-        private readonly Stream output;
+        private readonly Stream _output;
 
         /// <summary>
         /// Stack to keep track of beginning and ending tags.
         /// </summary>
-        private readonly Stack<String> tagStack;
+        private readonly Stack<String> _tagStack;
 
         /// <summary>
         /// The attributes for the current tag.
         /// </summary>
-        private readonly IDictionary<String, String> attributes;
+        private readonly IDictionary<String, String> _attributes;
 
         /// <summary>
         /// Used to encode strings to bytes.
         /// </summary>
-        private readonly StreamWriter encoder;
+        private readonly StreamWriter _encoder;
 
         /// <summary>
         /// Construct an object to write tags.
@@ -62,20 +62,20 @@ namespace Encog.Parse.Tags.Write
         /// <param name="output">THe output stream.</param>
         public WriteTags(Stream output)
         {
-            this.output = output;
-            tagStack = new Stack<String>();
-            attributes = new Dictionary<String, String>();
-            encoder = new StreamWriter(output);
+            _output = output;
+            _tagStack = new Stack<String>();
+            _attributes = new Dictionary<String, String>();
+            _encoder = new StreamWriter(output);
         }
 
         /// <summary>
         /// Add an attribute to be written with the next tag.
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
-        /// <param name="value_ren">The value of the attribute.</param>
-        public void AddAttribute(String name, String value_ren)
+        /// <param name="v">The value of the attribute.</param>
+        public void AddAttribute(String name, String v)
         {
-            attributes.Add(name, value_ren);
+            _attributes.Add(name, v);
         }
 
         /// <summary>
@@ -87,13 +87,13 @@ namespace Encog.Parse.Tags.Write
         {
             var builder = new StringBuilder();
             builder.Append('<');
-            builder.Append(TagConst.CDATA_BEGIN);
+            builder.Append(TagConst.CDATABegin);
             builder.Append(text);
-            builder.Append(TagConst.CDATA_END);
+            builder.Append(TagConst.CDATAEnd);
             builder.Append('>');
             try
             {
-                encoder.Write(builder.ToString());
+                _encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
@@ -143,7 +143,7 @@ namespace Encog.Parse.Tags.Write
         {
             try
             {
-                encoder.Write(text);
+                _encoder.Write(text);
             }
             catch (IOException e)
             {
@@ -167,11 +167,11 @@ namespace Encog.Parse.Tags.Write
             var builder = new StringBuilder();
             builder.Append("<");
             builder.Append(name);
-            if (attributes.Count > 0)
+            if (_attributes.Count > 0)
             {
-                foreach (String key in attributes.Keys)
+                foreach (String key in _attributes.Keys)
                 {
-                    String value = attributes[key];
+                    String value = _attributes[key];
                     builder.Append(' ');
                     builder.Append(key);
                     builder.Append('=');
@@ -184,14 +184,14 @@ namespace Encog.Parse.Tags.Write
 
             try
             {
-                encoder.Write(builder.ToString());
+                _encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
                 throw new ParseError(e);
             }
-            attributes.Clear();
-            tagStack.Push(name);
+            _attributes.Clear();
+            _tagStack.Push(name);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Encog.Parse.Tags.Write
         {
             try
             {
-                output.Close();
+                _output.Close();
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Encog.Parse.Tags.Write
         /// </summary>
         public void EndDocument()
         {
-            encoder.Flush();
+            _encoder.Flush();
         }
 
         /// <summary>
@@ -222,12 +222,12 @@ namespace Encog.Parse.Tags.Write
         /// </summary>
         public void EndTag()
         {
-            if (tagStack.Count < 1)
+            if (_tagStack.Count < 1)
             {
                 throw new ParseError(
                     "Can't create end tag, no beginning tag.");
             }
-            String tag = tagStack.Pop();
+            String tag = _tagStack.Pop();
 
             var builder = new StringBuilder();
             builder.Append("</");
@@ -236,21 +236,20 @@ namespace Encog.Parse.Tags.Write
 
             try
             {
-                encoder.Write(builder.ToString());
+                _encoder.Write(builder.ToString());
             }
             catch (IOException e)
             {
                 throw new ParseError(e);
             }
         }
-
-        /**
-	 * Write an array as a property.
-	 * @param name The name of the property.
-	 * @param array The array to write.
-	 * @param len The length of the array to write.
-	 */
-
+        
+        /// <summary>
+        /// Write an array as a property.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="array">The array to write.</param>
+        /// <param name="len">The length of the array to write.</param>
         public void AddProperty(String name, double[] array, int len)
         {
             if (array != null)
@@ -266,13 +265,12 @@ namespace Encog.Parse.Tags.Write
             }
         }
 
-        /**
-	 * Write an array as a property.
-	 * @param name The name of the property.
-	 * @param array The array to write.
-	 * @param len The length of the array to write.
-	 */
-
+        /// <summary>
+        /// Write an array as a property.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="array">The array to write.</param>
+        /// <param name="len">The length of the array to write.</param>
         public void AddProperty(String name, int[] array, int len)
         {
             if (array != null)
@@ -295,10 +293,10 @@ namespace Encog.Parse.Tags.Write
         /// <param name="name">The tag to be ending.</param>
         public void EndTag(String name)
         {
-            if (!tagStack.Peek().Equals(name))
+            if (!_tagStack.Peek().Equals(name))
             {
                 String str = "End tag mismatch, should be ending: "
-                             + tagStack.Peek() + ", but trying to end: " + name
+                             + _tagStack.Peek() + ", but trying to end: " + name
                              + ".";
 #if logging
                 if (logger.IsErrorEnabled)
@@ -308,10 +306,7 @@ namespace Encog.Parse.Tags.Write
 #endif
                 throw new ParseError(str);
             }
-            else
-            {
-                EndTag();
-            }
+            EndTag();
         }
     }
 }
