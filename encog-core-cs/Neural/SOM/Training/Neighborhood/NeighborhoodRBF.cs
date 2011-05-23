@@ -35,20 +35,20 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// The radial basis function to use.
         /// </summary>
         ///
-        private readonly IRadialBasisFunction rbf;
+        private readonly IRadialBasisFunction _rbf;
 
         /// <summary>
         /// The size of each dimension.
         /// </summary>
         ///
-        private readonly int[] size;
+        private readonly int[] _size;
 
         /// <summary>
         /// The displacement of each dimension, when mapping the dimensions
         /// to a 1d array.
         /// </summary>
         ///
-        private int[] displacement;
+        private int[] _displacement;
 
         /// <summary>
         /// Construct a 2d neighborhood function based on the sizes for the
@@ -60,9 +60,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <param name="y">The size of the y-dimension.</param>
         public NeighborhoodRBF(RBFEnum type, int x, int y)
         {
-            var size_0 = new int[2];
-            size_0[0] = x;
-            size_0[1] = y;
+            var size = new int[2];
+            size[0] = x;
+            size[1] = y;
 
             var centerArray = new double[2];
             centerArray[0] = 0;
@@ -75,23 +75,23 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             switch (type)
             {
                 case RBFEnum.Gaussian:
-                    rbf = new GaussianFunction(2);
+                    _rbf = new GaussianFunction(2);
                     break;
                 case RBFEnum.InverseMultiquadric:
-                    rbf = new InverseMultiquadricFunction(2);
+                    _rbf = new InverseMultiquadricFunction(2);
                     break;
                 case RBFEnum.Multiquadric:
-                    rbf = new MultiquadricFunction(2);
+                    _rbf = new MultiquadricFunction(2);
                     break;
                 case RBFEnum.MexicanHat:
-                    rbf = new MexicanHatFunction(2);
+                    _rbf = new MexicanHatFunction(2);
                     break;
             }
 
-            rbf.Width = 1;
-            EngineArray.ArrayCopy(centerArray, rbf.Centers);
+            _rbf.Width = 1;
+            EngineArray.ArrayCopy(centerArray, _rbf.Centers);
 
-            size = size_0;
+            _size = size;
 
             CalculateDisplacement();
         }
@@ -100,33 +100,33 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Construct a multi-dimensional neighborhood function.
         /// </summary>
         ///
-        /// <param name="size_0">The sizes of each dimension.</param>
+        /// <param name="size">The sizes of each dimension.</param>
         /// <param name="type">The RBF type to use.</param>
-        public NeighborhoodRBF(int[] size_0, RBFEnum type)
+        public NeighborhoodRBF(int[] size, RBFEnum type)
         {
             switch (type)
             {
                 case RBFEnum.Gaussian:
-                    rbf = new GaussianFunction(2);
+                    _rbf = new GaussianFunction(2);
                     break;
                 case RBFEnum.InverseMultiquadric:
-                    rbf = new InverseMultiquadricFunction(2);
+                    _rbf = new InverseMultiquadricFunction(2);
                     break;
                 case RBFEnum.Multiquadric:
-                    rbf = new MultiquadricFunction(2);
+                    _rbf = new MultiquadricFunction(2);
                     break;
                 case RBFEnum.MexicanHat:
-                    rbf = new MexicanHatFunction(2);
+                    _rbf = new MexicanHatFunction(2);
                     break;
             }
-            size = size_0;
+            _size = size;
             CalculateDisplacement();
         }
 
         /// <value>The RBF to use.</value>
         public IRadialBasisFunction RBF
         {
-            get { return rbf; }
+            get { return _rbf; }
         }
 
         #region INeighborhoodFunction Members
@@ -141,14 +141,14 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// neuron should get.  Usually 100% when it is the bestNeuron.</returns>
         public virtual double Function(int currentNeuron, int bestNeuron)
         {
-            var vector = new double[displacement.Length];
+            var vector = new double[_displacement.Length];
             int[] vectorCurrent = TranslateCoordinates(currentNeuron);
             int[] vectorBest = TranslateCoordinates(bestNeuron);
             for (int i = 0; i < vectorCurrent.Length; i++)
             {
                 vector[i] = vectorCurrent[i] - vectorBest[i];
             }
-            return rbf.Calculate(vector);
+            return _rbf.Calculate(vector);
         }
 
         /// <summary>
@@ -156,8 +156,8 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// </summary>
         public virtual double Radius
         {
-            get { return rbf.Width; }
-            set { rbf.Width = value; }
+            get { return _rbf.Width; }
+            set { _rbf.Width = value; }
         }
 
         #endregion
@@ -168,25 +168,25 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         ///
         private void CalculateDisplacement()
         {
-            displacement = new int[size.Length];
-            for (int i = 0; i < size.Length; i++)
+            _displacement = new int[_size.Length];
+            for (int i = 0; i < _size.Length; i++)
             {
-                int value_ren;
+                int v;
 
                 if (i == 0)
                 {
-                    value_ren = 0;
+                    v = 0;
                 }
                 else if (i == 1)
                 {
-                    value_ren = size[0];
+                    v = _size[0];
                 }
                 else
                 {
-                    value_ren = displacement[i - 1]*size[i - 1];
+                    v = _displacement[i - 1]*_size[i - 1];
                 }
 
-                displacement[i] = value_ren;
+                _displacement[i] = v;
             }
         }
 
@@ -202,23 +202,23 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <returns>The multi-dimensional coordinates.</returns>
         private int[] TranslateCoordinates(int index)
         {
-            var result = new int[displacement.Length];
+            var result = new int[_displacement.Length];
             int countingIndex = index;
 
-            for (int i = displacement.Length - 1; i >= 0; i--)
+            for (int i = _displacement.Length - 1; i >= 0; i--)
             {
-                int value_ren;
-                if (displacement[i] > 0)
+                int v;
+                if (_displacement[i] > 0)
                 {
-                    value_ren = countingIndex/displacement[i];
+                    v = countingIndex/_displacement[i];
                 }
                 else
                 {
-                    value_ren = countingIndex;
+                    v = countingIndex;
                 }
 
-                countingIndex -= displacement[i]*value_ren;
-                result[i] = value_ren;
+                countingIndex -= _displacement[i]*v;
+                result[i] = v;
             }
 
             return result;

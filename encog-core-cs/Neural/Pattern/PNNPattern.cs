@@ -30,39 +30,39 @@ namespace Encog.Neural.Pattern
     /// Pattern to create a PNN.
     /// </summary>
     ///
-    public class PNNPattern : NeuralNetworkPattern
+    public class PNNPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of input neurons.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The kernel type.
         /// </summary>
         ///
-        private PNNKernelType kernel;
+        private PNNKernelType _kernel;
 
         /// <summary>
         /// The output model.
         /// </summary>
         ///
-        private PNNOutputMode outmodel;
+        private PNNOutputMode _outmodel;
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public PNNPattern()
         {
-            kernel = PNNKernelType.Gaussian;
-            outmodel = PNNOutputMode.Regression;
+            _kernel = PNNKernelType.Gaussian;
+            _outmodel = PNNOutputMode.Regression;
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public PNNKernelType Kernel
         {
-            get { return kernel; }
-            set { kernel = value; }
+            get { return _kernel; }
+            set { _kernel = value; }
         }
 
 
@@ -80,8 +80,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public PNNOutputMode Outmodel
         {
-            get { return outmodel; }
-            set { outmodel = value; }
+            get { return _outmodel; }
+            set { _outmodel = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -112,8 +112,8 @@ namespace Encog.Neural.Pattern
         /// <returns>The neural network.</returns>
         public IMLMethod Generate()
         {
-            var pnn = new BasicPNN(kernel, outmodel,
-                                   inputNeurons, outputNeurons);
+            var pnn = new BasicPNN(_kernel, _outmodel,
+                                   _inputNeurons, _outputNeurons);
             return pnn;
         }
 
@@ -122,8 +122,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            get { return inputNeurons; }
-            set { inputNeurons = value; }
+            get { return _inputNeurons; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -134,8 +134,8 @@ namespace Encog.Neural.Pattern
         /// <value>The number of neurons.</value>
         public int OutputNeurons
         {
-            get { return outputNeurons; }
-            set { outputNeurons = value; }
+            get { return _outputNeurons; }
+            set { _outputNeurons = value; }
         }
 
 

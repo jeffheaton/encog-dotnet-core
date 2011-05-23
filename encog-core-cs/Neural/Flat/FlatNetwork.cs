@@ -287,7 +287,7 @@ namespace Encog.Neural.Flat
             {
                 _connectionLimit = value;
                 if (Math.Abs(_connectionLimit
-                             - BasicNetwork.DEFAULT_CONNECTION_LIMIT) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                             - BasicNetwork.DefaultConnectionLimit) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
                 {
                     _isLimited = true;
                 }

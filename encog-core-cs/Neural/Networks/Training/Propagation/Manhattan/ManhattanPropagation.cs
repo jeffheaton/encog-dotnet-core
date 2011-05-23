@@ -45,7 +45,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// The default tolerance to determine of a number is close to zero.
         /// </summary>
         ///
-        internal const double DEFAULT_ZERO_TOLERANCE = 0.001d;
+        internal const double DefaultZeroTolerance = 0.001d;
 
         /// <summary>
         /// Construct a Manhattan propagation training object.
@@ -54,7 +54,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="learnRate">The learning rate.</param>
-        public ManhattanPropagation(ContainsFlat network,
+        public ManhattanPropagation(IContainsFlat network,
                                     IMLDataSet training, double learnRate) : base(network, training)
         {
             FlatTraining = new TrainFlatNetworkManhattan(network.Flat,

@@ -39,13 +39,13 @@ namespace Encog.Neural.Thermal
         /// The property for run cycles.
         /// </summary>
         ///
-        public const String RUN_CYCLES = "runCycles";
+        public const String PARAM_RUN_CYCLES = "runCycles";
 
         /// <summary>
         /// The property for anneal cycles.
         /// </summary>
         ///
-        public const String ANNEAL_CYCLES = "annealCycles";
+        public const String PARAM_ANNEAL_CYCLES = "annealCycles";
 
         /// <summary>
         /// The number of cycles to anneal for.

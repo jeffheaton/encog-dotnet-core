@@ -37,43 +37,43 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// Learning decay rate.
         /// </summary>
         ///
-        public const double LEARNING_DECAY = 0.99d;
+        public const double LearningDecay = 0.99d;
 
         /// <summary>
         /// The current learning rate.
         /// </summary>
         ///
-        private double currentLearningRate;
+        private double _currentLearningRate;
 
         /// <summary>
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start evaluation.
         /// </summary>
         ///
-        private bool ready;
+        private bool _ready;
 
         /// <summary>
         /// The class that is to have the learning rate set for.
         /// </summary>
         ///
-        private ILearningRate setter;
+        private ILearningRate _setter;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private IMLTrain train;
+        private IMLTrain _train;
 
         /// <summary>
         /// The training set size, this is used to pick an initial learning rate.
         /// </summary>
         ///
-        private long trainingSize;
+        private long _trainingSize;
 
         #region IStrategy Members
 
@@ -81,17 +81,17 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// Initialize this strategy.
         /// </summary>
         ///
-        /// <param name="train_0">The training algorithm.</param>
-        public void Init(IMLTrain train_0)
+        /// <param name="train">The training algorithm.</param>
+        public void Init(IMLTrain train)
         {
-            train = train_0;
-            ready = false;
-            setter = (ILearningRate) train_0;
-            trainingSize = train_0.Training.Count;
-            currentLearningRate = 1.0d/trainingSize;
+            _train = train;
+            _ready = false;
+            _setter = (ILearningRate) train;
+            _trainingSize = train.Training.Count;
+            _currentLearningRate = 1.0d/_trainingSize;
             EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Starting learning rate: "
-                                                       + currentLearningRate);
-            setter.LearningRate = currentLearningRate;
+                                                       + _currentLearningRate);
+            _setter.LearningRate = _currentLearningRate;
         }
 
         /// <summary>
@@ -100,20 +100,20 @@ namespace Encog.Neural.Networks.Training.Strategy
         ///
         public void PostIteration()
         {
-            if (ready)
+            if (_ready)
             {
-                if (train.Error > lastError)
+                if (_train.Error > _lastError)
                 {
-                    currentLearningRate *= LEARNING_DECAY;
-                    setter.LearningRate = currentLearningRate;
+                    _currentLearningRate *= LearningDecay;
+                    _setter.LearningRate = _currentLearningRate;
                     EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                      "Adjusting learning rate to {}"
-                                     + currentLearningRate);
+                                     + _currentLearningRate);
                 }
             }
             else
             {
-                ready = true;
+                _ready = true;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         ///
         public void PreIteration()
         {
-            lastError = train.Error;
+            _lastError = _train.Error;
         }
 
         #endregion

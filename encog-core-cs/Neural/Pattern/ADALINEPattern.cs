@@ -32,19 +32,19 @@ namespace Encog.Neural.Pattern
     /// Construct an ADALINE neural network.
     /// </summary>
     ///
-    public class ADALINEPattern : NeuralNetworkPattern
+    public class ADALINEPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of neurons in the input layer.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The number of neurons in the output layer.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         #region NeuralNetworkPattern Members
 
@@ -64,8 +64,8 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            inputNeurons = 0;
-            outputNeurons = 0;
+            _inputNeurons = 0;
+            _outputNeurons = 0;
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace Encog.Neural.Pattern
             var network = new BasicNetwork();
 
             ILayer inputLayer = new BasicLayer(new ActivationLinear(), true,
-                                              inputNeurons);
+                                              _inputNeurons);
             ILayer outputLayer = new BasicLayer(new ActivationLinear(), false,
-                                               outputNeurons);
+                                               _outputNeurons);
 
             network.AddLayer(inputLayer);
             network.AddLayer(outputLayer);
@@ -107,7 +107,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -116,7 +116,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

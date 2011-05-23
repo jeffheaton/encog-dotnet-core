@@ -41,26 +41,14 @@ namespace Encog.Neural.SOM
         /// Do not allow patterns to go below this very small number.
         /// </summary>
         ///
-        public const double VERYSMALL = 1.0E-30d;
-
-        /// <summary>
-        /// Number of input neurons.
-        /// </summary>
-        ///
-        protected internal int inputNeuronCount;
-
-        /// <summary>
-        /// Number of output neurons.
-        /// </summary>
-        ///
-        protected internal int outputNeuronCount;
+        public const double Verysmall = 1.0E-30d;
 
         /// <summary>
         /// The weights of the output neurons base on the input from the input
         /// neurons.
         /// </summary>
         ///
-        private Matrix weights;
+        private Matrix _weights;
 
         /// <summary>
         /// Default constructor.
@@ -78,36 +66,17 @@ namespace Encog.Neural.SOM
         /// <param name="outputCount">Number of output neurons</param>
         public SOMNetwork(int inputCount, int outputCount)
         {
-            inputNeuronCount = inputCount;
-            outputNeuronCount = outputCount;
-            weights = new Matrix(inputCount, outputCount);
-        }
-
-
-        /// <summary>
-        /// Get the input neuron count.
-        /// </summary>
-        public int InputNeuronCount
-        {
-            get { return inputNeuronCount; }
-        }
-
-
-        /// <summary>
-        /// Set the output count.
-        /// </summary>
-        public int OutputNeuronCount
-        {
-            get { return outputNeuronCount; }
-            set { outputNeuronCount = value; }
+            InputCount = inputCount;
+            OutputCount = outputCount;
+            _weights = new Matrix(inputCount, outputCount);
         }
 
 
         /// <value>the weights to set</value>
         public Matrix Weights
         {
-            get { return weights; }
-            set { weights = value; }
+            get { return _weights; }
+            set { _weights = value; }
         }
 
         #region MLClassification Members
@@ -122,17 +91,10 @@ namespace Encog.Neural.SOM
         /// <summary>
         /// Set the input count.
         /// </summary>
-        public virtual int InputCount
-        {
-            get { return inputNeuronCount; }
-            set { inputNeuronCount = value; }
-        }
+        public virtual int InputCount { get; set; }
 
         /// <inheritdoc/>
-        public virtual int OutputCount
-        {
-            get { return 1; }
-        }
+        public virtual int OutputCount { get; set; }
 
         #endregion
 
@@ -164,7 +126,7 @@ namespace Encog.Neural.SOM
         /// <inheritdoc/>
         public void Reset()
         {
-            weights.Randomize(-1, 1);
+            _weights.Randomize(-1, 1);
         }
 
         /// <inheritdoc/>
@@ -184,11 +146,11 @@ namespace Encog.Neural.SOM
         /// <returns>The winning neuron.</returns>
         public IMLData Compute(IMLData input)
         {
-            IMLData result = new BasicMLData(outputNeuronCount);
+            IMLData result = new BasicMLData(OutputCount);
 
-            for (int i = 0; i < outputNeuronCount; i++)
+            for (int i = 0; i < OutputCount; i++)
             {
-                Matrix optr = weights.GetCol(i);
+                Matrix optr = _weights.GetCol(i);
                 Matrix inputMatrix = Matrix.CreateRowMatrix(input.Data);
                 result[i] = MatrixMath.DotProduct(inputMatrix, optr);
             }

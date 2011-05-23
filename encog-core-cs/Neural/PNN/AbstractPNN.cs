@@ -36,71 +36,71 @@ namespace Encog.Neural.PNN
         /// First derivative. 
         /// </summary>
         ///
-        private readonly double[] deriv;
+        private readonly double[] _deriv;
 
         /// <summary>
         /// Second derivative.
         /// </summary>
         ///
-        private readonly double[] deriv2;
+        private readonly double[] _deriv2;
 
         /// <summary>
         /// Input neuron count.
         /// </summary>
         ///
-        private readonly int inputCount;
+        private readonly int _inputCount;
 
         /// <summary>
         /// Kernel type. 
         /// </summary>
         ///
-        private readonly PNNKernelType kernel;
+        private readonly PNNKernelType _kernel;
 
         /// <summary>
         /// Output neuron count. 
         /// </summary>
         ///
-        private readonly int outputCount;
+        private readonly int _outputCount;
 
         /// <summary>
         /// Output mode.
         /// </summary>
         ///
-        private readonly PNNOutputMode outputMode;
+        private readonly PNNOutputMode _outputMode;
 
         /// <summary>
         /// Confusion work area.
         /// </summary>
         ///
-        private int[] confusion;
+        private int[] _confusion;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         ///
-        /// <param name="kernel_0">The kernel type to use.</param>
-        /// <param name="outputMode_1">The output mode to use.</param>
-        /// <param name="inputCount_2">The input count.</param>
-        /// <param name="outputCount_3">The output count.</param>
-        public AbstractPNN(PNNKernelType kernel_0,
-                           PNNOutputMode outputMode_1, int inputCount_2,
-                           int outputCount_3)
+        /// <param name="kernel">The kernel type to use.</param>
+        /// <param name="outputMode">The output mode to use.</param>
+        /// <param name="inputCount">The input count.</param>
+        /// <param name="outputCount">The output count.</param>
+        protected AbstractPNN(PNNKernelType kernel,
+                           PNNOutputMode outputMode, int inputCount,
+                           int outputCount)
         {
-            kernel = kernel_0;
-            outputMode = outputMode_1;
-            inputCount = inputCount_2;
-            outputCount = outputCount_3;
+            _kernel = kernel;
+            _outputMode = outputMode;
+            _inputCount = inputCount;
+            _outputCount = outputCount;
             Trained = false;
             Error = Double.MinValue;
-            confusion = null;
+            _confusion = null;
             Exclude = -1;
 
-            deriv = new double[inputCount_2];
-            deriv2 = new double[inputCount_2];
+            _deriv = new double[inputCount];
+            _deriv2 = new double[inputCount];
 
-            if (outputMode == PNNOutputMode.Classification)
+            if (_outputMode == PNNOutputMode.Classification)
             {
-                confusion = new int[outputCount + 1];
+                _confusion = new int[_outputCount + 1];
             }
         }
 
@@ -108,14 +108,14 @@ namespace Encog.Neural.PNN
         /// <value>the deriv</value>
         public double[] Deriv
         {
-            get { return deriv; }
+            get { return _deriv; }
         }
 
 
         /// <value>the deriv2</value>
         public double[] Deriv2
         {
-            get { return deriv2; }
+            get { return _deriv2; }
         }
 
 
@@ -134,28 +134,28 @@ namespace Encog.Neural.PNN
         /// <value>the inputCount</value>
         public int InputCount
         {
-            get { return inputCount; }
+            get { return _inputCount; }
         }
 
 
         /// <value>the kernel</value>
         public PNNKernelType Kernel
         {
-            get { return kernel; }
+            get { return _kernel; }
         }
 
 
         /// <value>the outputCount</value>
         public int OutputCount
         {
-            get { return outputCount; }
+            get { return _outputCount; }
         }
 
 
         /// <value>the outputMode</value>
         public PNNOutputMode OutputMode
         {
-            get { return outputMode; }
+            get { return _outputMode; }
         }
 
 

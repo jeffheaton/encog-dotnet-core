@@ -42,7 +42,7 @@ namespace Encog.Neural.Pnn
         /// The output mode property.
         /// </summary>
         ///
-        public const String PROPERTY_outputMode = "outputMode";
+        public const String PropertyOutputMode = "outputMode";
 
         #region EncogPersistor Members
 
@@ -96,7 +96,7 @@ namespace Encog.Neural.Pnn
                     outputCount = EncogFileSection.ParseInt(paras,
                                                             PersistConst.OUTPUT_COUNT);
                     kernel = StringToKernel(paras[PersistConst.KERNEL]);
-                    outmodel = StringToOutputMode(paras[PROPERTY_outputMode]);
+                    outmodel = StringToOutputMode(paras[PropertyOutputMode]);
                     error = EncogFileSection
                         .ParseDouble(paras, PersistConst.ERROR);
                     sigma = EncogFileSection.ParseDoubleArray(paras,
@@ -117,9 +117,9 @@ namespace Encog.Neural.Pnn
                                 CSVFormat.EG_FORMAT.Parse(cols[index++]);
                         }
                         IMLData idealData = new BasicMLData(inputCount);
-                        for (int i_0 = 0; i_0 < outputCount; i_0++)
+                        for (int i = 0; i < outputCount; i++)
                         {
-                            idealData[i_0] =
+                            idealData[i] =
                                 CSVFormat.EG_FORMAT.Parse(cols[index++]);
                         }
                         IMLDataPair pair = new BasicMLDataPair(inputData,
@@ -163,7 +163,7 @@ namespace Encog.Neural.Pnn
             xout.WriteProperty(PersistConst.KERNEL,
                                KernelToString(pnn.Kernel));
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, pnn.OutputCount);
-            xout.WriteProperty(PROPERTY_outputMode,
+            xout.WriteProperty(PropertyOutputMode,
                                OutputModeToString(pnn.OutputMode));
             xout.WriteProperty(PersistConst.SIGMA, pnn.Sigma);
 
@@ -175,9 +175,9 @@ namespace Encog.Neural.Pnn
                 {
                     xout.AddColumn(pair.Input[i]);
                 }
-                for (int i_0 = 0; i_0 < pair.Ideal.Count; i_0++)
+                for (int i = 0; i < pair.Ideal.Count; i++)
                 {
-                    xout.AddColumn(pair.Ideal[i_0]);
+                    xout.AddColumn(pair.Ideal[i]);
                 }
                 xout.WriteLine();
             }
@@ -239,14 +239,11 @@ namespace Encog.Neural.Pnn
             {
                 return PNNKernelType.Gaussian;
             }
-            else if (k.Equals("reciprocal", StringComparison.InvariantCultureIgnoreCase))
+            if (k.Equals("reciprocal", StringComparison.InvariantCultureIgnoreCase))
             {
                 return PNNKernelType.Reciprocal;
             }
-            else
-            {
-                return default(PNNKernelType) /* was: null */;
-            }
+            return default(PNNKernelType) /* was: null */;
         }
 
         /// <summary>
@@ -261,18 +258,15 @@ namespace Encog.Neural.Pnn
             {
                 return PNNOutputMode.Regression;
             }
-            else if (mode.Equals("unsupervised", StringComparison.InvariantCultureIgnoreCase))
+            if (mode.Equals("unsupervised", StringComparison.InvariantCultureIgnoreCase))
             {
                 return PNNOutputMode.Unsupervised;
             }
-            else if (mode.Equals("classification", StringComparison.InvariantCultureIgnoreCase))
+            if (mode.Equals("classification", StringComparison.InvariantCultureIgnoreCase))
             {
                 return PNNOutputMode.Classification;
             }
-            else
-            {
-                return default(PNNOutputMode) /* was: null */;
-            }
+            return default(PNNOutputMode) /* was: null */;
         }
 
         /// <inheritdoc/>

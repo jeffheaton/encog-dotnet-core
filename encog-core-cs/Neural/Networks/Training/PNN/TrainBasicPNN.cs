@@ -34,121 +34,121 @@ namespace Encog.Neural.Networks.Training.PNN
     /// Train a PNN.
     /// </summary>
     ///
-    public class TrainBasicPNN : BasicTraining, CalculationCriteria
+    public class TrainBasicPNN : BasicTraining, ICalculationCriteria
     {
         /// <summary>
         /// The default max error.
         /// </summary>
         ///
-        public const double DEFAULT_MAX_ERROR = 0.0d;
+        public const double DefaultMaxError = 0.0d;
 
         /// <summary>
         /// The default minimum improvement before stop.
         /// </summary>
         ///
-        public const double DEFAULT_MIN_IMPROVEMENT = 0.0001d;
+        public const double DefaultMinImprovement = 0.0001d;
 
         /// <summary>
         /// THe default sigma low value.
         /// </summary>
         ///
-        public const double DEFAULT_SIGMA_LOW = 0.0001d;
+        public const double DefaultSigmaLow = 0.0001d;
 
         /// <summary>
         /// The default sigma high value.
         /// </summary>
         ///
-        public const double DEFAULT_SIGMA_HIGH = 10.0d;
+        public const double DefaultSigmaHigh = 10.0d;
 
         /// <summary>
         /// The default number of sigmas to evaluate between the low and high.
         /// </summary>
         ///
-        public const int DEFAULT_NUM_SIGMAS = 10;
+        public const int DefaultNumSigmas = 10;
 
         /// <summary>
         /// The network to train.
         /// </summary>
         ///
-        private readonly BasicPNN network;
+        private readonly BasicPNN _network;
 
         /// <summary>
         /// The training data.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// Temp storage for derivative computation.
         /// </summary>
         ///
-        private double[] dsqr;
+        private double[] _dsqr;
 
         /// <summary>
         /// The maximum error to allow.
         /// </summary>
         ///
-        private double maxError;
+        private double _maxError;
 
         /// <summary>
         /// The minimum improvement allowed.
         /// </summary>
         ///
-        private double minImprovement;
+        private double _minImprovement;
 
         /// <summary>
         /// The number of sigmas to evaluate between the low and high.
         /// </summary>
         ///
-        private int numSigmas;
+        private int _numSigmas;
 
         /// <summary>
         /// Have the samples been loaded.
         /// </summary>
         ///
-        private bool samplesLoaded;
+        private bool _samplesLoaded;
 
         /// <summary>
         /// The high value for the sigma search.
         /// </summary>
         ///
-        private double sigmaHigh;
+        private double _sigmaHigh;
 
         /// <summary>
         /// The low value for the sigma search.
         /// </summary>
         ///
-        private double sigmaLow;
+        private double _sigmaLow;
 
         /// <summary>
         /// Temp storage for derivative computation.
         /// </summary>
         ///
-        private double[] v;
+        private double[] _v;
 
         /// <summary>
         /// Temp storage for derivative computation.
         /// </summary>
         ///
-        private double[] w;
+        private double[] _w;
 
         /// <summary>
         /// Train a BasicPNN.
         /// </summary>
         ///
-        /// <param name="network_0">The network to train.</param>
-        /// <param name="training_1">The training data.</param>
-        public TrainBasicPNN(BasicPNN network_0, IMLDataSet training_1) : base(TrainingImplementationType.OnePass)
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data.</param>
+        public TrainBasicPNN(BasicPNN network, IMLDataSet training) : base(TrainingImplementationType.OnePass)
         {
-            network = network_0;
-            training = training_1;
+            _network = network;
+            _training = training;
 
-            maxError = DEFAULT_MAX_ERROR;
-            minImprovement = DEFAULT_MIN_IMPROVEMENT;
-            sigmaLow = DEFAULT_SIGMA_LOW;
-            sigmaHigh = DEFAULT_SIGMA_HIGH;
-            numSigmas = DEFAULT_NUM_SIGMAS;
-            samplesLoaded = false;
+            _maxError = DefaultMaxError;
+            _minImprovement = DefaultMinImprovement;
+            _sigmaLow = DefaultSigmaLow;
+            _sigmaHigh = DefaultSigmaHigh;
+            _numSigmas = DefaultNumSigmas;
+            _samplesLoaded = false;
         }
 
         /// <inheritdoc/>
@@ -161,47 +161,47 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <value>the maxError to set</value>
         public double MaxError
         {
-            get { return maxError; }
-            set { maxError = value; }
+            get { return _maxError; }
+            set { _maxError = value; }
         }
 
 
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
         /// <value>the minImprovement to set</value>
         public double MinImprovement
         {
-            get { return minImprovement; }
-            set { minImprovement = value; }
+            get { return _minImprovement; }
+            set { _minImprovement = value; }
         }
 
 
         /// <value>the numSigmas to set</value>
         public int NumSigmas
         {
-            get { return numSigmas; }
-            set { numSigmas = value; }
+            get { return _numSigmas; }
+            set { _numSigmas = value; }
         }
 
 
         /// <value>the sigmaHigh to set</value>
         public double SigmaHigh
         {
-            get { return sigmaHigh; }
-            set { sigmaHigh = value; }
+            get { return _sigmaHigh; }
+            set { _sigmaHigh = value; }
         }
 
 
         /// <value>the sigmaLow to set</value>
         public double SigmaLow
         {
-            get { return sigmaLow; }
-            set { sigmaLow = value; }
+            get { return _sigmaLow; }
+            set { _sigmaLow = value; }
         }
 
         #region CalculationCriteria Members
@@ -219,24 +219,23 @@ namespace Encog.Neural.Networks.Training.PNN
                                                  double[] der1, double[] der2, bool der)
         {
             int ivar;
-            double err;
 
-            for (ivar = 0; ivar < network.InputCount; ivar++)
+            for (ivar = 0; ivar < _network.InputCount; ivar++)
             {
-                network.Sigma[ivar] = x[ivar];
+                _network.Sigma[ivar] = x[ivar];
             }
 
             if (!der)
             {
-                return CalculateError(network.Samples, false);
+                return CalculateError(_network.Samples, false);
             }
 
-            err = CalculateError(network.Samples, true);
+            double err = CalculateError(_network.Samples, true);
 
-            for (ivar = 0; ivar < network.InputCount; ivar++)
+            for (ivar = 0; ivar < _network.InputCount; ivar++)
             {
-                der1[ivar] = network.Deriv[ivar];
-                der2[ivar] = network.Deriv2[ivar];
+                der1[ivar] = _network.Deriv[ivar];
+                der2[ivar] = _network.Deriv2[ivar];
             }
 
             return err;
@@ -252,12 +251,12 @@ namespace Encog.Neural.Networks.Training.PNN
         {
             int ivar;
 
-            for (ivar = 0; ivar < network.InputCount; ivar++)
+            for (ivar = 0; ivar < _network.InputCount; ivar++)
             {
-                network.Sigma[ivar] = sig;
+                _network.Sigma[ivar] = sig;
             }
 
-            return CalculateError(network.Samples, false);
+            return CalculateError(_network.Samples, false);
         }
 
         #endregion
@@ -266,122 +265,122 @@ namespace Encog.Neural.Networks.Training.PNN
         /// Calculate the error for the entire training set.
         /// </summary>
         ///
-        /// <param name="training_0">Training set to use.</param>
+        /// <param name="training">Training set to use.</param>
         /// <param name="deriv">Should we find the derivative.</param>
         /// <returns>The error.</returns>
-        public double CalculateError(IMLDataSet training_0,
+        public double CalculateError(IMLDataSet training,
                                      bool deriv)
         {
-            double err, totErr;
+            double totErr;
             double diff;
             totErr = 0.0d;
 
             if (deriv)
             {
-                int num = (network.SeparateClass)
-                              ? network.InputCount*network.OutputCount
-                              : network.InputCount;
+                int num = (_network.SeparateClass)
+                              ? _network.InputCount*_network.OutputCount
+                              : _network.InputCount;
                 for (int i = 0; i < num; i++)
                 {
-                    network.Deriv[i] = 0.0d;
-                    network.Deriv2[i] = 0.0d;
+                    _network.Deriv[i] = 0.0d;
+                    _network.Deriv2[i] = 0.0d;
                 }
             }
 
-            network.Exclude = (int) training_0.Count;
+            _network.Exclude = (int) training.Count;
 
             IMLDataPair pair = BasicMLDataPair.CreatePair(
-                training_0.InputSize, training_0.IdealSize);
+                training.InputSize, training.IdealSize);
 
-            var xout = new double[network.OutputCount];
+            var xout = new double[_network.OutputCount];
 
-            for (int r = 0; r < training_0.Count; r++)
+            for (int r = 0; r < training.Count; r++)
             {
-                training_0.GetRecord(r, pair);
-                network.Exclude = network.Exclude - 1;
+                training.GetRecord(r, pair);
+                _network.Exclude = _network.Exclude - 1;
 
-                err = 0.0d;
+                double err = 0.0d;
 
                 IMLData input = pair.Input;
                 IMLData target = pair.Ideal;
 
-                if (network.OutputMode == PNNOutputMode.Unsupervised)
+                if (_network.OutputMode == PNNOutputMode.Unsupervised)
                 {
                     if (deriv)
                     {
                         IMLData output = ComputeDeriv(input, target);
-                        for (int z = 0; z < network.OutputCount; z++)
+                        for (int z = 0; z < _network.OutputCount; z++)
                         {
                             xout[z] = output[z];
                         }
                     }
                     else
                     {
-                        IMLData output_1 = network.Compute(input);
-                        for (int z_2 = 0; z_2 < network.OutputCount; z_2++)
+                        IMLData output = _network.Compute(input);
+                        for (int z = 0; z < _network.OutputCount; z++)
                         {
-                            xout[z_2] = output_1[z_2];
+                            xout[z] = output[z];
                         }
                     }
-                    for (int i_3 = 0; i_3 < network.OutputCount; i_3++)
+                    for (int i = 0; i < _network.OutputCount; i++)
                     {
-                        diff = input[i_3] - xout[i_3];
+                        diff = input[i] - xout[i];
                         err += diff*diff;
                     }
                 }
-                else if (network.OutputMode == PNNOutputMode.Classification)
+                else if (_network.OutputMode == PNNOutputMode.Classification)
                 {
                     var tclass = (int) target[0];
-                    IMLData output_4;
+                    IMLData output;
 
                     if (deriv)
                     {
-                        output_4 = ComputeDeriv(input, pair.Ideal);
+                        output = ComputeDeriv(input, pair.Ideal);
                         //output_4.GetData(0); //**FIX**?
                     }
                     else
                     {
-                        output_4 = network.Compute(input);
+                        output = _network.Compute(input);
                         //output_4.GetData(0); **FIX**?
                     }
 
-                    xout[0] = output_4[0];
+                    xout[0] = output[0];
 
-                    for (int i_5 = 0; i_5 < xout.Length; i_5++)
+                    for (int i = 0; i < xout.Length; i++)
                     {
-                        if (i_5 == tclass)
+                        if (i == tclass)
                         {
-                            diff = 1.0d - xout[i_5];
+                            diff = 1.0d - xout[i];
                             err += diff*diff;
                         }
                         else
                         {
-                            err += xout[i_5]*xout[i_5];
+                            err += xout[i]*xout[i];
                         }
                     }
                 }
 
-                else if (network.OutputMode == PNNOutputMode.Regression)
+                else if (_network.OutputMode == PNNOutputMode.Regression)
                 {
                     if (deriv)
                     {
-                        IMLData output_6 = network.Compute(input);
-                        for (int z_7 = 0; z_7 < network.OutputCount; z_7++)
+                        IMLData output = _network.Compute(input);
+                        for (int z = 0; z < _network.OutputCount; z++)
                         {
-                            xout[z_7] = output_6[z_7];
+                            xout[z] = output[z];
                         }
                     }
                     else
                     {
-                        IMLData output_8 = network.Compute(input);
-                        for (int z_9 = 0; z_9 < network.OutputCount; z_9++)
+                        IMLData output = _network.Compute(input);
+                        for (int z = 0; z < _network.OutputCount; z++)
                         {
-                            xout[z_9] = output_8[z_9];
+                            xout[z] = output[z];
                         }
                     }
-                    for (int i_10 = 0; i_10 < network.OutputCount; i_10++)
+                    for (int i = 0; i < _network.OutputCount; i++)
                     {
-                        diff = target[i_10] - xout[i_10];
+                        diff = target[i] - xout[i];
                         err += diff*diff;
                     }
                 }
@@ -389,34 +388,34 @@ namespace Encog.Neural.Networks.Training.PNN
                 totErr += err;
             }
 
-            network.Exclude = -1;
+            _network.Exclude = -1;
 
-            network.Error = totErr/training_0.Count;
+            _network.Error = totErr/training.Count;
             if (deriv)
             {
-                for (int i_11 = 0; i_11 < network.Deriv.Length; i_11++)
+                for (int i = 0; i < _network.Deriv.Length; i++)
                 {
-                    network.Deriv[i_11] /= training_0.Count;
-                    network.Deriv2[i_11] /= training_0.Count;
+                    _network.Deriv[i] /= training.Count;
+                    _network.Deriv2[i] /= training.Count;
                 }
             }
 
-            if ((network.OutputMode == PNNOutputMode.Unsupervised)
-                || (network.OutputMode == PNNOutputMode.Regression))
+            if ((_network.OutputMode == PNNOutputMode.Unsupervised)
+                || (_network.OutputMode == PNNOutputMode.Regression))
             {
-                network.Error = network.Error
-                                /network.OutputCount;
+                _network.Error = _network.Error
+                                /_network.OutputCount;
                 if (deriv)
                 {
-                    for (int i_12 = 0; i_12 < network.InputCount; i_12++)
+                    for (int i = 0; i < _network.InputCount; i++)
                     {
-                        network.Deriv[i_12] /= network.OutputCount;
-                        network.Deriv2[i_12] /= network.OutputCount;
+                        _network.Deriv[i] /= _network.OutputCount;
+                        _network.Deriv2[i] /= _network.OutputCount;
                     }
                 }
             }
 
-            return network.Error;
+            return _network.Error;
         }
 
         /// <summary>
@@ -431,63 +430,63 @@ namespace Encog.Neural.Networks.Training.PNN
             int pop, ivar;
             int ibest = 0;
             int outvar;
-            double diff, dist, truedist;
+            double dist, truedist;
             double vtot, wtot;
             double temp, der1, der2, psum;
             int vptr, wptr, vsptr = 0, wsptr = 0;
 
-            var xout = new double[network.OutputCount];
+            var xout = new double[_network.OutputCount];
 
-            for (pop = 0; pop < network.OutputCount; pop++)
+            for (pop = 0; pop < _network.OutputCount; pop++)
             {
                 xout[pop] = 0.0d;
-                for (ivar = 0; ivar < network.InputCount; ivar++)
+                for (ivar = 0; ivar < _network.InputCount; ivar++)
                 {
-                    v[pop*network.InputCount + ivar] = 0.0d;
-                    w[pop*network.InputCount + ivar] = 0.0d;
+                    _v[pop*_network.InputCount + ivar] = 0.0d;
+                    _w[pop*_network.InputCount + ivar] = 0.0d;
                 }
             }
 
             psum = 0.0d;
 
-            if (network.OutputMode != PNNOutputMode.Classification)
+            if (_network.OutputMode != PNNOutputMode.Classification)
             {
-                vsptr = network.OutputCount
-                        *network.InputCount;
-                wsptr = network.OutputCount
-                        *network.InputCount;
-                for (ivar = 0; ivar < network.InputCount; ivar++)
+                vsptr = _network.OutputCount
+                        *_network.InputCount;
+                wsptr = _network.OutputCount
+                        *_network.InputCount;
+                for (ivar = 0; ivar < _network.InputCount; ivar++)
                 {
-                    v[vsptr + ivar] = 0.0d;
-                    w[wsptr + ivar] = 0.0d;
+                    _v[vsptr + ivar] = 0.0d;
+                    _w[wsptr + ivar] = 0.0d;
                 }
             }
 
-            IMLDataPair pair = BasicMLDataPair.CreatePair(network.Samples.InputSize, network.Samples.IdealSize);
+            IMLDataPair pair = BasicMLDataPair.CreatePair(_network.Samples.InputSize, _network.Samples.IdealSize);
 
-            for (int r = 0; r < network.Samples.Count; r++)
+            for (int r = 0; r < _network.Samples.Count; r++)
             {
-                network.Samples.GetRecord(r, pair);
+                _network.Samples.GetRecord(r, pair);
 
-                if (r == network.Exclude)
+                if (r == _network.Exclude)
                 {
                     continue;
                 }
 
                 dist = 0.0d;
-                for (ivar = 0; ivar < network.InputCount; ivar++)
+                for (ivar = 0; ivar < _network.InputCount; ivar++)
                 {
-                    diff = input[ivar] - pair.Input[ivar];
-                    diff /= network.Sigma[ivar];
-                    dsqr[ivar] = diff*diff;
-                    dist += dsqr[ivar];
+                    double diff = input[ivar] - pair.Input[ivar];
+                    diff /= _network.Sigma[ivar];
+                    _dsqr[ivar] = diff*diff;
+                    dist += _dsqr[ivar];
                 }
 
-                if (network.Kernel == PNNKernelType.Gaussian)
+                if (_network.Kernel == PNNKernelType.Gaussian)
                 {
                     dist = Math.Exp(-dist);
                 }
-                else if (network.Kernel == PNNKernelType.Reciprocal)
+                else if (_network.Kernel == PNNKernelType.Reciprocal)
                 {
                     dist = 1.0d/(1.0d + dist);
                 }
@@ -498,82 +497,82 @@ namespace Encog.Neural.Networks.Training.PNN
                     dist = 1.0e-40d;
                 }
 
-                if (network.OutputMode == PNNOutputMode.Classification)
+                if (_network.OutputMode == PNNOutputMode.Classification)
                 {
                     pop = (int) pair.Ideal[0];
                     xout[pop] += dist;
-                    vptr = pop*network.InputCount;
-                    wptr = pop*network.InputCount;
-                    for (ivar = 0; ivar < network.InputCount; ivar++)
+                    vptr = pop*_network.InputCount;
+                    wptr = pop*_network.InputCount;
+                    for (ivar = 0; ivar < _network.InputCount; ivar++)
                     {
-                        temp = truedist*dsqr[ivar];
-                        v[vptr + ivar] += temp;
-                        w[wptr + ivar] += temp*(2.0d*dsqr[ivar] - 3.0d);
+                        temp = truedist*_dsqr[ivar];
+                        _v[vptr + ivar] += temp;
+                        _w[wptr + ivar] += temp*(2.0d*_dsqr[ivar] - 3.0d);
                     }
                 }
 
-                else if (network.OutputMode == PNNOutputMode.Unsupervised)
+                else if (_network.OutputMode == PNNOutputMode.Unsupervised)
                 {
-                    for (ivar = 0; ivar < network.InputCount; ivar++)
+                    for (ivar = 0; ivar < _network.InputCount; ivar++)
                     {
                         xout[ivar] += dist*pair.Input[ivar];
-                        temp = truedist*dsqr[ivar];
-                        v[vsptr + ivar] += temp;
-                        w[wsptr + ivar] += temp
-                                           *(2.0d*dsqr[ivar] - 3.0d);
+                        temp = truedist*_dsqr[ivar];
+                        _v[vsptr + ivar] += temp;
+                        _w[wsptr + ivar] += temp
+                                           *(2.0d*_dsqr[ivar] - 3.0d);
                     }
                     vptr = 0;
                     wptr = 0;
-                    for (outvar = 0; outvar < network.OutputCount; outvar++)
+                    for (outvar = 0; outvar < _network.OutputCount; outvar++)
                     {
-                        for (ivar = 0; ivar < network.InputCount; ivar++)
+                        for (ivar = 0; ivar < _network.InputCount; ivar++)
                         {
-                            temp = truedist*dsqr[ivar]
+                            temp = truedist*_dsqr[ivar]
                                    *pair.Input[ivar];
-                            v[vptr++] += temp;
-                            w[wptr++] += temp*(2.0d*dsqr[ivar] - 3.0d);
+                            _v[vptr++] += temp;
+                            _w[wptr++] += temp*(2.0d*_dsqr[ivar] - 3.0d);
                         }
                     }
                     psum += dist;
                 }
-                else if (network.OutputMode == PNNOutputMode.Regression)
+                else if (_network.OutputMode == PNNOutputMode.Regression)
                 {
-                    for (ivar = 0; ivar < network.OutputCount; ivar++)
+                    for (ivar = 0; ivar < _network.OutputCount; ivar++)
                     {
                         xout[ivar] += dist*pair.Ideal[ivar];
                     }
                     vptr = 0;
                     wptr = 0;
-                    for (outvar = 0; outvar < network.OutputCount; outvar++)
+                    for (outvar = 0; outvar < _network.OutputCount; outvar++)
                     {
-                        for (ivar = 0; ivar < network.InputCount; ivar++)
+                        for (ivar = 0; ivar < _network.InputCount; ivar++)
                         {
-                            temp = truedist*dsqr[ivar]
+                            temp = truedist*_dsqr[ivar]
                                    *pair.Ideal[outvar];
-                            v[vptr++] += temp;
-                            w[wptr++] += temp*(2.0d*dsqr[ivar] - 3.0d);
+                            _v[vptr++] += temp;
+                            _w[wptr++] += temp*(2.0d*_dsqr[ivar] - 3.0d);
                         }
                     }
-                    for (ivar = 0; ivar < network.InputCount; ivar++)
+                    for (ivar = 0; ivar < _network.InputCount; ivar++)
                     {
-                        temp = truedist*dsqr[ivar];
-                        v[vsptr + ivar] += temp;
-                        w[wsptr + ivar] += temp
-                                           *(2.0d*dsqr[ivar] - 3.0d);
+                        temp = truedist*_dsqr[ivar];
+                        _v[vsptr + ivar] += temp;
+                        _w[wsptr + ivar] += temp
+                                           *(2.0d*_dsqr[ivar] - 3.0d);
                     }
                     psum += dist;
                 }
             }
 
-            if (network.OutputMode == PNNOutputMode.Classification)
+            if (_network.OutputMode == PNNOutputMode.Classification)
             {
                 psum = 0.0d;
-                for (pop = 0; pop < network.OutputCount; pop++)
+                for (pop = 0; pop < _network.OutputCount; pop++)
                 {
-                    if (network.Priors[pop] >= 0.0d)
+                    if (_network.Priors[pop] >= 0.0d)
                     {
-                        xout[pop] *= network.Priors[pop]
-                                     /network.CountPer[pop];
+                        xout[pop] *= _network.Priors[pop]
+                                     /_network.CountPer[pop];
                     }
                     psum += xout[pop];
                 }
@@ -584,56 +583,56 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
             }
 
-            for (pop = 0; pop < network.OutputCount; pop++)
+            for (pop = 0; pop < _network.OutputCount; pop++)
             {
                 xout[pop] /= psum;
             }
 
-            for (ivar = 0; ivar < network.InputCount; ivar++)
+            for (ivar = 0; ivar < _network.InputCount; ivar++)
             {
-                if (network.OutputMode == PNNOutputMode.Classification)
+                if (_network.OutputMode == PNNOutputMode.Classification)
                 {
                     vtot = wtot = 0.0d;
                 }
                 else
                 {
-                    vtot = v[vsptr + ivar]*2.0d
-                           /(psum*network.Sigma[ivar]);
-                    wtot = w[wsptr + ivar]
+                    vtot = _v[vsptr + ivar]*2.0d
+                           /(psum*_network.Sigma[ivar]);
+                    wtot = _w[wsptr + ivar]
                            *2.0d
-                           /(psum*network.Sigma[ivar]*network.Sigma[ivar]);
+                           /(psum*_network.Sigma[ivar]*_network.Sigma[ivar]);
                 }
 
-                for (outvar = 0; outvar < network.OutputCount; outvar++)
+                for (outvar = 0; outvar < _network.OutputCount; outvar++)
                 {
-                    if ((network.OutputMode == PNNOutputMode.Classification)
-                        && (network.Priors[outvar] >= 0.0d))
+                    if ((_network.OutputMode == PNNOutputMode.Classification)
+                        && (_network.Priors[outvar] >= 0.0d))
                     {
-                        v[outvar*network.InputCount + ivar] *= network.Priors[outvar]
-                                                               /network.CountPer[outvar];
-                        w[outvar*network.InputCount + ivar] *= network.Priors[outvar]
-                                                               /network.CountPer[outvar];
+                        _v[outvar*_network.InputCount + ivar] *= _network.Priors[outvar]
+                                                               /_network.CountPer[outvar];
+                        _w[outvar*_network.InputCount + ivar] *= _network.Priors[outvar]
+                                                               /_network.CountPer[outvar];
                     }
-                    v[outvar*network.InputCount + ivar] *= 2.0d/(psum*network.Sigma[ivar]);
+                    _v[outvar*_network.InputCount + ivar] *= 2.0d/(psum*_network.Sigma[ivar]);
 
-                    w[outvar*network.InputCount + ivar] *= 2.0d/(psum
-                                                                 *network.Sigma[ivar]*network.Sigma[ivar]);
-                    if (network.OutputMode == PNNOutputMode.Classification)
+                    _w[outvar*_network.InputCount + ivar] *= 2.0d/(psum
+                                                                 *_network.Sigma[ivar]*_network.Sigma[ivar]);
+                    if (_network.OutputMode == PNNOutputMode.Classification)
                     {
-                        vtot += v[outvar*network.InputCount + ivar];
-                        wtot += w[outvar*network.InputCount + ivar];
+                        vtot += _v[outvar*_network.InputCount + ivar];
+                        wtot += _w[outvar*_network.InputCount + ivar];
                     }
                 }
 
-                for (outvar = 0; outvar < network.OutputCount; outvar++)
+                for (outvar = 0; outvar < _network.OutputCount; outvar++)
                 {
-                    der1 = v[outvar*network.InputCount + ivar]
+                    der1 = _v[outvar*_network.InputCount + ivar]
                            - xout[outvar]*vtot;
-                    der2 = w[outvar*network.InputCount + ivar]
+                    der2 = _w[outvar*_network.InputCount + ivar]
                            + 2.0d*xout[outvar]*vtot*vtot - 2.0d
-                                                           *v[outvar*network.InputCount + ivar]
+                                                           *_v[outvar*_network.InputCount + ivar]
                                                            *vtot - xout[outvar]*wtot;
-                    if (network.OutputMode == PNNOutputMode.Classification)
+                    if (_network.OutputMode == PNNOutputMode.Classification)
                     {
                         if (outvar == (int) target[0])
                         {
@@ -648,13 +647,13 @@ namespace Encog.Neural.Networks.Training.PNN
                     {
                         temp = 2.0d*(xout[outvar] - target[outvar]);
                     }
-                    network.Deriv[ivar] += temp*der1;
-                    network.Deriv2[ivar] += temp*der2 + 2.0d*der1
+                    _network.Deriv[ivar] += temp*der1;
+                    _network.Deriv2[ivar] += temp*der2 + 2.0d*der1
                                             *der1;
                 }
             }
 
-            if (network.OutputMode == PNNOutputMode.Classification)
+            if (_network.OutputMode == PNNOutputMode.Classification)
             {
                 IMLData result = new BasicMLData(1);
                 result[0] = ibest;
@@ -671,10 +670,10 @@ namespace Encog.Neural.Networks.Training.PNN
         ///
         public override sealed void Iteration()
         {
-            if (!samplesLoaded)
+            if (!_samplesLoaded)
             {
-                network.Samples = new BasicMLDataSet(training);
-                samplesLoaded = true;
+                _network.Samples = new BasicMLDataSet(_training);
+                _samplesLoaded = true;
             }
 
             var globalMinimum = new GlobalMinimumSearch();
@@ -682,58 +681,57 @@ namespace Encog.Neural.Networks.Training.PNN
 
             int k;
 
-            if (network.OutputMode == PNNOutputMode.Classification)
+            if (_network.OutputMode == PNNOutputMode.Classification)
             {
-                k = network.OutputCount;
+                k = _network.OutputCount;
             }
             else
             {
-                k = network.OutputCount + 1;
+                k = _network.OutputCount + 1;
             }
 
-            dsqr = new double[network.InputCount];
-            v = new double[network.InputCount*k];
-            w = new double[network.InputCount*k];
+            _dsqr = new double[_network.InputCount];
+            _v = new double[_network.InputCount*k];
+            _w = new double[_network.InputCount*k];
 
-            var x = new double[network.InputCount];
-            var bs = new double[network.InputCount];
-            var direc = new double[network.InputCount];
-            var g = new double[network.InputCount];
-            var h = new double[network.InputCount];
-            var dwk2 = new double[network.InputCount];
+            var x = new double[_network.InputCount];
+            var bs = new double[_network.InputCount];
+            var direc = new double[_network.InputCount];
+            var g = new double[_network.InputCount];
+            var h = new double[_network.InputCount];
+            var dwk2 = new double[_network.InputCount];
 
-            if (network.Trained)
+            if (_network.Trained)
             {
-                k = 0;
-                for (int i = 0; i < network.InputCount; i++)
+                for (int i = 0; i < _network.InputCount; i++)
                 {
-                    x[i] = network.Sigma[i];
+                    x[i] = _network.Sigma[i];
                 }
                 globalMinimum.Y2 = 1.0e30d;
             }
             else
             {
-                globalMinimum.FindBestRange(sigmaLow, sigmaHigh,
-                                            numSigmas, true, maxError, this);
+                globalMinimum.FindBestRange(_sigmaLow, _sigmaHigh,
+                                            _numSigmas, true, _maxError, this);
 
-                for (int i_0 = 0; i_0 < network.InputCount; i_0++)
+                for (int i = 0; i < _network.InputCount; i++)
                 {
-                    x[i_0] = globalMinimum.X2;
+                    x[i] = globalMinimum.X2;
                 }
             }
 
-            double d = dermin.Calculate(32767, maxError, 1.0e-8d,
-                                        minImprovement, this, network.InputCount, x,
+            double d = dermin.Calculate(32767, _maxError, 1.0e-8d,
+                                        _minImprovement, this, _network.InputCount, x,
                                         globalMinimum.Y2, bs, direc, g, h, dwk2);
             globalMinimum.Y2 = d;
 
-            for (int i_1 = 0; i_1 < network.InputCount; i_1++)
+            for (int i = 0; i < _network.InputCount; i++)
             {
-                network.Sigma[i_1] = x[i_1];
+                _network.Sigma[i] = x[i];
             }
 
-            network.Error = Math.Abs(globalMinimum.Y2);
-            network.Trained = true; // Tell other routines net is trained
+            _network.Error = Math.Abs(globalMinimum.Y2);
+            _network.Trained = true; // Tell other routines net is trained
 
             return;
         }

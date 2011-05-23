@@ -49,25 +49,25 @@ namespace Encog.Neural.PNN
         /// The sigma's specify the widths of each kernel used.
         /// </summary>
         ///
-        private readonly double[] sigma;
+        private readonly double[] _sigma;
 
         /// <summary>
         /// Used for classification, the number of cases in each class.
         /// </summary>
         ///
-        private int[] countPer;
+        private int[] _countPer;
 
         /// <summary>
         /// The prior probability weights.
         /// </summary>
         ///
-        private double[] priors;
+        private double[] _priors;
 
         /// <summary>
         /// The training samples that form the memory of this network.
         /// </summary>
         ///
-        private BasicMLDataSet samples;
+        private BasicMLDataSet _samples;
 
         /// <summary>
         /// Construct a BasicPNN network.
@@ -82,53 +82,53 @@ namespace Encog.Neural.PNN
         {
             SeparateClass = false;
 
-            sigma = new double[inputCount];
+            _sigma = new double[inputCount];
         }
 
 
         /// <value>the countPer</value>
         public int[] CountPer
         {
-            get { return countPer; }
+            get { return _countPer; }
         }
 
 
         /// <value>the priors</value>
         public double[] Priors
         {
-            get { return priors; }
+            get { return _priors; }
         }
 
 
         /// <value>the samples to set</value>
         public BasicMLDataSet Samples
         {        
-            get { return samples; }
+            get { return _samples; }
             set
             {
-                samples = value;
+                _samples = value;
 
                 // update counts per
                 if (OutputMode == PNNOutputMode.Classification)
                 {
-                    countPer = new int[OutputCount];
-                    priors = new double[OutputCount];
+                    _countPer = new int[OutputCount];
+                    _priors = new double[OutputCount];
 
 
                     foreach (IMLDataPair pair  in  value)
                     {
                         var i = (int) pair.Ideal[0];
-                        if (i >= countPer.Length)
+                        if (i >= _countPer.Length)
                         {
                             throw new NeuralNetworkError(
                                 "Training data contains more classes than neural network has output neurons to hold.");
                         }
-                        countPer[i]++;
+                        _countPer[i]++;
                     }
 
-                    for (int i_1 = 0; i_1 < priors.Length; i_1++)
+                    for (int i = 0; i < _priors.Length; i++)
                     {
-                        priors[i_1] = -1;
+                        _priors[i] = -1;
                     }
                 }
             }
@@ -138,7 +138,7 @@ namespace Encog.Neural.PNN
         /// <value>the sigma</value>
         public double[] Sigma
         {
-            get { return sigma; }
+            get { return _sigma; }
         }
 
         #region MLRegression Members
@@ -157,7 +157,7 @@ namespace Encog.Neural.PNN
 
             int r = -1;
 
-            foreach (IMLDataPair pair  in  samples)
+            foreach (IMLDataPair pair  in  _samples)
             {
                 r++;
 
@@ -170,7 +170,7 @@ namespace Encog.Neural.PNN
                 for (int i = 0; i < InputCount; i++)
                 {
                     double diff = input[i] - pair.Input[i];
-                    diff /= sigma[i];
+                    diff /= _sigma[i];
                     dist += diff*diff;
                 }
 
@@ -195,17 +195,17 @@ namespace Encog.Neural.PNN
                 }
                 else if (OutputMode == PNNOutputMode.Unsupervised)
                 {
-                    for (int i_0 = 0; i_0 < InputCount; i_0++)
+                    for (int i = 0; i < InputCount; i++)
                     {
-                        xout[i_0] += dist*pair.Input[i_0];
+                        xout[i] += dist*pair.Input[i];
                     }
                     psum += dist;
                 }
                 else if (OutputMode == PNNOutputMode.Regression)
                 {
-                    for (int i_1 = 0; i_1 < OutputCount; i_1++)
+                    for (int i = 0; i < OutputCount; i++)
                     {
-                        xout[i_1] += dist*pair.Ideal[i_1];
+                        xout[i] += dist*pair.Ideal[i];
                     }
 
                     psum += dist;
@@ -215,13 +215,13 @@ namespace Encog.Neural.PNN
             if (OutputMode == PNNOutputMode.Classification)
             {
                 psum = 0.0d;
-                for (int i_2 = 0; i_2 < OutputCount; i_2++)
+                for (int i = 0; i < OutputCount; i++)
                 {
-                    if (priors[i_2] >= 0.0d)
+                    if (_priors[i] >= 0.0d)
                     {
-                        xout[i_2] *= priors[i_2]/countPer[i_2];
+                        xout[i] *= _priors[i]/_countPer[i];
                     }
-                    psum += xout[i_2];
+                    psum += xout[i];
                 }
 
                 if (psum < 1.0e-40d)
@@ -229,9 +229,9 @@ namespace Encog.Neural.PNN
                     psum = 1.0e-40d;
                 }
 
-                for (int i_3 = 0; i_3 < OutputCount; i_3++)
+                for (int i = 0; i < OutputCount; i++)
                 {
-                    xout[i_3] /= psum;
+                    xout[i] /= psum;
                 }
 
                 IMLData result = new BasicMLData(1);
@@ -240,16 +240,16 @@ namespace Encog.Neural.PNN
             }
             else if (OutputMode == PNNOutputMode.Unsupervised)
             {
-                for (int i_4 = 0; i_4 < InputCount; i_4++)
+                for (int i = 0; i < InputCount; i++)
                 {
-                    xout[i_4] /= psum;
+                    xout[i] /= psum;
                 }
             }
             else if (OutputMode == PNNOutputMode.Regression)
             {
-                for (int i_5 = 0; i_5 < OutputCount; i_5++)
+                for (int i = 0; i < OutputCount; i++)
                 {
-                    xout[i_5] /= psum;
+                    xout[i] /= psum;
                 }
             }
 

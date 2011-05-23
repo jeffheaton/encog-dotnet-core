@@ -80,40 +80,40 @@ namespace Encog.Neural.Networks
                 if (section.SectionName.Equals("BASIC")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
 
-                    flat.BeginTraining = EncogFileSection.ParseInt(params_0,
-                                                                   BasicNetwork.TAG_BEGIN_TRAINING);
-                    flat.ConnectionLimit = EncogFileSection.ParseDouble(params_0,
-                                                                        BasicNetwork.TAG_CONNECTION_LIMIT);
+                    flat.BeginTraining = EncogFileSection.ParseInt(p,
+                                                                   BasicNetwork.TagBeginTraining);
+                    flat.ConnectionLimit = EncogFileSection.ParseDouble(p,
+                                                                        BasicNetwork.TagConnectionLimit);
                     flat.ContextTargetOffset = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_CONTEXT_TARGET_OFFSET);
+                        p, BasicNetwork.TagContextTargetOffset);
                     flat.ContextTargetSize = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_CONTEXT_TARGET_SIZE);
-                    flat.EndTraining = EncogFileSection.ParseInt(params_0,
-                                                                 BasicNetwork.TAG_END_TRAINING);
-                    flat.HasContext = EncogFileSection.ParseBoolean(params_0,
-                                                                    BasicNetwork.TAG_HAS_CONTEXT);
-                    flat.InputCount = EncogFileSection.ParseInt(params_0,
+                        p, BasicNetwork.TagContextTargetSize);
+                    flat.EndTraining = EncogFileSection.ParseInt(p,
+                                                                 BasicNetwork.TagEndTraining);
+                    flat.HasContext = EncogFileSection.ParseBoolean(p,
+                                                                    BasicNetwork.TagHasContext);
+                    flat.InputCount = EncogFileSection.ParseInt(p,
                                                                 PersistConst.INPUT_COUNT);
-                    flat.LayerCounts = EncogFileSection.ParseIntArray(params_0,
-                                                                      BasicNetwork.TAG_LAYER_COUNTS);
-                    flat.LayerFeedCounts = EncogFileSection.ParseIntArray(params_0,
-                                                                          BasicNetwork.TAG_LAYER_FEED_COUNTS);
+                    flat.LayerCounts = EncogFileSection.ParseIntArray(p,
+                                                                      BasicNetwork.TagLayerCounts);
+                    flat.LayerFeedCounts = EncogFileSection.ParseIntArray(p,
+                                                                          BasicNetwork.TagLayerFeedCounts);
                     flat.LayerContextCount = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_LAYER_CONTEXT_COUNT);
-                    flat.LayerIndex = EncogFileSection.ParseIntArray(params_0,
-                                                                     BasicNetwork.TAG_LAYER_INDEX);
-                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(params_0,
+                        p, BasicNetwork.TagLayerContextCount);
+                    flat.LayerIndex = EncogFileSection.ParseIntArray(p,
+                                                                     BasicNetwork.TagLayerIndex);
+                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
                                                                          PersistConst.OUTPUT);
-                    flat.OutputCount = EncogFileSection.ParseInt(params_0,
+                    flat.OutputCount = EncogFileSection.ParseInt(p,
                                                                  PersistConst.OUTPUT_COUNT);
-                    flat.WeightIndex = EncogFileSection.ParseIntArray(params_0,
-                                                                      BasicNetwork.TAG_WEIGHT_INDEX);
-                    flat.Weights = EncogFileSection.ParseDoubleArray(params_0,
+                    flat.WeightIndex = EncogFileSection.ParseIntArray(p,
+                                                                      BasicNetwork.TagWeightIndex);
+                    flat.Weights = EncogFileSection.ParseDoubleArray(p,
                                                                      PersistConst.WEIGHTS);
                     flat.BiasActivation = EncogFileSection.ParseDoubleArray(
-                        params_0, BasicNetwork.TAG_BIAS_ACTIVATION);
+                        p, BasicNetwork.TagBiasActivation);
                 }
                 else if (section.SectionName.Equals("BASIC")
                          && section.SubSectionName.Equals("ACTIVATION"))
@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks
 
                     foreach (String line  in  section.Lines)
                     {
-                        IActivationFunction af = null;
+                        IActivationFunction af;
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
                         String name = ReflectionUtil.AF_PATH
@@ -138,13 +138,13 @@ namespace Encog.Neural.Networks
                         {
                             throw new PersistError(e);
                         }
-                        catch (TargetException e_1)
+                        catch (TargetException e)
                         {
-                            throw new PersistError(e_1);
+                            throw new PersistError(e);
                         }
-                        catch (MemberAccessException e_2)
+                        catch (MemberAccessException e)
                         {
-                            throw new PersistError(e_2);
+                            throw new PersistError(e);
                         }
 
                         for (int i = 0; i < af.ParamNames.Length; i++)
@@ -174,28 +174,28 @@ namespace Encog.Neural.Networks
             xout.AddProperties(net.Properties);
             xout.AddSubSection("NETWORK");
 
-            xout.WriteProperty(BasicNetwork.TAG_BEGIN_TRAINING,
+            xout.WriteProperty(BasicNetwork.TagBeginTraining,
                                flat.BeginTraining);
-            xout.WriteProperty(BasicNetwork.TAG_CONNECTION_LIMIT,
+            xout.WriteProperty(BasicNetwork.TagConnectionLimit,
                                flat.ConnectionLimit);
-            xout.WriteProperty(BasicNetwork.TAG_CONTEXT_TARGET_OFFSET,
+            xout.WriteProperty(BasicNetwork.TagContextTargetOffset,
                                flat.ContextTargetOffset);
-            xout.WriteProperty(BasicNetwork.TAG_CONTEXT_TARGET_SIZE,
+            xout.WriteProperty(BasicNetwork.TagContextTargetSize,
                                flat.ContextTargetSize);
-            xout.WriteProperty(BasicNetwork.TAG_END_TRAINING, flat.EndTraining);
-            xout.WriteProperty(BasicNetwork.TAG_HAS_CONTEXT, flat.HasContext);
+            xout.WriteProperty(BasicNetwork.TagEndTraining, flat.EndTraining);
+            xout.WriteProperty(BasicNetwork.TagHasContext, flat.HasContext);
             xout.WriteProperty(PersistConst.INPUT_COUNT, flat.InputCount);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_COUNTS, flat.LayerCounts);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_FEED_COUNTS,
+            xout.WriteProperty(BasicNetwork.TagLayerCounts, flat.LayerCounts);
+            xout.WriteProperty(BasicNetwork.TagLayerFeedCounts,
                                flat.LayerFeedCounts);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_CONTEXT_COUNT,
+            xout.WriteProperty(BasicNetwork.TagLayerContextCount,
                                flat.LayerContextCount);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_INDEX, flat.LayerIndex);
+            xout.WriteProperty(BasicNetwork.TagLayerIndex, flat.LayerIndex);
             xout.WriteProperty(PersistConst.OUTPUT, flat.LayerOutput);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, flat.OutputCount);
-            xout.WriteProperty(BasicNetwork.TAG_WEIGHT_INDEX, flat.WeightIndex);
+            xout.WriteProperty(BasicNetwork.TagWeightIndex, flat.WeightIndex);
             xout.WriteProperty(PersistConst.WEIGHTS, flat.Weights);
-            xout.WriteProperty(BasicNetwork.TAG_BIAS_ACTIVATION,
+            xout.WriteProperty(BasicNetwork.TagBiasActivation,
                                flat.BiasActivation);
             xout.AddSubSection("ACTIVATION");
 

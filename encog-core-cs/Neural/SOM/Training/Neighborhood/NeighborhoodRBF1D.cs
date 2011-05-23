@@ -35,17 +35,17 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// from the best neuron.
         /// </summary>
         ///
-        private readonly IRadialBasisFunction radial;
+        private readonly IRadialBasisFunction _radial;
 
         /// <summary>
         /// Construct the neighborhood function with the specified radial function.
         /// Generally this will be a Gaussian function but any RBF should do.
         /// </summary>
         ///
-        /// <param name="radial_0">The radial basis function to use.</param>
-        public NeighborhoodRBF1D(IRadialBasisFunction radial_0)
+        /// <param name="radial">The radial basis function to use.</param>
+        public NeighborhoodRBF1D(IRadialBasisFunction radial)
         {
-            radial = radial_0;
+            _radial = radial;
         }
 
         /// <summary>
@@ -58,22 +58,22 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             switch (type)
             {
                 case RBFEnum.Gaussian:
-                    radial = new GaussianFunction(1);
+                    _radial = new GaussianFunction(1);
                     break;
                 case RBFEnum.InverseMultiquadric:
-                    radial = new InverseMultiquadricFunction(1);
+                    _radial = new InverseMultiquadricFunction(1);
                     break;
                 case RBFEnum.Multiquadric:
-                    radial = new MultiquadricFunction(1);
+                    _radial = new MultiquadricFunction(1);
                     break;
                 case RBFEnum.MexicanHat:
-                    radial = new MexicanHatFunction(1);
+                    _radial = new MexicanHatFunction(1);
                     break;
                 default:
                     throw new NeuralNetworkError("Unknown RBF type: " + type);
             }
 
-            radial.Width = 1.0d;
+            _radial.Width = 1.0d;
         }
 
         #region INeighborhoodFunction Members
@@ -88,7 +88,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         {
             var d = new double[1];
             d[0] = currentNeuron - bestNeuron;
-            return radial.Calculate(d);
+            return _radial.Calculate(d);
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <value>The new radius.</value>
         public virtual double Radius
         {
-            get { return radial.Width; }
-            set { radial.Width = value; }
+            get { return _radial.Width; }
+            set { _radial.Width = value; }
         }
 
         #endregion

@@ -49,99 +49,99 @@ namespace Encog.Neural.Networks
     /// </summary>
     ///
     [Serializable]
-    public class BasicNetwork : BasicML, ContainsFlat, IMLContext,
+    public class BasicNetwork : BasicML, IContainsFlat, IMLContext,
                                 IMLRegression, IMLEncodable, IMLResettable, IMLClassification, IMLError
     {
         /// <summary>
         /// Tag used for the connection limit.
         /// </summary>
         ///
-        public const String TAG_LIMIT = "CONNECTION_LIMIT";
+        public const String TagLimit = "CONNECTION_LIMIT";
 
         /// <summary>
         /// The default connection limit.
         /// </summary>
         ///
-        public const double DEFAULT_CONNECTION_LIMIT = 0.0000000001d;
+        public const double DefaultConnectionLimit = 0.0000000001d;
 
         /// <summary>
         /// The property for connection limit.
         /// </summary>
         ///
-        public const String TAG_CONNECTION_LIMIT = "connectionLimit";
+        public const String TagConnectionLimit = "connectionLimit";
 
         /// <summary>
         /// The property for begin training.
         /// </summary>
         ///
-        public const String TAG_BEGIN_TRAINING = "beginTraining";
+        public const String TagBeginTraining = "beginTraining";
 
         /// <summary>
         /// The property for context target offset.
         /// </summary>
         ///
-        public const String TAG_CONTEXT_TARGET_OFFSET = "contextTargetOffset";
+        public const String TagContextTargetOffset = "contextTargetOffset";
 
         /// <summary>
         /// The property for context target size.
         /// </summary>
         ///
-        public const String TAG_CONTEXT_TARGET_SIZE = "contextTargetSize";
+        public const String TagContextTargetSize = "contextTargetSize";
 
         /// <summary>
         /// The property for end training.
         /// </summary>
         ///
-        public const String TAG_END_TRAINING = "endTraining";
+        public const String TagEndTraining = "endTraining";
 
         /// <summary>
         /// The property for has context.
         /// </summary>
         ///
-        public const String TAG_HAS_CONTEXT = "hasContext";
+        public const String TagHasContext = "hasContext";
 
         /// <summary>
         /// The property for layer counts.
         /// </summary>
         ///
-        public const String TAG_LAYER_COUNTS = "layerCounts";
+        public const String TagLayerCounts = "layerCounts";
 
         /// <summary>
         /// The property for layer feed counts.
         /// </summary>
         ///
-        public const String TAG_LAYER_FEED_COUNTS = "layerFeedCounts";
+        public const String TagLayerFeedCounts = "layerFeedCounts";
 
         /// <summary>
         /// The property for layer index.
         /// </summary>
         ///
-        public const String TAG_LAYER_INDEX = "layerIndex";
+        public const String TagLayerIndex = "layerIndex";
 
         /// <summary>
         /// The property for weight index.
         /// </summary>
         ///
-        public const String TAG_WEIGHT_INDEX = "weightIndex";
+        public const String TagWeightIndex = "weightIndex";
 
         /// <summary>
         /// The property for bias activation.
         /// </summary>
         ///
-        public const String TAG_BIAS_ACTIVATION = "biasActivation";
+        public const String TagBiasActivation = "biasActivation";
 
         /// <summary>
         /// The property for layer context count.
         /// </summary>
         ///
-        public const String TAG_LAYER_CONTEXT_COUNT = "layerContextCount";
+        public const String TagLayerContextCount = "layerContextCount";
 
         /// <summary>
         /// Holds the structure of the network. This keeps the network from having to
         /// constantly lookup layers and synapses.
         /// </summary>
         ///
-        private readonly NeuralStructure structure;
+        private readonly NeuralStructure _structure;
 
         /// <summary>
         /// Construct an empty neural network.
@@ -149,7 +149,7 @@ namespace Encog.Neural.Networks
         ///
         public BasicNetwork()
         {
-            structure = new NeuralStructure(this);
+            _structure = new NeuralStructure(this);
         }
 
         /// <value>The layer count.</value>
@@ -157,8 +157,8 @@ namespace Encog.Neural.Networks
         {
             get
             {
-                structure.RequireFlat();
-                return structure.Flat.LayerCounts.Length;
+                _structure.RequireFlat();
+                return _structure.Flat.LayerCounts.Length;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Encog.Neural.Networks
         /// network.</value>
         public NeuralStructure Structure
         {
-            get { return structure; }
+            get { return _structure; }
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Encog.Neural.Networks
             {
                 // first, see what mode we are on. If the network has not been
                 // finalized, set the layers
-                if (structure.Flat == null)
+                if (_structure.Flat == null)
                 {
-                    foreach (ILayer layer  in  structure.Layers)
+                    foreach (ILayer layer  in  _structure.Layers)
                     {
                         if (layer.HasBias())
                         {
@@ -231,9 +231,9 @@ namespace Encog.Neural.Networks
         ///
         public void ClearContext()
         {
-            if (structure.Flat != null)
+            if (_structure.Flat != null)
             {
-                structure.Flat.ClearContext();
+                _structure.Flat.ClearContext();
             }
         }
 
@@ -244,8 +244,8 @@ namespace Encog.Neural.Networks
         /// <inheritdoc/>
         public void DecodeFromArray(double[] encoded)
         {
-            structure.RequireFlat();
-            double[] weights = structure.Flat.Weights;
+            _structure.RequireFlat();
+            double[] weights = _structure.Flat.Weights;
             if (weights.Length != encoded.Length)
             {
                 throw new NeuralNetworkError(
@@ -259,15 +259,15 @@ namespace Encog.Neural.Networks
         /// <inheritdoc/>
         public int EncodedArrayLength()
         {
-            structure.RequireFlat();
-            return structure.Flat.EncodeLength;
+            _structure.RequireFlat();
+            return _structure.Flat.EncodeLength;
         }
 
         /// <inheritdoc/>
         public void EncodeToArray(double[] encoded)
         {
-            structure.RequireFlat();
-            double[] weights = structure.Flat.Weights;
+            _structure.RequireFlat();
+            double[] weights = _structure.Flat.Weights;
             if (weights.Length != encoded.Length)
             {
                 throw new NeuralNetworkError(
@@ -307,8 +307,8 @@ namespace Encog.Neural.Networks
         {
             try
             {
-                IMLData result = new BasicMLData(structure.Flat.OutputCount);
-                structure.Flat.Compute(input.Data, result.Data);
+                IMLData result = new BasicMLData(_structure.Flat.OutputCount);
+                _structure.Flat.Compute(input.Data, result.Data);
                 return result;
             }
             catch (IndexOutOfRangeException ex)
@@ -324,7 +324,7 @@ namespace Encog.Neural.Networks
         {
             get
             {
-                structure.RequireFlat();
+                _structure.RequireFlat();
                 return Structure.Flat.InputCount;
             }
         }
@@ -334,7 +334,7 @@ namespace Encog.Neural.Networks
         {
             get
             {
-                structure.RequireFlat();
+                _structure.RequireFlat();
                 return Structure.Flat.OutputCount;
             }
         }
@@ -389,7 +389,7 @@ namespace Encog.Neural.Networks
         public void AddLayer(ILayer layer)
         {
             layer.Network = this;
-            structure.Layers.Add(layer);
+            _structure.Layers.Add(layer);
         }
 
         /// <summary>
@@ -399,12 +399,12 @@ namespace Encog.Neural.Networks
         /// <param name="fromLayer">The from layer.</param>
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value_ren">The value to add.</param>
+        /// <param name="v">The value to add.</param>
         public void AddWeight(int fromLayer, int fromNeuron,
-                              int toNeuron, double value_ren)
+                              int toNeuron, double v)
         {
             double old = GetWeight(fromLayer, fromNeuron, toNeuron);
-            SetWeight(fromLayer, fromNeuron, toNeuron, old + value_ren);
+            SetWeight(fromLayer, fromNeuron, toNeuron, old + v);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Encog.Neural.Networks
         {
             int result = 0;
 
-            foreach (ILayer layer  in  structure.Layers)
+            foreach (ILayer layer  in  _structure.Layers)
             {
                 result += layer.NeuronCount;
             }
@@ -453,7 +453,7 @@ namespace Encog.Neural.Networks
         public String DumpWeights()
         {
             var result = new StringBuilder();
-            NumberList.ToList(CSVFormat.EG_FORMAT, result, structure.Flat.Weights);
+            NumberList.ToList(CSVFormat.EG_FORMAT, result, _structure.Flat.Weights);
             return result.ToString();
         }
 
@@ -468,16 +468,16 @@ namespace Encog.Neural.Networks
         public void EnableConnection(int fromLayer,
                                      int fromNeuron, int toNeuron, bool enable)
         {
-            double value_ren = GetWeight(fromLayer, fromNeuron, toNeuron);
+            double v = GetWeight(fromLayer, fromNeuron, toNeuron);
 
             if (enable)
             {
-                if (!structure.ConnectionLimited)
+                if (!_structure.ConnectionLimited)
                 {
                     return;
                 }
 
-                if (Math.Abs(value_ren) < structure.ConnectionLimit)
+                if (Math.Abs(v) < _structure.ConnectionLimit)
                 {
                     SetWeight(fromLayer, fromNeuron, toNeuron,
                               RangeRandomizer.Randomize(-1, 1));
@@ -485,11 +485,11 @@ namespace Encog.Neural.Networks
             }
             else
             {
-                if (!structure.ConnectionLimited)
+                if (!_structure.ConnectionLimited)
                 {
-                    SetProperty(TAG_LIMIT,
-                                DEFAULT_CONNECTION_LIMIT);
-                    structure.UpdateProperties();
+                    SetProperty(TagLimit,
+                                DefaultConnectionLimit);
+                    _structure.UpdateProperties();
                 }
                 SetWeight(fromLayer, fromNeuron, toNeuron, 0);
             }
@@ -529,9 +529,9 @@ namespace Encog.Neural.Networks
         /// <returns>The activation function.</returns>
         public IActivationFunction GetActivation(int layer)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - layer - 1;
-            return structure.Flat.ActivationFunctions[layerNumber];
+            return _structure.Flat.ActivationFunctions[layerNumber];
         }
 
 
@@ -549,12 +549,12 @@ namespace Encog.Neural.Networks
                     "Error, the specified layer does not have a bias: " + l);
             }
 
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - l - 1;
 
-            int layerOutputIndex = structure.Flat.LayerIndex[layerNumber];
-            int count = structure.Flat.LayerCounts[layerNumber];
-            return structure.Flat.LayerOutput[layerOutputIndex
+            int layerOutputIndex = _structure.Flat.LayerIndex[layerNumber];
+            int count = _structure.Flat.LayerCounts[layerNumber];
+            return _structure.Flat.LayerOutput[layerOutputIndex
                                               + count - 1];
         }
 
@@ -567,9 +567,9 @@ namespace Encog.Neural.Networks
         /// <returns>The neuron count.</returns>
         public int GetLayerNeuronCount(int l)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - l - 1;
-            return structure.Flat.LayerFeedCounts[layerNumber];
+            return _structure.Flat.LayerFeedCounts[layerNumber];
         }
 
         /// <summary>
@@ -581,11 +581,11 @@ namespace Encog.Neural.Networks
         /// <returns>The output from the last call to compute.</returns>
         public double GetLayerOutput(int layer, int neuronNumber)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - layer - 1;
-            int index = structure.Flat.LayerIndex[layerNumber]
+            int index = _structure.Flat.LayerIndex[layerNumber]
                         + neuronNumber;
-            double[] output = structure.Flat.LayerOutput;
+            double[] output = _structure.Flat.LayerOutput;
             if (index >= output.Length)
             {
                 throw new NeuralNetworkError("The layer index: " + index
@@ -602,9 +602,9 @@ namespace Encog.Neural.Networks
         /// <returns>The count.</returns>
         public int GetLayerTotalNeuronCount(int l)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - l - 1;
-            return structure.Flat.LayerCounts[layerNumber];
+            return _structure.Flat.LayerCounts[layerNumber];
         }
 
 
@@ -619,7 +619,7 @@ namespace Encog.Neural.Networks
         public double GetWeight(int fromLayer, int fromNeuron,
                                 int toNeuron)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             ValidateNeuron(fromLayer, fromNeuron);
             ValidateNeuron(fromLayer + 1, toNeuron);
             int fromLayerNumber = LayerCount - fromLayer - 1;
@@ -632,12 +632,12 @@ namespace Encog.Neural.Networks
                     + fromLayer);
             }
 
-            int weightBaseIndex = structure.Flat.WeightIndex[toLayerNumber];
-            int count = structure.Flat.LayerCounts[fromLayerNumber];
+            int weightBaseIndex = _structure.Flat.WeightIndex[toLayerNumber];
+            int count = _structure.Flat.LayerCounts[fromLayerNumber];
             int weightIndex = weightBaseIndex + fromNeuron
                               + (toNeuron*count);
 
-            return structure.Flat.Weights[weightIndex];
+            return _structure.Flat.Weights[weightIndex];
         }
 
         /// <summary>
@@ -678,9 +678,9 @@ namespace Encog.Neural.Networks
         /// <returns>True, if the layer is biased.</returns>
         public bool IsLayerBiased(int l)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - l - 1;
-            return structure.Flat.LayerCounts[layerNumber] != structure.Flat.LayerFeedCounts[layerNumber];
+            return _structure.Flat.LayerCounts[layerNumber] != _structure.Flat.LayerFeedCounts[layerNumber];
         }
 
 
@@ -690,7 +690,7 @@ namespace Encog.Neural.Networks
         ///
         /// <param name="l">The layer to use.</param>
         /// <param name="value_ren">The bias activation.</param>
-        public void SetLayerBiasActivation(int l, double value_ren)
+        public void SetLayerBiasActivation(int l, double v)
         {
             if (!IsLayerBiased(l))
             {
@@ -698,12 +698,12 @@ namespace Encog.Neural.Networks
                     "Error, the specified layer does not have a bias: " + l);
             }
 
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int layerNumber = LayerCount - l - 1;
 
-            int layerOutputIndex = structure.Flat.LayerIndex[layerNumber];
-            int count = structure.Flat.LayerCounts[layerNumber];
-            structure.Flat.LayerOutput[layerOutputIndex + count - 1] = value_ren;
+            int layerOutputIndex = _structure.Flat.LayerIndex[layerNumber];
+            int count = _structure.Flat.LayerCounts[layerNumber];
+            _structure.Flat.LayerOutput[layerOutputIndex + count - 1] = v;
         }
 
         /// <summary>
@@ -713,11 +713,11 @@ namespace Encog.Neural.Networks
         /// <param name="fromLayer">The from layer.</param>
         /// <param name="fromNeuron">The from neuron.</param>
         /// <param name="toNeuron">The to neuron.</param>
-        /// <param name="value_ren">The to value.</param>
+        /// <param name="v">The to value.</param>
         public void SetWeight(int fromLayer, int fromNeuron,
-                              int toNeuron, double value_ren)
+                              int toNeuron, double v)
         {
-            structure.RequireFlat();
+            _structure.RequireFlat();
             int fromLayerNumber = LayerCount - fromLayer - 1;
             int toLayerNumber = fromLayerNumber - 1;
 
@@ -728,12 +728,12 @@ namespace Encog.Neural.Networks
                     + fromLayer);
             }
 
-            int weightBaseIndex = structure.Flat.WeightIndex[toLayerNumber];
-            int count = structure.Flat.LayerCounts[fromLayerNumber];
+            int weightBaseIndex = _structure.Flat.WeightIndex[toLayerNumber];
+            int count = _structure.Flat.LayerCounts[fromLayerNumber];
             int weightIndex = weightBaseIndex + fromNeuron
                               + (toNeuron*count);
 
-            structure.Flat.Weights[weightIndex] = value_ren;
+            _structure.Flat.Weights[weightIndex] = v;
         }
 
         /// <summary>
@@ -744,7 +744,7 @@ namespace Encog.Neural.Networks
         {
             var builder = new StringBuilder();
             builder.Append("[BasicNetwork: Layers=");
-            int layers = structure.Layers.Count;
+            int layers = _structure.Layers.Count;
             builder.Append(layers);
             builder.Append("]");
             return builder.ToString();
@@ -756,7 +756,7 @@ namespace Encog.Neural.Networks
         ///
         public override sealed void UpdateProperties()
         {
-            structure.UpdateProperties();
+            _structure.UpdateProperties();
         }
 
         /// <summary>

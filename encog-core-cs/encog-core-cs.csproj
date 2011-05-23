@@ -352,7 +352,7 @@
     <Compile Include="Neural\NEAT\Training\NEATParent.cs" />
     <Compile Include="Neural\NEAT\Training\NEATTraining.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
-    <Compile Include="Neural\Networks\ContainsFlat.cs" />
+    <Compile Include="Neural\Networks\IContainsFlat.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
     <Compile Include="Neural\Networks\Layers\ILayer.cs" />
     <Compile Include="Neural\Networks\NeuralDataMapping.cs" />
@@ -370,11 +370,11 @@
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
     <Compile Include="Neural\Networks\Training\Genetic\NeuralGenome.cs" />
     <Compile Include="Neural\Networks\Training\ILearningRate.cs" />
-    <Compile Include="Neural\Networks\Training\LMA\ComputeJacobian.cs" />
+    <Compile Include="Neural\Networks\Training\LMA\IComputeJacobian.cs" />
     <Compile Include="Neural\Networks\Training\LMA\JacobianChainRule.cs" />
     <Compile Include="Neural\Networks\Training\LMA\LevenbergMarquardtTraining.cs" />
     <Compile Include="Neural\Networks\Training\IMomentum.cs" />
-    <Compile Include="Neural\Networks\Training\PNN\CalculationCriteria.cs" />
+    <Compile Include="Neural\Networks\Training\PNN\ICalculationCriteria.cs" />
     <Compile Include="Neural\Networks\Training\PNN\DeriveMinimum.cs" />
     <Compile Include="Neural\Networks\Training\PNN\GlobalMinimumSearch.cs" />
     <Compile Include="Neural\Networks\Training\PNN\TrainBasicPNN.cs" />
@@ -388,7 +388,7 @@
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
-    <Compile Include="Neural\Networks\Training\Train.cs" />
+    <Compile Include="Neural\Networks\Training\ITrain.cs" />
     <Compile Include="Neural\Networks\Training\TrainingError.cs" />
     <Compile Include="Neural\Networks\Training\TrainingSetScore.cs" />
     <Compile Include="ML\Train\BasicTraining.cs" />
@@ -412,7 +412,7 @@
     <Compile Include="Neural\Pattern\FeedForwardPattern.cs" />
     <Compile Include="Neural\Pattern\HopfieldPattern.cs" />
     <Compile Include="Neural\Pattern\JordanPattern.cs" />
-    <Compile Include="Neural\Pattern\NeuralNetworkPattern.cs" />
+    <Compile Include="Neural\Pattern\INeuralNetworkPattern.cs" />
     <Compile Include="Neural\Pattern\PatternError.cs" />
     <Compile Include="Neural\Pattern\PNNPattern.cs" />
     <Compile Include="Neural\Pattern\RadialBasisPattern.cs" />
@@ -563,9 +563,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural\NeuralData\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <EmbeddedResource Include="Resources\analyst.csv" />

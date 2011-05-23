@@ -77,40 +77,40 @@ namespace Encog.Neural.Rbf
                 if (section.SectionName.Equals("RBF-NETWORK")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
+                    IDictionary<String, String> p = section.ParseParams();
 
-                    flat.BeginTraining = EncogFileSection.ParseInt(params_0,
-                                                                   BasicNetwork.TAG_BEGIN_TRAINING);
-                    flat.ConnectionLimit = EncogFileSection.ParseDouble(params_0,
-                                                                        BasicNetwork.TAG_CONNECTION_LIMIT);
+                    flat.BeginTraining = EncogFileSection.ParseInt(p,
+                                                                   BasicNetwork.TagBeginTraining);
+                    flat.ConnectionLimit = EncogFileSection.ParseDouble(p,
+                                                                        BasicNetwork.TagConnectionLimit);
                     flat.ContextTargetOffset = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_CONTEXT_TARGET_OFFSET);
+                        p, BasicNetwork.TagContextTargetOffset);
                     flat.ContextTargetSize = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_CONTEXT_TARGET_SIZE);
-                    flat.EndTraining = EncogFileSection.ParseInt(params_0,
-                                                                 BasicNetwork.TAG_END_TRAINING);
-                    flat.HasContext = EncogFileSection.ParseBoolean(params_0,
-                                                                    BasicNetwork.TAG_HAS_CONTEXT);
-                    flat.InputCount = EncogFileSection.ParseInt(params_0,
+                        p, BasicNetwork.TagContextTargetSize);
+                    flat.EndTraining = EncogFileSection.ParseInt(p,
+                                                                 BasicNetwork.TagEndTraining);
+                    flat.HasContext = EncogFileSection.ParseBoolean(p,
+                                                                    BasicNetwork.TagHasContext);
+                    flat.InputCount = EncogFileSection.ParseInt(p,
                                                                 PersistConst.INPUT_COUNT);
-                    flat.LayerCounts = EncogFileSection.ParseIntArray(params_0,
-                                                                      BasicNetwork.TAG_LAYER_COUNTS);
-                    flat.LayerFeedCounts = EncogFileSection.ParseIntArray(params_0,
-                                                                          BasicNetwork.TAG_LAYER_FEED_COUNTS);
+                    flat.LayerCounts = EncogFileSection.ParseIntArray(p,
+                                                                      BasicNetwork.TagLayerCounts);
+                    flat.LayerFeedCounts = EncogFileSection.ParseIntArray(p,
+                                                                          BasicNetwork.TagLayerFeedCounts);
                     flat.LayerContextCount = EncogFileSection.ParseIntArray(
-                        params_0, BasicNetwork.TAG_LAYER_CONTEXT_COUNT);
-                    flat.LayerIndex = EncogFileSection.ParseIntArray(params_0,
-                                                                     BasicNetwork.TAG_LAYER_INDEX);
-                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(params_0,
+                        p, BasicNetwork.TagLayerContextCount);
+                    flat.LayerIndex = EncogFileSection.ParseIntArray(p,
+                                                                     BasicNetwork.TagLayerIndex);
+                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
                                                                          PersistConst.OUTPUT);
-                    flat.OutputCount = EncogFileSection.ParseInt(params_0,
+                    flat.OutputCount = EncogFileSection.ParseInt(p,
                                                                  PersistConst.OUTPUT_COUNT);
-                    flat.WeightIndex = EncogFileSection.ParseIntArray(params_0,
-                                                                      BasicNetwork.TAG_WEIGHT_INDEX);
-                    flat.Weights = EncogFileSection.ParseDoubleArray(params_0,
+                    flat.WeightIndex = EncogFileSection.ParseIntArray(p,
+                                                                      BasicNetwork.TagWeightIndex);
+                    flat.Weights = EncogFileSection.ParseDoubleArray(p,
                                                                      PersistConst.WEIGHTS);
                     flat.BiasActivation = EncogFileSection.ParseDoubleArray(
-                        params_0, BasicNetwork.TAG_BIAS_ACTIVATION);
+                        p, BasicNetwork.TagBiasActivation);
                 }
                 else if (section.SectionName.Equals("RBF-NETWORK")
                          && section.SubSectionName.Equals("ACTIVATION"))
@@ -122,7 +122,7 @@ namespace Encog.Neural.Rbf
 
                     foreach (String line  in  section.Lines)
                     {
-                        IActivationFunction af = null;
+                        IActivationFunction af;
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
                         String name = ReflectionUtil.AF_PATH
@@ -146,7 +146,7 @@ namespace Encog.Neural.Rbf
                 else if (section.SectionName.Equals("RBF-NETWORK")
                          && section.SubSectionName.Equals("RBF"))
                 {
-                    int index_3 = 0;
+                    int index = 0;
 
                     int hiddenCount = flat.LayerCounts[1];
                     int inputCount = flat.LayerCounts[2];
@@ -154,39 +154,39 @@ namespace Encog.Neural.Rbf
                     flat.RBF = new IRadialBasisFunction[hiddenCount];
 
 
-                    foreach (String line_4  in  section.Lines)
+                    foreach (String line  in  section.Lines)
                     {
-                        IRadialBasisFunction rbf = null;
-                        IList<String> cols_5 = EncogFileSection
-                            .SplitColumns(line_4);
-                        String name_6 = ReflectionUtil.RBF_PATH + cols_5[0];
+                        IRadialBasisFunction rbf;
+                        IList<String> cols = EncogFileSection
+                            .SplitColumns(line);
+                        String name = ReflectionUtil.RBF_PATH + cols[0];
                         try
                         {
-                            rbf = (IRadialBasisFunction) ReflectionUtil.LoadObject(name_6);
+                            rbf = (IRadialBasisFunction) ReflectionUtil.LoadObject(name);
                         }
-                        catch (TypeLoadException e_8)
+                        catch (TypeLoadException ex)
                         {
-                            throw new PersistError(e_8);
+                            throw new PersistError(ex);
                         }
-                        catch (TargetException e_9)
+                        catch (TargetException ex)
                         {
-                            throw new PersistError(e_9);
+                            throw new PersistError(ex);
                         }
-                        catch (MemberAccessException e_10)
+                        catch (MemberAccessException ex)
                         {
-                            throw new PersistError(e_10);
+                            throw new PersistError(ex);
                         }
 
-                        rbf.Width = CSVFormat.EG_FORMAT.Parse(cols_5[1]);
-                        rbf.Peak = CSVFormat.EG_FORMAT.Parse(cols_5[2]);
+                        rbf.Width = CSVFormat.EG_FORMAT.Parse(cols[1]);
+                        rbf.Peak = CSVFormat.EG_FORMAT.Parse(cols[2]);
                         rbf.Centers = new double[inputCount];
 
-                        for (int i_11 = 0; i_11 < inputCount; i_11++)
+                        for (int i = 0; i < inputCount; i++)
                         {
-                            rbf.Centers[i_11] = CSVFormat.EG_FORMAT.Parse(cols_5[i_11 + 3]);
+                            rbf.Centers[i] = CSVFormat.EG_FORMAT.Parse(cols[i + 3]);
                         }
 
-                        flat.RBF[index_3++] = rbf;
+                        flat.RBF[index++] = rbf;
                     }
                 }
             }
@@ -204,37 +204,37 @@ namespace Encog.Neural.Rbf
             xout.AddSubSection("PARAMS");
             xout.AddProperties(net.Properties);
             xout.AddSubSection("NETWORK");
-            xout.WriteProperty(BasicNetwork.TAG_BEGIN_TRAINING,
+            xout.WriteProperty(BasicNetwork.TagBeginTraining,
                                flat.BeginTraining);
-            xout.WriteProperty(BasicNetwork.TAG_CONNECTION_LIMIT,
+            xout.WriteProperty(BasicNetwork.TagConnectionLimit,
                                flat.ConnectionLimit);
-            xout.WriteProperty(BasicNetwork.TAG_CONTEXT_TARGET_OFFSET,
+            xout.WriteProperty(BasicNetwork.TagContextTargetOffset,
                                flat.ContextTargetOffset);
-            xout.WriteProperty(BasicNetwork.TAG_CONTEXT_TARGET_SIZE,
+            xout.WriteProperty(BasicNetwork.TagContextTargetSize,
                                flat.ContextTargetSize);
-            xout.WriteProperty(BasicNetwork.TAG_END_TRAINING, flat.EndTraining);
-            xout.WriteProperty(BasicNetwork.TAG_HAS_CONTEXT, flat.HasContext);
+            xout.WriteProperty(BasicNetwork.TagEndTraining, flat.EndTraining);
+            xout.WriteProperty(BasicNetwork.TagHasContext, flat.HasContext);
             xout.WriteProperty(PersistConst.INPUT_COUNT, flat.InputCount);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_COUNTS, flat.LayerCounts);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_FEED_COUNTS,
+            xout.WriteProperty(BasicNetwork.TagLayerCounts, flat.LayerCounts);
+            xout.WriteProperty(BasicNetwork.TagLayerFeedCounts,
                                flat.LayerFeedCounts);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_CONTEXT_COUNT,
+            xout.WriteProperty(BasicNetwork.TagLayerContextCount,
                                flat.LayerContextCount);
-            xout.WriteProperty(BasicNetwork.TAG_LAYER_INDEX, flat.LayerIndex);
+            xout.WriteProperty(BasicNetwork.TagLayerIndex, flat.LayerIndex);
             xout.WriteProperty(PersistConst.OUTPUT, flat.LayerOutput);
             xout.WriteProperty(PersistConst.OUTPUT_COUNT, flat.OutputCount);
-            xout.WriteProperty(BasicNetwork.TAG_WEIGHT_INDEX, flat.WeightIndex);
+            xout.WriteProperty(BasicNetwork.TagWeightIndex, flat.WeightIndex);
             xout.WriteProperty(PersistConst.WEIGHTS, flat.Weights);
-            xout.WriteProperty(BasicNetwork.TAG_BIAS_ACTIVATION,
+            xout.WriteProperty(BasicNetwork.TagBiasActivation,
                                flat.BiasActivation);
             xout.AddSubSection("ACTIVATION");
 
             foreach (IActivationFunction af  in  flat.ActivationFunctions)
             {
                 xout.AddColumn(af.GetType().Name);
-                for (int i = 0; i < af.Params.Length; i++)
+                foreach (double t in af.Params)
                 {
-                    xout.AddColumn(af.Params[i]);
+                    xout.AddColumn(t);
                 }
                 xout.WriteLine();
             }
@@ -245,9 +245,9 @@ namespace Encog.Neural.Rbf
                 xout.AddColumn(rbf.GetType().Name);
                 xout.AddColumn(rbf.Width);
                 xout.AddColumn(rbf.Peak);
-                for (int i_0 = 0; i_0 < rbf.Centers.Length; i_0++)
+                foreach (double t in rbf.Centers)
                 {
-                    xout.AddColumn(rbf.Centers[i_0]);
+                    xout.AddColumn(t);
                 }
                 xout.WriteLine();
             }

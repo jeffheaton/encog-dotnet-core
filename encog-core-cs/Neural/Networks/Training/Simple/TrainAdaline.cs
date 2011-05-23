@@ -38,39 +38,39 @@ namespace Encog.Neural.Networks.Training.Simple
         /// The network to train.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// The training data to use.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The learning rate.
         /// </summary>
         ///
-        private double learningRate;
+        private double _learningRate;
 
         /// <summary>
         /// Construct an ADALINE trainer.
         /// </summary>
         ///
-        /// <param name="network_0">The network to train.</param>
-        /// <param name="training_1">The training data.</param>
-        /// <param name="learningRate_2">The learning rate.</param>
-        public TrainAdaline(BasicNetwork network_0, IMLDataSet training_1,
-                            double learningRate_2) : base(TrainingImplementationType.Iterative)
+        /// <param name="network">The network to train.</param>
+        /// <param name="training">The training data.</param>
+        /// <param name="learningRate">The learning rate.</param>
+        public TrainAdaline(BasicNetwork network, IMLDataSet training,
+                            double learningRate) : base(TrainingImplementationType.Iterative)
         {
-            if (network_0.LayerCount > 2)
+            if (network.LayerCount > 2)
             {
                 throw new NeuralNetworkError(
                     "An ADALINE network only has two layers.");
             }
-            network = network_0;
+            _network = network;
 
-            training = training_1;
-            learningRate = learningRate_2;
+            _training = training;
+            _learningRate = learningRate;
         }
 
         /// <inheritdoc />
@@ -83,7 +83,7 @@ namespace Encog.Neural.Networks.Training.Simple
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
         #region ILearningRate Members
@@ -93,8 +93,8 @@ namespace Encog.Neural.Networks.Training.Simple
         /// </summary>
         public double LearningRate
         {
-            get { return learningRate; }
-            set { learningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -105,10 +105,10 @@ namespace Encog.Neural.Networks.Training.Simple
             var errorCalculation = new ErrorCalculation();
 
 
-            foreach (IMLDataPair pair  in  training)
+            foreach (IMLDataPair pair  in  _training)
             {
                 // calculate the error
-                IMLData output = network.Compute(pair.Input);
+                IMLData output = _network.Compute(pair.Input);
 
                 for (int currentAdaline = 0; currentAdaline < output.Count; currentAdaline++)
                 {
@@ -116,11 +116,11 @@ namespace Encog.Neural.Networks.Training.Simple
                                   - output[currentAdaline];
 
                     // weights
-                    for (int i = 0; i <= network.InputCount; i++)
+                    for (int i = 0; i <= _network.InputCount; i++)
                     {
                         double input;
 
-                        if (i == network.InputCount)
+                        if (i == _network.InputCount)
                         {
                             input = 1.0d;
                         }
@@ -129,8 +129,8 @@ namespace Encog.Neural.Networks.Training.Simple
                             input = pair.Input[i];
                         }
 
-                        network.AddWeight(0, i, currentAdaline,
-                                          learningRate*diff*input);
+                        _network.AddWeight(0, i, currentAdaline,
+                                          _learningRate*diff*input);
                     }
                 }
 

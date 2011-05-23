@@ -30,31 +30,31 @@ namespace Encog.Neural.Pattern
     /// A pattern to create support vector machines.
     /// </summary>
     ///
-    public class SVMPattern : NeuralNetworkPattern
+    public class SVMPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of neurons in the first layer.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The kernel type.
         /// </summary>
         ///
-        private KernelType kernelType;
+        private KernelType _kernelType;
 
         /// <summary>
         /// The number of neurons in the second layer.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// The SVM type.
         /// </summary>
         ///
-        private SVMType svmType;
+        private SVMType _svmType;
 
         /// <summary>
         /// Construct the object.
@@ -62,8 +62,8 @@ namespace Encog.Neural.Pattern
         public SVMPattern()
         {
             Regression = true;
-            kernelType = KernelType.RadialBasisFunction;
-            svmType = SVMType.EpsilonSupportVectorRegression;
+            _kernelType = KernelType.RadialBasisFunction;
+            _svmType = SVMType.EpsilonSupportVectorRegression;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public KernelType KernelType
         {
-            set { kernelType = value; }
+            set { _kernelType = value; }
         }
 
 
@@ -85,7 +85,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public SVMType SVMType
         {
-            set { svmType = value; }
+            set { _svmType = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -106,20 +106,20 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            inputNeurons = 0;
-            outputNeurons = 0;
+            _inputNeurons = 0;
+            _outputNeurons = 0;
         }
 
 
         /// <returns>The generated network.</returns>
         public IMLMethod Generate()
         {
-            if (outputNeurons != 1)
+            if (_outputNeurons != 1)
             {
                 throw new PatternError("A SVM may only have one output.");
             }
-            var network = new SupportVectorMachine(inputNeurons, svmType,
-                                                   kernelType);
+            var network = new SupportVectorMachine(_inputNeurons, _svmType,
+                                                   _kernelType);
             return network;
         }
 
@@ -128,8 +128,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            get { return inputNeurons; }
-            set { inputNeurons = value; }
+            get { return _inputNeurons; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -138,8 +138,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            get { return outputNeurons; }
-            set { outputNeurons = value; }
+            get { return _outputNeurons; }
+            set { _outputNeurons = value; }
         }
 
 

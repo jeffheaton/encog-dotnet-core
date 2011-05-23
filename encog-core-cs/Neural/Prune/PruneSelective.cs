@@ -44,22 +44,22 @@ namespace Encog.Neural.Prune
         /// The network to prune.
         /// </summary>
         ///
-        private readonly BasicNetwork network;
+        private readonly BasicNetwork _network;
 
         /// <summary>
         /// Construct an object prune the neural network.
         /// </summary>
         ///
-        /// <param name="network_0">The network to prune.</param>
-        public PruneSelective(BasicNetwork network_0)
+        /// <param name="network">The network to prune.</param>
+        public PruneSelective(BasicNetwork network)
         {
-            network = network_0;
+            _network = network;
         }
 
         /// <value>The network that is being processed.</value>
         public BasicNetwork Network
         {
-            get { return network; }
+            get { return _network; }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Encog.Neural.Prune
                 throw new NeuralNetworkError("Can't decrease to zero neurons.");
             }
 
-            int currentCount = network.GetLayerNeuronCount(layer);
+            int currentCount = _network.GetLayerNeuronCount(layer);
 
             // is there anything to do?
             if (neuronCount == currentCount)
@@ -109,7 +109,7 @@ namespace Encog.Neural.Prune
             // create an array to hold the least significant neurons, which will be
             // removed
 
-            int lostNeuronCount = network.GetLayerNeuronCount(layer)
+            int lostNeuronCount = _network.GetLayerNeuronCount(layer)
                                   - neuronCount;
             int[] lostNeuron = FindWeakestNeurons(layer, lostNeuronCount);
 
@@ -132,7 +132,7 @@ namespace Encog.Neural.Prune
         public double DetermineNeuronSignificance(int layer,
                                                   int neuron)
         {
-            network.ValidateNeuron(layer, neuron);
+            _network.ValidateNeuron(layer, neuron);
 
             // calculate the bias significance
             double result = 0;
@@ -141,22 +141,22 @@ namespace Encog.Neural.Prune
             if (layer > 0)
             {
                 int prevLayer = layer - 1;
-                int prevCount = network
+                int prevCount = _network
                     .GetLayerTotalNeuronCount(prevLayer);
                 for (int i = 0; i < prevCount; i++)
                 {
-                    result += network.GetWeight(prevLayer, i, neuron);
+                    result += _network.GetWeight(prevLayer, i, neuron);
                 }
             }
 
             // calculate the outbound significance
-            if (layer < network.LayerCount - 1)
+            if (layer < _network.LayerCount - 1)
             {
                 int nextLayer = layer + 1;
-                int nextCount = network.GetLayerNeuronCount(nextLayer);
-                for (int i_0 = 0; i_0 < nextCount; i_0++)
+                int nextCount = _network.GetLayerNeuronCount(nextLayer);
+                for (int i = 0; i < nextCount; i++)
                 {
-                    result += network.GetWeight(layer, neuron, i_0);
+                    result += _network.GetWeight(layer, neuron, i);
                 }
             }
 
@@ -187,16 +187,16 @@ namespace Encog.Neural.Prune
 
             // now loop over the remaining neurons and see if any are better ones to
             // remove
-            for (int i_0 = count; i_0 < network.GetLayerNeuronCount(layer); i_0++)
+            for (int i = count; i < _network.GetLayerNeuronCount(layer); i++)
             {
-                double significance = DetermineNeuronSignificance(layer, i_0);
+                double significance = DetermineNeuronSignificance(layer, i);
 
                 // is this neuron less significant than one already chosen?
                 for (int j = 0; j < count; j++)
                 {
                     if (lostNeuronSignificance[j] > significance)
                     {
-                        lostNeuron[j] = i_0;
+                        lostNeuron[j] = i;
                         lostNeuronSignificance[j] = significance;
                         break;
                     }
@@ -218,7 +218,7 @@ namespace Encog.Neural.Prune
                                          int neuronCount)
         {
             // check for errors
-            if (targetLayer > network.LayerCount)
+            if (targetLayer > _network.LayerCount)
             {
                 throw new NeuralNetworkError("Invalid layer " + targetLayer);
             }
@@ -228,7 +228,7 @@ namespace Encog.Neural.Prune
                 throw new NeuralNetworkError("Invalid neuron count " + neuronCount);
             }
 
-            int oldNeuronCount = network
+            int oldNeuronCount = _network
                 .GetLayerNeuronCount(targetLayer);
             int increaseBy = neuronCount - oldNeuronCount;
 
@@ -240,32 +240,30 @@ namespace Encog.Neural.Prune
             }
 
             // access the flat network
-            FlatNetwork flat = network.Structure.Flat;
+            FlatNetwork flat = _network.Structure.Flat;
             double[] oldWeights = flat.Weights;
 
             // first find out how many connections there will be after this prune.
             int connections = oldWeights.Length;
-            int inBoundConnections = 0;
-            int outBoundConnections = 0;
 
             // are connections added from the previous layer?
             if (targetLayer > 0)
             {
-                inBoundConnections = network
+                int inBoundConnections = _network
                     .GetLayerTotalNeuronCount(targetLayer - 1);
                 connections += inBoundConnections*increaseBy;
             }
 
             // are there connections added from the next layer?
-            if (targetLayer < (network.LayerCount - 1))
+            if (targetLayer < (_network.LayerCount - 1))
             {
-                outBoundConnections = network
+                int outBoundConnections = _network
                     .GetLayerNeuronCount(targetLayer + 1);
                 connections += outBoundConnections*increaseBy;
             }
 
             // increase layer count
-            int flatLayer = network.LayerCount - targetLayer - 1;
+            int flatLayer = _network.LayerCount - targetLayer - 1;
             flat.LayerCounts[flatLayer] += increaseBy;
             flat.LayerFeedCounts[flatLayer] += increaseBy;
 
@@ -277,9 +275,9 @@ namespace Encog.Neural.Prune
 
             for (int fromLayer = flat.LayerCounts.Length - 2; fromLayer >= 0; fromLayer--)
             {
-                int fromNeuronCount = network
+                int fromNeuronCount = _network
                     .GetLayerTotalNeuronCount(fromLayer);
-                int toNeuronCount = network
+                int toNeuronCount = _network
                     .GetLayerNeuronCount(fromLayer + 1);
                 int toLayer = fromLayer + 1;
 
@@ -299,7 +297,7 @@ namespace Encog.Neural.Prune
                         }
                         else
                         {
-                            newWeights[weightsIndex++] = network.GetWeight(
+                            newWeights[weightsIndex++] = _network.GetWeight(
                                 fromLayer, fromNeuron, toNeuron);
                         }
                     }
@@ -324,36 +322,34 @@ namespace Encog.Neural.Prune
         public void Prune(int targetLayer, int neuron)
         {
             // check for errors
-            network.ValidateNeuron(targetLayer, neuron);
+            _network.ValidateNeuron(targetLayer, neuron);
 
             // don't empty a layer
-            if (network.GetLayerNeuronCount(targetLayer) <= 1)
+            if (_network.GetLayerNeuronCount(targetLayer) <= 1)
             {
                 throw new NeuralNetworkError(
                     "A layer must have at least a single neuron.  If you want to remove the entire layer you must create a new network.");
             }
 
             // access the flat network
-            FlatNetwork flat = network.Structure.Flat;
+            FlatNetwork flat = _network.Structure.Flat;
             double[] oldWeights = flat.Weights;
 
             // first find out how many connections there will be after this prune.
             int connections = oldWeights.Length;
-            int inBoundConnections = 0;
-            int outBoundConnections = 0;
 
             // are connections removed from the previous layer?
             if (targetLayer > 0)
             {
-                inBoundConnections = network
+                int inBoundConnections = _network
                     .GetLayerTotalNeuronCount(targetLayer - 1);
                 connections -= inBoundConnections;
             }
 
             // are there connections removed from the next layer?
-            if (targetLayer < (network.LayerCount - 1))
+            if (targetLayer < (_network.LayerCount - 1))
             {
-                outBoundConnections = network
+                int outBoundConnections = _network
                     .GetLayerNeuronCount(targetLayer + 1);
                 connections -= outBoundConnections;
             }
@@ -366,9 +362,9 @@ namespace Encog.Neural.Prune
 
             for (int fromLayer = flat.LayerCounts.Length - 2; fromLayer >= 0; fromLayer--)
             {
-                int fromNeuronCount = network
+                int fromNeuronCount = _network
                     .GetLayerTotalNeuronCount(fromLayer);
-                int toNeuronCount = network
+                int toNeuronCount = _network
                     .GetLayerNeuronCount(fromLayer + 1);
                 int toLayer = fromLayer + 1;
 
@@ -389,7 +385,7 @@ namespace Encog.Neural.Prune
 
                         if (!skip)
                         {
-                            newWeights[weightsIndex++] = network.GetWeight(
+                            newWeights[weightsIndex++] = _network.GetWeight(
                                 fromLayer, fromNeuron, toNeuron);
                         }
                     }
@@ -400,7 +396,7 @@ namespace Encog.Neural.Prune
             flat.Weights = newWeights;
 
             // decrease layer count
-            int flatLayer = network.LayerCount - targetLayer - 1;
+            int flatLayer = _network.LayerCount - targetLayer - 1;
             flat.LayerCounts[flatLayer]--;
             flat.LayerFeedCounts[flatLayer]--;
 
@@ -428,7 +424,7 @@ namespace Encog.Neural.Prune
         /// <param name="neuron">The target neuron.</param>
         public void RandomizeNeuron(int targetLayer, int neuron)
         {
-            FlatNetwork flat = network.Structure.Flat;
+            FlatNetwork flat = _network.Structure.Flat;
             double low = EngineArray.Min(flat.Weights);
             double high = EngineArray.Max(flat.Weights);
             RandomizeNeuron(targetLayer, neuron, true, low, high, false, 0.0d);
@@ -462,10 +458,10 @@ namespace Encog.Neural.Prune
             }
 
             // check for errors
-            network.ValidateNeuron(targetLayer, neuron);
+            _network.ValidateNeuron(targetLayer, neuron);
 
             // access the flat network
-            FlatNetwork flat = network.Structure.Flat;
+            FlatNetwork flat = _network.Structure.Flat;
 
             // allocate new weights now that we know how big the new weights will be
             var newWeights = new double[flat.Weights.Length];
@@ -475,9 +471,9 @@ namespace Encog.Neural.Prune
 
             for (int fromLayer = flat.LayerCounts.Length - 2; fromLayer >= 0; fromLayer--)
             {
-                int fromNeuronCount = network
+                int fromNeuronCount = _network
                     .GetLayerTotalNeuronCount(fromLayer);
-                int toNeuronCount = network
+                int toNeuronCount = _network
                     .GetLayerNeuronCount(fromLayer + 1);
                 int toLayer = fromLayer + 1;
 
@@ -496,7 +492,7 @@ namespace Encog.Neural.Prune
                             randomize = true;
                         }
 
-                        double weight = network.GetWeight(fromLayer,
+                        double weight = _network.GetWeight(fromLayer,
                                                           fromNeuron, toNeuron);
 
                         if (randomize)
@@ -519,7 +515,7 @@ namespace Encog.Neural.Prune
         ///
         private void ReindexNetwork()
         {
-            FlatNetwork flat = network.Structure.Flat;
+            FlatNetwork flat = _network.Structure.Flat;
 
             int neuronCount = 0;
             int weightCount = 0;

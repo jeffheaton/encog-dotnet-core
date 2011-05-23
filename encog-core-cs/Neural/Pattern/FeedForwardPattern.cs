@@ -35,51 +35,51 @@ namespace Encog.Neural.Pattern
     /// feedforward neural network is one of the most common neural network patterns.
     /// </summary>
     ///
-    public class FeedForwardPattern : NeuralNetworkPattern
+    public class FeedForwardPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of hidden neurons.
         /// </summary>
         ///
-        private readonly IList<Int32> hidden;
+        private readonly IList<Int32> _hidden;
 
         /// <summary>
         /// The activation function.
         /// </summary>
         ///
-        private IActivationFunction activationHidden;
+        private IActivationFunction _activationHidden;
 
         /// <summary>
         /// The activation function.
         /// </summary>
         ///
-        private IActivationFunction activationOutput;
+        private IActivationFunction _activationOutput;
 
         /// <summary>
         /// The number of input neurons.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public FeedForwardPattern()
         {
-            hidden = new List<Int32>();
+            _hidden = new List<Int32>();
         }
 
         /// <value>the activationOutput to set</value>
         public IActivationFunction ActivationOutput
         {
-            get { return activationOutput; }
-            set { activationOutput = value; }
+            get { return _activationOutput; }
+            set { _activationOutput = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -89,7 +89,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public void AddHiddenLayer(int count)
         {
-            hidden.Add(count);
+            _hidden.Add(count);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            hidden.Clear();
+            _hidden.Clear();
         }
 
         /// <summary>
@@ -106,25 +106,25 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IMLMethod Generate()
         {
-            if (activationOutput == null)
-                activationOutput = activationHidden;
+            if (_activationOutput == null)
+                _activationOutput = _activationHidden;
 
-            ILayer input = new BasicLayer(null, true, inputNeurons);
+            ILayer input = new BasicLayer(null, true, _inputNeurons);
 
             var result = new BasicNetwork();
             result.AddLayer(input);
 
 
-            foreach (Int32 count  in  hidden)
+            foreach (Int32 count  in  _hidden)
             {
-                ILayer hidden_0 = new BasicLayer(activationHidden, true,
+                ILayer hidden = new BasicLayer(_activationHidden, true,
                                                 (count));
 
-                result.AddLayer(hidden_0);
+                result.AddLayer(hidden);
             }
 
-            ILayer output = new BasicLayer(activationOutput, false,
-                                          outputNeurons);
+            ILayer output = new BasicLayer(_activationOutput, false,
+                                          _outputNeurons);
             result.AddLayer(output);
 
             result.Structure.FinalizeStructure();
@@ -138,7 +138,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IActivationFunction ActivationFunction
         {
-            set { activationHidden = value; }
+            set { _activationHidden = value; }
         }
 
 
@@ -147,7 +147,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -156,7 +156,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

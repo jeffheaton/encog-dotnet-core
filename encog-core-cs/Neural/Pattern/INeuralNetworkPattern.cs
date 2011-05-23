@@ -31,7 +31,7 @@ namespace Encog.Neural.Pattern
     /// then generate is called to produce a neural network of this type.
     /// </summary>
     ///
-    public interface NeuralNetworkPattern
+    public interface INeuralNetworkPattern
     {
         /// <summary>
         /// Set the activation function to be used for all created layers that allow

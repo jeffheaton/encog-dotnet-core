@@ -44,12 +44,12 @@ namespace Encog.Neural.Networks
         /// Construct the neural data mapping class with the specified values.
         /// </summary>
         ///
-        /// <param name="from_0">The source data.</param>
-        /// <param name="to_1">The target data.</param>
-        public NeuralDataMapping(IMLData from_0, IMLData to_1)
+        /// <param name="f">The source data.</param>
+        /// <param name="t">The target data.</param>
+        public NeuralDataMapping(IMLData f, IMLData t)
         {
-            From = from_0;
-            To = to_1;
+            From = f;
+            To = t;
         }
 
         /// <summary>

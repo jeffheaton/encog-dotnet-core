@@ -33,21 +33,21 @@ namespace Encog.Neural.Pattern
     /// network recognizes a pattern, it "echos" that pattern on the output.
     /// </summary>
     ///
-    public class HopfieldPattern : NeuralNetworkPattern
+    public class HopfieldPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// How many neurons in the Hopfield network. Default to -1, which is
         /// invalid. Therefore this value must be set.
         /// </summary>
         ///
-        private int neuronCount;
+        private int _neuronCount;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public HopfieldPattern()
         {
-            neuronCount = -1;
+            _neuronCount = -1;
         }
 
         #region NeuralNetworkPattern Members
@@ -78,7 +78,7 @@ namespace Encog.Neural.Pattern
         /// <returns>The generated network.</returns>
         public IMLMethod Generate()
         {
-            var logic = new HopfieldNetwork(neuronCount);
+            var logic = new HopfieldNetwork(_neuronCount);
             return logic;
         }
 
@@ -102,7 +102,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { neuronCount = value; }
+            set { _neuronCount = value; }
         }
 
 

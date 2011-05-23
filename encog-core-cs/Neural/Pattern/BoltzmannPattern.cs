@@ -30,40 +30,40 @@ namespace Encog.Neural.Pattern
     /// Pattern to create a Boltzmann machine.
     /// </summary>
     ///
-    public class BoltzmannPattern : NeuralNetworkPattern
+    public class BoltzmannPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of annealing cycles per run.
         /// </summary>
         ///
-        private int annealCycles;
+        private int _annealCycles;
 
         /// <summary>
         /// The number of neurons in the Boltzmann network.
         /// </summary>
         ///
-        private int neuronCount;
+        private int _neuronCount;
 
         /// <summary>
         /// The number of cycles per run.
         /// </summary>
         ///
-        private int runCycles;
+        private int _runCycles;
 
         /// <summary>
         /// The current temperature.
         /// </summary>
         ///
-        private double temperature;
+        private double _temperature;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public BoltzmannPattern()
         {
-            annealCycles = 100;
-            runCycles = 1000;
-            temperature = 0.0d;
+            _annealCycles = 100;
+            _runCycles = 1000;
+            _temperature = 0.0d;
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int AnnealCycles
         {
-            get { return annealCycles; }
-            set { annealCycles = value; }
+            get { return _annealCycles; }
+            set { _annealCycles = value; }
         }
 
 
@@ -81,8 +81,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int RunCycles
         {
-            get { return runCycles; }
-            set { runCycles = value; }
+            get { return _runCycles; }
+            set { _runCycles = value; }
         }
 
 
@@ -91,8 +91,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double Temperature
         {
-            get { return temperature; }
-            set { temperature = value; }
+            get { return _temperature; }
+            set { _temperature = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -114,7 +114,7 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            neuronCount = 0;
+            _neuronCount = 0;
         }
 
         /// <summary>
@@ -122,10 +122,10 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IMLMethod Generate()
         {
-            var boltz = new BoltzmannMachine(neuronCount);
-            boltz.Temperature = temperature;
-            boltz.RunCycles = runCycles;
-            boltz.AnnealCycles = annealCycles;
+            var boltz = new BoltzmannMachine(_neuronCount);
+            boltz.Temperature = _temperature;
+            boltz.RunCycles = _runCycles;
+            boltz.AnnealCycles = _annealCycles;
             return boltz;
         }
 
@@ -154,7 +154,7 @@ namespace Encog.Neural.Pattern
         /// <value>The number of input neurons.</value>
         public int InputNeurons
         {
-            set { neuronCount = value; }
+            set { _neuronCount = value; }
         }
 
 
@@ -164,7 +164,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { neuronCount = value; }
+            set { _neuronCount = value; }
         }
 
         #endregion

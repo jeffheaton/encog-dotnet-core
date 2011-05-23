@@ -68,12 +68,12 @@ namespace Encog.Neural.SOM
                 if (section.SectionName.Equals("SOM")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
-                    IDictionary<String, String> params_0 = section.ParseParams();
-                    result.Weights = EncogFileSection.ParseMatrix(params_0,
+                    IDictionary<String, String> p = section.ParseParams();
+                    result.Weights = EncogFileSection.ParseMatrix(p,
                                                                   PersistConst.WEIGHTS);
-                    result.OutputNeuronCount = EncogFileSection.ParseInt(params_0,
+                    result.OutputCount = EncogFileSection.ParseInt(p,
                                                                          PersistConst.OUTPUT_COUNT);
-                    result.InputCount = EncogFileSection.ParseInt(params_0,
+                    result.InputCount = EncogFileSection.ParseInt(p,
                                                                   PersistConst.INPUT_COUNT);
                 }
             }
@@ -92,7 +92,7 @@ namespace Encog.Neural.SOM
             xout.AddSubSection("NETWORK");
             xout.WriteProperty(PersistConst.WEIGHTS, som.Weights);
             xout.WriteProperty(PersistConst.INPUT_COUNT, som.InputCount);
-            xout.WriteProperty(PersistConst.OUTPUT_COUNT, som.OutputNeuronCount);
+            xout.WriteProperty(PersistConst.OUTPUT_COUNT, som.OutputCount);
             xout.Flush();
         }
 

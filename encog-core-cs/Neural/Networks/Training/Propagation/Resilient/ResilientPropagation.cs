@@ -58,13 +58,13 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// Continuation tag for the last gradients.
         /// </summary>
         ///
-        public const String LAST_GRADIENTS = "LAST_GRADIENTS";
+        public const String LastGradients = "LAST_GRADIENTS";
 
         /// <summary>
         /// Continuation tag for the last values.
         /// </summary>
         ///
-        public const String UPDATE_VALUES = "UPDATE_VALUES";
+        public const String UpdateValues = "UPDATE_VALUES";
 
         /// <summary>
         /// Construct an RPROP trainer, allows an OpenCL device to be specified. Use
@@ -75,7 +75,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         ///
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
-        public ResilientPropagation(ContainsFlat network,
+        public ResilientPropagation(IContainsFlat network,
                                     IMLDataSet training)
             : this(network, training, RPROPConst.DefaultInitialUpdate, RPROPConst.DefaultMaxStep)
         {
@@ -92,7 +92,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="training">The training set to use.</param>
         /// <param name="initialUpdate"></param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
-        public ResilientPropagation(ContainsFlat network,
+        public ResilientPropagation(IContainsFlat network,
                                     IMLDataSet training, double initialUpdate,
                                     double maxStep) : base(network, training)
         {
@@ -119,9 +119,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public bool IsValidResume(TrainingContinuation state)
         {
             if (!state.Contents.ContainsKey(
-                LAST_GRADIENTS)
+                LastGradients)
                 || !state.Contents.ContainsKey(
-                    UPDATE_VALUES))
+                    UpdateValues))
             {
                 return false;
             }
@@ -132,8 +132,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
             }
 
             var d = (double[]) state
-                                   .Get(LAST_GRADIENTS);
-            return d.Length == ((ContainsFlat) Method).Flat.Weights.Length;
+                                   .Get(LastGradients);
+            return d.Length == ((IContainsFlat) Method).Flat.Weights.Length;
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
 
             result.TrainingType = GetType().Name;
 
-            result.Set(LAST_GRADIENTS,
+            result.Set(LastGradients,
                        ((TrainFlatNetworkResilient) FlatTraining).LastGradient);
-            result.Set(UPDATE_VALUES,
+            result.Set(UpdateValues,
                        ((TrainFlatNetworkResilient) FlatTraining).UpdateValues);
 
             return result;
@@ -167,9 +167,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 throw new TrainingError("Invalid training resume data length");
             }
             var lastGradient = (double[]) state
-                                              .Get(LAST_GRADIENTS);
+                                              .Get(LastGradients);
             var updateValues = (double[]) state
-                                              .Get(UPDATE_VALUES);
+                                              .Get(UpdateValues);
 
             EngineArray.ArrayCopy(lastGradient,
                                   ((TrainFlatNetworkResilient) FlatTraining).LastGradient);

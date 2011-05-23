@@ -55,16 +55,15 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <returns>The best error.</returns>
         public double Calculate(int maxIterations, double maxError,
                                 double eps, double tol,
-                                CalculationCriteria network, int n, double[] x,
+                                ICalculationCriteria network, int n, double[] x,
                                 double ystart, double[] bs, double[] direc,
                                 double[] g, double[] h, double[] deriv2)
         {
-            double prevBest, toler, gam, improvement;
             var globalMinimum = new GlobalMinimumSearch();
 
             double fbest = network.CalcErrorWithMultipleSigma(x, direc, deriv2,
                                                               true);
-            prevBest = 1.0e30d;
+            double prevBest = 1.0e30d;
             for (int i = 0; i < n; i++)
             {
                 direc[i] = -direc[i];
@@ -74,7 +73,7 @@ namespace Encog.Neural.Networks.Training.PNN
             EngineArray.ArrayCopy(direc, h);
 
             int convergenceCounter = 0;
-            int poorCJ = 0;
+            int poorCj = 0;
 
             // Main loop
             for (int iteration = 0; iteration < maxIterations; iteration++)
@@ -85,6 +84,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
 
                 // Check for convergence
+                double toler;
                 if (prevBest <= 1.0d)
                 {
                     toler = tol;
@@ -107,25 +107,21 @@ namespace Encog.Neural.Networks.Training.PNN
                     convergenceCounter = 0;
                 }
 
-                double dot1 = 0;
                 double dot2 = 0;
                 double dlen = 0;
-
-                dot1 = dot2 = dlen = 0.0d;
+                double dot1 = dot2 = dlen = 0.0d;
                 double high = 1.0e-4d;
-                for (int i_0 = 0; i_0 < n; i_0++)
+                for (int i= 0; i < n; i++)
                 {
-                    bs[i_0] = x[i_0];
-                    if (deriv2[i_0] > high)
+                    bs[i] = x[i];
+                    if (deriv2[i] > high)
                     {
-                        high = deriv2[i_0];
+                        high = deriv2[i];
                     }
-                    dot1 += direc[i_0]*g[i_0]; // Directional first derivative
-                    dot2 += direc[i_0]*direc[i_0]*deriv2[i_0]; // and second
-                    dlen += direc[i_0]*direc[i_0]; // Length of search vector
+                    dot1 += direc[i]*g[i]; // Directional first derivative
+                    dot2 += direc[i]*direc[i]*deriv2[i]; // and second
+                    dlen += direc[i]*direc[i]; // Length of search vector
                 }
-
-                dlen = Math.Sqrt(dlen);
 
                 double scale;
 
@@ -166,21 +162,21 @@ namespace Encog.Neural.Networks.Training.PNN
                 {
                     if (globalMinimum.Y2 < fbest)
                     {
-                        for (int i_1 = 0; i_1 < n; i_1++)
+                        for (int i = 0; i < n; i++)
                         {
-                            x[i_1] = bs[i_1] + globalMinimum.Y2*direc[i_1];
-                            if (x[i_1] < 1.0e-10d)
+                            x[i] = bs[i] + globalMinimum.Y2*direc[i];
+                            if (x[i] < 1.0e-10d)
                             {
-                                x[i_1] = 1.0e-10d;
+                                x[i] = 1.0e-10d;
                             }
                         }
                         fbest = globalMinimum.Y2;
                     }
                     else
                     {
-                        for (int i_2 = 0; i_2 < n; i_2++)
+                        for (int i = 0; i < n; i++)
                         {
-                            x[i_2] = bs[i_2];
+                            x[i] = bs[i];
                         }
                     }
                     break;
@@ -197,28 +193,28 @@ namespace Encog.Neural.Networks.Training.PNN
                                                    network, globalMinimum.Y2);
                 }
 
-                for (int i_3 = 0; i_3 < n; i_3++)
+                for (int i = 0; i < n; i++)
                 {
-                    x[i_3] = bs[i_3] + globalMinimum.X2*direc[i_3];
-                    if (x[i_3] < 1.0e-10d)
+                    x[i] = bs[i] + globalMinimum.X2*direc[i];
+                    if (x[i] < 1.0e-10d)
                     {
-                        x[i_3] = 1.0e-10d;
+                        x[i] = 1.0e-10d;
                     }
                 }
 
-                improvement = (prevBest - fbest)/prevBest;
+                double improvement = (prevBest - fbest)/prevBest;
 
                 if (fbest < maxError)
                 {
                     break;
                 }
 
-                for (int i_4 = 0; i_4 < n; i_4++)
+                for (int i = 0; i < n; i++)
                 {
-                    direc[i_4] = -direc[i_4]; // negative gradient
+                    direc[i] = -direc[i]; // negative gradient
                 }
 
-                gam = Gamma(n, g, direc);
+                double gam = Gamma(n, g, direc);
 
                 if (gam < 0.0d)
                 {
@@ -232,14 +228,14 @@ namespace Encog.Neural.Networks.Training.PNN
 
                 if (improvement < 0.001d)
                 {
-                    ++poorCJ;
+                    ++poorCj;
                 }
                 else
                 {
-                    poorCJ = 0;
+                    poorCj = 0;
                 }
 
-                if (poorCJ >= 2)
+                if (poorCj >= 2)
                 {
                     if (gam > 1.0d)
                     {
@@ -247,9 +243,9 @@ namespace Encog.Neural.Networks.Training.PNN
                     }
                 }
 
-                if (poorCJ >= 6)
+                if (poorCj >= 6)
                 {
-                    poorCJ = 0;
+                    poorCj = 0;
                     gam = 0.0d;
                 }
 
@@ -268,7 +264,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="g">The "g" value, used for CJ algorithm.</param>
         /// <param name="h">The "h" value, used for CJ algorithm.</param>
         /// <param name="grad">The gradients.</param>
-        private void FindNewDir(int n, double gam, double[] g,
+        private static void FindNewDir(int n, double gam, double[] g,
                                 double[] h, double[] grad)
         {
             int i;
@@ -288,12 +284,12 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="g">The "g" value, used for CJ algorithm.</param>
         /// <param name="grad">The gradients.</param>
         /// <returns>The correction for the next iteration.</returns>
-        private double Gamma(int n, double[] g, double[] grad)
+        private static double Gamma(int n, double[] g, double[] grad)
         {
             int i;
-            double denom, numer;
+            double denom;
 
-            numer = denom = 0.0d;
+            double numer = denom = 0.0d;
 
             for (i = 0; i < n; i++)
             {
@@ -305,10 +301,7 @@ namespace Encog.Neural.Networks.Training.PNN
             {
                 return 0.0d;
             }
-            else
-            {
-                return numer/denom;
-            }
+            return numer/denom;
         }
     }
 }

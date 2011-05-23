@@ -26,7 +26,7 @@ namespace Encog.Neural.Networks.Training.PNN
     /// Calculate criteria.
     /// </summary>
     ///
-    public interface CalculationCriteria
+    public interface ICalculationCriteria
     {
         /// <summary>
         /// Calculate the error with a single sigma.

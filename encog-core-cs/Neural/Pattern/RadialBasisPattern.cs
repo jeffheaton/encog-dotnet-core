@@ -33,43 +33,43 @@ namespace Encog.Neural.Pattern
     /// of neural network. It consists of a input, output and hidden layer.
     /// </summary>
     ///
-    public class RadialBasisPattern : NeuralNetworkPattern
+    public class RadialBasisPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of hidden neurons to use. Must be set, default to invalid -1
         /// value.
         /// </summary>
         ///
-        private int hiddenNeurons;
+        private int _hiddenNeurons;
 
         /// <summary>
         /// The number of input neurons to use. Must be set, default to invalid -1
         /// value.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The number of hidden neurons to use. Must be set, default to invalid -1
         /// value.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// The RBF type.
         /// </summary>
-        private RBFEnum rbfType;
+        private RBFEnum _rbfType;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public RadialBasisPattern()
         {
-            rbfType = RBFEnum.Gaussian;
-            inputNeurons = -1;
-            outputNeurons = -1;
-            hiddenNeurons = -1;
+            _rbfType = RBFEnum.Gaussian;
+            _inputNeurons = -1;
+            _outputNeurons = -1;
+            _hiddenNeurons = -1;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public RBFEnum RBF
         {
-            set { rbfType = value; }
+            set { _rbfType = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -90,15 +90,12 @@ namespace Encog.Neural.Pattern
         /// <param name="count">The number of neurons in the hidden layer.</param>
         public void AddHiddenLayer(int count)
         {
-            if (hiddenNeurons != -1)
+            if (_hiddenNeurons != -1)
             {
                 throw new PatternError("A RBF network usually has a single "
                                        + "hidden layer.");
             }
-            else
-            {
-                hiddenNeurons = count;
-            }
+            _hiddenNeurons = count;
         }
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            hiddenNeurons = -1;
+            _hiddenNeurons = -1;
         }
 
         /// <summary>
@@ -117,8 +114,8 @@ namespace Encog.Neural.Pattern
         /// <returns>The neural network.</returns>
         public IMLMethod Generate()
         {
-            var result = new RBFNetwork(inputNeurons, hiddenNeurons,
-                                        outputNeurons, rbfType);
+            var result = new RBFNetwork(_inputNeurons, _hiddenNeurons,
+                                        _outputNeurons, _rbfType);
             return result;
         }
 
@@ -141,7 +138,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -150,7 +147,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

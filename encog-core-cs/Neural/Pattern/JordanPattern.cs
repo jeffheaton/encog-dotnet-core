@@ -38,31 +38,31 @@ namespace Encog.Neural.Pattern
     /// similar to the Elman neural network.
     /// </summary>
     ///
-    public class JordanPattern : NeuralNetworkPattern
+    public class JordanPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The activation function.
         /// </summary>
         ///
-        private IActivationFunction activation;
+        private IActivationFunction _activation;
 
         /// <summary>
         /// The number of hidden neurons.
         /// </summary>
         ///
-        private int hiddenNeurons;
+        private int _hiddenNeurons;
 
         /// <summary>
         /// The number of input neurons.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// Construct an object to create a Jordan type neural network.
@@ -70,9 +70,9 @@ namespace Encog.Neural.Pattern
         ///
         public JordanPattern()
         {
-            inputNeurons = -1;
-            outputNeurons = -1;
-            hiddenNeurons = -1;
+            _inputNeurons = -1;
+            _outputNeurons = -1;
+            _hiddenNeurons = -1;
         }
 
         #region NeuralNetworkPattern Members
@@ -84,14 +84,14 @@ namespace Encog.Neural.Pattern
         /// <param name="count">The number of neurons in this hidden layer.</param>
         public void AddHiddenLayer(int count)
         {
-            if (hiddenNeurons != -1)
+            if (_hiddenNeurons != -1)
             {
                 throw new PatternError(
                     "A Jordan neural network should have only one hidden "
                     + "layer.");
             }
 
-            hiddenNeurons = count;
+            _hiddenNeurons = count;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            hiddenNeurons = -1;
+            _hiddenNeurons = -1;
         }
 
         /// <summary>
@@ -113,12 +113,12 @@ namespace Encog.Neural.Pattern
             BasicLayer hidden, output;
 
             var network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(activation, true,
-                                            inputNeurons));
-            network.AddLayer(hidden = new BasicLayer(activation, true,
-                                                     hiddenNeurons));
+            network.AddLayer(new BasicLayer(_activation, true,
+                                            _inputNeurons));
+            network.AddLayer(hidden = new BasicLayer(_activation, true,
+                                                     _hiddenNeurons));
             network.AddLayer(output = new BasicLayer(null, false,
-                                                     outputNeurons));
+                                                     _outputNeurons));
             hidden.ContextFedBy = output;
             network.Structure.FinalizeStructure();
             network.Reset();
@@ -130,7 +130,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IActivationFunction ActivationFunction
         {
-            set { activation = value; }
+            set { _activation = value; }
         }
 
 
@@ -139,7 +139,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -148,7 +148,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

@@ -59,214 +59,214 @@ namespace Encog.Neural.Prune
         /// The ranges for the hidden layers.
         /// </summary>
         ///
-        private readonly IList<HiddenLayerParams> hidden;
+        private readonly IList<HiddenLayerParams> _hidden;
 
         /// <summary>
         /// The number if training iterations that should be tried for each network.
         /// </summary>
         ///
-        private readonly int iterations;
+        private readonly int _iterations;
 
         /// <summary>
         /// The pattern for which type of neural network we would like to create.
         /// </summary>
         ///
-        private readonly NeuralNetworkPattern pattern;
+        private readonly INeuralNetworkPattern _pattern;
 
         /// <summary>
         /// The object that status should be reported to.
         /// </summary>
         ///
-        private readonly IStatusReportable report;
+        private readonly IStatusReportable _report;
 
         /// <summary>
         /// An array of the top errors.
         /// </summary>
         ///
-        private readonly double[] topErrors;
+        private readonly double[] _topErrors;
 
         /// <summary>
         /// An array of the top networks.
         /// </summary>
         ///
-        private readonly BasicNetwork[] topNetworks;
+        private readonly BasicNetwork[] _topNetworks;
 
         /// <summary>
         /// The training set to use as different neural networks are evaluated.
         /// </summary>
         ///
-        private readonly IMLDataSet training;
+        private readonly IMLDataSet _training;
 
         /// <summary>
         /// The number of tries with random weights.
         /// </summary>
         ///
-        private readonly int weightTries;
+        private readonly int _weightTries;
 
         /// <summary>
         /// The best network found so far.
         /// </summary>
         ///
-        private BasicNetwork bestNetwork;
+        private BasicNetwork _bestNetwork;
 
         /// <summary>
         /// How many networks have been tried so far?
         /// </summary>
         ///
-        private int currentTry;
+        private int _currentTry;
 
         /// <summary>
         /// Are we done?
         /// </summary>
         ///
-        private bool done;
+        private bool _done;
 
         /// <summary>
         /// The size of the first hidden layer.
         /// </summary>
         ///
-        private int hidden1Size;
+        private int _hidden1Size;
 
         /// <summary>
         /// The size of the second hidden layer.
         /// </summary>
         ///
-        private int hidden2Size;
+        private int _hidden2Size;
 
         /// <summary>
         /// Keeps track of how many neurons in each hidden layer as training the
         /// evaluation progresses.
         /// </summary>
         ///
-        private int[] hiddenCounts;
+        private int[] _hiddenCounts;
 
         /// <summary>
         /// The current highest error.
         /// </summary>
         ///
-        private double high;
+        private double _high;
 
         /// <summary>
         /// The current lowest error.
         /// </summary>
         ///
-        private double low;
+        private double _low;
 
         /// <summary>
         /// The results in a 2d array.
         /// </summary>
         ///
-        private double[][] results;
+        private double[][] _results;
 
         /// <summary>
         /// Construct an object to determine the optimal number of hidden layers and
         /// neurons for the specified training data and pattern.
         /// </summary>
         ///
-        /// <param name="training_0">The training data to use.</param>
-        /// <param name="pattern_1">The network pattern to use to solve this data.</param>
-        /// <param name="iterations_2">How many iterations to try per network.</param>
-        /// <param name="weightTries_3">The number of random weights to use.</param>
+        /// <param name="training">The training data to use.</param>
+        /// <param name="pattern">The network pattern to use to solve this data.</param>
+        /// <param name="iterations">How many iterations to try per network.</param>
+        /// <param name="weightTries">The number of random weights to use.</param>
         /// <param name="numTopResults"></param>
-        /// <param name="report_4">Object used to report status to.</param>
-        public PruneIncremental(IMLDataSet training_0,
-                                NeuralNetworkPattern pattern_1, int iterations_2,
-                                int weightTries_3, int numTopResults,
-                                IStatusReportable report_4) : base(report_4)
+        /// <param name="report">Object used to report status to.</param>
+        public PruneIncremental(IMLDataSet training,
+                                INeuralNetworkPattern pattern, int iterations,
+                                int weightTries, int numTopResults,
+                                IStatusReportable report) : base(report)
         {
-            done = false;
-            hidden = new List<HiddenLayerParams>();
-            training = training_0;
-            pattern = pattern_1;
-            iterations = iterations_2;
-            report = report_4;
-            weightTries = weightTries_3;
-            topNetworks = new BasicNetwork[numTopResults];
-            topErrors = new double[numTopResults];
+            _done = false;
+            _hidden = new List<HiddenLayerParams>();
+            _training = training;
+            _pattern = pattern;
+            _iterations = iterations;
+            _report = report;
+            _weightTries = weightTries;
+            _topNetworks = new BasicNetwork[numTopResults];
+            _topErrors = new double[numTopResults];
         }
 
 
         /// <value>The network being processed.</value>
         public BasicNetwork BestNetwork
         {
-            get { return bestNetwork; }
+            get { return _bestNetwork; }
         }
 
 
         /// <value>The hidden layer max and min.</value>
         public IList<HiddenLayerParams> Hidden
         {
-            get { return hidden; }
+            get { return _hidden; }
         }
 
 
         /// <value>The size of the first hidden layer.</value>
         public int Hidden1Size
         {
-            get { return hidden1Size; }
+            get { return _hidden1Size; }
         }
 
 
         /// <value>The size of the second hidden layer.</value>
         public int Hidden2Size
         {
-            get { return hidden2Size; }
+            get { return _hidden2Size; }
         }
 
 
         /// <value>The higest error so far.</value>
         public double High
         {
-            get { return high; }
+            get { return _high; }
         }
 
 
         /// <value>The number of training iterations to try for each network.</value>
         public int Iterations
         {
-            get { return iterations; }
+            get { return _iterations; }
         }
 
 
         /// <value>The lowest error so far.</value>
         public double Low
         {
-            get { return low; }
+            get { return _low; }
         }
 
 
         /// <value>The network pattern to use.</value>
-        public NeuralNetworkPattern Pattern
+        public INeuralNetworkPattern Pattern
         {
-            get { return pattern; }
+            get { return _pattern; }
         }
 
 
         /// <value>The error results.</value>
         public double[][] Results
         {
-            get { return results; }
+            get { return _results; }
         }
 
 
         /// <value>the topErrors</value>
         public double[] TopErrors
         {
-            get { return topErrors; }
+            get { return _topErrors; }
         }
 
 
         /// <value>the topNetworks</value>
         public BasicNetwork[] TopNetworks
         {
-            get { return topNetworks; }
+            get { return _topNetworks; }
         }
 
 
         /// <value>The training set to use.</value>
         public IMLDataSet Training
         {
-            get { return training; }
+            get { return _training; }
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Encog.Neural.Prune
         public void AddHiddenLayer(int min, int max)
         {
             var param = new HiddenLayerParams(min, max);
-            hidden.Add(param);
+            _hidden.Add(param);
         }
 
         /// <summary>
@@ -317,18 +317,18 @@ namespace Encog.Neural.Prune
         /// <returns>The network based on current hidden layer counts.</returns>
         private BasicNetwork GenerateNetwork()
         {
-            pattern.Clear();
+            _pattern.Clear();
 
 
-            foreach (int element  in  hiddenCounts)
+            foreach (int element  in  _hiddenCounts)
             {
                 if (element > 0)
                 {
-                    pattern.AddHiddenLayer(element);
+                    _pattern.AddHiddenLayer(element);
                 }
             }
 
-            return (BasicNetwork) pattern.Generate();
+            return (BasicNetwork) _pattern.Generate();
         }
 
 
@@ -344,19 +344,19 @@ namespace Encog.Neural.Prune
             int i = 0;
             do
             {
-                HiddenLayerParams param = hidden[i];
-                hiddenCounts[i]++;
+                HiddenLayerParams param = _hidden[i];
+                _hiddenCounts[i]++;
 
                 // is this hidden layer still within the range?
-                if (hiddenCounts[i] <= param.Max)
+                if (_hiddenCounts[i] <= param.Max)
                 {
                     return true;
                 }
 
                 // increase the next layer if we've maxed out this one
-                hiddenCounts[i] = param.Min;
+                _hiddenCounts[i] = param.Min;
                 i++;
-            } while (i < hiddenCounts.Length);
+            } while (i < _hiddenCounts.Length);
 
             // can't increase anymore, we're done!
 
@@ -370,30 +370,30 @@ namespace Encog.Neural.Prune
         public void Init()
         {
             // handle display for one layer
-            if (hidden.Count == 1)
+            if (_hidden.Count == 1)
             {
-                hidden1Size = (hidden[0].Max - hidden[0].Min) + 1;
-                hidden2Size = 0;
-                results = EngineArray.AllocateDouble2D(hidden1Size, 1);
+                _hidden1Size = (_hidden[0].Max - _hidden[0].Min) + 1;
+                _hidden2Size = 0;
+                _results = EngineArray.AllocateDouble2D(_hidden1Size, 1);
             }
-            else if (hidden.Count == 2)
+            else if (_hidden.Count == 2)
             {
                 // handle display for two layers
-                hidden1Size = (hidden[0].Max - hidden[0].Min) + 1;
-                hidden2Size = (hidden[1].Max - hidden[1].Min) + 1;
-                results = EngineArray.AllocateDouble2D(hidden1Size, hidden2Size);
+                _hidden1Size = (_hidden[0].Max - _hidden[0].Min) + 1;
+                _hidden2Size = (_hidden[1].Max - _hidden[1].Min) + 1;
+                _results = EngineArray.AllocateDouble2D(_hidden1Size, _hidden2Size);
             }
             else
             {
                 // we don't handle displays for more than two layers
-                hidden1Size = 0;
-                hidden2Size = 0;
-                results = null;
+                _hidden1Size = 0;
+                _hidden2Size = 0;
+                _results = null;
             }
 
             // reset min and max
-            high = Double.NegativeInfinity;
-            low = Double.PositiveInfinity;
+            _high = Double.NegativeInfinity;
+            _low = Double.PositiveInfinity;
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Encog.Neural.Prune
             int result = 1;
 
 
-            foreach (HiddenLayerParams param  in  hidden)
+            foreach (HiddenLayerParams param  in  _hidden)
             {
                 result *= (param.Max - param.Min) + 1;
             }
@@ -427,18 +427,18 @@ namespace Encog.Neural.Prune
         {
             var network = (BasicNetwork) context.JobUnit;
             BufferedMLDataSet buffer = null;
-            IMLDataSet useTraining = training;
+            IMLDataSet useTraining = _training;
 
-            if (training is BufferedMLDataSet)
+            if (_training is BufferedMLDataSet)
             {
-                buffer = (BufferedMLDataSet) training;
+                buffer = (BufferedMLDataSet) _training;
                 useTraining = (buffer.OpenAdditional());
             }
 
             // train the neural network
 
             double error = Double.PositiveInfinity;
-            for (int z = 0; z < weightTries; z++)
+            for (int z = 0; z < _weightTries; z++)
             {
                 network.Reset();
                 Propagation train = new ResilientPropagation(network,
@@ -450,7 +450,7 @@ namespace Encog.Neural.Prune
                 train.NumThreads = 1; // force single thread mode
 
                 for (int i = 0;
-                     (i < iterations) && !ShouldStop
+                     (i < _iterations) && !ShouldStop
                      && !strat.ShouldStop();
                      i++)
                 {
@@ -469,10 +469,10 @@ namespace Encog.Neural.Prune
             {
                 // update min and max
 
-                high = Math.Max(high, error);
-                low = Math.Min(low, error);
+                _high = Math.Max(_high, error);
+                _low = Math.Min(_low, error);
 
-                if (hidden1Size > 0)
+                if (_hidden1Size > 0)
                 {
                     int networkHidden1Count;
                     int networkHidden2Count;
@@ -490,26 +490,26 @@ namespace Encog.Neural.Prune
 
                     int row, col;
 
-                    if (hidden2Size == 0)
+                    if (_hidden2Size == 0)
                     {
-                        row = networkHidden1Count - hidden[0].Min;
+                        row = networkHidden1Count - _hidden[0].Min;
                         col = 0;
                     }
                     else
                     {
-                        row = networkHidden1Count - hidden[0].Min;
-                        col = networkHidden2Count - hidden[1].Min;
+                        row = networkHidden1Count - _hidden[0].Min;
+                        col = networkHidden2Count - _hidden[1].Min;
                     }
 
                     if ((row < 0) || (col < 0))
                     {
                         Console.Out.WriteLine("STOP");
                     }
-                    results[row][col] = error;
+                    _results[row][col] = error;
                 }
 
                 // report status
-                currentTry++;
+                _currentTry++;
 
                 UpdateBest(network, error);
                 ReportStatus(
@@ -517,7 +517,7 @@ namespace Encog.Neural.Prune
                     "Current: "
                     + NetworkToString(network)
                     + "; Best: "
-                    + NetworkToString(bestNetwork));
+                    + NetworkToString(_bestNetwork));
             }
         }
 
@@ -527,28 +527,28 @@ namespace Encog.Neural.Prune
         ///
         public override sealed void Process()
         {
-            if (hidden.Count == 0)
+            if (_hidden.Count == 0)
             {
                 throw new EncogError(
                     "To calculate the optimal hidden size, at least "
                     + "one hidden layer must be defined.");
             }
 
-            hiddenCounts = new int[hidden.Count];
+            _hiddenCounts = new int[_hidden.Count];
 
             // set the best network
-            bestNetwork = null;
+            _bestNetwork = null;
 
             // set to minimums
             int i = 0;
 
-            foreach (HiddenLayerParams parm  in  hidden)
+            foreach (HiddenLayerParams parm  in  _hidden)
             {
-                hiddenCounts[i++] = parm.Min;
+                _hiddenCounts[i++] = parm.Min;
             }
 
             // make sure hidden layer 1 has at least one neuron
-            if (hiddenCounts[0] == 0)
+            if (_hiddenCounts[0] == 0)
             {
                 throw new EncogError(
                     "To calculate the optimal hidden size, at least "
@@ -565,7 +565,7 @@ namespace Encog.Neural.Prune
         /// <returns>The next network to train.</returns>
         public override sealed Object RequestNextTask()
         {
-            if (done || ShouldStop)
+            if (_done || ShouldStop)
             {
                 return null;
             }
@@ -574,7 +574,7 @@ namespace Encog.Neural.Prune
 
             if (!IncreaseHiddenCounts())
             {
-                done = true;
+                _done = true;
             }
 
             return network;
@@ -590,25 +590,25 @@ namespace Encog.Neural.Prune
         private void UpdateBest(BasicNetwork network,
                                 double error)
         {
-            high = Math.Max(high, error);
-            low = Math.Min(low, error);
+            _high = Math.Max(_high, error);
+            _low = Math.Min(_low, error);
 
             int selectedIndex = -1;
 
             // find a place for this in the top networks, if it is a top network
-            for (int i = 0; i < topNetworks.Length; i++)
+            for (int i = 0; i < _topNetworks.Length; i++)
             {
-                if (topNetworks[i] == null)
+                if (_topNetworks[i] == null)
                 {
                     selectedIndex = i;
                     break;
                 }
-                else if (topErrors[i] > error)
+                else if (_topErrors[i] > error)
                 {
                     // this network might be worth replacing, see if the one
                     // already selected is a better option.
                     if ((selectedIndex == -1)
-                        || (topErrors[selectedIndex] < topErrors[i]))
+                        || (_topErrors[selectedIndex] < _topErrors[i]))
                     {
                         selectedIndex = i;
                     }
@@ -618,8 +618,8 @@ namespace Encog.Neural.Prune
             // replace the selected index
             if (selectedIndex != -1)
             {
-                topErrors[selectedIndex] = error;
-                topNetworks[selectedIndex] = network;
+                _topErrors[selectedIndex] = error;
+                _topNetworks[selectedIndex] = network;
             }
 
             // now select the best network, which is the most simple of the
@@ -628,7 +628,7 @@ namespace Encog.Neural.Prune
             BasicNetwork choice = null;
 
 
-            foreach (BasicNetwork n  in  topNetworks)
+            foreach (BasicNetwork n  in  _topNetworks)
             {
                 if (n == null)
                 {
@@ -649,7 +649,7 @@ namespace Encog.Neural.Prune
                 }
             }
 
-            if (choice != bestNetwork)
+            if (choice != _bestNetwork)
             {
                 EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                  "Prune found new best network: error=" + error

@@ -38,73 +38,73 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// The minimum improvement to adjust momentum.
         /// </summary>
         ///
-        public const double MIN_IMPROVEMENT = 0.0001d;
+        public const double MinImprovement = 0.0001d;
 
         /// <summary>
         /// The maximum value that momentum can go to.
         /// </summary>
         ///
-        public const double MAX_MOMENTUM = 4;
+        public const double MaxMomentum = 4;
 
         /// <summary>
         /// The starting momentum.
         /// </summary>
         ///
-        public const double START_MOMENTUM = 0.1d;
+        public const double StartMomentum = 0.1d;
 
         /// <summary>
         /// How much to increase momentum by.
         /// </summary>
         ///
-        public const double MOMENTUM_INCREASE = 0.01d;
+        public const double MomentumIncrease = 0.01d;
 
         /// <summary>
         /// How many cycles to accept before adjusting momentum.
         /// </summary>
         ///
-        public const double MOMENTUM_CYCLES = 10;
+        public const double MomentumCycles = 10;
 
         /// <summary>
         /// The current momentum.
         /// </summary>
         ///
-        private double currentMomentum;
+        private double _currentMomentum;
 
         /// <summary>
         /// The error rate from the previous iteration.
         /// </summary>
         ///
-        private double lastError;
+        private double _lastError;
 
         /// <summary>
         /// The last improvement in error rate.
         /// </summary>
         ///
-        private double lastImprovement;
+        private double _lastImprovement;
 
         /// <summary>
         /// The last momentum.
         /// </summary>
         ///
-        private int lastMomentum;
+        private int _lastMomentum;
 
         /// <summary>
         /// Has one iteration passed, and we are now ready to start evaluation.
         /// </summary>
         ///
-        private bool ready;
+        private bool _ready;
 
         /// <summary>
         /// The setter used to change momentum.
         /// </summary>
         ///
-        private IMomentum setter;
+        private IMomentum _setter;
 
         /// <summary>
         /// The training algorithm that is using this strategy.
         /// </summary>
         ///
-        private IMLTrain train;
+        private IMLTrain _train;
 
         #region IStrategy Members
 
@@ -115,11 +115,11 @@ namespace Encog.Neural.Networks.Training.Strategy
         /// <param name="train_0">The training algorithm.</param>
         public void Init(IMLTrain train_0)
         {
-            train = train_0;
-            setter = (IMomentum) train_0;
-            ready = false;
-            setter.Momentum = 0.0d;
-            currentMomentum = 0;
+            _train = train_0;
+            _setter = (IMomentum) train_0;
+            _ready = false;
+            _setter.Momentum = 0.0d;
+            _currentMomentum = 0;
         }
 
         /// <summary>
@@ -128,30 +128,30 @@ namespace Encog.Neural.Networks.Training.Strategy
         ///
         public void PostIteration()
         {
-            if (ready)
+            if (_ready)
             {
-                double currentError = train.Error;
-                lastImprovement = (currentError - lastError)
-                                  /lastError;
+                double currentError = _train.Error;
+                _lastImprovement = (currentError - _lastError)
+                                  /_lastError;
                 EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Last improvement: "
-                                                           + lastImprovement);
+                                                           + _lastImprovement);
 
-                if ((lastImprovement > 0)
-                    || (Math.Abs(lastImprovement) < MIN_IMPROVEMENT))
+                if ((_lastImprovement > 0)
+                    || (Math.Abs(_lastImprovement) < MinImprovement))
                 {
-                    lastMomentum++;
+                    _lastMomentum++;
 
-                    if (lastMomentum > MOMENTUM_CYCLES)
+                    if (_lastMomentum > MomentumCycles)
                     {
-                        lastMomentum = 0;
-                        if (((int) currentMomentum) == 0)
+                        _lastMomentum = 0;
+                        if (((int) _currentMomentum) == 0)
                         {
-                            currentMomentum = START_MOMENTUM;
+                            _currentMomentum = StartMomentum;
                         }
-                        currentMomentum *= (1.0d + MOMENTUM_INCREASE);
-                        setter.Momentum = currentMomentum;
+                        _currentMomentum *= (1.0d + MomentumIncrease);
+                        _setter.Momentum = _currentMomentum;
                         EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
-                                         "Adjusting momentum: " + currentMomentum);
+                                         "Adjusting momentum: " + _currentMomentum);
                     }
                 }
                 else
@@ -159,13 +159,13 @@ namespace Encog.Neural.Networks.Training.Strategy
                     EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
                                      "Setting momentum back to zero.");
 
-                    currentMomentum = 0;
-                    setter.Momentum = 0;
+                    _currentMomentum = 0;
+                    _setter.Momentum = 0;
                 }
             }
             else
             {
-                ready = true;
+                _ready = true;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Encog.Neural.Networks.Training.Strategy
         ///
         public void PreIteration()
         {
-            lastError = train.Error;
+            _lastError = _train.Error;
         }
 
         #endregion

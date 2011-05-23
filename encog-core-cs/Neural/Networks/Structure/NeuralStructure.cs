@@ -162,7 +162,7 @@ namespace Encog.Neural.Networks.Structure
         {
             // see if there is a connection limit imposed
             String limit = _network
-                .GetPropertyString(BasicNetwork.TAG_LIMIT);
+                .GetPropertyString(BasicNetwork.TagLimit);
             if (limit != null)
             {
                 try
@@ -173,7 +173,7 @@ namespace Encog.Neural.Networks.Structure
                 catch (FormatException )
                 {
                     throw new NeuralNetworkError("Invalid property("
-                                                 + BasicNetwork.TAG_LIMIT + "):" + limit);
+                                                 + BasicNetwork.TagLimit + "):" + limit);
                 }
             }
             else
@@ -237,10 +237,10 @@ namespace Encog.Neural.Networks.Structure
         ///
         public void UpdateProperties()
         {
-            if (_network.Properties.ContainsKey(BasicNetwork.TAG_LIMIT))
+            if (_network.Properties.ContainsKey(BasicNetwork.TagLimit))
             {
                 _connectionLimit = _network
-                    .GetPropertyDouble(BasicNetwork.TAG_LIMIT);
+                    .GetPropertyDouble(BasicNetwork.TagLimit);
                 _connectionLimited = true;
             }
             else

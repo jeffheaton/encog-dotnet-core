@@ -35,21 +35,21 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// The contents of this object.
         /// </summary>
         ///
-        private readonly IDictionary<String, Object> contents;
+        private readonly IDictionary<String, Object> _contents;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public TrainingContinuation()
         {
-            contents = new Dictionary<String, Object>();
+            _contents = new Dictionary<String, Object>();
         }
 
 
         /// <value>The contents.</value>
         public IDictionary<String, Object> Contents
         {
-            get { return contents; }
+            get { return _contents; }
         }
 
         /// <value>the trainingType to set</value>
@@ -65,7 +65,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <returns>The object requested.</returns>
         public Object Get(String name)
         {
-            return contents[name];
+            return _contents[name];
         }
 
 
@@ -77,7 +77,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <param name="list">The list of doubles.</param>
         public void Put(String key, double[] list)
         {
-            contents[key] = list;
+            _contents[key] = list;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <param name="v">The value.</param>
         public void Set(String name, Object v)
         {
-            contents[name] = v;
+            _contents[name] = v;
         }
     }
 }

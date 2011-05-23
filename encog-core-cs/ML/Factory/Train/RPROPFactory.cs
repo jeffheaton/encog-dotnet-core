@@ -49,7 +49,7 @@ namespace Encog.ML.Factory.Train
         public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String argsStr)
         {
-            if (!(method is ContainsFlat))
+            if (!(method is IContainsFlat))
             {
                 throw new EncogError(
                     "RPROP training cannot be used on a method of type: "
@@ -65,7 +65,7 @@ namespace Encog.ML.Factory.Train
                 MLTrainFactory.PropertyMaxStep, false,
                 RPROPConst.DefaultMaxStep);
 
-            return new ResilientPropagation((ContainsFlat) method, training,
+            return new ResilientPropagation((IContainsFlat) method, training,
                                             initialUpdate, maxStep);
         }
     }

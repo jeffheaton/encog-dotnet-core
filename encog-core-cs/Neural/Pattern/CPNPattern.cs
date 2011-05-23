@@ -31,37 +31,37 @@ namespace Encog.Neural.Pattern
     /// Pattern that creates a CPN neural network.
     /// </summary>
     ///
-    public class CPNPattern : NeuralNetworkPattern
+    public class CPNPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The tag for the INSTAR layer.
         /// </summary>
         ///
-        public const String TAG_INSTAR = "INSTAR";
+        public const String TagInstar = "INSTAR";
 
         /// <summary>
         /// The tag for the OUTSTAR layer.
         /// </summary>
         ///
-        public const String TAG_OUTSTAR = "OUTSTAR";
+        public const String TagOutstar = "OUTSTAR";
 
         /// <summary>
         /// The number of neurons in the hidden layer.
         /// </summary>
         ///
-        private int inputCount;
+        private int _inputCount;
 
         /// <summary>
         /// The number of neurons in the instar layer.
         /// </summary>
         ///
-        private int instarCount;
+        private int _instarCount;
 
         /// <summary>
         /// The number of neurons in the outstar layer.
         /// </summary>
         ///
-        private int outstarCount;
+        private int _outstarCount;
 
         /// <summary>
         /// Set the number of neurons in the instar layer. This level is essentially
@@ -69,7 +69,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InstarCount
         {
-            set { instarCount = value; }
+            set { _instarCount = value; }
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutstarCount
         {
-            set { outstarCount = value; }
+            set { _outstarCount = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -102,9 +102,9 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            inputCount = 0;
-            instarCount = 0;
-            outstarCount = 0;
+            _inputCount = 0;
+            _instarCount = 0;
+            _outstarCount = 0;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Encog.Neural.Pattern
         /// <returns>The generated network.</returns>
         public IMLMethod Generate()
         {
-            return new CPNNetwork(inputCount, instarCount, outstarCount, 1);
+            return new CPNNetwork(_inputCount, _instarCount, _outstarCount, 1);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputCount = value; }
+            set { _inputCount = value; }
         }
 
 
@@ -147,7 +147,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outstarCount = value; }
+            set { _outstarCount = value; }
         }
 
         #endregion

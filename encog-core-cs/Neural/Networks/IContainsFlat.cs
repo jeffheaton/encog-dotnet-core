@@ -20,16 +20,19 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using Encog.ML.Train;
+using Encog.ML;
+using Encog.Neural.Flat;
 
-namespace Encog.Neural.Networks.Training
+namespace Encog.Neural.Networks
 {
     /// <summary>
-    /// This is an alias class for Encog 2.5 compatibility.  This class aliases 
-    /// MLTrain.  Newer code should use MLTrain in place of this class.
+    /// Interface that specifies that a machine learning method contains a 
+    /// flat network.
     /// </summary>
     ///
-    public interface Train : IMLTrain
+    public interface IContainsFlat : IMLMethod
     {
+        /// <value>The flat network associated with this neural network.</value>
+        FlatNetwork Flat { get; }
     }
 }

@@ -24,7 +24,6 @@ using System;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Train;
-using Encog.Neural.Flat;
 using Encog.Neural.Flat.Train;
 using Encog.Util;
 using Encog.Util.Logging;
@@ -38,37 +37,37 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// inside of the PropagationMethod interface implementors.
     /// </summary>
     ///
-    public abstract class Propagation : BasicTraining, Train
+    public abstract class Propagation : BasicTraining, ITrain
     {
         /// <summary>
         /// The network.
         /// </summary>
         ///
-        private readonly ContainsFlat network;
+        private readonly IContainsFlat _network;
 
         /// <summary>
         /// The current flat trainer we are using, or null for none.
         /// </summary>
         ///
-        private ITrainFlatNetwork flatTraining;
+        private ITrainFlatNetwork _flatTraining;
 
         /// <summary>
         /// Construct a propagation object.
         /// </summary>
         ///
-        /// <param name="network_0">The network.</param>
+        /// <param name="network">The network.</param>
         /// <param name="training">The training set.</param>
-        public Propagation(ContainsFlat network_0, IMLDataSet training) : base(TrainingImplementationType.Iterative)
+        protected Propagation(IContainsFlat network, IMLDataSet training) : base(TrainingImplementationType.Iterative)
         {
-            network = network_0;
+            _network = network;
             Training = training;
         }
 
         /// <value>the flatTraining to set</value>
         public ITrainFlatNetwork FlatTraining
         {
-            get { return flatTraining; }
-            set { flatTraining = value; }
+            get { return _flatTraining; }
+            set { _flatTraining = value; }
         }
 
 
@@ -79,8 +78,8 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         public int NumThreads
         {
-            get { return flatTraining.NumThreads; }
-            set { flatTraining.NumThreads = value; }
+            get { return _flatTraining.NumThreads; }
+            set { _flatTraining.NumThreads = value; }
         }
 
 
@@ -96,11 +95,11 @@ namespace Encog.Neural.Networks.Training.Propagation
         {
             get
             {
-                return ((TrainFlatNetworkProp)this.flatTraining).FixFlatSpot;
+                return ((TrainFlatNetworkProp)_flatTraining).FixFlatSpot;
             }
             set
             {
-                ((TrainFlatNetworkProp)this.flatTraining).FixFlatSpot = value;
+                ((TrainFlatNetworkProp)_flatTraining).FixFlatSpot = value;
             }
         }
 
@@ -114,13 +113,13 @@ namespace Encog.Neural.Networks.Training.Propagation
         public override sealed void FinishTraining()
         {
             base.FinishTraining();
-            flatTraining.FinishTraining();
+            _flatTraining.FinishTraining();
         }
 
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return network; }
+            get { return _network; }
         }
 
 
@@ -134,8 +133,8 @@ namespace Encog.Neural.Networks.Training.Propagation
             {
                 PreIteration();
 
-                flatTraining.Iteration();
-                Error = flatTraining.Error;
+                _flatTraining.Iteration();
+                Error = _flatTraining.Error;
 
                 PostIteration();
 
@@ -144,7 +143,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
             catch (IndexOutOfRangeException ex)
             {
-                EncogValidate.ValidateNetworkForTraining(network,
+                EncogValidate.ValidateNetworkForTraining(_network,
                                                          Training);
                 throw new EncogError(ex);
             }
@@ -163,9 +162,9 @@ namespace Encog.Neural.Networks.Training.Propagation
             {
                 PreIteration();
 
-                flatTraining.Iteration(count);
-                IterationNumber = flatTraining.IterationNumber;
-                Error = flatTraining.Error;
+                _flatTraining.Iteration(count);
+                IterationNumber = _flatTraining.IterationNumber;
+                Error = _flatTraining.Error;
 
                 PostIteration();
 
@@ -174,7 +173,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             }
             catch (IndexOutOfRangeException ex)
             {
-                EncogValidate.ValidateNetworkForTraining(network,
+                EncogValidate.ValidateNetworkForTraining(_network,
                                                          Training);
                 throw new EncogError(ex);
             }

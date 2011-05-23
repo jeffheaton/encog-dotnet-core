@@ -40,58 +40,58 @@ namespace Encog.Neural.Networks.Training.PNN
         /// The golden section.
         /// </summary>
         ///
-        public const double CGOLD = 0.3819660d;
+        public const double Cgold = 0.3819660d;
 
         /// <summary>
         /// A gamma to the left(lower) of the best(middle) gamma.
         /// </summary>
         ///
-        private double x1;
+        private double _x1;
 
         /// <summary>
         /// The middle(best) gamma.
         /// </summary>
         ///
-        private double x2;
+        private double _x2;
 
         /// <summary>
         /// A gamma to the right(higher) of the middle(best) gamma.
         /// </summary>
         ///
-        private double x3;
+        private double _x3;
 
         /// <summary>
         /// The value y1 is the error for x1.
         /// </summary>
         ///
-        private double y1;
+        private double _y1;
 
         /// <summary>
         /// The value y2 is the error for x2. This is the best(middle) error.
         /// </summary>
         ///
-        private double y2;
+        private double _y2;
 
         /// <summary>
         /// The value y3 is the error for x3.
         /// </summary>
         ///
-        private double y3;
+        private double _y3;
 
 
         /// <value></value>
         public double X1
         {
-            get { return x1; }
-            set { x1 = value; }
+            get { return _x1; }
+            set { _x1 = value; }
         }
 
 
         /// <value>Set X2, which is the middle(best) gamma.</value>
         public double X2
         {
-            get { return x2; }
-            set { x2 = value; }
+            get { return _x2; }
+            set { _x2 = value; }
         }
 
 
@@ -99,16 +99,16 @@ namespace Encog.Neural.Networks.Training.PNN
         /// gamma.</value>
         public double X3
         {
-            get { return x3; }
-            set { x3 = value; }
+            get { return _x3; }
+            set { _x3 = value; }
         }
 
 
         /// <value>Set Y1, which is the value y1 is the error for x1.</value>
         public double Y1
         {
-            get { return y1; }
-            set { y1 = value; }
+            get { return _y1; }
+            set { _y1 = value; }
         }
 
 
@@ -116,16 +116,16 @@ namespace Encog.Neural.Networks.Training.PNN
         /// best(middle) error.</value>
         public double Y2
         {
-            get { return y2; }
-            set { y2 = value; }
+            get { return _y2; }
+            set { _y2 = value; }
         }
 
 
         /// <value>Set Y3, which is the value y3 is the error for x3.</value>
         public double Y3
         {
-            get { return y3; }
-            set { y3 = value; }
+            get { return _y3; }
+            set { _y3 = value; }
         }
 
         /// <summary>
@@ -141,21 +141,21 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <returns>The best error.</returns>
         public double Brentmin(int maxIterations,
                                double maxError, double eps, double tol,
-                               CalculationCriteria network, double y)
+                               ICalculationCriteria network, double y)
         {
             double prevdist = 0.0d;
             double step = 0.0d;
 
             // xBest is the minimum function ordinate thus far.
             // also keep 2nd and 3rd
-            double xbest = x2;
-            double x2ndBest = x2;
-            double x3rdBest = x2;
+            double xbest = _x2;
+            double x2ndBest = _x2;
+            double x3rdBest = _x2;
             // Keep the minimum bracketed between xlow and xhigh.
 
             // Get the low and high from our previous "crude" search.
-            double xlow = x1;
-            double xhigh = x3;
+            double xlow = _x1;
+            double xhigh = _x3;
 
             double fbest = y;
             double fsecbest = y;
@@ -236,7 +236,7 @@ namespace Encog.Neural.Networks.Training.PNN
                     {
                         // Parabolic estimate poor, so use golden section
                         prevdist = (xbest >= xmid) ? xlow - xbest : xhigh - xbest;
-                        step = CGOLD*prevdist;
+                        step = Cgold*prevdist;
                     }
                 }
                 else
@@ -326,9 +326,9 @@ namespace Encog.Neural.Networks.Training.PNN
 
             // update the three sigmas.
 
-            x1 = xlow;
-            x2 = xbest;
-            x3 = xhigh;
+            _x1 = xlow;
+            _x2 = xbest;
+            _x3 = xhigh;
 
             // return the best.
             return fbest;
@@ -348,7 +348,7 @@ namespace Encog.Neural.Networks.Training.PNN
         /// <param name="network">The network to evaluate.</param>
         public void FindBestRange(double low, double high,
                                   int numberOfPoints, bool useLog, double minError,
-                                  CalculationCriteria network)
+                                  ICalculationCriteria network)
         {
             int i, ibest;
             double x, y, rate, previous;
@@ -396,24 +396,24 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
                 else
                 {
-                    y = y2;
+                    y = _y2;
                 }
 
                 // Have we found a new best candidate point?
-                if ((i == 0) || (y < y2))
+                if ((i == 0) || (y < _y2))
                 {
                     // yes, we found a new candidate point!
                     ibest = i;
-                    x2 = x;
-                    y2 = y;
-                    y1 = previous; // Function value to its left
+                    _x2 = x;
+                    _y2 = y;
+                    _y1 = previous; // Function value to its left
                     gettingWorse = false; // Flag that min is not yet bounded
                 }
                 else if (i == (ibest + 1))
                 {
                     // Things are getting worse!
                     // Might be the right neighbor of the best found.
-                    y3 = y;
+                    _y3 = y;
                     gettingWorse = true;
                 }
 
@@ -421,7 +421,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 previous = y;
 
                 // Is this good enough? Might be able to stop early
-                if ((y2 <= minError) && (ibest > 0) && gettingWorse)
+                if ((_y2 <= minError) && (ibest > 0) && gettingWorse)
                 {
                     break;
                 }
@@ -449,13 +449,13 @@ namespace Encog.Neural.Networks.Training.PNN
             // and are expensive to recalculate.
             if (useLog)
             {
-                x1 = x2/rate;
-                x3 = x2*rate;
+                _x1 = _x2/rate;
+                _x3 = _x2*rate;
             }
             else
             {
-                x1 = x2 - rate;
-                x3 = x2 + rate;
+                _x1 = _x2 - rate;
+                _x3 = _x2 + rate;
             }
 
             // We are really done at this point. But for "extra credit", we check to
@@ -475,25 +475,25 @@ namespace Encog.Neural.Networks.Training.PNN
                 for (;;)
                 {
                     // calculate at y3(the end point)
-                    y3 = network.CalcErrorWithSingleSigma(x3);
+                    _y3 = network.CalcErrorWithSingleSigma(_x3);
 
                     // If we are not finding anything better, then stop!
                     // We are already outside the specified search range.
-                    if (y3 > y2)
+                    if (_y3 > _y2)
                     {
                         break;
                     }
-                    if ((y1 == y2) && (y2 == y3))
+                    if ((_y1 == _y2) && (_y2 == _y3))
                     {
                         break;
                     }
 
                     // Shift the points for the new range, as we have
                     // extended to the right.
-                    x1 = x2;
-                    y1 = y2;
-                    x2 = x3;
-                    y2 = y3;
+                    _x1 = _x2;
+                    _y1 = _y2;
+                    _x2 = _x3;
+                    _y2 = _y3;
 
                     // We want to step further each time. We can't search forever,
                     // and we are already outside of the area we were supposed to
@@ -501,11 +501,11 @@ namespace Encog.Neural.Networks.Training.PNN
                     rate *= 3.0d;
                     if (useLog)
                     {
-                        x3 *= rate;
+                        _x3 *= rate;
                     }
                     else
                     {
-                        x3 += rate;
+                        _x3 += rate;
                     }
                 }
             }
@@ -522,30 +522,30 @@ namespace Encog.Neural.Networks.Training.PNN
                 for (;;)
                 {
                     // Calculate at y3(the begin point)
-                    y1 = network.CalcErrorWithSingleSigma(x1);
+                    _y1 = network.CalcErrorWithSingleSigma(_x1);
 
-                    if (y1 < 0.0d)
+                    if (_y1 < 0.0d)
                     {
                         return;
                     }
 
                     // If we are not finding anything better, then stop!
                     // We are already outside the specified search range.
-                    if (y1 > y2)
+                    if (_y1 > _y2)
                     {
                         break;
                     }
-                    if ((y1 == y2) && (y2 == y3))
+                    if ((_y1 == _y2) && (_y2 == _y3))
                     {
                         break;
                     }
 
                     // Shift the points for the new range, as we have
                     // extended to the left.
-                    x3 = x2;
-                    y3 = y2;
-                    x2 = x1;
-                    y2 = y1;
+                    _x3 = _x2;
+                    _y3 = _y2;
+                    _x2 = _x1;
+                    _y2 = _y1;
 
                     // We want to step further each time. We can't search forever,
                     // and we are already outside of the area we were supposed to
@@ -553,11 +553,11 @@ namespace Encog.Neural.Networks.Training.PNN
                     rate *= 3.0d;
                     if (useLog)
                     {
-                        x1 /= rate;
+                        _x1 /= rate;
                     }
                     else
                     {
-                        x1 -= rate;
+                        _x1 -= rate;
                     }
                 }
             }

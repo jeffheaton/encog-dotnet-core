@@ -30,67 +30,67 @@ namespace Encog.Neural.Pattern
     /// Pattern to create an ART-1 neural network.
     /// </summary>
     ///
-    public class ART1Pattern : NeuralNetworkPattern
+    public class ART1Pattern : INeuralNetworkPattern
     {
         /// <summary>
         /// A parameter for F1 layer.
         /// </summary>
         ///
-        private double a1;
+        private double _a1;
 
         /// <summary>
         /// B parameter for F1 layer.
         /// </summary>
         ///
-        private double b1;
+        private double _b1;
 
         /// <summary>
         /// C parameter for F1 layer.
         /// </summary>
         ///
-        private double c1;
+        private double _c1;
 
         /// <summary>
         /// D parameter for F1 layer.
         /// </summary>
         ///
-        private double d1;
+        private double _d1;
 
         /// <summary>
         /// The number of input neurons.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// L parameter for net.
         /// </summary>
         ///
-        private double l;
+        private double _l;
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         /// <summary>
         /// The vigilance parameter.
         /// </summary>
         ///
-        private double vigilance;
+        private double _vigilance;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public ART1Pattern()
         {
-            a1 = 1;
-            b1 = 1.5d;
-            c1 = 5;
-            d1 = 0.9d;
-            l = 3;
-            vigilance = 0.9d;
+            _a1 = 1;
+            _b1 = 1.5d;
+            _c1 = 5;
+            _d1 = 0.9d;
+            _l = 3;
+            _vigilance = 0.9d;
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double A1
         {
-            get { return a1; }
-            set { a1 = value; }
+            get { return _a1; }
+            set { _a1 = value; }
         }
 
 
@@ -108,8 +108,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double B1
         {
-            get { return b1; }
-            set { b1 = value; }
+            get { return _b1; }
+            set { _b1 = value; }
         }
 
 
@@ -118,8 +118,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double C1
         {
-            get { return c1; }
-            set { c1 = value; }
+            get { return _c1; }
+            set { _c1 = value; }
         }
 
 
@@ -128,8 +128,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double D1
         {
-            get { return d1; }
-            set { d1 = value; }
+            get { return _d1; }
+            set { _d1 = value; }
         }
 
 
@@ -140,8 +140,8 @@ namespace Encog.Neural.Pattern
         /// <value>The new value.</value>
         public double L
         {
-            get { return l; }            
-            set { l = value; }
+            get { return _l; }            
+            set { _l = value; }
         }
 
 
@@ -150,8 +150,8 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public double Vigilance
         {
-            get { return vigilance; }
-            set { vigilance = value; }
+            get { return _vigilance; }
+            set { _vigilance = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -172,8 +172,8 @@ namespace Encog.Neural.Pattern
         ///
         public void Clear()
         {
-            inputNeurons = 0;
-            outputNeurons = 0;
+            _inputNeurons = 0;
+            _outputNeurons = 0;
         }
 
         /// <summary>
@@ -183,13 +183,15 @@ namespace Encog.Neural.Pattern
         /// <returns>The generated neural network.</returns>
         public IMLMethod Generate()
         {
-            var art = new ART1(inputNeurons, outputNeurons);
-            art.A1 = a1;
-            art.B1 = b1;
-            art.C1 = c1;
-            art.D1 = d1;
-            art.L = l;
-            art.Vigilance = vigilance;
+            var art = new ART1(_inputNeurons, _outputNeurons)
+                          {
+                              A1 = _a1,
+                              B1 = _b1,
+                              C1 = _c1,
+                              D1 = _d1,
+                              L = _l,
+                              Vigilance = _vigilance
+                          };
             return art;
         }
 
@@ -209,7 +211,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -218,7 +220,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

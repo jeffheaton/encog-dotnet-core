@@ -50,13 +50,6 @@ namespace Encog.Neural.Networks.Training.Genetic
     public class NeuralGeneticAlgorithm : BasicTraining
     {
         /// <summary>
-        /// Simple helper class that implements the required methods to implement a
-        /// genetic algorithm.
-        /// </summary>
-        ///
-        private NeuralGeneticAlgorithmHelper _genetic;
-
-        /// <summary>
         /// Construct a neural genetic algorithm.
         /// </summary>
         ///
@@ -71,8 +64,10 @@ namespace Encog.Neural.Networks.Training.Genetic
                                       int populationSize, double mutationPercent,
                                       double percentToMate) : base(TrainingImplementationType.Iterative)
         {
-            _genetic = new NeuralGeneticAlgorithmHelper();
-            _genetic.CalculateScore = new GeneticScoreAdapter(calculateScore);
+            Genetic = new NeuralGeneticAlgorithmHelper
+                           {
+                               CalculateScore = new GeneticScoreAdapter(calculateScore)
+                           };
             IPopulation population = new BasicPopulation(populationSize);
             Genetic.MutationPercent = mutationPercent;
             Genetic.MatingPopulation = percentToMate*2;
@@ -86,8 +81,7 @@ namespace Encog.Neural.Networks.Training.Genetic
                                                            .Clone());
                 randomizer.Randomize(chromosomeNetwork);
 
-                var genome = new NeuralGenome(chromosomeNetwork);
-                genome.GA = Genetic;
+                var genome = new NeuralGenome(chromosomeNetwork) {GA = Genetic};
                 Genetic.PerformCalculateScore(genome);
                 Genetic.Population.Add(genome);
             }
@@ -103,11 +97,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         /// <summary>
         /// Set the genetic helper class.
         /// </summary>
-        public NeuralGeneticAlgorithmHelper Genetic
-        {
-            get { return _genetic; }
-            set { _genetic = value; }
-        }
+        public NeuralGeneticAlgorithmHelper Genetic { get; set; }
 
 
         /// <inheritdoc/>

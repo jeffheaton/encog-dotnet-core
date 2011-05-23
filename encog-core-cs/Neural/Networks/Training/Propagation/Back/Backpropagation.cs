@@ -57,7 +57,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// The resume key for backpropagation.
         /// </summary>
         ///
-        public const String LAST_DELTA = "LAST_DELTA";
+        public const String PropertyLastDelta = "LAST_DELTA";
 
         /// <summary>
         /// Create a class to train using backpropagation. Use auto learn rate and
@@ -66,7 +66,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         ///
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
-        public Backpropagation(ContainsFlat network, IMLDataSet training) : this(network, training, 0, 0)
+        public Backpropagation(IContainsFlat network, IMLDataSet training) : this(network, training, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
@@ -77,7 +77,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="training">The training set</param>
         /// <param name="learnRate"></param>
         /// <param name="momentum"></param>
-        public Backpropagation(ContainsFlat network,
+        public Backpropagation(IContainsFlat network,
                                IMLDataSet training, double learnRate,
                                double momentum) : base(network, training)
         {
@@ -139,7 +139,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// training method and network.</returns>
         public bool IsValidResume(TrainingContinuation state)
         {
-            if (!state.Contents.ContainsKey(LAST_DELTA))
+            if (!state.Contents.ContainsKey(PropertyLastDelta))
             {
                 return false;
             }
@@ -149,8 +149,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                 return false;
             }
 
-            var d = (double[]) state.Get(LAST_DELTA);
-            return d.Length == ((ContainsFlat) Method).Flat.Weights.Length;
+            var d = (double[])state.Get(PropertyLastDelta);
+            return d.Length == ((IContainsFlat) Method).Flat.Weights.Length;
         }
 
         /// <summary>
@@ -160,11 +160,10 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <returns>A training continuation object to continue with.</returns>
         public override sealed TrainingContinuation Pause()
         {
-            var result = new TrainingContinuation();
-            result.TrainingType = GetType().Name;
+            var result = new TrainingContinuation {TrainingType = GetType().Name};
             var backFlat = (TrainFlatNetworkBackPropagation) FlatTraining;
             double[] d = backFlat.LastDelta;
-            result.Set(LAST_DELTA, d);
+            result.Set(PropertyLastDelta, d);
             return result;
         }
 
@@ -180,7 +179,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                 throw new TrainingError("Invalid training resume data length");
             }
 
-            ((TrainFlatNetworkBackPropagation) FlatTraining).LastDelta = (double[]) state.Get(LAST_DELTA);
+            ((TrainFlatNetworkBackPropagation)FlatTraining).LastDelta = (double[])state.Get(PropertyLastDelta);
         }
     }
 }

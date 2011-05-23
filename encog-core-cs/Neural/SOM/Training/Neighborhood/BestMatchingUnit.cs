@@ -43,30 +43,30 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// The owner of this class.
         /// </summary>
         ///
-        private readonly SOMNetwork som;
+        private readonly SOMNetwork _som;
 
         /// <summary>
         /// What is the worst BMU distance so far, this becomes the error for the
         /// entire SOM.
         /// </summary>
         ///
-        private double worstDistance;
+        private double _worstDistance;
 
         /// <summary>
         /// Construct a BestMatchingUnit class.  The training class must be provided.
         /// </summary>
         ///
-        /// <param name="som_0">The SOM to evaluate.</param>
-        public BestMatchingUnit(SOMNetwork som_0)
+        /// <param name="som">The SOM to evaluate.</param>
+        public BestMatchingUnit(SOMNetwork som)
         {
-            som = som_0;
+            _som = som;
         }
 
         /// <value>What is the worst BMU distance so far, this becomes the error 
         /// for the entire SOM.</value>
         public double WorstDistance
         {
-            get { return worstDistance; }
+            get { return _worstDistance; }
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             // Track the lowest distance so far.
             double lowestDistance = Double.MaxValue;
 
-            for (int i = 0; i < som.OutputNeuronCount; i++)
+            for (int i = 0; i < _som.OutputCount; i++)
             {
                 double distance = CalculateEuclideanDistance(
-                    som.Weights, input, i);
+                    _som.Weights, input, i);
 
                 // Track the lowest distance, this is the BMU.
                 if (distance < lowestDistance)
@@ -97,9 +97,9 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             }
 
             // Track the worst distance, this is the error for the entire network.
-            if (lowestDistance > worstDistance)
+            if (lowestDistance > _worstDistance)
             {
-                worstDistance = lowestDistance;
+                _worstDistance = lowestDistance;
             }
 
             return result;
@@ -137,7 +137,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         ///
         public void Reset()
         {
-            worstDistance = Double.MinValue;
+            _worstDistance = Double.MinValue;
         }
     }
 }

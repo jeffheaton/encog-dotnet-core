@@ -38,13 +38,13 @@ namespace Encog.Neural.RBF
     /// </summary>
     [Serializable]
     public class RBFNetwork : BasicML, IMLError, IMLRegression,
-                              ContainsFlat
+                              IContainsFlat
     {
         /// <summary>
         /// The underlying flat network.
         /// </summary>
         ///
-        private readonly FlatNetworkRBF flat;
+        private readonly FlatNetworkRBF _flat;
 
         /// <summary>
         /// Construct RBF network.
@@ -52,7 +52,7 @@ namespace Encog.Neural.RBF
         ///
         public RBFNetwork()
         {
-            flat = new FlatNetworkRBF();
+            _flat = new FlatNetworkRBF();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Encog.Neural.RBF
             // Literature seems to suggest this is a good default value.
             double volumeNeuronWidth = 2.0d/hiddenCount;
 
-            flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf);
+            _flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf);
 
             try
             {
@@ -103,8 +103,7 @@ namespace Encog.Neural.RBF
         public RBFNetwork(int inputCount, int outputCount,
                           IRadialBasisFunction[] rbf)
         {
-            flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf);
-            flat.RBF = rbf;
+            _flat = new FlatNetworkRBF(inputCount, rbf.Length, outputCount, rbf) {RBF = rbf};
         }
 
         /// <summary>
@@ -112,8 +111,8 @@ namespace Encog.Neural.RBF
         /// </summary>
         public IRadialBasisFunction[] RBF
         {
-            get { return flat.RBF; }
-            set { flat.RBF = value; }
+            get { return _flat.RBF; }
+            set { _flat.RBF = value; }
         }
 
         #region ContainsFlat Members
@@ -121,7 +120,7 @@ namespace Encog.Neural.RBF
         /// <inheritdoc/>
         public FlatNetwork Flat
         {
-            get { return flat; }
+            get { return _flat; }
         }
 
         #endregion
@@ -147,7 +146,7 @@ namespace Encog.Neural.RBF
         public IMLData Compute(IMLData input)
         {
             IMLData output = new BasicMLData(OutputCount);
-            flat.Compute(input.Data, output.Data);
+            _flat.Compute(input.Data, output.Data);
             return output;
         }
 
@@ -155,14 +154,14 @@ namespace Encog.Neural.RBF
         /// <inheritdoc/>
         public virtual int InputCount
         {
-            get { return flat.InputCount; }
+            get { return _flat.InputCount; }
         }
 
 
         /// <inheritdoc/>
         public virtual int OutputCount
         {
-            get { return flat.OutputCount; }
+            get { return _flat.OutputCount; }
         }
 
         #endregion
@@ -185,9 +184,9 @@ namespace Encog.Neural.RBF
                 centers[i] = RangeRandomizer.Randomize(min, max);
             }
 
-            for (int i_0 = 0; i_0 < flat.RBF.Length; i_0++)
+            for (int i = 0; i < _flat.RBF.Length; i++)
             {
-                SetRBFFunction(i_0, t, centers, RangeRandomizer.Randomize(min, max));
+                SetRBFFunction(i, t, centers, RangeRandomizer.Randomize(min, max));
             }
         }
 
@@ -202,7 +201,7 @@ namespace Encog.Neural.RBF
         public void SetRBFCentersAndWidths(double[][] centers,
                                            double[] widths, RBFEnum t)
         {
-            for (int i = 0; i < flat.RBF.Length; i++)
+            for (int i = 0; i < _flat.RBF.Length; i++)
             {
                 SetRBFFunction(i, t, centers[i], widths[i]);
             }
@@ -223,7 +222,7 @@ namespace Encog.Neural.RBF
             RBFEnum t, double volumeNeuronRBFWidth,
             bool useWideEdgeRBFs)
         {
-            int totalNumHiddenNeurons = flat.RBF.Length;
+            int totalNumHiddenNeurons = _flat.RBF.Length;
 
             int dimensions = InputCount;
             double disMinMaxPosition = Math.Abs(maxPosition - minPosition);
@@ -308,17 +307,17 @@ namespace Encog.Neural.RBF
         {
             if (t == RBFEnum.Gaussian)
             {
-                flat.RBF[index] = new GaussianFunction(0.5d, centers,
+                _flat.RBF[index] = new GaussianFunction(0.5d, centers,
                                                        width);
             }
             else if (t == RBFEnum.Multiquadric)
             {
-                flat.RBF[index] = new MultiquadricFunction(0.5d, centers,
+                _flat.RBF[index] = new MultiquadricFunction(0.5d, centers,
                                                            width);
             }
             else if (t == RBFEnum.InverseMultiquadric)
             {
-                flat.RBF[index] = new InverseMultiquadricFunction(0.5d,
+                _flat.RBF[index] = new InverseMultiquadricFunction(0.5d,
                                                                   centers, width);
             }
         }

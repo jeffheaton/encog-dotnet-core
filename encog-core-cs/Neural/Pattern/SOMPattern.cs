@@ -33,19 +33,19 @@ namespace Encog.Neural.Pattern
     /// classify the input into a group.
     /// </summary>
     ///
-    public class SOMPattern : NeuralNetworkPattern
+    public class SOMPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of input neurons.
         /// </summary>
         ///
-        private int inputNeurons;
+        private int _inputNeurons;
 
         /// <summary>
         /// The number of output neurons.
         /// </summary>
         ///
-        private int outputNeurons;
+        private int _outputNeurons;
 
         #region NeuralNetworkPattern Members
 
@@ -71,7 +71,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public IMLMethod Generate()
         {
-            var som = new SOMNetwork(inputNeurons, outputNeurons);
+            var som = new SOMNetwork(_inputNeurons, _outputNeurons);
             som.Reset();
             return som;
         }
@@ -95,7 +95,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int InputNeurons
         {
-            set { inputNeurons = value; }
+            set { _inputNeurons = value; }
         }
 
 
@@ -104,7 +104,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int OutputNeurons
         {
-            set { outputNeurons = value; }
+            set { _outputNeurons = value; }
         }
 
         #endregion

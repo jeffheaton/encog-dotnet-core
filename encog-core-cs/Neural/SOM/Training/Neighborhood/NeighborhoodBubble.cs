@@ -36,7 +36,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// The radius of the bubble.
         /// </summary>
         ///
-        private double radius;
+        private double _radius;
 
         /// <summary>
         /// Create a bubble neighborhood function that will return 1.0 (full update)
@@ -44,10 +44,10 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// neuron.
         /// </summary>
         ///
-        /// <param name="radius_0">bubble, is actually two times this parameter.</param>
-        public NeighborhoodBubble(int radius_0)
+        /// <param name="radius">bubble, is actually two times this parameter.</param>
+        public NeighborhoodBubble(int radius)
         {
-            radius = radius_0;
+            _radius = radius;
         }
 
         #region INeighborhoodFunction Members
@@ -63,14 +63,11 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         public double Function(int currentNeuron, int bestNeuron)
         {
             int distance = Math.Abs(bestNeuron - currentNeuron);
-            if (distance <= radius)
+            if (distance <= _radius)
             {
                 return 1.0d;
             }
-            else
-            {
-                return 0.0d;
-            }
+            return 0.0d;
         }
 
         /// <summary>
@@ -78,8 +75,8 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// </summary>
         public virtual double Radius
         {
-            get { return radius; }
-            set { radius = value; }
+            get { return _radius; }
+            set { _radius = value; }
         }
 
         #endregion

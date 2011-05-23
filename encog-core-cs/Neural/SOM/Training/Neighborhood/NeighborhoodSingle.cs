@@ -45,10 +45,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             {
                 return 1.0d;
             }
-            else
-            {
-                return 0.0d;
-            }
+            return 0.0d;
         }
 
         /// <summary>

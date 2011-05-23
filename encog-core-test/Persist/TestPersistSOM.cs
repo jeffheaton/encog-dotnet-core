@@ -20,10 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.Util;
 using System.IO;
@@ -67,8 +63,8 @@ namespace Encog.Persist
 
         private void Validate(SOMNetwork network)
         {
-            Assert.AreEqual(4, network.InputNeuronCount);
-            Assert.AreEqual(2, network.OutputNeuronCount);
+            Assert.AreEqual(4, network.InputCount);
+            Assert.AreEqual(2, network.OutputCount);
             Assert.AreEqual(8, network.Weights.ToPackedArray().Length);
         }
     }

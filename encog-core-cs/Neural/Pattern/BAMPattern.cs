@@ -35,19 +35,19 @@ namespace Encog.Neural.Pattern
     /// make up the net.
     /// </summary>
     ///
-    public class BAMPattern : NeuralNetworkPattern
+    public class BAMPattern : INeuralNetworkPattern
     {
         /// <summary>
         /// The number of neurons in the first layer.
         /// </summary>
         ///
-        private int f1Neurons;
+        private int _f1Neurons;
 
         /// <summary>
         /// The number of neurons in the second layer.
         /// </summary>
         ///
-        private int f2Neurons;
+        private int _f2Neurons;
 
         /// <summary>
         /// Set the F1 neurons. The BAM really does not have an input and output
@@ -58,7 +58,7 @@ namespace Encog.Neural.Pattern
         /// <value>The number of neurons in the first layer.</value>
         public int F1Neurons
         {
-            set { f1Neurons = value; }
+            set { _f1Neurons = value; }
         }
 
 
@@ -69,7 +69,7 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public int F2Neurons
         {
-            set { f2Neurons = value; }
+            set { _f2Neurons = value; }
         }
 
         #region NeuralNetworkPattern Members
@@ -89,15 +89,15 @@ namespace Encog.Neural.Pattern
         /// </summary>
         public void Clear()
         {
-            f1Neurons = 0;
-            f2Neurons = 0;
+            _f1Neurons = 0;
+            _f2Neurons = 0;
         }
 
 
         /// <returns>The generated network.</returns>
         public IMLMethod Generate()
         {
-            var bam = new BAMNetwork(f1Neurons, f2Neurons);
+            var bam = new BAMNetwork(_f1Neurons, _f2Neurons);
             return bam;
         }
 
