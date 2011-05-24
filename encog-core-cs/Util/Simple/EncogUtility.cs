@@ -37,6 +37,7 @@ using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util.CSV;
+using Encog.App.Analyst.CSV.Basic;
 #if !SILVERLIGHT
 
 #endif
@@ -110,9 +111,9 @@ namespace Encog.Util.Simple
                 }
 
                 // handle input data
-                for (int i_0 = 0; i_0 < ideal.Length; i_0++)
+                for (int i = 0; i < ideal.Length; i++)
                 {
-                    idealData[i_0] = csv.GetDouble(ideal[i_0]);
+                    idealData[i] = csv.GetDouble(ideal[i]);
                 }
 
                 // add to dataset
@@ -151,10 +152,10 @@ namespace Encog.Util.Simple
             foreach (IMLDataPair pair in training)
             {
                 IMLData output = network.Compute(pair.Input);
-                Console.WriteLine("Input="
+                Console.WriteLine(@"Input="
                                   + FormatNeuralData(pair.Input)
-                                  + ", Actual=" + FormatNeuralData(output)
-                                  + ", Ideal="
+                                  + @", Actual=" + FormatNeuralData(output)
+                                  + @", Ideal="
                                   + FormatNeuralData(pair.Ideal));
             }
         }
@@ -192,9 +193,7 @@ namespace Encog.Util.Simple
                                                      int hidden1, int hidden2, int output,
                                                      bool tanh)
         {
-            var pattern = new FeedForwardPattern();
-            pattern.InputNeurons = input;
-            pattern.OutputNeurons = output;
+            var pattern = new FeedForwardPattern {InputNeurons = input, OutputNeurons = output};
             if (tanh)
             {
                 pattern.ActivationFunction = new ActivationTANH();
@@ -229,8 +228,7 @@ namespace Encog.Util.Simple
                                         IMLDataSet trainingSet, int minutes)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet);
-            train.NumThreads = 0;
+                                                         trainingSet) {NumThreads = 0};
             TrainConsole(train, network, trainingSet, minutes);
         }
 
@@ -250,7 +248,7 @@ namespace Encog.Util.Simple
             int epoch = 1;
             long remaining;
 
-            Console.WriteLine("Beginning training...");
+            Console.WriteLine(@"Beginning training...");
             long start = Environment.TickCount;
             do
             {
@@ -260,10 +258,10 @@ namespace Encog.Util.Simple
                 long elapsed = (current - start)/1000;
                 remaining = minutes - elapsed/60;
 
-                Console.WriteLine("Iteration #" + Format.FormatInteger(epoch)
-                                  + " Error:" + Format.FormatPercent(train.Error)
-                                  + " elapsed time = " + Format.FormatTimeSpan((int) elapsed)
-                                  + " time left = "
+                Console.WriteLine(@"Iteration #" + Format.FormatInteger(epoch)
+                                  + @" Error:" + Format.FormatPercent(train.Error)
+                                  + @" elapsed time = " + Format.FormatTimeSpan((int) elapsed)
+                                  + @" time left = "
                                   + Format.FormatTimeSpan((int) remaining*60));
                 epoch++;
             } while (remaining > 0 && !train.TrainingDone);
@@ -280,8 +278,7 @@ namespace Encog.Util.Simple
                                        IMLDataSet trainingSet)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet);
-            train.NumThreads = 0;
+                                                         trainingSet) {NumThreads = 0};
             TrainDialog(train, network, trainingSet);
         }
 #endif
@@ -297,8 +294,7 @@ namespace Encog.Util.Simple
         public static void TrainDialog(IMLTrain train,
                                        BasicNetwork network, IMLDataSet trainingSet)
         {
-            var dialog = new TrainingDialog();
-            dialog.Train = train;
+            var dialog = new TrainingDialog {Train = train};
             dialog.ShowDialog();
         }
 #endif
@@ -313,8 +309,7 @@ namespace Encog.Util.Simple
                                         IMLDataSet trainingSet, double error)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet);
-            train.NumThreads = 0;
+                                                         trainingSet) {NumThreads = 0};
             TrainToError(train, trainingSet, error);
         }
 
@@ -331,15 +326,15 @@ namespace Encog.Util.Simple
         {
             int epoch = 1;
 
-            Console.WriteLine("Beginning training...");
+            Console.WriteLine(@"Beginning training...");
 
             do
             {
                 train.Iteration();
 
-                Console.WriteLine("Iteration #" + Format.FormatInteger(epoch)
-                                  + " Error:" + Format.FormatPercent(train.Error)
-                                  + " Target Error: " + Format.FormatPercent(error));
+                Console.WriteLine(@"Iteration #" + Format.FormatInteger(epoch)
+                                  + @" Error:" + Format.FormatPercent(train.Error)
+                                  + @" Target Error: " + Format.FormatPercent(error));
                 epoch++;
             } while (train.Error > error && !train.TrainingDone);
             train.FinishTraining();
@@ -386,15 +381,15 @@ namespace Encog.Util.Simple
                     for (int i = 0; i < data.Input.Count; i++)
                     {
                         double d = data.Input[i];
-                        Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format);
-                        line.Append(format.Format(d, EncogFramework.DEFAULT_PRECISION));
+                        BasicFile.AppendSeparator(line, format);
+                        line.Append(format.Format(d, EncogFramework.DefaultPrecision));
                     }
 
-                    for (int i_0 = 0; i_0 < data.Ideal.Count; i_0++)
+                    for (int i = 0; i < data.Ideal.Count; i++)
                     {
-                        double d_1 = data.Ideal[i_0];
-                        Encog.App.Analyst.CSV.Basic.BasicFile.AppendSeparator(line, format);
-                        line.Append(format.Format(d_1, EncogFramework.DEFAULT_PRECISION));
+                        double d = data.Ideal[i];
+                        BasicFile.AppendSeparator(line, format);
+                        line.Append(format.Format(d, EncogFramework.DefaultPrecision));
                     }
 
                     file.WriteLine(line);
@@ -455,15 +450,15 @@ namespace Encog.Util.Simple
 
             int epoch = 1;
 
-            System.Console.Out.WriteLine("Beginning training...");
+            Console.Out.WriteLine(@"Beginning training...");
 
             do
             {
                 train.Iteration();
 
-                System.Console.Out.WriteLine("Iteration #" + Encog.Util.Format.FormatInteger(epoch)
-                        + " Error:" + Encog.Util.Format.FormatPercent(train.Error)
-                        + " Target Error: " + Encog.Util.Format.FormatPercent(error));
+                Console.Out.WriteLine(@"Iteration #" + Format.FormatInteger(epoch)
+                        + @" Error:" + Format.FormatPercent(train.Error)
+                        + @" Target Error: " + Format.FormatPercent(error));
                 epoch++;
             } while ((train.Error > error) && !train.TrainingDone);
             train.FinishTraining();

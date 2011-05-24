@@ -38,47 +38,42 @@ namespace Encog.Util.Banchmark
         /// <summary>
         /// Number of steps in all.
         /// </summary>
-        private const int STEPS = 4;
+        private const int Steps = 3;
 
         /// <summary>
         /// The first step.
         /// </summary>
-        private const int STEP1 = 1;
-
-        /// <summary>
-        /// The second step.
-        /// </summary>
-        private const int STEP2 = 2;
+        private const int Step1 = 1;
 
         /// <summary>
         /// The third step.
         /// </summary>
-        private const int STEP3 = 3;
+        private const int Step2 = 2;
 
         /// <summary>
         /// The fourth step.
         /// </summary>
-        private const int STEP4 = 4;
+        private const int Step3 = 3;
 
         /// <summary>
         /// Report progress.
         /// </summary>
-        private readonly IStatusReportable report;
+        private readonly IStatusReportable _report;
 
         /// <summary>
         /// The binary score.
         /// </summary>
-        private int binaryScore;
+        private int _binaryScore;
 
         /// <summary>
         /// The CPU score.
         /// </summary>
-        private int cpuScore;
+        private int _cpuScore;
 
         /// <summary>
         /// The memory score.
         /// </summary>
-        private int memoryScore;
+        private int _memoryScore;
 
         /// <summary>
         /// Construct a benchmark object.
@@ -86,7 +81,7 @@ namespace Encog.Util.Banchmark
         /// <param name="report">The object to report progress to.</param>
         public EncogBenchmark(IStatusReportable report)
         {
-            this.report = report;
+            _report = report;
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Encog.Util.Banchmark
         /// </summary>
         public int CpuScore
         {
-            get { return cpuScore; }
+            get { return _cpuScore; }
         }
 
         /// <summary>
@@ -102,7 +97,7 @@ namespace Encog.Util.Banchmark
         /// </summary>
         public int MemoryScore
         {
-            get { return memoryScore; }
+            get { return _memoryScore; }
         }
 
         /// <summary>
@@ -110,7 +105,7 @@ namespace Encog.Util.Banchmark
         /// </summary>
         public int BinaryScore
         {
-            get { return binaryScore; }
+            get { return _binaryScore; }
         }
 
         /// <summary>
@@ -120,9 +115,9 @@ namespace Encog.Util.Banchmark
         /// <returns>The total time, which is the final Encog benchmark score.</returns>
         public String Process()
         {
-            report.Report(STEPS, 0, "Beginning benchmark");
+            _report.Report(Steps, 0, "Beginning benchmark");
 
-            EvalCPU();
+            EvalCpu();
             EvalMemory();
 #if !SILVERLIGHT
             EvalBinary();
@@ -131,13 +126,13 @@ namespace Encog.Util.Banchmark
             var result = new StringBuilder();
 
             result.Append("Encog Benchmark: CPU:");
-            result.Append(Format.FormatInteger(cpuScore));
+            result.Append(Format.FormatInteger(_cpuScore));
 
             result.Append(", Memory:");
-            result.Append(Format.FormatInteger(memoryScore));
+            result.Append(Format.FormatInteger(_memoryScore));
             result.Append(", Disk:");
-            result.Append(Format.FormatInteger(binaryScore));
-            report.Report(STEPS, STEPS, result
+            result.Append(Format.FormatInteger(_binaryScore));
+            _report.Report(Steps, Steps, result
                                             .ToString());
 
             return result.ToString();
@@ -147,29 +142,29 @@ namespace Encog.Util.Banchmark
         /// <summary>
         /// Evaluate the CPU.
         /// </summary>
-        private void EvalCPU()
+        private void EvalCpu()
         {
             int small = Evaluate.EvaluateTrain(2, 4, 0, 1);
-            report.Report(STEPS, STEP1,
+            _report.Report(Steps, Step1,
                           "Evaluate CPU, tiny= " + Format.FormatInteger(small/100));
 
             int medium = Evaluate.EvaluateTrain(10, 20, 0, 1);
-            report.Report(STEPS, STEP1,
+            _report.Report(Steps, Step1,
                           "Evaluate CPU, small= " + Format.FormatInteger(medium/30));
 
             int large = Evaluate.EvaluateTrain(100, 200, 40, 5);
-            report.Report(STEPS, STEP1,
+            _report.Report(Steps, Step1,
                           "Evaluate CPU, large= " + Format.FormatInteger(large));
 
             int huge = Evaluate.EvaluateTrain(200, 300, 200, 50);
-            report.Report(STEPS, STEP1,
+            _report.Report(Steps, Step1,
                           "Evaluate CPU, huge= " + Format.FormatInteger(huge));
 
             int result = (small/100) + (medium/30) + large + huge;
 
-            report.Report(STEPS, STEP1,
+            _report.Report(Steps, Step1,
                           "CPU result: " + result);
-            cpuScore = result;
+            _cpuScore = result;
         }
 
 
@@ -181,7 +176,7 @@ namespace Encog.Util.Banchmark
             BasicMLDataSet training = RandomTrainingFactory.Generate(
                 1000, 10000, 10, 10, -1, 1);
 
-            long stop = (10*Evaluate.MILIS);
+            const long stop = (10*Evaluate.Milis);
             int record = 0;
 
             IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
@@ -199,10 +194,10 @@ namespace Encog.Util.Banchmark
 
             iterations /= 100000;
 
-            report.Report(STEPS, STEP3,
+            _report.Report(Steps, Step2,
                           "Memory dataset, result: " + Format.FormatInteger(iterations));
 
-            memoryScore = iterations;
+            _memoryScore = iterations;
         }
 
         /// <summary>
@@ -210,7 +205,7 @@ namespace Encog.Util.Banchmark
         /// </summary>
         private void EvalBinary()
         {
-            String file = "temp.egb";
+            const string file = "temp.egb";
 
             BasicMLDataSet training = RandomTrainingFactory.Generate(
                 1000, 10000, 10, 10, -1, 1);
@@ -222,7 +217,7 @@ namespace Encog.Util.Banchmark
             var training2 = new BufferedMLDataSet(file);
             training2.Load(training);
 
-            long stop = (10*Evaluate.MILIS);
+            const long stop = (10*Evaluate.Milis);
             int record = 0;
 
             IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
@@ -243,12 +238,12 @@ namespace Encog.Util.Banchmark
 
             iterations /= 100000;
 
-            report.Report(STEPS, STEP4,
+            _report.Report(Steps, Step3,
                           "Disk(binary) dataset, result: "
                           + Format.FormatInteger(iterations));
 
             Directory.Delete(file);
-            binaryScore = iterations;
+            _binaryScore = iterations;
         }
     }
 }

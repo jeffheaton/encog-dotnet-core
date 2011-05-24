@@ -70,7 +70,7 @@ namespace Encog.Neural.Networks.Structure
         public static bool Equals(BasicNetwork network1,
                                   BasicNetwork network2)
         {
-            return Equals(network1, network2, EncogFramework.DEFAULT_PRECISION);
+            return Equals(network1, network2, EncogFramework.DefaultPrecision);
         }
 
         /// <summary>

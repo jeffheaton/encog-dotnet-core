@@ -25,45 +25,45 @@ namespace Encog.Util
     /// <summary>
     /// A pair of objects.
     /// </summary>
-    /// <typeparam name="A_TYPE">The type of the first object.</typeparam>
-    /// <typeparam name="B_TYPE">The type of the second object.</typeparam>
-    public class ObjectPair<A_TYPE, B_TYPE>
+    /// <typeparam name="TA">The type of the first object.</typeparam>
+    /// <typeparam name="TB">The type of the second object.</typeparam>
+    public class ObjectPair<TA, TB>
     {
         /// <summary>
         /// The first object.
         /// </summary>
-        private readonly A_TYPE a;
+        private readonly TA _a;
 
         /// <summary>
         /// The second object.
         /// </summary>
-        private readonly B_TYPE b;
+        private readonly TB _b;
 
         /// <summary>
         /// Construct an object pair. 
         /// </summary>
         /// <param name="a">The first object.</param>
         /// <param name="b">The second object.</param>
-        public ObjectPair(A_TYPE a, B_TYPE b)
+        public ObjectPair(TA a, TB b)
         {
-            this.a = a;
-            this.b = b;
+            _a = a;
+            _b = b;
         }
 
         /// <summary>
         /// The first object.
         /// </summary>
-        public A_TYPE A
+        public TA A
         {
-            get { return a; }
+            get { return _a; }
         }
 
         /// <summary>
         /// The second object.
         /// </summary>
-        public B_TYPE B
+        public TB B
         {
-            get { return b; }
+            get { return _b; }
         }
     }
 }

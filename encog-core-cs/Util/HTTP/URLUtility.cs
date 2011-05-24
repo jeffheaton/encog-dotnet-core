@@ -23,6 +23,7 @@
 #if !SILVERLIGHT
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Encog.Util.HTTP
@@ -36,7 +37,7 @@ namespace Encog.Util.HTTP
         /// <summary>
         /// The name of an HTML index file.
         /// </summary>
-        public const String indexFile = "index.html";
+        public const String IndexFile = "index.html";
 
         /// <summary>
         /// Construct a URL from a string.
@@ -76,7 +77,7 @@ namespace Encog.Util.HTTP
             sb.Append(file);
 
 
-            if ((fragment != null) && !stripFragment)
+            if (!stripFragment)
             {
                 sb.Append('#');
                 sb.Append(fragment);
@@ -92,15 +93,7 @@ namespace Encog.Util.HTTP
         /// <returns>True if the URL contains invalid characters.</returns>
         public static bool ContainsInvalidURLCharacters(String url)
         {
-            for (int i = 0; i < url.Length; i++)
-            {
-                char ch = url[i];
-                if (ch > 255)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return url.Any(ch => ch > 255);
         }
 
         /// <summary>
@@ -129,7 +122,7 @@ namespace Encog.Util.HTTP
                 lastSegment--;
             String filename = url.Segments[lastSegment];
             if (filename.Equals('/'))
-                filename = indexFile;
+                filename = IndexFile;
 
             for (int i = 0; i < lastSegment; i++)
             {
@@ -149,11 +142,11 @@ namespace Encog.Util.HTTP
                 result = Path.Combine(result, dir);
                 if (mkdir)
                     Directory.CreateDirectory(result);
-                filename = indexFile;
+                filename = IndexFile;
             }
             else if (filename.IndexOf('.') == -1)
             {
-                filename = "/" + indexFile;
+                filename = "/" + IndexFile;
             }
 
 

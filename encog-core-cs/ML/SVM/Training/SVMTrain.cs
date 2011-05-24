@@ -215,7 +215,7 @@ namespace Encog.ML.SVM.Training
                 }
             }
 
-            return Format.HUNDRED_PERCENT*totalCorrect/prob.l;
+            return Format.HundredPercent*totalCorrect/prob.l;
         }
 
 

@@ -40,7 +40,7 @@ namespace Encog.App.CSV
         {
             var nsw = new NinjaStreamWriter();
 
-            nsw.Open(OutputName.ToString(), true, CSVFormat.ENGLISH);
+            nsw.Open(OutputName.ToString(), true, CSVFormat.English);
 
             nsw.BeginBar(new DateTime(2010, 01, 01));
             nsw.StoreColumn("close", 10);

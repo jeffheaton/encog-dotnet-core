@@ -59,7 +59,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFile(true);
             var norm = new FilterCSV();
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.Exclude(1, "1");
             norm.Process(OutputName);
 
@@ -77,7 +77,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFile(false);
             var norm = new FilterCSV();
-            norm.Analyze(InputName, false, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, false, CSVFormat.English);
             norm.Exclude(1, "1");
             norm.Process(OutputName);
 

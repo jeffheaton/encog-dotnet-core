@@ -113,7 +113,7 @@ namespace Encog.App.Quant.Loader.Yahoo
             var responseData = (HttpWebResponse) httpData.GetResponse();
 
             Stream istreamData = responseData.GetResponseStream();
-            var csvData = new ReadCSV(istreamData, true, CSVFormat.ENGLISH);
+            var csvData = new ReadCSV(istreamData, true, CSVFormat.English);
 
             TextWriter tw = new StreamWriter(output);
             tw.WriteLine("date,time,open price,high price,low price,close price,volume,adjusted price");

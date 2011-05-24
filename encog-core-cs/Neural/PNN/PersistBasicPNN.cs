@@ -114,13 +114,13 @@ namespace Encog.Neural.Pnn
                         for (int i = 0; i < inputCount; i++)
                         {
                             inputData[i] =
-                                CSVFormat.EG_FORMAT.Parse(cols[index++]);
+                                CSVFormat.EgFormat.Parse(cols[index++]);
                         }
                         IMLData idealData = new BasicMLData(inputCount);
                         for (int i = 0; i < outputCount; i++)
                         {
                             idealData[i] =
-                                CSVFormat.EG_FORMAT.Parse(cols[index++]);
+                                CSVFormat.EgFormat.Parse(cols[index++]);
                         }
                         IMLDataPair pair = new BasicMLDataPair(inputData,
                                                               idealData);

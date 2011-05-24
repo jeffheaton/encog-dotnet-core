@@ -105,7 +105,7 @@ namespace Encog.Examples.XOR
         public static String FormatArray(double[] a)
         {
             StringBuilder builder = new StringBuilder();
-            NumberList.ToList(CSVFormat.ENGLISH,5,builder,a);
+            NumberList.ToList(CSVFormat.English,5,builder,a);
             return builder.ToString();
         }
 

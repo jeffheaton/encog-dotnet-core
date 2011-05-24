@@ -136,7 +136,7 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public BasicFile()
         {
-            Precision = EncogFramework.DEFAULT_PRECISION;
+            Precision = EncogFramework.DefaultPrecision;
             _report = new NullStatusReportable();
             _reportInterval = REPORT_INTERVAL;
             _produceOutputHeaders = true;

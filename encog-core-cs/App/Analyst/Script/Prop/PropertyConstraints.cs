@@ -60,7 +60,7 @@ namespace Encog.App.Analyst.Script.Prop
             try
             {
                 Stream mask0 = ResourceLoader.CreateStream("Encog.Resources.analyst.csv");
-                var csv = new ReadCSV(mask0, false, CSVFormat.EG_FORMAT);
+                var csv = new ReadCSV(mask0, false, CSVFormat.EgFormat);
 
                 while (csv.Next())
                 {

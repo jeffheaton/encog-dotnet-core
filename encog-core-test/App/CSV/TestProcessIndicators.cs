@@ -64,7 +64,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFileHeadings(true);
             var norm = new ProcessIndicators();
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.AddColumn(new MovingAverage(3, true));
             norm.AddColumn(new BestClose(3, true));
             norm.Columns[0].Output = true;
@@ -90,7 +90,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFileHeadings(false);
             var norm = new ProcessIndicators();
-            norm.Analyze(InputName, false, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, false, CSVFormat.English);
             norm.AddColumn(new MovingAverage(3, true));
             norm.AddColumn(new BestClose(3, true));
             norm.Columns[0].Output = true;

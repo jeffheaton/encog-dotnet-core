@@ -242,7 +242,7 @@ namespace Encog.Neural.CPN
             for (i = 0; i < _instarCount; i++)
             {
                 if (winners[i]
-                    && (Math.Abs(sumWinners) > EncogFramework.DEFAULT_DOUBLE_EQUAL))
+                    && (Math.Abs(sumWinners) > EncogFramework.DefaultDoubleEqual))
                 {
                     result.Data[i] /= sumWinners;
                 }

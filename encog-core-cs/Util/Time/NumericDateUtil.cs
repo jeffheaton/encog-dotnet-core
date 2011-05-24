@@ -32,22 +32,22 @@ namespace Encog.Util.Time
         /// <summary>
         /// The numeric offset for a year.
         /// </summary>
-        public const uint YEAR_OFFSET = 10000;
+        public const uint YearOffset = 10000;
 
         /// <summary>
         /// The numeric offset for a month.
         /// </summary>
-        public const uint MONTH_OFFSET = 100;
+        public const uint MonthOffset = 100;
 
         /// <summary>
         /// The numeric offset for an hour.
         /// </summary>
-        public const uint HOUR_OFFSET = 10000;
+        public const uint HourOffset = 10000;
 
         /// <summary>
         /// The numeric offset for a minute.
         /// </summary>
-        public const uint MINUTE_OFFSET = 100;
+        public const uint MinuteOffset = 100;
 
         /// <summary>
         /// Convert a date/time to a long.
@@ -56,7 +56,7 @@ namespace Encog.Util.Time
         /// <returns>A numeric date.</returns>
         public static ulong DateTime2Long(DateTime time)
         {
-            return (ulong) (time.Day + (time.Month*MONTH_OFFSET) + (time.Year*YEAR_OFFSET));
+            return (ulong) (time.Day + (time.Month*MonthOffset) + (time.Year*YearOffset));
         }
 
         /// <summary>
@@ -67,10 +67,10 @@ namespace Encog.Util.Time
         public static DateTime Long2DateTime(ulong l)
         {
             var rest = (long) l;
-            var year = (int) (rest/YEAR_OFFSET);
-            rest -= year*YEAR_OFFSET;
-            var month = (int) (rest/MONTH_OFFSET);
-            rest -= month*MONTH_OFFSET;
+            var year = (int) (rest/YearOffset);
+            rest -= year*YearOffset;
+            var month = (int) (rest/MonthOffset);
+            rest -= month*MonthOffset;
             var day = (int) rest;
             return new DateTime(year, month, day);
         }
@@ -105,10 +105,10 @@ namespace Encog.Util.Time
         internal static DateTime Int2Time(DateTime date, uint i)
         {
             uint rest = i;
-            var hour = (int) (rest/HOUR_OFFSET);
-            rest -= (uint) (hour*HOUR_OFFSET);
-            var minute = (int) (rest/MONTH_OFFSET);
-            rest -= (uint) (minute*MINUTE_OFFSET);
+            var hour = (int) (rest/HourOffset);
+            rest -= (uint) (hour*HourOffset);
+            var minute = (int) (rest/MonthOffset);
+            rest -= (uint) (minute*MinuteOffset);
             var second = (int) rest;
             return new DateTime(date.Year, date.Month, date.Day, hour, minute, second);
         }
@@ -120,7 +120,7 @@ namespace Encog.Util.Time
         /// <returns>The time as an int.</returns>
         internal static uint Time2Int(DateTime time)
         {
-            return (uint) (time.Second + (time.Minute*MINUTE_OFFSET) + (time.Hour*HOUR_OFFSET));
+            return (uint) (time.Second + (time.Minute*MinuteOffset) + (time.Hour*HourOffset));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Encog.Util.Time
         /// <returns>The year.</returns>
         public static int GetYear(ulong date)
         {
-            return (int) (date/YEAR_OFFSET);
+            return (int) (date/YearOffset);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Encog.Util.Time
         public static int GetMonth(ulong l)
         {
             var rest = (long) l;
-            var year = (int) (rest/YEAR_OFFSET);
-            rest -= year*YEAR_OFFSET;
-            return (int) (rest/MONTH_OFFSET);
+            var year = (int) (rest/YearOffset);
+            rest -= year*YearOffset;
+            return (int) (rest/MonthOffset);
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace Encog.Util.Time
         public static int GetMinutePeriod(uint time, int period)
         {
             uint rest = time;
-            var hour = (int) (rest/HOUR_OFFSET);
-            rest -= (uint) (hour*HOUR_OFFSET);
-            var minute = (int) (rest/MONTH_OFFSET);
+            var hour = (int) (rest/HourOffset);
+            rest -= (uint) (hour*HourOffset);
+            var minute = (int) (rest/MonthOffset);
 
             int minutes = minute + (hour*60);
             return minutes/period;

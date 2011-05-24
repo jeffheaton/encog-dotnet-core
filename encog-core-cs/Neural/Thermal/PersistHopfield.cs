@@ -77,9 +77,9 @@ namespace Encog.Neural.Thermal
                     && section.SubSectionName.Equals("NETWORK"))
                 {
                     IDictionary<String, String> p = section.ParseParams();
-                    result.Weights = NumberList.FromList(CSVFormat.EG_FORMAT,
+                    result.Weights = NumberList.FromList(CSVFormat.EgFormat,
                                                          (p[PersistConst.Weights]));
-                    result.SetCurrentState(NumberList.FromList(CSVFormat.EG_FORMAT,
+                    result.SetCurrentState(NumberList.FromList(CSVFormat.EgFormat,
                                                                (p[PersistConst.Output])));
                     result.NeuronCount = EncogFileSection.ParseInt(p,
                                                                    PersistConst.NeuronCount);

@@ -35,13 +35,13 @@ namespace Encog.Util.Arrayutil
         /// The index of the class.
         /// </summary>
         ///
-        private int index;
+        private int _index;
 
         /// <summary>
         /// The name of the class.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// Construct the object.
@@ -51,8 +51,8 @@ namespace Encog.Util.Arrayutil
         /// <param name="theIndex">The index of the class.</param>
         public ClassItem(String theName, int theIndex)
         {
-            name = theName;
-            index = theIndex;
+            _name = theName;
+            _index = theIndex;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public int Index
         {
-            get { return index; }
-            set { index = value; }
+            get { return _index; }
+            set { _index = value; }
         }
 
 
@@ -70,8 +70,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
 
@@ -81,9 +81,9 @@ namespace Encog.Util.Arrayutil
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", index=");
-            result.Append(index);
+            result.Append(_index);
 
             result.Append("]");
             return result.ToString();

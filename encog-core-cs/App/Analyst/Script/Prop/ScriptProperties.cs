@@ -387,7 +387,7 @@ namespace Encog.App.Analyst.Script.Prop
         public double GetPropertyDouble(String name)
         {
             String v = _data[name];
-            return CSVFormat.EG_FORMAT.Parse(v);
+            return CSVFormat.EgFormat.Parse(v);
         }
 
         /// <summary>
@@ -564,7 +564,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <param name="d">The value.</param>
         public void SetProperty(String name, double d)
         {
-            _data[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
+            _data[name] = CSVFormat.EgFormat.Format(d, EncogFramework.DefaultPrecision);
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Encog.Util.Concurrency.Job
         /// <summary>
         /// The context for this job unit.
         /// </summary>
-        private readonly JobUnitContext context;
+        private readonly JobUnitContext _context;
 
         /// <summary>
         /// Construct a job unit worker to execute the specified job.
@@ -38,7 +38,7 @@ namespace Encog.Util.Concurrency.Job
         /// <param name="context">The context of the job to execute.</param>
         public JobUnitWorker(JobUnitContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         #region IEngineTask Members
@@ -48,7 +48,7 @@ namespace Encog.Util.Concurrency.Job
         /// </summary>
         public void Run()
         {
-            context.Owner.PerformJobUnit(context);
+            _context.Owner.PerformJobUnit(_context);
         }
 
         #endregion

@@ -117,7 +117,7 @@ namespace Encog.ML.Genetic.Genome
             // compare
             if ( _ga.CalculateScore.ShouldMinimize)
             {
-                if (Math.Abs(Score - other.Score) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                if (Math.Abs(Score - other.Score) < EncogFramework.DefaultDoubleEqual)
                 {
                     return 0;
                 }
@@ -127,7 +127,7 @@ namespace Encog.ML.Genetic.Genome
                 }
                 return -1;
             }
-            if (Math.Abs(Score - other.Score) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+            if (Math.Abs(Score - other.Score) < EncogFramework.DefaultDoubleEqual)
             {
                 return 0;
             }

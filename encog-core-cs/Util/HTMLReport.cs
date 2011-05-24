@@ -33,14 +33,14 @@ namespace Encog.Util
         /// <summary>
         /// Text.
         /// </summary>
-        private readonly StringBuilder text;
+        private readonly StringBuilder _text;
 
         /// <summary>
         /// Construct the object.
         /// </summary>
         public HTMLReport()
         {
-            text = new StringBuilder();
+            _text = new StringBuilder();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginHTML()
         {
-            text.Append("<html>");
+            _text.Append("<html>");
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Encog.Util
         /// </summary>
         public void EndHTML()
         {
-            text.Append("</html>");
+            _text.Append("</html>");
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Encog.Util
         /// <param name="str">The title.</param>
         public void Title(String str)
         {
-            text.Append("<head><title>");
-            text.Append(str);
-            text.Append("</title></head>");
+            _text.Append("<head><title>");
+            _text.Append(str);
+            _text.Append("</title></head>");
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginPara()
         {
-            text.Append("<p>");
+            _text.Append("<p>");
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Encog.Util
         /// </summary>
         public void EndPara()
         {
-            text.Append("</p>");
+            _text.Append("</p>");
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace Encog.Util
         /// <param name="str"></param>
         public void Bold(String str)
         {
-            text.Append("<b>");
-            text.Append(str);
-            text.Append("</b>");
+            _text.Append("<b>");
+            _text.Append(str);
+            _text.Append("</b>");
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Encog.Util
         /// <param name="str">The para to display.</param>
         public void Para(String str)
         {
-            text.Append("<p>");
-            text.Append(str);
-            text.Append("</p>");
+            _text.Append("<p>");
+            _text.Append(str);
+            _text.Append("</p>");
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Encog.Util
         /// </summary>
         public void Clear()
         {
-            text.Length = 0;
+            _text.Length = 0;
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Encog.Util
         /// <returns>The report text.</returns>
         public override String ToString()
         {
-            return text.ToString();
+            return _text.ToString();
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginBody()
         {
-            text.Append("<body>");
+            _text.Append("<body>");
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Encog.Util
         /// </summary>
         public void EndBody()
         {
-            text.Append("</body>");
+            _text.Append("</body>");
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace Encog.Util
         /// <param name="title"></param>
         public void H1(String title)
         {
-            text.Append("<h1>");
-            text.Append(title);
-            text.Append("</h1>");
+            _text.Append("<h1>");
+            _text.Append(title);
+            _text.Append("</h1>");
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginTable()
         {
-            text.Append("<table border=\"1\">");
+            _text.Append("<table border=\"1\">");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Encog.Util
         /// </summary>
         public void EndTable()
         {
-            text.Append("</table>");
+            _text.Append("</table>");
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginRow()
         {
-            text.Append("<tr>");
+            _text.Append("<tr>");
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Encog.Util
         /// </summary>
         public void EndRow()
         {
-            text.Append("</tr>");
+            _text.Append("</tr>");
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace Encog.Util
         /// <param name="head">The text to use.</param>
         public void Header(String head)
         {
-            text.Append("<th>");
-            text.Append(head);
-            text.Append("</th>");
+            _text.Append("<th>");
+            _text.Append(head);
+            _text.Append("</th>");
         }
 
         /// <summary>
@@ -211,28 +211,28 @@ namespace Encog.Util
         /// <param name="colSpan">The col span.</param>
         public void Cell(String head, int colSpan)
         {
-            text.Append("<td");
+            _text.Append("<td");
             if (colSpan > 0)
             {
-                text.Append(" colspan=\"");
-                text.Append(colSpan);
-                text.Append("\"");
+                _text.Append(" colspan=\"");
+                _text.Append(colSpan);
+                _text.Append("\"");
             }
-            text.Append(">");
-            text.Append(head);
-            text.Append("</td>");
+            _text.Append(">");
+            _text.Append(head);
+            _text.Append("</td>");
         }
 
         /// <summary>
         /// Add a name-value pair to a table.  This includes a row.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="value_ren">The value.</param>
-        public void TablePair(String name, String value_ren)
+        /// <param name="v">The value.</param>
+        public void TablePair(String name, String v)
         {
             BeginRow();
             Cell("<b>" + name + "</b>");
-            Cell(value_ren);
+            Cell(v);
             EndRow();
         }
 
@@ -242,9 +242,9 @@ namespace Encog.Util
         /// <param name="title">The title.</param>
         public void H2(String title)
         {
-            text.Append("<h2>");
-            text.Append(title);
-            text.Append("</h2>");
+            _text.Append("<h2>");
+            _text.Append(title);
+            _text.Append("</h2>");
         }
 
         /// <summary>
@@ -253,9 +253,9 @@ namespace Encog.Util
         /// <param name="title">The title.</param>
         public void H3(String title)
         {
-            text.Append("<h3>");
-            text.Append(title);
-            text.Append("</h3>");
+            _text.Append("<h3>");
+            _text.Append(title);
+            _text.Append("</h3>");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Encog.Util
         /// </summary>
         public void BeginList()
         {
-            text.Append("<ul>");
+            _text.Append("<ul>");
         }
 
         /// <summary>
@@ -272,8 +272,8 @@ namespace Encog.Util
         /// <param name="str">The item added.</param>
         public void ListItem(String str)
         {
-            text.Append("<li>");
-            text.Append(str);
+            _text.Append("<li>");
+            _text.Append(str);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Encog.Util
         /// </summary>
         public void EndList()
         {
-            text.Append("</ul>");
+            _text.Append("</ul>");
         }
 
         /// <summary>
@@ -290,15 +290,15 @@ namespace Encog.Util
         /// <param name="colSpan">The column span.</param>
         public void BeginTableInCell(int colSpan)
         {
-            text.Append("<td");
+            _text.Append("<td");
             if (colSpan > 0)
             {
-                text.Append(" colspan=\"");
-                text.Append(colSpan);
-                text.Append("\"");
+                _text.Append(" colspan=\"");
+                _text.Append(colSpan);
+                _text.Append("\"");
             }
-            text.Append(">");
-            text.Append("<table border=\"1\" width=\"100%\">");
+            _text.Append(">");
+            _text.Append("<table border=\"1\" width=\"100%\">");
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Encog.Util
         /// </summary>
         public void EndTableInCell()
         {
-            text.Append("</table></td>");
+            _text.Append("</table></td>");
         }
     }
 }

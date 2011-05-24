@@ -32,29 +32,29 @@ namespace Encog.Util.Time
         {
             switch (unit)
             {
-                case TimeUnit.SECONDS:
+                case TimeUnit.Seconds:
                     return "sec";
-                case TimeUnit.MINUTES:
+                case TimeUnit.Minutes:
                     return "min";
-                case TimeUnit.HOURS:
+                case TimeUnit.Hours:
                     return "hr";
-                case TimeUnit.DAYS:
+                case TimeUnit.Days:
                     return "d";
-                case TimeUnit.WEEKS:
+                case TimeUnit.Weeks:
                     return "w";
-                case TimeUnit.FORTNIGHTS:
+                case TimeUnit.Fortnights:
                     return "fn";
-                case TimeUnit.MONTHS:
+                case TimeUnit.Months:
                     return "m";
-                case TimeUnit.YEARS:
+                case TimeUnit.Years:
                     return "y";
-                case TimeUnit.DECADES:
+                case TimeUnit.Decades:
                     return "dec";
-                case TimeUnit.SCORES:
+                case TimeUnit.Scores:
                     return "sc";
-                case TimeUnit.CENTURIES:
+                case TimeUnit.Centuries:
                     return "c";
-                case TimeUnit.MILLENNIA:
+                case TimeUnit.Millennia:
                     return "m";
                 default:
                     return "unk";
@@ -65,29 +65,29 @@ namespace Encog.Util.Time
         {
             switch (unit)
             {
-                case TimeUnit.SECONDS:
+                case TimeUnit.Seconds:
                     return "seconds";
-                case TimeUnit.MINUTES:
+                case TimeUnit.Minutes:
                     return "minutes";
-                case TimeUnit.HOURS:
+                case TimeUnit.Hours:
                     return "hours";
-                case TimeUnit.DAYS:
+                case TimeUnit.Days:
                     return "days";
-                case TimeUnit.WEEKS:
+                case TimeUnit.Weeks:
                     return "weeks";
-                case TimeUnit.FORTNIGHTS:
+                case TimeUnit.Fortnights:
                     return "fortnights";
-                case TimeUnit.MONTHS:
+                case TimeUnit.Months:
                     return "months";
-                case TimeUnit.YEARS:
+                case TimeUnit.Years:
                     return "years";
-                case TimeUnit.DECADES:
+                case TimeUnit.Decades:
                     return "decades";
-                case TimeUnit.SCORES:
+                case TimeUnit.Scores:
                     return "scores";
-                case TimeUnit.CENTURIES:
+                case TimeUnit.Centuries:
                     return "centures";
-                case TimeUnit.MILLENNIA:
+                case TimeUnit.Millennia:
                     return "millennia";
                 default:
                     return "unknowns";
@@ -98,29 +98,29 @@ namespace Encog.Util.Time
         {
             switch (unit)
             {
-                case TimeUnit.SECONDS:
+                case TimeUnit.Seconds:
                     return "second";
-                case TimeUnit.MINUTES:
+                case TimeUnit.Minutes:
                     return "minute";
-                case TimeUnit.HOURS:
+                case TimeUnit.Hours:
                     return "hour";
-                case TimeUnit.DAYS:
+                case TimeUnit.Days:
                     return "day";
-                case TimeUnit.WEEKS:
+                case TimeUnit.Weeks:
                     return "week";
-                case TimeUnit.FORTNIGHTS:
+                case TimeUnit.Fortnights:
                     return "fortnight";
-                case TimeUnit.MONTHS:
+                case TimeUnit.Months:
                     return "month";
-                case TimeUnit.YEARS:
+                case TimeUnit.Years:
                     return "year";
-                case TimeUnit.DECADES:
+                case TimeUnit.Decades:
                     return "decade";
-                case TimeUnit.SCORES:
+                case TimeUnit.Scores:
                     return "score";
-                case TimeUnit.CENTURIES:
+                case TimeUnit.Centuries:
                     return "century";
-                case TimeUnit.MILLENNIA:
+                case TimeUnit.Millennia:
                     return "millenium";
                 default:
                     return "unknown";

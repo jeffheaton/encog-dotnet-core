@@ -41,19 +41,19 @@ namespace Encog.Util.Concurrency
         /// worthwhile.
         /// </summary>
         ///
-        public const int MIN_WORTHWHILE = 100;
+        public const int MinWorthwhile = 100;
 
         /// <summary>
         /// How many threads to use.
         /// </summary>
         ///
-        private readonly int threadCount;
+        private readonly int _threadCount;
 
         /// <summary>
         /// What is the total workload size?
         /// </summary>
         ///
-        private readonly int workloadSize;
+        private readonly int _workloadSize;
 
         /// <summary>
         /// Determine the workload.
@@ -63,7 +63,7 @@ namespace Encog.Util.Concurrency
         /// <param name="workloadSize">Total workload size.</param>
         public DetermineWorkload(int threads, int workloadSize)
         {
-            this.workloadSize = workloadSize;
+            _workloadSize = workloadSize;
             if (threads == 0)
             {
 #if !SILVERLIGHT
@@ -83,7 +83,7 @@ namespace Encog.Util.Concurrency
                 // We want at least 100 training elements in each.
                 // This method will likely be further "tuned" in future versions.
 
-                long recordCount = this.workloadSize;
+                long recordCount = _workloadSize;
                 long workPerThread = recordCount/num;
 
                 if (workPerThread < 100)
@@ -91,11 +91,11 @@ namespace Encog.Util.Concurrency
                     num = Math.Max(1, (int) (recordCount/100));
                 }
 
-                threadCount = num;
+                _threadCount = num;
             }
             else
             {
-                threadCount = Math.Min(threads, workloadSize);
+                _threadCount = Math.Min(threads, workloadSize);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Encog.Util.Concurrency
         /// </summary>
         public int ThreadCount
         {
-            get { return threadCount; }
+            get { return _threadCount; }
         }
 
         /// <summary>
@@ -115,19 +115,19 @@ namespace Encog.Util.Concurrency
         public IList<IntRange> CalculateWorkers()
         {
             IList<IntRange> result = new List<IntRange>();
-            int sizePerThread = workloadSize/threadCount;
+            int sizePerThread = _workloadSize/_threadCount;
 
             // create the workers
-            for (int i = 0; i < threadCount; i++)
+            for (int i = 0; i < _threadCount; i++)
             {
                 int low = i*sizePerThread;
                 int high;
 
                 // if this is the last record, then high to be the last item
                 // in the training set.
-                if (i == (threadCount - 1))
+                if (i == (_threadCount - 1))
                 {
-                    high = workloadSize - 1;
+                    high = _workloadSize - 1;
                 }
                 else
                 {

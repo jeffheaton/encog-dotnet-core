@@ -60,7 +60,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFileHeadings(true);
             var norm = new ShuffleCSV();
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.Process(OutputName);
 
             var tr = new StreamReader(OutputName.ToString());
@@ -85,7 +85,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFileHeadings(false);
             var norm = new ShuffleCSV();
-            norm.Analyze(InputName, false, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, false, CSVFormat.English);
             norm.ProduceOutputHeaders = false;
             norm.Process(OutputName);
 

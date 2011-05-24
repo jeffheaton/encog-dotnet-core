@@ -44,22 +44,22 @@ namespace Encog.Util.HTTP
         /// null if this is not a multipart form and has a value if
         /// this is a multipart form.
         /// </summary>
-        private readonly String boundary;
+        private readonly String _boundary;
 
         /// <summary>
         /// The stream to output the encoded form to.
         /// </summary>
-        private readonly Stream os;
+        private readonly Stream _os;
 
         /// <summary>
         /// The text writer to use.
         /// </summary>
-        private readonly TextWriter writer;
+        private readonly TextWriter _writer;
 
         /// <summary>
         /// Keep track of if we're on the first form element.
         /// </summary>
-        private bool first;
+        private bool _first;
 
         /// <summary>
         /// Prepare to access either a regular, or multipart, form.
@@ -69,17 +69,17 @@ namespace Encog.Util.HTTP
         /// not a multipart form.</param>
         public FormUtility(Stream os, String boundary)
         {
-            this.os = os;
-            writer = new StreamWriter(os);
-            this.boundary = boundary;
-            first = true;
+            _os = os;
+            _writer = new StreamWriter(os);
+            _boundary = boundary;
+            _first = true;
         }
 
         /// <summary>
         /// Generate a boundary for a multipart form.
         /// </summary>
         /// <returns>The boundary.</returns>
-        public static String getBoundary()
+        public static String GetBoundary()
         {
             return "---------------------------" + RandomString() + RandomString()
                    + RandomString();
@@ -125,7 +125,7 @@ namespace Encog.Util.HTTP
         /// <param name="type">The mime type</param>
         public void AddFile(String name, String file, String type)
         {
-            if (boundary != null)
+            if (_boundary != null)
             {
                 Boundary();
                 WriteName(name);
@@ -141,16 +141,16 @@ namespace Encog.Util.HTTP
                 var buf = new byte[8192];
                 int nread;
 
-                writer.Flush();
-                os.Flush();
+                _writer.Flush();
+                _os.Flush();
 
                 Stream istream = new FileStream(file, FileMode.Open);
                 while ((nread = istream.Read(buf, 0, buf.Length)) > 0)
                 {
-                    os.Write(buf, 0, nread);
+                    _os.Write(buf, 0, nread);
                 }
 
-                os.Flush();
+                _os.Flush();
                 Newline();
             }
         }
@@ -160,28 +160,28 @@ namespace Encog.Util.HTTP
         /// multipart form.
         /// </summary>
         /// <param name="name">The name of the field.</param>
-        /// <param name="value_ren">The value of the field.</param>
-        public void Add(String name, String value_ren)
+        /// <param name="v">The value of the field.</param>
+        public void Add(String name, String v)
         {
-            if (boundary != null)
+            if (_boundary != null)
             {
                 Boundary();
                 WriteName(name);
                 Newline();
                 Newline();
-                Writeln(value_ren);
+                Writeln(v);
             }
             else
             {
-                if (!first)
+                if (!_first)
                 {
                     Write("&");
                 }
                 Write(Encode(name));
                 Write("=");
-                Write(Encode(value_ren));
+                Write(Encode(v));
             }
-            first = false;
+            _first = false;
         }
 
         /// <summary>
@@ -189,11 +189,11 @@ namespace Encog.Util.HTTP
         /// </summary>
         public void Complete()
         {
-            if (boundary != null)
+            if (_boundary != null)
             {
                 Boundary();
                 Writeln("--");
-                os.Flush();
+                _os.Flush();
             }
         }
 
@@ -203,7 +203,7 @@ namespace Encog.Util.HTTP
         private void Boundary()
         {
             Write("--");
-            Write(boundary);
+            Write(_boundary);
         }
 
         /// <summary>
@@ -222,8 +222,8 @@ namespace Encog.Util.HTTP
         /// <param name="str">The string to write.</param>
         private void Write(String str)
         {
-            writer.Write(str);
-            writer.Flush();
+            _writer.Write(str);
+            _writer.Flush();
         }
 
         /// <summary>

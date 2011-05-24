@@ -52,17 +52,17 @@ namespace Encog.Util.CSV
         /// </summary>
         public CSVFormat Format
         {
-            get { return format; }
+            get { return _format; }
         }
 
-        private CSVFormat format;
+        private CSVFormat _format;
 
         /// <summary>
         /// The names of the columns.
         /// </summary>
         public IList<String> ColumnNames
         {
-            get { return columnNames; }
+            get { return _columnNames; }
         }
 
         /// <summary>
@@ -89,27 +89,27 @@ namespace Encog.Util.CSV
         /// <summary>
         /// The file to read.
         /// </summary>
-        private readonly TextReader reader;
+        private readonly TextReader _reader;
 
         /// <summary>
         /// The names of the columns.
         /// </summary>
-        private readonly IDictionary<String, int> columns = new Dictionary<String, int>();
+        private readonly IDictionary<String, int> _columns = new Dictionary<String, int>();
 
         /// <summary>
         /// The names of the columns.
         /// </summary>
-        private readonly IList<String> columnNames = new List<String>();
+        private readonly IList<String> _columnNames = new List<String>();
 
         /// <summary>
         /// The data.
         /// </summary>
-        private String[] data;
+        private String[] _data;
 
         /// <summary>
         /// The delimiter.
         /// </summary>
-        private char delim;
+        private char _delim;
 
         /// <summary>
         /// Construct a CSV reader from an input stream.
@@ -121,8 +121,8 @@ namespace Encog.Util.CSV
                        char delim)
         {
             var format = new CSVFormat(CSVFormat.DecimalCharacter, delim);
-            reader = new StreamReader(istream);
-            this.delim = delim;
+            _reader = new StreamReader(istream);
+            _delim = delim;
             Begin(headers, format);
         }
 
@@ -136,8 +136,8 @@ namespace Encog.Util.CSV
                        char delim)
         {
             var format = new CSVFormat(CSVFormat.DecimalCharacter, delim);
-            reader = new StreamReader(filename);
-            this.delim = delim;
+            _reader = new StreamReader(filename);
+            _delim = delim;
             Begin(headers, format);
         }
 
@@ -153,7 +153,7 @@ namespace Encog.Util.CSV
         public ReadCSV(String filename, bool headers,
                        CSVFormat format)
         {
-            reader = new StreamReader(filename);
+            _reader = new StreamReader(filename);
             Begin(headers, format);
         }
 
@@ -169,7 +169,7 @@ namespace Encog.Util.CSV
         public ReadCSV(Stream stream, bool headers,
                        CSVFormat format)
         {
-            reader = new StreamReader(stream);
+            _reader = new StreamReader(stream);
             Begin(headers, format);
         }
 
@@ -180,14 +180,11 @@ namespace Encog.Util.CSV
         {
             get
             {
-                if (this.data == null)
+                if (_data == null)
                 {
                     return 0;
                 }
-                else
-                {
-                    return data.Length;
-                }
+                return _data.Length;
             }
         }
 
@@ -203,24 +200,24 @@ namespace Encog.Util.CSV
             {
                 DateFormat = "yyyy-MM-dd";
                 TimeFormat = "hhmmss";
-                this.format = format;
+                _format = format;
                 // read the column heads
                 if (headers)
                 {
-                    String line = reader.ReadLine();
+                    String line = _reader.ReadLine();
                     IList<String> tok = Parse(line);
 
                     int i = 0;
                     foreach (String header in tok)
                     {
-                        if (columns.ContainsKey(header.ToLower()))
+                        if (_columns.ContainsKey(header.ToLower()))
                             throw new EncogError("Two columns cannot have the same name");
-                        columns.Add(header.ToLower(), i++);
-                        columnNames.Add(header);
+                        _columns.Add(header.ToLower(), i++);
+                        _columnNames.Add(header);
                     }
                 }
 
-                data = null;
+                _data = null;
             }
             catch (IOException e)
             {
@@ -241,7 +238,7 @@ namespace Encog.Util.CSV
         {
             try
             {
-                reader.Close();
+                _reader.Close();
             }
             catch (IOException e)
             {
@@ -262,7 +259,7 @@ namespace Encog.Util.CSV
         /// <returns>The column as a string.</returns>
         public String Get(int i)
         {
-            return data[i];
+            return _data[i];
         }
 
         /// <summary>
@@ -273,11 +270,11 @@ namespace Encog.Util.CSV
         /// <returns>The column data as a string.</returns>
         public String Get(String column)
         {
-            if (!columns.ContainsKey(column.ToLower()))
+            if (!_columns.ContainsKey(column.ToLower()))
                 return null;
-            int i = columns[column.ToLower()];
+            int i = _columns[column.ToLower()];
 
-            return data[i];
+            return _data[i];
         }
 
         /// <summary>
@@ -286,12 +283,12 @@ namespace Encog.Util.CSV
         /// <returns>The column count.</returns>
         public int GetCount()
         {
-            if (data == null)
+            if (_data == null)
             {
                 return 0;
             }
 
-            return data.Length;
+            return _data.Length;
         }
 
         /// <summary>
@@ -346,7 +343,7 @@ namespace Encog.Util.CSV
         public double GetDouble(String column)
         {
             String str = Get(column);
-            return format.Parse(str);
+            return _format.Parse(str);
         }
 
         /// <summary>
@@ -357,7 +354,7 @@ namespace Encog.Util.CSV
         public double GetDouble(int column)
         {
             String str = Get(column);
-            return format.Parse(str);
+            return _format.Parse(str);
         }
 
         /// <summary>
@@ -382,10 +379,10 @@ namespace Encog.Util.CSV
         /// Count the columns and create a an array to hold them.
         /// </summary>
         /// <param name="line">One line from the file</param>
-        private void InitData(String line)
+        private void InitData(IEnumerable<char> line)
         {
             IList<String> tok = Parse(line);
-            data = new String[tok.Count];
+            _data = new String[tok.Count];
         }
 
 
@@ -397,11 +394,11 @@ namespace Encog.Util.CSV
         {
             try
             {
-                String line = null;
+                String line;
 
                 do
                 {
-                    line = this.reader.ReadLine();
+                    line = _reader.ReadLine();
                 } while ((line != null) && line.Trim().Length == 0);
 
                 if (line == null)
@@ -409,7 +406,7 @@ namespace Encog.Util.CSV
                     return false;
                 }
 
-                if (data == null)
+                if (_data == null)
                 {
                     InitData(line);
                 }
@@ -419,9 +416,9 @@ namespace Encog.Util.CSV
                 int i = 0;
                 foreach (String str in tok)
                 {
-                    if (i < data.Length)
+                    if (i < _data.Length)
                     {
-                        data[i++] = str;
+                        _data[i++] = str;
                     }
                 }
 
@@ -445,16 +442,15 @@ namespace Encog.Util.CSV
         /// </summary>
         /// <param name="line">The line to parse.</param>
         /// <returns>The elements on this line.</returns>
-        private IList<String> Parse(String line)
+        private IList<String> Parse(IEnumerable<char> line)
         {
             var item = new StringBuilder();
             IList<String> result = new List<String>();
             bool quoted = false;
 
-            for (int i = 0; i < line.Length; i++)
+            foreach (char ch in line)
             {
-                char ch = line[i];
-                if ((ch == format.Separator) && !quoted)
+                if ((ch == _format.Separator) && !quoted)
                 {
                     result.Add(item.ToString());
                     item.Length = 0;

@@ -33,47 +33,47 @@ namespace Encog.Util
         /// <summary>
         /// One hundred percent.
         /// </summary>
-        public const double HUNDRED_PERCENT = 100.0;
+        public const double HundredPercent = 100.0;
 
         /// <summary>
         /// Bytes in a KB.
         /// </summary>
-        public const long MEMORY_K = 1024;
+        public const long MemoryK = 1024;
 
         /// <summary>
         /// Bytes in a MB.
         /// </summary>
-        public const long MEMORY_MEG = (1024*MEMORY_K);
+        public const long MemoryMeg = (1024*MemoryK);
 
         /// <summary>
         /// Bytes in a GB.
         /// </summary>
-        public const long MEMORY_GIG = (1024*MEMORY_MEG);
+        public const long MemoryGig = (1024*MemoryMeg);
 
         /// <summary>
         /// Bytes in a TB.
         /// </summary>
-        public const long MEMORY_TERA = (1024*MEMORY_GIG);
+        public const long MemoryTera = (1024*MemoryGig);
 
         /// <summary>
         /// Seconds in a minute.
         /// </summary>
-        public const int SECONDS_INA_MINUTE = 60;
+        public const int SecondsInaMinute = 60;
 
         /// <summary>
         /// Seconds in an hour.
         /// </summary>
-        public const int SECONDS_INA_HOUR = SECONDS_INA_MINUTE*60;
+        public const int SecondsInaHour = SecondsInaMinute*60;
 
         /// <summary>
         /// Seconds in a day.
         /// </summary>
-        public const int SECONDS_INA_DAY = SECONDS_INA_HOUR*24;
+        public const int SecondsInaDay = SecondsInaHour*24;
 
         /// <summary>
         /// Miliseconds in a day.
         /// </summary>
-        public const long MILI_IN_SEC = 1000;
+        public const long MiliInSec = 1000;
 
         /// <summary>
         /// Private constructor.
@@ -101,36 +101,30 @@ namespace Encog.Util
         /// <returns>The formatted memory size.</returns>
         public static String FormatMemory(long memory)
         {
-            if (memory < MEMORY_K)
+            if (memory < MemoryK)
             {
                 return memory + " bytes";
             }
-            else if (memory < MEMORY_MEG)
+            if (memory < MemoryMeg)
             {
-                return FormatDouble((memory)/((double) MEMORY_K), 2) + " KB";
+                return FormatDouble((memory)/((double) MemoryK), 2) + " KB";
             }
-            else if (memory < MEMORY_GIG)
+            if (memory < MemoryGig)
             {
-                return FormatDouble((memory)/((double) MEMORY_MEG), 2) + " MB";
+                return FormatDouble((memory)/((double) MemoryMeg), 2) + " MB";
             }
-            else if (memory < MEMORY_TERA)
+            if (memory < MemoryTera)
             {
-                return FormatDouble((memory)/((double) MEMORY_GIG), 2) + " GB";
+                return FormatDouble((memory)/((double) MemoryGig), 2) + " GB";
             }
-            else
-            {
-                return FormatDouble((memory)/((double) MEMORY_TERA), 2) + " TB";
-            }
+            return FormatDouble((memory)/((double) MemoryTera), 2) + " TB";
         }
 
-        /**
-         * Format an integer.
-         * 
-         * @param i
-         *            The integer to format.
-         * @return The integer as a string.
-         */
-
+        /// <summary>
+        /// Format an integer.
+        /// </summary>
+        /// <param name="i">The integer.</param>
+        /// <returns>The string.</returns>
         public static String FormatInteger(int i)
         {
             return String.Format("{0:n0}", i);
@@ -164,26 +158,19 @@ namespace Encog.Util
         public static String FormatTimeSpan(int seconds)
         {
             int secondsCount = seconds;
-            int days = seconds/SECONDS_INA_DAY;
-            secondsCount -= days*SECONDS_INA_DAY;
-            int hours = secondsCount/SECONDS_INA_HOUR;
-            secondsCount -= hours*SECONDS_INA_HOUR;
-            int minutes = secondsCount/SECONDS_INA_MINUTE;
-            secondsCount -= minutes*SECONDS_INA_MINUTE;
+            int days = seconds/SecondsInaDay;
+            secondsCount -= days*SecondsInaDay;
+            int hours = secondsCount/SecondsInaHour;
+            secondsCount -= hours*SecondsInaHour;
+            int minutes = secondsCount/SecondsInaMinute;
+            secondsCount -= minutes*SecondsInaMinute;
 
             var result = new StringBuilder();
 
             if (days > 0)
             {
                 result.Append(days);
-                if (days > 1)
-                {
-                    result.Append(" days ");
-                }
-                else
-                {
-                    result.Append(" day ");
-                }
+                result.Append(days > 1 ? " days " : " day ");
             }
 
             result.Append(hours.ToString("00"));
@@ -202,10 +189,7 @@ namespace Encog.Util
         /// <returns>A string form of the boolean.</returns>
         public static string FormatYesNo(bool p)
         {
-            if (p)
-                return "Yes";
-            else
-                return "No";
+            return p ? "Yes" : "No";
         }
     }
 }

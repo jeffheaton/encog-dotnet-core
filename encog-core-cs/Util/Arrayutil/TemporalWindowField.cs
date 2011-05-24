@@ -36,13 +36,13 @@ namespace Encog.Util.Arrayutil
         /// The action that is to be taken on this field.
         /// </summary>
         ///
-        private TemporalType action;
+        private TemporalType _action;
 
         /// <summary>
         /// The name of this field.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// Construct the object.
@@ -51,15 +51,15 @@ namespace Encog.Util.Arrayutil
         /// <param name="theName">The name of the field to be considered.</param>
         public TemporalWindowField(String theName)
         {
-            name = theName;
+            _name = theName;
         }
 
 
         /// <value>the action to set</value>
         public TemporalType Action
         {
-            get { return action; }
-            set { action = value; }
+            get { return _action; }
+            set { _action = value; }
         }
 
 
@@ -67,7 +67,7 @@ namespace Encog.Util.Arrayutil
         /// for a prediction.</value>
         public bool Input
         {
-            get { return ((action == TemporalType.Input) || (action == TemporalType.InputAndPredict)); }
+            get { return ((_action == TemporalType.Input) || (_action == TemporalType.InputAndPredict)); }
         }
 
 
@@ -78,15 +78,15 @@ namespace Encog.Util.Arrayutil
         /// <value>the name to set</value>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
 
         /// <value>Returns true, if this field is part of what is being predicted.</value>
         public bool Predict
         {
-            get { return ((action == TemporalType.Predict) || (action == TemporalType.InputAndPredict)); }
+            get { return ((_action == TemporalType.Predict) || (_action == TemporalType.InputAndPredict)); }
         }
 
 
@@ -96,9 +96,9 @@ namespace Encog.Util.Arrayutil
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", action=");
-            result.Append(action);
+            result.Append(_action);
 
             result.Append("]");
             return result.ToString();

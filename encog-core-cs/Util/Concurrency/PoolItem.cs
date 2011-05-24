@@ -32,17 +32,17 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// The task group that this item is a part of.
         /// </summary>
-        private readonly TaskGroup group;
+        private readonly TaskGroup _group;
 
         /// <summary>
         /// The concurrency object that started this.
         /// </summary>
-        private readonly EngineConcurrency owner;
+        private readonly EngineConcurrency _owner;
 
         /// <summary>
         /// The task that was executed.
         /// </summary>
-        private readonly IEngineTask task;
+        private readonly IEngineTask _task;
 
         /// <summary>
         /// Construct a pool item.
@@ -52,9 +52,9 @@ namespace Encog.Util.Concurrency
         /// <param name="group">The group that this task belongs to.</param>
         public PoolItem(EngineConcurrency owner, IEngineTask task, TaskGroup group)
         {
-            this.owner = owner;
-            this.task = task;
-            this.group = group;
+            _owner = owner;
+            _task = task;
+            _group = group;
         }
 
         /// <summary>
@@ -65,14 +65,14 @@ namespace Encog.Util.Concurrency
         {
             try
             {
-                task.Run();
-                owner.TaskFinished(this);
+                _task.Run();
+                _owner.TaskFinished(this);
             }
             finally
             {
-                if (group != null)
+                if (_group != null)
                 {
-                    group.TaskStopping();
+                    _group.TaskStopping();
                 }
             }
         }

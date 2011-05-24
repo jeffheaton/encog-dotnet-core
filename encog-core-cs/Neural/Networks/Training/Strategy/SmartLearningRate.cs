@@ -89,7 +89,7 @@ namespace Encog.Neural.Networks.Training.Strategy
             _setter = (ILearningRate) train;
             _trainingSize = train.Training.Count;
             _currentLearningRate = 1.0d/_trainingSize;
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Starting learning rate: "
+            EncogLogging.Log(EncogLogging.LevelDebug, "Starting learning rate: "
                                                        + _currentLearningRate);
             _setter.LearningRate = _currentLearningRate;
         }
@@ -106,7 +106,7 @@ namespace Encog.Neural.Networks.Training.Strategy
                 {
                     _currentLearningRate *= LearningDecay;
                     _setter.LearningRate = _currentLearningRate;
-                    EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                    EncogLogging.Log(EncogLogging.LevelDebug,
                                      "Adjusting learning rate to {}"
                                      + _currentLearningRate);
                 }

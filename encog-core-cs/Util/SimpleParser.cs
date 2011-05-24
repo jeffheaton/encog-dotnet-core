@@ -33,12 +33,12 @@ namespace Encog.Util
         /// <summary>
         /// The current position.
         /// </summary>
-        private int currentPosition;
+        private int _currentPosition;
 
         /// <summary>
         /// The marked position.
         /// </summary>
-        private int marked;
+        private int _marked;
 
         /// <summary>
         /// Construct the object for the specified line.
@@ -60,7 +60,7 @@ namespace Encog.Util
         /// <returns>The number of characters remaining.</returns>
         public int Remaining()
         {
-            return Math.Max(Line.Length - currentPosition, 0);
+            return Math.Max(Line.Length - _currentPosition, 0);
         }
 
         /// <summary>
@@ -102,10 +102,9 @@ namespace Encog.Util
         {
             if (EOL())
                 return (char) 0;
-            else if (currentPosition >= Line.Length)
+            if (_currentPosition >= Line.Length)
                 return (char) 0;
-            else
-                return Line[currentPosition];
+            return Line[_currentPosition];
         }
 
         /// <summary>
@@ -113,9 +112,9 @@ namespace Encog.Util
         /// </summary>
         public void Advance()
         {
-            if (currentPosition < Line.Length)
+            if (_currentPosition < Line.Length)
             {
-                currentPosition++;
+                _currentPosition++;
             }
         }
 
@@ -134,7 +133,7 @@ namespace Encog.Util
         /// <returns>True, if we have reached end of line.</returns>
         public bool EOL()
         {
-            return (currentPosition >= Line.Length);
+            return (_currentPosition >= Line.Length);
         }
 
         /// <summary>
@@ -189,7 +188,7 @@ namespace Encog.Util
             for (int i = 0; i < str.Length; i++)
             {
                 char c1 = str[i];
-                char c2 = Line[currentPosition + i];
+                char c2 = Line[_currentPosition + i];
 
                 if (ignoreCase)
                 {
@@ -210,7 +209,7 @@ namespace Encog.Util
         /// <param name="p">The number of characters to advance.</param>
         public void Advance(int p)
         {
-            currentPosition = Math.Min(Line.Length, currentPosition + p);
+            _currentPosition = Math.Min(Line.Length, _currentPosition + p);
         }
 
         /// <summary>
@@ -218,7 +217,7 @@ namespace Encog.Util
         /// </summary>
         public void Mark()
         {
-            marked = currentPosition;
+            _marked = _currentPosition;
         }
 
         /// <summary>
@@ -226,7 +225,7 @@ namespace Encog.Util
         /// </summary>
         public void Reset()
         {
-            currentPosition = marked;
+            _currentPosition = _marked;
         }
     }
 }

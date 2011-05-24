@@ -59,7 +59,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFile(true);
             var norm = new BalanceCSV();
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.Process(OutputName, 1, 2);
 
             var tr = new StreamReader(OutputName.ToString());
@@ -84,7 +84,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFile(false);
             var norm = new BalanceCSV();
-            norm.Analyze(InputName, false, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, false, CSVFormat.English);
             norm.Process(OutputName, 1, 2);
 
             var tr = new StreamReader(OutputName.ToString());

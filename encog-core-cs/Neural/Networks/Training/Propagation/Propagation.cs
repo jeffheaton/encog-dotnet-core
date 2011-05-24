@@ -138,7 +138,7 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 PostIteration();
 
-                EncogLogging.Log(EncogLogging.LEVEL_INFO,
+                EncogLogging.Log(EncogLogging.LevelInfo,
                                  "Training iteration done, error: " + Error);
             }
             catch (IndexOutOfRangeException ex)
@@ -168,7 +168,7 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 PostIteration();
 
-                EncogLogging.Log(EncogLogging.LEVEL_INFO,
+                EncogLogging.Log(EncogLogging.LevelInfo,
                                  "Training iterations done, error: " + Error);
             }
             catch (IndexOutOfRangeException ex)

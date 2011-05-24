@@ -99,7 +99,7 @@ namespace Encog.App.Analyst.CSV.Segregate
                 SegregateTargetPercent stp = p;
 
                 // assign a number of records to this
-                double percent = stp.Percent/Format.HUNDRED_PERCENT;
+                double percent = stp.Percent/Format.HundredPercent;
                 var c = (int) (RecordCount*percent);
                 stp.NumberRemaining = c;
 

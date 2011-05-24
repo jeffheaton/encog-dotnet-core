@@ -125,7 +125,7 @@ namespace Encog.Neural.Rbf
                         IActivationFunction af;
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
-                        String name = ReflectionUtil.AF_PATH
+                        String name = ReflectionUtil.AfPath
                                       + cols[0];
                         try
                         {
@@ -137,7 +137,7 @@ namespace Encog.Neural.Rbf
                         }
                         for (int i = 0; i < af.ParamNames.Length; i++)
                         {
-                            af.Params[i] = CSVFormat.EG_FORMAT.Parse(cols[i + 1]);
+                            af.Params[i] = CSVFormat.EgFormat.Parse(cols[i + 1]);
                         }
 
                         flat.ActivationFunctions[index++] = af;
@@ -159,7 +159,7 @@ namespace Encog.Neural.Rbf
                         IRadialBasisFunction rbf;
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
-                        String name = ReflectionUtil.RBF_PATH + cols[0];
+                        String name = ReflectionUtil.RBFPath + cols[0];
                         try
                         {
                             rbf = (IRadialBasisFunction) ReflectionUtil.LoadObject(name);
@@ -177,13 +177,13 @@ namespace Encog.Neural.Rbf
                             throw new PersistError(ex);
                         }
 
-                        rbf.Width = CSVFormat.EG_FORMAT.Parse(cols[1]);
-                        rbf.Peak = CSVFormat.EG_FORMAT.Parse(cols[2]);
+                        rbf.Width = CSVFormat.EgFormat.Parse(cols[1]);
+                        rbf.Peak = CSVFormat.EgFormat.Parse(cols[2]);
                         rbf.Centers = new double[inputCount];
 
                         for (int i = 0; i < inputCount; i++)
                         {
-                            rbf.Centers[i] = CSVFormat.EG_FORMAT.Parse(cols[i + 3]);
+                            rbf.Centers[i] = CSVFormat.EgFormat.Parse(cols[i + 3]);
                         }
 
                         flat.RBF[index++] = rbf;

@@ -179,10 +179,10 @@ namespace Encog.App.Analyst.Script
                     bool iscomplete = Int32.Parse(cols[2]) > 0;
                     bool isint = Int32.Parse(cols[ColumnThree]) > 0;
                     bool isreal = Int32.Parse(cols[ColumnFour]) > 0;
-                    double amax = CSVFormat.EG_FORMAT.Parse(cols[5]);
-                    double amin = CSVFormat.EG_FORMAT.Parse(cols[6]);
-                    double mean = CSVFormat.EG_FORMAT.Parse(cols[7]);
-                    double sdev = CSVFormat.EG_FORMAT.Parse(cols[8]);
+                    double amax = CSVFormat.EgFormat.Parse(cols[5]);
+                    double amin = CSVFormat.EgFormat.Parse(cols[6]);
+                    double mean = CSVFormat.EgFormat.Parse(cols[7]);
+                    double sdev = CSVFormat.EgFormat.Parse(cols[8]);
                     var df = new DataField(name)
                                  {
                                      Class = isclass,
@@ -248,8 +248,8 @@ namespace Encog.App.Analyst.Script
                         .Equals("output");
                     int timeSlice = Int32.Parse(cols[2]);
                     String action = cols[3];
-                    double high = CSVFormat.EG_FORMAT.Parse(cols[4]);
-                    double low = CSVFormat.EG_FORMAT.Parse(cols[5]);
+                    double high = CSVFormat.EgFormat.Parse(cols[4]);
+                    double low = CSVFormat.EgFormat.Parse(cols[5]);
 
                     NormalizationAction des;
                     if (action.Equals("range"))

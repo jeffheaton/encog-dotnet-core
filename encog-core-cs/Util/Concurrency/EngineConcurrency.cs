@@ -39,28 +39,21 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// Singleton instance.
         /// </summary>
-        private static EngineConcurrency instance;
+        private static EngineConcurrency _instance;
 
         /// <summary>
         /// The number of active tasks.
         /// </summary>
-        private int activeTasks;
+        private int _activeTasks;
 
-        private int currentTaskGroup;
+        private int _currentTaskGroup;
 
         /// <summary>
         /// The instance to the singleton.
         /// </summary>
         public static EngineConcurrency Instance
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new EngineConcurrency();
-                }
-                return instance;
-            }
+            get { return _instance ?? (_instance = new EngineConcurrency()); }
         }
 
         /// <summary>
@@ -69,7 +62,7 @@ namespace Encog.Util.Concurrency
         public EngineConcurrency()
         {
             SetMaxThreadsToCoreCount();
-            currentTaskGroup = 0;
+            _currentTaskGroup = 0;
         }
 
         /// <summary>
@@ -92,7 +85,7 @@ namespace Encog.Util.Concurrency
         {
             lock (this)
             {
-                activeTasks++;
+                _activeTasks++;
             }
             if (group != null)
                 group.TaskStarting();
@@ -160,11 +153,11 @@ namespace Encog.Util.Concurrency
         /// <returns>The new task group.</returns>
         public TaskGroup CreateTaskGroup()
         {
-            TaskGroup result = null;
+            TaskGroup result;
             lock (this)
             {
-                currentTaskGroup++;
-                result = new TaskGroup(currentTaskGroup);
+                _currentTaskGroup++;
+                result = new TaskGroup(_currentTaskGroup);
             }
             return result;
         }
@@ -173,7 +166,7 @@ namespace Encog.Util.Concurrency
         {
             lock (this)
             {
-                activeTasks--;
+                _activeTasks--;
             }
         }
     }

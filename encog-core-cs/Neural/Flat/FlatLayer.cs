@@ -139,7 +139,7 @@ namespace Encog.Neural.Flat
         /// <returns>the bias</returns>
         public bool HasBias()
         {
-            return Math.Abs(_biasActivation) > EncogFramework.DEFAULT_DOUBLE_EQUAL;
+            return Math.Abs(_biasActivation) > EncogFramework.DefaultDoubleEqual;
         }
 
         /// <inheritdoc/>

@@ -112,7 +112,7 @@ namespace Encog.Util
             String str = enc.GetString(mstream.GetBuffer());
             mstream.Dispose();
 
-            var Uri = new Uri(
+            var uri = new Uri(
                 "http://search.yahooapis.com/WebSearchService/V1/webSearch?"
                 + str);
 
@@ -122,14 +122,14 @@ namespace Encog.Util
             {
                 try
                 {
-                    result = DoSearch(Uri);
+                    result = DoSearch(uri);
                     done = true;
                 }
                 catch (IOException e)
                 {
                     if (tries == 5)
                     {
-                        throw (e);
+                        throw;
                     }
                     Thread.Sleep(5000);
                 }

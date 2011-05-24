@@ -118,7 +118,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 try
                 {
-                    double d = CSVFormat.EG_FORMAT.Parse(str);
+                    double d = CSVFormat.EgFormat.Parse(str);
                     Max = Math.Max(d, Max);
                     Min = Math.Min(d, Min);
                     _total += d;
@@ -202,7 +202,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-                    double d = CSVFormat.EG_FORMAT.Parse(str);
+                    double d = CSVFormat.EgFormat.Parse(str);
                     _devTotal += Math.Pow((d - Mean), 2);
                 }
             }

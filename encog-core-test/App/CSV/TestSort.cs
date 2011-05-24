@@ -61,7 +61,7 @@ namespace Encog.App.CSV
             GenerateTestFileHeadings(true);
             var norm = new SortCSV();
             norm.SortOrder.Add(new SortedField(1, SortType.SortString, true));
-            norm.Process(InputName, OutputName, true, CSVFormat.ENGLISH);
+            norm.Process(InputName, OutputName, true, CSVFormat.English);
 
             var tr = new StreamReader(OutputName.ToString());
 
@@ -88,7 +88,7 @@ namespace Encog.App.CSV
             var norm = new SortCSV();
             norm.SortOrder.Add(new SortedField(1, SortType.SortInteger, true));
             norm.ProduceOutputHeaders = false;
-            norm.Process(InputName, OutputName, false, CSVFormat.ENGLISH);
+            norm.Process(InputName, OutputName, false, CSVFormat.English);
 
             var tr = new StreamReader(OutputName.ToString());
 

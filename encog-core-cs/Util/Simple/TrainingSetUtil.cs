@@ -49,11 +49,10 @@ namespace Encog.Util.Simple
             var csv = new ReadCSV(filename, headers, format);
             while (csv.Next())
             {
-                IMLData input = null;
                 IMLData ideal = null;
                 int index = 0;
 
-                input = new BasicMLData(inputSize);
+                IMLData input = new BasicMLData(inputSize);
                 for (int i = 0; i < inputSize; i++)
                 {
                     double d = csv.GetDouble(index++);
@@ -63,10 +62,10 @@ namespace Encog.Util.Simple
                 if (idealSize > 0)
                 {
                     ideal = new BasicMLData(idealSize);
-                    for (int i_0 = 0; i_0 < idealSize; i_0++)
+                    for (int i = 0; i < idealSize; i++)
                     {
-                        double d_1 = csv.GetDouble(index++);
-                        ideal[i_0] = d_1;
+                        double d = csv.GetDouble(index++);
+                        ideal[i] = d;
                     }
                 }
 

@@ -136,7 +136,7 @@ namespace Encog.App.Analyst.Script
         /// <value>The precision.</value>
         public int Precision
         {
-            get { return EncogFramework.DEFAULT_PRECISION; }
+            get { return EncogFramework.DefaultPrecision; }
         }
 
 

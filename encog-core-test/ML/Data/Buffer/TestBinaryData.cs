@@ -65,11 +65,11 @@ namespace Encog.ML.Data.Buffer
             var loader = new BinaryDataLoader(codec);
             loader.External2Binary("encog.bin");
 
-            var codec2 = new CSVDataCODEC("encog.csv", CSVFormat.ENGLISH);
+            var codec2 = new CSVDataCODEC("encog.csv", CSVFormat.English);
             var loader2 = new BinaryDataLoader(codec2);
             loader2.Binary2External("encog.bin");
 
-            var codec3 = new CSVDataCODEC("encog.csv", CSVFormat.ENGLISH, false, 2, 1);
+            var codec3 = new CSVDataCODEC("encog.csv", CSVFormat.English, false, 2, 1);
             var loader3 = new BinaryDataLoader(codec3);
             loader3.External2Binary("encog.bin");
 

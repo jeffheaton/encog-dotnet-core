@@ -61,7 +61,7 @@ namespace Encog.App.CSV
             var norm = new SegregateCSV();
             norm.Targets.Add(new SegregateTargetPercent(OutputName1, 75));
             norm.Targets.Add(new SegregateTargetPercent(OutputName2, 25));
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.Process();
 
             var tr = new StreamReader(OutputName1.ToString());
@@ -90,7 +90,7 @@ namespace Encog.App.CSV
             var norm = new SegregateCSV();
             norm.Targets.Add(new SegregateTargetPercent(OutputName1, 75));
             norm.Targets.Add(new SegregateTargetPercent(OutputName2, 25));
-            norm.Analyze(InputName, false, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, false, CSVFormat.English);
             norm.ProduceOutputHeaders = false;
             norm.Process();
 

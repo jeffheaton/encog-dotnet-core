@@ -133,7 +133,7 @@ namespace Encog.Neural.Networks.Training.Strategy
                 double currentError = _train.Error;
                 _lastImprovement = (currentError - _lastError)
                                   /_lastError;
-                EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Last improvement: "
+                EncogLogging.Log(EncogLogging.LevelDebug, "Last improvement: "
                                                            + _lastImprovement);
 
                 if ((_lastImprovement > 0)
@@ -150,13 +150,13 @@ namespace Encog.Neural.Networks.Training.Strategy
                         }
                         _currentMomentum *= (1.0d + MomentumIncrease);
                         _setter.Momentum = _currentMomentum;
-                        EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                        EncogLogging.Log(EncogLogging.LevelDebug,
                                          "Adjusting momentum: " + _currentMomentum);
                     }
                 }
                 else
                 {
-                    EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                    EncogLogging.Log(EncogLogging.LevelDebug,
                                      "Setting momentum back to zero.");
 
                     _currentMomentum = 0;

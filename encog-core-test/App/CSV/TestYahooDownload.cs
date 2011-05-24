@@ -44,7 +44,7 @@ namespace Encog.App.CSV
                 var yahoo = new YahooDownload();
                 yahoo.Precision = 2;
                 // load a non-sense ticker, should throw error
-                yahoo.LoadAllData("sdfhusdhfuish", OutputName.ToString(), CSVFormat.ENGLISH,
+                yahoo.LoadAllData("sdfhusdhfuish", OutputName.ToString(), CSVFormat.English,
                                   new DateTime(2000, 01, 01),
                                   new DateTime(2000, 01, 10));
 
@@ -62,7 +62,7 @@ namespace Encog.App.CSV
         {
             var yahoo = new YahooDownload();
             yahoo.Precision = 2;
-            yahoo.LoadAllData("yhoo", OutputName.ToString(), CSVFormat.ENGLISH,
+            yahoo.LoadAllData("yhoo", OutputName.ToString(), CSVFormat.English,
                               new DateTime(2000, 01, 01),
                               new DateTime(2000, 01, 10));
             var tr = new StreamReader(OutputName.ToString());

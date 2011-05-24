@@ -74,7 +74,7 @@ namespace Encog.ML.Data.Specific
         /// <param name="headers">True if headers are present on the first line.</param>
         public CSVMLDataSet(String filename, int inputSize,
                             int idealSize, bool headers)
-            : this(filename, inputSize, idealSize, headers, CSVFormat.ENGLISH)
+            : this(filename, inputSize, idealSize, headers, CSVFormat.English)
         {
         }
 

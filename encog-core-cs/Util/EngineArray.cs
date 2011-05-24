@@ -146,9 +146,9 @@ namespace Encog.Util
         {
             var result = new double[list.Count];
             int index = 0;
-            foreach (Object obj in list)
+            foreach (double obj in list)
             {
-                result[index++] = (Double) obj;
+                result[index++] = obj;
             }
 
             return result;
@@ -158,11 +158,11 @@ namespace Encog.Util
         /// Fill the specified array with the specified value.
         /// </summary>
         /// <param name="p">The array to fill.</param>
-        /// <param name="value_ren">The value to fill.</param>
-        internal static void Fill(double[] p, double value_ren)
+        /// <param name="v">The value to fill.</param>
+        internal static void Fill(double[] p, double v)
         {
             for (int i = 0; i < p.Length; i++)
-                p[i] = value_ren;
+                p[i] = v;
         }
 
         /// <summary>
@@ -231,22 +231,22 @@ namespace Encog.Util
         /// Fill the array with the specified value.
         /// </summary>
         /// <param name="target">The array to fill.</param>
-        /// <param name="value_ren">The value to fill.</param>
-        public static void Fill(double[] target, int value_ren)
+        /// <param name="v">The value to fill.</param>
+        public static void Fill(double[] target, int v)
         {
             for (int i = 0; i < target.Length; i++)
-                target[i] = value_ren;
+                target[i] = v;
         }
 
         /// <summary>
         /// Fill the array with the specified value.
         /// </summary>
         /// <param name="target">The array to fill.</param>
-        /// <param name="value_ren">The value to fill.</param>
-        public static void Fill(float[] target, int value_ren)
+        /// <param name="v">The value to fill.</param>
+        public static void Fill(float[] target, int v)
         {
             for (int i = 0; i < target.Length; i++)
-                target[i] = value_ren;
+                target[i] = v;
         }
 
         /// <summary>
@@ -299,11 +299,11 @@ namespace Encog.Util
         /// <summary>
         /// Put all elements from one dictionary to another.
         /// </summary>
-        /// <typeparam name="K">The key type.</typeparam>
-        /// <typeparam name="V">The value type.</typeparam>
+        /// <typeparam name="TK">The key type.</typeparam>
+        /// <typeparam name="TV">The value type.</typeparam>
         /// <param name="source">The source dictionary.</param>
         /// <param name="target">The target dictionary.</param>
-        public static void PutAll<K, V>(IDictionary<K, V> source, IDictionary<K, V> target)
+        public static void PutAll<TK, TV>(IDictionary<TK, TV> source, IDictionary<TK, TV> target)
         {
             foreach (var x in source)
             {

@@ -38,31 +38,31 @@ namespace Encog.Util.Logging
         /// inner workings.
         /// </summary>
         ///
-        public const int LEVEL_DEBUG = 0;
+        public const int LevelDebug = 0;
 
         /// <summary>
         /// Info logging tells you when major processes start and stop.
         /// </summary>
         ///
-        public const int LEVEL_INFO = 1;
+        public const int LevelInfo = 1;
 
         /// <summary>
         /// Error level tells you about errors, less important to critical.
         /// </summary>
         ///
-        public const int LEVEL_ERROR = 2;
+        public const int LevelError = 2;
 
         /// <summary>
         /// Critical logging logs errors that cannot be recovered from.
         /// </summary>
         ///
-        public const int LEVEL_CRITICAL = 3;
+        public const int LevelCritical = 3;
 
         /// <summary>
         /// Logging is disabled at this level.
         /// </summary>
         ///
-        public const int LEVEL_DISABLE = 4;
+        public const int LevelDisable = 4;
 
         /// <value>The current logging level.</value>
         public int CurrentLevel
@@ -99,7 +99,7 @@ namespace Encog.Util.Logging
         /// <param name="t">The exception to log.</param>
         public static void Log(Exception t)
         {
-            Log(LEVEL_ERROR, t);
+            Log(LevelError, t);
         }
     }
 }

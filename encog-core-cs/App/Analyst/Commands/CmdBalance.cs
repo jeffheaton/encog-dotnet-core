@@ -68,9 +68,9 @@ namespace Encog.App.Analyst.Commands
             String targetID = Prop.GetPropertyString(
                 ScriptProperties.BalanceConfigTargetFile);
 
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning balance");
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "target file:" + targetID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "Beginning balance");
+            EncogLogging.Log(EncogLogging.LevelDebug, "source file:" + sourceID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "target file:" + targetID);
 
             FileInfo sourceFile = Script.ResolveFilename(sourceID);
             FileInfo targetFile = Script.ResolveFilename(targetID);

@@ -111,7 +111,7 @@ namespace Encog.Persist
                 line.Append(COMMA);
             }
 
-            line.Append(CSVFormat.ENGLISH.Format(d, EncogFramework.DEFAULT_PRECISION));
+            line.Append(CSVFormat.English.Format(d, EncogFramework.DefaultPrecision));
         }
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace Encog.Persist
             for (int i = 0; i < act.Params.Length; i++)
             {
                 result.Append('|');
-                result.Append(CSVFormat.EG_FORMAT.Format(act.Params[i],
-                                                         EncogFramework.DEFAULT_PRECISION));
+                result.Append(CSVFormat.EgFormat.Format(act.Params[i],
+                                                         EncogFramework.DefaultPrecision));
             }
             WriteProperty(name, result.ToString());
         }
@@ -294,13 +294,13 @@ namespace Encog.Persist
         public void WriteProperty(String name, CSVFormat csvFormat)
         {
             String fmt;
-            if ((csvFormat == CSVFormat.ENGLISH)
-                || (csvFormat == CSVFormat.ENGLISH)
-                || (csvFormat == CSVFormat.DECIMAL_POINT))
+            if ((csvFormat == CSVFormat.English)
+                || (csvFormat == CSVFormat.English)
+                || (csvFormat == CSVFormat.DecimalPoint))
             {
                 fmt = "decpnt";
             }
-            else if (csvFormat == CSVFormat.DECIMAL_COMMA)
+            else if (csvFormat == CSVFormat.DecimalComma)
             {
                 fmt = "deccomma";
             }
@@ -320,7 +320,7 @@ namespace Encog.Persist
         public void WriteProperty(String name, double value_ren)
         {
             xout.WriteLine(name + "="
-                           + CSVFormat.EG_FORMAT.Format(value_ren, EncogFramework.DEFAULT_PRECISION));
+                           + CSVFormat.EgFormat.Format(value_ren, EncogFramework.DefaultPrecision));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Encog.Persist
         public void WriteProperty(String name, double[] d)
         {
             var result = new StringBuilder();
-            NumberList.ToList(CSVFormat.EG_FORMAT, result, d);
+            NumberList.ToList(CSVFormat.EgFormat, result, d);
             WriteProperty(name, result.ToString());
         }
 
@@ -368,7 +368,7 @@ namespace Encog.Persist
         public void WriteProperty(String name, int[] array)
         {
             var result = new StringBuilder();
-            NumberList.ToListInt(CSVFormat.EG_FORMAT, result, array);
+            NumberList.ToListInt(CSVFormat.EgFormat, result, array);
             WriteProperty(name, result.ToString());
         }
 
@@ -390,8 +390,8 @@ namespace Encog.Persist
                 for (int col = 0; col < matrix.Cols; col++)
                 {
                     result.Append(',');
-                    result.Append(CSVFormat.EG_FORMAT.Format(matrix[row, col],
-                                                             EncogFramework.DEFAULT_PRECISION));
+                    result.Append(CSVFormat.EgFormat.Format(matrix[row, col],
+                                                             EncogFramework.DefaultPrecision));
                 }
             }
 

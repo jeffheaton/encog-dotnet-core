@@ -128,7 +128,7 @@ namespace Encog.Neural.Networks
                         IActivationFunction af;
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
-                        String name = ReflectionUtil.AF_PATH
+                        String name = ReflectionUtil.AfPath
                                       + cols[0];
                         try
                         {
@@ -150,7 +150,7 @@ namespace Encog.Neural.Networks
                         for (int i = 0; i < af.ParamNames.Length; i++)
                         {
                             af.Params[i] = 
-                                        CSVFormat.EG_FORMAT.Parse(cols[i + 1]);
+                                        CSVFormat.EgFormat.Parse(cols[i + 1]);
                         }
 
                         flat.ActivationFunctions[index++] = af;

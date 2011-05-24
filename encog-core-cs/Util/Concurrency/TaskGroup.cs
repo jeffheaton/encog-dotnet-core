@@ -34,22 +34,22 @@ namespace Encog.Util.Concurrency
         /// <summary>
         /// The event used to sync waiting for tasks to stop.
         /// </summary>
-        private readonly ManualResetEvent completeEvent = new ManualResetEvent(false);
+        private readonly ManualResetEvent _completeEvent = new ManualResetEvent(false);
 
         /// <summary>
         /// The ID for this task group.
         /// </summary>
-        private readonly int id;
+        private readonly int _id;
 
         /// <summary>
         /// The number of tasks that have completed.
         /// </summary>
-        private int completedTasks;
+        private int _completedTasks;
 
         /// <summary>
         /// The total number of tasks in this group.
         /// </summary>
-        private int totalTasks;
+        private int _totalTasks;
 
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Encog.Util.Concurrency
         /// <param name="id">The ID of the task group.</param>
         public TaskGroup(int id)
         {
-            this.id = id;
-            totalTasks = 0;
+            _id = id;
+            _totalTasks = 0;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Encog.Util.Concurrency
         /// </summary>
         public int ID
         {
-            get { return id; }
+            get { return _id; }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Encog.Util.Concurrency
             {
                 lock (this)
                 {
-                    return totalTasks == completedTasks;
+                    return _totalTasks == _completedTasks;
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Encog.Util.Concurrency
         {
             lock (this)
             {
-                totalTasks++;
+                _totalTasks++;
             }
         }
 
@@ -102,8 +102,8 @@ namespace Encog.Util.Concurrency
         {
             lock (this)
             {
-                completedTasks++;
-                completeEvent.Set();
+                _completedTasks++;
+                _completeEvent.Set();
             }
         }
 
@@ -114,8 +114,8 @@ namespace Encog.Util.Concurrency
         {
             while (!NoTasks)
             {
-                completeEvent.WaitOne();
-                completeEvent.Reset();
+                _completeEvent.WaitOne();
+                _completeEvent.Reset();
             }
         }
     }

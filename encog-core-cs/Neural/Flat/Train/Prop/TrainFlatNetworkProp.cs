@@ -317,9 +317,9 @@ namespace Encog.Neural.Flat.Train.Prop
                     double t1 = af.DerivativeFunction(-1.0);
                     double t2 = af.DerivativeFunction(0.0);
                     double t3 = af.DerivativeFunction(1.0);
-                    if ((Math.Abs(t1) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
-                            || (Math.Abs(t2) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
-                            || (Math.Abs(t3) < EncogFramework.DEFAULT_DOUBLE_EQUAL))
+                    if ((Math.Abs(t1) < EncogFramework.DefaultDoubleEqual)
+                            || (Math.Abs(t2) < EncogFramework.DefaultDoubleEqual)
+                            || (Math.Abs(t3) < EncogFramework.DefaultDoubleEqual))
                     {
                         _flatSpot[i] = 0.1;
                     }

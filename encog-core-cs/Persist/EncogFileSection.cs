@@ -129,7 +129,7 @@ namespace Encog.Persist
                 IActivationFunction af;
                 String[] cols = v.Split('|');
 
-                String afName = ReflectionUtil.AF_PATH
+                String afName = ReflectionUtil.AfPath
                                 + cols[0];
                 try
                 {
@@ -142,7 +142,7 @@ namespace Encog.Persist
 
                 for (int i = 0; i < af.ParamNames.Length; i++)
                 {
-                    af.Params[i] = CSVFormat.EG_FORMAT.Parse(cols[i + 1]);
+                    af.Params[i] = CSVFormat.EgFormat.Parse(cols[i + 1]);
                 }
 
                 return af;
@@ -200,7 +200,7 @@ namespace Encog.Persist
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return CSVFormat.EG_FORMAT.Parse(v);
+                return CSVFormat.EgFormat.Parse(v);
             }
             catch (FormatException )
             {
@@ -228,7 +228,7 @@ namespace Encog.Persist
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return NumberList.FromList(CSVFormat.EG_FORMAT, v);
+                return NumberList.FromList(CSVFormat.EgFormat, v);
             }
             catch (FormatException )
             {
@@ -284,7 +284,7 @@ namespace Encog.Persist
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return NumberList.FromListInt(CSVFormat.EG_FORMAT, v);
+                return NumberList.FromListInt(CSVFormat.EgFormat, v);
             }
             catch (FormatException )
             {
@@ -310,7 +310,7 @@ namespace Encog.Persist
 
             String line = paras[name];
 
-            double[] d = NumberList.FromList(CSVFormat.EG_FORMAT, line);
+            double[] d = NumberList.FromList(CSVFormat.EgFormat, line);
             var rows = (int) d[0];
             var cols = (int) d[1];
 

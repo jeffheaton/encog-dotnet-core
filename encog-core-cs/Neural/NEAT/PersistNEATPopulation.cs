@@ -82,8 +82,8 @@ namespace Encog.Neural.Neat
                                                  InnovationID = Int32.Parse(cols[0]),
                                                  InnovationType = StringToInnovationType(cols[1]),
                                                  NeuronType = StringToNeuronType(cols[2]),
-                                                 SplitX = CSVFormat.EG_FORMAT.Parse(cols[3]),
-                                                 SplitY = CSVFormat.EG_FORMAT.Parse(cols[4]),
+                                                 SplitX = CSVFormat.EgFormat.Parse(cols[3]),
+                                                 SplitY = CSVFormat.EgFormat.Parse(cols[4]),
                                                  NeuronID = Int32.Parse(cols[5]),
                                                  FromNeuronID = Int32.Parse(cols[6]),
                                                  ToNeuronID = Int32.Parse(cols[7])
@@ -101,13 +101,13 @@ namespace Encog.Neural.Neat
                                           {
                                               SpeciesID = Int32.Parse(cols[0]),
                                               Age = Int32.Parse(cols[1]),
-                                              BestScore = CSVFormat.EG_FORMAT.Parse(cols[2]),
+                                              BestScore = CSVFormat.EgFormat.Parse(cols[2]),
                                               GensNoImprovement = Int32.Parse(cols[3]),
-                                              SpawnsRequired = CSVFormat.EG_FORMAT
+                                              SpawnsRequired = CSVFormat.EgFormat
                                                   .Parse(cols[4])
                                           };
 
-                        species.SpawnsRequired = CSVFormat.EG_FORMAT
+                        species.SpawnsRequired = CSVFormat.EgFormat
                             .Parse(cols[5]);
                         leaderMap[(species)] = (Int32.Parse(cols[6]));
                         result.Species.Add(species);
@@ -133,12 +133,12 @@ namespace Encog.Neural.Neat
                             lastGenome.Chromosomes.Add(lastGenome.LinksChromosome);
                             lastGenome.GenomeID = Int32.Parse(cols[1]);
                             lastGenome.SpeciesID = Int32.Parse(cols[2]);
-                            lastGenome.AdjustedScore = CSVFormat.EG_FORMAT
+                            lastGenome.AdjustedScore = CSVFormat.EgFormat
                                 .Parse(cols[3]);
-                            lastGenome.AmountToSpawn = CSVFormat.EG_FORMAT
+                            lastGenome.AmountToSpawn = CSVFormat.EgFormat
                                 .Parse(cols[4]);
                             lastGenome.NetworkDepth = Int32.Parse(cols[5]);
-                            lastGenome.Score = CSVFormat.EG_FORMAT.Parse(cols[6]);
+                            lastGenome.Score = CSVFormat.EgFormat.Parse(cols[6]);
                             result.Add(lastGenome);
                             genomeMap[(int) lastGenome.GenomeID] = lastGenome;
                         }
@@ -150,10 +150,10 @@ namespace Encog.Neural.Neat
                                                      NeuronType = StringToNeuronType(cols[2]),
                                                      Enabled = Int32.Parse(cols[3]) > 0,
                                                      InnovationId = Int32.Parse(cols[4]),
-                                                     ActivationResponse = CSVFormat.EG_FORMAT
+                                                     ActivationResponse = CSVFormat.EgFormat
                                                          .Parse(cols[5]),
-                                                     SplitX = CSVFormat.EG_FORMAT.Parse(cols[6]),
-                                                     SplitY = CSVFormat.EG_FORMAT.Parse(cols[7])
+                                                     SplitX = CSVFormat.EgFormat.Parse(cols[6]),
+                                                     SplitY = CSVFormat.EgFormat.Parse(cols[7])
                                                  };
                             lastGenome.Neurons.Add(neuronGene);
                         }
@@ -165,7 +165,7 @@ namespace Encog.Neural.Neat
                             linkGene.Recurrent = Int32.Parse(cols[3]) > 0;
                             linkGene.FromNeuronID = Int32.Parse(cols[4]);
                             linkGene.ToNeuronID = Int32.Parse(cols[5]);
-                            linkGene.Weight = CSVFormat.EG_FORMAT.Parse(cols[6]);
+                            linkGene.Weight = CSVFormat.EgFormat.Parse(cols[6]);
                             linkGene.InnovationId = Int32.Parse(cols[7]);
                             lastGenome.Links.Add(linkGene);
                         }

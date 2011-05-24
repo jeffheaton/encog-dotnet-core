@@ -430,7 +430,7 @@ namespace Encog.App.Analyst
 
                         if (lastUpdate > UpdateTime)
                         {
-                            Report(0, (int) (size/Format.MEMORY_MEG),
+                            Report(0, (int) (size/Format.MemoryMeg),
                                    "Downloading... " + Format.FormatMemory(size));
                             lastUpdate = 0;
                         }
@@ -459,7 +459,7 @@ namespace Encog.App.Analyst
 
             foreach (String line  in  task.Lines)
             {
-                EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Execute analyst line: "
+                EncogLogging.Log(EncogLogging.LevelDebug, "Execute analyst line: "
                                                            + line);
                 ReportCommandBegin(total, current, line);
 
@@ -509,7 +509,7 @@ namespace Encog.App.Analyst
         /// <param name="name">The name of the task to execute.</param>
         public void ExecuteTask(String name)
         {
-            EncogLogging.Log(EncogLogging.LEVEL_INFO, "Analyst execute task:"
+            EncogLogging.Log(EncogLogging.LevelInfo, "Analyst execute task:"
                                                       + name);
             AnalystTask task = _script.GetTask(name);
             if (task == null)

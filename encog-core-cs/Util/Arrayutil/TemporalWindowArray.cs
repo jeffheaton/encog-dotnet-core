@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using System.Linq;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 
@@ -35,19 +36,19 @@ namespace Encog.Util.Arrayutil
         /// The fields that are to be processed.
         /// </summary>
         ///
-        private TemporalWindowField[] fields;
+        private TemporalWindowField[] _fields;
 
         /// <summary>
         /// The size of the input window.
         /// </summary>
         ///
-        private int inputWindow;
+        private int _inputWindow;
 
         /// <summary>
         /// The size of the prediction window.
         /// </summary>
         ///
-        private int predictWindow;
+        private int _predictWindow;
 
         /// <summary>
         /// Construct a time-series from an array.
@@ -58,30 +59,30 @@ namespace Encog.Util.Arrayutil
         public TemporalWindowArray(int theInputWindow,
                                    int thePredictWindow)
         {
-            inputWindow = theInputWindow;
-            predictWindow = thePredictWindow;
+            _inputWindow = theInputWindow;
+            _predictWindow = thePredictWindow;
         }
 
         /// <value>The fields that are to be processed.</value>
         public TemporalWindowField[] Fields
         {
-            get { return fields; }
+            get { return _fields; }
         }
 
 
         /// <value>the inputWindow to set</value>
         public int InputWindow
         {
-            get { return inputWindow; }
-            set { inputWindow = value; }
+            get { return _inputWindow; }
+            set { _inputWindow = value; }
         }
 
 
         /// <value>the predictWindow to set</value>
         public int PredictWindow
         {
-            get { return predictWindow; }
-            set { predictWindow = value; }
+            get { return _predictWindow; }
+            set { _predictWindow = value; }
         }
 
         /// <summary>
@@ -91,9 +92,8 @@ namespace Encog.Util.Arrayutil
         /// <param name="array">The array to analyze.</param>
         public void Analyze(double[] array)
         {
-            fields = new TemporalWindowField[1];
-            fields[0] = new TemporalWindowField("0");
-            fields[0].Action = TemporalType.InputAndPredict;
+            _fields = new TemporalWindowField[1];
+            _fields[0] = new TemporalWindowField("0") {Action = TemporalType.InputAndPredict};
         }
 
         /// <summary>
@@ -104,11 +104,10 @@ namespace Encog.Util.Arrayutil
         public void Analyze(double[][] array)
         {
             int length = array[0].Length;
-            fields = new TemporalWindowField[length];
+            _fields = new TemporalWindowField[length];
             for (int i = 0; i < length; i++)
             {
-                fields[i] = new TemporalWindowField("" + i);
-                fields[i].Action = TemporalType.InputAndPredict;
+                _fields[i] = new TemporalWindowField("" + i) {Action = TemporalType.InputAndPredict};
             }
         }
 
@@ -119,18 +118,7 @@ namespace Encog.Util.Arrayutil
         /// <returns>The number of input fields.</returns>
         public int CountInputFields()
         {
-            int result = 0;
-
-
-            foreach (TemporalWindowField field  in  fields)
-            {
-                if (field.Input)
-                {
-                    result++;
-                }
-            }
-
-            return result;
+            return _fields.Count(field => field.Input);
         }
 
         /// <summary>
@@ -140,18 +128,7 @@ namespace Encog.Util.Arrayutil
         /// <returns>The number of fields predicted.</returns>
         public int CountPredictFields()
         {
-            int result = 0;
-
-
-            foreach (TemporalWindowField field  in  fields)
-            {
-                if (field.Predict)
-                {
-                    result++;
-                }
-            }
-
-            return result;
+            return _fields.Count(field => field.Predict);
         }
 
 
@@ -165,26 +142,26 @@ namespace Encog.Util.Arrayutil
         {
             IMLDataSet result = new BasicMLDataSet();
 
-            int totalWindowSize = inputWindow + predictWindow;
+            int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
 
             for (int i = 0; i < stopPoint; i++)
             {
-                IMLData inputData = new BasicMLData(inputWindow);
-                IMLData idealData = new BasicMLData(predictWindow);
+                IMLData inputData = new BasicMLData(_inputWindow);
+                IMLData idealData = new BasicMLData(_predictWindow);
 
                 int index = i;
 
                 // handle input window
-                for (int j = 0; j < inputWindow; j++)
+                for (int j = 0; j < _inputWindow; j++)
                 {
                     inputData[j] = data[index++];
                 }
 
                 // handle predict window
-                for (int j_0 = 0; j_0 < predictWindow; j_0++)
+                for (int j = 0; j < _predictWindow; j++)
                 {
-                    idealData[j_0] = data[index++];
+                    idealData[j] = data[index++];
                 }
 
                 IMLDataPair pair = new BasicMLDataPair(inputData, idealData);

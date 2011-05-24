@@ -101,7 +101,7 @@ namespace Encog.ML.Factory.Train
             {
                 String str = holder.GetString(
                     MLTrainFactory.PropertyDimensions, true, null);
-                int[] size = NumberList.FromListInt(CSVFormat.EG_FORMAT, str);
+                int[] size = NumberList.FromListInt(CSVFormat.EgFormat, str);
                 nf = new NeighborhoodRBF(size, t);
             }
             else if (neighborhoodStr.Equals("rbf1d", StringComparison.InvariantCultureIgnoreCase))

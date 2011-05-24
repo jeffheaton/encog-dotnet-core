@@ -118,7 +118,7 @@ namespace Encog.ML.Train.Strategy
                 _badCycleCount++;
                 if (_badCycleCount > _cycles)
                 {
-                    EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                    EncogLogging.Log(EncogLogging.LevelDebug,
                                      "Failed to imrove network, resetting.");
                     _method.Reset();
                     _badCycleCount = 0;

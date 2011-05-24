@@ -41,55 +41,55 @@ namespace Encog.Util.Arrayutil
         /// The list of classes.
         /// </summary>
         ///
-        private readonly IList<ClassItem> classes;
+        private readonly IList<ClassItem> _classes;
 
         /// <summary>
         /// Allows the index of a field to be looked up.
         /// </summary>
         ///
-        private readonly IDictionary<String, Int32> lookup;
+        private readonly IDictionary<String, Int32> _lookup;
 
         /// <summary>
         /// The action that should be taken on this column.
         /// </summary>
         ///
-        private NormalizationAction action;
+        private NormalizationAction _action;
 
         /// <summary>
         /// The actual high from the sample data.
         /// </summary>
         ///
-        private double actualHigh;
+        private double _actualHigh;
 
         /// <summary>
         /// The actual low from the sample data.
         /// </summary>
         ///
-        private double actualLow;
+        private double _actualLow;
 
         /// <summary>
         /// If equilateral classification is used, this is the Equilateral object.
         /// </summary>
         ///
-        private Equilateral eq;
+        private Equilateral _eq;
 
         /// <summary>
         /// The name of this column.
         /// </summary>
         ///
-        private String name;
+        private String _name;
 
         /// <summary>
         /// The desired normalized high.
         /// </summary>
         ///
-        private double normalizedHigh;
+        private double _normalizedHigh;
 
         /// <summary>
         /// The desired normalized low from the sample data.
         /// </summary>
         ///
-        private double normalizedLow;
+        private double _normalizedLow;
 
         /// <summary>
         /// Construct the object with a range of 1 and -1.
@@ -108,13 +108,13 @@ namespace Encog.Util.Arrayutil
         public NormalizedField(double theNormalizedHigh,
                                double theNormalizedLow)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            normalizedHigh = theNormalizedHigh;
-            normalizedLow = theNormalizedLow;
-            actualHigh = Double.MinValue;
-            actualLow = Double.MaxValue;
-            action = NormalizationAction.Normalize;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _normalizedHigh = theNormalizedHigh;
+            _normalizedLow = theNormalizedLow;
+            _actualHigh = Double.MinValue;
+            _actualLow = Double.MaxValue;
+            _action = NormalizationAction.Normalize;
         }
 
         /// <summary>
@@ -142,14 +142,14 @@ namespace Encog.Util.Arrayutil
                                String theName, double ahigh, double alow,
                                double nhigh, double nlow)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            action = theAction;
-            actualHigh = ahigh;
-            actualLow = alow;
-            normalizedHigh = nhigh;
-            normalizedLow = nlow;
-            name = theName;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _action = theAction;
+            _actualHigh = ahigh;
+            _actualLow = alow;
+            _normalizedHigh = nhigh;
+            _normalizedLow = nlow;
+            _name = theName;
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace Encog.Util.Arrayutil
                                NormalizationAction theAction, double high,
                                double low)
         {
-            classes = new List<ClassItem>();
-            lookup = new Dictionary<String, Int32>();
-            name = theName;
-            action = theAction;
-            normalizedHigh = high;
-            normalizedLow = low;
+            _classes = new List<ClassItem>();
+            _lookup = new Dictionary<String, Int32>();
+            _name = theName;
+            _action = theAction;
+            _normalizedHigh = high;
+            _normalizedLow = low;
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public NormalizationAction Action
         {
-            get { return action; }
-            set { action = value; }
+            get { return _action; }
+            set { _action = value; }
         }
 
 
@@ -187,8 +187,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double ActualHigh
         {
-            get { return actualHigh; }
-            set { actualHigh = value; }
+            get { return _actualHigh; }
+            set { _actualHigh = value; }
         }
 
 
@@ -197,15 +197,15 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double ActualLow
         {
-            get { return actualLow; }
-            set { actualLow = value; }
+            get { return _actualLow; }
+            set { _actualLow = value; }
         }
 
 
         /// <value>A list of any classes in this field.</value>
         public IList<ClassItem> Classes
         {
-            get { return classes; }
+            get { return _classes; }
         }
 
 
@@ -216,14 +216,14 @@ namespace Encog.Util.Arrayutil
         {
             get
             {
-                switch (action)
+                switch (_action)
                 {
                     case NormalizationAction.Ignore:
                         return 0;
                     case NormalizationAction.Equilateral:
-                        return classes.Count - 1;
+                        return _classes.Count - 1;
                     case NormalizationAction.OneOf:
-                        return classes.Count;
+                        return _classes.Count;
                     default:
                         return 1;
                 }
@@ -234,7 +234,7 @@ namespace Encog.Util.Arrayutil
         /// <value>The equilateral object used by this class, null if none.</value>
         public Equilateral Eq
         {
-            get { return eq; }
+            get { return _eq; }
         }
 
 
@@ -243,8 +243,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public String Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
 
@@ -253,8 +253,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double NormalizedHigh
         {
-            get { return normalizedHigh; }
-            set { normalizedHigh = value; }
+            get { return _normalizedHigh; }
+            set { _normalizedHigh = value; }
         }
 
 
@@ -263,8 +263,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double NormalizedLow
         {
-            get { return normalizedLow; }
-            set { normalizedLow = value; }
+            get { return _normalizedLow; }
+            set { _normalizedLow = value; }
         }
 
 
@@ -273,9 +273,9 @@ namespace Encog.Util.Arrayutil
         {
             get
             {         
-                return (action == NormalizationAction.Equilateral)
-                       || (action == NormalizationAction.OneOf)
-                       || (action == NormalizationAction.SingleField);
+                return (_action == NormalizationAction.Equilateral)
+                       || (_action == NormalizationAction.OneOf)
+                       || (_action == NormalizationAction.SingleField);
             }
         }
 
@@ -287,22 +287,22 @@ namespace Encog.Util.Arrayutil
         /// <param name="d">The value to analyze.</param>
         public void Analyze(double d)
         {
-            actualHigh = Math.Max(actualHigh, d);
-            actualLow = Math.Min(actualLow, d);
+            _actualHigh = Math.Max(_actualHigh, d);
+            _actualLow = Math.Min(_actualLow, d);
         }
 
         /// <summary>
         /// Denormalize the specified value.
         /// </summary>
         ///
-        /// <param name="value_ren">The value to normalize.</param>
+        /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
-        public double DeNormalize(double value_ren)
+        public double DeNormalize(double v)
         {
-            double result = ((actualLow - actualHigh)*value_ren
-                             - normalizedHigh*actualLow + actualHigh
-                             *normalizedLow)
-                            /(normalizedLow - normalizedHigh);
+            double result = ((_actualLow - _actualHigh)*v
+                             - _normalizedHigh*_actualLow + _actualHigh
+                             *_normalizedLow)
+                            /(_normalizedLow - _normalizedHigh);
             return result;
         }
 
@@ -314,12 +314,12 @@ namespace Encog.Util.Arrayutil
         /// <returns>The class the data belongs to.</returns>
         public ClassItem DetermineClass(double[] data)
         {
-            int resultIndex = 0;
+            int resultIndex;
 
-            switch (action)
+            switch (_action)
             {
                 case NormalizationAction.Equilateral:
-                    resultIndex = eq.Decode(data);
+                    resultIndex = _eq.Decode(data);
                     break;
                 case NormalizationAction.OneOf:
                     resultIndex = EngineArray.IndexOfLargest(data);
@@ -328,10 +328,10 @@ namespace Encog.Util.Arrayutil
                     resultIndex = (int) data[0];
                     break;
                 default:
-                    throw new QuantError("Unknown action: " + action);
+                    throw new QuantError("Unknown action: " + _action);
             }
 
-            return classes[resultIndex];
+            return _classes[resultIndex];
         }
 
         /// <summary>
@@ -342,33 +342,33 @@ namespace Encog.Util.Arrayutil
         public String EncodeHeaders()
         {
             var line = new StringBuilder();
-            switch (action)
+            switch (_action)
             {
                 case NormalizationAction.SingleField:
-                    BasicFile.AppendSeparator(line, CSVFormat.EG_FORMAT);
+                    BasicFile.AppendSeparator(line, CSVFormat.EgFormat);
                     line.Append('\"');
-                    line.Append(name);
+                    line.Append(_name);
                     line.Append('\"');
                     break;
                 case NormalizationAction.Equilateral:
-                    for (int i = 0; i < classes.Count - 1; i++)
+                    for (int i = 0; i < _classes.Count - 1; i++)
                     {
-                        BasicFile.AppendSeparator(line, CSVFormat.EG_FORMAT);
+                        BasicFile.AppendSeparator(line, CSVFormat.EgFormat);
                         line.Append('\"');
-                        line.Append(name);
+                        line.Append(_name);
                         line.Append('-');
                         line.Append(i);
                         line.Append('\"');
                     }
                     break;
                 case NormalizationAction.OneOf:
-                    for (int i_0 = 0; i_0 < classes.Count; i_0++)
+                    for (int i = 0; i < _classes.Count; i++)
                     {
-                        BasicFile.AppendSeparator(line, CSVFormat.EG_FORMAT);
+                        BasicFile.AppendSeparator(line, CSVFormat.EgFormat);
                         line.Append('\"');
-                        line.Append(name);
+                        line.Append(_name);
                         line.Append('-');
-                        line.Append(i_0);
+                        line.Append(i);
                         line.Append('\"');
                     }
                     break;
@@ -398,12 +398,12 @@ namespace Encog.Util.Arrayutil
         ///
         public void FixSingleValue()
         {
-            if (action == NormalizationAction.Normalize)
+            if (_action == NormalizationAction.Normalize)
             {
-                if (Math.Abs(actualHigh - actualLow) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                if (Math.Abs(_actualHigh - _actualLow) < EncogFramework.DefaultDoubleEqual)
                 {
-                    actualHigh += 1;
-                    actualLow -= 1;
+                    _actualHigh += 1;
+                    _actualLow -= 1;
                 }
             }
         }
@@ -414,22 +414,22 @@ namespace Encog.Util.Arrayutil
         ///
         public void Init()
         {
-            if (action == NormalizationAction.Equilateral)
+            if (_action == NormalizationAction.Equilateral)
             {
-                if (classes.Count < Equilateral.MinEq)
+                if (_classes.Count < Equilateral.MinEq)
                 {
                     throw new QuantError("There must be at least three classes "
                                          + "to make use of equilateral normalization.");
                 }
 
-                eq = new Equilateral(classes.Count, normalizedHigh,
-                                     normalizedLow);
+                _eq = new Equilateral(_classes.Count, _normalizedHigh,
+                                     _normalizedLow);
             }
 
             // build lookup map
-            for (int i = 0; i < classes.Count; i++)
+            foreach (ClassItem t in _classes)
             {
-                lookup[classes[i].Name] = classes[i].Index;
+                _lookup[t.Name] = t.Index;
             }
         }
 
@@ -442,11 +442,11 @@ namespace Encog.Util.Arrayutil
         /// <returns>The index of the field, or -1 if not found.</returns>
         public int Lookup(String str)
         {
-            if (!lookup.ContainsKey(str))
+            if (!_lookup.ContainsKey(str))
             {
                 return -1;
             }
-            return lookup[str];
+            return _lookup[str];
         }
 
         /// <summary>
@@ -469,17 +469,17 @@ namespace Encog.Util.Arrayutil
                 throw new QuantError("Unsupported normalization type");
             }
 
-            action = theAction;
-            classes.Clear();
-            normalizedHigh = high;
-            normalizedLow = low;
-            actualHigh = 0;
-            actualLow = 0;
+            _action = theAction;
+            _classes.Clear();
+            _normalizedHigh = high;
+            _normalizedLow = low;
+            _actualHigh = 0;
+            _actualLow = 0;
 
             int index = 0;
             for (int i = classFrom; i < classTo; i++)
             {
-                classes.Add(new ClassItem("" + i, index++));
+                _classes.Add(new ClassItem("" + i, index++));
             }
         }
 
@@ -501,16 +501,16 @@ namespace Encog.Util.Arrayutil
                 throw new QuantError("Unsupported normalization type");
             }
 
-            action = theAction;
-            classes.Clear();
-            normalizedHigh = high;
-            normalizedLow = low;
-            actualHigh = 0;
-            actualLow = 0;
+            _action = theAction;
+            _classes.Clear();
+            _normalizedHigh = high;
+            _normalizedLow = low;
+            _actualHigh = 0;
+            _actualLow = 0;
 
             for (int i = 0; i < cls.Length; i++)
             {
-                classes.Insert(i, new ClassItem(cls[i], i));
+                _classes.Insert(i, new ClassItem(cls[i], i));
             }
         }
 
@@ -520,40 +520,36 @@ namespace Encog.Util.Arrayutil
         ///
         public void MakePassThrough()
         {
-            normalizedHigh = 0;
-            normalizedLow = 0;
-            actualHigh = 0;
-            actualLow = 0;
-            action = NormalizationAction.PassThrough;
+            _normalizedHigh = 0;
+            _normalizedLow = 0;
+            _actualHigh = 0;
+            _actualLow = 0;
+            _action = NormalizationAction.PassThrough;
         }
 
         /// <summary>
         /// Normalize the specified value.
         /// </summary>
-        ///
-        /// <param name="value_ren">The value to normalize.</param>
+        /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
-        public double Normalize(double value_ren)
+        public double Normalize(double v)
         {
-            return ((value_ren - actualLow)/(actualHigh - actualLow))
-                   *(normalizedHigh - normalizedLow)
-                   + normalizedLow;
+            return ((v - _actualLow)/(_actualHigh - _actualLow))
+                   *(_normalizedHigh - _normalizedLow)
+                   + _normalizedLow;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");
             result.Append(GetType().Name);
             result.Append(" name=");
-            result.Append(name);
+            result.Append(_name);
             result.Append(", actualHigh=");
-            result.Append(actualHigh);
+            result.Append(_actualHigh);
             result.Append(", actualLow=");
-            result.Append(actualLow);
+            result.Append(_actualLow);
 
             result.Append("]");
             return result.ToString();

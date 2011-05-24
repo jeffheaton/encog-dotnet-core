@@ -107,11 +107,11 @@ namespace Encog.Neural.NEAT
                         long neuronID = Int32.Parse(cols[0]);
                         NEATNeuronType neuronType = PersistNEATPopulation
                             .StringToNeuronType(cols[1]);
-                        double activationResponse = CSVFormat.EG_FORMAT
+                        double activationResponse = CSVFormat.EgFormat
                             .Parse(cols[2]);
-                        double splitY = CSVFormat.EG_FORMAT
+                        double splitY = CSVFormat.EgFormat
                             .Parse(cols[3]);
-                        double splitX = CSVFormat.EG_FORMAT
+                        double splitX = CSVFormat.EgFormat
                             .Parse(cols[4]);
 
                         var neatNeuron = new NEATNeuron(neuronType,
@@ -129,7 +129,7 @@ namespace Encog.Neural.NEAT
                         int fromID = Int32.Parse(cols[0]);
                         int toID = Int32.Parse(cols[1]);
                         bool recurrent = Int32.Parse(cols[2]) > 0;
-                        double weight = CSVFormat.EG_FORMAT.Parse(cols[3]);
+                        double weight = CSVFormat.EgFormat.Parse(cols[3]);
                         NEATNeuron fromNeuron = (neuronMap[fromID]);
                         NEATNeuron toNeuron = (neuronMap[toID]);
                         var neatLink = new NEATLink(weight, fromNeuron,

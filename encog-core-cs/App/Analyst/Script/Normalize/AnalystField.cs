@@ -571,7 +571,7 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             if (_action == NormalizationAction.Normalize)
             {
-                if (Math.Abs(_actualHigh - _actualLow) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                if (Math.Abs(_actualHigh - _actualLow) < EncogFramework.DefaultDoubleEqual)
                 {
                     _actualHigh += 1;
                     _actualLow -= 1;

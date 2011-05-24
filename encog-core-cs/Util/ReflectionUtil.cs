@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Encog.Util.File;
 
@@ -36,17 +37,17 @@ namespace Encog.Util
         /// <summary>
         /// Path to the activation functions.
         /// </summary>
-        public const String AF_PATH = "Encog.Engine.Network.Activation.";
+        public const String AfPath = "Encog.Engine.Network.Activation.";
 
         /// <summary>
         /// Path to RBF's.
         /// </summary>
-        public const String RBF_PATH = "Encog.MathUtil.RBF.";
+        public const String RBFPath = "Encog.MathUtil.RBF.";
 
         /// <summary>
         /// A map between short class names and the full path names.
         /// </summary>
-        private static readonly IDictionary<String, String> classMap = new Dictionary<String, String>();
+        private static readonly IDictionary<String, String> ClassMap = new Dictionary<String, String>();
 
         /// <summary>
         /// Private constructor.
@@ -65,14 +66,7 @@ namespace Encog.Util
         public static FieldInfo FindField(Type c, String name)
         {
             ICollection<FieldInfo> list = GetAllFields(c);
-            foreach (FieldInfo field in list)
-            {
-                if (field.Name.Equals(name))
-                {
-                    return field;
-                }
-            }
-            return null;
+            return list.FirstOrDefault(field => field.Name.Equals(name));
         }
 
         /// <summary>
@@ -121,7 +115,7 @@ namespace Encog.Util
                     if (idx != -1)
                     {
                         String simpleName = line.Substring(idx + 1);
-                        classMap[simpleName] = line;
+                        ClassMap[simpleName] = line;
                     }
                 }
                 sr.Close();
@@ -136,15 +130,12 @@ namespace Encog.Util
         /// <returns>The class requested.</returns>
         public static String ResolveEncogClass(String name)
         {
-            if (classMap.Count == 0)
+            if (ClassMap.Count == 0)
             {
                 LoadClassmap();
             }
 
-            if (!classMap.ContainsKey(name))
-                return null;
-            else
-                return classMap[name];
+            return !ClassMap.ContainsKey(name) ? null : ClassMap[name];
         }
 
 
@@ -156,12 +147,7 @@ namespace Encog.Util
         /// <returns>True if the field has the specified attribute.</returns>
         public static bool HasAttribute(FieldInfo field, Type t)
         {
-            foreach (Object obj in field.GetCustomAttributes(true))
-            {
-                if (obj.GetType() == t)
-                    return true;
-            }
-            return false;
+            return field.GetCustomAttributes(true).Any(obj => obj.GetType() == t);
         }
 
 
@@ -173,30 +159,20 @@ namespace Encog.Util
         /// <returns>True if the type contains the attribute.</returns>
         public static bool HasAttribute(Type t, Type attribute)
         {
-            foreach (Object obj in t.GetCustomAttributes(true))
-            {
-                if (obj.GetType() == attribute)
-                    return true;
-            }
-            return false;
+            return t.GetCustomAttributes(true).Any(obj => obj.GetType() == attribute);
         }
 
         /// <summary>
         /// Resolve an enumeration.
         /// </summary>
         /// <param name="field">The field to resolve.</param>
-        /// <param name="value_ren">The value to get the enum for.</param>
+        /// <param name="v">The value to get the enum for.</param>
         /// <returns>The enum that was resolved.</returns>
-        public static Object ResolveEnum(FieldInfo field, FieldInfo value_ren)
+        public static Object ResolveEnum(FieldInfo field, FieldInfo v)
         {
             Type type = field.GetType();
             Object[] objs = type.GetMembers(BindingFlags.Public | BindingFlags.Static);
-            foreach (MemberInfo obj in objs)
-            {
-                if (obj.Name.Equals(value_ren))
-                    return obj;
-            }
-            return null;
+            return objs.Cast<MemberInfo>().FirstOrDefault(obj => obj.Name.Equals(v));
         }
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace Encog.Util.File
             var fileData = new StringBuilder(1000);
             TextReader reader = new StreamReader(filePath.OpenRead());
             var buf = new char[1024];
-            int numRead = 0;
+            int numRead;
             while ((numRead = reader.Read(buf, 0, buf.Length)) != -1)
             {
                 var readData = new string(buf, 0, numRead);

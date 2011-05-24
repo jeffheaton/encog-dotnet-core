@@ -37,13 +37,13 @@ namespace Encog.Util
         /// The format that numbers will be in.
         /// </summary>
         ///
-        private readonly CSVFormat format;
+        private readonly CSVFormat _format;
 
         /// <summary>
         /// The params that are to be parsed.
         /// </summary>
         ///
-        private readonly IDictionary<String, String> paras;
+        private readonly IDictionary<String, String> _paras;
 
         /// <summary>
         /// Construct the object. Allow the format to be specified.
@@ -53,8 +53,8 @@ namespace Encog.Util
         /// <param name="theFormat">The format to be used.</param>
         public ParamsHolder(IDictionary<String, String> theParams, CSVFormat theFormat)
         {
-            paras = theParams;
-            format = theFormat;
+            _paras = theParams;
+            _format = theFormat;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Encog.Util
         /// </summary>
         ///
         /// <param name="theParams">The params to be used.</param>
-        public ParamsHolder(IDictionary<String, String> theParams) : this(theParams, CSVFormat.EG_FORMAT)
+        public ParamsHolder(IDictionary<String, String> theParams) : this(theParams, CSVFormat.EgFormat)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Encog.Util
         /// <value>the params</value>
         public IDictionary<String, String> Params
         {
-            get { return paras; }
+            get { return _paras; }
         }
 
 
@@ -84,21 +84,15 @@ namespace Encog.Util
         /// <returns>The value.</returns>
         public String GetString(String name, bool required, String defaultValue)
         {
-            if (paras.ContainsKey(name) )
+            if (_paras.ContainsKey(name) )
             {
-                return paras[name];                
+                return _paras[name];                
             }
-            else
+            if (required)
             {
-                if (required)
-                {
-                    throw new EncogError("Missing property: " + name);
-                }
-                else
-                {
-                    return defaultValue;
-                }
-            }                       
+                throw new EncogError("Missing property: " + name);
+            }
+            return defaultValue;
         }
 
         /// <summary>
@@ -145,7 +139,7 @@ namespace Encog.Util
 
             try
             {
-                return format.Parse(str);
+                return _format.Parse(str);
             }
             catch (FormatException )
             {

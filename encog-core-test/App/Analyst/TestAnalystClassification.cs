@@ -53,7 +53,7 @@ namespace Encog.App.Analyst
 
             analyst.ExecuteTask("task-full");
 
-            ReadCSV csv = new ReadCSV(outputFile.ToString(), true, CSVFormat.ENGLISH);
+            ReadCSV csv = new ReadCSV(outputFile.ToString(), true, CSVFormat.English);
             while (csv.Next())
             {
                 Assert.AreEqual(csv.Get(3), csv.Get(4));

@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks.Training.PNN
 
                 double scale;
 
-                if (Math.Abs(dot2) < EncogFramework.DEFAULT_DOUBLE_EQUAL)
+                if (Math.Abs(dot2) < EncogFramework.DefaultDoubleEqual)
                 {
                     scale = 0;
                 }

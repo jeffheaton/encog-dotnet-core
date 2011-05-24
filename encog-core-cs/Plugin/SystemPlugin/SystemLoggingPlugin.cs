@@ -52,7 +52,7 @@ namespace Encog.Plugin.SystemPlugin
         /// </summary>
         public SystemLoggingPlugin()
         {
-            currentLevel = EncogLogging.LEVEL_DISABLE;
+            currentLevel = EncogLogging.LevelDisable;
             logConsole = false;
         }
 
@@ -160,16 +160,16 @@ namespace Encog.Plugin.SystemPlugin
                 line.Append(" [");
                 switch (currentLevel)
                 {
-                    case EncogLogging.LEVEL_CRITICAL:
+                    case EncogLogging.LevelCritical:
                         line.Append("CRITICAL");
                         break;
-                    case EncogLogging.LEVEL_ERROR:
+                    case EncogLogging.LevelError:
                         line.Append("ERROR");
                         break;
-                    case EncogLogging.LEVEL_INFO:
+                    case EncogLogging.LevelInfo:
                         line.Append("INFO");
                         break;
-                    case EncogLogging.LEVEL_DEBUG:
+                    case EncogLogging.LevelDebug:
                         line.Append("DEBUG");
                         break;
                     default:
@@ -183,7 +183,7 @@ namespace Encog.Plugin.SystemPlugin
 
                 if (logConsole)
                 {
-                    if (currentLevel > EncogLogging.LEVEL_ERROR)
+                    if (currentLevel > EncogLogging.LevelError)
                     {
                         Console.Error.WriteLine(line.ToString());
                     }
@@ -211,7 +211,7 @@ namespace Encog.Plugin.SystemPlugin
         {
             StopLogging();
             logConsole = true;
-            LogLevel = EncogLogging.LEVEL_DEBUG;
+            LogLevel = EncogLogging.LevelDebug;
         }
 
         /// <summary>

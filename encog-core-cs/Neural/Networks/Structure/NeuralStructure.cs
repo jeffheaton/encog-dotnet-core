@@ -168,7 +168,7 @@ namespace Encog.Neural.Networks.Structure
                 try
                 {
                     _connectionLimited = true;
-                    _connectionLimit = CSVFormat.EG_FORMAT.Parse(limit);
+                    _connectionLimit = CSVFormat.EgFormat.Parse(limit);
                 }
                 catch (FormatException )
                 {

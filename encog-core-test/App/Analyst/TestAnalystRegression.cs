@@ -52,7 +52,7 @@ namespace Encog.App.Analyst
 
             analyst.ExecuteTask("task-full");
 
-            ReadCSV csv = new ReadCSV(outputFile.ToString(), true, CSVFormat.ENGLISH);
+            ReadCSV csv = new ReadCSV(outputFile.ToString(), true, CSVFormat.English);
             while (csv.Next())
             {
                 double diff = Math.Abs(csv.GetDouble(2) - csv.GetDouble(4));

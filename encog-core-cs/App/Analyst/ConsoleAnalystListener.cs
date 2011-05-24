@@ -125,7 +125,7 @@ namespace Encog.App.Analyst
                                   + " "
                                   + cancelStr
                                   + ", task elapsed time "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
+                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec)));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Encog.App.Analyst
                                   + " Error:"
                                   + Format.FormatPercent(train.Error)
                                   + " elapsed time = "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MILI_IN_SEC)));
+                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec)));
         }
 
         /// <summary>

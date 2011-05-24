@@ -76,13 +76,13 @@ namespace Encog.App.Analyst.Commands
             String arch = Prop.GetPropertyString(
                 ScriptProperties.MlConfigArchitecture);
 
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning create");
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "training file:"
+            EncogLogging.Log(EncogLogging.LevelDebug, "Beginning create");
+            EncogLogging.Log(EncogLogging.LevelDebug, "training file:"
                                                        + trainingID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "resource file:"
+            EncogLogging.Log(EncogLogging.LevelDebug, "resource file:"
                                                        + resourceID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "type:" + type);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "arch:" + arch);
+            EncogLogging.Log(EncogLogging.LevelDebug, "type:" + type);
+            EncogLogging.Log(EncogLogging.LevelDebug, "arch:" + arch);
 
             var egb = new EncogEGBFile(trainingFile.ToString());
             egb.Open();

@@ -61,35 +61,24 @@ namespace Encog.Util
         public static Object DeepCopy(Object oldObj)
         {
             var formatter = new BinaryFormatter();
-            MemoryStream memory = null;
 
-            try
-            {
-                memory = new MemoryStream();
-
-                // serialize and pass the object
-                formatter.Serialize(memory, oldObj);
-                memory.Flush();
-                memory.Position = 0;
-
-                // return the new object
-                return formatter.Deserialize(memory);
-            }
-            catch (Exception e)
-            {
-                throw new EncogError(e);
-            }
-            finally
+            using (var memory = new MemoryStream())
             {
                 try
                 {
-                    memory.Close();
+                    // serialize and pass the object
+                    formatter.Serialize(memory, oldObj);
+                    memory.Flush();
+                    memory.Position = 0;
+
+                    // return the new object
+                    return formatter.Deserialize(memory);
                 }
                 catch (Exception e)
                 {
                     throw new EncogError(e);
                 }
-            }
+            }            
         }
 #else
     /// <summary>

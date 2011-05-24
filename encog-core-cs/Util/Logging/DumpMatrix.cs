@@ -34,7 +34,7 @@ namespace Encog.Util.Logging
         /// <summary>
         /// Maximum precision.
         /// </summary>
-        public const int MAX_PRECIS = 3;
+        public const int MaxPrecis = 3;
 
         /// <summary>
         /// Private constructor.

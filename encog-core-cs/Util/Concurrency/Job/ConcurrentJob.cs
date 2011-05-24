@@ -33,20 +33,20 @@ namespace Encog.Util.Concurrency.Job
         /// <summary>
         /// Where to report progress to.
         /// </summary>
-        private readonly IStatusReportable report;
+        private readonly IStatusReportable _report;
 
         /// <summary>
         /// Total number of tasks.
         /// </summary>
-        private int totalTasks;
+        private int _totalTasks;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="report"></param>
-        public ConcurrentJob(IStatusReportable report)
+        protected ConcurrentJob(IStatusReportable report)
         {
-            this.report = report;
+            _report = report;
         }
 
         /// <summary>
@@ -81,16 +81,13 @@ namespace Encog.Util.Concurrency.Job
 
             TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
 
-            totalTasks = LoadWorkload();
+            _totalTasks = LoadWorkload();
             int currentTask = 0;
 
             while ((task = RequestNextTask()) != null)
             {
                 currentTask++;
-                var context = new JobUnitContext();
-                context.JobUnit = task;
-                context.Owner = this;
-                context.TaskNumber = currentTask;
+                var context = new JobUnitContext {JobUnit = task, Owner = this, TaskNumber = currentTask};
 
                 var worker = new JobUnitWorker(context);
                 EngineConcurrency.Instance.ProcessTask(worker, group);
@@ -106,7 +103,7 @@ namespace Encog.Util.Concurrency.Job
         /// <param name="status">The current status for this job.</param>
         public void ReportStatus(JobUnitContext context, String status)
         {
-            report.Report(totalTasks, context.TaskNumber, status);
+            _report.Report(_totalTasks, context.TaskNumber, status);
         }
     }
 }

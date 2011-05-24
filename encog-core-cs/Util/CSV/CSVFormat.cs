@@ -34,19 +34,13 @@ namespace Encog.Util.CSV
         /// <summary>
         /// The maximum number of digits.
         /// </summary>
-        public const int MAX_FORMATS = 100;
+        public const int MaxFormats = 100;
 
-        private static readonly CSVFormat _DECIMAL_POINT = new CSVFormat('.', ',');
-        private static readonly CSVFormat _DECIMAL_COMMA = new CSVFormat(',', ';');
-        private static CSVFormat _ENGLISH = DECIMAL_POINT;
-        private static CSVFormat _NONENGLISH = DECIMAL_COMMA;
-        private static CSVFormat _EG_FORMAT = DECIMAL_POINT;
+        private readonly char _decimalChar;
 
-        private readonly char decimalChar;
-
-        private readonly NumberFormatInfo numberFormat;
-        private readonly char separatorChar;
-        private String[] formats;
+        private readonly NumberFormatInfo _numberFormat;
+        private readonly char _separatorChar;
+        private readonly String[] _formats;
 
 
         /// <summary>
@@ -56,28 +50,28 @@ namespace Encog.Util.CSV
         /// <param name="separatorChar">The separator char for a number list, likely comma or semicolon.</param>
         public CSVFormat(char decimalChar, char separatorChar)
         {
-            this.decimalChar = decimalChar;
-            this.separatorChar = separatorChar;
+            _decimalChar = decimalChar;
+            _separatorChar = separatorChar;
 
             if (decimalChar == '.')
             {
-                numberFormat = (new CultureInfo("en-us")).NumberFormat;
+                _numberFormat = (new CultureInfo("en-us")).NumberFormat;
             }
             else if (decimalChar == ',')
             {
-                numberFormat = (new CultureInfo("de-DE")).NumberFormat;
+                _numberFormat = (new CultureInfo("de-DE")).NumberFormat;
             }
             else
             {
-                numberFormat = NumberFormatInfo.CurrentInfo;
+                _numberFormat = NumberFormatInfo.CurrentInfo;
             }
 
             // There might be a better way to do this, but I can't seem to find a way in
             // C# where I can specify "x" decimal places, and not end up with trailing zeros.
-            formats = new String[MAX_FORMATS];
-            for (int i = 0; i < MAX_FORMATS; i++)
+            _formats = new String[MaxFormats];
+            for (int i = 0; i < MaxFormats; i++)
             {
-                StringBuilder str = new StringBuilder();
+                var str = new StringBuilder();
                 str.Append("#0");
                 if (i > 0)
                 {
@@ -87,7 +81,7 @@ namespace Encog.Util.CSV
                 {
                     str.Append("#");
                 }
-                this.formats[i] = str.ToString();
+                _formats[i] = str.ToString();
             }
         }
 
@@ -98,29 +92,29 @@ namespace Encog.Util.CSV
         {
         }
 
+        static CSVFormat()
+        {
+            DecimalComma = new CSVFormat(',', ';');
+            DecimalPoint = new CSVFormat('.', ',');
+        }
+
         /// <summary>
         /// A format that uses a decimal point and a comma to separate fields.
         /// </summary>
-        public static CSVFormat DECIMAL_POINT
-        {
-            get { return _DECIMAL_POINT; }
-        }
+        public static CSVFormat DecimalPoint { get; private set; }
 
         /// <summary>
         /// A format that uses a decimal comma and a semicolon to separate fields.
         /// </summary>
-        public static CSVFormat DECIMAL_COMMA
-        {
-            get { return _DECIMAL_COMMA; }
-        }
+        public static CSVFormat DecimalComma { get; private set; }
 
         /// <summary>
         /// The typical format for English speaking countries is a decimal
         /// point and a comma for field separation.  
         /// </summary>
-        public static CSVFormat ENGLISH
+        public static CSVFormat English
         {
-            get { return _DECIMAL_POINT; }
+            get { return DecimalPoint; }
         }
 
         /// <summary>
@@ -129,9 +123,9 @@ namespace Encog.Util.CSV
         /// EG files internally use a decimal point and comma separator.  Of course
         /// programs should display numbers to the user using regional settings.
         /// </summary>
-        public static CSVFormat EG_FORMAT
+        public static CSVFormat EgFormat
         {
-            get { return _DECIMAL_POINT; }
+            get { return DecimalPoint; }
         }
 
         /// <summary>
@@ -139,7 +133,7 @@ namespace Encog.Util.CSV
         /// </summary>
         public char DecimalChar
         {
-            get { return decimalChar; }
+            get { return _decimalChar; }
         }
 
         /// <summary>
@@ -148,7 +142,7 @@ namespace Encog.Util.CSV
         /// </summary>
         public char Separator
         {
-            get { return separatorChar; }
+            get { return _separatorChar; }
         }
 
         /// <summary>
@@ -166,7 +160,7 @@ namespace Encog.Util.CSV
         /// <returns>The number that has been parsed.</returns>
         public double Parse(String str)
         {
-            return double.Parse(str, numberFormat);
+            return double.Parse(str, _numberFormat);
         }
 
         /// <summary>
@@ -177,9 +171,9 @@ namespace Encog.Util.CSV
         /// <returns>The formatted number.</returns>
         public String Format(double d, int digits)
         {
-            int digits2 = Math.Min(digits, MAX_FORMATS);
+            int digits2 = Math.Min(digits, MaxFormats);
             digits2 = Math.Max(digits2, 0);
-            return d.ToString(this.formats[digits2], numberFormat);
+            return d.ToString(_formats[digits2], _numberFormat);
         }
     }
 }

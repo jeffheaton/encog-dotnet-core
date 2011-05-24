@@ -75,10 +75,10 @@ namespace Encog.App.Analyst.Commands
                 ScriptProperties.ClusterConfigClusters);
             Prop.GetPropertyString(ScriptProperties.ClusterConfigType);
 
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning cluster");
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "target file:" + targetID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "clusters:" + clusters);
+            EncogLogging.Log(EncogLogging.LevelDebug, "Beginning cluster");
+            EncogLogging.Log(EncogLogging.LevelDebug, "source file:" + sourceID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "target file:" + targetID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "clusters:" + clusters);
 
             FileInfo sourceFile = Script.ResolveFilename(sourceID);
             FileInfo targetFile = Script.ResolveFilename(targetID);

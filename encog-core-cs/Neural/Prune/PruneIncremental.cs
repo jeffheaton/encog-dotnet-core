@@ -651,7 +651,7 @@ namespace Encog.Neural.Prune
 
             if (choice != _bestNetwork)
             {
-                EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                EncogLogging.Log(EncogLogging.LevelDebug,
                                  "Prune found new best network: error=" + error
                                  + ", network=" + choice);
             }

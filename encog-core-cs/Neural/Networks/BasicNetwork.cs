@@ -453,7 +453,7 @@ namespace Encog.Neural.Networks
         public String DumpWeights()
         {
             var result = new StringBuilder();
-            NumberList.ToList(CSVFormat.EG_FORMAT, result, _structure.Flat.Weights);
+            NumberList.ToList(CSVFormat.EgFormat, result, _structure.Flat.Weights);
             return result.ToString();
         }
 
@@ -504,7 +504,7 @@ namespace Encog.Neural.Networks
         /// <returns>True if the two networks are equal.</returns>
         public bool Equals(BasicNetwork other)
         {
-            return Equals(other, EncogFramework.DEFAULT_PRECISION);
+            return Equals(other, EncogFramework.DefaultPrecision);
         }
 
         /// <summary>

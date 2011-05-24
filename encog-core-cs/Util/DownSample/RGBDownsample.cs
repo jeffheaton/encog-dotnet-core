@@ -34,42 +34,42 @@ namespace Encog.Util.DownSample
         /// <summary>
         /// The bottom boundary of the downsample.
         /// </summary>
-        private int downSampleBottom;
+        private int _downSampleBottom;
 
         /// <summary>
         /// The left boundary of the downsample.
         /// </summary>
-        private int downSampleLeft;
+        private int _downSampleLeft;
 
         /// <summary>
         /// The right boundary of the downsample.
         /// </summary>
-        private int downSampleRight;
+        private int _downSampleRight;
 
         /// <summary>
         /// The top boundary of the downsample.
         /// </summary>
-        private int downSampleTop;
+        private int _downSampleTop;
 
         /// <summary>
         /// The image height.
         /// </summary>
-        private int imageHeight;
+        private int _imageHeight;
 
         /// <summary>
         /// The image width.
         /// </summary>
-        private int imageWidth;
+        private int _imageWidth;
 
         /// <summary>
         /// The downsample x-ratio.
         /// </summary>
-        private double ratioX;
+        private double _ratioX;
 
         /// <summary>
         /// The downsample y-ratio.
         /// </summary>
-        private double ratioY;
+        private double _ratioY;
 
         /// <summary>
         /// The current red average.
@@ -115,9 +115,9 @@ namespace Encog.Util.DownSample
 
             // now downsample
 
-            ratioX = (downSampleRight - downSampleLeft)
+            _ratioX = (_downSampleRight - _downSampleLeft)
                      /(double) width;
-            ratioY = (downSampleBottom - downSampleTop)
+            _ratioY = (_downSampleBottom - _downSampleTop)
                      /(double) height;
 
             int index = 0;
@@ -142,39 +142,39 @@ namespace Encog.Util.DownSample
         public void FindBounds()
         {
             // top line
-            for (int y = 0; y < imageHeight; y++)
+            for (int y = 0; y < _imageHeight; y++)
             {
                 if (!HLineClear(y))
                 {
-                    downSampleTop = y;
+                    _downSampleTop = y;
                     break;
                 }
             }
             // bottom line
-            for (int y = imageHeight - 1; y >= 0; y--)
+            for (int y = _imageHeight - 1; y >= 0; y--)
             {
                 if (!HLineClear(y))
                 {
-                    downSampleBottom = y;
+                    _downSampleBottom = y;
                     break;
                 }
             }
             // left line
-            for (int x = 0; x < imageWidth; x++)
+            for (int x = 0; x < _imageWidth; x++)
             {
                 if (!VLineClear(x))
                 {
-                    downSampleLeft = x;
+                    _downSampleLeft = x;
                     break;
                 }
             }
 
             // right line
-            for (int x = imageWidth - 1; x >= 0; x--)
+            for (int x = _imageWidth - 1; x >= 0; x--)
             {
                 if (!VLineClear(x))
                 {
-                    downSampleRight = x;
+                    _downSampleRight = x;
                     break;
                 }
             }
@@ -185,7 +185,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int DownSampleBottom
         {
-            get { return downSampleBottom; }
+            get { return _downSampleBottom; }
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int DownSampleLeft
         {
-            get { return downSampleLeft; }
+            get { return _downSampleLeft; }
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int DownSampleRight
         {
-            get { return downSampleRight; }
+            get { return _downSampleRight; }
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int DownSampleTop
         {
-            get { return downSampleTop; }
+            get { return _downSampleTop; }
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int ImageHeight
         {
-            get { return imageHeight; }
+            get { return _imageHeight; }
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public int ImageWidth
         {
-            get { return imageWidth; }
+            get { return _imageWidth; }
         }
 
 
@@ -234,7 +234,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public double RatioX
         {
-            get { return ratioX; }
+            get { return _ratioX; }
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Encog.Util.DownSample
         /// </summary>
         public double RatioY
         {
-            get { return ratioY; }
+            get { return _ratioY; }
         }
 
         /// <summary>
@@ -252,16 +252,16 @@ namespace Encog.Util.DownSample
         public void ProcessImage(Bitmap image)
         {
             Image = image;
-            imageHeight = Image.Height;
-            imageWidth = Image.Width;
-            downSampleLeft = 0;
-            downSampleTop = 0;
-            downSampleRight = imageWidth;
-            downSampleBottom = imageHeight;
+            _imageHeight = Image.Height;
+            _imageWidth = Image.Width;
+            _downSampleLeft = 0;
+            _downSampleTop = 0;
+            _downSampleRight = _imageWidth;
+            _downSampleBottom = _imageHeight;
 
-            ratioX = (downSampleRight - downSampleLeft)
+            _ratioX = (_downSampleRight - _downSampleLeft)
                      /(double) ImageWidth;
-            ratioY = (downSampleBottom - downSampleTop)
+            _ratioY = (_downSampleBottom - _downSampleTop)
                      /(double) ImageHeight;
         }
 
@@ -274,13 +274,13 @@ namespace Encog.Util.DownSample
         /// <param name="y">The y coordinate of the resulting downsample.</param>
         public void DownSampleRegion(int x, int y)
         {
-            var startX = (int) (downSampleLeft + x*ratioX);
-            var startY = (int) (downSampleTop + y*ratioY);
-            var endX = (int) (startX + ratioX);
-            var endY = (int) (startY + ratioY);
+            var startX = (int) (_downSampleLeft + x*_ratioX);
+            var startY = (int) (_downSampleTop + y*_ratioY);
+            var endX = (int) (startX + _ratioX);
+            var endY = (int) (startY + _ratioY);
 
-            endX = Math.Min(imageWidth, endX);
-            endY = Math.Min(imageHeight, endY);
+            endX = Math.Min(_imageWidth, endX);
+            endY = Math.Min(_imageHeight, endY);
 
             int redTotal = 0;
             int greenTotal = 0;
@@ -313,7 +313,7 @@ namespace Encog.Util.DownSample
         /// <returns></returns>
         private bool HLineClear(int y)
         {
-            for (int i = 0; i < imageWidth; i++)
+            for (int i = 0; i < _imageWidth; i++)
             {
                 Color pixel = Image.GetPixel(i, y);
                 if (pixel.R < 250 || pixel.G < 250 || pixel.B < 250)
@@ -332,7 +332,7 @@ namespace Encog.Util.DownSample
         /// <returns>True if there are any pixels in the specified vertical line.</returns>
         private bool VLineClear(int x)
         {
-            for (int i = 0; i < imageHeight; i++)
+            for (int i = 0; i < _imageHeight; i++)
             {
                 Color pixel = Image.GetPixel(x, i);
                 if (pixel.R < 250 || pixel.G < 250 || pixel.B < 250)

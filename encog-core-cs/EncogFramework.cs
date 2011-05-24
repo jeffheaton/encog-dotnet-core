@@ -44,7 +44,7 @@ namespace Encog
         /// <summary>
         /// The current engog version, this should be read from the properties.
         /// </summary>
-        public static string VERSION = "3.0.0";
+        public static string Version = "3.0.0";
 
         /// <summary>
         /// The platform.
@@ -54,54 +54,54 @@ namespace Encog
         /// <summary>
         /// The current engog file version, this should be read from the properties.
         /// </summary>
-        private static string FILE_VERSION = "1";
+        private const string FileVersion = "1";
 
 
         /// <summary>
         /// The default precision to use for compares.
         /// </summary>
-        public const int DEFAULT_PRECISION = 10;
+        public const int DefaultPrecision = 10;
 
         /// <summary>
         /// Default point at which two doubles are equal.
         /// </summary>
-        public const double DEFAULT_DOUBLE_EQUAL = 0.0000001;
+        public const double DefaultDoubleEqual = 0.0000001;
 
         /// <summary>
         /// The version of the Encog JAR we are working with. Given in the form
         /// x.x.x.
         /// </summary>
-        public const string ENCOG_VERSION = "encog.version";
+        public const string EncogVersion = "encog.version";
 
         /// <summary>
         /// The encog file version. This determines of an encog file can be read.
         /// This is simply an integer, that started with zero and is incramented each
         /// time the format of the encog data file changes.
         /// </summary>
-        public static string ENCOG_FILE_VERSION = "encog.file.version";
+        public static string EncogFileVersion = "encog.file.version";
 
         /// <summary>
         /// The instance.
         /// </summary>
-        private static EncogFramework instance;
+        private static EncogFramework _instance;
 
         /// <summary>
         /// The current calculation plugin.
         /// </summary>
         ///
-        private EncogPluginType1 calculationPlugin;
+        private EncogPluginType1 _calculationPlugin;
 
         /// <summary>
         /// The current logging plugin.
         /// </summary>
         ///
-        private EncogPluginType1 loggingPlugin;
+        private EncogPluginType1 _loggingPlugin;
 
         /// <summary>
         /// The plugins.
         /// </summary>
         ///
-        private readonly IList<EncogPluginBase> plugins;
+        private readonly IList<EncogPluginBase> _plugins;
 
         /// <summary>
         /// Get the instance to the singleton.
@@ -110,20 +110,20 @@ namespace Encog
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new EncogFramework();
+                    _instance = new EncogFramework();
                     Instance.RegisterPlugin(new SystemCalculationPlugin());
                     Instance.RegisterPlugin(new SystemLoggingPlugin());
                 }
-                return instance;
+                return _instance;
             }
         }
 
         /// <summary>
         /// Get the properties as a Map.
         /// </summary>
-        private readonly IDictionary<string, string> properties =
+        private readonly IDictionary<string, string> _properties =
             new Dictionary<string, string>();
 
         /// <summary>
@@ -131,10 +131,10 @@ namespace Encog
         /// </summary>
         private EncogFramework()
         {
-            properties[ENCOG_VERSION] = VERSION;
-            properties[ENCOG_FILE_VERSION] = FILE_VERSION;
+            _properties[EncogVersion] = Version;
+            _properties[EncogFileVersion] = FileVersion;
 
-            plugins = new List<EncogPluginBase>();
+            _plugins = new List<EncogPluginBase>();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Encog
         /// </summary>
         public IDictionary<string, string> Properties
         {
-            get { return properties; }
+            get { return _properties; }
         }
 
 
@@ -156,7 +156,7 @@ namespace Encog
         /// <value>the loggingPlugin</value>
         public EncogPluginType1 LoggingPlugin
         {
-            get { return loggingPlugin; }
+            get { return _loggingPlugin; }
         }
 
         /// <summary>
@@ -173,24 +173,24 @@ namespace Encog
                 if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_CALCULATION)
                 {
                     // remove the old calc plugin
-                    if (calculationPlugin != null)
+                    if (_calculationPlugin != null)
                     {
-                        plugins.Remove(calculationPlugin);
+                        _plugins.Remove(_calculationPlugin);
                     }
-                    calculationPlugin = (EncogPluginType1) plugin;
+                    _calculationPlugin = (EncogPluginType1) plugin;
                 }
                 else if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_LOGGING)
                 {
                     // remove the old logging plugin
-                    if (loggingPlugin != null)
+                    if (_loggingPlugin != null)
                     {
-                        plugins.Remove(loggingPlugin);
+                        _plugins.Remove(_loggingPlugin);
                     }
-                    loggingPlugin = (EncogPluginType1) plugin;
+                    _loggingPlugin = (EncogPluginType1) plugin;
                 }
             }
             // add to the plugins
-            plugins.Add(plugin);
+            _plugins.Add(plugin);
         }
 
         /// <summary>
@@ -202,17 +202,17 @@ namespace Encog
         {
             // is it a special plugin?
             // if so, replace with the system, Encog will crash without these
-            if (plugin == loggingPlugin)
+            if (plugin == _loggingPlugin)
             {
-                loggingPlugin = new SystemLoggingPlugin();
+                _loggingPlugin = new SystemLoggingPlugin();
             }
-            else if (plugin == calculationPlugin)
+            else if (plugin == _calculationPlugin)
             {
-                calculationPlugin = new SystemCalculationPlugin();
+                _calculationPlugin = new SystemCalculationPlugin();
             }
 
             // remove it
-            plugins.Remove(plugin);
+            _plugins.Remove(plugin);
         }
     }
 }

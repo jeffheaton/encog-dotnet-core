@@ -164,7 +164,7 @@ namespace Encog.ML.Train.Strategy
                 double currentError = _mainTrain.Error;
                 _lastImprovement = (currentError - _lastError)
                                   /_lastError;
-                EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Last improvement: "
+                EncogLogging.Log(EncogLogging.LevelDebug, "Last improvement: "
                                                            + _lastImprovement);
 
                 if ((_lastImprovement > 0)
@@ -176,7 +176,7 @@ namespace Encog.ML.Train.Strategy
                     {
                         _lastHybrid = 0;
 
-                        EncogLogging.Log(EncogLogging.LEVEL_DEBUG,
+                        EncogLogging.Log(EncogLogging.LevelDebug,
                                          "Performing hybrid cycle");
 
                         for (int i = 0; i < _alternateCycles; i++)

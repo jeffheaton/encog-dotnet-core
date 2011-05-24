@@ -179,7 +179,7 @@ namespace Encog.App.Analyst.Script.Prop
                         }
                         break;
                     case PropertyType.TypeDouble:
-                        CSVFormat.EG_FORMAT.Parse(v);
+                        CSVFormat.EgFormat.Parse(v);
                         break;
                     case PropertyType.TypeFormat:
                         if (ConvertStringConst.String2AnalystFileFormat(v) == AnalystFileFormat.Unknown)

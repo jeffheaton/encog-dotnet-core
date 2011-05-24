@@ -37,7 +37,7 @@ namespace Encog.Util.Banchmark
         /// <summary>
         /// Mili-seconds in a second.
         /// </summary>
-        public const int MILIS = 1000;
+        public const int Milis = 1000;
 
         /// <summary>
         /// Evaluate training.
@@ -70,12 +70,12 @@ namespace Encog.Util.Banchmark
         public static int EvaluateTrain(BasicNetwork network, IMLDataSet training)
         {
             // train the neural network
-            IMLTrain train = train = new ResilientPropagation(network, training);
+            IMLTrain train = new ResilientPropagation(network, training);
 
             int iterations = 0;
             var watch = new Stopwatch();
             watch.Start();
-            while (watch.ElapsedMilliseconds < (10*MILIS))
+            while (watch.ElapsedMilliseconds < (10*Milis))
             {
                 iterations++;
                 train.Iteration();

@@ -30,21 +30,13 @@ namespace Encog.Util.File
     /// Directory utilities.
     /// </summary>
     ///
-    public sealed class Directory
+    public static class Directory
     {
         /// <summary>
         /// Default buffer size for read/write operations.
         /// </summary>
         ///
-        public const int BUFFER_SIZE = 1024;
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        ///
-        private Directory()
-        {
-        }
+        public const int BufferSize = 1024;
 
         /// <summary>
         /// Copy the specified file.
@@ -56,7 +48,7 @@ namespace Encog.Util.File
         {
             try
             {
-                var buffer = new byte[BUFFER_SIZE];
+                var buffer = new byte[BufferSize];
 
                 // open the files before the copy
                 FileStream
@@ -110,8 +102,8 @@ namespace Encog.Util.File
                 var sb = new StringBuilder(1024);
                 TextReader reader = new StreamReader(mask0);
 
-                var chars = new char[BUFFER_SIZE];
-                int numRead = 0;
+                var chars = new char[BufferSize];
+                int numRead;
                 while ((numRead = reader.Read(chars, 0, chars.Length)) > -1)
                 {
                     sb.Append(new String(chars, 0, numRead));

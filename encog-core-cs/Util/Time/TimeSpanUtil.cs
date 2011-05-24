@@ -26,23 +26,23 @@ namespace Encog.Util.Time
 {
     internal class TimeSpanUtil
     {
-        private DateTime from;
-        private DateTime to;
+        private DateTime _from;
+        private DateTime _to;
 
         public TimeSpanUtil(DateTime from, DateTime to)
         {
-            this.from = from;
-            this.to = to;
+            _from = from;
+            _to = to;
         }
 
         public DateTime From
         {
-            get { return from; }
+            get { return _from; }
         }
 
         public DateTime To
         {
-            get { return to; }
+            get { return _to; }
         }
 
 
@@ -50,27 +50,27 @@ namespace Encog.Util.Time
         {
             switch (unit)
             {
-                case TimeUnit.SECONDS:
+                case TimeUnit.Seconds:
                     return GetSpanSeconds();
-                case TimeUnit.MINUTES:
+                case TimeUnit.Minutes:
                     return GetSpanMinutes();
-                case TimeUnit.HOURS:
+                case TimeUnit.Hours:
                     return GetSpanHours();
-                case TimeUnit.DAYS:
+                case TimeUnit.Days:
                     return GetSpanDays();
-                case TimeUnit.WEEKS:
+                case TimeUnit.Weeks:
                     return GetSpanWeeks();
-                case TimeUnit.FORTNIGHTS:
+                case TimeUnit.Fortnights:
                     return GetSpanFortnights();
-                case TimeUnit.MONTHS:
+                case TimeUnit.Months:
                     return GetSpanMonths();
-                case TimeUnit.YEARS:
+                case TimeUnit.Years:
                     return GetSpanYears();
-                case TimeUnit.SCORES:
+                case TimeUnit.Scores:
                     return GetSpanScores();
-                case TimeUnit.CENTURIES:
+                case TimeUnit.Centuries:
                     return GetSpanCenturies();
-                case TimeUnit.MILLENNIA:
+                case TimeUnit.Millennia:
                     return GetSpanMillennia();
                 default:
                     return 0;
@@ -79,7 +79,7 @@ namespace Encog.Util.Time
 
         private long GetSpanSeconds()
         {
-            TimeSpan span = to.Subtract(from);
+            TimeSpan span = _to.Subtract(_from);
             return span.Ticks/TimeSpan.TicksPerSecond;
         }
 
@@ -110,7 +110,7 @@ namespace Encog.Util.Time
 
         private long GetSpanMonths()
         {
-            return (to.Month - from.Month) + (to.Year - from.Year)*12;
+            return (_to.Month - _from.Month) + (_to.Year - _from.Year)*12;
         }
 
         private long GetSpanYears()

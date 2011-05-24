@@ -113,7 +113,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         ///
         public override sealed void Iteration()
         {
-            EncogLogging.Log(EncogLogging.LEVEL_INFO,
+            EncogLogging.Log(EncogLogging.LevelInfo,
                              "Performing Genetic iteration.");
             PreIteration();
             Genetic.Iteration();

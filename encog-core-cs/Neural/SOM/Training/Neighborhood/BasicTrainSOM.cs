@@ -377,7 +377,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         ///
         public override sealed void Iteration()
         {
-            EncogLogging.Log(EncogLogging.LEVEL_INFO,
+            EncogLogging.Log(EncogLogging.LevelInfo,
                              "Performing SOM Training iteration.");
 
             PreIteration();

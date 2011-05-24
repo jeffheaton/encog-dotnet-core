@@ -40,20 +40,20 @@ namespace Encog.Util.Arrayutil
         /// 1.
         /// </summary>
         ///
-        private double normalizedHigh;
+        private double _normalizedHigh;
 
         /// <summary>
         /// The low end of the range that the values are normalized into. Typically
         /// 1.
         /// </summary>
         ///
-        private double normalizedLow;
+        private double _normalizedLow;
 
         /// <summary>
         /// Contains stats about the array normalized.
         /// </summary>
         ///
-        private NormalizedField stats;
+        private NormalizedField _stats;
 
         /// <summary>
         /// Construct the object, default NormalizedHigh and NormalizedLow to 1 and
@@ -62,8 +62,8 @@ namespace Encog.Util.Arrayutil
         ///
         public NormalizeArray()
         {
-            normalizedHigh = 1;
-            normalizedLow = -1;
+            _normalizedHigh = 1;
+            _normalizedLow = -1;
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double NormalizedHigh
         {
-            get { return normalizedHigh; }
-            set { normalizedHigh = value; }
+            get { return _normalizedHigh; }
+            set { _normalizedHigh = value; }
         }
 
 
@@ -81,15 +81,15 @@ namespace Encog.Util.Arrayutil
         /// </summary>
         public double NormalizedLow
         {
-            get { return normalizedLow; }
-            set { normalizedLow = value; }
+            get { return _normalizedLow; }
+            set { _normalizedLow = value; }
         }
 
 
         /// <value>Contains stats about the array normalized.</value>
         public NormalizedField Stats
         {
-            get { return stats; }
+            get { return _stats; }
         }
 
 
@@ -101,21 +101,21 @@ namespace Encog.Util.Arrayutil
         /// <returns>The normalized array.</returns>
         public double[] Process(double[] inputArray)
         {
-            stats = new NormalizedField();
-            stats.NormalizedHigh = normalizedHigh;
-            stats.NormalizedLow = normalizedLow;
+            _stats = new NormalizedField();
+            _stats.NormalizedHigh = _normalizedHigh;
+            _stats.NormalizedLow = _normalizedLow;
 
 
             foreach (double element  in  inputArray)
             {
-                stats.Analyze(element);
+                _stats.Analyze(element);
             }
 
             var result = new double[inputArray.Length];
 
             for (int i = 0; i < inputArray.Length; i++)
             {
-                result[i] = stats.Normalize(inputArray[i]);
+                result[i] = _stats.Normalize(inputArray[i]);
             }
 
             return result;

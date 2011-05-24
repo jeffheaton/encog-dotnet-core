@@ -57,7 +57,7 @@ namespace Encog.App.CSV
         {
             GenerateTestFileHeadings(true);
             var norm = new NinjaFileConvert();
-            norm.Analyze(InputName, true, CSVFormat.ENGLISH);
+            norm.Analyze(InputName, true, CSVFormat.English);
             norm.Process(OutputName.ToString());
 
             var tr = new StreamReader(OutputName.ToString());

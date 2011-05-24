@@ -152,9 +152,9 @@ namespace Encog.App.Analyst.Commands
             CSVFormat format = Analyst.Script.DetermineInputFormat(
                 sourceID);
 
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "Beginning generate");
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "source file:" + sourceID);
-            EncogLogging.Log(EncogLogging.LEVEL_DEBUG, "target file:" + targetID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "Beginning generate");
+            EncogLogging.Log(EncogLogging.LevelDebug, "source file:" + sourceID);
+            EncogLogging.Log(EncogLogging.LevelDebug, "target file:" + targetID);
 
             FileInfo sourceFile = Script.ResolveFilename(sourceID);
             FileInfo targetFile = Script.ResolveFilename(targetID);

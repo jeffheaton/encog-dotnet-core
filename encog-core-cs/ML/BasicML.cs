@@ -67,7 +67,7 @@ namespace Encog.ML
         /// <returns>The property as a double.</returns>
         public double GetPropertyDouble(String name)
         {
-            return (CSVFormat.EG_FORMAT.Parse((_properties[name])));
+            return (CSVFormat.EgFormat.Parse((_properties[name])));
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Encog.ML
         /// <param name="d">The value of the property.</param>
         public void SetProperty(String name, double d)
         {
-            _properties[name] = CSVFormat.EG_FORMAT.Format(d, EncogFramework.DEFAULT_PRECISION);
+            _properties[name] = CSVFormat.EgFormat.Format(d, EncogFramework.DefaultPrecision);
             UpdateProperties();
         }
 

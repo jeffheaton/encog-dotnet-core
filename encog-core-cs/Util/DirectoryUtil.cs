@@ -32,12 +32,12 @@ namespace Encog.Util
     /// <summary>
     /// Directory utilities.
     /// </summary>
-    public sealed class DirectoryUtil
+    public static class DirectoryUtil
     {
         /// <summary>
         /// Default buffer size for read/write operations.
         /// </summary>
-        public const int BUFFER_SIZE = 1024;
+        public const int BufferSize = 1024;
 
         /// <summary>
         /// Copy the specified file.
@@ -48,7 +48,7 @@ namespace Encog.Util
         {
             try
             {
-                var buffer = new byte[BUFFER_SIZE];
+                var buffer = new byte[BufferSize];
 
                 // open the files before the copy
                 Stream inFile = new FileStream(source, FileMode.Open);
@@ -89,9 +89,8 @@ namespace Encog.Util
             {
                 var sb = new StringBuilder(1024);
 
-                var chars = new byte[BUFFER_SIZE];
-                int numRead = 0;
-                while ((numRead = istream.Read(chars, 0, chars.Length)) > -1)
+                var chars = new byte[BufferSize];
+                while ((istream.Read(chars, 0, chars.Length)) > -1)
                 {
                     string s = Encoding.ASCII.GetString(chars);
                     sb.Append(s);
@@ -123,12 +122,5 @@ namespace Encog.Util
             return result;
         }
 #endif
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        private DirectoryUtil()
-        {
-        }
     }
 }

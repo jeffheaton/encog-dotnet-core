@@ -226,7 +226,7 @@ namespace Encog.Persist
                 var pw = new StreamWriter(os);
                 DateTime now = DateTime.Now;
                 pw.WriteLine("encog," + p.PersistClassString + ",java,"
-                             + EncogFramework.VERSION + "," + p.FileVersion + ","
+                             + EncogFramework.Version + "," + p.FileVersion + ","
                              + (now.Ticks/10000));
                 pw.Flush();
                 p.Save(os, obj);
