@@ -67,6 +67,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.XOR.XORFlat.Info);
             examples.Add(Encog.Examples.XOR.XORDisplay.Info);
             examples.Add(Encog.Examples.Analyst.AnalystExample.Info);
+            examples.Add(Encog.Examples.XOR.XORNEAT.Info);
         }
 
         public void ListCommands()

@@ -87,6 +87,7 @@
     <Compile Include="Examples\XOR\XORFactory.cs" />
     <Compile Include="Examples\XOR\XORFlat.cs" />
     <Compile Include="Examples\XOR\XORHelloWorld.cs" />
+    <Compile Include="Examples\XOR\XORNEAT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

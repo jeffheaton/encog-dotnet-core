@@ -38,6 +38,8 @@ using Encog.Bot;
 using Encog.ML.Train;
 using Encog.Util;
 using Encog.Util.Logging;
+using Encog.Util.File;
+using System.IO.Compression;
 
 namespace Encog.App.Analyst
 {
@@ -228,7 +230,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (field.Input && !field.Ignored)
                 {
@@ -248,7 +250,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (field.Input && !field.Ignored)
                 {
@@ -268,7 +270,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (field.Output && !field.Ignored)
                 {
@@ -288,7 +290,7 @@ namespace Encog.App.Analyst
         {
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (field.Output && !field.Ignored)
                 {
@@ -310,7 +312,7 @@ namespace Encog.App.Analyst
             int result = 0;
 
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (!field.Ignored)
                 {
@@ -336,7 +338,7 @@ namespace Encog.App.Analyst
 
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (!map.ContainsKey(field.Name))
                 {
@@ -361,7 +363,7 @@ namespace Encog.App.Analyst
             IDictionary<String, Object> map = new Dictionary<String, Object>();
             int result = 0;
 
-            foreach (AnalystField field  in  _script.Normalize.NormalizedFields)
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
                 if (!map.ContainsKey(field.Name))
                 {
@@ -406,16 +408,20 @@ namespace Encog.App.Analyst
             try
             {
                 // download the URL	
-				file.Delete();
-                FileStream fos = file.OpenWrite();
+                file.Delete();
+                FileInfo tempFile = FileUtil.CombinePath(
+                    new FileInfo(file.DirectoryName), "temp.tmp");
+                tempFile.Delete();
+                FileStream fos = tempFile.OpenWrite();
                 int lastUpdate = 0;
 
                 int length = 0;
                 int size = 0;
                 var buffer = new byte[BotUtil.BufferSize];
                 WebRequest http = WebRequest.Create(url);
-                var response = (HttpWebResponse) http.GetResponse();
+                var response = (HttpWebResponse)http.GetResponse();
                 Stream istream = response.GetResponseStream();
+
 
                 do
                 {
@@ -430,16 +436,61 @@ namespace Encog.App.Analyst
 
                         if (lastUpdate > UpdateTime)
                         {
-                            Report(0, (int) (size/Format.MemoryMeg),
+                            Report(0, (int)(size / Format.MemoryMeg),
                                    "Downloading... " + Format.FormatMemory(size));
                             lastUpdate = 0;
                         }
                         lastUpdate++;
                     }
                 } while (length > 0);
-
-
                 fos.Close();
+
+                // unzip if needed
+
+                if (url.ToString().ToLower().EndsWith(".gz"))
+                {
+
+                    // Get the stream of the source file.
+                    using (FileStream inFile = tempFile.OpenRead())
+                    {
+                        //Create the decompressed file.
+                        using (FileStream outFile = file.Create())
+                        {
+                            using (GZipStream Decompress = new GZipStream(inFile,
+                                    CompressionMode.Decompress))
+                            {
+                                size = 0;
+                                lastUpdate = 0;
+
+                                do
+                                {
+                                    length = Decompress.Read(buffer, 0, buffer.Length);
+
+                                    if (length >= 0)
+                                    {
+                                        outFile.Write(buffer, 0, length);
+                                        size += length;
+                                    }
+
+                                    if (lastUpdate > UpdateTime)
+                                    {
+                                        Report(0, (int)(size / Format.MemoryMeg), "Uncompressing... " + Format.FormatMemory(size));
+                                        lastUpdate = 0;
+                                    }
+                                    lastUpdate++;
+                                } while (length > 0);                                
+                            }
+                        }
+                        tempFile.Delete();
+                    }
+                }
+                else
+                {
+                    // rename the temp file to the actual file
+                    file.Delete();
+                    tempFile.MoveTo(file.ToString());
+                }
+
             }
             catch (IOException e)
             {
@@ -457,7 +508,7 @@ namespace Encog.App.Analyst
             int total = task.Lines.Count;
             int current = 1;
 
-            foreach (String line  in  task.Lines)
+            foreach (String line in task.Lines)
             {
                 EncogLogging.Log(EncogLogging.LevelDebug, "Execute analyst line: "
                                                            + line);
@@ -596,7 +647,7 @@ namespace Encog.App.Analyst
         /// <param name="message">The message.</param>
         private void Report(int total, int current, String message)
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.Report(total, current, message);
             }
@@ -612,7 +663,7 @@ namespace Encog.App.Analyst
         private void ReportCommandBegin(int total, int current,
                                         String name)
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.ReportCommandBegin(total, current, name);
             }
@@ -625,7 +676,7 @@ namespace Encog.App.Analyst
         /// <param name="canceled">Was the command canceled.</param>
         private void ReportCommandEnd(bool canceled)
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.ReportCommandEnd(canceled);
             }
@@ -638,7 +689,7 @@ namespace Encog.App.Analyst
         /// <param name="train">The trainer.</param>
         public void ReportTraining(IMLTrain train)
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.ReportTraining(train);
             }
@@ -650,7 +701,7 @@ namespace Encog.App.Analyst
         ///
         public void ReportTrainingBegin()
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.ReportTrainingBegin();
             }
@@ -662,7 +713,7 @@ namespace Encog.App.Analyst
         ///
         public void ReportTrainingEnd()
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 listener.ReportTrainingEnd();
             }
@@ -731,7 +782,7 @@ namespace Encog.App.Analyst
         /// <returns>True, if all commands should be stopped.</returns>
         private bool ShouldStopAll()
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 if (listener.ShouldShutDown())
                 {
@@ -748,7 +799,7 @@ namespace Encog.App.Analyst
         /// <returns>True if the current command should be stopped.</returns>
         public bool ShouldStopCommand()
         {
-            foreach (IAnalystListener listener  in  _listeners)
+            foreach (IAnalystListener listener in _listeners)
             {
                 if (listener.ShouldStopCommand())
                 {
