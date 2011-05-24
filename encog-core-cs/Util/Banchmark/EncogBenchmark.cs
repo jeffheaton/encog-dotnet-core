@@ -27,6 +27,7 @@ using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Buffer;
+using Encog.Util.File;
 
 namespace Encog.Util.Banchmark
 {
@@ -205,16 +206,19 @@ namespace Encog.Util.Banchmark
         /// </summary>
         private void EvalBinary()
         {
-            const string file = "temp.egb";
+            FileInfo file = FileUtil.CombinePath( new FileInfo(Path.GetTempPath()), "temp.egb" );
 
             BasicMLDataSet training = RandomTrainingFactory.Generate(
                 1000, 10000, 10, 10, -1, 1);
 
             // create the binary file
 
-            Directory.Delete(file);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
 
-            var training2 = new BufferedMLDataSet(file);
+            var training2 = new BufferedMLDataSet(file.ToString());
             training2.Load(training);
 
             const long stop = (10*Evaluate.Milis);
@@ -242,7 +246,10 @@ namespace Encog.Util.Banchmark
                           "Disk(binary) dataset, result: "
                           + Format.FormatInteger(iterations));
 
-            Directory.Delete(file);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
             _binaryScore = iterations;
         }
     }
