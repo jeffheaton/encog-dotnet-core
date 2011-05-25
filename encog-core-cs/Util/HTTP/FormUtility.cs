@@ -93,7 +93,8 @@ namespace Encog.Util.HTTP
         /// <returns>The encoded string.</returns>
         public static String Encode(String str)
         {
-            return HttpUtility.HtmlEncode(str);
+            //return HttpUtility.HtmlEncode(str);
+            return str;
         }
 
         /// <summary>

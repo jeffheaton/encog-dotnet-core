@@ -29,7 +29,7 @@ namespace Encog.Neural.NeuralData
     /// This is an alias class for Encog 2.5 compatibility.  This class aliases 
     /// IMLDataPair.  Newer code should use IMLDataPair in place of this class.
     /// </summary>
-    public interface INeuralDataPair : IMLDataPair
+    public interface INeuralDataPair
     {
     }
 }
