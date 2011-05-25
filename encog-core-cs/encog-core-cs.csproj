@@ -325,6 +325,9 @@
     <Compile Include="Neural\CPN\PersistCPN.cs" />
     <Compile Include="Neural\CPN\Training\TrainInstar.cs" />
     <Compile Include="Neural\CPN\Training\TrainOutstar.cs" />
+    <Compile Include="Neural\Data\Basic\BasicNeuralData.cs" />
+    <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
+    <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
@@ -403,6 +406,9 @@
     <Compile Include="ML\Train\Strategy\ResetStrategy.cs" />
     <Compile Include="ML\Train\Strategy\StopTrainingStrategy.cs" />
     <Compile Include="ML\Train\Strategy\IStrategy.cs" />
+    <Compile Include="Neural\NeuralData\INeuralData.cs" />
+    <Compile Include="Neural\NeuralData\INeuralDataPair.cs" />
+    <Compile Include="Neural\NeuralData\INeuralDataSet.cs" />
     <Compile Include="Neural\Pattern\ADALINEPattern.cs" />
     <Compile Include="Neural\Pattern\ART1Pattern.cs" />
     <Compile Include="Neural\Pattern\BAMPattern.cs" />
