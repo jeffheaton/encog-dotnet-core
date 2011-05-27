@@ -575,6 +575,14 @@ namespace Encog.Neural.Flat
                 ComputeLayer(i);
             }
 
+            // update context values
+            int offset = _contextTargetOffset[0];
+
+            for (int x = 0; x < _contextTargetSize[0]; x++)
+            {
+                _layerOutput[offset + x] = _layerOutput[x];
+            }
+
             EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
         }
 

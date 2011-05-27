@@ -113,11 +113,11 @@ namespace Encog.Neural.Pattern
             BasicLayer hidden, output;
 
             var network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(_activation, true,
+            network.AddLayer(new BasicLayer(null, true,
                                             _inputNeurons));
             network.AddLayer(hidden = new BasicLayer(_activation, true,
                                                      _hiddenNeurons));
-            network.AddLayer(output = new BasicLayer(null, false,
+            network.AddLayer(output = new BasicLayer(_activation, false,
                                                      _outputNeurons));
             hidden.ContextFedBy = output;
             network.Structure.FinalizeStructure();
