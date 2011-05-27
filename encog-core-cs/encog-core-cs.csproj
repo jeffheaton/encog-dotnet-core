@@ -470,7 +470,6 @@
     <Compile Include="Plugin\EncogPluginBase.cs" />
     <Compile Include="Plugin\EncogPluginType1.cs" />
     <Compile Include="Plugin\EncogPluginType1Const.cs" />
-    <Compile Include="Plugin\SystemPlugin\SystemCalculationPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemLoggingPlugin.cs" />
     <Compile Include="Util\Arrayutil\ClassItem.cs" />
     <Compile Include="Util\Arrayutil\NormalizationAction.cs" />

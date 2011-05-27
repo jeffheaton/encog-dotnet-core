@@ -113,7 +113,6 @@ namespace Encog
                 if (_instance == null)
                 {
                     _instance = new EncogFramework();
-                    Instance.RegisterPlugin(new SystemCalculationPlugin());
                     Instance.RegisterPlugin(new SystemLoggingPlugin());
                 }
                 return _instance;
@@ -170,16 +169,7 @@ namespace Encog
             // is it not a general plugin?
             if (plugin.PluginServiceType != EncogPluginType1Const.SERVICE_TYPE_GENERAL)
             {
-                if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_CALCULATION)
-                {
-                    // remove the old calc plugin
-                    if (_calculationPlugin != null)
-                    {
-                        _plugins.Remove(_calculationPlugin);
-                    }
-                    _calculationPlugin = (EncogPluginType1) plugin;
-                }
-                else if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_LOGGING)
+                if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_LOGGING)
                 {
                     // remove the old logging plugin
                     if (_loggingPlugin != null)
@@ -205,10 +195,6 @@ namespace Encog
             if (plugin == _loggingPlugin)
             {
                 _loggingPlugin = new SystemLoggingPlugin();
-            }
-            else if (plugin == _calculationPlugin)
-            {
-                _calculationPlugin = new SystemCalculationPlugin();
             }
 
             // remove it
