@@ -277,9 +277,9 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         /// <param name="row">The row to calculate for.</param>
         /// <returns>The index.</returns>
-        private int CalculateIndex(int row)
+        private long CalculateIndex(long row)
         {
-            return HeaderSize + (row*_recordSize);
+            return (long)HeaderSize + (row*(long)_recordSize);
         }
 
         /// <summary>
