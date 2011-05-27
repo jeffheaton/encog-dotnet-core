@@ -56,13 +56,13 @@ namespace Encog.Examples.JordanNetwork
 
         private IExampleInterface app;
 
-        static IMLMethod CreateJordanNetwork()
+        private IMLMethod CreateJordanNetwork()
         {
             // construct an Jordan type network
             JordanPattern pattern = new JordanPattern();
-            pattern.ActivationFunction = new ActivationTANH();
+            pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
-            pattern.AddHiddenLayer(2);
+            pattern.AddHiddenLayer(6);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
@@ -70,22 +70,21 @@ namespace Encog.Examples.JordanNetwork
         private IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
-
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(1));
-            network.AddLayer(new BasicLayer(2));
-            network.AddLayer(new BasicLayer(1));
-            network.Structure.FinalizeStructure();
-            network.Reset();
-            return network;
+            FeedForwardPattern pattern = new FeedForwardPattern();
+            pattern.ActivationFunction = new ActivationSigmoid();
+            pattern.InputNeurons = 1;
+            pattern.AddHiddenLayer(6);
+            pattern.OutputNeurons = 1;
+            return pattern.Generate();
         }
 
         private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
-            NeuralSimulatedAnnealing trainAlt = new NeuralSimulatedAnnealing(
-                network, score, 10, 2, 100);
+            IMLTrain trainAlt = new NeuralSimulatedAnnealing(
+                    network, score, 10, 2, 100);
+
 
             IMLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
 
@@ -114,12 +113,12 @@ namespace Encog.Examples.JordanNetwork
             BasicNetwork jordanNetwork = (BasicNetwork)CreateJordanNetwork();
             BasicNetwork feedforwardNetwork = (BasicNetwork)CreateFeedforwardNetwork();
 
-            double jordanError = TrainNetwork("Jordan", jordanNetwork, trainingSet);
+            double elmanError = TrainNetwork("Jordan", jordanNetwork, trainingSet);
             double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
 
-            app.WriteLine("Best error rate with Jordan Network: " + jordanError);
+            app.WriteLine("Best error rate with Jordan Network: " + elmanError);
             app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
-            app.WriteLine("Jordan should be able to get into the 40% range,\nfeedforward should not go below 50%.\nThe recurrent Elment net can learn better in this case.");
+            app.WriteLine("(Jordan should outperform feed forward)");
             app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
         }
     }

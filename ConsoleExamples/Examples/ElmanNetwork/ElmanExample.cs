@@ -60,24 +60,22 @@ namespace Encog.Examples.ElmanNetwork
         {
             // construct an Elman type network
             ElmanPattern pattern = new ElmanPattern();
-            pattern.ActivationFunction = new ActivationTANH();
+            pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
-            pattern.AddHiddenLayer(2);
+            pattern.AddHiddenLayer(6);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
 
-        private BasicNetwork CreateFeedforwardNetwork()
+        private IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
-
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(1));
-            network.AddLayer(new BasicLayer(2));
-            network.AddLayer(new BasicLayer(1));
-            network.Structure.FinalizeStructure();
-            network.Reset();
-            return network;
+            FeedForwardPattern pattern = new FeedForwardPattern();
+            pattern.ActivationFunction = new ActivationSigmoid();
+            pattern.InputNeurons = 1;
+            pattern.AddHiddenLayer(6);
+            pattern.OutputNeurons = 1;
+            return pattern.Generate();
         }
 
         private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet)
@@ -113,14 +111,14 @@ namespace Encog.Examples.ElmanNetwork
             IMLDataSet trainingSet = temp.Generate(100);
 
             BasicNetwork elmanNetwork = (BasicNetwork)CreateElmanNetwork();
-            BasicNetwork feedforwardNetwork = CreateFeedforwardNetwork();
+            BasicNetwork feedforwardNetwork = (BasicNetwork)CreateFeedforwardNetwork();
 
             double elmanError = TrainNetwork("Elman", elmanNetwork, trainingSet);
             double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
 
             app.WriteLine("Best error rate with Elman Network: " + elmanError);
             app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
-            app.WriteLine("Elman should be able to get into the 30% range,\nfeedforward should not go below 50%.\nThe recurrent Elment net can learn better in this case.");
+            app.WriteLine("(Elman should outperform feed forward)");
             app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
         }
 
