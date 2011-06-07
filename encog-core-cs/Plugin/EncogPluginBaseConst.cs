@@ -25,7 +25,7 @@ namespace Encog.Plugin
     /// <summary>
     /// A type-1 Encog plugin.
     /// </summary>
-    public class EncogPluginType1Const
+    public class EncogPluginBaseConst
     {
         /// <summary>
         /// A general plugin, you can have multiple plugins installed that provide
@@ -40,12 +40,5 @@ namespace Encog.Plugin
         /// </summary>
         ///
         public const int SERVICE_TYPE_LOGGING = 1;
-
-        /// <summary>
-        /// A special plugin that provides calculation. You may only have one
-        /// calculation plugin installed.
-        /// </summary>
-        ///
-        public const int SERVICE_TYPE_CALCULATION = 2;
     }
 }

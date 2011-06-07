@@ -33,7 +33,7 @@ namespace Encog.Plugin.SystemPlugin
     /// file and console logging.
     /// </summary>
     ///
-    public class SystemLoggingPlugin : EncogPluginType1
+    public class SystemLoggingPlugin : IEncogPluginLogging1
     {
         /// <summary>
         /// The current level.
@@ -133,7 +133,7 @@ namespace Encog.Plugin.SystemPlugin
         /// plugin returns SERVICE_TYPE_CALCULATION.</value>
         public int PluginServiceType
         {
-            get { return EncogPluginType1Const.SERVICE_TYPE_LOGGING; }
+            get { return EncogPluginBaseConst.SERVICE_TYPE_LOGGING; }
         }
 
 

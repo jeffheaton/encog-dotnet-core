@@ -250,6 +250,7 @@
     <Compile Include="ML\Factory\Method\SOMFactory.cs" />
     <Compile Include="ML\Factory\Method\SRNFactory.cs" />
     <Compile Include="ML\Factory\Method\SVMFactory.cs" />
+    <Compile Include="ML\Factory\MLActivationFactory.cs" />
     <Compile Include="ML\Factory\MLMethodFactory.cs" />
     <Compile Include="ML\Factory\MLTrainFactory.cs" />
     <Compile Include="ML\Factory\Parse\ArchitectureLayer.cs" />
@@ -468,9 +469,13 @@
     <Compile Include="ML\SVM\Training\SVMSearchTrain.cs" />
     <Compile Include="ML\SVM\Training\SVMTrain.cs" />
     <Compile Include="Plugin\EncogPluginBase.cs" />
-    <Compile Include="Plugin\EncogPluginType1.cs" />
-    <Compile Include="Plugin\EncogPluginType1Const.cs" />
+    <Compile Include="Plugin\IEncogPluginLogging1.cs" />
+    <Compile Include="Plugin\IEncogPluginService1.cs" />
+    <Compile Include="Plugin\EncogPluginBaseConst.cs" />
+    <Compile Include="Plugin\SystemPlugin\SystemActivationPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemLoggingPlugin.cs" />
+    <Compile Include="Plugin\SystemPlugin\SystemMethodsPlugin.cs" />
+    <Compile Include="Plugin\SystemPlugin\SystemTrainingPlugin.cs" />
     <Compile Include="Util\Arrayutil\ClassItem.cs" />
     <Compile Include="Util\Arrayutil\NormalizationAction.cs" />
     <Compile Include="Util\Arrayutil\NormalizationActionExtension.cs" />

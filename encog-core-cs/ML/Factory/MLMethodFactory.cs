@@ -22,6 +22,7 @@
 //
 using System;
 using Encog.ML.Factory.Method;
+using Encog.Plugin;
 
 namespace Encog.ML.Factory
 {
@@ -62,48 +63,6 @@ namespace Encog.ML.Factory
         public const String TypePNN = "pnn";
 
         /// <summary>
-        /// A factory used to create feedforward neural networks.
-        /// </summary>
-        ///
-        private readonly FeedforwardFactory _feedforwardFactory;
-
-        /// <summary>
-        /// The factory for PNN's.
-        /// </summary>
-        ///
-        private readonly PNNFactory _pnnFactory;
-
-        /// <summary>
-        /// A factory used to create RBF networks.
-        /// </summary>
-        ///
-        private readonly RBFNetworkFactory _rbfFactory;
-
-        /// <summary>
-        /// A factory used to create SOM's.
-        /// </summary>
-        ///
-        private readonly SOMFactory _somFactory;
-
-        /// <summary>
-        /// A factory used to create support vector machines.
-        /// </summary>
-        ///
-        private readonly SVMFactory _svmFactory;
-
-        /// <summary>
-        /// Construct the object.
-        /// </summary>
-        public MLMethodFactory()
-        {
-            _feedforwardFactory = new FeedforwardFactory();
-            _svmFactory = new SVMFactory();
-            _rbfFactory = new RBFNetworkFactory();
-            _pnnFactory = new PNNFactory();
-            _somFactory = new SOMFactory();
-        }
-
-        /// <summary>
         /// Create a new machine learning method.
         /// </summary>
         ///
@@ -115,26 +74,19 @@ namespace Encog.ML.Factory
         public IMLMethod Create(String methodType,
                                String architecture, int input, int output)
         {
-            if (TypeFeedforward.Equals(methodType))
+            foreach (EncogPluginBase plugin in EncogFramework.Instance.Plugins)
             {
-                return _feedforwardFactory.Create(architecture, input, output);
+                if (plugin is IEncogPluginService1)
+                {
+                    IMLMethod result = ((IEncogPluginService1)plugin).CreateMethod(
+                            methodType, architecture, input, output);
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
             }
-            if (TypeRbfnetwork.Equals(methodType))
-            {
-                return _rbfFactory.Create(architecture, input, output);
-            }
-            if (TypeSVM.Equals(methodType))
-            {
-                return _svmFactory.Create(architecture, input, output);
-            }
-            if (TypeSOM.Equals(methodType))
-            {
-                return _somFactory.Create(architecture, input, output);
-            }
-            if (TypePNN.Equals(methodType))
-            {
-                return _pnnFactory.Create(architecture, input, output);
-            }
+
             throw new EncogError("Unknown method type: " + methodType);
         }
     }

@@ -86,16 +86,10 @@ namespace Encog
         private static EncogFramework _instance;
 
         /// <summary>
-        /// The current calculation plugin.
-        /// </summary>
-        ///
-        private EncogPluginType1 _calculationPlugin;
-
-        /// <summary>
         /// The current logging plugin.
         /// </summary>
         ///
-        private EncogPluginType1 _loggingPlugin;
+        private IEncogPluginLogging1 _loggingPlugin;
 
         /// <summary>
         /// The plugins.
@@ -113,7 +107,10 @@ namespace Encog
                 if (_instance == null)
                 {
                     _instance = new EncogFramework();
-                    Instance.RegisterPlugin(new SystemLoggingPlugin());
+                    EncogFramework.Instance.RegisterPlugin(new SystemLoggingPlugin());
+                    EncogFramework.Instance.RegisterPlugin(new SystemMethodsPlugin());
+                    EncogFramework.Instance.RegisterPlugin(new SystemTrainingPlugin());
+                    EncogFramework.Instance.RegisterPlugin(new SystemActivationPlugin());
                 }
                 return _instance;
             }
@@ -153,7 +150,7 @@ namespace Encog
         }
 
         /// <value>the loggingPlugin</value>
-        public EncogPluginType1 LoggingPlugin
+        public IEncogPluginLogging1 LoggingPlugin
         {
             get { return _loggingPlugin; }
         }
@@ -167,16 +164,16 @@ namespace Encog
         public void RegisterPlugin(EncogPluginBase plugin)
         {
             // is it not a general plugin?
-            if (plugin.PluginServiceType != EncogPluginType1Const.SERVICE_TYPE_GENERAL)
+            if (plugin.PluginServiceType != EncogPluginBaseConst.SERVICE_TYPE_GENERAL)
             {
-                if (plugin.PluginServiceType == EncogPluginType1Const.SERVICE_TYPE_LOGGING)
+                if (plugin.PluginServiceType == EncogPluginBaseConst.SERVICE_TYPE_LOGGING)
                 {
                     // remove the old logging plugin
                     if (_loggingPlugin != null)
                     {
                         _plugins.Remove(_loggingPlugin);
                     }
-                    _loggingPlugin = (EncogPluginType1) plugin;
+                    _loggingPlugin = (IEncogPluginLogging1) plugin;
                 }
             }
             // add to the plugins
@@ -199,6 +196,14 @@ namespace Encog
 
             // remove it
             _plugins.Remove(plugin);
+        }
+
+        /// <summary>
+        /// The plugins.
+        /// </summary>
+        public IList<EncogPluginBase> Plugins
+        {
+            get { return this.Plugins; }
         }
     }
 }

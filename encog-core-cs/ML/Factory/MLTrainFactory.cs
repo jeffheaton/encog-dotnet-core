@@ -24,6 +24,7 @@ using System;
 using Encog.ML.Data;
 using Encog.ML.Factory.Train;
 using Encog.ML.Train;
+using Encog.Plugin;
 
 namespace Encog.ML.Factory
 {
@@ -243,102 +244,12 @@ namespace Encog.ML.Factory
         ///
         public const String TypePNN = "pnn";
 
-        /// <summary>
-        /// The factory for simulated annealing.
-        /// </summary>
-        ///
-        private readonly AnnealFactory _annealFactory;
-
-        /// <summary>
-        /// The factory for backprop.
-        /// </summary>
-        ///
-        private readonly BackPropFactory _backpropFactory;
-
-        /// <summary>
-        /// The factory for genetic.
-        /// </summary>
-        ///
-        private readonly GeneticFactory _geneticFactory;
-
-        /// <summary>
-        /// The factory for LMA.
-        /// </summary>
-        ///
-        private readonly LMAFactory _lmaFactory;
-
-        /// <summary>
-        /// The factory for Manhattan networks.
-        /// </summary>
-        ///
-        private readonly ManhattanFactory _manhattanFactory;
-
-        /// <summary>
-        /// The factory for neighborhood SOM.
-        /// </summary>
-        ///
-        private readonly NeighborhoodSOMFactory _neighborhoodFactory;
-
-        /// <summary>
-        /// Factory for PNN.
-        /// </summary>
-        ///
-        private readonly PNNTrainFactory _pnnFactory;
-
-        /// <summary>
-        /// The factory for RPROP.
-        /// </summary>
-        ///
-        private readonly RPROPFactory _rpropFactory;
-
-        /// <summary>
-        /// The factory for SCG.
-        /// </summary>
-        ///
-        private readonly SCGFactory _scgFactory;
-
-        /// <summary>
-        /// The factory for SOM cluster.
-        /// </summary>
-        ///
-        private readonly ClusterSOMFactory _somClusterFactory;
-
-        /// <summary>
-        /// Factory for SVD.
-        /// </summary>
-        ///
-        private readonly RBFSVDFactory _svdFactory;
-
-        /// <summary>
-        /// THe factory for basic SVM.
-        /// </summary>
-        ///
-        private readonly SVMFactory _svmFactory;
-
-        /// <summary>
-        /// The factory for SVM-Search.
-        /// </summary>
-        ///
-        private readonly SVMSearchFactory _svmSearchFactory;
 
         /// <summary>
         /// Construct the boject.
         /// </summary>
         public MLTrainFactory()
         {
-            _backpropFactory = new BackPropFactory();
-            _lmaFactory = new LMAFactory();
-            _rpropFactory = new RPROPFactory();
-            _svmFactory = new SVMFactory();
-            _svmSearchFactory = new SVMSearchFactory();
-            _scgFactory = new SCGFactory();
-            _annealFactory = new AnnealFactory();
-            _neighborhoodFactory = new NeighborhoodSOMFactory();
-            _somClusterFactory = new ClusterSOMFactory();
-            _geneticFactory = new GeneticFactory();
-            _manhattanFactory = new ManhattanFactory();
-            _svdFactory = new RBFSVDFactory();
-            _pnnFactory = new PNNTrainFactory();
         }
 
         /// <summary>
@@ -353,61 +264,18 @@ namespace Encog.ML.Factory
         public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String type, String args)
         {
-            String args2 = args ?? "";
-
-            if (TypeRPROP.Equals(type, StringComparison.InvariantCultureIgnoreCase))
+            foreach (EncogPluginBase plugin in EncogFramework.Instance.Plugins)
             {
-                return _rpropFactory.Create(method, training, args2);
+                if (plugin is IEncogPluginService1)
+                {
+                    IMLTrain result = ((IEncogPluginService1)plugin).CreateTraining(
+                            method, training, type, args);
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
             }
-            if (TypeBackprop.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _backpropFactory.Create(method, training, args2);
-            }
-            if (TypeSCG.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _scgFactory.Create(method, training, args2);
-            }
-            if (TypeLma.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _lmaFactory.Create(method, training, args2);
-            }
-            if (TypeSVM.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _svmFactory.Create(method, training, args2);
-            }
-            if (TypeSVMSearch.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _svmSearchFactory.Create(method, training, args2);
-            }
-            if (TypeSOMNeighborhood.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _neighborhoodFactory.Create(method, training, args2);
-            }
-            if (TypeAnneal.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _annealFactory.Create(method, training, args2);
-            }
-            if (TypeGenetic.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _geneticFactory.Create(method, training, args2);
-            }
-            if (TypeSOMCluster.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _somClusterFactory.Create(method, training, args2);
-            }
-            if (TypeManhattan.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _manhattanFactory.Create(method, training, args2);
-            }
-            if (TypeSvd.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _svdFactory.Create(method, training, args2);
-            }
-            if (TypePNN.Equals(type, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return _pnnFactory.Create(method, training, args2);
-            }
-            
             throw new EncogError("Unknown training type: " + type);
         }
     }

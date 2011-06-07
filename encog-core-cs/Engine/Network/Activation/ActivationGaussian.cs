@@ -58,6 +58,13 @@ namespace Encog.Engine.Network.Activation
         private readonly double[] _paras;
 
         /// <summary>
+        /// Create an empty activation gaussian.
+        /// </summary>
+        public ActivationGaussian()
+        {
+        }
+
+        /// <summary>
         /// Create a gaussian activation function.
         /// </summary>
         ///
