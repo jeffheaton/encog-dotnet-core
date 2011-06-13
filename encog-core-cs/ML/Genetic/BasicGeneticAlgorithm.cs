@@ -79,12 +79,22 @@ namespace Encog.ML.Genetic
                 var worker = new MateWorker(mother, father, child1,
                                             child2);
 
-                EngineConcurrency.Instance.ProcessTask(worker, group);
+                if (MultiThreaded)
+                {
+                    EngineConcurrency.Instance.ProcessTask(worker, group);
+                }
+                else
+                {
+                    worker.Run();
+                }
 
                 offspringIndex += 2;
             }
 
-            group.WaitForComplete();
+            if (MultiThreaded)
+            {
+                group.WaitForComplete();
+            }
 
             // sort the next generation
             Population.Sort();

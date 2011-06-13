@@ -96,6 +96,13 @@ namespace Encog.ML.Genetic
         public IPopulation Population { get; set; }
 
         /// <summary>
+        /// Should multithreading be used?  By default, this is true.
+        /// However, if you have a score function that is not thread safe,
+        /// this should be set to false.
+        /// </summary>
+        public bool MultiThreaded { get; set; }
+
+        /// <summary>
         /// Add a genome.
         /// </summary>
         ///

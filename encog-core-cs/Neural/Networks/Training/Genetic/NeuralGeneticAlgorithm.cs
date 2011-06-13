@@ -132,6 +132,23 @@ namespace Encog.Neural.Networks.Training.Genetic
         {
         }
 
+        /// <summary>
+        /// Should multithreading be used?  By default, this is true.
+        /// However, if you have a score function that is not thread safe,
+        /// this should be set to false.
+        /// </summary>
+        public bool MultiThreaded 
+        {
+            get
+            {
+                return Genetic.MultiThreaded;
+            }
+            set
+            {
+                Genetic.MultiThreaded = value;
+            }
+        }
+
         #region Nested type: NeuralGeneticAlgorithmHelper
 
         /// <summary>
