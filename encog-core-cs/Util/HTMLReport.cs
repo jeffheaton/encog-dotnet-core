@@ -93,7 +93,7 @@ namespace Encog.Util
         public void Bold(String str)
         {
             _text.Append("<b>");
-            _text.Append(str);
+            _text.Append(Encode(str));
             _text.Append("</b>");
         }
 
@@ -104,7 +104,7 @@ namespace Encog.Util
         public void Para(String str)
         {
             _text.Append("<p>");
-            _text.Append(str);
+            _text.Append(Encode(str));
             _text.Append("</p>");
         }
 
@@ -148,7 +148,7 @@ namespace Encog.Util
         public void H1(String title)
         {
             _text.Append("<h1>");
-            _text.Append(title);
+            _text.Append(Encode(title));
             _text.Append("</h1>");
         }
 
@@ -191,7 +191,7 @@ namespace Encog.Util
         public void Header(String head)
         {
             _text.Append("<th>");
-            _text.Append(head);
+            _text.Append(Encode(head));
             _text.Append("</th>");
         }
 
@@ -219,7 +219,7 @@ namespace Encog.Util
                 _text.Append("\"");
             }
             _text.Append(">");
-            _text.Append(head);
+            _text.Append(Encode(head));
             _text.Append("</td>");
         }
 
@@ -231,7 +231,7 @@ namespace Encog.Util
         public void TablePair(String name, String v)
         {
             BeginRow();
-            Cell("<b>" + name + "</b>");
+            _text.Append("<td><b>" + Encode(name) + "</b></td>");
             Cell(v);
             EndRow();
         }
@@ -243,7 +243,7 @@ namespace Encog.Util
         public void H2(String title)
         {
             _text.Append("<h2>");
-            _text.Append(title);
+            _text.Append(Encode(title));
             _text.Append("</h2>");
         }
 
@@ -254,7 +254,7 @@ namespace Encog.Util
         public void H3(String title)
         {
             _text.Append("<h3>");
-            _text.Append(title);
+            _text.Append(Encode(title));
             _text.Append("</h3>");
         }
 
@@ -273,7 +273,7 @@ namespace Encog.Util
         public void ListItem(String str)
         {
             _text.Append("<li>");
-            _text.Append(str);
+            _text.Append(Encode(str));
         }
 
         /// <summary>
@@ -307,6 +307,39 @@ namespace Encog.Util
         public void EndTableInCell()
         {
             _text.Append("</table></td>");
+        }
+
+        /// <summary>
+        /// Encode a string for HTML.
+        /// </summary>
+        /// <param name="str">The string to encode.</param>
+        /// <returns>The encoded string.</returns>
+        public static String Encode(String str)
+        {
+            var result = new StringBuilder();
+            for (int i = 0; i < str.Length; i++)
+            {
+                char ch = str[i];
+
+                if (ch == '<')
+                {
+                    result.Append("&lt;");
+                }
+                else if (ch == '>')
+                {
+                    result.Append("&gt;");
+                }
+                else if (ch == '&')
+                {
+                    result.Append("&amp;");
+                }
+                else
+                {
+                    result.Append(ch);
+                }
+
+            }
+            return result.ToString();
         }
     }
 }

@@ -100,6 +100,10 @@
     <Compile Include="App\Analyst\CSV\Sort\SortType.cs" />
     <Compile Include="App\Analyst\CSV\TimeSeriesUtil.cs" />
     <Compile Include="App\Analyst\EncogAnalyst.cs" />
+    <Compile Include="App\Analyst\Missing\DiscardMissing.cs" />
+    <Compile Include="App\Analyst\Missing\IHandleMissingValues.cs" />
+    <Compile Include="App\Analyst\Missing\MeanAndModeMissing.cs" />
+    <Compile Include="App\Analyst\Missing\NegateMissing.cs" />
     <Compile Include="App\Analyst\Report\AnalystReport.cs" />
     <Compile Include="App\Analyst\Script\AnalystClassItem.cs" />
     <Compile Include="App\Analyst\Script\AnalystScript.cs" />

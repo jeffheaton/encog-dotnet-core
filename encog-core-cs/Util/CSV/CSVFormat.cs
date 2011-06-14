@@ -160,7 +160,7 @@ namespace Encog.Util.CSV
         /// <returns>The number that has been parsed.</returns>
         public double Parse(String str)
         {
-            return double.Parse(str, _numberFormat);
+            return double.Parse(str.Trim(), _numberFormat);
         }
 
         /// <summary>

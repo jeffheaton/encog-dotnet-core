@@ -506,7 +506,7 @@ namespace Encog.App.Analyst.Script.Normalize
                 {
                     classNumber = Int32.Parse(str);
                 }
-                catch (FormatException )
+                catch (FormatException)
                 {
                     throw new QuantError("Can't determine class for: " + str);
                 }
@@ -595,7 +595,7 @@ namespace Encog.App.Analyst.Script.Normalize
                 }
 
                 _eq = new Equilateral(_classes.Count, _normalizedHigh,
-                                     _normalizedLow);
+                                      _normalizedLow);
             }
 
             // build lookup map
@@ -703,11 +703,11 @@ namespace Encog.App.Analyst.Script.Normalize
         /// Normalize the specified value.
         /// </summary>
         ///
-        /// <param name="value_ren">The value to normalize.</param>
+        /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
-        public double Normalize(double value_ren)
+        public double Normalize(double v)
         {
-            return ((value_ren - _actualLow)/(_actualHigh - _actualLow))
+            return ((v - _actualLow)/(_actualHigh - _actualLow))
                    *(_normalizedHigh - _normalizedLow)
                    + _normalizedLow;
         }
@@ -726,6 +726,35 @@ namespace Encog.App.Analyst.Script.Normalize
 
             result.Append("]");
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Determine the mode, this is the class item that has the most instances.
+        /// </summary>
+        /// <param name="analyst">The analyst to use.</param>
+        /// <returns>The mode.</returns>
+        public int DetermineMode(EncogAnalyst analyst)
+        {
+            if (!Classify)
+            {
+                throw new AnalystError("Can only calculate the mode for a class.");
+            }
+
+            DataField df = analyst.Script.FindDataField(Name);
+            AnalystClassItem m = null;
+            int result = 0;
+            int idx = 0;
+            foreach (AnalystClassItem item in df.ClassMembers)
+            {
+                if (m == null || m.Count < item.Count)
+                {
+                    m = item;
+                    result = idx;
+                }
+                idx++;
+            }
+
+            return result;
         }
     }
 }

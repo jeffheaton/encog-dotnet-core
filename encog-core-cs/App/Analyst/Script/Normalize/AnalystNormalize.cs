@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.App.Analyst.Missing;
+using Encog.App.Analyst.Script.Prop;
 using Encog.Util.Arrayutil;
 
 namespace Encog.App.Analyst.Script.Normalize
@@ -43,17 +45,57 @@ namespace Encog.App.Analyst.Script.Normalize
         private readonly IList<AnalystField> _normalizedFields;
 
         /// <summary>
+        /// The parent script.
+        /// </summary>
+        private readonly AnalystScript _script;
+
+        /// <summary>
         /// Construct the object.
         /// </summary>
-        public AnalystNormalize()
+        public AnalystNormalize(AnalystScript script)
         {
             _normalizedFields = new List<AnalystField>();
+            _script = script;
         }
 
         /// <value>the normalizedFields</value>
         public IList<AnalystField> NormalizedFields
         {
             get { return _normalizedFields; }
+        }
+
+        /// <summary>
+        /// The missing values handler.
+        /// </summary>
+        public IHandleMissingValues MissingValues
+        {
+            get
+            {
+                String type = _script.Properties.GetPropertyString(
+                    ScriptProperties.NormalizeMissingValues);
+
+                if (type.Equals("DiscardMissing"))
+                {
+                    return new DiscardMissing();
+                }
+                else if (type.Equals("MeanAndModeMissing"))
+                {
+                    return new MeanAndModeMissing();
+                }
+                else if (type.Equals("NegateMissing"))
+                {
+                    return new NegateMissing();
+                }
+                else
+                {
+                    return new DiscardMissing();
+                }
+            }
+            set
+            {
+                _script.Properties.SetProperty(
+                    ScriptProperties.NormalizeMissingValues, value.GetType().Name);
+            }
         }
 
 

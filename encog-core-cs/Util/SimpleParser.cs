@@ -227,5 +227,26 @@ namespace Encog.Util
         {
             _currentPosition = _marked;
         }
+
+        /// <summary>
+        /// Read a quoted string.
+        /// </summary>
+        /// <returns>The string that was read.</returns>
+        public String ReadQuotedString()
+        {
+            if (Peek() != '\"')
+                return "";
+
+            var result = new StringBuilder();
+
+            Advance();
+            while (Peek() != '\"' && !EOL())
+            {
+                result.Append(ReadChar());
+            }
+            Advance();
+
+            return result.ToString();
+        }
     }
 }

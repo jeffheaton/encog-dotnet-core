@@ -30,6 +30,7 @@ using Encog.App.Quant;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
 using Encog.Util.Logging;
+using Encog.App.Analyst.Missing;
 
 namespace Encog.App.Analyst.CSV.Normalize
 {
@@ -74,7 +75,7 @@ namespace Encog.App.Analyst.CSV.Normalize
             var output = new double[outputLength];
             int outputIndex = 0;
 
-            foreach (AnalystField stat  in  analyst.Script.Normalize.NormalizedFields)
+            foreach (AnalystField stat in analyst.Script.Normalize.NormalizedFields)
             {
                 if (stat.Action == NormalizationAction.Ignore)
                 {
@@ -89,19 +90,42 @@ namespace Encog.App.Analyst.CSV.Normalize
                 int index = headers.Find(stat.Name);
                 String str = csv.Get(index);
 
-                if (stat.Action == NormalizationAction.Normalize)
+                // is this an unknown value?
+                if (str.Equals("?") || str.Length == 0)
                 {
-                    double d = csv.Format.Parse(str);
-                    d = stat.Normalize(d);
-                    output[outputIndex++] = d;
+                    IHandleMissingValues handler = analyst.Script.Normalize.MissingValues;
+                    double[] d = handler.HandleMissing(analyst, stat);
+
+                    // should we skip the entire row
+                    if (d == null)
+                    {
+                        return null;
+                    }
+
+                    // copy the returned values in place of the missing values
+                    for (int i = 0; i < d.Length; i++)
+                    {
+                        output[outputIndex++] = d[i];
+                    }
                 }
                 else
                 {
-                    double[] d = stat.Encode(str);
+                    // known value
 
-                    foreach (double element  in  d)
+                    if (stat.Action == NormalizationAction.Normalize)
                     {
-                        output[outputIndex++] = element;
+                        double d = csv.Format.Parse(str.Trim());
+                        d = stat.Normalize(d);
+                        output[outputIndex++] = d;
+                    }
+                    else
+                    {
+                        double[] d = stat.Encode(str.Trim());
+
+                        foreach (double element in d)
+                        {
+                            output[outputIndex++] = element;
+                        }
                     }
                 }
             }

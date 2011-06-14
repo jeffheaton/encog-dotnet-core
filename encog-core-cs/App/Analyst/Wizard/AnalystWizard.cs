@@ -32,6 +32,7 @@ using Encog.App.Analyst.Script.Task;
 using Encog.ML.Factory;
 using Encog.Util.Arrayutil;
 using Encog.Util.File;
+using Encog.App.Analyst.Missing;
 
 namespace Encog.App.Analyst.Wizard
 {
@@ -301,6 +302,11 @@ namespace Encog.App.Analyst.Wizard
         private bool _timeSeries;
 
         /// <summary>
+        /// How to handle missing values.
+        /// </summary>
+        private IHandleMissingValues _missing;
+
+        /// <summary>
         /// Construct the analyst wizard.
         /// </summary>
         ///
@@ -322,6 +328,7 @@ namespace Encog.App.Analyst.Wizard
             _leadWindowSize = 0;
             _lagWindowSize = 0;
             _includeTargetField = false;
+            _missing = new DiscardMissing();
         }
 
         /// <summary>
@@ -909,6 +916,7 @@ namespace Encog.App.Analyst.Wizard
                 target = FileNormalize;
                 _script.Properties.SetProperty(
                     ScriptProperties.NormalizeConfigTargetFile, target);
+                _script.Normalize.MissingValues = _missing;
             }
 
             string evalSource = _taskSegregate ? FileEval : target;

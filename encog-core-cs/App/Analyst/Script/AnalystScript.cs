@@ -93,7 +93,7 @@ namespace Encog.App.Analyst.Script
         ///
         public AnalystScript()
         {
-            _normalize = new AnalystNormalize();
+            _normalize = new AnalystNormalize(this);
             _segregate = new AnalystSegregate();
             _generated = new List<String>();
             _tasks = new Dictionary<String, AnalystTask>();

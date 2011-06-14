@@ -116,6 +116,11 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         public const String BalanceConfigTargetFile = "BALANCE:CONFIG_targetFile";
 
+ 		/// <summary>
+ 		/// Property for: "NORMALIZE:CONFIG_missingValues."
+ 		/// </summary>
+ 		public const String NormalizeMissingValues = "NORMALIZE:CONFIG_missingValues";
+
         /// <summary>
         /// Property for: "BALANCE:CONFIG_balanceField". 
         /// </summary>

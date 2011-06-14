@@ -38,58 +38,9 @@ namespace Encog.Util.CSV
     public class ReadCSV
     {
         /// <summary>
-        /// The format that dates are expected to be in. (i.e. "yyyy-MM-dd")
-        /// </summary>
-        public String DateFormat { get; set; }
-
-        /// <summary>
-        /// The format that times are expected to be in. (i.e. "hhmmss").
-        /// </summary>
-        public String TimeFormat { get; set; }
-
-        /// <summary>
-        /// The current format.
-        /// </summary>
-        public CSVFormat Format
-        {
-            get { return _format; }
-        }
-
-        private CSVFormat _format;
-
-        /// <summary>
         /// The names of the columns.
         /// </summary>
-        public IList<String> ColumnNames
-        {
-            get { return _columnNames; }
-        }
-
-        /// <summary>
-        /// Parse a date using the specified format.
-        /// </summary>
-        /// <param name="when">A string that contains a date in the specified format.</param>
-        /// <param name="dateFormat">The date format.</param>
-        /// <returns>A DateTime that was parsed.</returns>
-        public static DateTime ParseDate(String when, String dateFormat)
-        {
-            try
-            {
-                return DateTime.ParseExact(when, dateFormat,
-                                           CultureInfo.InvariantCulture);
-            }
-            catch (FormatException)
-            {
-                return default(DateTime);
-            }
-        }
-
-
-
-        /// <summary>
-        /// The file to read.
-        /// </summary>
-        private readonly TextReader _reader;
+        private readonly IList<String> _columnNames = new List<String>();
 
         /// <summary>
         /// The names of the columns.
@@ -97,9 +48,9 @@ namespace Encog.Util.CSV
         private readonly IDictionary<String, int> _columns = new Dictionary<String, int>();
 
         /// <summary>
-        /// The names of the columns.
+        /// The file to read.
         /// </summary>
-        private readonly IList<String> _columnNames = new List<String>();
+        private readonly TextReader _reader;
 
         /// <summary>
         /// The data.
@@ -110,6 +61,8 @@ namespace Encog.Util.CSV
         /// The delimiter.
         /// </summary>
         private char _delim;
+
+        private CSVFormat _format;
 
         /// <summary>
         /// Construct a CSV reader from an input stream.
@@ -174,6 +127,32 @@ namespace Encog.Util.CSV
         }
 
         /// <summary>
+        /// The format that dates are expected to be in. (i.e. "yyyy-MM-dd")
+        /// </summary>
+        public String DateFormat { get; set; }
+
+        /// <summary>
+        /// The format that times are expected to be in. (i.e. "hhmmss").
+        /// </summary>
+        public String TimeFormat { get; set; }
+
+        /// <summary>
+        /// The current format.
+        /// </summary>
+        public CSVFormat Format
+        {
+            get { return _format; }
+        }
+
+        /// <summary>
+        /// The names of the columns.
+        /// </summary>
+        public IList<String> ColumnNames
+        {
+            get { return _columnNames; }
+        }
+
+        /// <summary>
         /// Return the number of columns, if known. 
         /// </summary>
         public int ColumnCount
@@ -185,6 +164,25 @@ namespace Encog.Util.CSV
                     return 0;
                 }
                 return _data.Length;
+            }
+        }
+
+        /// <summary>
+        /// Parse a date using the specified format.
+        /// </summary>
+        /// <param name="when">A string that contains a date in the specified format.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <returns>A DateTime that was parsed.</returns>
+        public static DateTime ParseDate(String when, String dateFormat)
+        {
+            try
+            {
+                return DateTime.ParseExact(when, dateFormat,
+                                           CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                return default(DateTime);
             }
         }
 
@@ -379,7 +377,7 @@ namespace Encog.Util.CSV
         /// Count the columns and create a an array to hold them.
         /// </summary>
         /// <param name="line">One line from the file</param>
-        private void InitData(IEnumerable<char> line)
+        private void InitData(string line)
         {
             IList<String> tok = Parse(line);
             _data = new String[tok.Count];
@@ -436,25 +434,44 @@ namespace Encog.Util.CSV
             }
         }
 
+        private IList<String> Parse(string line)
+        {
+            if (Format.Separator == ' ')
+            {
+                return ParseSpaceSep(line);
+            }
+            else
+            {
+                return ParseCharSep(line);
+            }
+        }
 
         /// <summary>
         /// Parse the line into a list of values.
         /// </summary>
         /// <param name="line">The line to parse.</param>
         /// <returns>The elements on this line.</returns>
-        private IList<String> Parse(IEnumerable<char> line)
+        private IList<String> ParseCharSep(string line)
         {
             var item = new StringBuilder();
-            IList<String> result = new List<String>();
+            var result = new List<String>();
             bool quoted = false;
+            bool hadQuotes = false;
 
-            foreach (char ch in line)
+            for (int i = 0; i < line.Length; i++)
             {
-                if ((ch == _format.Separator) && !quoted)
+                char ch = line[i];
+                if ((ch == Format.Separator) && !quoted)
                 {
-                    result.Add(item.ToString());
+                    String s = item.ToString();
+                    if (!hadQuotes)
+                    {
+                        s = s.Trim();
+                    }
+                    result.Add(s);
                     item.Length = 0;
                     quoted = false;
+                    hadQuotes = false;
                 }
                 else if ((ch == '\"') && quoted)
                 {
@@ -462,6 +479,7 @@ namespace Encog.Util.CSV
                 }
                 else if ((ch == '\"') && (item.Length == 0))
                 {
+                    hadQuotes = true;
                     quoted = true;
                 }
                 else
@@ -472,7 +490,31 @@ namespace Encog.Util.CSV
 
             if (item.Length > 0)
             {
-                result.Add(item.ToString());
+                String s = item.ToString();
+                if (!hadQuotes)
+                {
+                    s = s.Trim();
+                }
+                result.Add(s);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parse a line with space separators.
+        /// </summary>
+        /// <param name="line">The line to parse.</param>
+        /// <returns>The list of items from the line.</returns>
+        private static List<String> ParseSpaceSep(String line)
+        {
+            var result = new List<String>();
+            var parse = new SimpleParser(line);
+
+            while (!parse.EOL())
+            {
+                result.Add(parse.Peek() == '\"' ? parse.ReadQuotedString() : parse.ReadToWhiteSpace());
+                parse.EatWhiteSpace();
             }
 
             return result;
@@ -490,6 +532,23 @@ namespace Encog.Util.CSV
             {
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Check to see if there are any missing values on the current row.
+        /// </summary>
+        /// <returns>True, if there are missing values.</returns>
+        public bool HasMissing()
+        {
+            for (int i = 0; i < _data.Length; i++)
+            {
+                String s = _data[i].Trim();
+                if (s.Length == 0 || s.Equals("?"))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

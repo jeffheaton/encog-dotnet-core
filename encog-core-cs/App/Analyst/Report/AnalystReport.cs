@@ -26,7 +26,8 @@ using Encog.App.Analyst.Script;
 using Encog.App.Analyst.Script.Normalize;
 using Encog.App.Analyst.Script.Prop;
 using Encog.Util;
-using FileUtil = Encog.Util.File.FileUtil;
+using Encog.Util.CSV;
+using Encog.Util.File;
 
 namespace Encog.App.Analyst.Report
 {
@@ -55,6 +56,16 @@ namespace Encog.App.Analyst.Report
         private readonly EncogAnalyst _analyst;
 
         /// <summary>
+        /// The missing count.
+        /// </summary>
+        private int _missingCount;
+
+        /// <summary>
+        /// The row count.
+        /// </summary>
+        private int _rowCount;
+
+        /// <summary>
         /// Construct the report.
         /// </summary>
         ///
@@ -65,6 +76,38 @@ namespace Encog.App.Analyst.Report
         }
 
         /// <summary>
+        /// Analyze the file.
+        /// </summary>
+        private void AnalyzeFile()
+        {
+            ScriptProperties prop = _analyst.Script.Properties;
+
+            // get filenames, headers & format
+            String sourceID = prop.GetPropertyString(
+                ScriptProperties.HeaderDatasourceRawFile);
+
+            FileInfo sourceFile = _analyst.Script.ResolveFilename(sourceID);
+            CSVFormat inputFormat = _analyst.Script.DetermineInputFormat(sourceID);
+            bool headers = _analyst.Script.ExpectInputHeaders(sourceID);
+
+            // read the file
+            _rowCount = 0;
+            _missingCount = 0;
+
+            var csv = new ReadCSV(sourceFile.ToString(), headers, inputFormat);
+            while (csv.Next())
+            {
+                _rowCount++;
+                if (csv.HasMissing())
+                {
+                    _missingCount++;
+                }
+            }
+            csv.Close();
+        }
+
+
+        /// <summary>
         /// Produce the report.
         /// </summary>
         ///
@@ -73,9 +116,16 @@ namespace Encog.App.Analyst.Report
         {
             var report = new HTMLReport();
 
+            AnalyzeFile();
             report.BeginHTML();
             report.Title("Encog Analyst Report");
             report.BeginBody();
+
+            report.H1("General Statistics");
+            report.BeginTable();
+            report.TablePair("Total row count", Format.FormatInteger(_rowCount));
+            report.TablePair("Missing row count", Format.FormatInteger(_missingCount));
+            report.EndTable();
 
             report.H1("Field Ranges");
             report.BeginTable();

@@ -102,9 +102,10 @@ namespace Encog.App.Analyst.Analyze
         /// </summary>
         ///
         /// <param name="str">The current value.</param>
-        public void Analyze1(String str)
+        public void Analyze1(String v)
         {
             bool accountedFor = false;
+            string str = v.Trim();
 
             if (str.Trim().Length == 0 || str.Equals("?"))
             {
