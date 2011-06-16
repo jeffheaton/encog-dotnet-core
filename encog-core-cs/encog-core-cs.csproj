@@ -333,6 +333,9 @@
     <Compile Include="Neural\Data\Basic\BasicNeuralData.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
+    <Compile Include="Neural\Error\ATanErrorFunction.cs" />
+    <Compile Include="Neural\Error\IErrorFunction.cs" />
+    <Compile Include="Neural\Error\LinearErrorFunction.cs" />
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />

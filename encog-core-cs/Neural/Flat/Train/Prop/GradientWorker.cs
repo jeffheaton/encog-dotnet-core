@@ -27,6 +27,7 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Util;
 using Encog.Util.Concurrency;
+using Encog.Neural.Error;
 
 namespace Encog.Neural.Flat.Train.Prop
 {
@@ -137,6 +138,11 @@ namespace Encog.Neural.Flat.Train.Prop
         /// </summary>
         private readonly double[] _flatSpot;
 
+        /// <summary>
+        /// The error function.
+        /// </summary>
+        private readonly IErrorFunction _ef;
+
 
         /// <summary>
         /// Construct a gradient worker.
@@ -150,7 +156,7 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <param name="theFlatSpots">Holds an array of flat spot constants.</param>
         public GradientWorker(FlatNetwork theNetwork,
                                  TrainFlatNetworkProp theOwner, IMLDataSet theTraining,
-                                 int theLow, int theHigh, double[] theFlatSpots)
+                                 int theLow, int theHigh, double[] theFlatSpots, IErrorFunction ef)
         {
             _errorCalculation = new ErrorCalculation();
             _network = theNetwork;
@@ -170,6 +176,7 @@ namespace Encog.Neural.Flat.Train.Prop
             _weightIndex = _network.WeightIndex;
             _layerOutput = _network.LayerOutput;
             _layerFeedCounts = _network.LayerFeedCounts;
+            _ef = ef;
 
             _pair = BasicMLDataPair.CreatePair(_network.InputCount,
                                               _network.OutputCount);
@@ -227,12 +234,13 @@ namespace Encog.Neural.Flat.Train.Prop
             _network.Compute(input, _actual);
 
             _errorCalculation.UpdateError(_actual, ideal);
+            _ef.CalculateError(ideal,_actual,_layerDelta);
 
             for (int i = 0; i < _actual.Length; i++)
             {
                 _layerDelta[i] = (_network.ActivationFunctions[0]
                                     .DerivativeFunction(_actual[i])+_flatSpot[0])
-                                *(ideal[i] - _actual[i]);
+                                *_layerDelta[i];
             }
 
             for (int i = _network.BeginTraining; i < _network.EndTraining; i++)

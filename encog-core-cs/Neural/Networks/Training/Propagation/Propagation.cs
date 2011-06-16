@@ -28,6 +28,7 @@ using Encog.Neural.Flat.Train;
 using Encog.Util;
 using Encog.Util.Logging;
 using Encog.Neural.Flat.Train.Prop;
+using Encog.Neural.Error;
 
 namespace Encog.Neural.Networks.Training.Propagation
 {
@@ -101,6 +102,15 @@ namespace Encog.Neural.Networks.Training.Propagation
             {
                 ((TrainFlatNetworkProp)_flatTraining).FixFlatSpot = value;
             }
+        }
+
+        /// <summary>
+        /// The error function, defaults to linear.
+        /// </summary>
+        public IErrorFunction ErrorFunction
+        {
+            get { return ((TrainFlatNetworkProp) _flatTraining).ErrorFunction; }
+            set { ((TrainFlatNetworkProp) _flatTraining).ErrorFunction = value; }
         }
 
         #region Train Members

@@ -26,6 +26,7 @@ using Encog.ML.Data;
 using Encog.Util;
 using Encog.Util.Concurrency;
 using Encog.Engine.Network.Activation;
+using Encog.Neural.Error;
 
 namespace Encog.Neural.Flat.Train.Prop
 {
@@ -113,7 +114,12 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <summary>
         /// The flat spot constants.
         /// </summary>
-        private double[] _flatSpot;        
+        private double[] _flatSpot;
+
+        /// <summary>
+        /// The error function.
+        /// </summary>
+        public IErrorFunction ErrorFunction { get; set; }
 
 
 
@@ -136,6 +142,7 @@ namespace Encog.Neural.Flat.Train.Prop
             _numThreads = 0;
             _reportedException = null;
             FixFlatSpot = true;
+            ErrorFunction = new LinearErrorFunction();
         }
 
         /// <value>The gradients from the last iteration;</value>
@@ -348,7 +355,7 @@ namespace Encog.Neural.Flat.Train.Prop
             {
                 _workers[index++] = new GradientWorker(((FlatNetwork)_network.Clone()),
                                                          this, _indexable.OpenAdditional(), r.Low,
-                                                         r.High, _flatSpot);
+                                                         r.High, _flatSpot, ErrorFunction);
             }
         }
 
