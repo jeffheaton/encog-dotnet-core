@@ -464,7 +464,7 @@ namespace Encog.Neural.Flat
             {
                 data.GetRecord(i, pair);
                 Compute(pair.InputArray, actual);
-                errorCalculation.UpdateError(actual, pair.IdealArray);
+                errorCalculation.UpdateError(actual, pair.IdealArray,pair.Significance);
             }
             return errorCalculation.Calculate();
         }

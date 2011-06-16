@@ -56,5 +56,10 @@ namespace Encog.ML.Data
         /// The input array.
         /// </summary>
         double[] InputArray { get; set; }
+
+        /// <summary>
+        /// The significance of this training element.
+        /// </summary>
+        double Significance { get; set; }
     }
 }

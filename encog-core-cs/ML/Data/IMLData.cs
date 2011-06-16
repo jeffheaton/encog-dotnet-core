@@ -50,5 +50,6 @@ namespace Encog.ML.Data
         /// Clear the data to zero values.
         /// </summary>
         void Clear();
+        
     }
 }

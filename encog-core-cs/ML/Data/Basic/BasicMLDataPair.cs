@@ -46,6 +46,11 @@ namespace Encog.ML.Data.Basic
         private readonly IMLData _input;
 
         /// <summary>
+        /// The significance.
+        /// </summary>
+        private double _significance = 1.0;
+
+        /// <summary>
         /// Construct a BasicMLDataPair class with the specified input
         /// and ideal values.
         /// </summary>
@@ -176,6 +181,15 @@ namespace Encog.ML.Data.Basic
         public bool Supervised
         {
             get { return _ideal != null; }
+        }
+
+        /// <summary>
+        /// The significance of this training element.
+        /// </summary>
+        public double Significance
+        {
+            get { return this._significance; }
+            set { this._significance = value;  }
         }
     }
 }

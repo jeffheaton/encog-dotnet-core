@@ -53,7 +53,7 @@ namespace Encog.Util.Error
             foreach (IMLDataPair pair  in  data)
             {
                 IMLData actual = method.Compute(pair.Input);
-                errorCalculation.UpdateError(actual.Data, pair.Ideal.Data);
+                errorCalculation.UpdateError(actual.Data, pair.Ideal.Data, pair.Significance);
             }
             return errorCalculation.Calculate();
         }

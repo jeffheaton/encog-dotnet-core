@@ -155,6 +155,7 @@ namespace Encog.ML.Data.Buffer
             egb.SetLocation((int) index);
             egb.Read(inputTarget);
             egb.Read(idealTarget);
+            pair.Significance = egb.Read();
         }
 
         /// <summary>
@@ -180,6 +181,7 @@ namespace Encog.ML.Data.Buffer
             }
 
             egb.Write(data1.Data);
+            egb.Write(1.0);
         }
 
 
@@ -197,6 +199,7 @@ namespace Encog.ML.Data.Buffer
 
             egb.Write(inputData.Data);
             egb.Write(idealData.Data);
+            egb.Write(1.0);
         }
 
         /// <summary>
@@ -212,6 +215,7 @@ namespace Encog.ML.Data.Buffer
 
             egb.Write(pair.Input.Data);
             egb.Write(pair.Ideal.Data);
+            egb.Write(pair.Significance);
         }
 
         /// <summary>

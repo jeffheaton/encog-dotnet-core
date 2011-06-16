@@ -147,7 +147,7 @@ namespace Encog.Neural.CPN.Training
                 }
 
                 IMLData out2 = _network.ComputeOutstar(xout);
-                error.UpdateError(out2.Data, pair.Ideal.Data);
+                error.UpdateError(out2.Data, pair.Ideal.Data, pair.Significance);
             }
 
             Error = error.Calculate();

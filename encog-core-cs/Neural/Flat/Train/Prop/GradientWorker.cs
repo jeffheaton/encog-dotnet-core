@@ -209,7 +209,7 @@ namespace Encog.Neural.Flat.Train.Prop
                 for (int i = _low; i <= _high; i++)
                 {
                     _training.GetRecord(i, _pair);
-                    Process(_pair.InputArray, _pair.IdealArray);
+                    Process(_pair.InputArray, _pair.IdealArray, _pair.Significance);
                 }
                 double error = _errorCalculation.Calculate();
                 _owner.Report(_gradients, error, null);
@@ -229,18 +229,19 @@ namespace Encog.Neural.Flat.Train.Prop
         ///
         /// <param name="input">The network input.</param>
         /// <param name="ideal">The ideal values.</param>
-        private void Process(double[] input, double[] ideal)
+        /// <param name="s">The significance of this error.</param>
+        private void Process(double[] input, double[] ideal, double s)
         {
             _network.Compute(input, _actual);
 
-            _errorCalculation.UpdateError(_actual, ideal);
+            _errorCalculation.UpdateError(_actual, ideal, s);
             _ef.CalculateError(ideal,_actual,_layerDelta);
 
             for (int i = 0; i < _actual.Length; i++)
             {
                 _layerDelta[i] = (_network.ActivationFunctions[0]
                                     .DerivativeFunction(_actual[i])+_flatSpot[0])
-                                *_layerDelta[i];
+                                *_layerDelta[i] * s;
             }
 
             for (int i = _network.BeginTraining; i < _network.EndTraining; i++)

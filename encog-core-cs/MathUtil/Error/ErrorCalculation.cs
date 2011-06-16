@@ -129,7 +129,8 @@ namespace Encog.MathUtil.Error
         /// </summary>
         /// <param name="actual">The actual number.</param>
         /// <param name="ideal">The ideal number.</param>
-        public void UpdateError(double[] actual, double[] ideal)
+        /// <param name="significance">The significance of this error, 1.0 is the baseline.</param>
+        public void UpdateError(double[] actual, double[] ideal, double  significance)
         {
             for (int i = 0; i < actual.Length; i++)
             {

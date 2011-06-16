@@ -174,7 +174,7 @@ namespace Encog.ML.Data.Buffer
                 _binaryWriter.Write((double) ideal.Length);
 
                 _numberOfRecords = 0;
-                _recordCount = _inputCount + _idealCount;
+                _recordCount = _inputCount + _idealCount + 1;
                 _recordSize = _recordCount*DoubleSize;
             }
             catch (IOException ex)
@@ -231,7 +231,7 @@ namespace Encog.ML.Data.Buffer
                 _inputCount = (int) _binaryReader.ReadDouble();
                 _idealCount = (int) _binaryReader.ReadDouble();
 
-                _recordCount = _inputCount + _idealCount;
+                _recordCount = _inputCount + _idealCount + 1;
                 _recordSize = _recordCount*DoubleSize;
                 _numberOfRecords = (int) ((_stream.Length - HeaderSize)/_recordSize);
             }
@@ -378,6 +378,22 @@ namespace Encog.ML.Data.Buffer
             try
             {
                 _binaryWriter.Write(b);
+            }
+            catch (IOException ex)
+            {
+                throw new BufferedDataError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Write a double. 
+        /// </summary>
+        /// <param name="d">The double to write.</param>
+        public void Write(double d)
+        {
+            try
+            {
+                _binaryWriter.Write(d);
             }
             catch (IOException ex)
             {

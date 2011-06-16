@@ -95,6 +95,7 @@ namespace Encog.ML.Data.Buffer
                     lastUpdate = 0;
                     Status.Report(0, currentRecord, "Importing...");
                 }
+                egb.Write(1.0);
             }
 
             egb.Close();
@@ -138,6 +139,8 @@ namespace Encog.ML.Data.Buffer
                 {
                     ideal[j] = egb.Read();
                 }
+
+                double significance = egb.Read();
 
                 _codec.Write(input, ideal);
 
