@@ -42,6 +42,11 @@ namespace Encog.ML.Factory.Method
         public const String CantDefineAct = "Can't define activation function before first layer.";
 
         /// <summary>
+        /// The activation function factory to use.
+        /// </summary>
+        private MLActivationFactory _factory = new MLActivationFactory();
+
+        /// <summary>
         /// Create a feed forward network.
         /// </summary>
         ///
@@ -82,19 +87,13 @@ namespace Encog.ML.Factory.Method
                 String part = layer.Name;
                 part = part != null ? part.Trim() : "";
 
-                if ("tanh".Equals(part, StringComparison.InvariantCultureIgnoreCase))
+                IActivationFunction lookup = _factory.Create(part);
+			
+			    if (lookup!=null) 
                 {
-                    af = new ActivationTANH();
-                }
-                else if ("linear".Equals(part, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    af = new ActivationLinear();
-                }
-                else if ("sigmoid".Equals(part, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    af = new ActivationSigmoid();
-                }
-                else
+				    af = lookup;
+			    } 
+                else 
                 {
                     if (layer.UsedDefault)
                     {
