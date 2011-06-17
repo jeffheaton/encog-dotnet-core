@@ -119,6 +119,7 @@ namespace Encog.App.Analyst.Commands
                 ScriptProperties.MlConfigMachineLearningFile);
             FileInfo resourceFile = Analyst.Script.ResolveFilename(
                 resourceID);
+            method = trainer.Method;
             EncogDirectoryPersistence.SaveObject(resourceFile, method);
             EncogLogging.Log(EncogLogging.LevelDebug, "save to:" + resourceID);
 
