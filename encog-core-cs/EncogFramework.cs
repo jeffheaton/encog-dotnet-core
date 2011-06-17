@@ -203,7 +203,7 @@ namespace Encog
         /// </summary>
         public IList<EncogPluginBase> Plugins
         {
-            get { return this.Plugins; }
+            get { return _plugins; }
         }
     }
 }

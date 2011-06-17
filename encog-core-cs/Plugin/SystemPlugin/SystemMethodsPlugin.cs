@@ -11,7 +11,7 @@ using Encog.ML.Train;
 
 namespace Encog.Plugin.SystemPlugin
 {
-    public class SystemMethodsPlugin : EncogPluginBase
+    public class SystemMethodsPlugin : IEncogPluginService1
     {
         /// <summary>
         /// A factory used to create feedforward neural networks.
@@ -72,13 +72,13 @@ namespace Encog.Plugin.SystemPlugin
 
 
         /// <inheritdoc/>
-        public IActivationFunction createActivationFunction(String name)
+        public IActivationFunction CreateActivationFunction(String name)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IMLMethod createMethod(String methodType, String architecture,
+        public IMLMethod CreateMethod(String methodType, String architecture,
                 int input, int output)
         {
             if (MLMethodFactory.TypeFeedforward.Equals(methodType))
@@ -105,7 +105,7 @@ namespace Encog.Plugin.SystemPlugin
         }
 
         /// <inheritdoc/>
-        public IMLTrain createTraining(IMLMethod method, IMLDataSet training,
+        public IMLTrain CreateTraining(IMLMethod method, IMLDataSet training,
                 String type, String args)
         {
             return null;

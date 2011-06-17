@@ -14,7 +14,7 @@ namespace Encog.Plugin.SystemPlugin
     /// <summary>
     /// Create the system training methods.
     /// </summary>
-    public class SystemTrainingPlugin : EncogPluginBase
+    public class SystemTrainingPlugin : IEncogPluginService1
     {
         /// <summary>
         /// The factory for backprop.

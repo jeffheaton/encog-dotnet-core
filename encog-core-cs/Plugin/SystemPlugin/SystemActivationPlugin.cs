@@ -11,7 +11,7 @@ using Encog.ML.Data;
 
 namespace Encog.Plugin.SystemPlugin
 {
-    public class SystemActivationPlugin : EncogPluginBase
+    public class SystemActivationPlugin : IEncogPluginService1
     {
         /// <inheritdoc/>
         public String PluginDescription
