@@ -77,7 +77,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         }
 
         /// <inheritdoc/>
-        public bool Read(double[] input, double[] ideal)
+        public bool Read(double[] input, double[] ideal, ref double significance)
         {
             if (!_enumerator.MoveNext())
             {
@@ -88,17 +88,19 @@ namespace Encog.ML.Data.Buffer.CODEC
                 IMLDataPair pair = _enumerator.Current;
                 EngineArray.ArrayCopy(pair.Input.Data, input);
                 EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
+                significance = pair.Significance;
                 return true;
             }
         }
 
         /// <inheritdoc/>
-        public void Write(double[] input, double[] ideal)
+        public void Write(double[] input, double[] ideal, double significance)
         {
             IMLDataPair pair = BasicMLDataPair.CreatePair(_inputSize,
                                                          _idealSize);
             EngineArray.ArrayCopy(input, pair.Input.Data);
             EngineArray.ArrayCopy(ideal, pair.Ideal.Data);
+            pair.Significance = significance;
         }
 
         /// <inheritdoc/>

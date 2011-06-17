@@ -65,14 +65,15 @@ namespace Encog.Util.Simple
         /// <param name="inputCount">The number of input values.</param>
         /// <param name="outputCount">The number of output values.</param>
         /// <param name="headers">True, if there are headers on the3 CSV.</param>
+        /// <param name="expectSignificance">Should a significance column be expected.</param>
         public static void ConvertCSV2Binary(String csvFile, CSVFormat format,
                                              String binFile, int inputCount, int outputCount,
-                                             bool headers)
+                                             bool headers, bool  expectSignificance)
         {
             Directory.Delete(binFile);
 
             var csv = new CSVMLDataSet(csvFile,
-                                       inputCount, outputCount, false, format);
+                                       inputCount, outputCount, false, format, expectSignificance);
             var buffer = new BufferedMLDataSet(binFile);
             buffer.BeginLoad(inputCount, outputCount);
             foreach (IMLDataPair pair in csv)
@@ -131,10 +132,11 @@ namespace Encog.Util.Simple
         /// <param name="ideal">The ideal count.</param>
         /// <param name="headers">True, if headers are present.</param>
         /// <param name="format">The loaded dataset.</param>
+        /// <param name="expectSignificance">The loaded dataset.</param>
         /// <returns></returns>
-        public static IMLDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format)
+        public static IMLDataSet LoadCSV2Memory(String filename, int input, int ideal, bool headers, CSVFormat format, bool expectSignificance)
         {
-            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, input, ideal);
+            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, input, ideal, expectSignificance);
             var load = new MemoryDataLoader(codec);
             IMLDataSet dataset = load.External2Memory();
             return dataset;

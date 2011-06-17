@@ -74,6 +74,11 @@ namespace Encog.ML.Data.Buffer.CODEC
         private ReadCSV _readCSV;
 
         /// <summary>
+        /// Should a significance column be expected.
+        /// </summary>
+        private bool _significance;
+
+        /// <summary>
         /// Create a CODEC to load data from CSV to binary. 
         /// </summary>
         /// <param name="file">The CSV file to load.</param>
@@ -81,11 +86,12 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <param name="headers">True, if there are headers.</param>
         /// <param name="inputCount">The number of input columns.</param>
         /// <param name="idealCount">The number of ideal columns.</param>
+        /// <param name="significance">Is there a signficance column.</param>
         public CSVDataCODEC(
             String file,
             CSVFormat format,
             bool headers,
-            int inputCount, int idealCount)
+            int inputCount, int idealCount, bool significance)
         {
             if (_inputCount != 0)
             {
@@ -97,6 +103,7 @@ namespace Encog.ML.Data.Buffer.CODEC
             _inputCount = inputCount;
             _idealCount = idealCount;
             _headers = headers;
+            _significance = significance;
         }
 
         /// <summary>
@@ -104,21 +111,17 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         /// <param name="file">The CSV file to create.</param>
         /// <param name="format">The format for that CSV file.</param>
-        public CSVDataCODEC(String file, CSVFormat format)
+        public CSVDataCODEC(String file, CSVFormat format, bool significance)
         {
             _file = file;
             _format = format;
+            _significance = significance;
         }
 
         #region IDataSetCODEC Members
 
-        /// <summary>
-        /// Read one record of data from a CSV file. 
-        /// </summary>
-        /// <param name="input">The input data array.</param>
-        /// <param name="ideal">The ideal data array.</param>
-        /// <returns>True, if there is more data to be read.</returns>
-        public bool Read(double[] input, double[] ideal)
+        /// <inheritdoc/>
+        public bool Read(double[] input, double[] ideal, ref double significance)
         {
             if (_readCSV.Next())
             {
@@ -132,25 +135,43 @@ namespace Encog.ML.Data.Buffer.CODEC
                 {
                     ideal[i] = _readCSV.GetDouble(index++);
                 }
+
+                if( _significance )
+                {
+                    significance = _readCSV.GetDouble(index++);
+                }
+                else
+                {
+                    significance = 1;
+                }
                 return true;
             }
             return false;
         }
 
 
-        /// <summary>
-        /// Write one record of data to a CSV file. 
-        /// </summary>
-        /// <param name="input">The input data array.</param>
-        /// <param name="ideal">The ideal data array.</param>
-        public void Write(double[] input, double[] ideal)
+        /// <inheritdoc/>
+        public void Write(double[] input, double[] ideal, double significance)
         {
-            var record = new double[input.Length + ideal.Length];
-            EngineArray.ArrayCopy(input, record);
-            EngineArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
-            var result = new StringBuilder();
-            NumberList.ToList(_format, result, record);
-            _output.WriteLine(result.ToString());
+            if (_significance)
+            {
+                var record = new double[input.Length + ideal.Length + 1];
+                EngineArray.ArrayCopy(input, record);
+                EngineArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
+                record[record.Length - 1] = significance;
+                var result = new StringBuilder();
+                NumberList.ToList(_format, result, record);
+                _output.WriteLine(result.ToString());
+            }
+            else
+            {
+                var record = new double[input.Length + ideal.Length];
+                EngineArray.ArrayCopy(input, record);
+                EngineArray.ArrayCopy(ideal, 0, record, input.Length, ideal.Length);
+                var result = new StringBuilder();
+                NumberList.ToList(_format, result, record);
+                _output.WriteLine(result.ToString());
+            }
         }
 
         /// <summary>

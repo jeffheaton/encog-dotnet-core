@@ -84,7 +84,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <param name="input">The input data.</param>
         /// <param name="ideal">The ideal data.</param>
         /// <returns></returns>
-        public bool Read(double[] input, double[] ideal)
+        public bool Read(double[] input, double[] ideal, ref double significance)
         {
             if (!_results.NextResult())
                 return false;
@@ -106,12 +106,8 @@ namespace Encog.ML.Data.Buffer.CODEC
             return true;
         }
 
-        /// <summary>
-        /// Write a recrod.
-        /// </summary>
-        /// <param name="input">The input data.</param>
-        /// <param name="ideal">The ideal data.</param>
-        public void Write(double[] input, double[] ideal)
+        /// <inheritdoc/>
+        public void Write(double[] input, double[] ideal, double significance)
         {
             throw new NotImplementedException();
         }

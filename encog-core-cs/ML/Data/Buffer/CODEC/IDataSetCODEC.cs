@@ -45,15 +45,17 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// </summary>
         /// <param name="input">The input data array.</param>
         /// <param name="ideal">The ideal data array.</param>
+        /// <param name="significance">The signficance. (by reff)</param>
         /// <returns>True, if there is more data to be read.</returns>
-        bool Read(double[] input, double[] ideal);
+        bool Read(double[] input, double[] ideal, ref double significance);
 
         /// <summary>
         /// Write one record of data to an external destination. 
         /// </summary>
         /// <param name="input">The input data array.</param>
         /// <param name="ideal">The ideal data array.</param>
-        void Write(double[] input, double[] ideal);
+        /// <returns>True, if there is more data to be read.</returns>
+        void Write(double[] input, double[] ideal, double significance);
 
         /// <summary>
         /// Prepare to write to an external data destination. 

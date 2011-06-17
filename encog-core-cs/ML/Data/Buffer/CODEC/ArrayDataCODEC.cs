@@ -102,7 +102,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         }
 
         /// <inheritdoc/>
-        public bool Read(double[] input, double[] ideal)
+        public bool Read(double[] input, double[] ideal, ref double significance)
         {
             if (_index >= _input.Length)
             {
@@ -111,11 +111,12 @@ namespace Encog.ML.Data.Buffer.CODEC
             EngineArray.ArrayCopy(_input[_index], input);
             EngineArray.ArrayCopy(_ideal[_index], ideal);
             _index++;
+            significance = 1.0;
             return true;
         }
 
         /// <inheritdoc/>
-        public void Write(double[] input, double[] ideal)
+        public void Write(double[] input, double[] ideal, double significance)
         {
             EngineArray.ArrayCopy(input, _input[_index]);
             EngineArray.ArrayCopy(ideal, _ideal[_index]);

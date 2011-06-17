@@ -83,8 +83,9 @@ namespace Encog.ML.Data.Buffer
 
             int currentRecord = 0;
             int lastUpdate = 0;
+            double significance = 1.0;
 
-            while (_codec.Read(input, ideal))
+            while (_codec.Read(input, ideal, ref significance))
             {
                 IMLData b = null;
 
@@ -94,6 +95,7 @@ namespace Encog.ML.Data.Buffer
                     b = new BasicMLData(ideal);
 
                 IMLDataPair pair = new BasicMLDataPair(a, b);
+                pair.Significance = significance;
                 Result.Add(pair);
 
                 currentRecord++;

@@ -74,7 +74,7 @@ namespace Encog.ML.Data.Specific
         /// <param name="headers">True if headers are present on the first line.</param>
         public CSVMLDataSet(String filename, int inputSize,
                             int idealSize, bool headers)
-            : this(filename, inputSize, idealSize, headers, CSVFormat.English)
+            : this(filename, inputSize, idealSize, headers, CSVFormat.English, false)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Encog.ML.Data.Specific
         /// <param name="headers">True if headers are present on the first line.</param>
         /// <param name="format">The format to use.</param>
         public CSVMLDataSet(String filename, int inputSize,
-                            int idealSize, bool headers, CSVFormat format)
+                            int idealSize, bool headers, CSVFormat format, bool expectSignificance)
         {
             _filename = filename;
             _inputSize = inputSize;
@@ -95,7 +95,7 @@ namespace Encog.ML.Data.Specific
             _format = format;
             _headers = headers;
 
-            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, inputSize, idealSize);
+            IDataSetCODEC codec = new CSVDataCODEC(filename, format, headers, inputSize, idealSize, expectSignificance);
             var load = new MemoryDataLoader(codec) {Result = this};
             load.External2Memory();
         }
