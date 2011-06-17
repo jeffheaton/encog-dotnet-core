@@ -106,6 +106,7 @@ namespace Encog.Neural.Networks
                                                                      BasicNetwork.TagLayerIndex);
                     flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
                                                                          PersistConst.Output);
+                    flat.LayerSums = new double[flat.LayerOutput.Length];
                     flat.OutputCount = EncogFileSection.ParseInt(p,
                                                                  PersistConst.OutputCount);
                     flat.WeightIndex = EncogFileSection.ParseIntArray(p,

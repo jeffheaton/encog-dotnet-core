@@ -154,10 +154,16 @@ namespace Encog.Neural.Flat
         private int[] _layerIndex;
 
         /// <summary>
-        /// The outputs from each of the neurons.
+        /// The outputs from each of the neurons, after activation applied.
         /// </summary>
         ///
         private double[] _layerOutput;
+
+        /// <summary>
+        /// The sums from each of the neurons, before activation applied.
+        /// </summary>
+        ///
+        private double[] _layerSums;
 
         /// <summary>
         /// The number of output neurons in this network.
@@ -534,6 +540,7 @@ namespace Encog.Neural.Flat
             result._layerCounts = EngineArray.ArrayCopy(_layerCounts);
             result._layerIndex = EngineArray.ArrayCopy(_layerIndex);
             result._layerOutput = EngineArray.ArrayCopy(_layerOutput);
+            result._layerSums = EngineArray.ArrayCopy(_layerSums);
             result._layerFeedCounts = EngineArray.ArrayCopy(_layerFeedCounts);
             result._contextTargetOffset = EngineArray
                 .ArrayCopy(_contextTargetOffset);
@@ -612,6 +619,7 @@ namespace Encog.Neural.Flat
                     sum += _weights[index++]*_layerOutput[y];
                 }
                 _layerOutput[x] = sum;
+                _layerSums[x] = sum;
             }
 
             _activationFunctions[currentLayer - 1].ActivationFunction(
@@ -768,6 +776,7 @@ namespace Encog.Neural.Flat
 
             _weights = new double[weightCount];
             _layerOutput = new double[neuronCount];
+            _layerSums = new double[neuronCount];
 
             ClearContext();
         }
@@ -796,6 +805,15 @@ namespace Encog.Neural.Flat
             {
                 _weights[i] = (ThreadSafeRandom.NextDouble()*(hi - lo)) + lo;
             }
+        }
+
+        /// <summary>
+        /// The layer sums, before the activation is applied.
+        /// </summary>
+        public double[] LayerSums
+        {
+            get { return _layerSums; }
+            set { _layerSums = value; }
         }
     }
 }

@@ -321,9 +321,9 @@ namespace Encog.Neural.Flat.Train.Prop
                     IActivationFunction af = _network.ActivationFunctions[i];
                     // if the diriv tends to 0 on either -1, 0.0 or 1, then 
                     // add a flat-spot const.
-                    double t1 = af.DerivativeFunction(-1.0);
-                    double t2 = af.DerivativeFunction(0.0);
-                    double t3 = af.DerivativeFunction(1.0);
+                    double t1 = af.DerivativeFunction(-1.0,-1.0);
+                    double t2 = af.DerivativeFunction(0.0,0.0);
+                    double t3 = af.DerivativeFunction(1.0,1.0);
                     if ((Math.Abs(t1) < EncogFramework.DefaultDoubleEqual)
                             || (Math.Abs(t2) < EncogFramework.DefaultDoubleEqual)
                             || (Math.Abs(t3) < EncogFramework.DefaultDoubleEqual))

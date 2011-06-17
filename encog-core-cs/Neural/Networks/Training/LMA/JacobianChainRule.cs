@@ -170,7 +170,7 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <returns>The derivative.</returns>
         private static double CalcDerivative(IActivationFunction a, double d)
         {
-            return a.DerivativeFunction(d);
+            return a.DerivativeFunction(d,d);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Encog.Neural.Networks.Training.Lma
             var temp = new double[1];
             temp[0] = d;
             a.ActivationFunction(temp, 0, temp.Length);
-            temp[0] = a.DerivativeFunction(temp[0]);
+            temp[0] = a.DerivativeFunction(temp[0],temp[0]);
             return temp[0];
         }
 

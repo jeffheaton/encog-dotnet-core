@@ -180,7 +180,7 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual double DerivativeFunction(double d)
+        public virtual double DerivativeFunction(double b, double a)
         {
             return 1.0d;
         }

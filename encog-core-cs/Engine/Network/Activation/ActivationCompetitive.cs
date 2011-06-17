@@ -119,15 +119,8 @@ namespace Encog.Engine.Network.Activation
                 (int) _paras[ParamCompetitiveMaxWinners]);
         }
 
-        /// <summary>
-        /// Implements the activation function. The array is modified according to
-        /// the activation function being used. See the class description for more
-        /// specific information on this type of activation function.
-        /// </summary>
-        ///
-        /// <param name="d">The input array to the activation function.</param>
-        /// <returns>The derivative.</returns>
-        public virtual double DerivativeFunction(double d)
+        /// <inheritdoc/>
+        public virtual double DerivativeFunction(double b, double a)
         {
             throw new NeuralNetworkError(
                 "Can't use the competitive activation function "

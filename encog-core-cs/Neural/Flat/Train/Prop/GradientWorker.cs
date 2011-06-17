@@ -92,6 +92,12 @@ namespace Encog.Neural.Flat.Train.Prop
         private readonly double[] _layerOutput;
 
         /// <summary>
+        /// The sum from each layer.
+        /// </summary>
+        ///
+        private readonly double[] _layerSums;
+
+        /// <summary>
         /// The high end of the training data.
         /// </summary>
         ///
@@ -175,6 +181,7 @@ namespace Encog.Neural.Flat.Train.Prop
             _layerCounts = _network.LayerCounts;
             _weightIndex = _network.WeightIndex;
             _layerOutput = _network.LayerOutput;
+            _layerSums = _network.LayerSums;
             _layerFeedCounts = _network.LayerFeedCounts;
             _ef = ef;
 
@@ -240,7 +247,7 @@ namespace Encog.Neural.Flat.Train.Prop
             for (int i = 0; i < _actual.Length; i++)
             {
                 _layerDelta[i] = (_network.ActivationFunctions[0]
-                                    .DerivativeFunction(_actual[i])+_flatSpot[0])
+                                    .DerivativeFunction(_layerSums[i],_layerOutput[i])+_flatSpot[0])
                                 *_layerDelta[i] * s;
             }
 
@@ -283,7 +290,7 @@ namespace Encog.Neural.Flat.Train.Prop
                 }
 
                 _layerDelta[yi] = sum
-                                 *(activation.DerivativeFunction(_layerOutput[yi])+currentFlatSpot);
+                                 *(activation.DerivativeFunction(_layerSums[yi],_layerOutput[yi])+currentFlatSpot);
                 yi++;
             }
         }

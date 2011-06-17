@@ -57,22 +57,28 @@ namespace Encog.Engine.Network.Activation
         /// <param name="start">The starting index.</param>
         /// <param name="size">The number of values to calculate.</param>
         void ActivationFunction(double[] d, int start, int size);
-
+        
         /// <summary>
-        /// Calculate the derivative of the activation. It is assumed that the value
-        /// d, which is passed to this method, was the output from this activation.
-        /// This prevents this method from having to recalculate the activation, just
-        /// to recalculate the derivative.
-        /// The array is modified according derivative of the activation function
-        /// being used. See the class description for more specific information on
-        /// this type of activation function. Propagation training requires the
-        /// derivative. Some activation functions do not support a derivative and
-        /// will throw an error.
+        /// Calculate the derivative.  For performance reasons two numbers are provided.
+	    /// First, the value "b" is simply the number that we would like to calculate
+	    /// the derivative of.
+	    /// 
+	    /// Second, the value "a", which is the value returned by the activation function,
+	    /// when presented with "b".  
+	    /// 
+	    /// We use two values because some of the most common activation functions make 
+	    /// use of the result of the activation function.  It is bad for performance to
+	    /// calculate this value twice.  Yet, not all derivatives are calculated this way.
+	    /// By providing both the value before the activation function is applied ("b"), 
+	    /// and after the activation function is applied("a"), the class can be constructed
+	    /// to use whichever value will be the most efficient.
         /// </summary>
-        ///
-        /// <param name="d">The input array to the activation function.</param>
-        /// <returns>The derivative.</returns>
-        double DerivativeFunction(double d);
+        /// <param name="b">The number to calculate the derivative of, the number "before" the
+	    /// activation function was applied.</param>
+        /// <param name="a">The number "after" an activation function has been applied.
+	    /// @return The derivative.</param>
+        /// <returns></returns>
+        double DerivativeFunction(double b, double a);
 
 
         /// <returns>Return true if this function has a derivative.</returns>

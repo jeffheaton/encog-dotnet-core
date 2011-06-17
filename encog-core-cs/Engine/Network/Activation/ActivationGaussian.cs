@@ -142,12 +142,12 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual double DerivativeFunction(double x)
+        public virtual double DerivativeFunction(double b, double a)
         {
             double width = _paras[ParamGaussianWidth];
             double peak = _paras[ParamGaussianPeak];
-            return Math.Exp(-0.5d*width*width*x*x)*peak*width*width
-                   *(width*width*x*x - 1);
+            return Math.Exp(-0.5d*width*width*b*b)*peak*width*width
+                   *(width*width*b*b - 1);
         }
 
         /// <inheritdoc />

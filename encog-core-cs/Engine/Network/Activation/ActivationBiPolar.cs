@@ -48,17 +48,8 @@ namespace Encog.Engine.Network.Activation
             _paras = new double[0];
         }
 
-        /// <summary>
-        /// Implements the activation function derivative. The array is modified
-        /// according derivative of the activation function being used. See the class
-        /// description for more specific information on this type of activation
-        /// function. Propagation training requires the derivative. Some activation
-        /// functions do not support a derivative and will throw an error.
-        /// </summary>
-        ///
-        /// <param name="d">The input array to the activation function.</param>
-        /// <returns>The derivative.</returns>
-        public virtual double DerivativeFunction(double d)
+        /// <inheritdoc/>
+        public virtual double DerivativeFunction(double b, double a)
         {
             return 1;
         }

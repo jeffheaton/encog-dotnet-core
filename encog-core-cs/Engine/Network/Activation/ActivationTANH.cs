@@ -77,9 +77,9 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual double DerivativeFunction(double x)
+        public virtual double DerivativeFunction(double b, double a)
         {
-            return (1.0d - x*x);
+            return (1.0d - a*a);
         }
 
         /// <inheritdoc />

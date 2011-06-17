@@ -75,9 +75,9 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <inheritdoc />
-        public virtual double DerivativeFunction(double x)
+        public virtual double DerivativeFunction(double b, double a)
         {
-            return BoundMath.Cos(x);
+            return BoundMath.Cos(b);
         }
 
         /// <inheritdoc />
