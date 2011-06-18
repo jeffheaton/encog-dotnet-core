@@ -186,6 +186,7 @@
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
     <Compile Include="MathUtil\BoundNumbers.cs" />
+    <Compile Include="MathUtil\ComplexNumber.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
     <Compile Include="ML\Data\Image\ImageMLData.cs" />
     <Compile Include="ML\Data\Image\ImageMLDataSet.cs" />
+    <Compile Include="ML\Data\IMLComplexData.cs" />
     <Compile Include="ML\Data\IMLData.cs" />
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />

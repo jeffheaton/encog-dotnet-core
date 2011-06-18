@@ -227,8 +227,17 @@ namespace Encog.ML.Data.Basic
             get
             {
                 if (_data == null || _data.Count == 0)
+                {
                     return 0;
+                }
+
                 IMLDataPair pair = _data[0];
+
+                if (pair.IdealArray == null)
+                {
+                    return 0;
+                }
+
                 return pair.Ideal.Count;
             }
         }

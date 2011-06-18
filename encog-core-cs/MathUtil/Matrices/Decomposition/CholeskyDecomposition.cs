@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.Util;
 
 namespace Encog.MathUtil.Matrices.Decomposition
 {
@@ -63,7 +64,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
             // Initialize.
             double[][] a = matrix.Data;
             n = matrix.Rows;
-            l = new double[n][];
+            l = EngineArray.AllocateDouble2D(n,n);
             isspd = (matrix.Cols == n);
             // Main loop.
             for (int j = 0; j < n; j++)

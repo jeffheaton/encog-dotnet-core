@@ -22,6 +22,7 @@
 //
 using System;
 using Encog.MathUtil.Matrices;
+using System.Text;
 
 namespace Encog.ML.Data.Specific
 {
@@ -128,6 +129,23 @@ namespace Encog.ML.Data.Specific
             {
                 _data[i] = false;
             }
+        }
+
+        /// <inheritdoc/>
+        public String ToString()
+        {
+            var result = new StringBuilder();
+            result.Append('[');
+            for (var i = 0; i < Count; i++)
+            {
+                result.Append(this[i] > 0 ? "T" : "F");
+                if (i != Count - 1)
+                {
+                    result.Append(",");
+                }
+            }
+            result.Append(']');
+            return (result.ToString());
         }
     }
 }
