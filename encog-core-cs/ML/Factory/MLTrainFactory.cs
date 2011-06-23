@@ -41,6 +41,12 @@ namespace Encog.ML.Factory
         public const String TypeRPROP = "rprop";
 
         /// <summary>
+        /// String constant for RPROP training.
+        /// </summary>
+        ///
+        public const String TypeQPROP = "qprop";
+
+        /// <summary>
         /// String constant for backprop training.
         /// </summary>
         ///

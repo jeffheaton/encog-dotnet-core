@@ -371,5 +371,12 @@ namespace Encog.Neural.Flat.Train.Prop
         {
             return 0;
         }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
+        }
     }
 }

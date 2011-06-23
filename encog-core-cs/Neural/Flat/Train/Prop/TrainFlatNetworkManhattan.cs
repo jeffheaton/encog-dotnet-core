@@ -90,5 +90,12 @@ namespace Encog.Neural.Flat.Train.Prop
                 return -_learningRate;
             }
         }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
+        }
     }
 }

@@ -270,6 +270,7 @@
     <Compile Include="ML\Factory\Train\ManhattanFactory.cs" />
     <Compile Include="ML\Factory\Train\NeighborhoodSOMFactory.cs" />
     <Compile Include="ML\Factory\Train\PNNTrainFactory.cs" />
+    <Compile Include="ML\Factory\Train\QuickPropFactory.cs" />
     <Compile Include="ML\Factory\Train\RBFSVDFactory.cs" />
     <Compile Include="ML\Factory\Train\RPROPFactory.cs" />
     <Compile Include="ML\Factory\Train\SCGFactory.cs" />
@@ -347,6 +348,7 @@
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkBackPropagation.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkManhattan.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkProp.cs" />
+    <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkQPROP.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkResilient.cs" />
     <Compile Include="Neural\Flat\Train\Prop\TrainFlatNetworkSCG.cs" />
     <Compile Include="Neural\Flat\Train\ITrainFlatNetwork.cs" />
@@ -396,6 +398,7 @@
     <Compile Include="Neural\Networks\Training\Propagation\Manhattan\ManhattanPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\PersistTrainingContinuation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Propagation.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\Quick\QuickPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\ResilientPropagation.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />

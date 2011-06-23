@@ -159,5 +159,12 @@ namespace Encog.Neural.Flat.Train.Prop
             // apply the weight change, if any
             return weightChange;
         }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
+        }
     }
 }

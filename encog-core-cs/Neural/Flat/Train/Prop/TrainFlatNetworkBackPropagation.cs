@@ -111,5 +111,12 @@ namespace Encog.Neural.Flat.Train.Prop
             _lastDelta[index] = delta;
             return delta;
         }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
+        }
     }
 }

@@ -82,7 +82,10 @@ namespace Encog.Plugin.SystemPlugin
         /// </summary>
         private PNNTrainFactory pnnFactory = new PNNTrainFactory();
 
-        //private QuickPropFactory qpropFactory = new QuickPropFactory(); 
+        /// <summary>
+        /// Factory for quick prop.
+        /// </summary>
+        private QuickPropFactory qpropFactory = new QuickPropFactory(); 
 
         /// <inheritdoc/>
         public String PluginDescription
@@ -194,9 +197,10 @@ namespace Encog.Plugin.SystemPlugin
             else if (String.Compare(MLTrainFactory.TypePNN, type) == 0)
             {
                 return this.pnnFactory.Create(method, training, args2);
-            } /*else if (MLTrainFactory.TYPE_QPROP.equalsIgnoreCase(type)) {
-			return this.qpropFactory.Create(method, training, args2);
-		}*/ else
+            } 
+            else if (String.Compare(MLTrainFactory.TypeQPROP,type) == 0) {
+			    return this.qpropFactory.Create(method, training, args2);
+		    } else
             {
                 throw new EncogError("Unknown training type: " + type);
             }

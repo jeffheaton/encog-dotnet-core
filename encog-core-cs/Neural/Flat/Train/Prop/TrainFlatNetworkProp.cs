@@ -357,6 +357,8 @@ namespace Encog.Neural.Flat.Train.Prop
                                                          this, _indexable.OpenAdditional(), r.Low,
                                                          r.High, _flatSpot, ErrorFunction);
             }
+
+            InitOthers();
         }
 
         /// <summary>
@@ -436,5 +438,10 @@ namespace Encog.Neural.Flat.Train.Prop
         /// <returns>The update value.</returns>
         public abstract double UpdateWeight(double[] gradients,
                                             double[] lastGradient, int index);
+
+        /// <summary>
+        /// Allow other training methods to init.
+        /// </summary>
+        public abstract void InitOthers();
     }
 }
