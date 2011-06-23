@@ -105,13 +105,22 @@ namespace Encog.MathUtil.Randomize
             int fromCount = network.GetLayerTotalNeuronCount(fromLayer);
             int toCount = network.GetLayerNeuronCount(fromLayer + 1);
 
-            for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
+            for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
             {
-                for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
+                double n = 0.0;
+                for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
                 {
-                    double v = network.GetWeight(fromLayer, fromNeuron, toNeuron);
-                    v = (_beta*v)/_inputCount;
-                    network.SetWeight(fromLayer, fromNeuron, toNeuron, v);
+                    double w = network.GetWeight(fromLayer, fromNeuron, toNeuron);
+                    n += w * w;
+                }
+                n = Math.Sqrt(n);
+
+
+                for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
+                {
+                    double w = network.GetWeight(fromLayer, fromNeuron, toNeuron);
+                    w = _beta * w / n;
+                    network.SetWeight(fromLayer, fromNeuron, toNeuron, w);
                 }
             }
         }
