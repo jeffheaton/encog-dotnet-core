@@ -46,7 +46,7 @@ namespace Encog.Engine.Network.Activation
 
 
             // test derivative, should not throw an error
-            input[0] = activation.DerivativeFunction(input[0]);
+            input[0] = activation.DerivativeFunction(input[0],input[0]);
         }
     }
 }

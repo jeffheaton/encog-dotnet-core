@@ -75,8 +75,11 @@
     <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
+    <Compile Include="ML\Data\Market\TestMarketData.cs" />
+    <Compile Include="ML\Data\Market\TestYahooLoader.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
+    <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />

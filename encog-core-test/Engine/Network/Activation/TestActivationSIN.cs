@@ -43,7 +43,7 @@ namespace Encog.Engine.Network.Activation
             Assert.AreEqual(0.0, input[0], 0.1);
 
             // test derivative, should throw an error
-            input[0] = activation.DerivativeFunction(input[0]);
+            input[0] = activation.DerivativeFunction(input[0],input[0]);
             Assert.AreEqual(1.0, input[0], 0.1);
         }
     }

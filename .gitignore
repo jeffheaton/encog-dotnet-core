@@ -1,0 +1,12 @@
+ConsoleExamples/bin/
+ConsoleExamples/obj/
+OCR/bin/
+OCR/obj/
+SOMColors/bin/
+SOMColors/obj/
+TestResults/
+_ReSharper.encog-core-cs/
+encog-core-cs/bin/
+encog-core-cs/obj/
+encog-core-test/bin/
+encog-core-test/obj/
