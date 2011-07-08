@@ -13,6 +13,7 @@ namespace Encog.ML.Data.Basic
     /// that does not support complex numbers will only be dealing with the 
     /// real-number portion of the complex number. 
     /// </summary>
+    [Serializable]
     public class BasicMLComplexData : IMLComplexData
     {
         /// <summary>

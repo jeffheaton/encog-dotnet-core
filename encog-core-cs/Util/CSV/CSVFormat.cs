@@ -29,6 +29,7 @@ namespace Encog.Util.CSV
     /// <summary>
     /// Describes how to format number lists, such as CSV.
     /// </summary>
+    [Serializable]
     public class CSVFormat
     {
         /// <summary>
