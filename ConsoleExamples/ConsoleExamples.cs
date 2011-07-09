@@ -22,8 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ConsoleExamples.Examples;
 using Encog.Examples;
 
@@ -68,6 +66,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.XOR.XORDisplay.Info);
             examples.Add(Encog.Examples.Analyst.AnalystExample.Info);
             examples.Add(Encog.Examples.XOR.XORNEAT.Info);
+            examples.Add(Encog.Examples.Forest.ForestCover.Info);
         }
 
         public void ListCommands()

@@ -1,65 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Neural.Networks;
 using System.IO;
-using Encog.Persist;
-using Encog.Util.Normalize;
-using Encog.Util;
-using Encog.Util.Normalize.Output.Nominal;
-using Encog.Util.CSV;
 using Encog.ML.Data;
+using Encog.Neural.Networks;
+using Encog.Persist;
+using Encog.Util;
+using Encog.Util.CSV;
+using Encog.Util.Normalize;
+using Encog.Util.Normalize.Output.Nominal;
 
 namespace Encog.Examples.Forest
 {
     public class Evaluate
     {
-        private int[] treeCount = new int[10];
-        private int[] treeCorrect = new int[10];
-        private ForestConfig config;
+        private readonly ForestConfig _config;
+        private readonly int[] _treeCorrect = new int[10];
+        private readonly int[] _treeCount = new int[10];
 
         public Evaluate(ForestConfig config)
         {
-            this.config = config;
+            _config = config;
         }
 
         public void KeepScore(int actual, int ideal)
         {
-            treeCount[ideal]++;
+            _treeCount[ideal]++;
             if (actual == ideal)
-                treeCorrect[ideal]++;
+                _treeCorrect[ideal]++;
         }
 
         public BasicNetwork LoadNetwork()
         {
-            FileInfo file = config.TrainedNetworkFile;
+            FileInfo file = _config.TrainedNetworkFile;
 
             if (!file.Exists)
             {
-                Console.WriteLine("Can't read file: " + file.ToString());
+                Console.WriteLine(@"Can't read file: " + file);
                 return null;
             }
 
-            BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(file);
+            var network = (BasicNetwork) EncogDirectoryPersistence.LoadObject(file);
 
             return network;
         }
 
         public DataNormalization LoadNormalization()
         {
-
             DataNormalization norm = null;
 
-            if (config.NormalizeFile.Exists)
+            if (_config.NormalizeFile.Exists)
             {
-                norm = (DataNormalization)SerializeObject.Load(config.NormalizeFile.ToString());
+                norm = (DataNormalization) SerializeObject.Load(_config.NormalizeFile.ToString());
             }
 
             if (norm == null)
             {
-                Console.WriteLine("Can't find normalization resource: "
-                        + config.NormalizeFile.ToString());
+                Console.WriteLine(@"Can't find normalization resource: "
+                                  + _config.NormalizeFile);
                 return null;
             }
 
@@ -68,7 +64,7 @@ namespace Encog.Examples.Forest
 
         public int DetermineTreeType(OutputEquilateral eqField, IMLData output)
         {
-            int result = 0;
+            int result;
 
             if (eqField != null)
             {
@@ -97,10 +93,10 @@ namespace Encog.Examples.Forest
             BasicNetwork network = LoadNetwork();
             DataNormalization norm = LoadNormalization();
 
-            ReadCSV csv = new ReadCSV(config.EvaluateFile.ToString(), false, ',');
-            double[] input = new double[norm.InputFields.Count];
-            OutputEquilateral eqField = (OutputEquilateral)norm.FindOutputField(
-                    typeof(OutputEquilateral), 0);
+            var csv = new ReadCSV(_config.EvaluateFile.ToString(), false, ',');
+            var input = new double[norm.InputFields.Count];
+            var eqField = (OutputEquilateral) norm.FindOutputField(
+                typeof (OutputEquilateral), 0);
 
             int correct = 0;
             int total = 0;
@@ -114,7 +110,7 @@ namespace Encog.Examples.Forest
                 IMLData inputData = norm.BuildForNetworkInput(input);
                 IMLData output = network.Compute(inputData);
                 int coverTypeActual = DetermineTreeType(eqField, output);
-                int coverTypeIdeal = (int)csv.GetDouble(54) - 1;
+                int coverTypeIdeal = (int) csv.GetDouble(54) - 1;
 
                 KeepScore(coverTypeActual, coverTypeIdeal);
 
@@ -124,17 +120,17 @@ namespace Encog.Examples.Forest
                 }
             }
 
-            Console.WriteLine("Total cases:" + total);
-            Console.WriteLine("Correct cases:" + correct);
-            double percent = (double)correct / (double)total;
-            Console.WriteLine("Correct percent:"
-                    + Format.FormatPercentWhole(percent));
+            Console.WriteLine(@"Total cases:" + total);
+            Console.WriteLine(@"Correct cases:" + correct);
+            double percent = correct/(double) total;
+            Console.WriteLine(@"Correct percent:"
+                              + Format.FormatPercentWhole(percent));
             for (int i = 0; i < 7; i++)
             {
-                double p = ((double)this.treeCorrect[i] / (double)this.treeCount[i]);
-                Console.WriteLine("Tree Type #" + i + " - Correct/total: "
-                        + this.treeCorrect[i] + "/" + treeCount[i] + "("
-                        + Format.FormatPercentWhole(p) + ")");
+                double p = (_treeCorrect[i]/(double) _treeCount[i]);
+                Console.WriteLine(@"Tree Type #" + i + @" - Correct/total: "
+                                  + _treeCorrect[i] + @"/" + _treeCount[i] + @"("
+                                  + Format.FormatPercentWhole(p) + @")");
             }
         }
     }

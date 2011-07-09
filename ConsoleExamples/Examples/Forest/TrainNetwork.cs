@@ -1,67 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Encog.ML.Data.Buffer;
 using Encog.Neural.Networks;
 using Encog.Persist;
-using Encog.Util.Simple;
-using Encog.ML.Data.Buffer;
 using Encog.Util.CSV;
+using Encog.Util.Simple;
 
 namespace Encog.Examples.Forest
 {
     public class TrainNetwork
     {
-        private ForestConfig config;
+        private readonly ForestConfig _config;
 
         public TrainNetwork(ForestConfig config)
         {
-            this.config = config;
+            _config = config;
         }
 
-        public void train(bool useGUI)
+        public void Train(bool useGui)
         {
             // load, or create the neural network
-            BasicNetwork network = null;
+            BasicNetwork network;
 
-            if (!config.TrainedNetworkFile.Exists)
+            if (!_config.TrainedNetworkFile.Exists)
             {
-                throw new EncogError("Can't find neural network file, please generate data");
+                throw new EncogError(@"Can't find neural network file, please generate data");
             }
 
-            network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(config.TrainedNetworkFile);
+            network = (BasicNetwork) EncogDirectoryPersistence.LoadObject(_config.TrainedNetworkFile);
 
             // convert training data
-            Console.WriteLine("Converting training file to binary");
-
-
+            Console.WriteLine(@"Converting training file to binary");
 
 
             EncogUtility.ConvertCSV2Binary(
-                config.NormalizedDataFile.ToString(),
+                _config.NormalizedDataFile.ToString(),
                 CSVFormat.English,
-                config.BinaryFile.ToString(),
+                _config.BinaryFile.ToString(),
                 network.InputCount,
                 network.OutputCount,
                 false, false);
 
-            BufferedMLDataSet trainingSet = new BufferedMLDataSet(
-                    config.BinaryFile.ToString());
+            var trainingSet = new BufferedMLDataSet(
+                _config.BinaryFile.ToString());
 
 
-            if (useGUI)
+            if (useGui)
             {
                 EncogUtility.TrainDialog(network, trainingSet);
             }
             else
             {
                 EncogUtility.TrainConsole(network, trainingSet,
-                        config.TrainingMinutes);
+                                          _config.TrainingMinutes);
             }
 
-            Console.WriteLine("Training complete, saving network...");
-            EncogDirectoryPersistence.SaveObject(config.TrainedNetworkFile, network);
+            Console.WriteLine(@"Training complete, saving network...");
+            EncogDirectoryPersistence.SaveObject(_config.TrainedNetworkFile, network);
         }
-
     }
 }
