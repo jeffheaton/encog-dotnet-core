@@ -464,6 +464,6 @@ namespace Encog.Util.Simple
                 epoch++;
             } while ((train.Error > error) && !train.TrainingDone);
             train.FinishTraining();
-        }
+        }       
     }
 }

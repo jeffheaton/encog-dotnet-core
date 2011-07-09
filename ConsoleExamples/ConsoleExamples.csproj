@@ -57,6 +57,10 @@
     <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
     <Compile Include="Examples\Benchmark\ThreadCount.cs" />
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
+    <Compile Include="Examples\Forest\Evaluate.cs" />
+    <Compile Include="Examples\Forest\ForestConfig.cs" />
+    <Compile Include="Examples\Forest\GenerateData.cs" />
+    <Compile Include="Examples\Forest\TrainNetwork.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
     <Compile Include="Examples\GeneticTSP\ICalculateGenomeScore.cs" />
     <Compile Include="Examples\GeneticTSP\TSPGenome.cs" />

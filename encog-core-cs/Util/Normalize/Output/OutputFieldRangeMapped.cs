@@ -70,6 +70,14 @@ namespace Encog.Util.Normalize.Output
         }
 
         /// <summary>
+        /// Construct the output field with -1 for low and +1 for high.
+        /// </summary>
+        /// <param name="f">The input field.</param>
+        public OutputFieldRangeMapped(IInputField f): this(f,-1,1)
+        {
+        }
+
+        /// <summary>
         /// The field that this output is based on.
         /// </summary>
         public IInputField Field

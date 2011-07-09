@@ -54,9 +54,9 @@ namespace Encog.Util.Normalize.Output.Nominal
         private readonly double _trueValue;
 
         /// <summary>
-        /// Default constructor for reflection.
+        /// Default constructor for reflection.  Use 1 for true, -1 for false.
         /// </summary>
-        public OutputOneOf()
+        public OutputOneOf(): this(1,-1)
         {
         }
 

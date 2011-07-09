@@ -64,8 +64,10 @@ namespace Encog.Util.Normalize.Output.Nominal
 
         /// <summary>
         /// Prodvide a default constructor for reflection.
+        /// Use -1 for low and +1 for high.
         /// </summary>
         public OutputEquilateral()
+            : this(1, -1)
         {
         }
 
