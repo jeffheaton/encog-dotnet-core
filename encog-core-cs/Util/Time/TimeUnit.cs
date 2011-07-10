@@ -74,6 +74,10 @@ namespace Encog.Util.Time
         /// <summary>
         /// Millennia
         /// </summary>
-        Millennia
+        Millennia,
+        /// <summary>
+        /// Ticks
+        /// </summary>
+        Ticks
     }
 }

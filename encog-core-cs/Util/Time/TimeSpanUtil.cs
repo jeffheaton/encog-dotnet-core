@@ -50,6 +50,8 @@ namespace Encog.Util.Time
         {
             switch (unit)
             {
+                case TimeUnit.Ticks:
+                    return GetSpanTicks();
                 case TimeUnit.Seconds:
                     return GetSpanSeconds();
                 case TimeUnit.Minutes:
@@ -75,6 +77,12 @@ namespace Encog.Util.Time
                 default:
                     return 0;
             }
+        }
+
+        private long GetSpanTicks()
+        {
+            TimeSpan span = _to.Subtract(_from);
+            return span.Ticks;
         }
 
         private long GetSpanSeconds()

@@ -55,6 +55,16 @@ namespace Encog.ML.Data.Market
         /// <summary>
         /// The low for the day.
         /// </summary>
-        Low
+        Low,
+
+        /// <summary>
+        /// A trade (Tick data).
+        /// </summary>
+        Trade,
+
+        /// <summary>
+        /// A quote (bid /ask)
+        /// </summary>
+        Quote
     }
 }

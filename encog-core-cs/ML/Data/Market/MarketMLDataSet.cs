@@ -62,6 +62,21 @@ namespace Encog.ML.Data.Market
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MarketMLDataSet"/> class.
+        /// </summary>
+        /// <param name="loader">The loader.</param>
+        /// <param name="inputWindowSize">Size of the input window.</param>
+        /// <param name="predictWindowSize">Size of the predict window.</param>
+        /// <param name="unit">The time unit to use.</param>
+        public MarketMLDataSet(IMarketLoader loader, int inputWindowSize, int predictWindowSize, TimeUnit unit)
+            : base(inputWindowSize, predictWindowSize)
+        {
+
+            _loader = loader;
+            SequenceGrandularity =unit;
+        }
+
+        /// <summary>
         /// The loader that is being used for this set.
         /// </summary>
         public IMarketLoader Loader
