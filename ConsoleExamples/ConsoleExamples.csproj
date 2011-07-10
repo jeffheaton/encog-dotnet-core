@@ -59,6 +59,7 @@
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
     <Compile Include="Examples\Forest\Evaluate.cs" />
     <Compile Include="Examples\Forest\ForestConfig.cs" />
+    <Compile Include="Examples\Forest\ForestCover.cs" />
     <Compile Include="Examples\Forest\GenerateData.cs" />
     <Compile Include="Examples\Forest\TrainNetwork.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
@@ -70,6 +71,12 @@
     <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
     <Compile Include="Examples\Image\ImagePair.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
+    <Compile Include="Examples\Market\Config.cs" />
+    <Compile Include="Examples\Market\MarketBuildTraining.cs" />
+    <Compile Include="Examples\Market\MarketEvaluate.cs" />
+    <Compile Include="Examples\Market\MarketPredict.cs" />
+    <Compile Include="Examples\Market\MarketPrune.cs" />
+    <Compile Include="Examples\Market\MarketTrain.cs" />
     <Compile Include="Examples\MultiBench\MultiThreadBenchmark.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />

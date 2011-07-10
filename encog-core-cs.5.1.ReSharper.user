@@ -8,21 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Output/f:BasicOutputField.cs" caret="1086" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Output/f:BasicOutputFieldGroup.cs" caret="1148" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Output/f:OutputFieldDirect.cs" caret="1081" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Output/f:OutputFieldGrouped.cs" caret="1108" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Output/f:OutputFieldRangeMapped.cs" caret="1122" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/d:Index/f:IndexRangeSegregator.cs" caret="1491" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/d:Index/f:IndexSampleSegregator.cs" caret="1774" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/d:Index/f:IndexSegregator.cs" caret="1438" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/f:IntegerBalanceSegregator.cs" caret="1340" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/f:RangeSegregator.cs" caret="1158" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Segregate/f:SegregationRange.cs" caret="1032" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Target/f:NormalizationStorageCSV.cs" caret="1073" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:CSVFormat.cs" caret="1060" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestMapped.cs" caret="2140" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Target/f:NormalizationStorageArray2D.cs" caret="1003" fromTop="10" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestNormArray.cs" caret="1276" fromTop="15" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestMultiplicative.cs" caret="309" fromTop="10" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestNormCSV.cs" caret="2130" fromTop="10" />
@@ -38,38 +23,53 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/f:DataNormalization.cs" caret="7225" fromTop="12" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5263" fromTop="8" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="1998" fromTop="2" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:Evaluate.cs" caret="4244" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestConfig.cs" caret="318" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:GenerateData.cs" caret="4870" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:TrainNetwork.cs" caret="510" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Associate/f:HopfieldAssociate.cs" caret="1619" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="4414" fromTop="2" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:Config.cs" caret="180" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="18988" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1487" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2951" fromTop="15" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="592" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="702" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MultiBench/f:MultiThreadBenchmark.cs" caret="4163" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="134" fromTop="6" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3072" fromTop="5" />
     </RecentFiles>
     <RecentEdits>
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="6" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="19" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="16" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="18" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5415" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="1032" fromTop="1" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="1829" fromTop="20" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="2111" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5380" fromTop="18" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="4369" fromTop="9" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="3357" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="2205" fromTop="7" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="3291" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="4302" fromTop="10" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5299" fromTop="8" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="20" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="4" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="14" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="15" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="9" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="9" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2436" fromTop="11" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="2182" fromTop="9" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="1998" fromTop="2" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="474" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="532" fromTop="5" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2326" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1355" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1558" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2960" fromTop="15" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="8" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="977" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1489" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1441" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="260" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="601" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="3" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1300" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="711" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="17" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1609" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1600" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="533" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3277" fromTop="9" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -85,7 +85,7 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="long" priority="1" />
-      <Item value="new" priority="20" />
+      <Item value="new" priority="22" />
       <Item value="svm_node" priority="1" />
       <Item value="result" priority="10" />
       <Item value="for" priority="9" />
@@ -94,7 +94,7 @@
       <Item value="training" priority="0" />
       <Item value="paras" priority="3" />
       <Item value="foreach" priority="2" />
-      <Item value="String`0" priority="4" />
+      <Item value="String`0" priority="5" />
       <Item value="key" priority="0" />
       <Item value="value_ren" priority="0" />
       <Item value="public" priority="5" />
@@ -138,8 +138,8 @@
       <Item value="Hopfield" priority="1" />
       <Item value="network" priority="3" />
       <Item value="pattern1" priority="0" />
-      <Item value="using" priority="1" />
-      <Item value="Encog" priority="2" />
+      <Item value="using" priority="2" />
+      <Item value="Encog" priority="3" />
       <Item value="Neural" priority="0" />
       <Item value="BAMNetwork`0" priority="1" />
       <Item value="Boltzmann" priority="0" />
@@ -176,13 +176,13 @@
       <Item value="oldList" priority="1" />
       <Item value="ClassItem" priority="0" />
       <Item value="double" priority="3" />
-      <Item value="app" priority="1" />
+      <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
-      <Item value="Console`0" priority="8" />
-      <Item value="examples" priority="1" />
-      <Item value="Examples" priority="1" />
+      <Item value="Console`0" priority="22" />
+      <Item value="examples" priority="2" />
+      <Item value="Examples" priority="2" />
       <Item value="XOR" priority="1" />
-      <Item value="IExample`0" priority="3" />
+      <Item value="IExample`0" priority="4" />
       <Item value="XORHelloWorld`0" priority="0" />
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
@@ -194,7 +194,7 @@
       <Item value="theFlatSpots" priority="0" />
       <Item value="_flatSpot" priority="0" />
       <Item value="ShouldFixFlatSpot" priority="0" />
-      <Item value="true" priority="0" />
+      <Item value="true" priority="1" />
       <Item value="value" priority="0" />
       <Item value="Engine.Network.Activation" priority="0" />
       <Item value="Extract" priority="0" />
@@ -204,7 +204,7 @@
       <Item value="Buffer" priority="0" />
       <Item value="Specific" priority="1" />
       <Item value="MathUtil" priority="1" />
-      <Item value="Util" priority="1" />
+      <Item value="Util" priority="2" />
       <Item value="Mathutil" priority="0" />
       <Item value="Matrices" priority="0" />
       <Item value="d" priority="1" />
@@ -212,7 +212,7 @@
       <Item value="Parse" priority="0" />
       <Item value="Tags" priority="0" />
       <Item value="Read" priority="0" />
-      <Item value="FileUtil`0" priority="2" />
+      <Item value="FileUtil`0" priority="3" />
       <Item value="File" priority="1" />
       <Item value="Directory" priority="0" />
       <Item value="readonly" priority="4" />
@@ -256,6 +256,13 @@
       <Item value="_array" priority="0" />
       <Item value="_report" priority="0" />
       <Item value="IList" priority="2" />
+      <Item value="e" priority="0" />
+      <Item value="ForestCover`0" priority="0" />
+      <Item value="Forest" priority="0" />
+      <Item value="DateTime`0" priority="4" />
+      <Item value="end" priority="1" />
+      <Item value="DateTime" priority="1" />
+      <Item value="Format" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -290,6 +297,7 @@
       <Item value="IndexOf`0" priority="0" />
       <Item value="Trim`0" priority="0" />
       <Item value="Length" priority="0" />
+      <Item value="ToLower`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.ReflectionUtil">
       <Item value="LoadObject`0" priority="0" />
@@ -311,12 +319,13 @@
       <Item value="Properties" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.IO.FileInfo">
-      <Item value="ToString`0" priority="30" />
+      <Item value="ToString`0" priority="36" />
       <Item value="Directory" priority="2" />
       <Item value="DirectoryName" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Exception">
       <Item value="ToString`0" priority="0" />
+      <Item value="StackTrace" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.ML.Data.Specific.BiPolarMLData">
       <Item value="SetBoolean`0" priority="4" />
@@ -379,7 +388,7 @@
       <Item value="ClassMembers" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="3" />
+      <Item value="Add`0" priority="4" />
       <Item value="Sort`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
@@ -392,10 +401,11 @@
       <Item value="ColumnNames" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Examples.IExampleInterface">
-      <Item value="Args" priority="1" />
+      <Item value="Args" priority="7" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Console">
-      <Item value="WriteLine`0" priority="9" />
+      <Item value="WriteLine`0" priority="21" />
+      <Item value="Write`0" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Examples.XOR.XORFactory">
       <Item value="Info" priority="0" />
@@ -444,7 +454,7 @@
       <Item value="Size" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.File.FileUtil">
-      <Item value="CombinePath`0" priority="0" />
+      <Item value="CombinePath`0" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.IO.Directory">
       <Item value="CreateDirectory`0" priority="0" />
@@ -467,6 +477,7 @@
     <ItemStatistics item="Qualified:@Encog.ML.Data.Market.MarketDataType">
       <Item value="CLOSE" priority="0" />
       <Item value="Close" priority="0" />
+      <Item value="AdjustedClose" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.ML.Data.Market.TickerSymbol">
       <Item value="Exchange" priority="0" />
@@ -483,6 +494,31 @@
     <ItemStatistics item="Qualified:Encog.Util.Normalize.Target.NormalizationStorageArray2D">
       <Item value="_array" priority="0" />
       <Item value="GetArray`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Examples.Forest.ForestConfig">
+      <Item value="HiddenCount" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="Compare`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.MathUtil.Randomize.ConsistentRandomizer">
+      <Item value="Randomize`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Examples.Forest.ForestCover">
+      <Item value="Info" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.DateTime">
+      <Item value="getTime`0" priority="0" />
+      <Item value="Ticks" priority="1" />
+      <Item value="AddDays`0" priority="2" />
+      <Item value="AddYears`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Examples.Market.Config">
+      <Item value="TRAINING_FILE" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.Format">
+      <Item value="FormatDouble`0" priority="1" />
+      <Item value="FormatPercent`0" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

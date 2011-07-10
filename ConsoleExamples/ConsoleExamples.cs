@@ -24,6 +24,25 @@ using System;
 using System.Collections.Generic;
 using ConsoleExamples.Examples;
 using Encog.Examples;
+using Encog.Examples.Adaline;
+using Encog.Examples.Analyst;
+using Encog.Examples.AnnealTSP;
+using Encog.Examples.ARTExample;
+using Encog.Examples.BAM;
+using Encog.Examples.Benchmark;
+using Encog.Examples.Boltzmann;
+using Encog.Examples.CPN;
+using Encog.Examples.ElmanNetwork;
+using Encog.Examples.Forest;
+using Encog.Examples.GeneticTSP;
+using Encog.Examples.Hopfield.Associate;
+using Encog.Examples.Hopfield.Simple;
+using Encog.Examples.Image;
+using Encog.Examples.JordanNetwork;
+using Encog.Examples.Market;
+using Encog.Examples.MultiBench;
+using Encog.Examples.Persist;
+using Encog.Examples.XOR;
 
 namespace ConsoleExamples
 {
@@ -37,45 +56,46 @@ namespace ConsoleExamples
     /// </summary>
     public class ConsoleExamples
     {
-        private List<ExampleInfo> examples = new List<ExampleInfo>();
+        private readonly List<ExampleInfo> examples = new List<ExampleInfo>();
 
         public ConsoleExamples()
         {
-            examples.Add(Encog.Examples.Adaline.AdalineDigits.Info);
-            examples.Add(Encog.Examples.AnnealTSP.SolveTSP.Info);
-            examples.Add(Encog.Examples.ARTExample.ClassifyART1.Info);
-            examples.Add(Encog.Examples.BAM.BidirectionalAssociativeMemory.Info);
-            examples.Add(Encog.Examples.Benchmark.EncogBenchmarkExample.Info);
-            examples.Add(Encog.Examples.Boltzmann.BoltzTSP.Info);
-            examples.Add(Encog.Examples.CPN.RocketCPN.Info);
-            examples.Add(Encog.Examples.ElmanNetwork.ElmanExample.Info);
-            examples.Add(Encog.Examples.GeneticTSP.GeneticSolveTSP.Info);
-            examples.Add(Encog.Examples.Hopfield.Simple.HopfieldSimple.Info);
-            examples.Add(Encog.Examples.Hopfield.Associate.HopfieldAssociate.Info);
-            examples.Add(Encog.Examples.JordanNetwork.JordanExample.Info);
-            examples.Add(Encog.Examples.MultiBench.MultiThreadBenchmark.Info);
-            examples.Add(Encog.Examples.Image.ImageNeuralNetwork.Info);
-            examples.Add(Encog.Examples.Persist.PersistEncog.Info);
-            examples.Add(Encog.Examples.Persist.PersistSerial.Info);
-            examples.Add(Encog.Examples.Benchmark.WeightInitialization.Info);
-            examples.Add(Encog.Examples.Benchmark.ThreadCount.Info);
-            examples.Add(Encog.Examples.Benchmark.SimpleBenchmark.Info);
-            examples.Add(Encog.Examples.XOR.XORFactory.Info);
-            examples.Add(Encog.Examples.XOR.XORHelloWorld.Info);
-            examples.Add(Encog.Examples.XOR.XORFlat.Info);
-            examples.Add(Encog.Examples.XOR.XORDisplay.Info);
-            examples.Add(Encog.Examples.Analyst.AnalystExample.Info);
-            examples.Add(Encog.Examples.XOR.XORNEAT.Info);
-            examples.Add(Encog.Examples.Forest.ForestCover.Info);
+            examples.Add(AdalineDigits.Info);
+            examples.Add(SolveTSP.Info);
+            examples.Add(ClassifyART1.Info);
+            examples.Add(BidirectionalAssociativeMemory.Info);
+            examples.Add(EncogBenchmarkExample.Info);
+            examples.Add(BoltzTSP.Info);
+            examples.Add(RocketCPN.Info);
+            examples.Add(ElmanExample.Info);
+            examples.Add(GeneticSolveTSP.Info);
+            examples.Add(HopfieldSimple.Info);
+            examples.Add(HopfieldAssociate.Info);
+            examples.Add(JordanExample.Info);
+            examples.Add(MultiThreadBenchmark.Info);
+            examples.Add(ImageNeuralNetwork.Info);
+            examples.Add(PersistEncog.Info);
+            examples.Add(PersistSerial.Info);
+            examples.Add(WeightInitialization.Info);
+            examples.Add(ThreadCount.Info);
+            examples.Add(SimpleBenchmark.Info);
+            examples.Add(XORFactory.Info);
+            examples.Add(XORHelloWorld.Info);
+            examples.Add(XORFlat.Info);
+            examples.Add(XORDisplay.Info);
+            examples.Add(AnalystExample.Info);
+            examples.Add(XORNEAT.Info);
+            examples.Add(ForestCover.Info);
+            examples.Add(MarketPredict.Info);
         }
 
         public void ListCommands()
         {
-            List<String> commands = new List<string>();
+            var commands = new List<string>();
 
             Console.WriteLine(@"The following commands are available:");
-            
-            
+
+
             foreach (ExampleInfo info in examples)
             {
                 commands.Add(info.Command.PadRight(20) + ": " + info.Title);
@@ -105,7 +125,7 @@ namespace ConsoleExamples
                 index++;
             }
 
-            if (index >= args.Length )
+            if (index >= args.Length)
             {
                 Console.WriteLine(@"Must specify the example to run as the first argument");
                 ListCommands();
@@ -119,13 +139,13 @@ namespace ConsoleExamples
             String command = args[index++];
 
             // get any arguments
-            String[] pargs = new String[args.Length - index];
+            var pargs = new String[args.Length - index];
             for (int i = 0; i < pargs.Length; i++)
             {
                 pargs[i] = args[index + i];
             }
 
-            foreach(ExampleInfo info in examples)
+            foreach (ExampleInfo info in examples)
             {
                 if (String.Compare(command, info.Command, true) == 0)
                 {
@@ -154,9 +174,9 @@ namespace ConsoleExamples
             Console.ReadLine();
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            ConsoleExamples app = new ConsoleExamples();
+            var app = new ConsoleExamples();
             app.Execute(args);
         }
     }

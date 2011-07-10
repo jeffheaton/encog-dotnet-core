@@ -30,6 +30,7 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Buffer;
 using Encog.ML.Data.Buffer.CODEC;
+using Encog.ML.Data.Market;
 using Encog.ML.Data.Specific;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
@@ -464,6 +465,18 @@ namespace Encog.Util.Simple
                 epoch++;
             } while ((train.Error > error) && !train.TrainingDone);
             train.FinishTraining();
-        }       
+        }
+
+        /// <summary>
+        /// Save the training set to an EGB file.
+        /// </summary>
+        /// <param name="egbFile">The EGB file to save to.</param>
+        /// <param name="data">The training data to save.</param>
+        public static void SaveEGB(FileInfo egbFile, IMLDataSet data)
+        {
+            var binary = new BufferedMLDataSet(f);
+            binary.Load(data);
+            data.Close();
+        }
     }
 }
