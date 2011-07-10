@@ -21,32 +21,31 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using ConsoleExamples.Examples;
+using Encog.Engine.Network.Activation;
+using Encog.Examples.Util;
+using Encog.ML;
 using Encog.ML.Data;
+using Encog.ML.Train;
+using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks;
-using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Strategy;
-using Encog.Util.Logging;
-using Encog.Examples.Util;
-using ConsoleExamples.Examples;
-using Encog.Engine.Network.Activation;
 using Encog.Neural.Pattern;
-using Encog.ML;
-using Encog.ML.Train;
-using Encog.ML.Train.Strategy;
 
 namespace Encog.Examples.JordanNetwork
 {
-    public class JordanExample:IExample
+    public class JordanExample : IExample
     {
+        private IExampleInterface app;
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(JordanExample),
+                var info = new ExampleInfo(
+                    typeof (JordanExample),
                     "xor-jordan",
                     "Jordan Temporal XOR",
                     "Uses a temporal sequence, made up of the XOR truth table, as the basis for prediction.  Compares Jordan to traditional feedforward.");
@@ -54,12 +53,33 @@ namespace Encog.Examples.JordanNetwork
             }
         }
 
-        private IExampleInterface app;
+        #region IExample Members
+
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+
+            var temp = new TemporalXOR();
+            IMLDataSet trainingSet = temp.Generate(100);
+
+            var jordanNetwork = (BasicNetwork) CreateJordanNetwork();
+            var feedforwardNetwork = (BasicNetwork) CreateFeedforwardNetwork();
+
+            double elmanError = TrainNetwork("Jordan", jordanNetwork, trainingSet);
+            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
+
+            app.WriteLine("Best error rate with Jordan Network: " + elmanError);
+            app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
+            app.WriteLine("(Jordan should outperform feed forward)");
+            app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
+        }
+
+        #endregion
 
         private IMLMethod CreateJordanNetwork()
         {
             // construct an Jordan type network
-            JordanPattern pattern = new JordanPattern();
+            var pattern = new JordanPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
             pattern.AddHiddenLayer(6);
@@ -70,7 +90,7 @@ namespace Encog.Examples.JordanNetwork
         private IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
-            FeedForwardPattern pattern = new FeedForwardPattern();
+            var pattern = new FeedForwardPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
             pattern.AddHiddenLayer(6);
@@ -83,12 +103,12 @@ namespace Encog.Examples.JordanNetwork
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(
-                    network, score, 10, 2, 100);
+                network, score, 10, 2, 100);
 
 
             IMLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
 
-            StopTrainingStrategy stop = new StopTrainingStrategy();
+            var stop = new StopTrainingStrategy();
             trainMain.AddStrategy(new Greedy());
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
@@ -101,25 +121,6 @@ namespace Encog.Examples.JordanNetwork
                 epoch++;
             }
             return trainMain.Error;
-        }
-
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-
-            TemporalXOR temp = new TemporalXOR();
-            IMLDataSet trainingSet = temp.Generate(100);
-
-            BasicNetwork jordanNetwork = (BasicNetwork)CreateJordanNetwork();
-            BasicNetwork feedforwardNetwork = (BasicNetwork)CreateFeedforwardNetwork();
-
-            double elmanError = TrainNetwork("Jordan", jordanNetwork, trainingSet);
-            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
-
-            app.WriteLine("Best error rate with Jordan Network: " + elmanError);
-            app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
-            app.WriteLine("(Jordan should outperform feed forward)");
-            app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
         }
     }
 }

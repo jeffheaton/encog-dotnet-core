@@ -33,28 +33,31 @@ namespace Encog.Examples.Util
    * 0 xor 1 = 1
    * 1 xor 1 = 0
    */
-        public double[] SEQUENCE = { 1.0,0.0,1.0,
-		0.0,0.0,0.0,
-		0.0,1.0,1.0,
-		1.0,1.0,0.0 };
 
-        private double[][] input;
+        public double[] SEQUENCE = {
+                                       1.0, 0.0, 1.0,
+                                       0.0, 0.0, 0.0,
+                                       0.0, 1.0, 1.0,
+                                       1.0, 1.0, 0.0
+                                   };
+
         private double[][] ideal;
+        private double[][] input;
 
         public IMLDataSet Generate(int count)
         {
-            this.input = new double[count][];
-            this.ideal = new double[count][];
+            input = new double[count][];
+            ideal = new double[count][];
 
-            for (int i = 0; i < this.input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                this.input[i] = new double[1];
-                this.ideal[i] = new double[1];
-                this.input[i][0] = SEQUENCE[i % SEQUENCE.Length];
-                this.ideal[i][0] = SEQUENCE[(i + 1) % SEQUENCE.Length];
+                input[i] = new double[1];
+                ideal[i] = new double[1];
+                input[i][0] = SEQUENCE[i%SEQUENCE.Length];
+                ideal[i][0] = SEQUENCE[(i + 1)%SEQUENCE.Length];
             }
 
-            return new BasicMLDataSet(this.input, this.ideal);
+            return new BasicMLDataSet(input, ideal);
         }
     }
 }

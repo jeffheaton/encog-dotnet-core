@@ -22,19 +22,17 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Image;
-using Encog.Neural.Networks;
-using Encog.Util.DownSample;
-using Encog.Util.Logging;
-using System.IO;
-using Encog.Util.Simple;
-using System.Drawing;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Neural.Networks.Training.Strategy;
-using ConsoleExamples.Examples;
 using Encog.ML.Train.Strategy;
+using Encog.Neural.Networks;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Util.DownSample;
+using Encog.Util.Simple;
 
 namespace Encog.Examples.Image
 {
@@ -56,12 +54,25 @@ namespace Encog.Examples.Image
     /// </summary>
     public class ImageNeuralNetwork : IExample
     {
+        private readonly IDictionary<String, String> args = new Dictionary<String, String>();
+        private readonly IDictionary<String, int> identity2neuron = new Dictionary<String, int>();
+        private readonly IList<ImagePair> imageList = new List<ImagePair>();
+        private readonly IDictionary<int, String> neuron2identity = new Dictionary<int, String>();
+        private IExampleInterface app;
+        private IDownSample downsample;
+        private int downsampleHeight;
+        private int downsampleWidth;
+        private String line;
+        private BasicNetwork network;
+        private int outputCount;
+        private ImageMLDataSet training;
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(ImageNeuralNetwork),
+                var info = new ExampleInfo(
+                    typeof (ImageNeuralNetwork),
                     "image",
                     "Image Neural Networks",
                     "Simple ADALINE neural network that recognizes the digits.");
@@ -69,7 +80,7 @@ namespace Encog.Examples.Image
             }
         }
 
-        private IExampleInterface app;
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
@@ -81,54 +92,37 @@ namespace Encog.Examples.Image
             }
             else
             {
-
-
                 // Read the file and display it line by line.
-                StreamReader file =
-                   new System.IO.StreamReader(this.app.Args[0]);
+                var file =
+                    new StreamReader(this.app.Args[0]);
                 while ((line = file.ReadLine()) != null)
                 {
                     ExecuteLine();
-
                 }
 
                 file.Close();
-
-
             }
         }
 
-        private IList<ImagePair> imageList = new List<ImagePair>();
-        private IDictionary<String, String> args = new Dictionary<String, String>();
-        private IDictionary<String, int> identity2neuron = new Dictionary<String, int>();
-        private IDictionary<int, String> neuron2identity = new Dictionary<int, String>();
-        private ImageMLDataSet training;
-        private String line;
-        private int outputCount;
-        private int downsampleWidth;
-        private int downsampleHeight;
-        private BasicNetwork network;
-
-        private IDownSample downsample;
+        #endregion
 
         private int AssignIdentity(String identity)
         {
-
-            if (this.identity2neuron.ContainsKey(identity.ToLower()))
+            if (identity2neuron.ContainsKey(identity.ToLower()))
             {
-                return this.identity2neuron[identity.ToLower()];
+                return identity2neuron[identity.ToLower()];
             }
 
-            int result = this.outputCount;
-            this.identity2neuron[identity.ToLower()] = result;
-            this.neuron2identity[result] = identity.ToLower();
-            this.outputCount++;
+            int result = outputCount;
+            identity2neuron[identity.ToLower()] = result;
+            neuron2identity[result] = identity.ToLower();
+            outputCount++;
             return result;
         }
 
 
         private void ExecuteCommand(String command,
-                 IDictionary<String, String> args)
+                                    IDictionary<String, String> args)
         {
             if (command.Equals("input"))
             {
@@ -150,45 +144,43 @@ namespace Encog.Examples.Image
             {
                 ProcessWhatIs();
             }
-
         }
 
         public void ExecuteLine()
         {
-            int index = this.line.IndexOf(':');
+            int index = line.IndexOf(':');
             if (index == -1)
             {
-                throw new EncogError("Invalid command: " + this.line);
+                throw new EncogError("Invalid command: " + line);
             }
 
-            String command = this.line.Substring(0, index).ToLower()
-                    .Trim();
-            String argsStr = this.line.Substring(index + 1).Trim();
+            String command = line.Substring(0, index).ToLower()
+                .Trim();
+            String argsStr = line.Substring(index + 1).Trim();
             String[] tok = argsStr.Split(',');
-            this.args.Clear();
+            args.Clear();
             foreach (String arg in tok)
             {
-
                 int index2 = arg.IndexOf(':');
                 if (index2 == -1)
                 {
-                    throw new EncogError("Invalid command: " + this.line);
+                    throw new EncogError("Invalid command: " + line);
                 }
                 String key = arg.Substring(0, index2).ToLower().Trim();
                 String value = arg.Substring(index2 + 1).Trim();
-                this.args[key] = value;
+                args[key] = value;
             }
 
-            ExecuteCommand(command, this.args);
+            ExecuteCommand(command, args);
         }
 
         private String GetArg(String name)
         {
-            String result = this.args[name];
+            String result = args[name];
             if (result == null)
             {
                 throw new EncogError("Missing argument " + name + " on line: "
-                        + this.line);
+                                     + line);
             }
             return result;
         }
@@ -199,20 +191,20 @@ namespace Encog.Examples.Image
             String strHeight = GetArg("height");
             String strType = GetArg("type");
 
-            this.downsampleHeight = int.Parse(strWidth);
-            this.downsampleWidth = int.Parse(strHeight);
+            downsampleHeight = int.Parse(strWidth);
+            downsampleWidth = int.Parse(strHeight);
 
             if (strType.Equals("RGB"))
             {
-                this.downsample = new RGBDownsample();
+                downsample = new RGBDownsample();
             }
             else
             {
-                this.downsample = new SimpleIntensityDownsample();
+                downsample = new SimpleIntensityDownsample();
             }
 
-            this.training = new ImageMLDataSet(this.downsample, false, 1, -1);
-            this.app.WriteLine("Training set created");
+            training = new ImageMLDataSet(downsample, false, 1, -1);
+            app.WriteLine("Training set created");
         }
 
         private void ProcessInput()
@@ -223,20 +215,20 @@ namespace Encog.Examples.Image
             int idx = AssignIdentity(identity);
 
 
-            this.imageList.Add(new ImagePair(image, idx));
+            imageList.Add(new ImagePair(image, idx));
 
-            this.app.WriteLine("Added input image:" + image);
+            app.WriteLine("Added input image:" + image);
         }
 
         private void ProcessNetwork()
         {
-            this.app.WriteLine("Downsampling images...");
+            app.WriteLine("Downsampling images...");
 
-            foreach (ImagePair pair in this.imageList)
+            foreach (ImagePair pair in imageList)
             {
-                IMLData ideal = new BasicMLData(this.outputCount);
+                IMLData ideal = new BasicMLData(outputCount);
                 int idx = pair.Identity;
-                for (int i = 0; i < this.outputCount; i++)
+                for (int i = 0; i < outputCount; i++)
                 {
                     if (i == idx)
                     {
@@ -250,40 +242,40 @@ namespace Encog.Examples.Image
 
                 try
                 {
-                    Bitmap img = new Bitmap(pair.File);
-                    ImageMLData data = new ImageMLData(img);
-                    this.training.Add(data, ideal);
+                    var img = new Bitmap(pair.File);
+                    var data = new ImageMLData(img);
+                    training.Add(data, ideal);
                 }
                 catch (Exception e)
                 {
-                    this.app.WriteLine("Error loading: " + pair.File 
-                        + ": " + e.Message);
+                    app.WriteLine("Error loading: " + pair.File
+                                  + ": " + e.Message);
                 }
             }
 
             String strHidden1 = GetArg("hidden1");
             String strHidden2 = GetArg("hidden2");
 
-            if (this.training.Count == 0)
+            if (training.Count == 0)
             {
                 app.WriteLine("No images to create network for.");
                 return;
             }
 
-            this.training.Downsample(this.downsampleHeight, this.downsampleWidth);
+            training.Downsample(downsampleHeight, downsampleWidth);
 
             int hidden1 = int.Parse(strHidden1);
             int hidden2 = int.Parse(strHidden2);
 
-            this.network = EncogUtility.SimpleFeedForward(this.training
-                    .InputSize, hidden1, hidden2,
-                    this.training.IdealSize, true);
-            app.WriteLine("Created network: " + this.network.ToString());
+            network = EncogUtility.SimpleFeedForward(training
+                                                         .InputSize, hidden1, hidden2,
+                                                     training.IdealSize, true);
+            app.WriteLine("Created network: " + network);
         }
 
         private void ProcessTrain()
         {
-            if (this.network == null)
+            if (network == null)
                 return;
 
             String strMode = GetArg("mode");
@@ -291,24 +283,24 @@ namespace Encog.Examples.Image
             String strStrategyError = GetArg("strategyerror");
             String strStrategyCycles = GetArg("strategycycles");
 
-            this.app.WriteLine("Training Beginning... Output patterns="
-                    + this.outputCount);
+            app.WriteLine("Training Beginning... Output patterns="
+                          + outputCount);
 
             double strategyError = double.Parse(strStrategyError);
             int strategyCycles = int.Parse(strStrategyCycles);
 
-            ResilientPropagation train = new ResilientPropagation(this.network, this.training);
+            var train = new ResilientPropagation(network, training);
             train.AddStrategy(new ResetStrategy(strategyError, strategyCycles));
 
             if (String.Compare(strMode, "gui", true) == 0)
             {
-                EncogUtility.TrainDialog(train, this.network, this.training);
+                EncogUtility.TrainDialog(train, network, training);
             }
             else
             {
                 int minutes = int.Parse(strMinutes);
-                EncogUtility.TrainConsole(train, this.network, this.training,
-                        minutes);
+                EncogUtility.TrainConsole(train, network, training,
+                                          minutes);
             }
             app.WriteLine("Training Stopped...");
         }
@@ -318,17 +310,17 @@ namespace Encog.Examples.Image
             String filename = GetArg("image");
             try
             {
-                Bitmap img = new Bitmap(filename);
-                ImageMLData input = new ImageMLData(img);
-                input.Downsample(this.downsample, false, this.downsampleHeight,
-                        this.downsampleWidth, 1, -1);
-                int winner = this.network.Winner(input);
-                this.app.WriteLine("What is: " + filename + ", it seems to be: "
-                        + this.neuron2identity[winner]);
+                var img = new Bitmap(filename);
+                var input = new ImageMLData(img);
+                input.Downsample(downsample, false, downsampleHeight,
+                                 downsampleWidth, 1, -1);
+                int winner = network.Winner(input);
+                app.WriteLine("What is: " + filename + ", it seems to be: "
+                              + neuron2identity[winner]);
             }
             catch (Exception e)
             {
-                this.app.WriteLine("Error loading: " + filename + ", " + e.Message);
+                app.WriteLine("Error loading: " + filename + ", " + e.Message);
             }
         }
     }

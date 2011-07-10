@@ -20,15 +20,15 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using System;
+using System.IO;
 using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Util;
-using Encog.Util.Simple;
 using Encog.Neural.Networks;
 using Encog.Persist;
-using System.IO;
-using System;
+using Encog.Util;
+using Encog.Util.Simple;
 
 namespace Encog.Examples.Persist
 {
@@ -36,14 +36,34 @@ namespace Encog.Examples.Persist
     {
         public const String FILENAME = "encogexample.eg";
 
+        /// <summary>
+        /// Input for the XOR function.
+        /// </summary>
+        public static double[][] XOR_INPUT = {
+                                                 new double[2] {0.0, 0.0},
+                                                 new double[2] {1.0, 0.0},
+                                                 new double[2] {0.0, 1.0},
+                                                 new double[2] {1.0, 1.0}
+                                             };
+
+        /// <summary>
+        /// Ideal output for the XOR function.
+        /// </summary>
+        public static double[][] XOR_IDEAL = {
+                                                 new double[1] {0.0},
+                                                 new double[1] {1.0},
+                                                 new double[1] {1.0},
+                                                 new double[1] {0.0}
+                                             };
+
         private IExampleInterface app;
 
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(PersistEncog),
+                var info = new ExampleInfo(
+                    typeof (PersistEncog),
                     "persist-encog",
                     "Persist using .Net Serialization",
                     "Create and persist a neural network using .Net serialization.");
@@ -51,28 +71,12 @@ namespace Encog.Examples.Persist
             }
         }
 
-        /// <summary>
-        /// Input for the XOR function.
-        /// </summary>
-        public static double[][] XOR_INPUT ={
-            new double[2] { 0.0, 0.0 },
-            new double[2] { 1.0, 0.0 },
-			new double[2] { 0.0, 1.0 },
-            new double[2] { 1.0, 1.0 } };
-
-        /// <summary>
-        /// Ideal output for the XOR function.
-        /// </summary>
-        public static double[][] XOR_IDEAL = {                                              
-            new double[1] { 0.0 }, 
-            new double[1] { 1.0 }, 
-            new double[1] { 1.0 }, 
-            new double[1] { 0.0 } };
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
             this.app = app;
-            IMLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT,XOR_IDEAL);
+            IMLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 6, 0, 1, false);
             EncogUtility.TrainToError(network, trainingSet, 0.01);
             double error = network.CalculateError(trainingSet);
@@ -81,5 +85,7 @@ namespace Encog.Examples.Persist
             app.WriteLine("Error before save to EG: " + Format.FormatPercent(error));
             app.WriteLine("Error before after to EG: " + Format.FormatPercent(error2));
         }
+
+        #endregion
     }
 }

@@ -22,24 +22,21 @@
 //
 using System;
 using ConsoleExamples.Examples;
+using Encog.Engine.Network.Activation;
+using Encog.Examples.Util;
+using Encog.ML;
 using Encog.ML.Data;
+using Encog.ML.Train;
+using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks;
-using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Strategy;
-using Encog.Util.Logging;
-using Encog.Examples.Util;
-using Encog.Engine.Network.Activation;
 using Encog.Neural.Pattern;
-using Encog.ML;
-using Encog.ML.Train;
-using Encog.ML.Train.Strategy;
 
 namespace Encog.Examples.ElmanNetwork
 {
-    public class ElmanExample: IExample
+    public class ElmanExample : IExample
     {
         private IExampleInterface app;
 
@@ -47,8 +44,8 @@ namespace Encog.Examples.ElmanNetwork
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(ElmanExample),
+                var info = new ExampleInfo(
+                    typeof (ElmanExample),
                     "xor-elman",
                     "Elman Temporal XOR",
                     "Uses a temporal sequence, made up of the XOR truth table, as the basis for prediction.  Compares Elman to traditional feedforward.");
@@ -56,10 +53,33 @@ namespace Encog.Examples.ElmanNetwork
             }
         }
 
+        #region IExample Members
+
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+
+            var temp = new TemporalXOR();
+            IMLDataSet trainingSet = temp.Generate(100);
+
+            var elmanNetwork = (BasicNetwork) CreateElmanNetwork();
+            var feedforwardNetwork = (BasicNetwork) CreateFeedforwardNetwork();
+
+            double elmanError = TrainNetwork("Elman", elmanNetwork, trainingSet);
+            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
+
+            app.WriteLine("Best error rate with Elman Network: " + elmanError);
+            app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
+            app.WriteLine("(Elman should outperform feed forward)");
+            app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
+        }
+
+        #endregion
+
         private IMLMethod CreateElmanNetwork()
         {
             // construct an Elman type network
-            ElmanPattern pattern = new ElmanPattern();
+            var pattern = new ElmanPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
             pattern.AddHiddenLayer(6);
@@ -70,7 +90,7 @@ namespace Encog.Examples.ElmanNetwork
         private IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
-            FeedForwardPattern pattern = new FeedForwardPattern();
+            var pattern = new FeedForwardPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
             pattern.AddHiddenLayer(6);
@@ -83,12 +103,12 @@ namespace Encog.Examples.ElmanNetwork
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(
-                    network, score, 10, 2, 100);
+                network, score, 10, 2, 100);
 
 
             IMLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
 
-            StopTrainingStrategy stop = new StopTrainingStrategy();
+            var stop = new StopTrainingStrategy();
             trainMain.AddStrategy(new Greedy());
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
@@ -102,25 +122,5 @@ namespace Encog.Examples.ElmanNetwork
             }
             return trainMain.Error;
         }
-
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-
-            TemporalXOR temp = new TemporalXOR();
-            IMLDataSet trainingSet = temp.Generate(100);
-
-            BasicNetwork elmanNetwork = (BasicNetwork)CreateElmanNetwork();
-            BasicNetwork feedforwardNetwork = (BasicNetwork)CreateFeedforwardNetwork();
-
-            double elmanError = TrainNetwork("Elman", elmanNetwork, trainingSet);
-            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
-
-            app.WriteLine("Best error rate with Elman Network: " + elmanError);
-            app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
-            app.WriteLine("(Elman should outperform feed forward)");
-            app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
-        }
-
     }
 }

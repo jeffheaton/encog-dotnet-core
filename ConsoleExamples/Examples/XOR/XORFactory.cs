@@ -334,7 +334,7 @@ namespace Encog.Examples.XOR
         public void Usage()
         {
             Console.WriteLine(
-@"Usage:
+                @"Usage:
 XORFactory [mode]
 
 Where mode is one of:
@@ -354,7 +354,6 @@ rbf - RBF Network with Resilient propagation
 svd - RBF Network with SVD
 pnn-c PNN for Classification
 pnn-r PNN for Regression");
-
         }
 
         /// <summary>
@@ -421,7 +420,7 @@ pnn-r PNN for Regression");
             }
             else if (string.Compare(mode, "pnn-r", true) == 0)
             {
-                this.xorPNNr();
+                xorPNNr();
             }
             else
             {

@@ -20,10 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Examples.Util;
 using Encog.ML.Genetic.Genome;
 
@@ -31,19 +27,20 @@ namespace Encog.Examples.GeneticTSP
 {
     public class TSPScore : ICalculateGenomeScore
     {
-        private City[] cities;
+        private readonly City[] cities;
 
         public TSPScore(City[] cities)
         {
             this.cities = cities;
         }
 
+        #region ICalculateGenomeScore Members
 
         public double CalculateScore(IGenome genome)
         {
             double result = 0.0;
 
-            int[] path = (int[])genome.Organism;
+            var path = (int[]) genome.Organism;
 
             for (int i = 0; i < cities.Length - 1; i++)
             {
@@ -59,10 +56,9 @@ namespace Encog.Examples.GeneticTSP
 
         public bool ShouldMinimize
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
+
+        #endregion
     }
 }

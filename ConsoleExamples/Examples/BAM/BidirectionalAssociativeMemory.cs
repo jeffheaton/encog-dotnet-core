@@ -21,16 +21,13 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Encog.ML.Data.Specific;
-using Encog.Neural.Networks;
 using ConsoleExamples.Examples;
-using Encog.Examples.Adaline;
 using Encog.MathUtil;
-using Encog.Neural.Pattern;
+using Encog.ML.Data.Specific;
 using Encog.Neural.BAM;
+using Encog.Neural.Networks;
+using Encog.Neural.Pattern;
 
 namespace Encog.Examples.BAM
 {
@@ -46,14 +43,31 @@ namespace Encog.Examples.BAM
 * original example.
 *
 */
-    public class BidirectionalAssociativeMemory: IExample
+
+    public class BidirectionalAssociativeMemory : IExample
     {
+        public const int IN_CHARS = 5;
+        public const int OUT_CHARS = 7;
+
+        public const int BITS_PER_CHAR = 6;
+        public const char FIRST_CHAR = ' ';
+
+        public const int INPUT_NEURONS = (IN_CHARS*BITS_PER_CHAR);
+        public const int OUTPUT_NEURONS = (OUT_CHARS*BITS_PER_CHAR);
+        public String[] NAMES = {"TINA ", "ANTJE", "LISA "};
+
+        public String[] NAMES2 = {"TINE ", "ANNJE", "RITA "};
+
+        public String[] PHONES = {"6843726", "8034673", "7260915"};
+
+        private IExampleInterface app;
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(BidirectionalAssociativeMemory),
+                var info = new ExampleInfo(
+                    typeof (BidirectionalAssociativeMemory),
                     "bam",
                     "Bidirectional Associative Memory",
                     "Uses a BAM to associate patterns in a bidirectional way.");
@@ -61,31 +75,64 @@ namespace Encog.Examples.BAM
             }
         }
 
-        public String[] NAMES = { "TINA ", "ANTJE", "LISA " };
+        #region IExample Members
 
-        public String[] NAMES2 = { "TINE ", "ANNJE", "RITA " };
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+            var pattern = new BAMPattern();
+            pattern.F1Neurons = INPUT_NEURONS;
+            pattern.F2Neurons = OUTPUT_NEURONS;
+            var network = (BAMNetwork) pattern.Generate();
 
-        public String[] PHONES = { "6843726", "8034673", "7260915" };
+            // train
+            for (int i = 0; i < NAMES.Length; i++)
+            {
+                network.AddPattern(
+                    StringToBipolar(NAMES[i]),
+                    StringToBipolar(PHONES[i]));
+            }
 
-        public const int IN_CHARS = 5;
-        public const int OUT_CHARS = 7;
+            // test
+            for (int i = 0; i < NAMES.Length; i++)
+            {
+                var data = new NeuralDataMapping(
+                    StringToBipolar(NAMES[i]),
+                    RandomBiPolar(OUT_CHARS*BITS_PER_CHAR));
+                RunBAM(network, data);
+            }
 
-        public const int BITS_PER_CHAR = 6;
-        public const char FIRST_CHAR = ' ';
+            app.WriteLine();
 
-        public const int INPUT_NEURONS = (IN_CHARS * BITS_PER_CHAR);
-        public const int OUTPUT_NEURONS = (OUT_CHARS * BITS_PER_CHAR);
+            for (int i = 0; i < PHONES.Length; i++)
+            {
+                var data = new NeuralDataMapping(
+                    StringToBipolar(PHONES[i]),
+                    RandomBiPolar(IN_CHARS*BITS_PER_CHAR));
+                RunBAM(network, data);
+            }
 
-        private IExampleInterface app;
+            app.WriteLine();
+
+            for (int i = 0; i < NAMES.Length; i++)
+            {
+                var data = new NeuralDataMapping(
+                    StringToBipolar(NAMES2[i]),
+                    RandomBiPolar(OUT_CHARS*BITS_PER_CHAR));
+                RunBAM(network, data);
+            }
+        }
+
+        #endregion
 
         public BiPolarMLData StringToBipolar(String str)
         {
-            BiPolarMLData result = new BiPolarMLData(str.Length * BITS_PER_CHAR);
+            var result = new BiPolarMLData(str.Length*BITS_PER_CHAR);
             int currentIndex = 0;
             for (int i = 0; i < str.Length; i++)
             {
                 char ch = char.ToUpper(str[i]);
-                int idx = (int)ch - FIRST_CHAR;
+                int idx = ch - FIRST_CHAR;
 
                 int place = 1;
                 for (int j = 0; j < BITS_PER_CHAR; j++)
@@ -94,29 +141,28 @@ namespace Encog.Examples.BAM
                     result.SetBoolean(currentIndex++, value);
                     place *= 2;
                 }
-
             }
             return result;
         }
 
         public String BipolalToString(BiPolarMLData data)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
             int j, a, p;
 
-            for (int i = 0; i < (data.Count / BITS_PER_CHAR); i++)
+            for (int i = 0; i < (data.Count/BITS_PER_CHAR); i++)
             {
                 a = 0;
                 p = 1;
                 for (j = 0; j < BITS_PER_CHAR; j++)
                 {
-                    if (data.GetBoolean(i * BITS_PER_CHAR + j))
+                    if (data.GetBoolean(i*BITS_PER_CHAR + j))
                         a += p;
 
                     p *= 2;
                 }
-                result.Append((char)(a + FIRST_CHAR));
+                result.Append((char) (a + FIRST_CHAR));
             }
 
 
@@ -125,7 +171,7 @@ namespace Encog.Examples.BAM
 
         public BiPolarMLData RandomBiPolar(int size)
         {
-            BiPolarMLData result = new BiPolarMLData(size);
+            var result = new BiPolarMLData(size);
             for (int i = 0; i < size; i++)
             {
                 if (ThreadSafeRandom.NextDouble() > 0.5)
@@ -138,69 +184,21 @@ namespace Encog.Examples.BAM
 
         public String MappingToString(NeuralDataMapping mapping)
         {
-            StringBuilder result = new StringBuilder();
-            result.Append(BipolalToString((BiPolarMLData)mapping.From));
+            var result = new StringBuilder();
+            result.Append(BipolalToString((BiPolarMLData) mapping.From));
             result.Append(" -> ");
-            result.Append(BipolalToString((BiPolarMLData)mapping.To));
+            result.Append(BipolalToString((BiPolarMLData) mapping.To));
             return result.ToString();
         }
 
         public void RunBAM(BAMNetwork network, NeuralDataMapping data)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append(MappingToString(data));
             network.Compute(data);
             line.Append("  |  ");
             line.Append(MappingToString(data));
             app.WriteLine(line.ToString());
-        }
-
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-            BAMPattern pattern = new BAMPattern();
-            pattern.F1Neurons = INPUT_NEURONS;
-            pattern.F2Neurons = OUTPUT_NEURONS;
-            BAMNetwork network = (BAMNetwork)pattern.Generate();
-
-            // train
-            for (int i = 0; i < NAMES.Length; i++)
-            {
-                 network.AddPattern(
-                        StringToBipolar(NAMES[i]),
-                        StringToBipolar(PHONES[i]));
-            }
-
-            // test
-            for (int i = 0; i < NAMES.Length; i++)
-            {
-                NeuralDataMapping data = new NeuralDataMapping(
-                        StringToBipolar(NAMES[i]),
-                        RandomBiPolar(OUT_CHARS * BITS_PER_CHAR));
-                RunBAM(network, data);
-            }
-
-            app.WriteLine();
-
-            for (int i = 0; i < PHONES.Length; i++)
-            {
-                NeuralDataMapping data = new NeuralDataMapping(
-                        StringToBipolar(PHONES[i]),
-                        RandomBiPolar(IN_CHARS * BITS_PER_CHAR));
-                RunBAM(network, data);
-            }
-
-            app.WriteLine();
-
-            for (int i = 0; i < NAMES.Length; i++)
-            {
-                NeuralDataMapping data = new NeuralDataMapping(
-                        StringToBipolar(NAMES2[i]),
-                        RandomBiPolar(OUT_CHARS * BITS_PER_CHAR));
-                RunBAM(network, data);
-            }
-
-
         }
     }
 }

@@ -25,13 +25,12 @@ using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Util.Banchmark;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
-using Encog.Util.Logging;
+using Encog.Util.Banchmark;
 
 namespace Encog.Examples.MultiBench
 {
-    public class MultiThreadBenchmark:IExample
+    public class MultiThreadBenchmark : IExample
     {
         public const int INPUT_COUNT = 40;
         public const int HIDDEN_COUNT = 60;
@@ -43,8 +42,8 @@ namespace Encog.Examples.MultiBench
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(MultiThreadBenchmark),
+                var info = new ExampleInfo(
+                    typeof (MultiThreadBenchmark),
                     "multibench",
                     "Multithreading Benchmark",
                     "See the effects that multithreading has on performance.");
@@ -52,13 +51,29 @@ namespace Encog.Examples.MultiBench
             }
         }
 
+        #region IExample Members
+
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+
+            BasicNetwork network = generateNetwork();
+            IMLDataSet data = generateTraining();
+
+            double rprop = evaluateRPROP(network, data);
+            double mprop = evaluateMPROP(network, data);
+            double factor = rprop/mprop;
+            Console.WriteLine("Factor improvement:" + factor);
+        }
+
+        #endregion
 
         public BasicNetwork generateNetwork()
         {
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(MultiThreadBenchmark.INPUT_COUNT));
-            network.AddLayer(new BasicLayer(MultiThreadBenchmark.HIDDEN_COUNT));
-            network.AddLayer(new BasicLayer(MultiThreadBenchmark.OUTPUT_COUNT));
+            var network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(INPUT_COUNT));
+            network.AddLayer(new BasicLayer(HIDDEN_COUNT));
+            network.AddLayer(new BasicLayer(OUTPUT_COUNT));
             network.Structure.FinalizeStructure();
             network.Reset();
             return network;
@@ -66,15 +81,14 @@ namespace Encog.Examples.MultiBench
 
         public IMLDataSet generateTraining()
         {
-            IMLDataSet training = RandomTrainingFactory.Generate(1000,50000,
-                    INPUT_COUNT, OUTPUT_COUNT, -1, 1);
+            IMLDataSet training = RandomTrainingFactory.Generate(1000, 50000,
+                                                                 INPUT_COUNT, OUTPUT_COUNT, -1, 1);
             return training;
         }
 
         public double evaluateRPROP(BasicNetwork network, IMLDataSet data)
         {
-
-            ResilientPropagation train = new ResilientPropagation(network, data);
+            var train = new ResilientPropagation(network, data);
             long start = DateTime.Now.Ticks;
             Console.WriteLine(@"Training 20 Iterations with RPROP");
             for (int i = 1; i <= 1; i++)
@@ -92,8 +106,7 @@ namespace Encog.Examples.MultiBench
 
         public double evaluateMPROP(BasicNetwork network, IMLDataSet data)
         {
-
-            ResilientPropagation train = new ResilientPropagation(network, data);
+            var train = new ResilientPropagation(network, data);
             long start = DateTime.Now.Ticks;
             Console.WriteLine(@"Training 20 Iterations with MPROP");
             for (int i = 1; i <= 20; i++)
@@ -107,18 +120,6 @@ namespace Encog.Examples.MultiBench
             Console.WriteLine("MPROP Result:" + diff + " seconds.");
             Console.WriteLine("Final MPROP error: " + network.CalculateError(data));
             return diff;
-        }
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-
-            BasicNetwork network = generateNetwork();
-            IMLDataSet data = generateTraining();
-
-            double rprop = evaluateRPROP(network, data);
-            double mprop = evaluateMPROP(network, data);
-            double factor = rprop / mprop;
-            Console.WriteLine("Factor improvement:" + factor);
         }
     }
 }

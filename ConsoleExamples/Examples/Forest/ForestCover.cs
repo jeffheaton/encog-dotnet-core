@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
+using ConsoleExamples.Examples;
 using Encog.Neural.Networks;
 using Encog.Persist;
 using Encog.Util;
 using Encog.Util.Normalize;
 using Encog.Util.Simple;
-using ConsoleExamples.Examples;
 
 namespace Encog.Examples.Forest
 {
@@ -95,8 +95,8 @@ namespace Encog.Examples.Forest
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(ForestCover),
+                var info = new ExampleInfo(
+                    typeof (ForestCover),
                     "forest",
                     "Forest Cover",
                     "Shows how to use NormalizeData to predict forest cover.");

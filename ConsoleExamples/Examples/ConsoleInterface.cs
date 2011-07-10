@@ -21,28 +21,24 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.Examples
 {
-    public class ConsoleInterface: IExampleInterface
+    public class ConsoleInterface : IExampleInterface
     {
+        private readonly String[] args;
+
         public ConsoleInterface(String[] args)
         {
             this.args = args;
         }
 
+        #region IExampleInterface Members
+
         public String[] Args
         {
-            get
-            {
-                return this.args;
-            }
+            get { return args; }
         }
-
-        private String[] args;
 
         public void WriteLine(string str)
         {
@@ -62,5 +58,7 @@ namespace Encog.Examples
         public void Exit()
         {
         }
+
+        #endregion
     }
 }

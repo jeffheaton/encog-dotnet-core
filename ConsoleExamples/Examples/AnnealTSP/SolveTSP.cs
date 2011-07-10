@@ -21,15 +21,13 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
 using Encog.Examples.Util;
 
 namespace Encog.Examples.AnnealTSP
 {
-    public class SolveTSP: IExample
+    public class SolveTSP : IExample
     {
         public const double START_TEMP = 10.0;
         public const double STOP_TEMP = 2.0;
@@ -37,21 +35,6 @@ namespace Encog.Examples.AnnealTSP
         public const int CITIES = 50;
         public const int MAP_SIZE = 256;
         public const int MAX_SAME_SOLUTION = 25;
-        private IExampleInterface app;
-
-
-        public static ExampleInfo Info
-        {
-            get
-            {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(SolveTSP),
-                    "tsp-anneal",
-                    "Annealing Traveling Salesman",
-                    "Use simulated annealing to provide a solution for the traveling salesman problem (TSP).");
-                return info;
-            }
-        }
 
 
         /// <summary>
@@ -59,23 +42,52 @@ namespace Encog.Examples.AnnealTSP
         /// </summary>
         private TSPSimulatedAnnealing anneal;
 
+        private IExampleInterface app;
+
         /// <summary>
         /// The cities to use.
         /// </summary>
         private City[] cities;
+
+        public static ExampleInfo Info
+        {
+            get
+            {
+                var info = new ExampleInfo(
+                    typeof (SolveTSP),
+                    "tsp-anneal",
+                    "Annealing Traveling Salesman",
+                    "Use simulated annealing to provide a solution for the traveling salesman problem (TSP).");
+                return info;
+            }
+        }
+
+        #region IExample Members
+
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        /// <param name="args">Not used.</param>
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+            Solve();
+        }
+
+        #endregion
 
         /// <summary>
         /// Place the cities in random locations.
         /// </summary>
         private void InitCities()
         {
-            Random rand = new Random();
+            var rand = new Random();
 
             cities = new City[CITIES];
             for (int i = 0; i < cities.Length; i++)
             {
-                int xPos = (int)(rand.NextDouble() * MAP_SIZE);
-                int yPos = (int)(rand.NextDouble() * MAP_SIZE);
+                var xPos = (int) (rand.NextDouble()*MAP_SIZE);
+                var yPos = (int) (rand.NextDouble()*MAP_SIZE);
 
                 cities[i] = new City(xPos, yPos);
             }
@@ -86,9 +98,9 @@ namespace Encog.Examples.AnnealTSP
         /// </summary>
         private void InitPath()
         {
-            Random rand = new Random();
-            bool[] taken = new bool[this.cities.Length];
-            int[] path = new int[this.cities.Length];
+            var rand = new Random();
+            var taken = new bool[cities.Length];
+            var path = new int[cities.Length];
 
             for (int i = 0; i < path.Length; i++)
             {
@@ -99,7 +111,7 @@ namespace Encog.Examples.AnnealTSP
                 int icandidate;
                 do
                 {
-                    icandidate = (int)(rand.NextDouble() * path.Length);
+                    icandidate = (int) (rand.NextDouble()*path.Length);
                 } while (taken[icandidate]);
                 path[i] = icandidate;
                 taken[icandidate] = true;
@@ -114,7 +126,7 @@ namespace Encog.Examples.AnnealTSP
                 }
             }
 
-            this.anneal.PutArray(path);
+            anneal.PutArray(path);
         }
 
         /// <summary>
@@ -139,12 +151,12 @@ namespace Encog.Examples.AnnealTSP
         /// </summary>
         public void Solve()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             InitCities();
 
             anneal = new TSPSimulatedAnnealing(cities, START_TEMP, STOP_TEMP,
-                    CYCLES);
+                                               CYCLES);
 
             InitPath();
 
@@ -180,17 +192,6 @@ namespace Encog.Examples.AnnealTSP
 
             app.WriteLine("Good solution found:");
             DisplaySolution();
-
-        }
-
-        /// <summary>
-        /// Program entry point.
-        /// </summary>
-        /// <param name="args">Not used.</param>
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-            Solve();
         }
     }
 }

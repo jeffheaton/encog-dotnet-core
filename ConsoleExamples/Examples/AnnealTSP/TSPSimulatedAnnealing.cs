@@ -21,19 +21,16 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Examples.Util;
 using Encog.ML.Anneal;
 
 namespace Encog.Examples.AnnealTSP
 {
-/// <summary>
+    /// <summary>
     /// A subclass of the simulated annealing algorithm that is designed to work with the 
     /// traveling salesman problem.
     /// </summary>
-    class TSPSimulatedAnnealing : SimulatedAnnealing<int>
+    internal class TSPSimulatedAnnealing : SimulatedAnnealing<int>
     {
         /// <summary>
         /// The cities to use.
@@ -53,16 +50,43 @@ namespace Encog.Examples.AnnealTSP
         /// <param name="stopTemp">The stopping temperature per iteration.</param>
         /// <param name="cycles">The number of cycles per iteration.</param>
         public TSPSimulatedAnnealing(City[] cities, double startTemp,
-                 double stopTemp, int cycles)
+                                     double stopTemp, int cycles)
         {
-
-            this.Temperature = startTemp;
-            this.StartTemperature = startTemp;
-            this.StopTemperature = stopTemp;
-            this.Cycles = cycles;
+            Temperature = startTemp;
+            StartTemperature = startTemp;
+            StopTemperature = stopTemp;
+            Cycles = cycles;
 
             this.cities = cities;
-            this.path = new int[this.cities.Length];
+            path = new int[this.cities.Length];
+        }
+
+        /// <summary>
+        /// Get the best solution as an array.  In the case of the TSP, this
+        /// is the best path.
+        /// </summary>
+        /// <returns>The best path through the cities.</returns>
+        public override int[] Array
+        {
+            get { return path; }
+        }
+
+        /// <summary>
+        /// Create a new copy of the best path.
+        /// </summary>
+        /// <returns>A copy of the best path through the cities.</returns>
+        public override int[] ArrayCopy
+        {
+            get
+            {
+                var result = new int[path.Length];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = path[i];
+                }
+
+                return result;
+            }
         }
 
         /// <summary>
@@ -73,10 +97,10 @@ namespace Encog.Examples.AnnealTSP
         public override double PerformCalculateScore()
         {
             double cost = 0.0;
-            for (int i = 0; i < this.cities.Length - 1; i++)
+            for (int i = 0; i < cities.Length - 1; i++)
             {
-                double dist = this.cities[this.path[i]]
-                       .Proximity(this.cities[this.path[i + 1]]);
+                double dist = cities[path[i]]
+                    .Proximity(cities[path[i + 1]]);
                 cost += dist;
             }
             return cost;
@@ -91,19 +115,9 @@ namespace Encog.Examples.AnnealTSP
         /// <returns>The distance between the two cities.</returns>
         public double Distance(int i, int j)
         {
-            int c1 = this.path[i % this.path.Length];
-            int c2 = this.path[j % this.path.Length];
-            return this.cities[c1].Proximity(this.cities[c2]);
-        }
-
-        /// <summary>
-        /// Get the best solution as an array.  In the case of the TSP, this
-        /// is the best path.
-        /// </summary>
-        /// <returns>The best path through the cities.</returns>
-        public override int[] Array
-        {
-            get { return this.path; }
+            int c1 = path[i%path.Length];
+            int c2 = path[j%path.Length];
+            return cities[c1].Proximity(cities[c2]);
         }
 
         /// <summary>
@@ -112,7 +126,7 @@ namespace Encog.Examples.AnnealTSP
         /// <param name="array">A path through the cities.</param>
         public override void PutArray(int[] array)
         {
-            this.path = array;
+            path = array;
         }
 
         /// <summary>
@@ -120,21 +134,19 @@ namespace Encog.Examples.AnnealTSP
         /// </summary>
         public override void Randomize()
         {
+            int length = path.Length;
 
-            int length = this.path.Length;
-
-            Random rand = new Random();
+            var rand = new Random();
 
             // make adjustments to city order(annealing)
-            for (int i = 0; i < this.Temperature; i++)
+            for (int i = 0; i < Temperature; i++)
             {
-                int index1 = (int)Math.Floor(length * rand.NextDouble());
-                int index2 = (int)Math.Floor(length * rand.NextDouble());
+                var index1 = (int) Math.Floor(length*rand.NextDouble());
+                var index2 = (int) Math.Floor(length*rand.NextDouble());
                 double d = Distance(index1, index1 + 1) + Distance(index2, index2 + 1)
-                       - Distance(index1, index2) - Distance(index1 + 1, index2 + 1);
+                           - Distance(index1, index2) - Distance(index1 + 1, index2 + 1);
                 if (d > 0)
                 {
-
                     // sort index1 and index2 if needed
                     if (index2 < index1)
                     {
@@ -144,31 +156,12 @@ namespace Encog.Examples.AnnealTSP
                     }
                     for (; index2 > index1; index2--)
                     {
-                        int temp = this.path[index1 + 1];
-                        this.path[index1 + 1] = this.path[index2];
-                        this.path[index2] = temp;
+                        int temp = path[index1 + 1];
+                        path[index1 + 1] = path[index2];
+                        path[index2] = temp;
                         index1++;
                     }
                 }
-            }
-
-        }
-
-        /// <summary>
-        /// Create a new copy of the best path.
-        /// </summary>
-        /// <returns>A copy of the best path through the cities.</returns>
-        public override int[] ArrayCopy
-        {
-            get
-            {
-                int[] result = new int[this.path.Length];
-                for (int i = 0; i < result.Length; i++)
-                {
-                    result[i] = this.path[i];
-                }
-
-                return result;
             }
         }
     }

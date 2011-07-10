@@ -11,13 +11,15 @@ namespace Encog.Examples.Market
             get
             {
                 var info = new ExampleInfo(
-                    typeof(MarketPredict),
+                    typeof (MarketPredict),
                     "market",
                     "Simple Market Prediction",
                     "Use EOD data to predict direction of a stock.");
                 return info;
             }
         }
+
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
@@ -48,5 +50,7 @@ namespace Encog.Examples.Market
                 }
             }
         }
+
+        #endregion
     }
 }

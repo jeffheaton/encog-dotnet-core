@@ -21,9 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.Examples.Util
 {
@@ -35,34 +32,12 @@ namespace Encog.Examples.Util
         /// <summary>
         /// The city's x position.
         /// </summary>
-        int xpos;
+        private readonly int xpos;
 
         /// <summary>
         /// The city's y position.
         /// </summary>
-        int ypos;
-
-        /// <summary>
-        /// The city's x position.
-        /// </summary>
-        int X
-        {
-            get
-            {
-                return this.xpos;
-            }
-        }
-
-        /// <summary>
-        /// The city's y position.
-        /// </summary>
-        int Y
-        {
-            get
-            {
-                return this.ypos;
-            }
-        }
+        private readonly int ypos;
 
         /// <summary>
         /// Construct a city.
@@ -71,8 +46,24 @@ namespace Encog.Examples.Util
         /// <param name="y">The city's y location.</param>
         public City(int x, int y)
         {
-            this.xpos = x;
-            this.ypos = y;
+            xpos = x;
+            ypos = y;
+        }
+
+        /// <summary>
+        /// The city's x position.
+        /// </summary>
+        private int X
+        {
+            get { return xpos; }
+        }
+
+        /// <summary>
+        /// The city's y position.
+        /// </summary>
+        private int Y
+        {
+            get { return ypos; }
         }
 
         /// <summary>
@@ -92,11 +83,11 @@ namespace Encog.Examples.Util
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <returns>The distance.</returns>
-        int Proximity(int x, int y)
+        private int Proximity(int x, int y)
         {
-            int xdiff = this.xpos - x;
-            int ydiff = this.ypos - y;
-            return (int)Math.Sqrt(xdiff * xdiff + ydiff * ydiff);
+            int xdiff = xpos - x;
+            int ydiff = ypos - y;
+            return (int) Math.Sqrt(xdiff*xdiff + ydiff*ydiff);
         }
     }
 }

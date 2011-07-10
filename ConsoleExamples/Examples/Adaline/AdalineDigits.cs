@@ -21,29 +21,131 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using Encog.ML.Data;
-using Encog.ML.Data.Basic;
-using Encog.Neural.Networks.Layers;
-using Encog.Neural.Networks;
-using Encog.Neural.Networks.Training.Simple;
-using Encog.Neural.Networks.Training;
 using ConsoleExamples.Examples;
 using Encog.MathUtil.Randomize;
-using Encog.Engine.Network.Activation;
-using Encog.Neural.Pattern;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.ML.Train;
-
+using Encog.Neural.Networks;
+using Encog.Neural.Networks.Training.Simple;
+using Encog.Neural.Pattern;
 
 namespace Encog.Examples.Adaline
 {
-    public class AdalineDigits: IExample
+    public class AdalineDigits : IExample
     {
+        public const int CHAR_WIDTH = 5;
+        public const int CHAR_HEIGHT = 7;
+
+        public static String[][] DIGITS = {
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "O   O",
+                                                      "O   O",
+                                                      "O   O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      "  O  ",
+                                                      " OO  ",
+                                                      "O O  ",
+                                                      "  O  ",
+                                                      "  O  ",
+                                                      "  O  ",
+                                                      "  O  "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "    O",
+                                                      "   O ",
+                                                      "  O  ",
+                                                      " O   ",
+                                                      "OOOOO"
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "    O",
+                                                      " OOO ",
+                                                      "    O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      "   O ",
+                                                      "  OO ",
+                                                      " O O ",
+                                                      "O  O ",
+                                                      "OOOOO",
+                                                      "   O ",
+                                                      "   O "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      "OOOOO",
+                                                      "O    ",
+                                                      "O    ",
+                                                      "OOOO ",
+                                                      "    O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "O    ",
+                                                      "OOOO ",
+                                                      "O   O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      "OOOOO",
+                                                      "    O",
+                                                      "    O",
+                                                      "   O ",
+                                                      "  O  ",
+                                                      " O   ",
+                                                      "O    "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "O   O",
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  },
+                                              new String[CHAR_HEIGHT]
+                                                  {
+                                                      " OOO ",
+                                                      "O   O",
+                                                      "O   O",
+                                                      " OOOO",
+                                                      "    O",
+                                                      "O   O",
+                                                      " OOO "
+                                                  }
+                                          };
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(AdalineDigits),
+                var info = new ExampleInfo(
+                    typeof (AdalineDigits),
                     "adalinedigits",
                     "ADALINE Digits",
                     "Simple ADALINE neural network that recognizes the digits.");
@@ -51,151 +153,17 @@ namespace Encog.Examples.Adaline
             }
         }
 
-        public const int CHAR_WIDTH = 5;
-        public const int CHAR_HEIGHT = 7;
-
-        public static String[][] DIGITS = { 
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "O   O",
-        "O   O",
-        "O   O",
-        "O   O",
-        " OOO "  },
-
-      new String[CHAR_HEIGHT] {           
-        "  O  ",
-        " OO  ",
-        "O O  ",
-        "  O  ",
-        "  O  ",
-        "  O  ",
-        "  O  "  },
-
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "    O",
-        "   O ",
-        "  O  ",
-        " O   ",
-        "OOOOO"  },
-
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "    O",
-        " OOO ",
-        "    O",
-        "O   O",
-        " OOO "  },
-
-      new String[CHAR_HEIGHT] { 
-        "   O ",
-        "  OO ",
-        " O O ",
-        "O  O ",
-        "OOOOO",
-        "   O ",
-        "   O "  },
-
-      new String[CHAR_HEIGHT] { 
-        "OOOOO",
-        "O    ",
-        "O    ",
-        "OOOO ",
-        "    O",
-        "O   O",
-        " OOO "  },
-
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "O    ",
-        "OOOO ",
-        "O   O",
-        "O   O",
-        " OOO "  },
-
-      new String[CHAR_HEIGHT] {
-        "OOOOO",
-        "    O",
-        "    O",
-        "   O ",
-        "  O  ",
-        " O   ",
-        "O    "  },
-
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "O   O",
-        " OOO ",
-        "O   O",
-        "O   O",
-        " OOO "  },
-
-      new String[CHAR_HEIGHT] { 
-        " OOO ",
-        "O   O",
-        "O   O",
-        " OOOO",
-        "    O",
-        "O   O",
-        " OOO "  } };
-
-        public static IMLDataSet GenerateTraining()
-        {
-            IMLDataSet result = new BasicMLDataSet();
-            for (int i = 0; i < DIGITS.Length; i++)
-            {
-                BasicMLData ideal = new BasicMLData(DIGITS.Length);
-
-                // setup input
-                IMLData input = Image2data(DIGITS[i]);
-
-                // setup ideal
-                for (int j = 0; j < DIGITS.Length; j++)
-                {
-                    if (j == i)
-                        ideal[j] = 1;
-                    else
-                        ideal[j] = -1;
-                }
-
-                // add training element
-                result.Add(input, ideal);
-            }
-            return result;
-        }
-
-        public static IMLData Image2data(String[] image)
-        {
-            IMLData result = new BasicMLData(CHAR_WIDTH * CHAR_HEIGHT);
-
-            for (int row = 0; row < CHAR_HEIGHT; row++)
-            {
-                for (int col = 0; col < CHAR_WIDTH; col++)
-                {
-                    int index = (row * CHAR_WIDTH) + col;
-                    char ch = image[row][col];
-                    result[index] = (ch == 'O' ? 1 : -1);
-                }
-            }
-
-            return result;
-        }
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
-            int inputNeurons = CHAR_WIDTH * CHAR_HEIGHT;
+            int inputNeurons = CHAR_WIDTH*CHAR_HEIGHT;
             int outputNeurons = DIGITS.Length;
 
-            ADALINEPattern pattern = new ADALINEPattern();
+            var pattern = new ADALINEPattern();
             pattern.InputNeurons = inputNeurons;
             pattern.OutputNeurons = outputNeurons;
-            BasicNetwork network = (BasicNetwork)pattern.Generate();
+            var network = (BasicNetwork) pattern.Generate();
 
             (new RangeRandomizer(-0.5, 0.5)).Randomize(network);
 
@@ -225,12 +193,54 @@ namespace Encog.Examples.Adaline
                         app.WriteLine(DIGITS[i][j] + " -> " + output);
                     else
                         app.WriteLine(DIGITS[i][j]);
-
                 }
 
                 app.WriteLine();
             }
         }
-    }
-    }
 
+        #endregion
+
+        public static IMLDataSet GenerateTraining()
+        {
+            IMLDataSet result = new BasicMLDataSet();
+            for (int i = 0; i < DIGITS.Length; i++)
+            {
+                var ideal = new BasicMLData(DIGITS.Length);
+
+                // setup input
+                IMLData input = Image2data(DIGITS[i]);
+
+                // setup ideal
+                for (int j = 0; j < DIGITS.Length; j++)
+                {
+                    if (j == i)
+                        ideal[j] = 1;
+                    else
+                        ideal[j] = -1;
+                }
+
+                // add training element
+                result.Add(input, ideal);
+            }
+            return result;
+        }
+
+        public static IMLData Image2data(String[] image)
+        {
+            IMLData result = new BasicMLData(CHAR_WIDTH*CHAR_HEIGHT);
+
+            for (int row = 0; row < CHAR_HEIGHT; row++)
+            {
+                for (int col = 0; col < CHAR_WIDTH; col++)
+                {
+                    int index = (row*CHAR_WIDTH) + col;
+                    char ch = image[row][col];
+                    result[index] = (ch == 'O' ? 1 : -1);
+                }
+            }
+
+            return result;
+        }
+    }
+}

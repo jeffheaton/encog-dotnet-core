@@ -21,12 +21,8 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Util.Banchmark;
 using ConsoleExamples.Examples;
-using Encog.Engine;
+using Encog.Util.Banchmark;
 
 namespace Encog.Examples.Benchmark
 {
@@ -36,8 +32,8 @@ namespace Encog.Examples.Benchmark
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(EncogBenchmarkExample),
+                var info = new ExampleInfo(
+                    typeof (EncogBenchmarkExample),
                     "benchmark",
                     "Perform an Encog benchmark.",
                     "Return a number to show how fast Encog executes on this machine.  The lower the number, the better.");
@@ -45,16 +41,23 @@ namespace Encog.Examples.Benchmark
             }
         }
 
-        public void Report(int total, int current, String message)
-        {
-            Console.WriteLine(current + " of " + total + ":" + message);
-
-        }
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
-            EncogBenchmark mark = new EncogBenchmark(this);
+            var mark = new EncogBenchmark(this);
             Console.WriteLine("Benchmark result: " + mark.Process());
         }
+
+        #endregion
+
+        #region IStatusReportable Members
+
+        public void Report(int total, int current, String message)
+        {
+            Console.WriteLine(current + " of " + total + ":" + message);
+        }
+
+        #endregion
     }
 }

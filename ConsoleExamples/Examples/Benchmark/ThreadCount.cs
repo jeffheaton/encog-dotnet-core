@@ -21,13 +21,13 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using System.Diagnostics;
 using ConsoleExamples.Examples;
 using Encog.ML.Data;
 using Encog.Neural.Networks;
-using System.Diagnostics;
 using Encog.Neural.Networks.Layers;
-using Encog.Util.Banchmark;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
+using Encog.Util.Banchmark;
 
 namespace Encog.Examples.Benchmark
 {
@@ -41,8 +41,8 @@ namespace Encog.Examples.Benchmark
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(ThreadCount),
+                var info = new ExampleInfo(
+                    typeof (ThreadCount),
                     "threadcount",
                     "Evaluate Thread Count Performance",
                     "Compare Encog performance at various thread counts.");
@@ -50,29 +50,7 @@ namespace Encog.Examples.Benchmark
             }
         }
 
-        public void Perform(int thread)
-        {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            BasicNetwork network = new BasicNetwork();
-            network.AddLayer(new BasicLayer(INPUT_COUNT));
-            network.AddLayer(new BasicLayer(HIDDEN_COUNT));
-            network.AddLayer(new BasicLayer(OUTPUT_COUNT));
-            network.Structure.FinalizeStructure();
-            network.Reset();
-
-            IMLDataSet training = RandomTrainingFactory.Generate(1000,50000,
-                    INPUT_COUNT, OUTPUT_COUNT, -1, 1);
-
-            ResilientPropagation rprop = new ResilientPropagation(network, training);
-            rprop.NumThreads = thread;
-            for (int i = 0; i < 5; i++)
-            {
-                rprop.Iteration();
-            }
-            stopwatch.Stop();
-            Console.WriteLine("Result with " + thread + " was " + stopwatch.ElapsedMilliseconds + "ms");
-        }
+        #region IExample Members
 
         public void Execute(IExampleInterface app)
         {
@@ -80,6 +58,32 @@ namespace Encog.Examples.Benchmark
             {
                 Perform(i);
             }
+        }
+
+        #endregion
+
+        public void Perform(int thread)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(INPUT_COUNT));
+            network.AddLayer(new BasicLayer(HIDDEN_COUNT));
+            network.AddLayer(new BasicLayer(OUTPUT_COUNT));
+            network.Structure.FinalizeStructure();
+            network.Reset();
+
+            IMLDataSet training = RandomTrainingFactory.Generate(1000, 50000,
+                                                                 INPUT_COUNT, OUTPUT_COUNT, -1, 1);
+
+            var rprop = new ResilientPropagation(network, training);
+            rprop.NumThreads = thread;
+            for (int i = 0; i < 5; i++)
+            {
+                rprop.Iteration();
+            }
+            stopwatch.Stop();
+            Console.WriteLine("Result with " + thread + " was " + stopwatch.ElapsedMilliseconds + "ms");
         }
     }
 }

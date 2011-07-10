@@ -20,27 +20,22 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Examples.Util;
 using Encog.MathUtil;
-using Encog.ML.Genetic.Genome;
 using Encog.ML.Genetic;
 using Encog.ML.Genetic.Genes;
+using Encog.ML.Genetic.Genome;
 
 namespace Encog.Examples.GeneticTSP
 {
     public class TSPGenome : BasicGenome
     {
-        private Chromosome pathChromosome;
+        private readonly Chromosome pathChromosome;
 
         public TSPGenome(GeneticAlgorithm owner, City[] cities)
         {
-
-            int[] organism = new int[cities.Length];
-            bool[] taken = new bool[cities.Length];
+            var organism = new int[cities.Length];
+            var taken = new bool[cities.Length];
 
             for (int i = 0; i < organism.Length; i++)
             {
@@ -51,7 +46,7 @@ namespace Encog.Examples.GeneticTSP
                 int icandidate;
                 do
                 {
-                    icandidate = (int)(ThreadSafeRandom.NextDouble() * organism.Length);
+                    icandidate = (int) (ThreadSafeRandom.NextDouble()*organism.Length);
                 } while (taken[icandidate]);
                 organism[i] = icandidate;
                 taken[icandidate] = true;
@@ -66,29 +61,28 @@ namespace Encog.Examples.GeneticTSP
                 }
             }
 
-            this.pathChromosome = new Chromosome();
-            this.Chromosomes.Add(this.pathChromosome);
+            pathChromosome = new Chromosome();
+            Chromosomes.Add(pathChromosome);
 
             for (int i = 0; i < organism.Length; i++)
             {
-                IntegerGene gene = new IntegerGene();
+                var gene = new IntegerGene();
                 gene.Value = organism[i];
-                this.pathChromosome.Genes.Add(gene);
+                pathChromosome.Genes.Add(gene);
             }
             Organism = organism;
 
             Encode();
-
         }
 
         public override void Decode()
         {
-            Chromosome chromosome = this.Chromosomes[0];
-            int[] organism = new int[chromosome.Genes.Count];
+            Chromosome chromosome = Chromosomes[0];
+            var organism = new int[chromosome.Genes.Count];
 
             for (int i = 0; i < chromosome.Genes.Count; i++)
             {
-                IntegerGene gene = (IntegerGene)chromosome.Genes[i];
+                var gene = (IntegerGene) chromosome.Genes[i];
                 organism[i] = gene.Value;
             }
 
@@ -97,13 +91,13 @@ namespace Encog.Examples.GeneticTSP
 
         public override void Encode()
         {
-            Chromosome chromosome = this.Chromosomes[0];
+            Chromosome chromosome = Chromosomes[0];
 
-            int[] organism = (int[])this.Organism;
+            var organism = (int[]) Organism;
 
             for (int i = 0; i < chromosome.Genes.Count; i++)
             {
-                IntegerGene gene = (IntegerGene)chromosome.Genes[i];
+                var gene = (IntegerGene) chromosome.Genes[i];
                 gene.Value = organism[i];
             }
         }

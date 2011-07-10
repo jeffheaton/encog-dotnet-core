@@ -21,14 +21,11 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using ConsoleExamples.Examples;
 using Encog.ML.Data.Specific;
-using Encog.Neural.Networks;
-using Encog.Neural.Thermal;
 using Encog.Neural.Pattern;
+using Encog.Neural.Thermal;
 
 namespace Encog.Examples.Hopfield.Associate
 {
@@ -43,14 +40,165 @@ namespace Encog.Examples.Hopfield.Associate
 * original example.
 *
 */
-    public class HopfieldAssociate: IExample
+
+    public class HopfieldAssociate : IExample
     {
+        public const int HEIGHT = 10;
+        public const int WIDTH = 10;
+
+        /**
+         * The neural network will learn these patterns.
+         */
+
+        public String[][] PATTERN = {
+                                        new String[WIDTH]
+                                            {
+                                                "O O O O O ",
+                                                " O O O O O",
+                                                "O O O O O ",
+                                                " O O O O O",
+                                                "O O O O O ",
+                                                " O O O O O",
+                                                "O O O O O ",
+                                                " O O O O O",
+                                                "O O O O O ",
+                                                " O O O O O"
+                                            },
+                                        new String[WIDTH]
+                                            {
+                                                "OO  OO  OO",
+                                                "OO  OO  OO",
+                                                "  OO  OO  ",
+                                                "  OO  OO  ",
+                                                "OO  OO  OO",
+                                                "OO  OO  OO",
+                                                "  OO  OO  ",
+                                                "  OO  OO  ",
+                                                "OO  OO  OO",
+                                                "OO  OO  OO"
+                                            },
+                                        new String[WIDTH]
+                                            {
+                                                "OOOOO     ",
+                                                "OOOOO     ",
+                                                "OOOOO     ",
+                                                "OOOOO     ",
+                                                "OOOOO     ",
+                                                "     OOOOO",
+                                                "     OOOOO",
+                                                "     OOOOO",
+                                                "     OOOOO",
+                                                "     OOOOO"
+                                            },
+                                        new String[WIDTH]
+                                            {
+                                                "O  O  O  O",
+                                                " O  O  O  ",
+                                                "  O  O  O ",
+                                                "O  O  O  O",
+                                                " O  O  O  ",
+                                                "  O  O  O ",
+                                                "O  O  O  O",
+                                                " O  O  O  ",
+                                                "  O  O  O ",
+                                                "O  O  O  O"
+                                            },
+                                        new String[WIDTH]
+                                            {
+                                                "OOOOOOOOOO",
+                                                "O        O",
+                                                "O OOOOOO O",
+                                                "O O    O O",
+                                                "O O OO O O",
+                                                "O O OO O O",
+                                                "O O    O O",
+                                                "O OOOOOO O",
+                                                "O        O",
+                                                "OOOOOOOOOO"
+                                            }
+                                    };
+
+        /**
+         * The neural network will be tested on these patterns, to see
+         * which of the last set they are the closest to.
+         */
+
+        public String[][] PATTERN2 = {
+                                         new String[WIDTH]
+                                             {
+                                                 "          ",
+                                                 "          ",
+                                                 "          ",
+                                                 "          ",
+                                                 "          ",
+                                                 " O O O O O",
+                                                 "O O O O O ",
+                                                 " O O O O O",
+                                                 "O O O O O ",
+                                                 " O O O O O"
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "OOO O    O",
+                                                 " O  OOO OO",
+                                                 "  O O OO O",
+                                                 " OOO   O  ",
+                                                 "OO  O  OOO",
+                                                 " O OOO   O",
+                                                 "O OO  O  O",
+                                                 "   O OOO  ",
+                                                 "OO OOO  O ",
+                                                 " O  O  OOO"
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "OOOOO     ",
+                                                 "O   O OOO ",
+                                                 "O   O OOO ",
+                                                 "O   O OOO ",
+                                                 "OOOOO     ",
+                                                 "     OOOOO",
+                                                 " OOO O   O",
+                                                 " OOO O   O",
+                                                 " OOO O   O",
+                                                 "     OOOOO"
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "O  OOOO  O",
+                                                 "OO  OOOO  ",
+                                                 "OOO  OOOO ",
+                                                 "OOOO  OOOO",
+                                                 " OOOO  OOO",
+                                                 "  OOOO  OO",
+                                                 "O  OOOO  O",
+                                                 "OO  OOOO  ",
+                                                 "OOO  OOOO ",
+                                                 "OOOO  OOOO"
+                                             },
+                                         new String[WIDTH]
+                                             {
+                                                 "OOOOOOOOOO",
+                                                 "O        O",
+                                                 "O        O",
+                                                 "O        O",
+                                                 "O   OO   O",
+                                                 "O   OO   O",
+                                                 "O        O",
+                                                 "O        O",
+                                                 "O        O",
+                                                 "OOOOOOOOOO"
+                                             }
+                                     };
+
+        private IExampleInterface app;
+
         public static ExampleInfo Info
         {
             get
             {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(HopfieldAssociate),
+                var info = new ExampleInfo(
+                    typeof (HopfieldAssociate),
                     "hopfield-associate",
                     "Hopfield Associates Patterns",
                     "Simple Hopfield neural network that learns to associate patterns.");
@@ -58,145 +206,30 @@ namespace Encog.Examples.Hopfield.Associate
             }
         }
 
+        #region IExample Members
 
-        public const int HEIGHT = 10;
-        public const int WIDTH = 10;
+        public void Execute(IExampleInterface app)
+        {
+            this.app = app;
+            var pattern = new HopfieldPattern();
+            pattern.InputNeurons = WIDTH*HEIGHT;
+            var hopfield = (HopfieldNetwork) pattern.Generate();
 
-        private IExampleInterface app;
+            for (int i = 0; i < PATTERN.Length; i++)
+            {
+                hopfield.AddPattern(ConvertPattern(PATTERN, i));
+            }
 
-        /**
-         * The neural network will learn these patterns.
-         */
-        public String[][] PATTERN = { 
-        new String[WIDTH] { 
-		"O O O O O ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O"  },
+            Evaluate(hopfield, PATTERN);
+            Evaluate(hopfield, PATTERN2);
+        }
 
-      new String[WIDTH] { 
-        "OO  OO  OO",
-        "OO  OO  OO",
-        "  OO  OO  ",
-        "  OO  OO  ",
-        "OO  OO  OO",
-        "OO  OO  OO",
-        "  OO  OO  ",
-        "  OO  OO  ",
-        "OO  OO  OO",
-        "OO  OO  OO"  },
-
-      new String[WIDTH]  { 
-        "OOOOO     ",
-        "OOOOO     ",
-        "OOOOO     ",
-        "OOOOO     ",
-        "OOOOO     ",
-        "     OOOOO",
-        "     OOOOO",
-        "     OOOOO",
-        "     OOOOO",
-        "     OOOOO"  },
-
-      new String[WIDTH] { 
-        "O  O  O  O",
-        " O  O  O  ",
-        "  O  O  O ",
-        "O  O  O  O",
-        " O  O  O  ",
-        "  O  O  O ",
-        "O  O  O  O",
-        " O  O  O  ",
-        "  O  O  O ",
-        "O  O  O  O"  },
-
-      new String[WIDTH]  { 
-        "OOOOOOOOOO",
-        "O        O",
-        "O OOOOOO O",
-        "O O    O O",
-        "O O OO O O",
-        "O O OO O O",
-        "O O    O O",
-        "O OOOOOO O",
-        "O        O",
-        "OOOOOOOOOO"  } };
-
-        /**
-         * The neural network will be tested on these patterns, to see
-         * which of the last set they are the closest to.
-         */
-        public String[][] PATTERN2 = { 
-        new String[WIDTH] { 
-		"          ",
-        "          ",
-        "          ",
-        "          ",
-        "          ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O",
-        "O O O O O ",
-        " O O O O O"  },
-
-        new String[WIDTH] { 
-        "OOO O    O",
-        " O  OOO OO",
-        "  O O OO O",
-        " OOO   O  ",
-        "OO  O  OOO",
-        " O OOO   O",
-        "O OO  O  O",
-        "   O OOO  ",
-        "OO OOO  O ",
-        " O  O  OOO"  },
-
-        new String[WIDTH] { 
-        "OOOOO     ",
-        "O   O OOO ",
-        "O   O OOO ",
-        "O   O OOO ",
-        "OOOOO     ",
-        "     OOOOO",
-        " OOO O   O",
-        " OOO O   O",
-        " OOO O   O",
-        "     OOOOO"  },
-
-        new String[WIDTH] { 
-        "O  OOOO  O",
-        "OO  OOOO  ",
-        "OOO  OOOO ",
-        "OOOO  OOOO",
-        " OOOO  OOO",
-        "  OOOO  OO",
-        "O  OOOO  O",
-        "OO  OOOO  ",
-        "OOO  OOOO ",
-        "OOOO  OOOO"  },
-
-        new String[WIDTH] { 
-        "OOOOOOOOOO",
-        "O        O",
-        "O        O",
-        "O        O",
-        "O   OO   O",
-        "O   OO   O",
-        "O        O",
-        "O        O",
-        "O        O",
-        "OOOOOOOOOO"  } };
+        #endregion
 
         public BiPolarMLData ConvertPattern(String[][] data, int index)
         {
             int resultIndex = 0;
-            BiPolarMLData result = new BiPolarMLData(WIDTH * HEIGHT);
+            var result = new BiPolarMLData(WIDTH*HEIGHT);
             for (int row = 0; row < HEIGHT; row++)
             {
                 for (int col = 0; col < WIDTH; col++)
@@ -215,7 +248,7 @@ namespace Encog.Examples.Hopfield.Associate
 
             for (int row = 0; row < HEIGHT; row++)
             {
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
 
                 for (int col = 0; col < WIDTH; col++)
                 {
@@ -242,33 +275,16 @@ namespace Encog.Examples.Hopfield.Associate
 
         public void Evaluate(HopfieldNetwork hopfield, String[][] pattern)
         {
-            
             for (int i = 0; i < pattern.Length; i++)
             {
                 BiPolarMLData pattern1 = ConvertPattern(pattern, i);
                 hopfield.CurrentState = pattern1;
                 int cycles = hopfield.RunUntilStable(100);
-                BiPolarMLData pattern2 = (BiPolarMLData)hopfield.CurrentState;
+                BiPolarMLData pattern2 = hopfield.CurrentState;
                 Console.WriteLine("Cycles until stable(max 100): " + cycles + ", result=");
                 Display(pattern1, pattern2);
                 Console.WriteLine(@"----------------------");
             }
-        }
-
-        public void Execute(IExampleInterface app)
-        {
-            this.app = app;
-            HopfieldPattern pattern = new HopfieldPattern();
-            pattern.InputNeurons = WIDTH * HEIGHT;
-            HopfieldNetwork hopfield = (HopfieldNetwork)pattern.Generate();            
-
-            for (int i = 0; i < PATTERN.Length; i++)
-            {
-                hopfield.AddPattern(ConvertPattern(PATTERN, i));
-            }
-
-            Evaluate(hopfield, PATTERN);
-            Evaluate(hopfield, PATTERN2);
         }
     }
 }

@@ -21,14 +21,14 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using ConsoleExamples.Examples;
+using Encog.Mathutil.Randomize;
 using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks;
-using ConsoleExamples.Examples;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util.Simple;
-using Encog.Mathutil.Randomize;
 
 namespace Encog.Examples.Benchmark
 {
@@ -47,24 +47,64 @@ namespace Encog.Examples.Benchmark
         /// <summary>
         /// Input for the XOR function.
         /// </summary>
-        public static double[][] XOR_INPUT ={
-            new double[2] { 0.0, 0.0 },
-            new double[2] { 1.0, 0.0 },
-			new double[2] { 0.0, 1.0 },
-            new double[2] { 1.0, 1.0 } };
+        public static double[][] XOR_INPUT = {
+                                                 new double[2] {0.0, 0.0},
+                                                 new double[2] {1.0, 0.0},
+                                                 new double[2] {0.0, 1.0},
+                                                 new double[2] {1.0, 1.0}
+                                             };
 
         /// <summary>
         /// Ideal output for the XOR function.
         /// </summary>
-        public static double[][] XOR_IDEAL = {                                              
-            new double[1] { 0.0 }, 
-            new double[1] { 1.0 }, 
-            new double[1] { 1.0 }, 
-            new double[1] { 0.0 } };
+        public static double[][] XOR_IDEAL = {
+                                                 new double[1] {0.0},
+                                                 new double[1] {1.0},
+                                                 new double[1] {1.0},
+                                                 new double[1] {0.0}
+                                             };
+
+        public static ExampleInfo Info
+        {
+            get
+            {
+                var info = new ExampleInfo(
+                    typeof (WeightInitialization),
+                    "weight-init",
+                    "weight Initializers",
+                    "Show performance of different weight init methods.");
+                return info;
+            }
+        }
+
+        #region IExample Members
+
+        public void Execute(IExampleInterface app)
+        {
+            var rangeRandom = new RangeRandomizer(-1, 1);
+            var nwrRandom = new NguyenWidrowRandomizer(-1, 1);
+            var fanRandom = new FanInRandomizer();
+            var gaussianRandom = new GaussianRandomizer(0, 1);
+
+            var training = new BasicMLDataSet(XOR_INPUT,
+                                              XOR_IDEAL);
+            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 10, 0, 1, true);
+
+            Console.WriteLine("Range random: "
+                              + EvaluateRandomizer(rangeRandom, network, training));
+            Console.WriteLine("Nguyen-Widrow: "
+                              + EvaluateRandomizer(nwrRandom, network, training));
+            Console.WriteLine("Fan-In: "
+                              + EvaluateRandomizer(fanRandom, network, training));
+            Console.WriteLine("Gaussian: "
+                              + EvaluateRandomizer(gaussianRandom, network, training));
+        }
+
+        #endregion
 
         public double Evaluate(BasicNetwork network, IMLDataSet training)
         {
-            ResilientPropagation rprop = new ResilientPropagation(network, training);
+            var rprop = new ResilientPropagation(network, training);
             double startingError = network.CalculateError(training);
             for (int i = 0; i < ITERATIONS; i++)
             {
@@ -75,7 +115,7 @@ namespace Encog.Examples.Benchmark
         }
 
         public double EvaluateRandomizer(IRandomizer randomizer,
-                BasicNetwork network, IMLDataSet training)
+                                         BasicNetwork network, IMLDataSet training)
         {
             double total = 0;
             for (int i = 0; i < SAMPLE_SIZE; i++)
@@ -83,41 +123,7 @@ namespace Encog.Examples.Benchmark
                 randomizer.Randomize(network);
                 total += Evaluate(network, training);
             }
-            return total / SAMPLE_SIZE;
-        }
-
-        public static ExampleInfo Info
-        {
-            get
-            {
-                ExampleInfo info = new ExampleInfo(
-                    typeof(WeightInitialization),
-                    "weight-init",
-                    "weight Initializers",
-                    "Show performance of different weight init methods.");
-                return info;
-            }
-        }
-
-        public void Execute(IExampleInterface app)
-        {
-            RangeRandomizer rangeRandom = new RangeRandomizer(-1, 1);
-            NguyenWidrowRandomizer nwrRandom = new NguyenWidrowRandomizer(-1, 1);
-            FanInRandomizer fanRandom = new FanInRandomizer();
-            GaussianRandomizer gaussianRandom = new GaussianRandomizer(0, 1);
-
-            BasicMLDataSet training = new BasicMLDataSet(XOR_INPUT,
-                    XOR_IDEAL);
-            BasicNetwork network = EncogUtility.SimpleFeedForward(2, 10, 0, 1, true);
-
-            Console.WriteLine("Range random: "
-                    + EvaluateRandomizer(rangeRandom, network, training));
-            Console.WriteLine("Nguyen-Widrow: "
-                    + EvaluateRandomizer(nwrRandom, network, training));
-            Console.WriteLine("Fan-In: "
-                    + EvaluateRandomizer(fanRandom, network, training));
-            Console.WriteLine("Gaussian: "
-                    + EvaluateRandomizer(gaussianRandom, network, training));
+            return total/SAMPLE_SIZE;
         }
     }
 }
