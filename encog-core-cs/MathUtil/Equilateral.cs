@@ -29,6 +29,7 @@ namespace Encog.MathUtil
     /// class is provided the number of groups, as well as the range that the
     /// activations should fall into.
     /// </summary>
+    [Serializable]
     public class Equilateral
     {
         /// <summary>

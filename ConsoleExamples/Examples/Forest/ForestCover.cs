@@ -89,7 +89,7 @@ namespace Encog.Examples.Forest
     /// Cottonwood/Willow 5 -- Aspen 6 -- Douglas-fir 7 -- Krummholz
     /// 
     /// </summary>
-    public class ForestCover
+    public class ForestCover: IExample
     {
         public static ExampleInfo Info
         {
@@ -172,10 +172,10 @@ namespace Encog.Examples.Forest
                         Evaluate(config);
                     }
                 }
-                catch (Exception e)
+                /*catch (Exception e)
                 {
                     Console.WriteLine(e.StackTrace);
-                }
+                }*/
                 finally
                 {
                     EncogFramework.Instance.Shutdown();

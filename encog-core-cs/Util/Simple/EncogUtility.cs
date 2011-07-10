@@ -71,8 +71,8 @@ namespace Encog.Util.Simple
                                              String binFile, int inputCount, int outputCount,
                                              bool headers, bool  expectSignificance)
         {
-            Directory.Delete(binFile);
-
+            new FileInfo(binFile).Delete();
+                    
             var csv = new CSVMLDataSet(csvFile,
                                        inputCount, outputCount, false, format, expectSignificance);
             var buffer = new BufferedMLDataSet(binFile);
