@@ -157,6 +157,12 @@ namespace Encog.ML.Data.Buffer
                 var input = new double[inputCount];
                 var ideal = new double[idealCount];
 
+                if( _stream!=null )
+                {
+                    _stream.Close();
+                    _stream = null;
+                }
+
                 _stream = new FileStream(_file, FileMode.Create, FileAccess.ReadWrite);
                 _binaryWriter = new BinaryWriter(_stream);
                 _binaryReader = null;

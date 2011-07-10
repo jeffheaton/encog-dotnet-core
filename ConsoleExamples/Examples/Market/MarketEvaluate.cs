@@ -36,9 +36,9 @@ namespace Encog.Examples.Market
                                                  MarketDataType.AdjustedClose, true, true);
             result.AddDescription(desc);
 
-            var end = new DateTime(); // end today
+            var end = DateTime.Now; // end today
             var begin = new DateTime(end.Ticks); // begin 30 days ago
-            begin.AddDays(-60);
+            begin = begin.AddDays(-60);
 
             result.Load(begin, end);
             result.Generate();

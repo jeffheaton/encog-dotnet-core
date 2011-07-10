@@ -20,14 +20,14 @@ namespace Encog.Examples.Market
                 Config.TICKER, MarketDataType.AdjustedClose, true, true);
             market.AddDescription(desc);
 
-            var end = new DateTime(); // end today
+            var end = DateTime.Now; // end today
             var begin = new DateTime(end.Ticks); // begin 30 days ago
 
             // Gather training data for the last 2 years, stopping 60 days short of today.
             // The 60 days will be used to evaluate prediction.
-            begin.AddDays(-60);
-            end.AddDays(-60);
-            begin.AddYears(-2);
+            begin = begin.AddDays(-60);
+            end = end.AddDays(-60);
+            begin = begin.AddYears(-2);
 
             market.Load(begin, end);
             market.Generate();

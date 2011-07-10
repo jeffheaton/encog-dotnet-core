@@ -8,9 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Target/f:NormalizationStorageMLDataSet.cs" caret="2351" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Input/f:InputFieldMLDataSet.cs" caret="2006" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLComplexData.cs" caret="622" fromTop="15" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLData.cs" caret="1062" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataPair.cs" caret="800" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataSet.cs" caret="1828" fromTop="17" />
@@ -22,7 +19,6 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:TrainNetwork.cs" caret="510" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Associate/f:HopfieldAssociate.cs" caret="13012" fromTop="7" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:Config.cs" caret="625" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2951" fromTop="15" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="592" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="702" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MultiBench/f:MultiThreadBenchmark.cs" caret="4560" fromTop="13" />
@@ -30,21 +26,20 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3072" fromTop="5" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Properties/f:AssemblyInfo.cs" caret="2288" fromTop="60" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Persist/f:PersistSerial.cs" caret="3402" fromTop="87" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1209" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ExampleInfo.cs" caret="1727" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:GenerateData.cs" caret="5440" fromTop="19" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestConfig.cs" caret="1999" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:SerializeObject.cs" caret="2273" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="1152" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="2697" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="7879" fromTop="47" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="2754" fromTop="3" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketMLDataSet.cs" caret="5179" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:BufferedMLDataSet.cs" caret="3553" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="14470" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1209" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="19117" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
     </RecentFiles>
     <RecentEdits>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1531" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="977" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1489" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1441" fromTop="7" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="260" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="601" fromTop="18" />
@@ -70,6 +65,11 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="1152" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="2733" fromTop="15" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="2697" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="760" fromTop="5" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:BufferedMLDataSet.cs" caret="8963" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="4435" fromTop="8" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1104" fromTop="8" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -119,7 +119,7 @@
       <Item value="Directory`0" priority="1" />
       <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="14" />
+      <Item value="this" priority="15" />
       <Item value="private" priority="3" />
       <Item value="bool" priority="1" />
       <Item value="BasicMLDataSet`0" priority="0" />
@@ -151,10 +151,10 @@
       <Item value="CPNNetwork`0" priority="4" />
       <Item value="BasicTrainSOM`0" priority="0" />
       <Item value="SOMNetwork`0" priority="3" />
-      <Item value="if" priority="8" />
+      <Item value="if" priority="9" />
       <Item value="else" priority="2" />
       <Item value="return" priority="11" />
-      <Item value="null" priority="4" />
+      <Item value="null" priority="6" />
       <Item value="CSVFormat`0" priority="1" />
       <Item value="csv" priority="0" />
       <Item value="format" priority="2" />
@@ -259,11 +259,12 @@
       <Item value="e" priority="0" />
       <Item value="ForestCover`0" priority="0" />
       <Item value="Forest" priority="0" />
-      <Item value="DateTime`0" priority="4" />
+      <Item value="DateTime`0" priority="5" />
       <Item value="end" priority="1" />
       <Item value="DateTime" priority="1" />
       <Item value="Format" priority="0" />
       <Item value="binFile" priority="0" />
+      <Item value="_stream" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -522,6 +523,15 @@
     <ItemStatistics item="Qualified:@Encog.Util.Format">
       <Item value="FormatDouble`0" priority="1" />
       <Item value="FormatPercent`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.DateTime">
+      <Item value="Now" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Data.Buffer.BufferedMLDataSet">
+      <Item value="Close`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IO.FileStream">
+      <Item value="Close`0" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>
