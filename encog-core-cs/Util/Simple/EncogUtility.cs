@@ -474,7 +474,7 @@ namespace Encog.Util.Simple
         /// <param name="data">The training data to save.</param>
         public static void SaveEGB(FileInfo egbFile, IMLDataSet data)
         {
-            var binary = new BufferedMLDataSet(f);
+            var binary = new BufferedMLDataSet(egbFile.ToString());
             binary.Load(data);
             data.Close();
         }
