@@ -29,6 +29,7 @@ using Encog.Util;
 using Encog.Util.Logging;
 using Encog.Neural.Flat.Train.Prop;
 using Encog.Neural.Error;
+using Encog.Util.Concurrency;
 
 namespace Encog.Neural.Networks.Training.Propagation
 {
@@ -38,7 +39,7 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// inside of the PropagationMethod interface implementors.
     /// </summary>
     ///
-    public abstract class Propagation : BasicTraining, ITrain
+    public abstract class Propagation : BasicTraining, ITrain, IMultiThreadable
     {
         /// <summary>
         /// The network.
@@ -77,7 +78,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// determine the best number of threads for the processor. If OpenCL is used
         /// as the target device, then this value is not used.
         /// </summary>
-        public int NumThreads
+        public int ThreadCount
         {
             get { return _flatTraining.NumThreads; }
             set { _flatTraining.NumThreads = value; }

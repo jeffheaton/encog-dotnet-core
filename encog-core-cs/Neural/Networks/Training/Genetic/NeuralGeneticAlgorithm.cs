@@ -30,6 +30,7 @@ using Encog.ML.Genetic.Population;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Util.Logging;
+using Encog.Util.Concurrency;
 
 namespace Encog.Neural.Networks.Training.Genetic
 {
@@ -47,7 +48,7 @@ namespace Encog.Neural.Networks.Training.Genetic
     /// then score the networks any way that you like.
     /// </summary>
     ///
-    public class NeuralGeneticAlgorithm : BasicTraining
+    public class NeuralGeneticAlgorithm : BasicTraining, IMultiThreadable
     {
         /// <summary>
         /// Construct a neural genetic algorithm.
@@ -132,22 +133,7 @@ namespace Encog.Neural.Networks.Training.Genetic
         {
         }
 
-        /// <summary>
-        /// Should multithreading be used?  By default, this is true.
-        /// However, if you have a score function that is not thread safe,
-        /// this should be set to false.
-        /// </summary>
-        public bool MultiThreaded 
-        {
-            get
-            {
-                return Genetic.MultiThreaded;
-            }
-            set
-            {
-                Genetic.MultiThreaded = value;
-            }
-        }
+     
 
         #region Nested type: NeuralGeneticAlgorithmHelper
 
@@ -182,5 +168,18 @@ namespace Encog.Neural.Networks.Training.Genetic
         }
 
         #endregion
+
+        /// <inheritdoc/>
+        public int ThreadCount
+        {
+            get
+            {
+                return this.Genetic.ThreadCount;
+            }
+            set
+            {
+                this.Genetic.ThreadCount = value;
+            }
+        }
     }
 }

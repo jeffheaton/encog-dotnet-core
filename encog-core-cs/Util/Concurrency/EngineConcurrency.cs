@@ -34,12 +34,12 @@ namespace Encog.Util.Concurrency
     /// concurrency. It is used by other classes inside of Encog to allow tasks to be
     /// executed efficiently on multicore machines.
     /// </summary>
-    public class EngineConcurrency
+    public class EngineConcurrency: IMultiThreadable
     {
         /// <summary>
         /// Singleton instance.
         /// </summary>
-        private static EngineConcurrency _instance;
+        private static EngineConcurrency _instance = new EngineConcurrency();
 
         /// <summary>
         /// The number of active tasks.
@@ -53,7 +53,7 @@ namespace Encog.Util.Concurrency
         /// </summary>
         public static EngineConcurrency Instance
         {
-            get { return _instance ?? (_instance = new EngineConcurrency()); }
+            get { return _instance; }
         }
 
         /// <summary>
@@ -169,5 +169,7 @@ namespace Encog.Util.Concurrency
                 _activeTasks--;
             }
         }
+
+        public int ThreadCount { get; set; }
     }
 }

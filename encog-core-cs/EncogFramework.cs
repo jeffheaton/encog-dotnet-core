@@ -83,7 +83,7 @@ namespace Encog
         /// <summary>
         /// The instance.
         /// </summary>
-        private static EncogFramework _instance;
+        private static EncogFramework _instance = new EncogFramework();
 
         /// <summary>
         /// The current logging plugin.
@@ -104,14 +104,6 @@ namespace Encog
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new EncogFramework();
-                    EncogFramework.Instance.RegisterPlugin(new SystemLoggingPlugin());
-                    EncogFramework.Instance.RegisterPlugin(new SystemMethodsPlugin());
-                    EncogFramework.Instance.RegisterPlugin(new SystemTrainingPlugin());
-                    EncogFramework.Instance.RegisterPlugin(new SystemActivationPlugin());
-                }
                 return _instance;
             }
         }
@@ -131,6 +123,10 @@ namespace Encog
             _properties[EncogFileVersion] = FileVersion;
 
             _plugins = new List<EncogPluginBase>();
+            RegisterPlugin(new SystemLoggingPlugin());
+            RegisterPlugin(new SystemMethodsPlugin());
+            RegisterPlugin(new SystemTrainingPlugin());
+            RegisterPlugin(new SystemActivationPlugin());
         }
 
         /// <summary>

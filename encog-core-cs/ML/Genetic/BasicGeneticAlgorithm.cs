@@ -54,6 +54,7 @@ namespace Encog.ML.Genetic
         {
             if (_first)
             {
+                EngineConcurrency.Instance.ThreadCount = ThreadCount;
                 Population.Claim(this);
                 _first = false;
             }

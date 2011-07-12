@@ -515,6 +515,7 @@
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEngineTask.cs" />
+    <Compile Include="Util\Concurrency\IMultiThreadable.cs" />
     <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
