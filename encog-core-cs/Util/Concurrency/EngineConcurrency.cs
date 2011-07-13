@@ -106,7 +106,16 @@ namespace Encog.Util.Concurrency
             }
             set
             {
-                //ThreadPool.SetMaxThreads(value, value);
+                int threads = value;
+
+                if (threads == 0)
+                {
+                    threads = Environment.ProcessorCount;
+                    if (threads > 1)
+                        threads++;
+                }
+
+                ThreadPool.SetMaxThreads(threads, threads);
             }
         }
 
@@ -119,33 +128,6 @@ namespace Encog.Util.Concurrency
             MaxThreads = Environment.ProcessorCount;
 #endif
         }
-
-/*
-        /// <summary>
-        /// Wait for all threads in the pool to complete.
-        /// </summary>
-        /// <param name="timeOutSeconds">How long to wait for all threads to complete.</param>
-        public void Shutdown(long timeOutSeconds)
-        {
-            long start = DateTime.Now.Ticks;
-            long current;
-            long elapsed;
-
-            do
-            {
-                lock (this)
-                {
-                    if (this.activeTasks < 1)
-                        return;
-                }
-                current = DateTime.Now.Ticks;
-                elapsed = current - start;
-                elapsed /= 10000; // to miliseconds
-                elapsed /= 1000; // to seconds
-                Thread.Sleep(100);
-            } while (elapsed < timeOutSeconds);
-        }
-        */
 
         /// <summary>
         /// Create a new task group.
