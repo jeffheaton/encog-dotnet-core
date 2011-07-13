@@ -278,23 +278,30 @@ namespace Encog.Neural.Prune
         /// <returns>A human readable string.</returns>
         public static String NetworkToString(BasicNetwork network)
         {
-            var result = new StringBuilder();
-            int num = 1;
-
-            // display only hidden layers
-            for (int i = 1; i < network.LayerCount - 1; i++)
+            if (network == null)
             {
-                if (result.Length > 0)
-                {
-                    result.Append(",");
-                }
-                result.Append("H");
-                result.Append(num++);
-                result.Append("=");
-                result.Append(network.GetLayerNeuronCount(i));
-            }
+                var result = new StringBuilder();
+                int num = 1;
 
-            return result.ToString();
+                // display only hidden layers
+                for (int i = 1; i < network.LayerCount - 1; i++)
+                {
+                    if (result.Length > 0)
+                    {
+                        result.Append(",");
+                    }
+                    result.Append("H");
+                    result.Append(num++);
+                    result.Append("=");
+                    result.Append(network.GetLayerNeuronCount(i));
+                }
+
+                return result.ToString();
+            }
+            else
+            {
+                return "N/A";
+            }
         }
 
         /// <summary>
@@ -447,7 +454,7 @@ namespace Encog.Neural.Prune
                                                      5);
 
                 train.AddStrategy(strat);
-                train.NumThreads = 1; // force single thread mode
+                train.ThreadCount = 1; // force single thread mode
 
                 for (int i = 0;
                      (i < _iterations) && !ShouldStop
@@ -479,8 +486,8 @@ namespace Encog.Neural.Prune
 
                     if (network.LayerCount > 3)
                     {
-                        networkHidden2Count = network.GetLayerNeuronCount(1);
-                        networkHidden1Count = network.GetLayerNeuronCount(2);
+                        networkHidden2Count = network.GetLayerNeuronCount(2);
+                        networkHidden1Count = network.GetLayerNeuronCount(1);
                     }
                     else
                     {
@@ -651,6 +658,7 @@ namespace Encog.Neural.Prune
 
             if (choice != _bestNetwork)
             {
+                _bestNetwork = choice;
                 EncogLogging.Log(EncogLogging.LevelDebug,
                                  "Prune found new best network: error=" + error
                                  + ", network=" + choice);

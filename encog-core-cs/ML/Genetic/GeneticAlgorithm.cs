@@ -25,6 +25,7 @@ using Encog.ML.Genetic.Genome;
 using Encog.ML.Genetic.Mutate;
 using Encog.ML.Genetic.Population;
 using Encog.ML.Genetic.Species;
+using Encog.Util.Concurrency;
 
 namespace Encog.ML.Genetic
 {
@@ -36,7 +37,7 @@ namespace Encog.ML.Genetic
     /// execution.
     /// </summary>
     ///
-    public abstract class GeneticAlgorithm
+    public abstract class GeneticAlgorithm: IMultiThreadable
     {
         /// <summary>
         /// The score calculation object.
@@ -52,6 +53,11 @@ namespace Encog.ML.Genetic
             get { return _calculateScore; }
             set { _calculateScore = value; }
         }
+
+        /// <summary>
+        /// The thread count.
+        /// </summary>
+        public int ThreadCount { get; set; }
 
 
         /// <summary>

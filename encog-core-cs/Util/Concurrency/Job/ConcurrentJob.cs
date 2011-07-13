@@ -28,7 +28,7 @@ namespace Encog.Util.Concurrency.Job
     /// A concurrent JOB, works well for multicore machines.  Provides
     /// the low-level tools to create a concurrent job.
     /// </summary>
-    public abstract class ConcurrentJob
+    public abstract class ConcurrentJob: IMultiThreadable
     {
         /// <summary>
         /// Where to report progress to.
@@ -79,6 +79,8 @@ namespace Encog.Util.Concurrency.Job
         {
             Object task;
 
+            EngineConcurrency.Instance.ThreadCount = ThreadCount;
+
             TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
 
             _totalTasks = LoadWorkload();
@@ -105,5 +107,11 @@ namespace Encog.Util.Concurrency.Job
         {
             _report.Report(_totalTasks, context.TaskNumber, status);
         }
+
+        /// <summary>
+        /// Set the thread count, 0 for auto, 1 for single-threaded, 
+        /// otherwise the number of threads.
+        /// </summary>
+        public int ThreadCount { get; set; }
     }
 }

@@ -231,7 +231,7 @@ namespace Encog.Util.Simple
                                         IMLDataSet trainingSet, int minutes)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet) {NumThreads = 0};
+                                                         trainingSet) {ThreadCount = 0};
             TrainConsole(train, network, trainingSet, minutes);
         }
 
@@ -281,7 +281,7 @@ namespace Encog.Util.Simple
                                        IMLDataSet trainingSet)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet) {NumThreads = 0};
+                                                         trainingSet) {ThreadCount = 0};
             TrainDialog(train, network, trainingSet);
         }
 #endif
@@ -312,7 +312,7 @@ namespace Encog.Util.Simple
                                         IMLDataSet trainingSet, double error)
         {
             Propagation train = new ResilientPropagation(network,
-                                                         trainingSet) {NumThreads = 0};
+                                                         trainingSet) {ThreadCount = 0};
             TrainToError(train, trainingSet, error);
         }
 

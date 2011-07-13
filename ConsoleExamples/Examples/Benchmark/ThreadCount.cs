@@ -77,7 +77,7 @@ namespace Encog.Examples.Benchmark
                                                                  INPUT_COUNT, OUTPUT_COUNT, -1, 1);
 
             var rprop = new ResilientPropagation(network, training);
-            rprop.NumThreads = thread;
+            rprop.ThreadCount = thread;
             for (int i = 0; i < 5; i++)
             {
                 rprop.Iteration();
