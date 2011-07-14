@@ -36,6 +36,18 @@ using Encog.Neural.Pattern;
 
 namespace Encog.Examples.JordanNetwork
 {
+    /// <summary>
+    /// Implement an Jordan style neural network with Encog. This network attempts to
+    /// predict the next value in an XOR sequence, taken one at a time. A regular
+    /// feedforward network would fail using a single input neuron for this task. The
+    /// internal state stored by an Jordan neural network allows better performance.
+    /// 
+    /// This example does not perform very well and is provided mainly as a contrast to
+    /// the ExlmanXOR.  There is only one context neuron, because there is only one output 
+    /// neuron.  This network does not perform as well as the Elman for XOR.
+    /// 
+    /// Jordan is better suited to a larger array of output neurons.
+    /// </summary>
     public class JordanExample : IExample
     {
         private IExampleInterface app;
@@ -70,8 +82,7 @@ namespace Encog.Examples.JordanNetwork
 
             app.WriteLine("Best error rate with Jordan Network: " + elmanError);
             app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
-            app.WriteLine("(Jordan should outperform feed forward)");
-            app.WriteLine("If your results are not as good, try rerunning, or perhaps training longer.");
+            app.WriteLine("Jordan will perform only marginally better than feedforward.\nThe more output neurons, the better performance a Jordan will give.");
         }
 
         #endregion
@@ -82,7 +93,7 @@ namespace Encog.Examples.JordanNetwork
             var pattern = new JordanPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
-            pattern.AddHiddenLayer(6);
+            pattern.AddHiddenLayer(2);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
@@ -93,7 +104,7 @@ namespace Encog.Examples.JordanNetwork
             var pattern = new FeedForwardPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = 1;
-            pattern.AddHiddenLayer(6);
+            pattern.AddHiddenLayer(2);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
