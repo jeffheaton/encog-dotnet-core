@@ -158,7 +158,7 @@ namespace Encog.Neural.Networks.Structure
         /// Parse/finalize the limit value for connections.
         /// </summary>
         ///
-        private void FinalizeLimit()
+        public void FinalizeLimit()
         {
             // see if there is a connection limit imposed
             String limit = _network
@@ -169,6 +169,7 @@ namespace Encog.Neural.Networks.Structure
                 {
                     _connectionLimited = true;
                     _connectionLimit = CSVFormat.EgFormat.Parse(limit);
+                    EnforceLimit();
                 }
                 catch (FormatException )
                 {

@@ -493,7 +493,7 @@ namespace Encog.App.Analyst.CSV.Basic
             _currentRecord++;
             _lastUpdate++;
 
-            if (_lastUpdate > _reportInterval)
+            if (_lastUpdate >= _reportInterval)
             {
                 _lastUpdate = 0;
                 shouldDisplay = true;

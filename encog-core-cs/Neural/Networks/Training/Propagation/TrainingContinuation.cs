@@ -28,7 +28,7 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// <summary>
     /// Allows training to be continued.
     /// </summary>
-    ///
+    [Serializable]
     public class TrainingContinuation
     {
         /// <summary>

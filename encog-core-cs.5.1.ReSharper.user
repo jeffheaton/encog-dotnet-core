@@ -8,12 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLData.cs" caret="1062" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataPair.cs" caret="800" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataSet.cs" caret="1828" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestNormDataSet.cs" caret="773" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/f:DataNormalization.cs" caret="7225" fromTop="12" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestSegregate.cs" caret="5263" fromTop="8" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/d:Normalize/f:TestZAxis.cs" caret="1998" fromTop="2" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:Evaluate.cs" caret="4244" fromTop="16" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:TrainNetwork.cs" caret="510" fromTop="10" />
@@ -38,21 +32,14 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1209" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="19117" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Concurrency/f:EngineConcurrency.cs" caret="888" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:CSV/d:Basic/f:BasicFile.cs" caret="14382" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/f:ITrain.cs" caret="86" fromTop="3" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:TrainingContinuation.cs" caret="1055" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:NeuralStructure.cs" caret="5028" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="3883" fromTop="1" />
     </RecentFiles>
     <RecentEdits>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1441" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="260" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="601" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="3" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1383" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1300" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="711" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="13" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="17" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="10" />
@@ -70,6 +57,19 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="4435" fromTop="8" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1104" fromTop="8" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:CSV/d:Basic/f:BasicFile.cs" caret="14382" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:TrainingContinuation.cs" caret="1055" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:NeuralStructure.cs" caret="4595" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:NeuralStructure.cs" caret="5028" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="4078" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="3938" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="3130" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="2844" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="4665" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="5239" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="5065" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="4208" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="4954" fromTop="18" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -216,7 +216,7 @@
       <Item value="File" priority="2" />
       <Item value="Directory" priority="0" />
       <Item value="readonly" priority="4" />
-      <Item value="Serializable" priority="5" />
+      <Item value="Serializable" priority="6" />
       <Item value="map" priority="1" />
       <Item value="IDictionary" priority="1" />
       <Item value="Type`0" priority="0" />
@@ -265,6 +265,9 @@
       <Item value="Format" priority="0" />
       <Item value="binFile" priority="0" />
       <Item value="_stream" priority="2" />
+      <Item value="EnforceLimit`0" priority="0" />
+      <Item value="assignDisabled" priority="0" />
+      <Item value="assignedTotal" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -532,6 +535,13 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.IO.FileStream">
       <Item value="Close`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.Networks.Structure.NeuralStructure">
+      <Item value="ConnectionLimited" priority="0" />
+      <Item value="ConnectionLimit" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.Neural.Networks.BasicNetwork">
+      <Item value="Structure" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

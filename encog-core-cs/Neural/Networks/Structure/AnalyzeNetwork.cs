@@ -90,12 +90,15 @@ namespace Encog.Neural.Networks.Structure
         /// <param name="network">The network to analyze.</param>
         public AnalyzeNetwork(BasicNetwork network)
         {
+            int assignDisabled = 0;
+            int assignedTotal = 0;
             IList<Double> biasList = new List<Double>();
             IList<Double> weightList = new List<Double>();
             IList<Double> allList = new List<Double>();
 
             for (int layerNumber = 0; layerNumber < network.LayerCount - 1; layerNumber++)
             {
+
                 int fromCount = network.GetLayerNeuronCount(layerNumber);
                 int fromBiasCount = network
                     .GetLayerTotalNeuronCount(layerNumber);
@@ -108,8 +111,18 @@ namespace Encog.Neural.Networks.Structure
                     {
                         double v = network.GetWeight(layerNumber, fromNeuron,
                                                      toNeuron);
+
+                        if (network.Structure.ConnectionLimited )
+                        {
+                            if (Math.Abs(v) < network.Structure.ConnectionLimit )
+                            {
+                                assignDisabled++;
+                            }
+                        }
+
                         weightList.Add(v);
                         allList.Add(v);
+                        assignedTotal++;
                     }
                 }
 
@@ -121,14 +134,23 @@ namespace Encog.Neural.Networks.Structure
                     {
                         double v = network.GetWeight(layerNumber, biasNeuron,
                                                        toNeuron);
+                        if (network.Structure.ConnectionLimited)
+                        {
+                            if (Math.Abs(v) < network.Structure.ConnectionLimit)
+                            {
+                                assignDisabled++;
+                            }
+                        }
+
                         biasList.Add(v);
                         allList.Add(v);
+                        assignedTotal++;
                     }
                 }
             }
 
-            _disabledConnections = 0;
-            _totalConnections = 0;
+            _disabledConnections = assignDisabled;
+            _totalConnections = assignedTotal;
             _weights = new NumericRange(weightList);
             _bias = new NumericRange(biasList);
             _weightsAndBias = new NumericRange(allList);
