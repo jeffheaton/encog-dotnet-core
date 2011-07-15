@@ -77,7 +77,7 @@ namespace Encog.Util.Normalize.Output.Nominal
         /// </summary>
         /// <param name="high">The high output value.</param>
         /// <param name="low">The low output value.</param>
-        public OutputEquilateral(double high, double low)
+        public OutputEquilateral(double low, double high)
         {
             _high = high;
             _low = low;
@@ -107,7 +107,7 @@ namespace Encog.Util.Normalize.Output.Nominal
         /// <param name="value">The value.</param>
         public void AddItem(IInputField inputField, double value)
         {
-            AddItem(inputField, value + 0.1, value - 0.1);
+            AddItem(inputField, value - 0.1, value + 0.1);
         }
 
         /// <summary>
