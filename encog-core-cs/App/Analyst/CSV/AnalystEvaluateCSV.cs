@@ -96,7 +96,7 @@ namespace Encog.App.Analyst.CSV
             _outputColumns = _analyst.DetermineOutputFieldCount();
 
             _analystHeaders = new CSVHeaders(InputHeadings);
-            _series = new TimeSeriesUtil(_analyst,
+            _series = new TimeSeriesUtil(_analyst, false,
                                         _analystHeaders.Headers);
         }
 
@@ -167,7 +167,7 @@ namespace Encog.App.Analyst.CSV
 
             IMLData output;
 
-            int outputLength = _analyst.DetermineUniqueColumns();
+            int outputLength = _analyst.DetermineTotalInputFieldCount();
 
             StreamWriter tw = PrepareOutputFile(outputFile);
 
@@ -178,7 +178,7 @@ namespace Encog.App.Analyst.CSV
                 var row = new LoadedRow(csv, _outputColumns);
 
                 double[] inputArray = AnalystNormalizeCSV.ExtractFields(_analyst,
-                                                                        _analystHeaders, csv, outputLength, false);
+                                                                        _analystHeaders, csv, outputLength, true);
                 if (_series.TotalDepth > 1)
                 {
                     inputArray = _series.Process(inputArray);

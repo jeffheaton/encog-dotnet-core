@@ -40,7 +40,6 @@ using Encog.Examples.Hopfield.Simple;
 using Encog.Examples.Image;
 using Encog.Examples.JordanNetwork;
 using Encog.Examples.Market;
-using Encog.Examples.MultiBench;
 using Encog.Examples.Persist;
 using Encog.Examples.XOR;
 

@@ -86,7 +86,7 @@ namespace Encog.App.Analyst.Commands
             var method = (IMLMethod) EncogDirectoryPersistence
                                         .LoadObject(resourceFile);
 
-            bool headers = Script.ExpectInputHeaders(evalID);
+            bool headers = true;
 
             var eval = new AnalystEvaluateCSV {Script = Script};
             Analyst.CurrentQuantTask = eval;

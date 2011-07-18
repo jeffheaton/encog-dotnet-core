@@ -160,7 +160,7 @@ namespace Encog.App.Analyst.CSV.Normalize
                 field.Init();
             }
 
-            _series = new TimeSeriesUtil(_analyst,
+            _series = new TimeSeriesUtil(_analyst, true,
                                         _analystHeaders.Headers);
         }
 
@@ -195,7 +195,7 @@ namespace Encog.App.Analyst.CSV.Normalize
                 }
 
                 ResetStatus();
-                int outputLength = _analyst.DetermineUniqueColumns();
+                int outputLength = _analyst.DetermineTotalColumns();
 
                 // write file contents
                 while (csv.Next() && !ShouldStop())

@@ -87,7 +87,7 @@ namespace Encog.App.Analyst.CSV
             ResetStatus();
             int recordCount = 0;
 
-            int outputLength = _analyst.DetermineUniqueColumns();
+            int outputLength = _analyst.DetermineTotalColumns();
             var csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, InputFormat);
             ReadHeaders(csv);

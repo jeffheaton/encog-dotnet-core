@@ -86,8 +86,9 @@ namespace Encog.App.Analyst.CSV
         /// </summary>
         ///
         /// <param name="theAnalyst">The analyst to use.</param>
+        /// <param name="includeOutput">Should output fields be included.</param>
         /// <param name="headings">The column headings.</param>
-        public TimeSeriesUtil(EncogAnalyst theAnalyst,
+        public TimeSeriesUtil(EncogAnalyst theAnalyst, bool includeOutput,
                               IEnumerable<string> headings)
         {
             _buffer = new List<double[]>();
@@ -96,7 +97,7 @@ namespace Encog.App.Analyst.CSV
             _lagDepth = _analyst.LagDepth;
             _leadDepth = _analyst.LeadDepth;
             _totalDepth = _lagDepth + _leadDepth + 1;
-            _inputSize = _analyst.DetermineUniqueColumns();
+            _inputSize = includeOutput ? _analyst.DetermineTotalColumns() : _analyst.DetermineTotalInputFieldCount();
             _outputSize = _analyst.DetermineInputCount()
                          + _analyst.DetermineOutputCount();
 

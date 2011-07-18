@@ -320,6 +320,7 @@ namespace Encog.App.Analyst
                     if (!used.ContainsKey(name))
                     {
                         result += field.ColumnsNeeded;
+                        used[name] = null;
                     }
                 }
             }
@@ -820,6 +821,43 @@ namespace Encog.App.Analyst
             {
                 _currentQuantTask.RequestStop();
             }
+        }
+
+        /// <summary>
+        /// Determine the total number of columns.  
+        /// </summary>
+        /// <returns>The number of tes</returns>
+        public int DetermineTotalColumns() 
+        {
+		    int result = 0;
+
+		    foreach (AnalystField field in _script.Normalize.NormalizedFields ) 
+            {
+			    if (!field.Ignored ) 
+                {
+				    result += field.ColumnsNeeded;
+			    }
+		    }
+		    return result;
+	    }
+
+        /// <summary>
+        /// Determine the total input field count, minus ignored fields.
+        /// </summary>
+        /// <returns>The number of unique input fields.</returns>
+        public int DetermineTotalInputFieldCount()
+        {
+
+            int result = 0;
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
+            {
+                if (field.Input && !field.Ignored)
+                {
+                    result += field.ColumnsNeeded;
+                }
+            }
+
+            return result;
         }
     }
 }
