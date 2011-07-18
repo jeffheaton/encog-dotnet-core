@@ -60,8 +60,8 @@ namespace Encog.Util.Normalize.Output.Nominal
         /// <param name="inputField">The field that this item is based on.</param>
         /// <param name="high">The high value.</param>
         /// <param name="low">The low value.</param>
-        public NominalItem(IInputField inputField, double high,
-                           double low)
+        public NominalItem(IInputField inputField, double low,
+                           double high)
         {
             _high = high;
             _low = low;

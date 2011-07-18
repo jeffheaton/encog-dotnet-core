@@ -152,13 +152,13 @@ namespace Encog.Plugin.SystemPlugin
         /// <param name="message">The logging message.</param>
         public void Log(int level, String message)
         {
-            if (currentLevel < level)
+            if (currentLevel <= level)
             {
                 DateTime now = DateTime.Now;
                 var line = new StringBuilder();
                 line.Append(now.ToString());
                 line.Append(" [");
-                switch (currentLevel)
+                switch (level)
                 {
                     case EncogLogging.LevelCritical:
                         line.Append("CRITICAL");
