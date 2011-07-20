@@ -1168,5 +1168,14 @@ namespace Encog.App.Analyst.Wizard
 
             Wizard(analyzeFile, b, format);
         }
+
+        /// <summary>
+        /// How should missing values be handled.
+        /// </summary>
+        public IHandleMissingValues Missing
+        {
+            get { return _missing; }
+            set { _missing = value; }
+        }
     }
 }

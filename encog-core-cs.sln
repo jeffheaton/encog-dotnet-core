@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncogCmd", "EncogCmd\EncogCmd.csproj", "{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = encog-core-cs.vsmdi
@@ -81,6 +83,16 @@ Global
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|x86.ActiveCfg = Release|Any CPU
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Debug|x86.ActiveCfg = Debug|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Debug|x86.Build.0 = Debug|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Release|Any CPU.ActiveCfg = Release|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Release|Mixed Platforms.Build.0 = Release|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Release|x86.ActiveCfg = Release|x86
+		{DCD16E74-CC9A-4FB6-972E-2834FAC9E441}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

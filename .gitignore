@@ -5,6 +5,8 @@ OCR/bin/
 OCR/obj/
 SOMColors/bin/
 SOMColors/obj/
+EncogCmd/bin/
+EncogCmd/obj/
 TestResults/
 _ReSharper.encog-core-cs/
 encog-core-cs/bin/
