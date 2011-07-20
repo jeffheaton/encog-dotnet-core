@@ -63,7 +63,7 @@ namespace EncogCmd
             get { return _command; }
         }
 
-        public bool PromptBoolean(string name)
+        public bool PromptBoolean(string name, bool d)
         {
             String n = name.ToLower();
             if (_settings.ContainsKey(n))
@@ -71,12 +71,15 @@ namespace EncogCmd
                 return char.ToLower(_settings[n][0]) == 't';
             }
 
-            Console.WriteLine("Enter value for boolean[" + name + "](t/f) :");
+            Console.Write("Enter value for [" + name + "] (default="+d+"): ");
             String str = Console.ReadLine().Trim().ToLower();
-            return str[0] == 't';
+            if (str.Length == 0)
+                return d;
+            else
+                return str[0] == 't';
         }
 
-        internal int PromptInteger(string name)
+        internal int PromptInteger(string name, int d)
         {
             String n = name.ToLower();
             if (_settings.ContainsKey(n))
@@ -84,12 +87,15 @@ namespace EncogCmd
                 return int.Parse(_settings[n]);
             }
 
-            Console.WriteLine("Enter value for int[" + name + "] :");
+            Console.Write("Enter value for [" + name + "] (default="+d+"): ");
             String str = Console.ReadLine().Trim().ToLower();
-            return int.Parse(str);
+            if (str.Length == 0)
+                return d;
+            else
+                return int.Parse(str);
         }
 
-        public string PromptString(string name)
+        public string PromptString(string name, String d)
         {
             String n = name.ToLower();
             if (_settings.ContainsKey(n))
@@ -97,8 +103,29 @@ namespace EncogCmd
                 return _settings[n];
             }
 
-            Console.WriteLine("Enter value for int[" + name + "] :");
-            return Console.ReadLine().Trim().ToLower();
+            Console.Write("Enter value for [" + name + "] (default=" + d + "): ");
+            String result = Console.ReadLine().Trim().ToLower();
+
+            if (result.Length == 0)
+                result = d;
+
+            return result;
+        }
+
+        internal double PromptDouble(string name, double d)
+        {
+            String n = name.ToLower();
+            if (_settings.ContainsKey(n))
+            {
+                return int.Parse(_settings[n]);
+            }
+
+            Console.Write("Enter value for [" + name + "] (default=" + d + "): ");
+            String str = Console.ReadLine().Trim().ToLower();
+            if (str.Length == 0)
+                return d;
+            else
+                return double.Parse(str);
         }
     }
 }

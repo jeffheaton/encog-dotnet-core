@@ -57,18 +57,6 @@ namespace Encog.ML.Factory.Method
         public IMLMethod Create(String architecture, int input,
                                int output)
         {
-            if (input <= 0)
-            {
-                throw new EncogError(
-                    "Must have at least one input for feedforward.");
-            }
-
-            if (output <= 0)
-            {
-                throw new EncogError(
-                    "Must have at least one output for feedforward.");
-            }
-
             var result = new BasicNetwork();
             IList<String> layers = ArchitectureParse.ParseLayers(architecture);
             IActivationFunction af = new ActivationLinear();

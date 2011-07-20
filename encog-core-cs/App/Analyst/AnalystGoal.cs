@@ -38,6 +38,11 @@ namespace Encog.App.Analyst
         /// Goal of classification.
         /// </summary>
         ///
-        Classification
+        Classification,
+
+        /// <summary>
+        /// Unknown, usually an error.
+        /// </summary>
+        Unknown
     }
 }

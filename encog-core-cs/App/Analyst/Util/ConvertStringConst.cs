@@ -138,5 +138,20 @@ namespace Encog.App.Analyst.Util
                 return AnalystFileFormat.Unknown;
             }
         }
+
+        /// <summary>
+        /// Convert a string to an analyst goal.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static AnalystGoal String2AnalystGoal(String str)
+        {
+            if (String.Compare(str, "classification", true) == 0)
+                return AnalystGoal.Classification;
+            else if (String.Compare(str, "regression", true) == 0)
+                return AnalystGoal.Regression;
+            else
+                return AnalystGoal.Unknown;
+        }
     }
 }

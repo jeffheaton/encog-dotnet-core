@@ -108,7 +108,7 @@ namespace Encog.App.Analyst.CSV
         {
             try
             {
-                var tw = new StreamWriter(outputFile.OpenRead());
+                var tw = new StreamWriter(outputFile.OpenWrite());
                 // write headers, if needed
                 if (ProduceOutputHeaders)
                 {

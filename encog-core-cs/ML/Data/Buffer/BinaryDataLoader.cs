@@ -51,7 +51,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Used to report the status.
         /// </summary>
-        private IStatusReportable Status { get; set; }
+        public IStatusReportable Status { get; set; }
 
         /// <summary>
         /// The CODEC that is being used.
