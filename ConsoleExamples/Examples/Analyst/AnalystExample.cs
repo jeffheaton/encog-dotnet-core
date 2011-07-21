@@ -92,7 +92,6 @@ namespace Encog.Examples.Analyst
             var encog = new EncogAnalyst();
             encog.AddAnalystListener(new ConsoleAnalystListener());
             var wiz = new AnalystWizard(encog);
-            //wiz.TaskRandomize = false;
             wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DecpntComma);
             encog.Save(analystFile);
 
@@ -116,7 +115,7 @@ namespace Encog.Examples.Analyst
             wiz.TaskBalance = true;
 
             wiz.Wizard(url, analystFile, rawFile, false, AnalystFileFormat.DecpntComma);
-
+            encog.MaxIteration = 300;
             encog.ExecuteTask("task-full");
 
             encog.Save(analystFile);

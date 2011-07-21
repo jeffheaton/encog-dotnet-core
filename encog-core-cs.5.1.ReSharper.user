@@ -8,11 +8,7 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:Config.cs" caret="625" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="592" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="702" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1669" fromTop="6" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3072" fromTop="5" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Properties/f:AssemblyInfo.cs" caret="2288" fromTop="60" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Persist/f:PersistSerial.cs" caret="3402" fromTop="87" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ExampleInfo.cs" caret="1727" fromTop="10" />
@@ -36,40 +32,44 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="2090" fromTop="12" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:FileUtil.cs" caret="4330" fromTop="109" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Wizard/f:AnalystWizard.cs" caret="38844" fromTop="4" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2682" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="2125" fromTop="0" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="12170" fromTop="11" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="3539" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="4254" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:ReadCSV.cs" caret="3570" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="670" fromTop="3" />
     </RecentFiles>
     <RecentEdits>
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="16" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="10" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="6" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="16" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="2123" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="0" fromTop="0" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="2252" fromTop="9" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="2352" fromTop="13" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1933" fromTop="20" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="499" fromTop="11" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1890" fromTop="17" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1963" fromTop="7" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="545" fromTop="13" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="710" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="19" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1930" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Wizard/f:AnalystWizard.cs" caret="38999" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Wizard/f:AnalystWizard.cs" caret="38844" fromTop="4" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1082" fromTop="13" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="20" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="10" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="17" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1578" fromTop="12" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="905" fromTop="8" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="10" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="15" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2944" fromTop="10" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2739" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1391" fromTop="8" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="2106" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="3160" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="4445" fromTop="12" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="4615" fromTop="7" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="4719" fromTop="11" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="5425" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="5887" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="6431" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="6730" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="7289" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="8190" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="8462" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="9770" fromTop="13" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10295" fromTop="11" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10516" fromTop="4" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10623" fromTop="8" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="11864" fromTop="5" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="12170" fromTop="11" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="3752" fromTop="9" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2733" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2534" fromTop="4" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="311" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2083" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="2195" fromTop="8" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="3039" fromTop="10" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:ParseCommand.cs" caret="3539" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="3265" fromTop="4" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="4254" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="670" fromTop="3" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -286,6 +286,7 @@
       <Item value="char" priority="0" />
       <Item value="IHandleMissingValues`0" priority="0" />
       <Item value="_missing" priority="1" />
+      <Item value="encog" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -587,6 +588,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Int32">
       <Item value="Parse`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
+      <Item value="MaxIteration" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

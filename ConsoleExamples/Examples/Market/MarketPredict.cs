@@ -23,7 +23,7 @@ namespace Encog.Examples.Market
 
         public void Execute(IExampleInterface app)
         {
-            if (app.Args.Length < 1)
+            if (app.Args.Length < 2)
             {
                 Console.WriteLine(@"MarketPredict [data dir] [generate/train/prune/evaluate]");
             }

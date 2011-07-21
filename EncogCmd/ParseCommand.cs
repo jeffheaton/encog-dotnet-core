@@ -9,7 +9,7 @@ namespace EncogCmd
         private readonly String _command;
         private readonly IDictionary<String, String> _settings;
 
-        public ParseCommand(String[] args)
+        public ParseCommand(IEnumerable<string> args)
         {
             _args = new List<String>();
             _settings = new Dictionary<string, string>();
@@ -71,12 +71,9 @@ namespace EncogCmd
                 return char.ToLower(_settings[n][0]) == 't';
             }
 
-            Console.Write("Enter value for [" + name + "] (default="+d+"): ");
+            Console.Write(@"Enter value for [" + name + @"] (default=" + d + @"): ");
             String str = Console.ReadLine().Trim().ToLower();
-            if (str.Length == 0)
-                return d;
-            else
-                return str[0] == 't';
+            return str.Length == 0 ? d : str[0] == 't';
         }
 
         internal int PromptInteger(string name, int d)
@@ -87,7 +84,7 @@ namespace EncogCmd
                 return int.Parse(_settings[n]);
             }
 
-            Console.Write("Enter value for [" + name + "] (default="+d+"): ");
+            Console.Write(@"Enter value for [" + name + @"] (default=" + d + @"): ");
             String str = Console.ReadLine().Trim().ToLower();
             if (str.Length == 0)
                 return d;
@@ -103,7 +100,7 @@ namespace EncogCmd
                 return _settings[n];
             }
 
-            Console.Write("Enter value for [" + name + "] (default=" + d + "): ");
+            Console.Write(@"Enter value for [" + name + @"] (default=" + d + @"): ");
             String result = Console.ReadLine().Trim().ToLower();
 
             if (result.Length == 0)
@@ -120,7 +117,7 @@ namespace EncogCmd
                 return int.Parse(_settings[n]);
             }
 
-            Console.Write("Enter value for [" + name + "] (default=" + d + "): ");
+            Console.Write(@"Enter value for [" + name + @"] (default=" + d + @"): ");
             String str = Console.ReadLine().Trim().ToLower();
             if (str.Length == 0)
                 return d;
