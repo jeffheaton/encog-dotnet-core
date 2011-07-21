@@ -65,8 +65,8 @@ namespace Encog.ML.Factory.Method
                 layers[2], output);
 
             String name = paramsLayer.Name;
-            String kernelStr = paramsLayer.Params["KERNEL"];
-            String svmTypeStr = paramsLayer.Params["TYPE"];
+            String kernelStr = paramsLayer.Params.ContainsKey("KERNEL") ? paramsLayer.Params["KERNEL"] : null;
+            String svmTypeStr = paramsLayer.Params.ContainsKey("TYPE") ? paramsLayer.Params["TYPE"] : null;
 
             SVMType svmType = SVMType.NewSupportVectorClassification;
             KernelType kernelType = KernelType.RadialBasisFunction;

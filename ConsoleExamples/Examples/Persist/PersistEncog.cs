@@ -66,7 +66,7 @@ namespace Encog.Examples.Persist
                     typeof (PersistEncog),
                     "persist-encog",
                     "Persist using .Net Serialization",
-                    "Create and persist a neural network using .Net serialization.");
+                    "Create and persist a neural network using Encog EG serialization.");
                 return info;
             }
         }

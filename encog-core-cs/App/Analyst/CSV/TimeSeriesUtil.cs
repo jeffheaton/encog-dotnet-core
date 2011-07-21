@@ -105,7 +105,7 @@ namespace Encog.App.Analyst.CSV
 
             foreach (String column  in  headings)
             {
-                _headingMap[column] = headingIndex++;
+                _headingMap[column.ToUpper()] = headingIndex++;
             }
         }
 
@@ -197,12 +197,12 @@ namespace Encog.App.Analyst.CSV
             {
                 if (!field.Ignored)
                 {
-                    if (!_headingMap.ContainsKey(field.Name))
+                    if (!_headingMap.ContainsKey(field.Name.ToUpper()))
                     {
                         throw new AnalystError("Undefined field: "
                                                + field.Name);
                     }
-                    int headingIndex = _headingMap[field.Name];
+                    int headingIndex = _headingMap[field.Name.ToUpper()];
                     int timeslice = TranslateTimeSlice(field.TimeSlice);
                     double[] row = _buffer[timeslice];
                     double d = row[headingIndex];

@@ -313,7 +313,7 @@ namespace Encog.Examples.XOR
             // reset if improve is less than 1% over 5 cycles
             if (method is IMLResettable && !(train is ManhattanPropagation))
             {
-                train.AddStrategy(new RequiredImprovementStrategy(50));
+                train.AddStrategy(new RequiredImprovementStrategy(500));
             }
 
             // fourth, train and evaluate.

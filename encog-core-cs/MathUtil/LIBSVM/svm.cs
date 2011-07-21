@@ -609,6 +609,9 @@ namespace Encog.MathUtil.LIBSVM
 
             while (true)
             {
+                // max iterations?
+                if (iter > 10000)
+                    break;
                 // show progress and do shrinking
 
                 if (--counter == 0)
@@ -616,7 +619,7 @@ namespace Encog.MathUtil.LIBSVM
                     counter = Math.Min(l, 1000);
                     if (shrinking != 0)
                         do_shrinking();
-                    Console.Error.Write(".");
+                    //Console.Error.Write(".");
                 }
 
                 if (select_working_set(working_set) != 0)
@@ -625,7 +628,7 @@ namespace Encog.MathUtil.LIBSVM
                     reconstruct_gradient();
                     // reset active set size and check
                     active_size = l;
-                    Console.Error.Write("*");
+                    //Console.Error.Write("*");
                     if (select_working_set(working_set) != 0)
                         break;
                     else
@@ -793,7 +796,7 @@ namespace Encog.MathUtil.LIBSVM
             si.upper_bound_p = Cp;
             si.upper_bound_n = Cn;
 
-            Console.Out.Write("\noptimization finished, #iter = " + iter + "\n");
+            //Console.Out.Write("\noptimization finished, #iter = " + iter + "\n");
         }
 
         // return 1 if already optimal, return 0 otherwise
@@ -1438,8 +1441,8 @@ namespace Encog.MathUtil.LIBSVM
             for (i = 0; i < l; i++)
                 sum_alpha += alpha[i];
 
-            if (Cp == Cn)
-                Console.Out.Write("nu = " + sum_alpha/(Cp*prob.l) + "\n");
+            /*if (Cp == Cn)
+                Console.Out.Write("nu = " + sum_alpha/(Cp*prob.l) + "\n");*/
 
             for (i = 0; i < l; i++)
                 alpha[i] *= y[i];
@@ -1483,7 +1486,7 @@ namespace Encog.MathUtil.LIBSVM
             s.Solve(l, new SVC_Q(prob, param, y), zeros, y, alpha, 1.0, 1.0, param.eps, si, param.shrinking);
             double r = si.r;
 
-            Console.Out.Write("C = " + 1/r + "\n");
+            //Console.Out.Write("C = " + 1/r + "\n");
 
             for (i = 0; i < l; i++)
                 alpha[i] *= y[i]/r;
@@ -1551,7 +1554,7 @@ namespace Encog.MathUtil.LIBSVM
                 alpha[i] = alpha2[i] - alpha2[i + l];
                 sum_alpha += Math.Abs(alpha[i]);
             }
-            Console.Out.Write("nu = " + sum_alpha/(param.C*l) + "\n");
+            //Console.Out.Write("nu = " + sum_alpha/(param.C*l) + "\n");
         }
 
         private static void solve_nu_svr(svm_problem prob, svm_parameter param, double[] alpha, Solver.SolutionInfo si)
@@ -1579,7 +1582,7 @@ namespace Encog.MathUtil.LIBSVM
             var s = new Solver_NU();
             s.Solve(2*l, new SVR_Q(prob, param), linear_term, y, alpha2, C, C, param.eps, si, param.shrinking);
 
-            Console.Out.Write("epsilon = " + (- si.r) + "\n");
+            //Console.Out.Write("epsilon = " + (- si.r) + "\n");
 
             for (i = 0; i < l; i++)
                 alpha[i] = alpha2[i] - alpha2[i + l];
@@ -1622,7 +1625,7 @@ namespace Encog.MathUtil.LIBSVM
                     break;
             }
 
-            Console.Out.Write("obj = " + si.obj + ", rho = " + si.rho + "\n");
+            //Console.Out.Write("obj = " + si.obj + ", rho = " + si.rho + "\n");
 
             // output SVs
 
@@ -1646,7 +1649,7 @@ namespace Encog.MathUtil.LIBSVM
                 }
             }
 
-            Console.Out.Write("nSV = " + nSV + ", nBSV = " + nBSV + "\n");
+            //Console.Out.Write("nSV = " + nSV + ", nBSV = " + nBSV + "\n");
 
             var f = new decision_function();
             f.alpha = alpha;
@@ -1766,13 +1769,13 @@ namespace Encog.MathUtil.LIBSVM
 
                 if (stepsize < min_step)
                 {
-                    Console.Error.Write("Line search fails in two-class probability estimates\n");
+                    //Console.Error.Write("Line search fails in two-class probability estimates\n");
                     break;
                 }
             }
 
-            if (iter >= max_iter)
-                Console.Error.Write("Reaching maximal iterations in two-class probability estimates\n");
+            /*if (iter >= max_iter)
+                Console.Error.Write("Reaching maximal iterations in two-class probability estimates\n");*/
             probAB[0] = A;
             probAB[1] = B;
         }
@@ -1847,8 +1850,8 @@ namespace Encog.MathUtil.LIBSVM
                     }
                 }
             }
-            if (iter >= max_iter)
-                Console.Error.Write("Exceeds max_iter in multiclass_prob\n");
+            /*if (iter >= max_iter)
+                Console.Error.Write("Exceeds max_iter in multiclass_prob\n");*/
         }
 
         // Cross-validation decision values for probability estimates
@@ -1966,9 +1969,9 @@ namespace Encog.MathUtil.LIBSVM
                 else
                     mae += Math.Abs(ymv[i]);
             mae /= (prob.l - count);
-            Console.Error.Write(
+            /*Console.Error.Write(
                 "Prob. model for test data: target value = predicted value + z,\nz: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=" +
-                mae + "\n");
+                mae + "\n");*/
             return mae;
         }
 
@@ -2092,9 +2095,9 @@ namespace Encog.MathUtil.LIBSVM
                     for (j = 0; j < nr_class; j++)
                         if (param.weight_label[i] == label[j])
                             break;
-                    if (j == nr_class)
-                        Console.Error.Write("warning: class label " + param.weight_label[i] +
-                                            " specified in weight is not found\n");
+                    if (j == nr_class) ;
+                    /*Console.Error.Write("warning: class label " + param.weight_label[i] +
+                                        " specified in weight is not found\n");*/
                     else
                         weighted_C[j] *= param.weight[i];
                 }
@@ -2197,7 +2200,7 @@ namespace Encog.MathUtil.LIBSVM
                     nz_count[i] = nSV;
                 }
 
-                Console.Out.Write("Total nSV = " + nnz + "\n");
+                //Console.Out.Write("Total nSV = " + nnz + "\n");
 
                 model.l = nnz;
                 model.SV = new svm_node[nnz][];
@@ -2324,7 +2327,7 @@ namespace Encog.MathUtil.LIBSVM
                 return model.probA[0];
             else
             {
-                Console.Error.Write("Model doesn't contain information for SVR probability inference\n");
+                //Console.Error.Write("Model doesn't contain information for SVR probability inference\n");
                 return 0;
             }
         }
@@ -2593,7 +2596,7 @@ namespace Encog.MathUtil.LIBSVM
                     }
                     if (i == svm_type_table.Length)
                     {
-                        Console.Error.Write("unknown svm type.\n");
+                        //Console.Error.Write("unknown svm type.\n");
                         return null;
                     }
                 }
@@ -2610,7 +2613,7 @@ namespace Encog.MathUtil.LIBSVM
                     }
                     if (i == kernel_type_table.Length)
                     {
-                        Console.Error.Write("unknown kernel function.\n");
+                        //Console.Error.Write("unknown kernel function.\n");
                         return null;
                     }
                 }
@@ -2670,7 +2673,7 @@ namespace Encog.MathUtil.LIBSVM
                 }
                 else
                 {
-                    Console.Error.Write("unknown text in model file\n");
+                    //Console.Error.Write("unknown text in model file\n");
                     return null;
                 }
             }

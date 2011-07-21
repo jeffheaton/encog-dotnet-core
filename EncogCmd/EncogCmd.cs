@@ -159,6 +159,7 @@ namespace EncogCmd
                 task = _cmd.Args[1];
             }
 
+            _sw.Start();
             var analyst = new EncogAnalyst();
             analyst.AddAnalystListener(new ConsoleAnalystListener());
             analyst.Load(new FileInfo(egaFile));
@@ -329,11 +330,11 @@ namespace EncogCmd
 
                 _sw.Stop();
             }
-            catch (Exception ex)
+            /*catch (Exception ex)
             {
                 Console.WriteLine(@"* * Error * *");
                 Console.WriteLine(ex.ToString());
-            }
+            }*/
             finally
             {
                 Console.Write(@"Done.  Runtime was " + Format.FormatTimeSpan((int) _sw.ElapsedMilliseconds/1000));
