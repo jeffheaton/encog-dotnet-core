@@ -45,7 +45,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -249,6 +248,13 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ML\Data\Market\Loader\CSVFormLoader.Designer.cs">
+      <DependentUpon>CSVFormLoader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ML\Data\Market\Loader\CSVLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
@@ -637,6 +643,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ML\Data\Market\Loader\CSVFormLoader.resx">
+      <DependentUpon>CSVFormLoader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\classes.txt" />
     <EmbeddedResource Include="Util\Simple\TrainingDialog.resx">
       <DependentUpon>TrainingDialog.cs</DependentUpon>

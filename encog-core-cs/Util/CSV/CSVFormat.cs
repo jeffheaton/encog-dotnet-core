@@ -24,6 +24,7 @@ using System;
 using System.Globalization;
 using System.Text;
 
+
 namespace Encog.Util.CSV
 {
     /// <summary>
@@ -176,5 +177,6 @@ namespace Encog.Util.CSV
             digits2 = Math.Max(digits2, 0);
             return d.ToString(_formats[digits2], _numberFormat);
         }
+
     }
 }
