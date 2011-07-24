@@ -8,7 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using Encog.Util.CSV;
 using System.IO;
-
+using System.Linq;
+using System.Globalization;
 namespace Encog.ML.Data.Market.Loader
 {
     public partial class CSVFormLoader : Form
@@ -64,7 +65,16 @@ namespace Encog.ML.Data.Market.Loader
 
         }
 
-        List<MarketDataType> TypesLoaded = new List<MarketDataType>();
+
+
+        public CSVFormat format { get; set; }
+
+        public List<MarketDataType> TypesLoaded = new List<MarketDataType>();
+        public List<MarketDataType> MarketTypesUsed
+        {
+            get { return TypesLoaded; }
+            set { TypesLoaded = value; }
+        }
         OpenFileDialog openFileDialog1;
         private void button1_Click(object sender, EventArgs e)
         {
@@ -84,7 +94,60 @@ namespace Encog.ML.Data.Market.Loader
                 try
                 {
                     Chosenfile = file;
+                    format = FormatDictionary[CSVFormatsCombo.Text];
+                    foreach (string item in MarketDataTypesListBox.SelectedItems)
+                    {
+                       
+                        TypesLoaded.Add((MarketDataType) Enum.Parse(typeof(MarketDataType),item));
+                    }
 
+                    ReadCSV csv = new ReadCSV(Chosenfile, true, format);
+
+                    var ColQuery =
+                                                   from Names in csv.ColumnNames
+                                                  
+                                                   select new {Names};
+                    ColumnSetupForm newColumnsSetup = new ColumnSetupForm();
+                    newColumnsSetup.bindingSource1.DataSource = ColQuery;
+                  
+                    newColumnsSetup.dataGridView1.GridColor = Color.Aquamarine;
+                   //ComboBox comboxTypes = new ComboBox();
+                   // comboxTypes.Items.Add("DateTime");
+                   // comboxTypes.Items.Add("Double");
+                   // comboxTypes.Items.Add("Skip");
+                   // comboxTypes.SelectedIndex = 0;
+
+                    newColumnsSetup.dataGridView1.DataSource = newColumnsSetup.bindingSource1;
+                   // DataGridViewRow dr = new DataGridViewRow();
+                   // DataGridViewComboBoxCell CellGrids = new DataGridViewComboBoxCell();
+
+                   // foreach (string item in comboxTypes.Items)
+                   // {
+                   //     CellGrids.Items.Add(item);
+                   // }
+
+                   
+
+                   
+          
+                   // dr.Cells.Add(CellGrids);
+                   // //newColumnsSetup.dataGridView1.Rows.Add(dr);
+
+                   // DataGridViewColumn cols = new DataGridViewColumn(CellGrids);
+                   // cols.Name = "Combo";
+
+                   // newColumnsSetup.dataGridView1.Columns.Add(cols);
+
+                     
+
+                    newColumnsSetup.ShowDialog(this);
+                    //DataGridViewColumn aCol = new DataGridViewColumn();
+                    //foreach (DataGridViewRow item in newColumnsSetup.dataGridView1.Rows)
+                    //{
+                    //    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(item.Cells[0]);      
+
+                    //}
+                   
                 }
                 catch (Exception ex)
                 {
@@ -92,15 +155,22 @@ namespace Encog.ML.Data.Market.Loader
                     toolStripStatusLabel1.Text = "Error Loading the CSV:" + ex.Message;
                 }
 
+              
 
+           
+
+                            
+                            
             }
         }
+
+
         private void CSVFormLoader_Load(object sender, EventArgs e)
         {
 
             foreach (string item in FormatDictionary.Keys)
             {
-                comboBox1.Items.Add(item);
+                CSVFormatsCombo.Items.Add(item);
             }
 
             foreach (string item in MarketDataTypesValues)
@@ -108,16 +178,17 @@ namespace Encog.ML.Data.Market.Loader
                 MarketDataTypesListBox.Items.Add(item);
             }
 
-            comboBox1.SelectedIndex = 1;
+            CSVFormatsCombo.SelectedIndex = 2;
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Chosenfile = openFileDialog1.FileName;
-            CurrentFormat = (CSVFormat)comboBox1.SelectedItem;
+            Chosenfile = openFileDialog1.FileName;          
             toolStripStatusLabel1.Text = " File:" + openFileDialog1.FileName + " has been successfully loaded";
         }
+
+     
 
        
     }

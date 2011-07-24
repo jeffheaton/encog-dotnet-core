@@ -17,9 +17,9 @@ namespace Encog.ML.Data.Market.Loader
       
         string Precision { get; set; }
         string LoadedFile { get;set;}
-
-        CSVFormat LoadedFormat {get;set;}
-
+        public List<MarketDataType> TypesLoaded = new List<MarketDataType>();
+        CSVFormat LoadedFormat { get; set; }
+        string DateTimeFormat { get; set; }
 
         public ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IList<MarketDataType> neededTypes, DateTime from, DateTime to,string File)
         {
@@ -29,10 +29,13 @@ namespace Encog.ML.Data.Market.Loader
 
                         //We got a file, lets load it.
 
-                        ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
-                        ReadCSV csv = new ReadCSV(File, true, CSVFormat.DecimalPoint);
+                    
 
-                        csv.DateFormat = "yyyy.MM.dd HH:mm:ss";
+                        ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
+                        ReadCSV csv = new ReadCSV(File, true,LoadedFormat);
+
+
+                        csv.DateFormat = DateTimeFormat.Normalize();
                         //  Time,Open,High,Low,Close,Volume
                         while (csv.Next())
                         {
@@ -68,7 +71,29 @@ namespace Encog.ML.Data.Market.Loader
             return null;
         }
 
+        public CSVFormat fromStringCSVFormattoCSVFormat(string csvformat)
+        {
+            switch (csvformat)
+            {
+                case "Decimal Point":
+                    LoadedFormat = CSVFormat.DecimalPoint;
+                    break;
+                case "Decimal Comma":
+                    LoadedFormat = CSVFormat.DecimalComma;
+                    break;
+                case "English Format":
+                    LoadedFormat = CSVFormat.English;
+                    break;
+                case "EG Format":
+                    LoadedFormat = CSVFormat.EgFormat;
+                    break;
+                   
+                default:
+                    break;
+            }
 
+            return LoadedFormat;
+        }
 
         public ICollection<LoadedMarketData> Load(TickerSymbol ticker, IList<MarketDataType> dataNeeded, DateTime from, DateTime to)
         {
@@ -78,12 +103,21 @@ namespace Encog.ML.Data.Market.Loader
                 CSVFormLoader formLoader = new CSVFormLoader();
 
 
-               
-    
-               
+
+
+              
+
                     if (File.Exists(formLoader.Chosenfile))
                     {
+                        LoadedFormat = formLoader.format;
 
+                        //Lets add all the marketdatatypes we selected in the form.
+                        foreach (MarketDataType item in formLoader.TypesLoaded)
+                        {
+                            TypesLoaded.Add(item);
+
+                        }
+                        DateTimeFormat = formLoader.DateTimeFormatTextBox.Text;
                         result = ReadAndCallLoader(ticker, dataNeeded, from, to,formLoader.Chosenfile);
                         return result;
                     }
