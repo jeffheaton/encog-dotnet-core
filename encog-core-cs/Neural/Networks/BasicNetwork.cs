@@ -744,7 +744,9 @@ namespace Encog.Neural.Networks
         {
             var builder = new StringBuilder();
             builder.Append("[BasicNetwork: Layers=");
-            int layers = _structure.Layers.Count;
+            
+            int layers = _structure.Flat==null ? _structure.Layers.Count : _structure.Flat.LayerCounts.Length;
+            
             builder.Append(layers);
             builder.Append("]");
             return builder.ToString();

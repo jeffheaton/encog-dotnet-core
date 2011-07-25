@@ -278,7 +278,7 @@ namespace Encog.Neural.Prune
         /// <returns>A human readable string.</returns>
         public static String NetworkToString(BasicNetwork network)
         {
-            if (network == null)
+            if (network != null)
             {
                 var result = new StringBuilder();
                 int num = 1;
