@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,6 +79,7 @@
     <Compile Include="Examples\Market\MarketPrune.cs" />
     <Compile Include="Examples\Market\MarketTrain.cs" />
     <Compile Include="Examples\Benchmark\MultiThreadBenchmark.cs" />
+    <Compile Include="Examples\MyTests\MyTests.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />
     <Compile Include="Examples\Util\City.cs" />
