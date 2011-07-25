@@ -86,6 +86,7 @@ namespace ConsoleExamples
             examples.Add(XORNEAT.Info);
             examples.Add(ForestCover.Info);
             examples.Add(MarketPredict.Info);
+            examples.Add(MyTests.Info);
         }
 
         public void ListCommands()
@@ -172,7 +173,7 @@ namespace ConsoleExamples
             Console.Write("\n\nPress ENTER to continue.");
             Console.ReadLine();
         }
-
+        [STAThread]
         private static void Main(string[] args)
         {
             var app = new ConsoleExamples();
