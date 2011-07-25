@@ -12,13 +12,11 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Persist/f:PersistSerial.cs" caret="3402" fromTop="87" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ExampleInfo.cs" caret="1727" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:GenerateData.cs" caret="5440" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestConfig.cs" caret="1999" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:SerializeObject.cs" caret="2273" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="1152" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="2754" fromTop="3" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketMLDataSet.cs" caret="5179" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:BufferedMLDataSet.cs" caret="3553" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="14470" fromTop="20" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1209" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="19117" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
@@ -37,6 +35,8 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="4254" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:ReadCSV.cs" caret="3570" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="670" fromTop="3" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestConfig.cs" caret="31" fromTop="1" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="6453" fromTop="5" />
     </RecentFiles>
     <RecentEdits>
       <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1391" fromTop="8" />
