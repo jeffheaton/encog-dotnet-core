@@ -55,9 +55,7 @@ namespace Encog.ML.Data.Market.Loader
                         }
 
                         csv.Close();
-                        return result;
-
-                  
+                        return result;                 
                 }
             
             catch (Exception ex)
@@ -128,6 +126,16 @@ namespace Encog.ML.Data.Market.Loader
         
 
         
+        #endregion
+
+        #region IMarketLoader Members
+
+
+        public string GetFile(string file)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
