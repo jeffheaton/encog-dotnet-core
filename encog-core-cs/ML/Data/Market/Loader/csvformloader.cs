@@ -107,17 +107,14 @@ namespace Encog.ML.Data.Market.Loader
                                                    from Names in csv.ColumnNames
                                                   
                                                    select new {Names};
-                    ColumnSetupForm newColumnsSetup = new ColumnSetupForm();
-                    newColumnsSetup.bindingSource1.DataSource = ColQuery;
-                  
-                    newColumnsSetup.dataGridView1.GridColor = Color.Aquamarine;
+                
                    //ComboBox comboxTypes = new ComboBox();
                    // comboxTypes.Items.Add("DateTime");
                    // comboxTypes.Items.Add("Double");
                    // comboxTypes.Items.Add("Skip");
                    // comboxTypes.SelectedIndex = 0;
 
-                    newColumnsSetup.dataGridView1.DataSource = newColumnsSetup.bindingSource1;
+                  
                    // DataGridViewRow dr = new DataGridViewRow();
                    // DataGridViewComboBoxCell CellGrids = new DataGridViewComboBoxCell();
 
@@ -140,7 +137,7 @@ namespace Encog.ML.Data.Market.Loader
 
                      
 
-                    newColumnsSetup.ShowDialog(this);
+                   
                     //DataGridViewColumn aCol = new DataGridViewColumn();
                     //foreach (DataGridViewRow item in newColumnsSetup.dataGridView1.Rows)
                     //{

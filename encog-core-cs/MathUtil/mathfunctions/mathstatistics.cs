@@ -10,6 +10,62 @@ namespace Encog.MathUtil.MathFunctions
     /// </summary>
     public class MathStatistics
     {
+
+        public static double GetMax(double[] DoubleCollection)
+        {
+            double max = double.MinValue;
+            foreach (double i in DoubleCollection)
+            {
+                if (i > max)
+                {
+                    max = i;
+                }
+            }
+            return max;
+        }
+        public static double GetMin(double[] DoubleCollection)
+        {
+            double max = double.MaxValue;
+            foreach (double i in DoubleCollection)
+            {
+                if (i < max)
+                {
+                    max = i;
+                }
+            }
+            return max;
+        }
+
+        //Overload for System.Collections.ObjectModel.Collection<>
+        public static double GetMax(System.Collections.ObjectModel.Collection<double> DoubleCollection)
+        {
+            double max = double.MinValue;
+            foreach (double i in DoubleCollection)
+            {
+                if (i > max)
+                {
+                    max = i;
+                }
+            }
+            return max;
+        }
+        //Overload for System.Collections.ObjectModel.Collection<>
+        public static double GetMin(System.Collections.ObjectModel.Collection<double> DoubleCollection)
+        {
+            double max = double.MaxValue;
+            foreach (double i in DoubleCollection)
+            {
+                if (i < max)
+                {
+                    max = i;
+                }
+            }
+            return max;
+        } 
+
+    
+
+
         /// <summary>
         /// Get average
         /// </summary>
