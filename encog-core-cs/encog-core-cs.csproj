@@ -248,6 +248,12 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\Market\Loader\columnsetupform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ML\Data\Market\Loader\columnsetupform.designer.cs">
+      <DependentUpon>columnsetupform.cs</DependentUpon>
+    </Compile>
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -643,6 +649,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ML\Data\Market\Loader\columnsetupform.resx">
+      <DependentUpon>columnsetupform.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ML\Data\Market\Loader\CSVFormLoader.resx">
       <DependentUpon>CSVFormLoader.cs</DependentUpon>
     </EmbeddedResource>
