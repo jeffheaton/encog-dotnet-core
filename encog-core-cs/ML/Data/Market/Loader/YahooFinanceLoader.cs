@@ -129,6 +129,16 @@ namespace Encog.ML.Data.Market.Loader
                          + StringUtil.FromBytes(b);
             return new Uri(str);
         }
+
+        #region IMarketLoader Members
+
+
+        public string GetFile(string file)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
 
