@@ -40,5 +40,12 @@ namespace Encog.ML.Data.Market.Loader
         /// <returns>A collection of LoadedMarketData objects that was loaded.</returns>
         ICollection<LoadedMarketData> Load(TickerSymbol ticker,
                                            IList<MarketDataType> dataNeeded, DateTime from, DateTime to);
+
+        /// <summary>
+        /// Gets the file we want to parse.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        string GetFile(string file);
     }
 }
