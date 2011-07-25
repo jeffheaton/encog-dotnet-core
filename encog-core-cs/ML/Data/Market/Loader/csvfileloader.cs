@@ -30,6 +30,7 @@ namespace Encog.ML.Data.Market.Loader
 
                 ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
                 ReadCSV csv = new ReadCSV(File, true, CSVFormat.English);
+                csv.DateFormat = "yyyy.MM.dd HH:mm:ss";
 
 
                
