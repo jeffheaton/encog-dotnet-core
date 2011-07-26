@@ -284,7 +284,7 @@ namespace EncogCmd
                 _sw = new Stopwatch();
 
                 Console.Write(@"Encog " + EncogFramework.Version);
-                Console.Write(Environment.Is64BitProcess ? "(64-bit)" : "(32-bit)");
+                Console.Write((IntPtr.Size == 4) ? "(32-bit)" : "(64-bit)");
 
                 Console.WriteLine(@" Command Line Utility");
                 Console.WriteLine(@"Copyright 2011 by Heaton Research, Inc. Released under the Apache License");
