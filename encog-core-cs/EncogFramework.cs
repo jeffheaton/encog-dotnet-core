@@ -44,7 +44,7 @@ namespace Encog
         /// <summary>
         /// The current engog version, this should be read from the properties.
         /// </summary>
-        public static string Version = "3.0.0";
+        public static string Version = "3.0.1";
 
         /// <summary>
         /// The platform.
