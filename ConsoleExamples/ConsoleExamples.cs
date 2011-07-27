@@ -42,6 +42,7 @@ using Encog.Examples.JordanNetwork;
 using Encog.Examples.Market;
 using Encog.Examples.Persist;
 using Encog.Examples.XOR;
+using Encog.Examples.CSVMarketExample;
 
 namespace ConsoleExamples
 {
@@ -85,8 +86,8 @@ namespace ConsoleExamples
             examples.Add(AnalystExample.Info);
             examples.Add(XORNEAT.Info);
             examples.Add(ForestCover.Info);
-            examples.Add(MarketPredict.Info);
-            examples.Add(MyTests.Info);
+            examples.Add(Encog.Examples.Market.MarketPredict.Info);
+            examples.Add(CSVMarketExample.Info);
         }
 
         public void ListCommands()
