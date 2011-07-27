@@ -38,9 +38,9 @@ using Encog.Util.File;
 using System.IO;
 using Encog.Persist;
 
-namespace Encog.Examples.Adaline
+namespace Encog.Examples.CSVMarketExample
 {
-    public class MyTests : IExample
+    public class CSVMarketExample : IExample
     {
         public const int CHAR_WIDTH = 5;
         public const int CHAR_HEIGHT = 7;
@@ -52,10 +52,10 @@ namespace Encog.Examples.Adaline
             get
             {
                 var info = new ExampleInfo(
-                    typeof(MyTests),
-                    "Tests",
-                    "Testing",
-                    "Just a small console app to test some stuff..");
+                    typeof(CSVMarketExample),
+                    "CSVPredict",
+                    "CSVPredict",
+                    "Load CSV and make market predictions in the console.");
                 return info;
             }
         }
@@ -64,67 +64,71 @@ namespace Encog.Examples.Adaline
 
         public void Execute(IExampleInterface app)
         {
-
-
-            string dataDir = "c:\\EncogOutput";
-
-            Array a = Enum.GetValues(typeof(MarketDataType));
-            string[] ab = new string[a.Length];
-
-            ab = Enum.GetNames(typeof(MarketDataType));
-
-            foreach (string item in ab)
+            //placed a try catch in case something bugs.
+            try
             {
-                Console.WriteLine("MarketType:" + item);
+                //lets check the lenght of the input from the console.
+                if (app.Args.Length < 1)
+                {
+                    Console.WriteLine(@"MarketPredict [generate/train/prune/evaluate] [PathToFile]");
+                    Console.WriteLine(@"e.g csvMarketPredict [generate/train/prune/evaluate] c:\\EURUSD.csv");
+                }
+
+           //looks like we are fine.
+                else
+                {
+
+                    //save the files in the directory where the consoleexample.exe is located.
+                    FileInfo dataDir = new FileInfo(@"c:\");
+
+                    //we generate the network , by calling the CSVloader.
+                    if (String.Compare(app.Args[0], "generate", true) == 0)
+                    {
+                        Console.WriteLine("Generating your network with file:" + app.Args[1]);
+                        MarketBuildTraining.Generate(app.Args[1]);
+                    }
+
+                    //train the network here.
+                    else if (String.Compare(app.Args[0], "train", true) == 0)
+                    {
+                        MarketTrain.Train(dataDir);
+                    }
+                    //Evaluate the network that was built and trained.
+                    else if (String.Compare(app.Args[0], "evaluate", true) == 0)
+                    {
+                        MarketEvaluate.Evaluate(dataDir,app.Args[1]);
+                    }
+                    //Lets prune the network.
+                    else if (String.Compare(app.Args[0], "prune", true) == 0)
+                    {
+
+                        MarketPrune.Incremental(dataDir);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Didnt understand the command you typed:" + app.Args[0]);
+
+                    }
+                }
             }
 
 
-            IMarketLoader loader = new CSVLoader();
+            catch (Exception ex)
+            {
 
-            var market = new MarketMLDataSet(loader,
-                                          Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
-            var desc = new MarketDataDescription(
-                Config.TICKER, MarketDataType.Close, true, true);
-            market.AddDescription(desc);
+                Console.WriteLine("Error Message:"+ ex.Message);
+                Console.WriteLine("Error Innerexception:" + ex.InnerException);
+                Console.WriteLine("Error stacktrace:" + ex.StackTrace);
+                Console.WriteLine("Error source:" + ex.Source);
+            }
+             
 
-            var end = DateTime.Now; // end today
-            var begin = new DateTime(end.Ticks); // begin 30 days ago
-
-            // Gather training data for the last 2 years, stopping 60 days short of today.
-            // The 60 days will be used to evaluate prediction.
-            begin = begin.AddDays(-60);
-            end = end.AddDays(-60);
-            begin = begin.AddYears(-2);
-
-            market.Load(begin, end);
-            market.Generate();
-            EncogUtility.SaveEGB(FileUtil.CombinePath(new FileInfo(dataDir), Config.TRAINING_FILE), market);
-            // create a network
-            BasicNetwork network = EncogUtility.SimpleFeedForward(
-                market.InputSize,
-                Config.HIDDEN1_COUNT,
-                Config.HIDDEN2_COUNT,
-                market.IdealSize,
-                true);
-
-            // save the network and the training
-            EncogDirectoryPersistence.SaveObject(FileUtil.CombinePath(new FileInfo(dataDir), Config.NETWORK_FILE), network);
-
-
-       
-            // train the neural network
-            EncogUtility.TrainConsole(network, market,1);
-
-            Console.WriteLine(@"Final Error: " + network.CalculateError(market));
-            Console.WriteLine(@"Training complete, saving network.");
-            EncogDirectoryPersistence.SaveObject(new FileInfo(Config.NETWORK_FILE), network);
-            Console.WriteLine(@"Network saved.");
-
-            EncogFramework.Instance.Shutdown();
         }
 
         #endregion
 
        
     }
+    
 }

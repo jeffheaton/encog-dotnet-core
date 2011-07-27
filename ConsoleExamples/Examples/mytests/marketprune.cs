@@ -9,8 +9,9 @@ using Encog.Util.File;
 using Encog.Util.Simple;
 using Encog.Util.Logging;
 
-namespace Encog.Examples.Market
+namespace Encog.Examples.CSVMarketExample
 {
+
     public class MarketPrune
     {
         public static void Incremental(FileInfo dataDir)
@@ -24,7 +25,7 @@ namespace Encog.Examples.Market
             }
 
             IMLDataSet training = EncogUtility.LoadEGB2Memory(file);
-         
+    
 
             var pattern = new FeedForwardPattern
                               {
