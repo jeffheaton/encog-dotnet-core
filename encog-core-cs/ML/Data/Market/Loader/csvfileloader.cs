@@ -22,33 +22,43 @@ namespace Encog.ML.Data.Market.Loader
         {
             try
             {
-
-
                 //We got a file, lets load it.
-
-
-
                 ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
                 ReadCSV csv = new ReadCSV(File, true, CSVFormat.English);
                 csv.DateFormat = "yyyy.MM.dd HH:mm:ss";
 
+                DateTime ParsedDate = from;
 
-               
+
                 //  Time,Open,High,Low,Close,Volume
-                while (csv.Next())
+                while (csv.Next() && ParsedDate >= from && ParsedDate <= to  )
                 {
                     DateTime date = csv.GetDate("Time");
-                    double open = csv.GetDouble("Open");
-                    double close = csv.GetDouble("High");
-                    double high = csv.GetDouble("Low");
-                    double low = csv.GetDouble("Close");
-                    double volume = csv.GetDouble("Volume");
+                    double Bid= csv.GetDouble("Bid");
+                    double Ask = csv.GetDouble("Ask");
+                    double AskVolume = csv.GetDouble("AskVolume");
+                    double BidVolume= csv.GetDouble("BidVolume");
+                    double _trade = ( Bid + Ask ) /2;
+                    double _tradeSize = (AskVolume + BidVolume) / 2;
                     LoadedMarketData data = new LoadedMarketData(date, symbol);
-                    data.SetData(MarketDataType.Open, open);
-                    data.SetData(MarketDataType.High, high);
-                    data.SetData(MarketDataType.Low, low);
-                    data.SetData(MarketDataType.Close, close);
-                    data.SetData(MarketDataType.Volume, volume);
+                    data.SetData(MarketDataType.Trade, _trade);
+                    data.SetData(MarketDataType.Volume, _tradeSize);
+                    result.Add(data);
+
+                    Console.WriteLine("Current DateTime:"+ParsedDate.ToShortDateString()+ " Time:"+ParsedDate.ToShortTimeString() +"  Start date was "+from.ToShortDateString());
+                    Console.WriteLine("Stopping at date:" + to.ToShortDateString() );
+                    ParsedDate = date;
+                    //double open = csv.GetDouble("Open");
+                    //double close = csv.GetDouble("High");
+                    //double high = csv.GetDouble("Low");
+                    //double low = csv.GetDouble("Close");
+                    //double volume = csv.GetDouble("Volume");
+                    //LoadedMarketData data = new LoadedMarketData(date, symbol);
+                    //data.SetData(MarketDataType.Open, open);
+                    //data.SetData(MarketDataType.High, high);
+                    //data.SetData(MarketDataType.Low, low);
+                    //data.SetData(MarketDataType.Close, close);
+                    //data.SetData(MarketDataType.Volume, volume);
                     result.Add(data);
                 }
 

@@ -18,7 +18,9 @@ namespace Encog.Examples.CSVMarketExample
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
             IMarketLoader loader = new CSVFileLoader();
             var market = new MarketMLDataSet(loader,Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
-            var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
+          //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
+
+            var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Trade, true, true);
             market.AddDescription(desc);
             string currentDirectory =@"c:\";
             loader.GetFile(fileName);
@@ -28,9 +30,10 @@ namespace Encog.Examples.CSVMarketExample
 
             // Gather training data for the last 2 years, stopping 60 days short of today.
             // The 60 days will be used to evaluate prediction.
-            begin = begin.AddDays(-60);
-            end = end.AddDays(-60);
-            begin = begin.AddYears(-2);
+            begin = begin.AddDays(-200);
+            end = begin.AddDays(1);
+           
+            Console.WriteLine("You are loading date from:" + begin.ToShortDateString() + " To :" + end.ToShortDateString());
 
             market.Load(begin, end);
             market.Generate();
