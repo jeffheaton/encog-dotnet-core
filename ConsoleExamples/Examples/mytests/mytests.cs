@@ -113,7 +113,7 @@ namespace Encog.Examples.CSVMarketExample
                 }
             }
 
-
+              
             catch (Exception ex)
             {
 

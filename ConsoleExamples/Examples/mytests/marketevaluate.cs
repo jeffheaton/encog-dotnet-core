@@ -34,8 +34,11 @@ namespace Encog.Examples.CSVMarketExample
 
             var result = new MarketMLDataSet(loader,
                                              Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
+          //  var desc = new MarketDataDescription(Config.TICKER,
+                                              //   MarketDataType.Close, true, true);
+
             var desc = new MarketDataDescription(Config.TICKER,
-                                                 MarketDataType.Close, true, true);
+                                     MarketDataType.Trade, true, true);
             result.AddDescription(desc);
 
             var end = DateTime.Now; // end today
