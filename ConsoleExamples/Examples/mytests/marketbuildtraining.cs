@@ -16,7 +16,7 @@ namespace Encog.Examples.CSVMarketExample
 
           
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
-            IMarketLoader loader = new CSVFileLoader();
+            IMarketLoader loader = new CSVLoader();
             var market = new MarketMLDataSet(loader,Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
