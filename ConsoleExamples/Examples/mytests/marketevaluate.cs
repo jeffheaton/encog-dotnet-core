@@ -29,7 +29,7 @@ namespace Encog.Examples.CSVMarketExample
 
         public static MarketMLDataSet GrabData(string newfileLoad)
         {
-            IMarketLoader loader = new CSVFileLoader();
+            IMarketLoader loader = new CSVLoader();
             loader.GetFile(newfileLoad);
 
             var result = new MarketMLDataSet(loader,
