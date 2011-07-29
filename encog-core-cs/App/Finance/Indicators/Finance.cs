@@ -20,10 +20,9 @@ namespace Encog.App.Finance.Indicators
         /// <value>
         /// The fitness score (netprofit / drawdown) * winning percentage..
         /// </value>
-        private internal double FitNess
+        internal double FitNessScore
 	    {
 		    get { return _fitNess; }
-		    set { _fitNess = value; }
 	    }
 
 
@@ -32,30 +31,15 @@ namespace Encog.App.Finance.Indicators
         public double NetProfit { get; set; }
         private double Drawdown { get; set;}
         private double WinningPercentage { get; set; }
-        private internal double _fitNess = 0;
 
-       private IList<double> _fitnessSerie = new List<double>();
-	
-       
-       /// <summary>
-       /// Gets or sets the fitness serie.
-       /// </summary>
-       /// <value>
-       /// The fitness serie.
-       /// </value>
-
-       public IList<double> FitnessSerie
-	    {
-		    get { return _fitnessSerie; }
-		    set { _fitnessSerie = value; }
-	    }
         /// <summary>
         /// returns the current fitness score.
         /// </summary>
         /// <returns></returns>
         public double GetFitNess()
         {
-            FitnessSerie.Add((NetProfit/Drawdown)*WinningPercentage);
+           
+
             return (NetProfit/Drawdown)*WinningPercentage;
         }
 
@@ -107,11 +91,6 @@ namespace Encog.App.Finance.Indicators
         {
             ForwardLookupValue = valuesToLookForwardInto;
         }
-
-
-       
-
-   
 
       /// <summary>
         /// Calculates the forward oscillator.
@@ -170,6 +149,16 @@ namespace Encog.App.Finance.Indicators
            return null;
        }
 
+
+
+       ///<summary>
+       /// Adds a double to the moving average series.
+       ///</summary>
+       ///<param name="close"></param>
+       public void AddCloseToMovingAverage(double close)
+       {
+           _movingAverageSeries.Add(close);
+       }
        /// <summary>
         /// Calculate this indicator.
         /// </summary>

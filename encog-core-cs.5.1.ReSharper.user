@@ -8,7 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="1152" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="2754" fromTop="3" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketMLDataSet.cs" caret="5179" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:BufferedMLDataSet.cs" caret="3553" fromTop="16" />
@@ -38,6 +37,7 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORDisplay.cs" caret="2243" fromTop="4" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="442" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3429" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/f:Finance.cs" caret="0" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="20" />
