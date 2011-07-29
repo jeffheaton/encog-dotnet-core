@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.MathUtil;
 
 namespace Encog.Engine.Network.Activation
 {
@@ -72,7 +73,7 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
-                x[i] = Math.Tanh(x[i]);
+                x[i] = 2.0 / (1.0 + BoundMath.Exp(-2.0 * x[i])) - 1.0; //3x faster than Math.Tanh(x[i]);
             }
         }
 
