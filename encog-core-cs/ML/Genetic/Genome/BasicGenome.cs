@@ -103,10 +103,18 @@ namespace Encog.ML.Genetic.Genome
             return _chromosomes.Sum(chromosome => chromosome.Genes.Count);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritDoc/>
+        public bool Equals(IGenome other)
+        {
+            if (other == this)
+            {
+                return true;
+            }
+
+            return Math.Abs(other.Score - Score) < EncogFramework.DefaultDoubleEqual;          
+        }
+
+        /// <inheritDoc/>
         public int CompareTo(IGenome other)
         {
             // might be null when deserializing
@@ -114,6 +122,12 @@ namespace Encog.ML.Genetic.Genome
             {
                 return 0;
             }
+
+            if( Equals(other))
+            {
+                return 0;
+            }
+
             // compare
             if ( _ga.CalculateScore.ShouldMinimize)
             {

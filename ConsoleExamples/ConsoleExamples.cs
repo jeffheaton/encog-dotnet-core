@@ -39,6 +39,7 @@ using Encog.Examples.Hopfield.Associate;
 using Encog.Examples.Hopfield.Simple;
 using Encog.Examples.Image;
 using Encog.Examples.JordanNetwork;
+using Encog.Examples.Lunar;
 using Encog.Examples.Market;
 using Encog.Examples.Persist;
 using Encog.Examples.XOR;
@@ -88,6 +89,7 @@ namespace ConsoleExamples
             examples.Add(ForestCover.Info);
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
+            examples.Add(LunarLander.Info);
         }
 
         public void ListCommands()
