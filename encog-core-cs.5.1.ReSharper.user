@@ -10,42 +10,52 @@
     <RecentFiles>
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MyTests/f:config.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="5415" fromTop="64" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/f:MarketLoader.cs" caret="1020" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/f:QuantTask.cs" caret="1000" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:Yahoo/f:YahooDownload.cs" caret="4269" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="6494" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:EncogAnalyst.cs" caret="24676" fromTop="21" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:IAnalystListener.cs" caret="861" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:NumericRange.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:Yahoo/f:YahooDownload.cs" caret="1199" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/f:QuantTask.cs" caret="1005" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Util/f:BarBuffer.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="2647" fromTop="21" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="212" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="482" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1546" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="567" fromTop="23" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="3029" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="1976" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="1751" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="1567" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="1316" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="1150" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="3377" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:Yahoo/f:YahooDownload.cs" caret="4278" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="771" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="573" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="939" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1471" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2743" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2753" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2939" fromTop="34" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2037" fromTop="24" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3049" fromTop="34" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3805" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2364" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="4932" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3466" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3210" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="4583" fromTop="37" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="7466" fromTop="41" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="7302" fromTop="29" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="6779" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="595" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1183" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="6514" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="4" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6087" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6002" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6064" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="7597" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1864" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1849" fromTop="28" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5638" fromTop="27" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6119" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6379" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5698" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="491" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3122" fromTop="38" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1131" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="150" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="195" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="863" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="480" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1615" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2028" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="594" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="833" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2687" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="538" fromTop="21" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

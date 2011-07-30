@@ -28,7 +28,7 @@ namespace Encog.App.Finance.Indicators
        private double _fitNess = 0;
 
 
-        private internal double _forwardOscillator;
+        private  double _forwardOscillator;
 
         public double NetProfit { get; set; }
         private double Drawdown { get; set;}
@@ -83,14 +83,14 @@ namespace Encog.App.Finance.Indicators
         /// <summary>
         /// Our predicted closing values which will be used by the network to predict the forward indicator.
         /// </summary>
-        private internal double[] _closes;
+        internal double[] _closes;
         /// <summary>
         /// Gets or sets the moving average length
         /// </summary>
         /// <value>
         /// The moving average length.
         /// </value>
-        private internal int MovingAverageLenght { get; set; }
+        private int MovingAverageLenght { get; set; }
         /// <summary>
         /// Gets or sets the forward lookup value.
         /// This is the number of bars (or closes) we are looking into the future.
@@ -98,7 +98,7 @@ namespace Encog.App.Finance.Indicators
         /// <value>
         /// The forward lookup value.
         /// </value>
-        private internal int ForwardLookupValue { get; set; }
+        private  int ForwardLookupValue { get; set; }
 
         /// <summary>
         /// Sets the moving average lenght.
@@ -162,7 +162,7 @@ namespace Encog.App.Finance.Indicators
           }
        }
 
-       private internal List<double> _movingAverageSeries;
+       internal List<double> _movingAverageSeries;
        /// <summary>
        /// Gets the moving average serie.
        /// </summary>

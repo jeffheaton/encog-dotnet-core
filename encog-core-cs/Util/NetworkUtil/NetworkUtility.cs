@@ -19,7 +19,7 @@ using Encog.Util.Simple;
 
 namespace Encog.Util.NetworkUtil
 {
-    class NetworkUtility
+    public class NetworkUtility
     {
 
 

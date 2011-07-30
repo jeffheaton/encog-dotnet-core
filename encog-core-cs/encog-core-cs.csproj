@@ -133,6 +133,11 @@
     <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
     <Compile Include="App\Quant\Loader\LoaderError.cs" />
     <Compile Include="App\Quant\Loader\MarketLoader.cs" />
+    <Compile Include="App\Quant\Loader\OpenQuant\Bar.cs" />
+    <Compile Include="App\Quant\Loader\OpenQuant\BarSeries.cs" />
+    <Compile Include="App\Quant\Loader\OpenQuant\IDataseries.cs" />
+    <Compile Include="App\Quant\Loader\OpenQuant\OpenQuant.cs" />
+    <Compile Include="App\Quant\Loader\OpenQuant\OpenQuantLoader.cs" />
     <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
@@ -537,6 +542,7 @@
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
+    <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />
