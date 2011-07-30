@@ -44,6 +44,30 @@ namespace Encog.App.Finance.Indicators
         }
 
 
+
+
+       /// <summary>
+       /// Calculates the drawdown.
+       /// Need to enter Min equity value, max equity value and the equity series.
+       /// </summary>
+       /// <param name="equity">The equity</param>
+       /// <param name="minValue">The min value.</param>
+       /// <param name="maxValue">The max value.</param>
+       /// <returns></returns>
+       public static double DrawDown( double[] equity, out double minValue, out double maxValue )
+        {
+            maxValue = double.MinValue;
+            minValue = double.MaxValue;
+
+            foreach (double t in equity)
+            {
+                if( t > maxValue )
+                    maxValue = t;
+                if( t < minValue )
+                    minValue = t;
+            }
+            return maxValue - minValue;
+        }
         /// <summary>
         /// Our predicted closing values which will be used by the network to predict the forward indicator.
         /// </summary>
@@ -73,16 +97,7 @@ namespace Encog.App.Finance.Indicators
             MovingAverageLenght = Lenght;
         }
 
-        /// <summary>
-        /// Sets the closing values based on whatever closing values we have.
-        /// </summary>
-        /// <param name="myclosingValues">The myclosing values.</param>
-        public void SetClosingValues(double [] myclosingValues)
-        {
-            if (myclosingValues != null)
-                _closes = EngineArray.ArrayCopy(myclosingValues);
-        }
-
+     
     
         /// Sets the number of look forward values.
         /// </summary>
@@ -92,7 +107,7 @@ namespace Encog.App.Finance.Indicators
             ForwardLookupValue = valuesToLookForwardInto;
         }
 
-      /// <summary>
+        /// <summary>
         /// Calculates the forward oscillator.
         /// Which is :Close N - Average(Close , X);
         /// Where N is number of bars into the future and X is the lenght of our moving average.
