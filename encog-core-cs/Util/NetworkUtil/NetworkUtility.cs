@@ -41,7 +41,19 @@ namespace Encog.Util.NetworkUtil
         }
 
 
+       /// <summary>
+       /// Saves the network to the specified directory with the specified parameter name.
+       /// </summary>
+       /// <param name="directory">The directory.</param>
+       /// <param name="file">The file.</param>
+       /// <param name="anetwork">The network to save..</param>
+       public void SaveNetwork(string directory, string file, BasicNetwork anetwork)
+       {
+           FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
+           EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
+           return;
 
+       }
 
        /// <summary>
        /// Loads an basic network from the specified directory and file.
