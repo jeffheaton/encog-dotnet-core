@@ -25,6 +25,8 @@ namespace Encog.App.Finance.Indicators
 		    get { return _fitNess; }
 	    }
 
+       private double _fitNess = 0;
+
 
         private internal double _forwardOscillator;
 
@@ -44,7 +46,17 @@ namespace Encog.App.Finance.Indicators
         }
 
 
-
+       /// <summary>
+       /// Calculates the winning percentage.
+       /// </summary>
+       /// <param name="numberofWins">The number of wins.</param>
+       /// <param name="numberofLosses">The numberof losses.</param>
+       /// <returns></returns>
+       public static double CalculateWinningPercentage(double numberofWins, double numberofLosses)
+       {
+           double add = numberofWins +numberofLosses;
+           return (numberofWins/add);
+       }
 
        /// <summary>
        /// Calculates the drawdown.
@@ -110,7 +122,7 @@ namespace Encog.App.Finance.Indicators
         /// <summary>
         /// Calculates the forward oscillator.
         /// Which is :Close N - Average(Close , X);
-        /// Where N is number of bars into the future and X is the lenght of our moving average.
+        /// Where N is number of bars into the future and X is the length of our moving average.
         /// if this indicator is positive , then we are in bullish mode else we are in bearish mode.
         /// See Neural networks in the capital markets by John paul.
         /// </summary>
