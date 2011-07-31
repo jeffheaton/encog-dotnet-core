@@ -8,68 +8,54 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="1152" fromTop="11" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestCover.cs" caret="2754" fromTop="3" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketMLDataSet.cs" caret="5179" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:BufferedMLDataSet.cs" caret="3553" fromTop="16" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1209" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Simple/f:EncogUtility.cs" caret="19117" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="1090" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Concurrency/f:EngineConcurrency.cs" caret="888" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:CSV/d:Basic/f:BasicFile.cs" caret="14382" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/f:ITrain.cs" caret="86" fromTop="3" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:TrainingContinuation.cs" caret="1055" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:NeuralStructure.cs" caret="5028" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Structure/f:AnalyzeNetwork.cs" caret="3883" fromTop="1" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="2090" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:FileUtil.cs" caret="4330" fromTop="109" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Wizard/f:AnalystWizard.cs" caret="38844" fromTop="4" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="4254" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:CSV/f:ReadCSV.cs" caret="3570" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="670" fromTop="3" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:ForestConfig.cs" caret="31" fromTop="1" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="6453" fromTop="5" />
-      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10200" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="2299" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Genetic/d:Genome/f:BasicGenome.cs" caret="3475" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:PilotScore.cs" caret="290" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LanderSimulator.cs" caret="1818" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="1785" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORDisplay.cs" caret="2243" fromTop="4" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="442" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3429" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MyTests/f:config.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/f:MarketLoader.cs" caret="1020" fromTop="28" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:EncogAnalyst.cs" caret="24676" fromTop="21" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:IAnalystListener.cs" caret="861" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:NumericRange.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:Yahoo/f:YahooDownload.cs" caret="1199" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/f:QuantTask.cs" caret="1005" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Util/f:BarBuffer.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="2647" fromTop="21" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="212" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="482" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1546" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="567" fromTop="23" />
     </RecentFiles>
     <RecentEdits>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="3" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="15" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LanderSimulator.cs" caret="1818" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="2065" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="1459" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="384" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="1120" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="1066" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="1794" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="6" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="16" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="3073" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="2270" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="2371" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="2744" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="1302" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="839" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="1243" fromTop="17" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="741" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="442" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3429" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="4" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6087" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6002" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6064" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="7597" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1864" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1849" fromTop="28" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5638" fromTop="27" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6119" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6379" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5698" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="491" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3122" fromTop="38" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="6" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1131" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="150" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="195" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="863" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="480" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1615" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2028" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="594" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="833" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2687" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="538" fromTop="21" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -97,8 +83,8 @@
       <Item value="String`0" priority="21" />
       <Item value="key" priority="0" />
       <Item value="value_ren" priority="0" />
-      <Item value="public" priority="13" />
-      <Item value="const" priority="2" />
+      <Item value="public" priority="10" />
+      <Item value="const" priority="1" />
       <Item value="ReflectionUtil`0" priority="0" />
       <Item value="Exception`0" priority="0" />
       <Item value="IActivationFunction`0" priority="1" />
@@ -111,7 +97,7 @@
       <Item value="StreamWriter" priority="0" />
       <Item value="ba" priority="2" />
       <Item value="networkParams" priority="0" />
-      <Item value="EncogFramework`0" priority="3" />
+      <Item value="EncogFramework`0" priority="2" />
       <Item value="header" priority="0" />
       <Item value="tok" priority="0" />
       <Item value="Length" priority="6" />
@@ -119,9 +105,9 @@
       <Item value="Directory`0" priority="1" />
       <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="17" />
+      <Item value="this" priority="16" />
       <Item value="private" priority="6" />
-      <Item value="bool" priority="3" />
+      <Item value="bool" priority="1" />
       <Item value="BasicMLDataSet`0" priority="0" />
       <Item value="Population" priority="4" />
       <Item value="speciesArray" priority="0" />
@@ -151,9 +137,9 @@
       <Item value="CPNNetwork`0" priority="4" />
       <Item value="BasicTrainSOM`0" priority="0" />
       <Item value="SOMNetwork`0" priority="3" />
-      <Item value="if" priority="20" />
-      <Item value="else" priority="7" />
-      <Item value="return" priority="21" />
+      <Item value="if" priority="17" />
+      <Item value="else" priority="6" />
+      <Item value="return" priority="17" />
       <Item value="null" priority="8" />
       <Item value="CSVFormat`0" priority="1" />
       <Item value="csv" priority="0" />
@@ -176,13 +162,13 @@
       <Item value="oldList" priority="1" />
       <Item value="ClassItem" priority="0" />
       <Item value="double" priority="3" />
-      <Item value="app" priority="6" />
+      <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
-      <Item value="Console`0" priority="30" />
-      <Item value="examples" priority="3" />
+      <Item value="Console`0" priority="25" />
+      <Item value="examples" priority="2" />
       <Item value="Examples" priority="2" />
       <Item value="XOR" priority="1" />
-      <Item value="IExample`0" priority="6" />
+      <Item value="IExample`0" priority="5" />
       <Item value="XORHelloWorld`0" priority="0" />
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
@@ -194,7 +180,7 @@
       <Item value="theFlatSpots" priority="0" />
       <Item value="_flatSpot" priority="0" />
       <Item value="ShouldFixFlatSpot" priority="0" />
-      <Item value="true" priority="4" />
+      <Item value="true" priority="2" />
       <Item value="value" priority="2" />
       <Item value="Engine.Network.Activation" priority="0" />
       <Item value="Extract" priority="0" />
@@ -241,7 +227,7 @@
       <Item value="input" priority="6" />
       <Item value="Temporal" priority="0" />
       <Item value="Market" priority="1" />
-      <Item value="other" priority="3" />
+      <Item value="other" priority="0" />
       <Item value="case" priority="0" />
       <Item value="TimeUnit`0" priority="0" />
       <Item value="EngineArray`0" priority="9" />
@@ -287,14 +273,6 @@
       <Item value="IHandleMissingValues`0" priority="0" />
       <Item value="_missing" priority="1" />
       <Item value="encog" priority="0" />
-      <Item value="Boolean`0" priority="0" />
-      <Item value="IGenome`0" priority="0" />
-      <Item value="Score" priority="0" />
-      <Item value="Math`0" priority="0" />
-      <Item value="Equals`0" priority="0" />
-      <Item value="getAltitude`0" priority="0" />
-      <Item value="Altitude" priority="0" />
-      <Item value="LunarLander`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -424,7 +402,7 @@
       <Item value="ClassMembers" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="5" />
+      <Item value="Add`0" priority="4" />
       <Item value="Sort`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
@@ -437,10 +415,10 @@
       <Item value="ColumnNames" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Examples.IExampleInterface">
-      <Item value="Args" priority="9" />
+      <Item value="Args" priority="7" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Console">
-      <Item value="WriteLine`0" priority="28" />
+      <Item value="WriteLine`0" priority="23" />
       <Item value="Write`0" priority="1" />
       <Item value="ReadLine`0" priority="0" />
     </ItemStatistics>
@@ -538,7 +516,7 @@
       <Item value="HiddenCount" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
-      <Item value="Compare`0" priority="3" />
+      <Item value="Compare`0" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.Randomize.ConsistentRandomizer">
       <Item value="Randomize`0" priority="0" />
@@ -556,7 +534,7 @@
       <Item value="TRAINING_FILE" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.Format">
-      <Item value="FormatDouble`0" priority="2" />
+      <Item value="FormatDouble`0" priority="1" />
       <Item value="FormatPercent`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.DateTime">
@@ -599,21 +577,6 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
       <Item value="MaxIteration" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.ML.Genetic.Genome.IGenome">
-      <Item value="Score" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@System.Math">
-      <Item value="Abs`0" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.EncogFramework">
-      <Item value="DefaultDoubleEqual" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.Examples.Lunar.LanderSimulator">
-      <Item value="TerminalVelocity" priority="1" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.Examples.Lunar.LanderSimulator">
-      <Item value="Score" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>
