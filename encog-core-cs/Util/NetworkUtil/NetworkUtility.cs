@@ -32,11 +32,11 @@ namespace Encog.Util.NetworkUtil
        public static IMLDataSet LoadTraining(string directory, string file)
         {
             FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
-           if (!System.IO.File.Exists(file))
+           if (!networkFile.Exists)
            {
                return null;
            }
-            IMLDataSet network = (IMLDataSet)EncogDirectoryPersistence.LoadObject(networkFile);
+            IMLDataSet network = (IMLDataSet) EncogUtility.LoadEGB2Memory(networkFile);
             return network;
         }
 
@@ -47,16 +47,17 @@ namespace Encog.Util.NetworkUtil
        /// <param name="directory">The directory.</param>
        /// <param name="file">The file.</param>
        /// <param name="anetwork">The network to save..</param>
-       public void SaveNetwork(string directory, string file, BasicNetwork anetwork)
+       public static void SaveNetwork(string directory, string file, BasicNetwork anetwork)
        {
            FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
            EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
            return;
 
        }
-
+    
        /// <summary>
        /// Loads an basic network from the specified directory and file.
+       /// You must load the network like this Loadnetwork(@directory,@file);
        /// </summary>
        /// <param name="directory">The directory.</param>
        /// <param name="file">The file.</param>
@@ -67,9 +68,10 @@ namespace Encog.Util.NetworkUtil
            // network file
            if (!networkFile.Exists)
            {
+               Console.WriteLine(@"Can't read file: " + networkFile);
                return null;
            }
-           BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(networkFile);
+           var network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(networkFile);
            return network;
        }
 
@@ -83,11 +85,6 @@ namespace Encog.Util.NetworkUtil
         public static void SaveTraining(string directory, string file, IMLDataSet trainintoSave)
         {
             FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
-            // network file
-            if (!networkFile.Exists)
-            {
-                return;
-            }
             //save our training file.
             EncogUtility.SaveEGB(networkFile, trainintoSave);
             return;
@@ -243,7 +240,7 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         /// <param name="inputArray">The input array.</param>
         /// <returns></returns>
-        static double[] NormalizeThisArray(double[] inputArray)
+        public static double[] NormalizeThisArray(double[] inputArray)
         {
             return ArrayNormalizer.Process(inputArray);
         }
@@ -252,11 +249,44 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         /// <param name="doubleToDenormalize">The double to denormalize.</param>
         /// <returns></returns>
-        double DenormalizeDouble(double doubleToDenormalize)
+        public static double DenormalizeDouble(double doubleToDenormalize)
         {
             return ArrayNormalizer.Stats.DeNormalize(doubleToDenormalize);
         }
 
+        /// <summary>
+        /// Loads a normalization file.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static DataNormalization LoadNormalization(string directory , string file)
+        {
+            DataNormalization norm = null;
+            FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
+            if (networkFile.Exists)
+            {
+                norm = (DataNormalization) SerializeObject.Load(networkFile.FullName);
+            }
 
+            if (norm == null)
+            {
+                Console.WriteLine(@"Can't find normalization resource: "
+                                  + directory + file);
+                return null;
+            }
+            return norm;
+        }
+
+        /// <summary>
+        /// Saves a normalization to the specified folder with the specified name.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <param name="normTosave">The norm tosave.</param>
+        public static void SaveNormalization(string directory, string file, DataNormalization normTosave)
+        {
+            SerializeObject.Save(directory + file, normTosave);
+        }
     }
 }
