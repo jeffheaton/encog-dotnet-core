@@ -181,6 +181,43 @@ namespace Encog.Util
             return -1;
         }
 
+
+        /// <summary>
+        /// Gets the last N closing values of a double serie;
+        /// copied in a new double serie.
+        /// </summary>
+        /// <param name="lenth">The lenth to get.</param>
+        /// <param name="closes"></param>
+        /// <returns>a double serie with the last n requested values.</returns>
+        public double[] TransferNvaluesOfSerie(int lenth, double [] closes)
+        {
+            if (closes != null)
+            {
+                double[] output;
+
+                if (closes.Length > lenth)
+                {
+                    //we have more closing values than our length so we'll return values based on last - Length.
+                    int startIndex = closes.Length - lenth;
+                    output = new double[lenth];
+                    EngineArray.ArrayCopy(closes, startIndex, output, 0, lenth);
+                    return output;
+                }
+                if (closes.Length == lenth)
+                {
+                    //we have the same values , so we just return the full closing values.
+                    int startIndex = closes.Length - lenth;
+                    output = new double[lenth];
+                    EngineArray.ArrayCopy(closes, startIndex, output, 0, lenth);
+                    return output;
+                }
+            }
+
+            //we didn't get any right values to return N lenght of the serie.
+            return null;
+
+        }
+
         /// <summary>
         /// Copy a 2d array.
         /// </summary>
