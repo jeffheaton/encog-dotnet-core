@@ -77,7 +77,7 @@ namespace Encog.App.Analyst.CSV
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
             _analyst = theAnalyst;
 
             Analyzed = true;
@@ -120,7 +120,7 @@ namespace Encog.App.Analyst.CSV
                     {
                         if (field.Input)
                         {
-                            field.AddRawHeadings(line, null, OutputFormat);
+                            field.AddRawHeadings(line, null, Format);
                         }
                     }
 
@@ -132,7 +132,7 @@ namespace Encog.App.Analyst.CSV
                             if (field.Output)
                             {
                                 field.AddRawHeadings(line, "ideal:",
-                                                       OutputFormat);
+                                                       Format);
                             }
                         }
                     }
@@ -143,7 +143,7 @@ namespace Encog.App.Analyst.CSV
                     {
                         if (field.Output)
                         {
-                            field.AddRawHeadings(line, "output:", OutputFormat);
+                            field.AddRawHeadings(line, "output:", Format);
                         }
                     }
 
@@ -167,7 +167,7 @@ namespace Encog.App.Analyst.CSV
         public void Process(FileInfo outputFile, IMLRegression method)
         {
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
 
             if (method.InputCount != _inputCount)
             {
@@ -192,7 +192,7 @@ namespace Encog.App.Analyst.CSV
                 for (int i = 0; i < _inputCount; i++)
                 {
                     String str = row.Data[i];
-                    double d = InputFormat.Parse(str);
+                    double d = Format.Parse(str);
                     input[i] = d;
                     dataIndex++;
                 }
@@ -207,7 +207,7 @@ namespace Encog.App.Analyst.CSV
                 for (int i = 0; i < _outputCount; i++)
                 {
                     double d = output[i];
-                    row.Data[dataIndex++] = InputFormat.Format(d, Precision);
+                    row.Data[dataIndex++] = Format.Format(d, Precision);
                 }
 
                 WriteRow(tw, row);

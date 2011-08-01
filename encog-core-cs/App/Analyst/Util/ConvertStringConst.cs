@@ -125,11 +125,11 @@ namespace Encog.App.Analyst.Util
             {
                 return AnalystFileFormat.DecpntSemi;
             }
-            else if (str.Equals("decpnt|space", StringComparison.InvariantCultureIgnoreCase))
+            else if (str.Equals("deccomma|space", StringComparison.InvariantCultureIgnoreCase))
             {
                 return AnalystFileFormat.DeccommaSpace;
             }
-            else if (str.Equals("decpnt|semi", StringComparison.InvariantCultureIgnoreCase))
+            else if (str.Equals("deccomma|semi", StringComparison.InvariantCultureIgnoreCase))
             {
                 return AnalystFileFormat.DeccommaSemi;
             }

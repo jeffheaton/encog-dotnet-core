@@ -77,7 +77,7 @@ namespace Encog.App.Analyst.CSV.Sort
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             ReadInputFile();
             SortData();
@@ -93,7 +93,7 @@ namespace Encog.App.Analyst.CSV.Sort
             ResetStatus();
 
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
             while (csv.Next() && !ShouldStop())
             {
                 UpdateStatus("Reading input file");
@@ -151,7 +151,7 @@ namespace Encog.App.Analyst.CSV.Sort
                         try
                         {
                             String str = row.Data[i];
-                            InputFormat.Parse(str);
+                            Format.Parse(str);
                             nonNumeric[i] = false;
                         }
                         catch (Exception )

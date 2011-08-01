@@ -92,7 +92,7 @@ namespace Encog.App.Analyst.CSV.Shuffle
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             Analyzed = true;
 
@@ -159,7 +159,7 @@ namespace Encog.App.Analyst.CSV.Shuffle
             ValidateAnalyzed();
 
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
             LoadedRow row;
 
             StreamWriter tw = PrepareOutputFile(outputFile);

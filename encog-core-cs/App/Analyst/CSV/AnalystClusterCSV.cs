@@ -73,23 +73,18 @@ namespace Encog.App.Analyst.CSV
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             Analyzed = true;
             _analyst = theAnalyst;
-
-            if (OutputFormat == null)
-            {
-                OutputFormat = InputFormat;
-            }
-
+            
             _data = new BasicMLDataSet();
             ResetStatus();
             int recordCount = 0;
 
             int outputLength = _analyst.DetermineTotalColumns();
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
             ReadHeaders(csv);
 
             _analystHeaders = new CSVHeaders(InputHeadings);
@@ -137,7 +132,7 @@ namespace Encog.App.Analyst.CSV
                     // be displayed
                     foreach (String heading  in  InputHeadings)
                     {
-                        AppendSeparator(line, OutputFormat);
+                        AppendSeparator(line, Format);
                         line.Append("\"");
                         line.Append(heading);
                         line.Append("\"");

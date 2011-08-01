@@ -135,7 +135,7 @@ namespace Encog.App.Quant.Indicators
             try
             {
                 csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
 
                 ResetStatus();
                 int row = 0;
@@ -151,7 +151,7 @@ namespace Encog.App.Quant.Indicators
                             {
                                 var fd = (FileData) column;
                                 String str = csv.Get(fd.Index);
-                                double d = InputFormat.Parse(str);
+                                double d = Format.Parse(str);
                                 fd.Data[row] = d;
                             }
                         }
@@ -208,7 +208,7 @@ namespace Encog.App.Quant.Indicators
                         {
                             if (line.Length > 0)
                             {
-                                line.Append(InputFormat.Separator);
+                                line.Append(Format.Separator);
                             }
                             line.Append("\"");
                             line.Append(column.Name);
@@ -236,10 +236,10 @@ namespace Encog.App.Quant.Indicators
                         {
                             if (line_0.Length > 0)
                             {
-                                line_0.Append(InputFormat.Separator);
+                                line_0.Append(Format.Separator);
                             }
                             double d = column_1.Data[row];
-                            line_0.Append(InputFormat.Format(d, Precision));
+                            line_0.Append(Format.Format(d, Precision));
                         }
                     }
 
