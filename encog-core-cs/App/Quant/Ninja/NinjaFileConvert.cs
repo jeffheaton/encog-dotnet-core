@@ -39,7 +39,7 @@ namespace Encog.App.Quant.Ninja
         /// <param name="target">The target file to write to.</param>
         public void Process(string target)
         {
-            var csv = new ReadCSV(InputFilename.ToString(), ExpectInputHeaders, InputFormat);
+            var csv = new ReadCSV(InputFilename.ToString(), ExpectInputHeaders, Format);
             TextWriter tw = new StreamWriter(target);
 
             ResetStatus();
@@ -51,15 +51,15 @@ namespace Encog.App.Quant.Ninja
                 line.Append(" ");
                 line.Append(GetColumnData(FileData.Time, csv));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Open, csv)), Precision));
+                line.Append(Format.Format(double.Parse(GetColumnData(FileData.Open, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.High, csv)), Precision));
+                line.Append(Format.Format(double.Parse(GetColumnData(FileData.High, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Low, csv)), Precision));
+                line.Append(Format.Format(double.Parse(GetColumnData(FileData.Low, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Close, csv)), Precision));
+                line.Append(Format.Format(double.Parse(GetColumnData(FileData.Close, csv)), Precision));
                 line.Append(";");
-                line.Append(InputFormat.Format(double.Parse(GetColumnData(FileData.Volume, csv)), Precision));
+                line.Append(Format.Format(double.Parse(GetColumnData(FileData.Volume, csv)), Precision));
 
                 tw.WriteLine(line.ToString());
             }

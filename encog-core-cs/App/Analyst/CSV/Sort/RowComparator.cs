@@ -69,8 +69,8 @@ namespace Encog.App.Analyst.CSV.Sort
                 switch (t.SortType)
                 {
                     case SortType.SortDecimal:
-                        double xDouble = _sort.InputFormat.Parse(xStr);
-                        double yDouble = _sort.InputFormat.Parse(yStr);
+                        double xDouble = _sort.Format.Parse(xStr);
+                        double yDouble = _sort.Format.Parse(yStr);
                         int c = xDouble.CompareTo(yDouble);
                         if (c != 0)
                         {

@@ -83,7 +83,7 @@ namespace Encog.App.Analyst.CSV.Filter
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             Analyzed = true;
 
@@ -110,7 +110,7 @@ namespace Encog.App.Analyst.CSV.Filter
         public void Process(FileInfo outputFile)
         {
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
 
             StreamWriter tw = PrepareOutputFile(outputFile);
             _filteredCount = 0;

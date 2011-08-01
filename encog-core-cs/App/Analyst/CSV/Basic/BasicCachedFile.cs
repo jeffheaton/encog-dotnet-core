@@ -93,7 +93,7 @@ namespace Encog.App.Analyst.CSV.Basic
             ResetStatus();
             InputFilename = input;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
             _columnMapping.Clear();
             _columns.Clear();
 
@@ -135,7 +135,7 @@ namespace Encog.App.Analyst.CSV.Basic
                 }
                 InputFilename = input;
                 ExpectInputHeaders = headers;
-                InputFormat = format;
+                Format = format;
             }
 
             // now analyze columns
@@ -169,7 +169,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
                     try
                     {
-                        InputFormat.Parse(str);
+                        Format.Parse(str);
                         io = true;
                     }
                     catch (FormatException ex)

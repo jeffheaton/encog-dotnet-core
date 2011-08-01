@@ -176,29 +176,13 @@ namespace Encog.App.Analyst.Script
         {
             _tasks.Clear();
         }
-
-        /// <summary>
-        /// Determine the input format for the specified file.
-        /// </summary>
-        ///
-        /// <param name="sourceID">The file.</param>
-        /// <returns>The input format.</returns>
-        public CSVFormat DetermineInputFormat(String sourceID)
-        {
-            String rawID = Properties.GetPropertyString(
-                ScriptProperties.HeaderDatasourceRawFile);
-
-            CSVFormat result = Properties.GetPropertyCSVFormat(sourceID.Equals(rawID) ? ScriptProperties.HeaderDatasourceSourceFormat : ScriptProperties.SetupConfigCSVFormat);
-
-            return result;
-        }
-
+        
         /// <summary>
         /// Determine the output format.
         /// </summary>
         ///
         /// <returns>The output format.</returns>
-        public CSVFormat DetermineOutputFormat()
+        public CSVFormat DetermineFormat()
         {
             return Properties.GetPropertyCSVFormat(
                 ScriptProperties.SetupConfigCSVFormat);

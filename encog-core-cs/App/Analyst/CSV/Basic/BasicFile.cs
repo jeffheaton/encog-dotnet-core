@@ -84,7 +84,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// The format of the input file.
         /// </summary>
         ///
-        private CSVFormat _inputFormat;
+        private CSVFormat _format;
 
         /// <summary>
         /// The column headings from the input file.
@@ -97,12 +97,6 @@ namespace Encog.App.Analyst.CSV.Basic
         /// </summary>
         ///
         private int _lastUpdate;
-
-        /// <summary>
-        /// The output format, usually, the same as the input format.
-        /// </summary>
-        ///
-        private CSVFormat _outputFormat;
 
         /// <summary>
         /// Should output headers be produced?
@@ -164,12 +158,12 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the input format.
+        /// Set the format.
         /// </summary>
-        public CSVFormat InputFormat
+        public CSVFormat Format
         {
-            get { return _inputFormat; }
-            set { _inputFormat = value; }
+            get { return _format; }
+            set { _format = value; }
         }
 
 
@@ -181,15 +175,6 @@ namespace Encog.App.Analyst.CSV.Basic
             get { return _inputHeadings; }
             set { _inputHeadings = value; }
         }
-
-
-        /// <value>the outputFormat to set</value>
-        public CSVFormat OutputFormat
-        {
-            get { return _outputFormat; }
-            set { _outputFormat = value; }
-        }
-
 
         /// <summary>
         /// Set the precision to use.
@@ -308,15 +293,10 @@ namespace Encog.App.Analyst.CSV.Basic
         ///
         public void PerformBasicCounts()
         {
-            if (_outputFormat == null)
-            {
-                _outputFormat = _inputFormat;
-            }
-
             ResetStatus();
             int rc = 0;
             var csv = new ReadCSV(_inputFilename.ToString(),
-                                  _expectInputHeaders, _inputFormat);
+                                  _expectInputHeaders, _format);
             while (csv.Next() && !_cancel)
             {
                 UpdateStatus(true);
@@ -342,10 +322,6 @@ namespace Encog.App.Analyst.CSV.Basic
             {
                 outputFile.Delete();
                 var tw = new StreamWriter(outputFile.OpenWrite());
-                if (_outputFormat == null)
-                {
-                    _outputFormat = _inputFormat;
-                }
 
                 // write headers, if needed
                 if (_produceOutputHeaders)
@@ -358,7 +334,7 @@ namespace Encog.App.Analyst.CSV.Basic
                         {
                             if (line.Length > 0)
                             {
-                                line.Append(_outputFormat.Separator);
+                                line.Append(_format.Separator);
                             }
                             line.Append("\"");
                             line.Append(str);
@@ -529,7 +505,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
             foreach (string t in row.Data)
             {
-                AppendSeparator(line, _outputFormat);
+                AppendSeparator(line, _format);
                 line.Append(t);
             }
 
