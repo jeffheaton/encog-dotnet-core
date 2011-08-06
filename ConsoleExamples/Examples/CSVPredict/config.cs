@@ -1,7 +1,7 @@
 ﻿using System;
 using Encog.ML.Data.Market;
 
-namespace Encog.Examples.CSVMarketExample
+namespace Encog.Examples.CSVPredict
 {
     public class Config
     {

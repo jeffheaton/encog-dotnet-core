@@ -2,7 +2,7 @@
 using System.IO;
 using ConsoleExamples.Examples;
 
-namespace Encog.Examples.CSVMarketExample
+namespace Encog.Examples.CSVPredict
 {
 
     public class MarketPredict : IExample

@@ -8,6 +8,7 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
+using Encog.Neural.NeuralData;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
 using Encog.Util.File;
@@ -54,7 +55,7 @@ namespace Encog.Util.NetworkUtil
            return;
 
        }
-    
+
        /// <summary>
        /// Loads an basic network from the specified directory and file.
        /// You must load the network like this Loadnetwork(@directory,@file);

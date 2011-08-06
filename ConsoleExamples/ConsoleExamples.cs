@@ -33,6 +33,7 @@ using Encog.Examples.Benchmark;
 using Encog.Examples.Boltzmann;
 using Encog.Examples.CPN;
 using Encog.Examples.ElmanNetwork;
+using Encog.Examples.Finance_Patterns;
 using Encog.Examples.Forest;
 using Encog.Examples.GeneticTSP;
 using Encog.Examples.Hopfield.Associate;
@@ -43,7 +44,7 @@ using Encog.Examples.Lunar;
 using Encog.Examples.Market;
 using Encog.Examples.Persist;
 using Encog.Examples.XOR;
-using Encog.Examples.CSVMarketExample;
+using Encog.Examples.CSVPredict;
 
 namespace ConsoleExamples
 {
@@ -90,6 +91,7 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
             examples.Add(LunarLander.Info);
+            examples.Add(FinancePatterns.Info);
         }
 
         public void ListCommands()

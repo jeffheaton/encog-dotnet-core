@@ -8,7 +8,7 @@ using Encog.Persist;
 using Encog.Util;
 using Encog.Util.File;
 
-namespace Encog.Examples.CSVMarketExample
+namespace Encog.Examples.CSVPredict
 {
     public class MarketEvaluate
     {

@@ -9,7 +9,7 @@ using Encog.Util.File;
 using Encog.Util.Simple;
 using Encog.Util.Logging;
 
-namespace Encog.Examples.CSVMarketExample
+namespace Encog.Examples.CSVPredict
 {
 
     public class MarketPrune

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Encog.Util.CSV;
-using System.IO;
-using System.Linq;
-using System.Globalization;
+
 namespace Encog.ML.Data.Market.Loader
 {
+    /// <summary>
+    /// A class that uses a form to show the loaded CSV.
+    /// </summary>
     public partial class CSVFormLoader : Form
     {
 

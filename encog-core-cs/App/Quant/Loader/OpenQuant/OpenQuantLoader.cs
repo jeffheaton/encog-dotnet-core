@@ -8,6 +8,9 @@ namespace Encog.App.Quant.Loader.OpenQuant
     public class OpenQuantLoader
     {
 
+        /// <summary>
+        /// A class to know which types have been loaded.
+        /// </summary>
         public class LoaderTypes
         {
             public DateTime from { get; set; }
@@ -66,6 +69,7 @@ namespace Encog.App.Quant.Loader.OpenQuant
                 // BarSerie = DataManager.GetHistoricalBars(instrument, Data.Data.BarType.Time, 3600);
 
                 LoaderTypes typeLoaded = new LoaderTypes(instrument, dtfrom, dtto,bartype, barsize);
+
                 Console.WriteLine("Loaded Types instrument:" + typeLoaded.Instrument);
                 return typeLoaded;
             }
@@ -78,7 +82,22 @@ namespace Encog.App.Quant.Loader.OpenQuant
                 Console.WriteLine("Full message:" + ex);
                 return null;
             }
-
         }
+
+
+        //public static DataArray DoubleSeriesForEncog(object ReceivingObject)
+        //{
+        //    bool b = ReceivingObject is DataArray;
+        //    DataArray dat = new DataArray();
+        //    if (b)
+        //    {
+        //        foreach (Data.Data.Bar d in ReceivingObject)
+        //        {
+        //            dat.Add(d);
+
+        //        }
+        //    }
+        //    return dat;
+        //}
     }
 }

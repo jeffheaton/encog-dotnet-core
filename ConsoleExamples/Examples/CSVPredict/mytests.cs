@@ -38,7 +38,7 @@ using Encog.Util.File;
 using System.IO;
 using Encog.Persist;
 
-namespace Encog.Examples.CSVMarketExample
+namespace Encog.Examples.CSVPredict
 {
     public class CSVMarketExample : IExample
     {
