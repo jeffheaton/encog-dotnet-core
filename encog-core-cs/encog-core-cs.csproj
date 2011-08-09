@@ -265,6 +265,7 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
+    <Compile Include="ML\Data\Market\Loader\TimeSeriesLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
@@ -495,6 +496,7 @@
     <Compile Include="Neural\Thermal\PersistBoltzmann.cs" />
     <Compile Include="Neural\Thermal\PersistHopfield.cs" />
     <Compile Include="Neural\Thermal\ThermalNetwork.cs" />
+    <Compile Include="Parallel\IObservable.cs" />
     <Compile Include="Persist\EncogDirectoryPersistence.cs" />
     <Compile Include="Persist\EncogFileSection.cs" />
     <Compile Include="Persist\IEncogPersistor.cs" />

@@ -3,59 +3,74 @@
     <string />
     <integer />
     <boolean>
+      <setting name="livetemplates.csharp.usevar">True</setting>
       <setting name="SolutionAnalysisEnabled">False</setting>
     </boolean>
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MyTests/f:config.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/f:MarketLoader.cs" caret="1020" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:EncogAnalyst.cs" caret="24676" fromTop="21" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:IAnalystListener.cs" caret="861" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:NumericRange.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:Yahoo/f:YahooDownload.cs" caret="1199" fromTop="31" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/f:QuantTask.cs" caret="1005" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Util/f:BarBuffer.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="2647" fromTop="21" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="35" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="212" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="482" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1546" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="567" fromTop="23" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:EKohonenKernel.cs" caret="0" fromTop="0" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:EKohonenTopology.cs" caret="0" fromTop="0" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:TOutputNeuron.cs" caret="0" fromTop="0" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:TOCRDataSet.cs" caret="0" fromTop="0" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:TNeuralDataSet.cs" caret="4309" fromTop="0" />
+      <File id="5AC99519-5B4F-4CD2-B084-45193639A37B/d:SmartQuant.Neural/f:TKohonenMap.cs" caret="3173" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2824" fromTop="42" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="538" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/d:Loader/f:CSVFormLoader.cs" caret="3457" fromTop="69" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:NormalizeArray.cs" caret="3312" fromTop="82" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3232" fromTop="29" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:GenerateData.cs" caret="1052" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Hopfield/d:Simple/f:HopfieldSimple.cs" caret="2200" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="2311" fromTop="37" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORNEAT.cs" caret="2303" fromTop="32" />
+      <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="1039" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:Browse/d:Extract/f:BasicExtract.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:HTTP/f:FormUtility.cs" caret="898" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:ResourceLoader.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Identity/f:BasicGenerateID.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Logging/f:EncogLogging.cs" caret="1220" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Time/f:TimeSpanUtil.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Validate/f:ValidateNetwork.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Bot/d:RSS/f:RSS.cs" caret="4032" fromTop="106" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:Generate.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:FinancePatterns.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:EncogMath.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="16881" fromTop="36" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="4" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6087" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6002" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6064" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="7597" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1864" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1849" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5638" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6119" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6379" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5698" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="491" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3122" fromTop="38" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1131" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="150" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="195" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="863" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="480" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1615" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2028" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="594" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="833" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2687" fromTop="26" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="538" fromTop="21" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1870" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1872" fromTop="40" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1872" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1870" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2798" fromTop="39" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2094" fromTop="5" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2471" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2809" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2798" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2735" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2146" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3258" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/d:Loader/f:CSVFormLoader.cs" caret="3372" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3550" fromTop="36" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3234" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3666" fromTop="43" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14399" fromTop="33" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15055" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14785" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14931" fromTop="37" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14717" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="16382" fromTop="30" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="16703" fromTop="24" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15704" fromTop="28" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15282" fromTop="29" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15526" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15999" fromTop="43" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="15986" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="17131" fromTop="41" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="16916" fromTop="36" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

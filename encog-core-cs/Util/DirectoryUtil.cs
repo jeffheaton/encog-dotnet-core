@@ -122,5 +122,21 @@ namespace Encog.Util
             return result;
         }
 #endif
+
+
+
+        /// <summary>
+        /// Gets the assembly directory.
+        /// </summary>
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return System.IO.Path.GetDirectoryName(path);
+            }
+        }
     }
 }

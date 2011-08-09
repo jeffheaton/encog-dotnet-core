@@ -24,6 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.MathUtil.RBF;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
+using Encog.ML.SVM;
+using Encog.Neural.Pattern;
+using Encog.Neural.Rbf.Training;
 using Encog.Util;
 using System.Reflection;
 using Encog.Neural.Networks;
@@ -96,7 +102,7 @@ namespace Encog.Examples.Radial
 
             pattern.AddHiddenLayer(numNeurons);
 
-            BasicNetwork network = pattern.Generate();
+            var network =(SupportVectorMachine) pattern.Generate();
             RadialBasisFunctionLayer rbfLayer = (RadialBasisFunctionLayer)network.GetLayer(RadialBasisPattern.RBF_LAYER);
             network.Reset();
 
@@ -112,8 +118,8 @@ namespace Encog.Examples.Radial
             Create2DSmoothTainingDataGit();
 
             //Create the training set and train.
-            INeuralDataSet trainingSet = new BasicNeuralDataSet(INPUT, IDEAL);
-            ITrain train = new SVDTraining(network, trainingSet);
+            IMLDataSet trainingSet = new BasicMLDataSet(INPUT, IDEAL);
+            var train = new SVDTraining(network, trainingSet);
 
             //SVD is a single step solve
             int epoch = 1;
@@ -129,14 +135,14 @@ namespace Encog.Examples.Radial
 
             //Create a testing array which may be to a higher resoltion than the original training data
             Set2DTestingArrays(100);
-            trainingSet = new BasicNeuralDataSet(INPUT, IDEAL);
+            trainingSet = new BasicMLDataSet(INPUT, IDEAL);
 
             //Write out the results data
             using (var sw = new System.IO.StreamWriter("results.csv", false))
             {
-                foreach (INeuralDataPair pair in trainingSet)
+                foreach (IMLDataPair pair in trainingSet)
                 {
-                    INeuralData output = network.Compute(pair.Input);
+                    IMLData output = network.Compute(pair.Input);
                     //1D//sw.WriteLine(InverseScale(pair.Input[0]) + ", " + Chop(InverseScale(output[0])));// + ", " + pair.Ideal[0]);
                     sw.WriteLine(InverseScale(pair.Input[0]) + ", " + InverseScale(pair.Input[1]) + ", " + Chop(InverseScale(output[0])));// + ", " + pair.Ideal[0]);// + ",ideal=" + pair.Ideal[0]);
                     //3D//sw.WriteLine(InverseScale(pair.Input[0]) + ", " + InverseScale(pair.Input[1]) + ", " + InverseScale(pair.Input[2]) + ", " + Chop(InverseScale(output[0])));// + ", " + pair.Ideal[0]);// + ",ideal=" + pair.Ideal[0]);

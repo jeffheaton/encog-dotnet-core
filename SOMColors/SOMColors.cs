@@ -72,7 +72,7 @@ namespace SOMColors
             this.train.SetAutoDecay(100, 0.8, 0.003, 30, 5);
         }
 
-        private SOMNetwork CreateNetwork()
+        private static SOMNetwork CreateNetwork()
         {
             SOMNetwork result = new SOMNetwork(3, SOMColors.WIDTH * SOMColors.HEIGHT);            
             result.Reset();
