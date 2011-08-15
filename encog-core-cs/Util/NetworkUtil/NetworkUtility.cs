@@ -20,6 +20,10 @@ using Encog.Util.Simple;
 
 namespace Encog.Util.NetworkUtil
 {
+    /// <summary>
+    /// A few method to help load , save training and networks.
+    /// Also a few helper method to use normalization methods.
+    /// </summary>
     public class NetworkUtility
     {
 
@@ -75,6 +79,42 @@ namespace Encog.Util.NetworkUtil
            var network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(networkFile);
            return network;
        }
+
+       /// <summary>
+       /// Calculates the percents change from one number to the next.
+       /// First input the current number , then input the previous value.
+       /// </summary>
+       public static double CalculatePercents(double CurrentValue , double PreviousValue)
+       {
+          if (CurrentValue > 0.0 && PreviousValue > 0.0) 
+          {
+              return (CurrentValue - PreviousValue) / PreviousValue;
+          }  
+           return 0.0;
+       }
+
+
+       /// <summary>
+       /// Calculates the percents in a double serie.
+       /// </summary>
+       /// <param name="inputs">The inputs.</param>
+       /// <returns></returns>
+        public static double[] CalculatePercents (double[] inputs)
+        {
+            int index = 0;
+            List<double> result = new List<double>();
+            foreach (double input in inputs)
+            {
+                //we dont continue if we have no more doubles to calculate.
+                    if (index > 0)
+                    {
+                        result.Add(CalculatePercents(input, inputs[index - 1]));
+                    }
+                
+                index++;
+            }
+           return result.ToArray();
+        }
 
 
        /// <summary>

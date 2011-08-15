@@ -139,6 +139,7 @@
     <Compile Include="App\Quant\Loader\OpenQuant\IDataseries.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuant.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuantLoader.cs" />
+    <Compile Include="App\Quant\Loader\TimeSeriesLoader.cs" />
     <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
@@ -189,11 +190,13 @@
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="Finance\Finance.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
     <Compile Include="MathUtil\BoundNumbers.cs" />
     <Compile Include="MathUtil\ComplexNumber.cs" />
+    <Compile Include="MathUtil\Distribution.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
@@ -229,6 +232,7 @@
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
     <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
+    <Compile Include="MathUtil\Statistics.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
@@ -547,6 +551,7 @@
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
+    <Compile Include="Util\Normalize\DateNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />
     <Compile Include="Util\Normalize\Input\IInputField.cs" />

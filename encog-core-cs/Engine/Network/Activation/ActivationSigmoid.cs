@@ -75,6 +75,24 @@ namespace Encog.Engine.Network.Activation
             }
         }
 
+
+        
+
+        /// <summary>
+        /// Calculates the output value for the specified input value and optional activation function auxiliary arguments.
+        /// This single precision overload of Calculate() will be used in neural network code 
+        /// that has been specifically written to use floats instead of doubles.
+        /// "y = 1.0/(1.0 + exp(-4.9*x))";
+        /// </summary>
+        public void SteepSigmoid(double[] x, int start, int size) // float[] auxArgs)
+        {
+            for (int i = start; i < start + size; i++)
+            {
+                x[i] = 1.0f / (1.0f + (float)Math.Exp(-4.9f * x[i]));
+            }
+        }
+
+
         /// <inheritdoc />
         public virtual double DerivativeFunction(double b, double a)
         {
