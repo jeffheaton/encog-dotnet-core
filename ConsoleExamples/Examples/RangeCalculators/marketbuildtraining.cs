@@ -23,33 +23,36 @@ namespace Encog.Examples.RangeCalculators
         public static void Generate(string fileName)
         {
 
-          
+
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
             IMarketLoader loader = new RangeMaker();
             loader.GetFile(@fileName);
 
-             var market = new MarketMLDataSet(loader, RangeConfig.INPUT_WINDOW, RangeConfig.PREDICT_WINDOW);
-             var descClose = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Close, true, true);
-             market.AddDescription(descClose);
-             var descOpen = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Open, true, true);
-             market.AddDescription(descOpen);
-             var descHigh = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.High, true, true);
-             market.AddDescription(descHigh);
-             var descLow = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Low, true, true);
-             market.AddDescription(descLow);
-             var ranges = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.RangeOpenClose,TemporalDataDescription.Type.Raw, true, true);
-             market.AddDescription(ranges);
-             var RangeopenClose = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.RangeHighLow, TemporalDataDescription.Type.Raw, true, true);
+            var market = new MarketMLDataSet(loader, RangeConfig.INPUT_WINDOW, RangeConfig.PREDICT_WINDOW);
+            var descClose = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Close, true, true);
+            market.AddDescription(descClose);
+            var descOpen = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Open, true, true);
+            market.AddDescription(descOpen);
+            var descHigh = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.High, true, true);
+            market.AddDescription(descHigh);
+            var descLow = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.Low, true, true);
+            market.AddDescription(descLow);
+            var ranges = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.RangeOpenClose,
+                                                   TemporalDataDescription.Type.Raw, true, true);
+            market.AddDescription(ranges);
+            var RangeopenClose = new MarketDataDescription(RangeConfig.TICKER, MarketDataType.RangeHighLow,
+                                                           TemporalDataDescription.Type.Raw, true, true);
             market.AddDescription(RangeopenClose);
-            string currentDirectory =@"c:\EncogOutput";
+            string currentDirectory = @"c:\EncogOutput";
             var end = DateTime.Now; // end today
             var begin = new DateTime(end.Ticks); // begin 30 days ago
             // Gather training data for the last 2 years, stopping 60 days short of today.
             // The 60 days will be used to evaluate prediction.
             begin = begin.AddDays(-800);
             end = begin.AddDays(800);
-           
-            Console.WriteLine(@"You are loading date from:" + begin.ToShortDateString() + @" To :" + end.ToShortDateString());
+
+            Console.WriteLine(@"You are loading date from:" + begin.ToShortDateString() + @" To :" +
+                              end.ToShortDateString());
 
             market.Load(begin, end);
             market.Generate();
@@ -57,10 +60,26 @@ namespace Encog.Examples.RangeCalculators
 
             // create a network
 
-          
+
 
             Console.WriteLine(@"Built training file , and saved it to:" + dataDir.DirectoryName);
-         
+
+            //BasicNetwork network =
+            //    (BasicNetwork) MarketBuildTraining.NetworkBuilders.CreateFeedforwardNetwork(RangeConfig.INPUT_WINDOW,
+            //                                                                                RangeConfig.PREDICT_WINDOW,
+            //                                                                                RangeConfig.HIDDEN1_COUNT,
+            //                                                                                RangeConfig.HIDDEN2_COUNT);
+            // training file
+
+
+
+
+            // train the neural network
+            //  EncogUtility.TrainConsole(network, trainingSet, RangeConfig.TRAINING_MINUTES);
+            NetworkBuilders.DualNetworksTrainer(market.InputNeuronCount, 6,
+                                                RangeConfig.HIDDEN1_COUNT, RangeConfig.HIDDEN2_COUNT, market,
+                                                RangeConfig.NETWORK_FILE);
+
 
         }
 
@@ -82,7 +101,7 @@ namespace Encog.Examples.RangeCalculators
             {
                 // construct a feedforward type network
                 FeedForwardPattern pattern = new FeedForwardPattern();
-                pattern.ActivationFunction = new ActivationSigmoid();
+                pattern.ActivationFunction = new ActivationTANH();
                 pattern.InputNeurons = inputneurons;
                 pattern.AddHiddenLayer(hiddenNeurons);
                 pattern.AddHiddenLayer(hidden2);

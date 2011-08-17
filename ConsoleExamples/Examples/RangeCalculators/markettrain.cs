@@ -45,23 +45,22 @@ namespace Encog.Examples.RangeCalculators
                 return;
             }
 
-            BasicMLDataSet trainingSet = (BasicMLDataSet)EncogUtility.LoadEGB2Memory(trainingFile);
+            var trainingSet = EncogUtility.LoadEGB2Memory(trainingFile);
 
             // train the neural network
-            // EncogUtility.TrainConsole(network, trainingSet, Config.TRAINING_MINUTES);
+            //  EncogUtility.TrainConsole(network, trainingSet, RangeConfig.TRAINING_MINUTES);
 
             TrainNetwork("Feedforward", network, trainingSet);
 
-            Console.WriteLine(@"Final Error: " + network.CalculateError(trainingSet));
+            //Console.WriteLine(@"Final Error: " + network.CalculateError(trainingSet));
             Console.WriteLine(@"Training complete, saving network.");
             EncogDirectoryPersistence.SaveObject(networkFile, network);
             Console.WriteLine(@"Network saved.");
-
             EncogFramework.Instance.Shutdown();
         }
 
 
-        private static double TrainNetwork(String what, BasicNetwork network, BasicMLDataSet set)
+        private static double TrainNetwork(String what, BasicNetwork network, IMLDataSet set)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(set);
@@ -69,11 +68,11 @@ namespace Encog.Examples.RangeCalculators
                 network, score, 10, 2, 100);
 
 
-            IMLTrain trainMain = new ResilientPropagation(network, set, 0.00001, 0.0);
+            IMLTrain trainMain = new Backpropagation(network, set, 0.00001, 0.0);
 
             var stop = new StopTrainingStrategy();
             trainMain.AddStrategy(new Greedy());
-            trainMain.AddStrategy(new HybridStrategy(trainAlt));
+            //trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
 
             int epoch = 0;
