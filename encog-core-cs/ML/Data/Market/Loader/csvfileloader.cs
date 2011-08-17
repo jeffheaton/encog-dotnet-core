@@ -8,7 +8,10 @@ using System.Windows.Forms;
 
 namespace Encog.ML.Data.Market.Loader
 {
-    public class CSVFileLoader : IMarketLoader
+    /// <summary>
+    /// Loads a csv file and makes a marketdataset.
+    /// </summary>
+    public class CSVTicksFileLoader : IMarketLoader
     {
 
         #region IMarketLoader Members

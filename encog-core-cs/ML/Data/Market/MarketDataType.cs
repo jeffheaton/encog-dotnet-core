@@ -65,6 +65,27 @@ namespace Encog.ML.Data.Market
         /// <summary>
         /// A quote (bid /ask)
         /// </summary>
-        Quote
+        Quote,
+
+        /// <summary>
+        /// The bid from a quote
+        /// </summary>
+        Bid,
+
+        /// <summary>
+        /// The ask price from a quote
+        /// </summary>
+        Ask,
+
+        /// <summary>
+        /// the bid volume from a quote.
+        /// </summary>
+        BidSize,
+
+        /// <summary>
+        /// the ask size from a quote.
+        /// </summary>
+        AskSize,
+
     }
 }
