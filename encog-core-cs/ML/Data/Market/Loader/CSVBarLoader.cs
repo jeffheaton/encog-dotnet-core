@@ -7,8 +7,9 @@ using Encog.Util.CSV;
 
 namespace Encog.ML.Data.Market.Loader
 {
-    class CSVBarLoader
-    {        #region IMarketLoader Members
+    public class CSVBarLoader :IMarketLoader
+    {       
+        #region IMarketLoader Members
 
 
         string Precision { get; set; }
@@ -22,7 +23,8 @@ namespace Encog.ML.Data.Market.Loader
                 //We got a file, lets load it.
                 ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
                 ReadCSV csv = new ReadCSV(File, true, CSVFormat.English);
-                csv.DateFormat = "yyyy.MM.dd HH:mm:ss";
+                //In case we want to use a different date format...and have used the SetDateFormat method, our DateFormat Lenght must be longer than 1.
+                csv.DateFormat = DateFormat.Length > 1 ? DateFormat : "yyyy.MM.dd HH:mm:ss";
 
                 DateTime ParsedDate = from;
 
@@ -54,13 +56,21 @@ namespace Encog.ML.Data.Market.Loader
 
             catch (Exception ex)
             {
-               
-                Console.WriteLine(@"Something went wrong reading the csv:" + ex.Message);
+                  Console.WriteLine(@"Something went wrong reading the csv:" + ex.Message);
                   return null;
             }
         }
 
-
+        public string DateFormat{get;set;}
+        /// <summary>
+        /// Sets the date format for the csv file.
+        /// </summary>
+        /// <param name="stringFormat">The string format.</param>
+        public void SetDateFormat(string stringFormat)
+        {
+           DateFormat = stringFormat;
+            return;
+        }
 
         public ICollection<LoadedMarketData> Load(TickerSymbol ticker, IList<MarketDataType> dataNeeded, DateTime from, DateTime to)
         {

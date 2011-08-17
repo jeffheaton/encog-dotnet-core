@@ -24,7 +24,7 @@ namespace Encog.Examples.CSVPredict
 
         public void Execute(IExampleInterface app)
         {
-            if (app.Args.Length < 3)
+            if (app.Args.Length < 2)
             {
                 Console.WriteLine(@"MarketPredict [data dir] [generate/train/prune/evaluate] PathToFile");
                 Console.WriteLine(@"e.g csvMarketPredict [data dir] [generate/train/prune/evaluate] c:\\EURUSD.csv");

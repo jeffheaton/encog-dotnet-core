@@ -58,7 +58,7 @@ namespace Encog.ML.Data.Market
             : base(inputWindowSize, predictWindowSize)
         {
             _loader = loader;
-            SequenceGrandularity = TimeUnit.Days;
+            SequenceGrandularity = TimeUnit.Ticks;
         }
 
         /// <summary>

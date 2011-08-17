@@ -16,7 +16,7 @@ namespace Encog.Examples.RangeCalculators
     {
         public static void Incremental(FileInfo dataDir)
         {
-            FileInfo file = FileUtil.CombinePath(dataDir, Config.TRAINING_FILE);
+            FileInfo file = FileUtil.CombinePath(dataDir, RangeConfig.TRAINING_FILE);
 
             if (!file.Exists)
             {

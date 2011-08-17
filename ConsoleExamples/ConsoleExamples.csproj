@@ -101,6 +101,12 @@
     <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Examples\RangeCalculators\config.cs" />
+    <Compile Include="Examples\RangeCalculators\marketbuildtraining.cs" />
+    <Compile Include="Examples\RangeCalculators\marketevaluate.cs" />
+    <Compile Include="Examples\RangeCalculators\marketpredict.cs" />
+    <Compile Include="Examples\RangeCalculators\marketprune.cs" />
+    <Compile Include="Examples\RangeCalculators\markettrain.cs" />
     <Compile Include="Examples\Util\City.cs" />
     <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
     <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />

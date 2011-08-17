@@ -87,5 +87,30 @@ namespace Encog.ML.Data.Market
         /// </summary>
         AskSize,
 
+
+        /// <summary>
+        /// Range from Open to Close (Absolute).
+        /// </summary>
+        RangeOpenClose,
+
+        /// <summary>
+        /// Rangr from High to Low.
+        /// </summary>
+        RangeHighLow,
+
+        /// <summary>
+        /// Range Open to Close not using absolute numbers (No Math.Abs(Open - Close)) , this gives a directional range.
+        /// </summary>
+        RangeOpenCloseNonAbsolute,
+
+
+
+        /// <summary>
+        /// Percentage moves from one bar to the next.
+        /// </summary>
+        PercentageMove,
+
+        
+
     }
 }

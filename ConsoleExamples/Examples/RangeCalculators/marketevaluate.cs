@@ -33,12 +33,12 @@ namespace Encog.Examples.RangeCalculators
             loader.GetFile(newfileLoad);
 
             var result = new MarketMLDataSet(loader,
-                                             Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
+                                             RangeConfig.INPUT_WINDOW, RangeConfig.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER,
                                               //   MarketDataType.Close, true, true);
 
-            var desc = new MarketDataDescription(Config.TICKER,
-                                     MarketDataType.Trade, true, true);
+            var desc = new MarketDataDescription(RangeConfig.TICKER,
+                                     MarketDataType.RangeOpenClose, true, true);
             result.AddDescription(desc);
 
             var end = DateTime.Now; // end today
@@ -47,13 +47,12 @@ namespace Encog.Examples.RangeCalculators
 
             result.Load(begin, end);
             result.Generate();
-
             return result;
         }
 
         public static void Evaluate(FileInfo dataDir,string filename)
         {
-            FileInfo file = FileUtil.CombinePath(dataDir, Config.NETWORK_FILE);
+            FileInfo file = FileUtil.CombinePath(dataDir, RangeConfig.NETWORK_FILE);
 
             if (!file.Exists)
             {

@@ -259,6 +259,8 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\Market\Loader\CSVBarLoader.cs" />
+    <Compile Include="ML\Data\Market\Loader\csvfileloader.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +271,7 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
+    <Compile Include="ML\Data\Market\Loader\RangeMaker.cs" />
     <Compile Include="ML\Data\Market\Loader\TimeSeriesLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />

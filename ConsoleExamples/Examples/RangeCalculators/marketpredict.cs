@@ -5,17 +5,17 @@ using ConsoleExamples.Examples;
 namespace Encog.Examples.RangeCalculators
 {
 
-    public class MarketPredict : IExample
+    public class RangeCalculators : IExample
     {
         public static ExampleInfo Info
         {
             get
             {
                 var info = new ExampleInfo(
-                    typeof (MarketPredict),
-                    "csvmarket",
-                    "Simple Market Prediction",
-                    "Use csv data to predict direction of a stock or forex, futures instrument.");
+                    typeof (RangeCalculators),
+                    "csvrange",
+                    "Simple Range Prediction",
+                    "Use csv data to predict ranges of a stock or forex, futures instrument.");
                 return info;
             }
         }
@@ -24,10 +24,11 @@ namespace Encog.Examples.RangeCalculators
 
         public void Execute(IExampleInterface app)
         {
-            if (app.Args.Length < 3)
+            if (app.Args.Length < 1)
             {
-                Console.WriteLine(@"MarketPredict [data dir] [generate/train/prune/evaluate] PathToFile");
-                Console.WriteLine(@"e.g csvMarketPredict [data dir] [generate/train/prune/evaluate] c:\\EURUSD.csv");
+                Console.WriteLine(@"csvRange [generate/train/prune/evaluate] PathToFile");
+                Console.WriteLine(@"e.g csvrange [generate/train/prune/evaluate] c:\\EURUSD.csv");
+                Console.WriteLine(@"csvrange train Directory");
             }
             else
             {
