@@ -1,0 +1,140 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Encog.Util.CSV;
+
+namespace Encog.ML.Data.Market.Loader
+{
+    public class RangeMaker :IMarketLoader
+    {
+
+        #region IMarketLoader Members
+
+
+        string Precision { get; set; }
+        public static string LoadedFile { get; set; }
+
+
+        public ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IList<MarketDataType> neededTypes, DateTime from, DateTime to, string File)
+        {
+            try
+            {
+                //We got a file, lets load it.
+                
+                ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
+                ReadCSV csv = new ReadCSV(File, true, CSVFormat.English);
+                //In case we want to use a different date format...and have used the SetDateFormat method, our DateFormat must then not be null..
+                //We will use the ?? operator to check for nullables.
+                csv.DateFormat = DateFormat ?? "yyyy.MM.dd HH:mm:ss";
+                csv.TimeFormat = "HH:mm:ss";
+
+                DateTime ParsedDate = from;
+                bool writeonce = true;
+
+                //  Time,Open,High,Low,Close,Volume
+                while (csv.Next())
+                {
+                    DateTime date = csv.GetDate(0);
+                    ParsedDate = date;
+                    if (writeonce)
+                    {
+                        Console.WriteLine(@"First parsed date in csv:" + ParsedDate.ToShortDateString());
+                        Console.WriteLine(@"Stopping at date:" + to.ToShortDateString());
+                        Console.WriteLine(@"Current DateTime:" + ParsedDate.ToShortDateString() + @" Time:" +
+                                          ParsedDate.ToShortTimeString() + @"  Asked Start date was " +
+                                          from.ToShortDateString());
+                        writeonce = false;
+                    }
+
+                
+                
+                    if  (ParsedDate > from && ParsedDate < to)
+                    {
+                        DateTime datex = csv.GetDate(0);
+                        double open = csv.GetDouble(1);
+                        double close = csv.GetDouble(2);
+                        double high = csv.GetDouble(3);
+                        double low = csv.GetDouble(4);
+                        double volume = csv.GetDouble(5);
+                        double range = Math.Abs(open - close);
+                        double HighLowRange = Math.Abs(high - low);
+                        double DirectionalRange = close - open;
+                        LoadedMarketData data = new LoadedMarketData(datex, symbol);
+                        data.SetData(MarketDataType.Open, open);
+                        data.SetData(MarketDataType.High, high);
+                        data.SetData(MarketDataType.Low, low);
+                        data.SetData(MarketDataType.Close, close);
+                        data.SetData(MarketDataType.Volume, volume);
+                        data.SetData(MarketDataType.RangeHighLow, Math.Round(HighLowRange, 6));
+                        data.SetData(MarketDataType.RangeOpenClose, Math.Round(range, 6));
+                        data.SetData(MarketDataType.RangeOpenCloseNonAbsolute, Math.Round(DirectionalRange, 6));
+                        result.Add(data);
+
+                        
+                    }
+                   
+                }
+
+                csv.Close();
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"Something went wrong reading the csv:" + ex.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the date format for the whole csv file.
+        /// </summary>
+        /// <value>
+        /// The date format.
+        /// </value>
+        public string DateFormat { get; set; }
+        /// <summary>
+        /// Sets the date format for the csv file.
+        /// </summary>
+        /// <param name="stringFormat">The string format.</param>
+        public void SetDateFormat(string stringFormat)
+        {
+            DateFormat = stringFormat;
+            return;
+        }
+
+        public ICollection<LoadedMarketData> Load(TickerSymbol ticker, IList<MarketDataType> dataNeeded, DateTime from, DateTime to)
+        {
+            return File.Exists(LoadedFile) ? (ReadAndCallLoader(ticker, dataNeeded, from, to, LoadedFile)) : null;
+        }
+
+        #endregion
+
+        #region IMarketLoader Members
+
+
+
+
+        #endregion
+
+        #region IMarketLoader Members
+
+
+        /// <summary>
+        /// Gets the file we want to parse.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public string GetFile(string file)
+        {
+            if (File.Exists(file))
+                LoadedFile = file;
+            return LoadedFile;
+        }
+
+        #endregion
+
+    }
+}
