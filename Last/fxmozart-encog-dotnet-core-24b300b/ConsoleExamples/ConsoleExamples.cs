@@ -109,7 +109,6 @@ namespace ConsoleExamples
 
             foreach (ExampleInfo info in examples)
             {
-                //test
                 commands.Add(info.Command.PadRight(20) + ": " + info.Title);
             }
 
