@@ -105,8 +105,6 @@ namespace ConsoleExamples
 
             Console.WriteLine(@"The following commands are available:");
 
-
-
             foreach (ExampleInfo info in examples)
             {
                 commands.Add(info.Command.PadRight(20) + ": " + info.Title);
