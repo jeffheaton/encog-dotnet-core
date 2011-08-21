@@ -58,14 +58,6 @@
     <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
     <Compile Include="Examples\Benchmark\ThreadCount.cs" />
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
-    <Compile Include="Examples\Finance Patterns\Data.cs" />
-    <Compile Include="Examples\Finance Patterns\FinancePatterns.cs" />
-    <Compile Include="Examples\Finance Patterns\Generate.cs" />
-    <Compile Include="Examples\FinancePilots\GenerateData.cs" />
-    <Compile Include="Examples\FinancePilots\LanderSimulator.cs" />
-    <Compile Include="Examples\FinancePilots\LunarLander.cs" />
-    <Compile Include="Examples\FinancePilots\NeuralPilot.cs" />
-    <Compile Include="Examples\FinancePilots\PilotScore.cs" />
     <Compile Include="Examples\Forest\Evaluate.cs" />
     <Compile Include="Examples\Forest\ForestConfig.cs" />
     <Compile Include="Examples\Forest\ForestCover.cs" />
@@ -137,6 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\SuperPredict\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -33,8 +33,6 @@ using Encog.Examples.Benchmark;
 using Encog.Examples.Boltzmann;
 using Encog.Examples.CPN;
 using Encog.Examples.ElmanNetwork;
-using Encog.Examples.Finance_Patterns;
-using Encog.Examples.FinancePilots;
 using Encog.Examples.Forest;
 using Encog.Examples.GeneticTSP;
 using Encog.Examples.Hopfield.Associate;
@@ -94,9 +92,9 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
             examples.Add(LunarLander.Info);
-            examples.Add(FinancePatterns.Info);
+   
             examples.Add(PrunerLoader.Info);
-            examples.Add(FinancePilot.Info);
+            //examples.Add(FinancePilot.Info);
             examples.Add(RangeCalculators.Info);
 
         }
@@ -108,8 +106,10 @@ namespace ConsoleExamples
             Console.WriteLine(@"The following commands are available:");
 
 
+
             foreach (ExampleInfo info in examples)
             {
+                //test
                 commands.Add(info.Command.PadRight(20) + ": " + info.Title);
             }
 
