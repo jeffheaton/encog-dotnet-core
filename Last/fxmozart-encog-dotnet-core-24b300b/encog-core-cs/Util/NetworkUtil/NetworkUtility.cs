@@ -30,6 +30,36 @@ namespace Encog.Util.NetworkUtil
 
 
         /// <summary>
+        /// Creates the ideal/input array from a list of inputs (double arrays).
+        /// can be as many inputs/outputs as needed.
+        /// </summary>
+        /// <param name="nbofSeCondDimendsion">The nb of points in the inputs (must be the same).</param>
+        /// <param name="inputs">The inputs.</param>
+        /// <returns></returns>
+        public static double[][] CreateIdealorInputs(int nbofSeCondDimendsion,params object[] inputs)
+        {
+            double[][] result = EngineArray.AllocateDouble2D(inputs.Length, nbofSeCondDimendsion);
+            int i = 0, k = 0;
+            foreach (double[] doubles in inputs)
+            {
+                foreach (double d in doubles)
+                {
+                    result[i][k] = d;
+                    k++;
+                }
+                if (i < inputs.Length - 1)
+                {
+                    i++;
+                    k = 0;
+                }
+            }
+            return result;
+        }
+
+
+
+
+        /// <summary>
         /// Loads an IMLDataset training file in a given directory.
         /// </summary>
         /// <param name="directory">The directory.</param>
@@ -117,6 +147,22 @@ namespace Encog.Util.NetworkUtil
         }
 
 
+        /// <summary>
+        /// Copy a doubles series to a List of double.
+        /// return the filled List of doubles.
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <returns></returns>
+        public static List<double> CopydoubleArrayToList(double[]inputs)
+        {
+            List<double> result = new List<double>();
+
+            foreach (var input in inputs)
+            {
+                result.Add(input);
+            }
+            return result;
+        }
        /// <summary>
        /// Saves an IMLDataset to a file.
        /// </summary>

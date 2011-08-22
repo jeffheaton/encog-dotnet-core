@@ -12,7 +12,6 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:IExample.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLData.cs" caret="1886" fromTop="17" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:NormalizedField.cs" caret="17917" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="4760" fromTop="77" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:Config.cs" caret="477" fromTop="12" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ExampleArgument.cs" caret="0" fromTop="0" />
       <File id="83F646D8-D413-47F4-AE4D-AFF34C6A0CA7/f:OCRForm.cs" caret="9704" fromTop="71" />
@@ -24,53 +23,54 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ARTExample/f:ClassifyART1.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:TrainNetwork.cs" caret="1779" fromTop="30" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Pattern/f:FeedForwardPattern.cs" caret="3994" fromTop="24" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3620" fromTop="25" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Temporal/f:TestTemporal.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:GenerateData.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:GenerateData.cs" caret="2759" fromTop="48" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:Data.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:Generate.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:FinancePatterns.cs" caret="12309" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Adaline/f:AdalineDigits.cs" caret="10130" fromTop="15" />
       <File id="78C56915-2005-4DBA-B74F-4A03DD161A1D/f:GatherUtil.cs" caret="3212" fromTop="32" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:PilotScore.cs" caret="579" fromTop="23" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:NeuralPilot.cs" caret="1775" fromTop="48" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LunarLander.cs" caret="820" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="2537" fromTop="20" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2234" fromTop="31" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:InterestRate.cs" caret="1262" fromTop="55" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:RangeConfig.cs" caret="79" fromTop="3" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketprune.cs" caret="1402" fromTop="46" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketevaluate.cs" caret="5818" fromTop="134" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="5125" fromTop="36" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3628" fromTop="96" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:markettrain.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketpredict.cs" caret="1211" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="3674" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3692" fromTop="15" />
     </RecentFiles>
     <RecentEdits>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:Config.cs" caret="477" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="1043" fromTop="27" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LunarLander.cs" caret="2478" fromTop="23" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LunarLander.cs" caret="1412" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="39" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="32" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="35" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="32" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="7483" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="1117" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="5837" fromTop="31" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:LanderSimulator.cs" caret="6380" fromTop="43" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="4127" fromTop="44" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3172" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3714" fromTop="37" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3444" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3852" fromTop="37" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3714" fromTop="29" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3102" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="3852" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="4075" fromTop="39" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:FinancePilots/f:PilotScore.cs" caret="477" fromTop="17" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Finance Patterns/f:FinancePatterns.cs" caret="11906" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="1919" fromTop="34" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2022" fromTop="39" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2127" fromTop="44" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2234" fromTop="34" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="296" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="17211" fromTop="48" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1650" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="940" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1274" fromTop="15" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3759" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4708" fromTop="35" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="2325" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="5021" fromTop="40" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1656" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4878" fromTop="41" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3702" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="5515" fromTop="42" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="5246" fromTop="39" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="5125" fromTop="36" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3402" fromTop="32" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3514" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3315" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketpredict.cs" caret="1240" fromTop="31" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketpredict.cs" caret="141" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketpredict.cs" caret="324" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3628" fromTop="21" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketpredict.cs" caret="950" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="340" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="1853" fromTop="27" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4708" fromTop="39" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4708" fromTop="30" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4709" fromTop="46" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="4064" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SuperPredict/f:marketbuildtraining.cs" caret="3964" fromTop="15" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

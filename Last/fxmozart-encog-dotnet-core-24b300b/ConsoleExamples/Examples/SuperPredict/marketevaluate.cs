@@ -2,16 +2,12 @@
 using System.IO;
 using Encog.Engine.Network.Activation;
 using Encog.ML;
-using Encog.ML.Data;
 using Encog.ML.Data.Market;
 using Encog.ML.Data.Market.Loader;
 using Encog.ML.Data.Temporal;
-using Encog.Neural.Networks;
 using Encog.Neural.Pattern;
-using Encog.Util;
-using Encog.Util.File;
 
-namespace Encog.Examples.RangeAndPredictions
+namespace Encog.Examples.SuperPredict
 {
     public class MarketEvaluate
     {

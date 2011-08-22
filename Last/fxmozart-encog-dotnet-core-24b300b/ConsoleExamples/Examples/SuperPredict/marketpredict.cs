@@ -2,20 +2,20 @@
 using System.IO;
 using ConsoleExamples.Examples;
 
-namespace Encog.Examples.RangeAndPredictions
+namespace Encog.Examples.SuperPredict
 {
 
-    public class RangeCalculators : IExample
+    public class SuperPredict : IExample
     {
         public static ExampleInfo Info
         {
             get
             {
                 var info = new ExampleInfo(
-                    typeof (RangeCalculators),
-                    "csvrange",
-                    "Simple Range Prediction",
-                    "Use csv data to predict ranges of a stock or forex, futures instrument.");
+                    typeof (SuperPredict),
+                    "Super",
+                    "Super Predictor Prediction",
+                    "Predicts stuff with a bench of inputs.");
                 return info;
             }
         }
@@ -26,16 +26,16 @@ namespace Encog.Examples.RangeAndPredictions
         {
             if (app.Args.Length < 1)
             {
-                Console.WriteLine(@"csvRange [generate/train/prune/evaluate] PathToFile");
-                Console.WriteLine(@"e.g csvrange [generate/train/prune/evaluate] c:\\EURUSD.csv");
-                Console.WriteLine(@"csvrange train Directory");
+                Console.WriteLine(@"Super predictors with a bunch of inputs. [generate/train/prune/evaluate] PathToFile");
+                Console.WriteLine(@"e.g Super [generate/train/prune/evaluate] c:\\EURUSD.csv");
+                Console.WriteLine(@"Super train Directory");
             }
             else
             {
                 FileInfo dataDir = new FileInfo(Environment.CurrentDirectory);
                 if (String.Compare(app.Args[0], "generate", true) == 0)
                 {
-                    MarketBuildTraining.Generate(app.Args[1]);
+                    MarketBuildTraining.Generate();
                 }
                 else if (String.Compare(app.Args[0], "train", true) == 0)
                 {

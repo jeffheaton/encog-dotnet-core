@@ -276,6 +276,37 @@ namespace Encog.Util
                 target[i] = v;
         }
 
+
+        /// <summary>
+        /// Repeats the specified generator.
+        /// Used to initialize jagged arrays
+        ///  var result = Repeat(() => new double[13], 13).ToArray();
+        /// 
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="generator">The generator.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
+        public static IEnumerable<TResult> Repeat<TResult>(Func<TResult> generator, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                yield return generator();
+            }
+        }
+
+
+        /// <summary>
+        /// Inits a jagged array with all elements to zero..
+        /// </summary>
+        /// <param name="cols">The cols.</param>
+        /// <param name="rows">The rows.</param>
+        /// <returns></returns>
+        public static double[][] InitJaggedArray(int cols, int rows)
+        {
+            var result = Repeat(() => new double[cols], rows).ToArray();
+            return result;
+        }
         /// <summary>
         /// Fill the array with the specified value.
         /// </summary>
@@ -464,7 +495,7 @@ namespace Encog.Util
                 return true;
             }
 
-            
+
             double prev = valueList[0];
             int count = valueList.Length;
             for (int i = 1; i < count; i++)

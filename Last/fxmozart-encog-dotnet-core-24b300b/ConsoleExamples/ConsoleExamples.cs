@@ -44,6 +44,7 @@ using Encog.Examples.Market;
 using Encog.Examples.NetWorkPruner;
 using Encog.Examples.Persist;
 using Encog.Examples.RangeCalculators;
+using Encog.Examples.SuperPredict;
 using Encog.Examples.XOR;
 using Encog.Examples.CSVPredict;
 
@@ -94,7 +95,7 @@ namespace ConsoleExamples
             examples.Add(LunarLander.Info);
    
             examples.Add(PrunerLoader.Info);
-            //examples.Add(FinancePilot.Info);
+            examples.Add(SuperPredict.Info);
             examples.Add(RangeCalculators.Info);
 
         }

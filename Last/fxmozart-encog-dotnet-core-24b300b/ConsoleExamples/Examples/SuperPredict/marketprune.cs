@@ -8,7 +8,7 @@ using Encog.Persist;
 using Encog.Util.File;
 using Encog.Util.Simple;
 
-namespace Encog.Examples.RangeAndPredictions
+namespace Encog.Examples.SuperPredict
 {
 
     public class MarketPrune

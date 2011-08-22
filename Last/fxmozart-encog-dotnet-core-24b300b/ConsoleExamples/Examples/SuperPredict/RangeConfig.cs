@@ -1,7 +1,7 @@
 ﻿using System;
 using Encog.ML.Data.Market;
 
-namespace Encog.Examples.RangeAndPredictions
+namespace Encog.Examples.SuperPredict
 {
     public class RangeConfig
     {
