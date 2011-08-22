@@ -193,14 +193,12 @@ namespace Encog.ML.Data.Basic
                 {
                     tempInput[j] = input[i][j];
                 }
-
+                //note: possible bug?
                 BasicMLData idealData = null;
-                 if (ideal != null && ideal.Length > i)
+                //note: shouldn't it be :if (ideal != null && ideal.Length > i)
+                 
+                 if (ideal != null)
                 {
-
-                 //note: possible bug?
-                //if (ideal != null && ideal.Length > i)
-                //{
                     tempIdeal = new double[ideal[0].Length];
                     for (int j = 0; j < tempIdeal.Length; j++)
                     {

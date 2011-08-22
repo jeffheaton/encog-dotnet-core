@@ -152,7 +152,7 @@ namespace ConsoleSuperTrainer
             //headers removed , now we can keep going.
 
             // normalize the sunspots
-            _norm.CSVFormatUsed = CSVFormat.English;
+        
             //first we put all our inputs in the normalization.
             _norm.Report = new ConsoleStatusReportable();
             _norm.AddInputField(Open = new InputFieldCSV(true, fileUsed, "Open"));
