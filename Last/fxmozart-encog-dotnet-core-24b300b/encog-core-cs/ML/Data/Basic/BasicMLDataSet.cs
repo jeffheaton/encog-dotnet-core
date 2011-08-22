@@ -188,12 +188,15 @@ namespace Encog.ML.Data.Basic
             {
                 var tempInput = new double[input[0].Length];
                 double[] tempIdeal;
+
                 for (int j = 0; j < tempInput.Length; j++)
                 {
                     tempInput[j] = input[i][j];
                 }
+
                 BasicMLData idealData = null;
-                if (ideal != null && ideal.Length>i)
+
+                if (ideal != null)
                 {
                     tempIdeal = new double[ideal[0].Length];
                     for (int j = 0; j < tempIdeal.Length; j++)
@@ -202,7 +205,9 @@ namespace Encog.ML.Data.Basic
                     }
                     idealData = new BasicMLData(tempIdeal);
                 }
+
                 var inputData = new BasicMLData(tempInput);
+
                 Add(inputData, idealData);
             }
         }

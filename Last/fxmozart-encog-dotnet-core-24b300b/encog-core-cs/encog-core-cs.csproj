@@ -46,7 +46,6 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -139,7 +138,6 @@
     <Compile Include="App\Quant\Loader\OpenQuant\IDataseries.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuant.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuantLoader.cs" />
-    <Compile Include="App\Quant\Loader\TimeSeriesLoader.cs" />
     <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
@@ -195,7 +193,6 @@
     <Compile Include="MathUtil\BoundMath.cs" />
     <Compile Include="MathUtil\BoundNumbers.cs" />
     <Compile Include="MathUtil\ComplexNumber.cs" />
-    <Compile Include="MathUtil\Distribution.cs" />
     <Compile Include="MathUtil\EncogMath.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculation.cs" />
     <Compile Include="MathUtil\Error\ErrorCalculationMode.cs" />
@@ -231,7 +228,6 @@
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
     <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
-    <Compile Include="MathUtil\Statistics.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
@@ -258,14 +254,6 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\FinanceDataDescription.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\FinanceDataTypes.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\FinanceError.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\FinancePoints.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\FinanceSymbols.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\Fundamentals.cs" />
-    <Compile Include="ML\Data\Market\Loader\CSVBarLoader.cs" />
-    <Compile Include="ML\Data\Market\Loader\csvfileloader.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,19 +261,15 @@
       <DependentUpon>CSVFormLoader.cs</DependentUpon>
     </Compile>
     <Compile Include="ML\Data\Market\Loader\CSVLoader.cs" />
-    <Compile Include="ML\Data\Market\Loader\EODDownloader.cs" />
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
-    <Compile Include="ML\Data\Market\Loader\RangeMaker.cs" />
-    <Compile Include="ML\Data\Market\Loader\TimeSeriesLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
     <Compile Include="ML\Data\Market\MarketError.cs" />
     <Compile Include="ML\Data\Market\MarketMLDataSet.cs" />
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
-    <Compile Include="ML\Data\Market\FinanceDataSet\MLFinanceDataSet.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
@@ -560,7 +544,6 @@
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
-    <Compile Include="Util\Normalize\DateNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />
     <Compile Include="Util\Normalize\Input\IInputField.cs" />

@@ -74,7 +74,7 @@ namespace Encog.App.Analyst.CSV.Segregate
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             Analyzed = true;
 
@@ -99,7 +99,7 @@ namespace Encog.App.Analyst.CSV.Segregate
                 SegregateTargetPercent stp = p;
 
                 // assign a number of records to this
-                double percent = stp.Percent/Format.HundredPercent;
+                double percent = stp.Percent/100.0;
                 var c = (int) (RecordCount*percent);
                 stp.NumberRemaining = c;
 
@@ -135,7 +135,7 @@ namespace Encog.App.Analyst.CSV.Segregate
             Validate();
 
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
             ResetStatus();
 
             foreach (SegregateTargetPercent target  in  _targets)

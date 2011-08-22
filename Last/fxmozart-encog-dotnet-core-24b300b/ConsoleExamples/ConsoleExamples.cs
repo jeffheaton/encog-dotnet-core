@@ -41,12 +41,9 @@ using Encog.Examples.Image;
 using Encog.Examples.JordanNetwork;
 using Encog.Examples.Lunar;
 using Encog.Examples.Market;
-using Encog.Examples.NetWorkPruner;
 using Encog.Examples.Persist;
-using Encog.Examples.RangeCalculators;
-using Encog.Examples.SuperPredict;
 using Encog.Examples.XOR;
-using Encog.Examples.CSVPredict;
+using Encog.Examples.CSVMarketExample;
 
 namespace ConsoleExamples
 {
@@ -93,11 +90,6 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
             examples.Add(LunarLander.Info);
-   
-            examples.Add(PrunerLoader.Info);
-            examples.Add(SuperPredict.Info);
-            examples.Add(RangeCalculators.Info);
-
         }
 
         public void ListCommands()
@@ -105,6 +97,7 @@ namespace ConsoleExamples
             var commands = new List<string>();
 
             Console.WriteLine(@"The following commands are available:");
+
 
             foreach (ExampleInfo info in examples)
             {

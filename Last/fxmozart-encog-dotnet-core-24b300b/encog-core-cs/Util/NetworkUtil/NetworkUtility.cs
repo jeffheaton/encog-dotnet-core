@@ -8,10 +8,8 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
-using Encog.Neural.NeuralData;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
-using Encog.Util.CSV;
 using Encog.Util.File;
 using Encog.Util.Normalize;
 using Encog.Util.Normalize.Input;
@@ -21,42 +19,8 @@ using Encog.Util.Simple;
 
 namespace Encog.Util.NetworkUtil
 {
-    /// <summary>
-    /// A few method to help load , save training and networks.
-    /// Also a few helper method to use normalization methods.
-    /// </summary>
     public class NetworkUtility
     {
-
-
-        /// <summary>
-        /// Creates the ideal/input array from a list of inputs (double arrays).
-        /// can be as many inputs/outputs as needed.
-        /// </summary>
-        /// <param name="nbofSeCondDimendsion">The nb of points in the inputs (must be the same).</param>
-        /// <param name="inputs">The inputs.</param>
-        /// <returns></returns>
-        public static double[][] CreateIdealorInputs(int nbofSeCondDimendsion,params object[] inputs)
-        {
-            double[][] result = EngineArray.AllocateDouble2D(inputs.Length, nbofSeCondDimendsion);
-            int i = 0, k = 0;
-            foreach (double[] doubles in inputs)
-            {
-                foreach (double d in doubles)
-                {
-                    result[i][k] = d;
-                    k++;
-                }
-                if (i < inputs.Length - 1)
-                {
-                    i++;
-                    k = 0;
-                }
-            }
-            return result;
-        }
-
-
 
 
         /// <summary>
@@ -90,7 +54,7 @@ namespace Encog.Util.NetworkUtil
            return;
 
        }
-
+    
        /// <summary>
        /// Loads an basic network from the specified directory and file.
        /// You must load the network like this Loadnetwork(@directory,@file);
@@ -111,58 +75,7 @@ namespace Encog.Util.NetworkUtil
            return network;
        }
 
-       /// <summary>
-       /// Calculates the percents change from one number to the next.
-       /// First input the current number , then input the previous value.
-       /// </summary>
-       public static double CalculatePercents(double CurrentValue , double PreviousValue)
-       {
-          if (CurrentValue > 0.0 && PreviousValue > 0.0) 
-          {
-              return (CurrentValue - PreviousValue) / PreviousValue;
-          }  
-           return 0.0;
-       }
 
-
-       /// <summary>
-       /// Calculates the percents in a double serie.
-       /// </summary>
-       /// <param name="inputs">The inputs.</param>
-       /// <returns></returns>
-        public static double[] CalculatePercents (double[] inputs)
-        {
-            int index = 0;
-            List<double> result = new List<double>();
-            foreach (double input in inputs)
-            {
-                //we dont continue if we have no more doubles to calculate.
-                    if (index > 0)
-                    {
-                        result.Add(CalculatePercents(input, inputs[index - 1]));
-                    }
-                index++;
-            }
-           return result.ToArray();
-        }
-
-
-        /// <summary>
-        /// Copy a doubles series to a List of double.
-        /// return the filled List of doubles.
-        /// </summary>
-        /// <param name="inputs">The inputs.</param>
-        /// <returns></returns>
-        public static List<double> CopydoubleArrayToList(double[]inputs)
-        {
-            List<double> result = new List<double>();
-
-            foreach (var input in inputs)
-            {
-                result.Add(input);
-            }
-            return result;
-        }
        /// <summary>
        /// Saves an IMLDataset to a file.
        /// </summary>
@@ -200,6 +113,7 @@ namespace Encog.Util.NetworkUtil
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
+
             result.Generate();
             return result;
         }
@@ -227,6 +141,7 @@ namespace Encog.Util.NetworkUtil
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
+
             result.Generate();
             return result;
         }
@@ -253,6 +168,7 @@ namespace Encog.Util.NetworkUtil
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
+
             result.Generate();
             return result;
         }
@@ -269,6 +185,7 @@ namespace Encog.Util.NetworkUtil
         public static IMLDataSet ProcessDoubleSerieIntoIMLDataset(double[] data, int _inputWindow, int _predictWindow)
         {
             IMLDataSet result = new BasicMLDataSet();
+
             int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
 
@@ -284,11 +201,13 @@ namespace Encog.Util.NetworkUtil
                 {
                     inputData[j] = data[index++];
                 }
+
                 // handle predict window
                 for (int j = 0; j < _predictWindow; j++)
                 {
                     idealData[j] = data[index++];
                 }
+
                 IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }
@@ -304,121 +223,6 @@ namespace Encog.Util.NetworkUtil
         public static readonly Encog.Util.Arrayutil.NormalizeArray ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
 
 
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="formatused">The formatused.</param>
-        /// <param name="Name">The name of the column to parse..</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, CSVFormat formatused, string Name)
-        {
-            List<double> returnedArrays = new List<double>();
-
-            ReadCSV csv = new ReadCSV(file, true, formatused);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-           
-            while (csv.Next())
-            {
-                returnedArrays.Add(csv.GetDouble(Name));
-            }
-            return returnedArrays;
-        }
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="Name">The name of the column to parse.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, string Name)
-        {
-            List<double> returnedArrays = new List<double>();
-
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-
-            while (csv.Next())
-            {
-                returnedArrays.Add(csv.GetDouble(Name));
-            }
-            return returnedArrays;
-        }
-
-
-
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// this method needs the column number.
-        /// We are assuming english format for the csvformat.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="colnumber">The colnumber.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, int colnumber)
-        {
-            List<double> returnedArrays = new List<double>();
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            while (csv.Next())
-            {
-                returnedArrays.Add(csv.GetDouble(colnumber));
-            }
-            return returnedArrays;
-        }
-
-
-        /// <summary>
-        /// Writes an array of double to file using a CSVFormat.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="arrayToWrite">The array to write.</param>
-        /// <param name="columnName">Name of the column.</param>
-        /// <param name="Appender">The appender.</param>
-        public static void WriteQuickCSV(string file , double [] arrayToWrite,string columnName, CSVFormat format)
-        {
-            StringBuilder res = new StringBuilder();
-            NumberList.ToList(format, res, arrayToWrite);
-            System.IO.StreamWriter wrt = new StreamWriter(file,false);
-            wrt.WriteLine(columnName);
-            //foreach (double d in arrayToWrite)
-            //{
-            //    wrt.WriteLine(d);
-            //}
-            //wrt.Close();
-
-            wrt.Write(res);
-        }
-
-        /// <summary>
-        /// Writes an array of double to file using a CSVFormat.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="arrayToWrite">The array to write.</param>
-        /// <param name="columnName">Name of the column.</param>
-        /// <param name="Appender">The appender.</param>
-        public static void WriteQuickCSV(string file, int[] arrayToWrite, string columnName, CSVFormat format)
-        {
-            //We make a string builder.
-            StringBuilder res = new StringBuilder();
-            //put the array of int in the stringbuilder using the csvformat.
-            NumberList.ToListInt(format, res, arrayToWrite);
-            //make a streamwriter.
-            System.IO.StreamWriter wrt = new StreamWriter(file, false);
-            //write the column heading.
-            wrt.WriteLine(columnName);
-            //write the csv.
-            wrt.Write(res);
-            //release the csv.
-            wrt.Close();
-        }
-
-
-
-       
 
         /// <summary>
         /// Processes and normalize a double serie.

@@ -100,9 +100,8 @@ namespace Encog.App.Analyst.Commands
             Script.MarkGenerated(targetID);
 
             // get formats
-            CSVFormat inputFormat = Script
-                .DetermineInputFormat(sourceID);
-            CSVFormat outputFormat = Script.DetermineOutputFormat();
+            CSVFormat inputFormat = Script.DetermineFormat();
+            CSVFormat outputFormat = Script.DetermineFormat();
 
             // prepare to normalize
             var balance = new BalanceCSV {Script = Script};
@@ -111,7 +110,6 @@ namespace Encog.App.Analyst.Commands
 
             bool headers = Script.ExpectInputHeaders(sourceID);
             balance.Analyze(sourceFile, headers, inputFormat);
-            balance.OutputFormat = outputFormat;
             balance.ProduceOutputHeaders = true;
             balance.Process(targetFile, targetFieldIndex, countPer);
             Analyst.CurrentQuantTask = null;

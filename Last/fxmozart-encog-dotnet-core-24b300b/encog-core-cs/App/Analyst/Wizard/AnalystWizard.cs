@@ -70,7 +70,7 @@ namespace Encog.App.Analyst.Wizard
         /// The default training error.
         /// </summary>
         ///
-        public const double DefaultTrainError = 0.01d;
+        public const double DefaultTrainError = 0.05d;
 
         /// <summary>
         /// The raw file.
@@ -305,6 +305,11 @@ namespace Encog.App.Analyst.Wizard
         /// How to handle missing values.
         /// </summary>
         private IHandleMissingValues _missing;
+
+        /// <summary>
+        /// The format in use.
+        /// </summary>
+        private AnalystFileFormat _format;
 
         /// <summary>
         /// Construct the analyst wizard.
@@ -957,7 +962,7 @@ namespace Encog.App.Analyst.Wizard
             // other
             _script.Properties.SetProperty(
                 ScriptProperties.SetupConfigCSVFormat,
-                AnalystFileFormat.DecpntComma);
+                _format);
         }
 
         /// <summary>
@@ -1112,8 +1117,7 @@ namespace Encog.App.Analyst.Wizard
         public void Wizard(FileInfo analyzeFile, bool b,
                            AnalystFileFormat format)
         {
-            _script.Properties.SetProperty(
-                ScriptProperties.HeaderDatasourceSourceFormat, format);
+            _format = format;
             _script.Properties.SetProperty(
                 ScriptProperties.HeaderDatasourceSourceHeaders, b);
             _script.Properties.SetProperty(
@@ -1152,11 +1156,10 @@ namespace Encog.App.Analyst.Wizard
                            AnalystFileFormat format)
         {
             _script.BasePath = saveFile.DirectoryName;
+            _format = format;
 
             _script.Properties.SetProperty(
                 ScriptProperties.HeaderDatasourceSourceFile, url);
-            _script.Properties.SetProperty(
-                ScriptProperties.HeaderDatasourceSourceFormat, format);
             _script.Properties.SetProperty(
                 ScriptProperties.HeaderDatasourceSourceHeaders, b);
             _script.Properties.SetProperty(

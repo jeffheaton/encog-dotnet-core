@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using Encog.ML.Data.Market.FinanceDataSet;
 
 namespace Encog.ML.Data.Market.Loader
 {
@@ -42,17 +41,6 @@ namespace Encog.ML.Data.Market.Loader
         ICollection<LoadedMarketData> Load(TickerSymbol ticker,
                                            IList<MarketDataType> dataNeeded, DateTime from, DateTime to);
 
-
-        /// <summary>
-        /// Loads the specified ticker.
-        /// </summary>
-        /// <param name="ticker">The ticker.</param>
-        /// <param name="dataNeeded">The data needed.</param>
-        /// <param name="from">From.</param>
-        /// <param name="to">To.</param>
-        /// <returns></returns>
-        ICollection<LoadedMarketData> Load(FinanceSymbols.Instrument ticker,
-                                       IList<FinanceDataTypes> dataNeeded, DateTime from, DateTime to);
         /// <summary>
         /// Gets the file we want to parse.
         /// </summary>

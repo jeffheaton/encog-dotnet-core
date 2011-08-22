@@ -149,8 +149,7 @@ namespace Encog.App.Analyst.Commands
                 ScriptProperties.GenerateConfigSourceFile);
             String targetID = Prop.GetPropertyString(
                 ScriptProperties.GenerateConfigTargetFile);
-            CSVFormat format = Analyst.Script.DetermineInputFormat(
-                sourceID);
+            CSVFormat format = Analyst.Script.DetermineFormat();
 
             EncogLogging.Log(EncogLogging.LevelDebug, "Beginning generate");
             EncogLogging.Log(EncogLogging.LevelDebug, "source file:" + sourceID);

@@ -91,7 +91,6 @@ namespace Encog.ML.Data.Market
                                      bool predict)
             : this(ticker, dataType, Type.PercentChange, null, input, predict)
         {
-
         }
 
         /// <summary>
