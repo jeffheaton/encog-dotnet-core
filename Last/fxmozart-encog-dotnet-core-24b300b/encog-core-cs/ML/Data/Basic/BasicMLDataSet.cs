@@ -195,9 +195,12 @@ namespace Encog.ML.Data.Basic
                 }
 
                 BasicMLData idealData = null;
-
-                if (ideal != null && ideal.Length > i)
+                 if (ideal != null && ideal.Length > i)
                 {
+
+                     //possible bug?
+                //if (ideal != null && ideal.Length > i)
+                //{
                     tempIdeal = new double[ideal[0].Length];
                     for (int j = 0; j < tempIdeal.Length; j++)
                     {
