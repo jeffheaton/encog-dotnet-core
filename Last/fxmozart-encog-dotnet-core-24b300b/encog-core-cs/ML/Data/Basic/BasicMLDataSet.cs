@@ -198,7 +198,7 @@ namespace Encog.ML.Data.Basic
                  if (ideal != null && ideal.Length > i)
                 {
 
-                     //possible bug?
+                 //note: possible bug?
                 //if (ideal != null && ideal.Length > i)
                 //{
                     tempIdeal = new double[ideal[0].Length];
