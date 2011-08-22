@@ -41,6 +41,7 @@ namespace QuickConsoleTests
             return ;
         }
 
+
         private static void RandomTrainer()
         {
             double[] firstinput = MakeInputs(3000);
@@ -94,9 +95,9 @@ namespace QuickConsoleTests
                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
             IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.NormalizeThisArray(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.NormalizeThisArray(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.NormalizeThisArray(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
@@ -152,9 +153,9 @@ namespace QuickConsoleTests
 
 
             IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.NormalizeThisArray(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.NormalizeThisArray(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.NormalizeThisArray(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
