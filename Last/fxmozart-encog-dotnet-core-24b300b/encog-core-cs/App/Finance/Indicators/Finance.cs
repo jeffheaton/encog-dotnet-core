@@ -119,6 +119,32 @@ namespace Encog.App.Finance.Indicators
             ForwardLookupValue = valuesToLookForwardInto;
         }
 
+
+        /// <summary>
+        /// Returns the RSI.
+        /// To calculate the RSI we need the closing up values and the closing down values.
+        /// The formula to calculate RSI is :
+        /// (100 - (100/(1 + (Average(closingDownValue, closingUpvalue)
+        /// Which means , we need a few closing up values and a few closing down values.
+        /// </summary>
+        /// <param name="ClosingUpvalues">The closing upvalues.</param>
+        /// <param name="ClosingDownvalues">The closing downvalues.</param>
+        /// <returns></returns>
+        public static double ReturnRSI(double[] ClosingUpvalues, double[] ClosingDownvalues)
+        {
+            IList<double> RSIValues = new List<double>();
+            if (ClosingDownvalues.Length != ClosingUpvalues.Length)
+            {
+                Encog.Util.Logging.EncogLogging.Log(1, " Error , your closing values Lenght are different");
+                return 0;
+            }
+            return (from closingDownValue in ClosingDownvalues
+                    from closingUpvalue in ClosingUpvalues
+                    select (100 - (100 / (1 + (Average(closingDownValue, closingUpvalue)))))).FirstOrDefault();
+        }
+
+
+
         /// <summary>
         /// Calculates the forward oscillator.
         /// Which is :Close N - Average(Close , X);

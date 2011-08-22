@@ -10,6 +10,7 @@ using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
+using Encog.Util.CSV;
 using Encog.Util.File;
 using Encog.Util.Normalize;
 using Encog.Util.Normalize.Input;
@@ -21,6 +22,157 @@ namespace Encog.Util.NetworkUtil
 {
     public class NetworkUtility
     {
+
+
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="formatused">The formatused.</param>
+        /// <param name="Name">The name of the column to parse..</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, CSVFormat formatused, string Name)
+        {
+            List<double> returnedArrays = new List<double>();
+
+            ReadCSV csv = new ReadCSV(file, true, formatused);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            while (csv.Next())
+            {
+                returnedArrays.Add(csv.GetDouble(Name));
+            }
+            return returnedArrays;
+        }
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// We are assuming CSVFormat english in this quick parse csv method.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="Name">The name of the column to parse.</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, string Name)
+        {
+            List<double> returnedArrays = new List<double>();
+
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            while (csv.Next())
+            {
+                returnedArrays.Add(csv.GetDouble(Name));
+            }
+            return returnedArrays;
+        }
+
+
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// We are assuming CSVFormat english in this quick parse csv method.
+        /// You can input the size (number of lines) to read.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="Name">The name of the column to parse.</param>
+        /// <param name="size">The size.</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, string Name, int size)
+        {
+            List<double> returnedArrays = new List<double>();
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            int currentRead = 0;
+            while (csv.Next() && currentRead < size)
+            {
+                returnedArrays.Add(csv.GetDouble(Name));
+                currentRead++;
+            }
+            return returnedArrays;
+        }
+
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// We are assuming CSVFormat english in this quick parse csv method.
+        /// You can input the size (number of lines) to read and the number of lines you want to skip from the start line
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="Name">The name of the column to parse.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="StartLine">The start line (how many lines you want to skip from the start of the file.</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, string Name, int size, int StartLine)
+        {
+            List<double> returnedArrays = new List<double>();
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            int currentRead = 0;
+            int currentLine = 0;
+            while (csv.Next())
+            {
+                if(currentRead < size && currentLine> StartLine)
+                {
+                    returnedArrays.Add(csv.GetDouble(Name));
+                    currentRead++;
+                }
+                currentLine++;
+            }
+            return returnedArrays;
+        }
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// We are assuming CSVFormat english in this quick parse csv method.
+        /// You can input the size (number of lines) to read.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="columnNumber">The column number to get.</param>
+        /// <param name="size">The size.</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, int columnNumber, int size)
+        {
+            List<double> returnedArrays = new List<double>();
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            int currentRead = 0;
+            while (csv.Next() && currentRead < size)
+            {
+                returnedArrays.Add(csv.GetDouble(columnNumber));
+                currentRead++;
+            }
+            return returnedArrays;
+        }
+
+
+        /// <summary>
+        /// parses one column of a csv and returns an array of doubles.
+        /// you can only return one double array with this method.
+        /// We are assuming CSVFormat english in this quick parse csv method.
+        /// You can input the size (number of lines) to read , and the number of lines you want to skip start from the first line.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="columnNumber">The column number to get.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="startLine">The start line (how many lines you want to skip from the first line.</param>
+        /// <returns></returns>
+        public static List<double> QuickParseCSV(string file, int columnNumber, int size, int startLine)
+        {
+            List<double> returnedArrays = new List<double>();
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            List<string> ColumnNames = csv.ColumnNames.ToList();
+            int currentRead = 0;
+            int currentLine = 0;
+            while (csv.Next())
+            {
+                if (currentRead < size && currentLine > startLine)
+                {
+                    returnedArrays.Add(csv.GetDouble(columnNumber));
+                    currentRead++;
+                }
+                currentLine++;
+            }
+            return returnedArrays;
+        }
 
 
         /// <summary>
@@ -101,11 +253,8 @@ namespace Encog.Util.NetworkUtil
         public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie(double [] inputserie, int windowsize , int predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize,predictsize);
-
-            TemporalDataDescription desc = new TemporalDataDescription(
-                    TemporalDataDescription.Type.PercentChange, true, true);
+            TemporalDataDescription desc = new TemporalDataDescription(TemporalDataDescription.Type.PercentChange, true, true);
             result.AddDescription(desc);
-
             for (int index = 0; index < inputserie.Length - 1; index++)
             {
                 TemporalPoint point = new TemporalPoint(1);
@@ -113,20 +262,41 @@ namespace Encog.Util.NetworkUtil
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
-
             result.Generate();
             return result;
         }
 
+
         /// <summary>
-        /// Generates a temporal data set with a given double serie.
-        /// uses Type raw.
+        /// Generates a temporal data set with a given double serie or a any number of double series , making your inputs.
+        /// uses Type percent change.
         /// </summary>
-        /// <param name="inputserie">The inputserie.</param>
         /// <param name="windowsize">The windowsize.</param>
         /// <param name="predictsize">The predictsize.</param>
+        /// <param name="inputserie">The inputserie.</param>
         /// <returns></returns>
-        public static TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie, int windowsize, int predictsize)
+        public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie(int windowsize, int predictsize, params double[][] inputserie)
+        {
+            TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
+            TemporalDataDescription desc = new TemporalDataDescription(TemporalDataDescription.Type.PercentChange, true,
+                                                                       true);
+            result.AddDescription(desc);
+            foreach (double[] t in inputserie)
+            {
+                for (int j = 0; j < t.Length; j++)
+                {
+                    TemporalPoint point = new TemporalPoint(1);
+                    point.Sequence = j;
+                    point.Data[0] = t[j];
+                    result.Points.Add(point);
+                }
+                result.Generate();
+                return result;
+            }
+            return null;
+        }
+
+        TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie, int windowsize, int predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
 
@@ -168,7 +338,6 @@ namespace Encog.Util.NetworkUtil
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
-
             result.Generate();
             return result;
         }
@@ -185,10 +354,8 @@ namespace Encog.Util.NetworkUtil
         public static IMLDataSet ProcessDoubleSerieIntoIMLDataset(double[] data, int _inputWindow, int _predictWindow)
         {
             IMLDataSet result = new BasicMLDataSet();
-
             int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
-
             for (int i = 0; i < stopPoint; i++)
             {
                 IMLData inputData = new BasicMLData(_inputWindow);
@@ -207,7 +374,6 @@ namespace Encog.Util.NetworkUtil
                 {
                     idealData[j] = data[index++];
                 }
-
                 IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }

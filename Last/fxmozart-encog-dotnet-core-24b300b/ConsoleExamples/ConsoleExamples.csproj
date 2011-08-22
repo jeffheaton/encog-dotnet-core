@@ -90,6 +90,7 @@
     <Compile Include="Examples\MyTests\marketprune.cs" />
     <Compile Include="Examples\MyTests\markettrain.cs" />
     <Compile Include="Examples\MyTests\MyTests.cs" />
+    <Compile Include="Examples\OntheFly\OnTheFlyExample.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />
     <Compile Include="Examples\Util\City.cs" />
