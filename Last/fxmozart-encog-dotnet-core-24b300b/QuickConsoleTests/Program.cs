@@ -32,14 +32,46 @@ namespace QuickConsoleTests
     {
         static void Main(string[] args)
         {
-        
+
+            SuperTemporalVersusBasic();
             ////make inputs.
-            double[] firstinput = MakeInputs();
-            double[] SecondInput = MakeInputs();
-            double[] ThirdInputs = MakeInputs();
-            double[] FourthInputs = MakeInputs();
-            ////Make ideal.
-            double[] ideal = MakeInputs();
+           // RandomTrainer();
+
+            Console.ReadKey();
+            return ;
+        }
+
+        private static void RandomTrainer()
+        {
+            double[] firstinput = MakeInputs(3000);
+            double[] SecondInput = MakeInputs(3000);
+            double[] ThirdInputs = MakeInputs(3000);
+            double[] FourthInputs = MakeInputs(3000);
+            var pair = ProcessPairs(firstinput, FourthInputs, 3000, 20);
+            var pair2 = ProcessPairs(SecondInput, FourthInputs, 3000, 20);
+            var pair3 = ProcessPairs(ThirdInputs, FourthInputs, 3000, 20);
+            var pair4 = ProcessPairs(FourthInputs, FourthInputs, 3000, 20);
+            BasicMLDataSet SuperSet = new BasicMLDataSet();
+            SuperSet.Add(pair);
+            SuperSet.Add(pair2);
+            SuperSet.Add(pair3);
+            SuperSet.Add(pair4);
+            var network = (BasicNetwork)CreateElmanNetwork(SuperSet.InputSize, SuperSet.IdealSize);
+            double error = TrainNetworks(network, SuperSet);
+            //Lets create an evaluation.
+            Console.WriteLine("Paused , Press a key to continue, Last Error was:" + error);
+        }
+
+        #region temporal etc.
+        private static void SuperTemporalVersusBasic()
+        {
+            ////make inputs.
+            //double[] firstinput = MakeInputs();
+            //double[] SecondInput = MakeInputs();
+            //double[] ThirdInputs = MakeInputs();
+            //double[] FourthInputs = MakeInputs();
+            //////Make ideal.
+            //double[] ideal = MakeInputs();
             #region previous tests
             ////put them in jagged arrays.
             //double[][] FinalInputs = CreateIdealOrInput(500, firstinput, SecondInput);
@@ -68,7 +100,7 @@ namespace QuickConsoleTests
             //listData.Add(pairsb);
             //listData.Add(pairsc);
 
-          
+
             //List<IMLDataPair> listData = new List<IMLDataPair>();
 
             //listData.Add(pairs);
@@ -97,15 +129,15 @@ namespace QuickConsoleTests
 
 
 
-            TemporalMLDataSet superTemportal = new TemporalMLDataSet(20, 1);
+            TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
 
-            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(20, 1, Opens.ToArray(),
-                                                                                                  Close.ToArray(),High.ToArray(),Low.ToArray(),Volume.ToArray());
+            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
-            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()), 20, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()), 20, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()), 20, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()), 20, 1);
+            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),Close.ToArray(), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()), Close.ToArray(), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()), Close.ToArray(), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()), Close.ToArray(), 100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
@@ -117,7 +149,7 @@ namespace QuickConsoleTests
 
             var minitrainning = new BasicMLDataSet(listData);
             //make a network.
-            var network = (BasicNetwork)CreateElmanNetwork(20);
+            var network = (BasicNetwork)CreateElmanNetwork(minitrainning.InputSize,minitrainning.IdealSize);
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //Train the elmhan network with a basic dataset.
@@ -133,7 +165,7 @@ namespace QuickConsoleTests
             sw.Stop();
             Console.WriteLine("First network trained in :" + sw.ElapsedMilliseconds);
             double secondtime = sw.ElapsedMilliseconds;
-            Console.WriteLine("First network trained in :" + firsttime +" Error for first network:"+errorfirst+ " Second network error:"+errorSecond+"  took:"+secondtime);
+            Console.WriteLine("First network trained in :" + firsttime + " Error for first network:" + errorfirst + " Second network error:" + errorSecond + "  took:" + secondtime);
 
             //Lets create an evaluation.
             Console.WriteLine("Paused , Press a key to continue to evaluation");
@@ -142,14 +174,7 @@ namespace QuickConsoleTests
 
             //lets evalute networks.
             CreateEvaluationSet(fileName);
-            //Lets create an evaluation.
-            Console.WriteLine("Paused , Press a key to continue to evaluation");
-            Console.ReadKey();
-
-
-            return ;
         }
-
 private static void CreateEvaluationSet(string @fileName)
         {
             List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", 1200,1200);
@@ -157,16 +182,16 @@ private static void CreateEvaluationSet(string @fileName)
             List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", 1200,1200);
             List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", 1200,1200);
             List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, 1200,1200);
-            TemporalMLDataSet superTemportal = new TemporalMLDataSet(20, 1);
+            TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
 
-            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(20, 1, Opens.ToArray(),
+            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
                                                                                                    Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
 
-            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()), 20, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()), 20, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()), 20, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()), 20, 1);
+            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
@@ -176,9 +201,9 @@ private static void CreateEvaluationSet(string @fileName)
 
             var minitrainning = new BasicMLDataSet(listData);
 
-            var network = (BasicNetwork)CreateElmanNetwork(20);
-            double normalCorrectRate= EvaluateNetworks(network, minitrainning);
-            double temporalErrorRate =EvaluateNetworks(network, superTemportal);
+            var network = (BasicNetwork)CreateElmanNetwork(100,1);
+            double normalCorrectRate = EvaluateNetworks(network, minitrainning);
+            double temporalErrorRate = EvaluateNetworks(network, superTemportal);
 
             Console.WriteLine("Percent Correct with normal Data Set:" + normalCorrectRate + " Percent Correnct with temporal Dataset:" +
                       temporalErrorRate);
@@ -205,7 +230,9 @@ private static void CreateEvaluationSet(string @fileName)
 
         #endregion
 
+        #endregion
 
+        #region evaluate and train networks.
         public static double EvaluateNetworks(BasicNetwork network, TemporalMLDataSet set)
         {
             int count = 0;
@@ -289,7 +316,7 @@ private static void CreateEvaluationSet(string @fileName)
             var sw = new Stopwatch();
             sw.Start();
             // run epoch of learning procedure
-            for (int i = 0; i < 3000; i++)
+            for (int i = 0; i < 500; i++)
             {
                 trainMain.Iteration();
                 Console.WriteLine("Iteration #:" + trainMain.IterationNumber + " Error:"+trainMain.Error);
@@ -298,9 +325,11 @@ private static void CreateEvaluationSet(string @fileName)
 
             return trainMain.Error;
         }
-        
-        
-        public IMLDataSet ProcessLive(double[] data, int _inputWindow, int _predictWindow)
+
+        #endregion
+
+
+        public static IMLDataSet ProcessLive(double[] data, int _inputWindow, int _predictWindow)
         {
             IMLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < data.Length; i++)
@@ -326,27 +355,63 @@ private static void CreateEvaluationSet(string @fileName)
         }
 
 
+        public static double[][] ProcessInputs(params double[][] data)
+        {
+            double[][] inputsremade = new double[data.Length][];
+            //foreach (double[] t in data)
+            //{
+            //        int index2 = 0;
+            //    foreach (double [] d in inputsremade)
+            //    {
+            //        EngineArray.ArrayCopy(t, inputsremade[index2++]);
+            //    }
+                   
+               
+            //}
+            return data;
 
+        }
 
-        public IMLDataSet ProcessLiveFullz(int _inputWindow, int _predictWindow, params double [][]data)
+        public static IMLDataSet ProcessLiveFullz(int _inputWindow, int _predictWindow, params double [][]data)
         {
             IMLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < data.Length; i++)
             {
-                IMLData inputData = new BasicMLData(_inputWindow);
-                IMLData idealData = new BasicMLData(_predictWindow);
+                IMLData inputData = new BasicMLData(data.Length);
+                IMLData idealData = new BasicMLData(data.Length);
+                int index2 = 0;
+                double[][] inputsremade = new double[data.Length][];
+
+
+                foreach (double[] doublearrs in data)
+                {
+                    EngineArray.ArrayCopy(doublearrs, inputsremade[index2++]);
+
+                }
                 int index = i;
                 // handle input window
-                for (int j = 0; j < _inputWindow; j++)
+                  foreach (double[] doublearr in data)
                 {
-                    inputData[j] = data[i][index++];
+                    //We can now check the first array.
+                    int indexArray = 0;
+                    int InsideArray = 0;
+                    foreach (double d in doublearr)
+                    {
+                        inputData.Data[InsideArray++] = d;
+                    }
+
                 }
 
-                // handle predict window
-                for (int j = 0; j < _predictWindow; j++)
-                {
-                    idealData[j] = data[j][index++];
-                }
+                //for (int j = 0; j < _inputWindow; j++)
+                //{
+                //    inputData[j] = data[i][index+];
+                //}
+
+                //// handle predict window
+                //for (int j = 0; j < _predictWindow; j++)
+                //{
+                //    idealData[j] = data[i][index++];
+                //}
                 IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }
@@ -354,7 +419,7 @@ private static void CreateEvaluationSet(string @fileName)
         }
 
 
-        public static IMLDataPair ProcessPairs(double[] data, int _inputWindow, int _predictWindow)
+        public static IMLDataPair ProcessPairs(double[] data,double []ideal ,  int _inputWindow, int _predictWindow)
         {
             IMLDataSet result = new BasicMLDataSet();
             for (int i = 0; i < data.Length; i++)
@@ -367,10 +432,11 @@ private static void CreateEvaluationSet(string @fileName)
                 {
                     inputData[j] = data[index++];
                 }
+                index = 0;
                 // handle predict window
                 for (int j = 0; j < _predictWindow; j++)
                 {
-                    idealData[j] = data[index++];
+                    idealData[j] = ideal[index++];
                 }
                 IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
                 return pair;
@@ -383,29 +449,30 @@ private static void CreateEvaluationSet(string @fileName)
 
 
         /// <summary>
-        ///   Creates the elman network.
+        /// Creates the elman network.
         /// </summary>
-        /// <param name = "inputsize">The input neuron size.</param>
+        /// <param name="inputsize">The input neuron size.</param>
+        /// <param name="outputsize">The outputsize.</param>
         /// <returns></returns>
-        private static IMLMethod CreateElmanNetwork(int inputsize)
+        private static IMLMethod CreateElmanNetwork(int inputsize, int outputsize)
         {
             // construct an Elman type network
             ElmanPattern pattern = new ElmanPattern();
             pattern.ActivationFunction = new ActivationTANH();
             pattern.InputNeurons = inputsize;
             pattern.AddHiddenLayer(20);
-            pattern.OutputNeurons = 1;
+            pattern.OutputNeurons = outputsize;
             return pattern.Generate();
         }
 
 
 
-        public static double[] MakeInputs()
+        public static double[] MakeInputs(int number)
         {
             Random rdn = new Random();
 
-            double [] x = new double[500];
-            for (int i = 0; i < 500; i++)
+            double [] x = new double[number];
+            for (int i = 0; i < number; i++)
             {
                 x[i] = rdn.NextDouble();
             }

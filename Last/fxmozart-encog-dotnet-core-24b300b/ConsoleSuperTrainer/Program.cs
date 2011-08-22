@@ -135,24 +135,6 @@ namespace ConsoleSuperTrainer
             // create arrays to hold the normalized sunspots
             double [][] FirstArray = new double[5][];
             double[] First = new double[6];
-            FileInfo infoFile = new FileInfo(fileUsed);
-            FileInfo CopiedFile = infoFile.CopyTo("c:\\NewEuro.csv",true);
-
-          
-
-          
-
-            ////we remove the headers.
-            //StreamReader rd = new StreamReader(Environment.CurrentDirectory+CopiedFile);
-            //rd.ReadLine();
-            //StreamWriter wt = new StreamWriter(Environment.CurrentDirectory + CopiedFile);
-            //wt.Write(rd);
-            //wt.Close();
-            //rd.Close();
-            //headers removed , now we can keep going.
-
-            // normalize the sunspots
-        
             //first we put all our inputs in the normalization.
             _norm.Report = new ConsoleStatusReportable();
             _norm.AddInputField(Open = new InputFieldCSV(true, fileUsed, "Open"));

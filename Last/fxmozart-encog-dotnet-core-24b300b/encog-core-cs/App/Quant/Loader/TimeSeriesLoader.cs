@@ -8,7 +8,10 @@ using Encog.Util.CSV;
 
 namespace Encog.App.Quant.Loader
 {
-    class TimeSeriesLoader
+    /// <summary>
+    /// This method lets you download from the 
+    /// </summary>
+    public class TimeSeriesLoader
     {
         #region IMarketLoader Members
 

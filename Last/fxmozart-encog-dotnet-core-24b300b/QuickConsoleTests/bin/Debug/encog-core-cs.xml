@@ -473,9 +473,15 @@
             <param name="count">The instance of the output field needed, 0 for the first.</param>
             <returns>The output field if found, otherwise null.</returns>
         </member>
+        <member name="M:Encog.Util.Normalize.DataNormalization.FirstPass(System.Boolean)">
+            <summary>
+            First pass, count everything, establish min/max.
+            </summary>
+        </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.FirstPass">
             <summary>
             First pass, count everything, establish min/max.
+            This version doesn't read column names in csvinputfields.
             </summary>
         </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.GetNetworkInputLayerSize">
@@ -517,6 +523,11 @@
             Called internally to open the CSV file.
             </summary>
         </member>
+        <member name="M:Encog.Util.Normalize.DataNormalization.OpenCSV(System.Boolean)">
+            <summary>
+            Called internally to open the CSV file with header.
+            </summary>
+        </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.OpenDataSet">
             <summary>
             Open any datasets that were used by the input layer.
@@ -528,6 +539,13 @@
             updates will be sent to the class specified in the constructor.
             </summary>
         </member>
+        <member name="M:Encog.Util.Normalize.DataNormalization.Process(System.Boolean)">
+            <summary>
+            Call this method to begin the normalization process.  Any status 
+            updates will be sent to the class specified in the constructor.
+            this version uses headers.
+            </summary>
+        </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.ReportResult(System.String,System.Int32,System.Int32)">
             <summary>
             Report on the current progress.
@@ -537,6 +555,11 @@
             <param name="current"> The current record.</param>
         </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.SecondPass">
+            <summary>
+            The second pass actually writes the data to the output files.
+            </summary>
+        </member>
+        <member name="M:Encog.Util.Normalize.DataNormalization.SecondPass(System.Boolean)">
             <summary>
             The second pass actually writes the data to the output files.
             </summary>
@@ -27032,6 +27055,15 @@
             <param name="file">The tile to read.</param>
             <param name="offset">The CSV file column to read.</param>
         </member>
+        <member name="M:Encog.Util.Normalize.Input.InputFieldCSV.#ctor(System.Boolean,System.String,System.String)">
+            <summary>
+            Construct a input field for a CSV file.
+            </summary>
+            <param name="usedForNetworkInput">True if this field is used for actual
+            input to the neural network, as opposed to segregation only.</param>
+            <param name="file">The tile to read.</param>
+            <param name="columnname">The columnname you wish to read.</param>
+        </member>
         <member name="P:Encog.Util.Normalize.Input.InputFieldCSV.File">
             <summary>
             The file being read.
@@ -27041,6 +27073,14 @@
             <summary>
             The column in this CSV file to read.
             </summary>
+        </member>
+        <member name="P:Encog.Util.Normalize.Input.InputFieldCSV.ColumnName">
+            <summary>
+            Gets the name of the column we want to read.
+            </summary>
+            <value>
+            The name of the column we want to read.
+            </value>
         </member>
         <member name="T:Encog.Util.File.Directory">
              <summary>
@@ -34906,6 +34946,22 @@
         </member>
         <member name="P:Encog.App.Analyst.Commands.CmdEvaluate.Name">
             <inheritdoc/>
+        </member>
+        <member name="T:Encog.App.Quant.Loader.TimeSeriesLoader">
+            <summary>
+            This method lets you download from the 
+            </summary>
+        </member>
+        <member name="M:Encog.App.Quant.Loader.TimeSeriesLoader.Load(System.String)">
+            <summary>
+            Load the specified financial data. 
+            </summary>
+            <param name="ticker">The ticker symbol to load.</param>
+            <param name="dataNeeded">The financial data needed.</param>
+            <param name="from">The beginning date to load data from.</param>
+            <param name="to">The ending date to load data to.</param>
+            <returns>A collection of LoadedMarketData objects that represent the data
+            loaded.</returns>
         </member>
     </members>
 </doc>
