@@ -65,50 +65,9 @@ namespace QuickConsoleTests
         #region temporal etc.
         private static void SuperTemporalVersusBasic()
         {
-            ////make inputs.
-            //double[] firstinput = MakeInputs();
-            //double[] SecondInput = MakeInputs();
-            //double[] ThirdInputs = MakeInputs();
-            //double[] FourthInputs = MakeInputs();
-            //////Make ideal.
-            //double[] ideal = MakeInputs();
-            #region previous tests
-            ////put them in jagged arrays.
-            //double[][] FinalInputs = CreateIdealOrInput(500, firstinput, SecondInput);
-            //double[][] Ideal = CreateIdealOrInput(500, ideal);
-            //make a training.
-            //var Training = new BasicMLDataSet();
+           
 
-            //IMLData data1 = new BasicMLData(firstinput);
-            //IMLData data2 = new BasicMLData(SecondInput);
-            //IMLData data3 = new BasicMLData(ThirdInputs);
-            //IMLData data4 = new BasicMLData(FourthInputs);
-
-            //IMLData IdealData = new BasicMLData(ideal);
-            //IMLDataPair pairs = new BasicMLDataPair(data1, IdealData);
-            //IMLDataPair pairs2 = new BasicMLDataPair(data2, IdealData);
-            //IMLDataPair pairs3 = new BasicMLDataPair(data3, IdealData);
-            //IMLDataPair pairs4 = new BasicMLDataPair(data4, IdealData);
-
-            //IMLDataPair pairsa = ProcessDoubleSerieIntoIMLDataset(firstinput, 500, 1);
-            //IMLDataPair pairsb = ProcessDoubleSerieIntoIMLDataset(SecondInput, 500, 1);
-            //IMLDataPair pairsc = ProcessDoubleSerieIntoIMLDataset(ThirdInputs, 500, 1);
-
-            //List<IMLDataPair> listData = new List<IMLDataPair>();
-
-            //listData.Add(pairsa);
-            //listData.Add(pairsb);
-            //listData.Add(pairsc);
-
-
-            //List<IMLDataPair> listData = new List<IMLDataPair>();
-
-            //listData.Add(pairs);
-            //listData.Add(pairs2);
-            //listData.Add(pairs3);
-            //listData.Add(pairs4);
-
-            #endregion
+           
 
 
             const string fileName = "c:\\EURUSD_Hourly_Bid_1999.03.04_2011.03.14.csv";
@@ -131,13 +90,13 @@ namespace QuickConsoleTests
 
             TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
 
-            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
-            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),Close.ToArray(), 100, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()), Close.ToArray(), 100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()), Close.ToArray(), 100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()), Close.ToArray(), 100, 1);
+            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.NormalizeThisArray(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.NormalizeThisArray(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.NormalizeThisArray(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
@@ -175,7 +134,11 @@ namespace QuickConsoleTests
             //lets evalute networks.
             CreateEvaluationSet(fileName);
         }
-private static void CreateEvaluationSet(string @fileName)
+
+#endregion
+
+        #region evaluation
+        private static void CreateEvaluationSet(string @fileName)
         {
             List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", 1200,1200);
             List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", 1200,1200);
@@ -188,10 +151,10 @@ private static void CreateEvaluationSet(string @fileName)
                                                                                                    Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
 
-            IMLDataPair aPairInput = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()), 100, 1);
-            IMLDataPair aPairInput3 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Close.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(High.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(SuperUtility.NetworkUtility.NormalizeThisArray(Volume.ToArray()),SuperUtility.NetworkUtility.NormalizeThisArray(Opens.ToArray()),100, 1);
+            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.NormalizeThisArray(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.NormalizeThisArray(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.NormalizeThisArray(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
 
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
@@ -209,10 +172,11 @@ private static void CreateEvaluationSet(string @fileName)
                       temporalErrorRate);
             Console.WriteLine("Paused , Press a key to continue to evaluation");
             Console.ReadKey();
-
-
-
         }
+
+#endregion
+
+
         #region Direction enum
 
         public enum Direction
@@ -230,7 +194,7 @@ private static void CreateEvaluationSet(string @fileName)
 
         #endregion
 
-        #endregion
+      
 
         #region evaluate and train networks.
         public static double EvaluateNetworks(BasicNetwork network, TemporalMLDataSet set)

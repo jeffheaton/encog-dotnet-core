@@ -621,6 +621,19 @@
             The place that the normalization output will be stored.
             </summary>
         </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.CalculatePercents(System.Double,System.Double)">
+            <summary>
+            Calculates the percents change from one number to the next.
+            First input the current number , then input the previous value.
+            </summary>
+        </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.CalculatePercents(System.Double[])">
+            <summary>
+            Calculates the percents in a double serie.
+            </summary>
+            <param name="inputs">The inputs.</param>
+            <returns></returns>
+        </member>
         <member name="M:Encog.Util.NetworkUtil.NetworkUtility.QuickParseCSV(System.String,Encog.Util.CSV.CSVFormat,System.String)">
             <summary>
             parses one column of a csv and returns an array of doubles.
@@ -742,6 +755,15 @@
             <param name="windowsize">The windowsize.</param>
             <param name="predictsize">The predictsize.</param>
             <param name="inputserie">The inputserie.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.GenerateTrainingWithRawSerie(System.Double[],System.Int32,System.Int32)">
+            <summary>
+            Generates the training with raw serie.
+            </summary>
+            <param name="inputserie">The inputserie.</param>
+            <param name="windowsize">The windowsize.</param>
+            <param name="predictsize">The predictsize.</param>
             <returns></returns>
         </member>
         <member name="M:Encog.Util.NetworkUtil.NetworkUtility.GenerateTrainingWithDeltaChangeOnSerie(System.Double[],System.Int32,System.Int32)">

@@ -23,7 +23,40 @@ namespace Encog.Util.NetworkUtil
     public class NetworkUtility
     {
 
+        /// <summary>
+        /// Calculates the percents change from one number to the next.
+        /// First input the current number , then input the previous value.
+        /// </summary>
+        public static double CalculatePercents(double CurrentValue, double PreviousValue)
+        {
+            if (CurrentValue > 0.0 && PreviousValue > 0.0)
+            {
+                return (CurrentValue - PreviousValue) / PreviousValue;
+            }
+            return 0.0;
+        }
 
+
+        /// <summary>
+        /// Calculates the percents in a double serie.
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <returns></returns>
+        public static double[] CalculatePercents(double[] inputs)
+        {
+            int index = 0;
+            List<double> result = new List<double>();
+            foreach (double input in inputs)
+            {
+                //we dont continue if we have no more doubles to calculate.
+                if (index > 0)
+                {
+                    result.Add(CalculatePercents(input, inputs[index - 1]));
+                }
+                index++;
+            }
+            return result.ToArray();
+        }
         /// <summary>
         /// parses one column of a csv and returns an array of doubles.
         /// you can only return one double array with this method.
@@ -296,7 +329,14 @@ namespace Encog.Util.NetworkUtil
             return null;
         }
 
-        TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie, int windowsize, int predictsize)
+        /// <summary>
+        /// Generates the training with raw serie.
+        /// </summary>
+        /// <param name="inputserie">The inputserie.</param>
+        /// <param name="windowsize">The windowsize.</param>
+        /// <param name="predictsize">The predictsize.</param>
+        /// <returns></returns>
+       public static TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie, int windowsize, int predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
 
