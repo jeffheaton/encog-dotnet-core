@@ -99,6 +99,7 @@
     <Compile Include="Examples\Analyzer\Prunes.cs" />
     <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
     <Compile Include="Examples\SVM Predict\CreateSVMNetWork.cs" />
+    <Compile Include="Examples\SVM Predict\SVMExample.cs" />
     <Compile Include="Examples\Util\City.cs" />
     <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
     <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
