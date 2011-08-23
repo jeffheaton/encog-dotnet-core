@@ -91,5 +91,10 @@ namespace Encog.ML.Data.Market.Loader
                 }
             return result;
         }
+
+        public string GetFile(string file)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

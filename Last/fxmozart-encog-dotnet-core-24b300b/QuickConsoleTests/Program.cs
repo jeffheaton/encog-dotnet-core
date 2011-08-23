@@ -30,13 +30,19 @@ namespace QuickConsoleTests
 {
     class Program
     {
+        const string fileName = "c:\\EURUSD_Hourly_Bid_1999.03.04_2011.03.14.csv";
         static void Main(string[] args)
         {
 
             SuperTemporalVersusBasic();
             ////make inputs.
            // RandomTrainer();
+            BasicMLDataSet set = CreateEvaluationSetAndLoad(fileName);
+            var network = NetworkUtility.LoadNetwork(@"C:\EncogOutput", "newnetwork.eg");
 
+
+
+            EvaluateNetworks(network, set);
             Console.ReadKey();
             return ;
         }
@@ -66,12 +72,7 @@ namespace QuickConsoleTests
         #region temporal etc.
         private static void SuperTemporalVersusBasic()
         {
-           
-
-           
-
-
-            const string fileName = "c:\\EURUSD_Hourly_Bid_1999.03.04_2011.03.14.csv";
+          
             List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", 1200);
             List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", 1200);
             List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", 1200);
@@ -88,23 +89,25 @@ namespace QuickConsoleTests
 
 
 
+            double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
+
 
             TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
 
             superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
-            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
             IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
+            IMLDataPair aPairInput5 = ProcessPairs(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
             listData.Add(aPairInput3);
             listData.Add(aPairInput4);
-
+            listData.Add((aPairInput5));
 
 
             var minitrainning = new BasicMLDataSet(listData);
@@ -117,23 +120,26 @@ namespace QuickConsoleTests
             sw.Stop();
             double firsttime = sw.ElapsedMilliseconds;
 
-            Console.WriteLine("First network trained in :" + sw.ElapsedMilliseconds);
-            //train elhman with a temporal dataset.
-            sw.Reset();
-            sw.Start();
-            double errorSecond = TrainNetworks(network, superTemportal);
-            sw.Stop();
-            Console.WriteLine("First network trained in :" + sw.ElapsedMilliseconds);
-            double secondtime = sw.ElapsedMilliseconds;
-            Console.WriteLine("First network trained in :" + firsttime + " Error for first network:" + errorfirst + " Second network error:" + errorSecond + "  took:" + secondtime);
 
-            //Lets create an evaluation.
-            Console.WriteLine("Paused , Press a key to continue to evaluation");
-            Console.ReadKey();
+            NetworkUtility.SaveNetwork(@"C:\EncogOutput", "newnetwork.eg", network);
+            Console.WriteLine("First network saved");
+            //Console.WriteLine("First network trained in :" + sw.ElapsedMilliseconds);
+            ////train elhman with a temporal dataset.
+            //sw.Reset();
+            //sw.Start();
+            //double errorSecond = TrainNetworks(network, superTemportal);
+            //sw.Stop();
+            //Console.WriteLine("First network trained in :" + sw.ElapsedMilliseconds);
+            //double secondtime = sw.ElapsedMilliseconds;
+            //Console.WriteLine("First network trained in :" + firsttime + " Error for first network:" + errorfirst + " Second network error:" + errorSecond + "  took:" + secondtime);
+
+            ////Lets create an evaluation.
+            //Console.WriteLine("Paused , Press a key to continue to evaluation");
+            //Console.ReadKey();
 
 
-            //lets evalute networks.
-            CreateEvaluationSet(fileName);
+            ////lets evalute networks.
+            //CreateEvaluationSet(fileName);
         }
 
 #endregion
@@ -148,31 +154,80 @@ namespace QuickConsoleTests
             List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, 1200,1200);
             TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
 
-            superTemportal = SuperUtility.NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
-                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+            double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
 
 
-            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+         
+
+            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+
+            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
             IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
+            IMLDataPair aPairInput5 = ProcessPairs(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
             listData.Add(aPairInput3);
             listData.Add(aPairInput4);
+            listData.Add((aPairInput5));
+
 
             var minitrainning = new BasicMLDataSet(listData);
 
             var network = (BasicNetwork)CreateElmanNetwork(100,1);
-            double normalCorrectRate = EvaluateNetworks(network, minitrainning);
-            double temporalErrorRate = EvaluateNetworks(network, superTemportal);
+            double normalCorrectRate = EvaluateNetworks(network, minitrainning,Close);
+           
+            double temporalErrorRate = EvaluateNetworks(network, superTemportal,Close);
 
-            Console.WriteLine("Percent Correct with normal Data Set:" + normalCorrectRate + " Percent Correnct with temporal Dataset:" +
+            Console.WriteLine("Percent Correct with normal Data Set:" + normalCorrectRate + " Percent Correct with temporal Dataset:" +
                       temporalErrorRate);
+
+
+          
+            
+            
             Console.WriteLine("Paused , Press a key to continue to evaluation");
             Console.ReadKey();
+        }
+
+
+
+
+        private static BasicMLDataSet CreateEvaluationSetAndLoad(string @fileName)
+        {
+            List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", 1500, 800);
+            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", 1500, 800);
+            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", 1500, 800);
+            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", 1500, 800);
+            List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, 1500, 800);
+            TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
+
+            double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
+
+
+
+
+            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+
+            IMLDataPair aPairInput = ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
+            IMLDataPair aPairInput5 = ProcessPairs(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
+            List<IMLDataPair> listData = new List<IMLDataPair>();
+            listData.Add(aPairInput);
+            listData.Add(aPairInput2);
+            listData.Add(aPairInput3);
+            listData.Add(aPairInput4);
+            listData.Add((aPairInput5));
+
+
+            var minitrainning = new BasicMLDataSet(listData);
+            return minitrainning;
         }
 
 #endregion
@@ -198,10 +253,11 @@ namespace QuickConsoleTests
       
 
         #region evaluate and train networks.
-        public static double EvaluateNetworks(BasicNetwork network, TemporalMLDataSet set)
+        public static double EvaluateNetworks(BasicNetwork network, TemporalMLDataSet set, List<double> closing)
         {
             int count = 0;
             int correct = 0;
+            int CurrentIndex = 0;
             foreach (IMLDataPair pair in set)
             {
                 IMLData input = pair.Input;
@@ -217,10 +273,43 @@ namespace QuickConsoleTests
                 if (actualDirection == predictDirection)
                     correct++;
                 count++;
-                Console.WriteLine(@"Day " + count + @":actual="
-                                  + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
-                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"("
-                                  + predictDirection + @")" + @",diff=" + diff);
+              
+                Console.WriteLine(@"Real value " + closing[CurrentIndex] + count + @":actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
+                CurrentIndex++;
+            }
+            double percent = correct / (double)count;
+            Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
+            Console.WriteLine(@"Directional Accuracy:"
+                              + Format.FormatPercent(percent));
+
+            return percent;
+        }
+
+        public static double EvaluateNetworks(BasicNetwork network, BasicMLDataSet set, List<double> closing)
+        {
+            int count = 0;
+            int correct = 0;
+            int CurrentIndex = 0;
+            foreach (IMLDataPair pair in set)
+            {
+                IMLData input = pair.Input;
+                IMLData actualData = pair.Ideal;
+                IMLData predictData = network.Compute(input);
+
+                double actual = actualData[0];
+                double predict = predictData[0];
+                double diff = Math.Abs(predict - actual);
+
+                Direction actualDirection = DetermineDirection(actual);
+                Direction predictDirection = DetermineDirection(predict);
+
+                if (actualDirection == predictDirection)
+                    correct++;
+                count++;
+                Console.WriteLine(@"Real value "+closing[CurrentIndex] + count + @":actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
+                CurrentIndex++;
             }
             double percent = correct / (double)count;
             Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
@@ -234,6 +323,7 @@ namespace QuickConsoleTests
         {
             int count = 0;
             int correct = 0;
+            int CurrentIndex = 0;
             foreach (IMLDataPair pair in set)
             {
                 IMLData input = pair.Input;
@@ -250,10 +340,9 @@ namespace QuickConsoleTests
                 if (actualDirection == predictDirection)
                     correct++;
                 count++;
-                Console.WriteLine(@"Day " + count + @":actual="
-                                  + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
-                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"("
-                                  + predictDirection + @")" + @",diff=" + diff);
+                Console.WriteLine("Number"+"count" + @": actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
+                CurrentIndex++;
             }
             double percent = correct / (double)count;
             Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
@@ -264,6 +353,40 @@ namespace QuickConsoleTests
         }
 
 
+        public static double LoadEvaluateNetworks(BasicMLDataSet set, List<double> closing)
+        {
+
+            BasicNetwork network =NetworkUtility.LoadNetwork(@"C:\EncogOutput", "newnetwork.eg");
+            int count = 0;
+            int correct = 0;
+            int CurrentIndex = 0;
+            foreach (IMLDataPair pair in set)
+            {
+                IMLData input = pair.Input;
+                IMLData actualData = pair.Ideal;
+                IMLData predictData = network.Compute(input);
+
+                double actual = actualData[0];
+                double predict = predictData[0];
+                double diff = Math.Abs(predict - actual);
+
+                Direction actualDirection = DetermineDirection(actual);
+                Direction predictDirection = DetermineDirection(predict);
+
+                if (actualDirection == predictDirection)
+                    correct++;
+                count++;
+                Console.WriteLine(@"Real value " + closing[CurrentIndex] + count + @":actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
+                CurrentIndex++;
+            }
+            double percent = correct / (double)count;
+            Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
+            Console.WriteLine(@"Directional Accuracy:"
+                              + Format.FormatPercent(percent));
+
+            return percent;
+        }
 
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
         {
@@ -271,20 +394,26 @@ namespace QuickConsoleTests
             ICalculateScore score = new TrainingSetScore(minis);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(
                 network, score, 10, 2, 100);
-            IMLTrain trainMain = new Backpropagation(network, minis, 0.00001, 0.0);
-            StopTrainingStrategy stop = new StopTrainingStrategy();
+            IMLTrain trainMain = new Backpropagation(network, minis, 0.0001, 0.01);
+            StopTrainingStrategy stop = new StopTrainingStrategy(0.0000001, 200);
             trainMain.AddStrategy(new Greedy());
-           // trainMain.AddStrategy(new HybridStrategy(trainAlt));
+            trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
             // IMLTrain train = EncogUtility.TrainConsole(network, superTemportal);
 
             var sw = new Stopwatch();
             sw.Start();
             // run epoch of learning procedure
-            for (int i = 0; i < 500; i++)
+            //for (int i = 0; i < 500; i++)
+            //{         
+            //    trainMain.Iteration();
+            //    Console.WriteLine("Iteration #:" + trainMain.IterationNumber + " Error:"+trainMain.Error);
+            //}
+
+            while (!stop.ShouldStop())
             {
                 trainMain.Iteration();
-                Console.WriteLine("Iteration #:" + trainMain.IterationNumber + " Error:"+trainMain.Error);
+                Console.WriteLine("Iteration #:" + trainMain.IterationNumber + " Error:" + trainMain.Error);
             }
             sw.Stop();
 

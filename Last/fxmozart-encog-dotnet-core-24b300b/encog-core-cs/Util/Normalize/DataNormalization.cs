@@ -382,7 +382,42 @@ namespace Encog.Util.Normalize
 
 
 
+        private void DetermineInputFieldValue(IInputField field, int index, bool headers)
+        {
+            double result;
 
+            if (field is InputFieldCSV)
+            {
+                var fieldCSV = (InputFieldCSV)field;
+                ReadCSV csv = _csvMap[field];
+                result = csv.GetDouble(fieldCSV.ColumnName);
+
+            }
+            else if (field is InputFieldMLDataSet)
+            {
+                var mlField = (InputFieldMLDataSet)field;
+                MLDataFieldHolder holder = _dataSetFieldMap
+                    [field];
+                IMLDataPair pair = holder.Pair;
+                int offset = mlField.Offset;
+                if (offset < pair.Input.Count)
+                {
+                    result = pair.Input[offset];
+                }
+                else
+                {
+                    offset -= pair.Input.Count;
+                    result = pair.Ideal[offset];
+                }
+            }
+            else
+            {
+                result = field.GetValue(index);
+            }
+
+            field.CurrentValue = result;
+            return;
+        }
         /// <summary>
         /// Called internally to obtain the current value for an input field.
         /// </summary>
@@ -397,9 +432,8 @@ namespace Encog.Util.Normalize
             {
                 var fieldCSV = (InputFieldCSV) field;
                 ReadCSV csv = _csvMap[field];
-                if (String.IsNullOrEmpty(fieldCSV.ColumnName))
-                    result = csv.GetDouble(fieldCSV.Offset);
-                result = csv.GetDouble(fieldCSV.ColumnName);
+                result = csv.GetDouble(fieldCSV.Offset);
+               
             }
             else if (field is InputFieldMLDataSet)
             {
@@ -438,6 +472,21 @@ namespace Encog.Util.Normalize
                 DetermineInputFieldValue(field, index);
             }
         }
+
+
+        /// <summary>
+        /// Called internally to determine all of the input field values.
+        /// </summary>
+        /// <param name="index">The current index.</param>
+        /// <param name="headers">if set to <c>true</c> [headers].</param>
+        private void DetermineInputFieldValues(int index, bool headers)
+        {
+            foreach (IInputField field in _inputFields)
+            {
+                DetermineInputFieldValue(field, index,headers);
+            }
+        }
+
 
         /// <summary>
         /// Find an input field by its class.
@@ -510,7 +559,7 @@ namespace Encog.Util.Normalize
             // loop over all of the records
             while (Next())
             {
-                DetermineInputFieldValues(index);
+                DetermineInputFieldValues(index,headers);
 
                 if (ShouldInclude())
                 {
@@ -882,7 +931,7 @@ namespace Encog.Util.Normalize
                 // read the value
                 foreach (IInputField field in _inputFields)
                 {
-                    DetermineInputFieldValue(field, index);
+                    DetermineInputFieldValue(field, index,headers);
                 }
 
                 if (ShouldInclude())

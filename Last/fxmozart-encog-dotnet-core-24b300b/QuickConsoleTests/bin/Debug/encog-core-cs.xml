@@ -14036,6 +14036,46 @@
             A quote (bid /ask)
             </summary>
         </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.Bid">
+            <summary>
+            The bid from a quote
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.Ask">
+            <summary>
+            The ask price from a quote
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.BidSize">
+            <summary>
+            the bid volume from a quote.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.AskSize">
+            <summary>
+            the ask size from a quote.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeOpenClose">
+            <summary>
+            Range from Open to Close (Absolute).
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeHighLow">
+            <summary>
+            Rangr from High to Low.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeOpenCloseNonAbsolute">
+            <summary>
+            Range Open to Close not using absolute numbers (No Math.Abs(Open - Close)) , this gives a directional range.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.PercentageMove">
+            <summary>
+            Percentage moves from one bar to the next.
+            </summary>
+        </member>
         <member name="T:Encog.ML.Data.Market.Loader.LoaderError">
             <summary>
             The base error for when market data is loaded.
@@ -34975,6 +35015,66 @@
             </summary>
         </member>
         <member name="M:Encog.App.Quant.Loader.TimeSeriesLoader.Load(System.String)">
+            <summary>
+            Load the specified financial data. 
+            </summary>
+            <param name="ticker">The ticker symbol to load.</param>
+            <param name="dataNeeded">The financial data needed.</param>
+            <param name="from">The beginning date to load data from.</param>
+            <param name="to">The ending date to load data to.</param>
+            <returns>A collection of LoadedMarketData objects that represent the data
+            loaded.</returns>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.RangeMaker.SetDateFormat(System.String)">
+            <summary>
+            Sets the date format for the csv file.
+            </summary>
+            <param name="stringFormat">The string format.</param>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.RangeMaker.GetFile(System.String)">
+            <summary>
+            Gets the file we want to parse.
+            </summary>
+            <param name="file">The file.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Encog.ML.Data.Market.Loader.RangeMaker.DateFormat">
+            <summary>
+            Gets or sets the date format for the whole csv file.
+            </summary>
+            <value>
+            The date format.
+            </value>
+        </member>
+        <member name="T:Encog.ML.Data.Market.Loader.GoogleLoader">
+            <summary>
+            A loader for Google.com.
+            
+            From code provided by: fxmozart
+            http://www.heatonresearch.com/node/2102
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.GoogleLoader.#ctor">
+            <summary>
+            Construct the object.
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.GoogleLoader.Load(Encog.ML.Data.Market.TickerSymbol,System.Collections.Generic.IList{Encog.ML.Data.Market.MarketDataType},System.DateTime,System.DateTime)">
+            <summary>
+            Load financial data from Google.
+            </summary>
+            <param name="ticker">The ticker to load from.</param>
+            <param name="dataNeeded">The data needed.</param>
+            <param name="from">The starting time.</param>
+            <param name="to">The ending time.</param>
+            <returns>The loaded data.</returns>
+        </member>
+        <member name="P:Encog.ML.Data.Market.Loader.GoogleLoader.Precision">
+            <summary>
+            The percision.
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.TimeSeriesLoader.Load(System.String)">
             <summary>
             Load the specified financial data. 
             </summary>

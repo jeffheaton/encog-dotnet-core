@@ -36,7 +36,23 @@ namespace Encog.Util.NetworkUtil
             return 0.0;
         }
 
+        public static double[] CalculateRanges(double[] closingValues, double[] OpeningValues)
+        {
+            double range = 0;
+            List<double> results = new List<double>();
+           //if one is bigger than the other, something is wrong.
+            if (closingValues.Length != OpeningValues.Length)
+                return null;
 
+            for (int i = 0; i < closingValues.Length; i++)
+            {
+                range = Math.Abs(closingValues[i] - OpeningValues[i]);
+                results.Add(range);
+                i++;
+            }
+            return results.ToArray();
+
+        }
         /// <summary>
         /// Calculates the percents in a double serie.
         /// </summary>

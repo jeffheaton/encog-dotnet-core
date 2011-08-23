@@ -457,6 +457,13 @@
             </summary>
             <param name="index">The current index.</param>
         </member>
+        <member name="M:Encog.Util.Normalize.DataNormalization.DetermineInputFieldValues(System.Int32,System.Boolean)">
+            <summary>
+            Called internally to determine all of the input field values.
+            </summary>
+            <param name="index">The current index.</param>
+            <param name="headers">if set to <c>true</c> [headers].</param>
+        </member>
         <member name="M:Encog.Util.Normalize.DataNormalization.FindInputField(System.Type,System.Int32)">
             <summary>
             Find an input field by its class.
@@ -621,6 +628,19 @@
             The place that the normalization output will be stored.
             </summary>
         </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.CalculatePercents(System.Double,System.Double)">
+            <summary>
+            Calculates the percents change from one number to the next.
+            First input the current number , then input the previous value.
+            </summary>
+        </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.CalculatePercents(System.Double[])">
+            <summary>
+            Calculates the percents in a double serie.
+            </summary>
+            <param name="inputs">The inputs.</param>
+            <returns></returns>
+        </member>
         <member name="M:Encog.Util.NetworkUtil.NetworkUtility.QuickParseCSV(System.String,Encog.Util.CSV.CSVFormat,System.String)">
             <summary>
             parses one column of a csv and returns an array of doubles.
@@ -742,6 +762,15 @@
             <param name="windowsize">The windowsize.</param>
             <param name="predictsize">The predictsize.</param>
             <param name="inputserie">The inputserie.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Encog.Util.NetworkUtil.NetworkUtility.GenerateTrainingWithRawSerie(System.Double[],System.Int32,System.Int32)">
+            <summary>
+            Generates the training with raw serie.
+            </summary>
+            <param name="inputserie">The inputserie.</param>
+            <param name="windowsize">The windowsize.</param>
+            <param name="predictsize">The predictsize.</param>
             <returns></returns>
         </member>
         <member name="M:Encog.Util.NetworkUtil.NetworkUtility.GenerateTrainingWithDeltaChangeOnSerie(System.Double[],System.Int32,System.Int32)">
@@ -14012,6 +14041,46 @@
         <member name="F:Encog.ML.Data.Market.MarketDataType.Quote">
             <summary>
             A quote (bid /ask)
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.Bid">
+            <summary>
+            The bid from a quote
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.Ask">
+            <summary>
+            The ask price from a quote
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.BidSize">
+            <summary>
+            the bid volume from a quote.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.AskSize">
+            <summary>
+            the ask size from a quote.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeOpenClose">
+            <summary>
+            Range from Open to Close (Absolute).
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeHighLow">
+            <summary>
+            Rangr from High to Low.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.RangeOpenCloseNonAbsolute">
+            <summary>
+            Range Open to Close not using absolute numbers (No Math.Abs(Open - Close)) , this gives a directional range.
+            </summary>
+        </member>
+        <member name="F:Encog.ML.Data.Market.MarketDataType.PercentageMove">
+            <summary>
+            Percentage moves from one bar to the next.
             </summary>
         </member>
         <member name="T:Encog.ML.Data.Market.Loader.LoaderError">
@@ -34946,6 +35015,82 @@
         </member>
         <member name="P:Encog.App.Analyst.Commands.CmdEvaluate.Name">
             <inheritdoc/>
+        </member>
+        <member name="T:Encog.App.Quant.Loader.TimeSeriesLoader">
+            <summary>
+            This method lets you download from the 
+            </summary>
+        </member>
+        <member name="M:Encog.App.Quant.Loader.TimeSeriesLoader.Load(System.String)">
+            <summary>
+            Load the specified financial data. 
+            </summary>
+            <param name="ticker">The ticker symbol to load.</param>
+            <param name="dataNeeded">The financial data needed.</param>
+            <param name="from">The beginning date to load data from.</param>
+            <param name="to">The ending date to load data to.</param>
+            <returns>A collection of LoadedMarketData objects that represent the data
+            loaded.</returns>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.RangeMaker.SetDateFormat(System.String)">
+            <summary>
+            Sets the date format for the csv file.
+            </summary>
+            <param name="stringFormat">The string format.</param>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.RangeMaker.GetFile(System.String)">
+            <summary>
+            Gets the file we want to parse.
+            </summary>
+            <param name="file">The file.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Encog.ML.Data.Market.Loader.RangeMaker.DateFormat">
+            <summary>
+            Gets or sets the date format for the whole csv file.
+            </summary>
+            <value>
+            The date format.
+            </value>
+        </member>
+        <member name="T:Encog.ML.Data.Market.Loader.GoogleLoader">
+            <summary>
+            A loader for Google.com.
+            
+            From code provided by: fxmozart
+            http://www.heatonresearch.com/node/2102
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.GoogleLoader.#ctor">
+            <summary>
+            Construct the object.
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.GoogleLoader.Load(Encog.ML.Data.Market.TickerSymbol,System.Collections.Generic.IList{Encog.ML.Data.Market.MarketDataType},System.DateTime,System.DateTime)">
+            <summary>
+            Load financial data from Google.
+            </summary>
+            <param name="ticker">The ticker to load from.</param>
+            <param name="dataNeeded">The data needed.</param>
+            <param name="from">The starting time.</param>
+            <param name="to">The ending time.</param>
+            <returns>The loaded data.</returns>
+        </member>
+        <member name="P:Encog.ML.Data.Market.Loader.GoogleLoader.Precision">
+            <summary>
+            The percision.
+            </summary>
+        </member>
+        <member name="M:Encog.ML.Data.Market.Loader.TimeSeriesLoader.Load(System.String)">
+            <summary>
+            Load the specified financial data. 
+            </summary>
+            <param name="ticker">The ticker symbol to load.</param>
+            <param name="dataNeeded">The financial data needed.</param>
+            <param name="from">The beginning date to load data from.</param>
+            <param name="to">The ending date to load data to.</param>
+            <returns>A collection of LoadedMarketData objects that represent the data
+            loaded.</returns>
         </member>
     </members>
 </doc>

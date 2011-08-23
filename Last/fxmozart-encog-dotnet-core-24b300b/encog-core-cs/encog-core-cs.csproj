@@ -262,9 +262,11 @@
       <DependentUpon>CSVFormLoader.cs</DependentUpon>
     </Compile>
     <Compile Include="ML\Data\Market\Loader\CSVLoader.cs" />
+    <Compile Include="ML\Data\Market\Loader\GoogleLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
+    <Compile Include="ML\Data\Market\Loader\RangeMaker.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
@@ -272,6 +274,7 @@
     <Compile Include="ML\Data\Market\MarketMLDataSet.cs" />
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
+    <Compile Include="ML\Data\Market\TimeSeriesLoader.cs" />
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
     <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />

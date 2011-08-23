@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Encog.ML.Data.Market.FinanceDataSet;
+
 using Encog.Util.CSV;
 
 namespace Encog.ML.Data.Market.Loader
@@ -111,10 +111,7 @@ namespace Encog.ML.Data.Market.Loader
             return File.Exists(LoadedFile) ? (ReadAndCallLoader(ticker, dataNeeded, from, to, LoadedFile)) : null;
         }
 
-        public ICollection<LoadedMarketData> Load(FinanceSymbols.Instrument ticker, IList<FinanceDataTypes> dataNeeded, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         #endregion
 
