@@ -125,6 +125,7 @@
     <Compile Include="App\Analyst\Wizard\AnalystWizard.cs" />
     <Compile Include="App\Analyst\Wizard\NormalizeRange.cs" />
     <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
+    <Compile Include="App\Finance\COTReportDownloader.cs" />
     <Compile Include="App\Finance\Indicators\Finance.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -544,6 +545,7 @@
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
+    <Compile Include="Util\NetworkUtil\ZipClass.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />

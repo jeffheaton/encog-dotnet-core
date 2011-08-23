@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Encog.Engine.Network.Activation;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.ML.SVM;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
+using Encog.Neural.Pattern;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
@@ -26,10 +28,19 @@ namespace Encog.Util.NetworkUtil
     /// </summary>
     public class NetworkUtility
     {
-
-
-
-
+        /// <summary>
+        /// Quickly an IMLDataset from a double array using the TemporalWindow array.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="outputsize">The outputsize.</param>
+        /// <returns></returns>
+        public static IMLDataSet QuickTrainingFromDoubleArray(double [] array, int inputsize, int outputsize)
+        {
+            TemporalWindowArray temp = new TemporalWindowArray(inputsize,outputsize);
+            temp.Analyze(array);
+            return temp.Process(array);
+        }
 
         /// <summary>
         /// Saves the matrix to the desired file location.
@@ -439,7 +450,98 @@ namespace Encog.Util.NetworkUtil
             result.Generate();
             return result;
         }
+        /// <summary>
+        /// Makes random inputs by randomizing with encog randomize , the normal random from net framework library.
+        /// a quick and easy way to test data and networks.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        /// <returns></returns>
+        public static double[] MakeInputs(int number)
+        {
+            Random rdn = new Random();
+            Encog.MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
+            double[] x = new double[number];
+            for (int i = 0; i < number; i++)
+            {
+                x[i] = encogRnd.Randomize((rdn.NextDouble()));
 
+            }
+            return x;
+        }
+
+        /// <summary>
+        /// Calculates and returns the copied array.
+        /// This is used in live data , when you want have a full array of doubles but you want to cut from a starting position
+        /// and return only from that point to the end.
+        /// example you have 1000 doubles , but you want only the last 100.
+        /// input size is the input you must set to 100.
+        /// </summary>
+        /// <param name="inputted">The inputted.</param>
+        /// <param name="inputsize">The input neuron size (window size).</param>
+        /// <returns></returns>
+        public double[] ReturnArrayOnSize(double[] inputted, int inputsize)
+        {
+            double[] arr = new double[inputsize];
+            int howBig = 0;
+            if (inputted.Length > inputsize)
+            {
+                howBig = inputted.Length - inputsize;
+            }
+            EngineArray.ArrayCopy(inputted, howBig, arr, 0, inputsize);
+            return arr;
+        }
+
+
+        /// <summary>
+        /// Returns a randomized IMLDataset ready for use.
+        /// </summary>
+        /// <param name="sizeofInputs">The sizeof inputs.</param>
+        /// <param name="sizeOfOutputs">The size of outputs.</param>
+        /// <returns></returns>
+        public static IMLDataSet ReturnRandomizedDataSet(int sizeofInputs, int sizeOfOutputs)
+        {
+            double[] res = MakeInputs(sizeofInputs);
+           return QuickTrainingFromDoubleArray(res, sizeofInputs, sizeOfOutputs);
+
+        }
+        /// <summary>
+        /// Generates the Temporal Training based on an array of doubles.
+        /// You need to have 2 array of doubles [] for this method to work!
+        /// </summary>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="outputsize">The outputsize.</param>
+        /// <param name="Arraydouble">The arraydouble.</param>
+        /// <returns></returns>
+        public static TemporalMLDataSet GenerateTraining(int inputsize, int outputsize, params double[][] Arraydouble)
+        {
+            if (Arraydouble.Length <2)
+                return null;
+            if (Arraydouble.Length > 2)
+                return null;
+            TemporalMLDataSet result = new TemporalMLDataSet(inputsize, outputsize);
+            TemporalDataDescription desc = new TemporalDataDescription(new ActivationTANH(),TemporalDataDescription.Type.PercentChange, true, true);
+            result.AddDescription(desc);
+            TemporalPoint point = new TemporalPoint(Arraydouble.Length);
+            int currentindex;
+           for (int w =0 ;w <Arraydouble[0].Length;w++)
+           {
+               //We have filled in one dimension now lets put them in our temporal dataset.
+               for (int year = 0; year < Arraydouble.Length-1; year++)
+               {
+                   //We have as many points as we passed the array of doubles.
+                   point = new TemporalPoint(Arraydouble.Length);
+                   //our first sequence (0).
+                   point.Sequence = w;
+                   //point 0 is double[0] array.
+                   point.Data[0] = Arraydouble[0][w];
+                   point.Data[1] = Arraydouble[1][w];
+                   //we add the point..
+               }
+               result.Points.Add(point);
+           }
+            result.Generate();
+            return result;
+        }
 
         /// <summary>
         /// Generates a temporal data set with a given double serie or a any number of double series , making your inputs.
@@ -484,7 +586,6 @@ namespace Encog.Util.NetworkUtil
             TemporalDataDescription desc = new TemporalDataDescription(
                     TemporalDataDescription.Type.Raw, true, true);
             result.AddDescription(desc);
-
             for (int index = 0; index < inputserie.Length - 1; index++)
             {
                 TemporalPoint point = new TemporalPoint(1);
@@ -569,24 +670,12 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         public static readonly Encog.Util.Arrayutil.NormalizeArray ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
 
-
-
+        
         /// <summary>
-        /// Processes and normalize a double serie.
-        /// </summary>
-        /// <param name="data">The double serie to normalize.</param>
-        /// <returns></returns>
-        public static double[] ProcessAndNormalizeDoubles(double[] data)
-        {
-            double[] returnedArray = NormalizeThisArray(data);
-            return returnedArray;
-        }
-
-        /// <summary>
-        /// Normalizes this array.
+        /// Normalizes an array.
         /// </summary>
         /// <param name="inputArray">The input array.</param>
-        /// <returns></returns>
+        /// <returns>a normalized array of doubles</returns>
         public static double[] NormalizeThisArray(double[] inputArray)
         {
             return ArrayNormalizer.Process(inputArray);
@@ -602,11 +691,11 @@ namespace Encog.Util.NetworkUtil
         }
 
         /// <summary>
-        /// Loads a normalization file.
+        /// Loads a normalization from the specified directory and file.
         /// </summary>
         /// <param name="directory">The directory.</param>
         /// <param name="file">The file.</param>
-        /// <returns></returns>
+        /// <returns>a datanormalization object</returns>
         public static DataNormalization LoadNormalization(string directory, string file)
         {
             DataNormalization norm = null;
@@ -634,6 +723,28 @@ namespace Encog.Util.NetworkUtil
         public static void SaveNormalization(string directory, string file, DataNormalization normTosave)
         {
             SerializeObject.Save(directory + file, normTosave);
+        }
+
+
+
+        /// <summary>
+        /// Creates the elman network as a basicnetwork.
+        /// This method create a elmhan patterns but returns a basic network (ready for load/save).
+        /// </summary>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="outputsize">The outputsize.</param>
+        /// <param name="hiddenlayers">The hiddenlayers.</param>
+        /// <param name="activate">The activation function to use..</param>
+        /// <returns>a basic network</returns>
+        public static BasicNetwork CreateElmanNetwork(int inputsize, int outputsize, int hiddenlayers, IActivationFunction activate)
+        {
+            // construct an Elman type network
+            ElmanPattern pattern = new ElmanPattern();
+            pattern.ActivationFunction = activate;
+            pattern.InputNeurons = inputsize;
+            pattern.AddHiddenLayer(hiddenlayers);
+            pattern.OutputNeurons = outputsize;
+            return (BasicNetwork)pattern.Generate();
         }
     }
 }
