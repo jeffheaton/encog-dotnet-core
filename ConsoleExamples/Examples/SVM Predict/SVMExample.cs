@@ -27,9 +27,11 @@ namespace Encog.Examples.SVM_Predict
                 var info = new ExampleInfo(
                     typeof(SVMExample),
                     "SVM",
-                    "Makes a small SVM random trainer.",
+                    "Random Makes a small SVM random trainer.",
                     "Makes a SVM network and trains against random inputs." +
-                    "\nYou can do SVM random [numberofInputs] [OutputSize]")
+                    "\nYou can do SVM random [numberofInputs] [OutputSize]"+
+                    "\n SVM [sunspot] analyzes the sunspots and predicts the sunspots"+
+                    "SVM [svm] uses the super vector machines to predict random numbers")
                 ;
                 return info;
             }
