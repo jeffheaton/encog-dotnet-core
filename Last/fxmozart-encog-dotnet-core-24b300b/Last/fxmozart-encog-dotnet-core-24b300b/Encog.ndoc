@@ -1,0 +1,14 @@
+<project SchemaVersion="1.3">
+    <assemblies>
+        <assembly location="C:\tools\CruiseControl\projects\cs-encog-core\stage\src\encog-core-cs\bin\Release\encog-core-cs.dll" documentation="C:\tools\CruiseControl\projects\cs-encog-core\stage\src\encog-core-cs\bin\Release\encog-core-cs.xml" />
+    </assemblies>
+    <documenters>
+        <documenter name="MSDN">
+            <property name="OutputDirectory" value=".\stage\" />
+            <property name="HtmlHelpName" value="EncogDotNet" />
+            <property name="Title" value="Documentation For Encog 2.x" />
+            <property name="OutputTarget" value="HtmlHelp" />
+            <property name="SdkDocVersionString" value="VS.80" />
+        </documenter>
+    </documenters>
+</project>

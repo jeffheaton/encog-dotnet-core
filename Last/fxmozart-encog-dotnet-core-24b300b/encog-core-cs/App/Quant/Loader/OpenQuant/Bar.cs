@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-#pragma warning disable 1591
+
 namespace Encog.App.Quant.Loader.OpenQuant.Data
 {
     /// <summary>
@@ -22,9 +22,7 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
             public DateTime DateTime { get; set; }
             public double Close { get; set; }
             public double Open { get; set; }
-#pragma warning disable 1591
             public double High { get; set; }
-
             public double Low { get; set; }
             public DateTime BeginTime { get; set; }
             protected DateTime EndTime { get; set; }//end time for this bar.
@@ -277,5 +275,3 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
     }
 
 }
-
-#pragma warning restore 1591

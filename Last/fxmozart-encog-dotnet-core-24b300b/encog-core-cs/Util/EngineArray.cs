@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Encog.Util
 {
@@ -88,7 +87,7 @@ namespace Encog.Util
             double value = 0;
 
             for (int i = 0; i < length; ++i)
-                value += a[i] * b[i];
+                value += a[i]*b[i];
 
             return value;
         }
@@ -190,7 +189,7 @@ namespace Encog.Util
         /// <param name="lenth">The lenth to get.</param>
         /// <param name="closes"></param>
         /// <returns>a double serie with the last n requested values.</returns>
-        public double[] TransferNvaluesOfSerie(int lenth, double[] closes)
+        public double[] TransferNvaluesOfSerie(int lenth, double [] closes)
         {
             if (closes != null)
             {
@@ -261,7 +260,7 @@ namespace Encog.Util
         {
             for (int i = 0; i < source.Length; i++)
             {
-                target[i] = (float)source[i];
+                target[i] = (float) source[i];
             }
         }
 
@@ -403,83 +402,5 @@ namespace Encog.Util
             }
             return result;
         }
-
-        /// <summary>
-        /// Indicates if a list of doubles is sorted into ascending order.
-        /// </summary>
-        public static bool IsSorted(IList<double> valueList)
-        {
-            if (0 == valueList.Count)
-            {
-                return true;
-            }
-
-            double prev = valueList[0];
-            int count = valueList.Count;
-            for (int i = 1; i < count; i++)
-            {
-                if (valueList[i] < prev)
-                {
-                    return false;
-                }
-                prev = valueList[i];
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Indicates if an array of doubles is sorted into ascending order.
-        /// </summary>
-        public static bool IsSortedAscending(double[] valueList)
-        {
-            if (0 == valueList.Length)
-            {
-                return true;
-            }
-
-            double prev = valueList[0];
-            int count = valueList.Length;
-            for (int i = 1; i < count; i++)
-            {
-                if (valueList[i] < prev)
-                {
-                    return false;
-                }
-                prev = valueList[i];
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Determines whether [is sorted descending] [the specified value list].
-        /// </summary>
-        /// <param name="valueList">The value list.</param>
-        /// <returns>
-        ///   <c>true</c> if [is sorted descending] [the specified value list]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsSortedDescending(double[] valueList)
-        {
-            if (0 == valueList.Length)
-            {
-                return true;
-            }
-
-            
-            double prev = valueList[0];
-            int count = valueList.Length;
-            for (int i = 1; i < count; i++)
-            {
-                if (valueList[i] > prev)
-                {
-                    return false;
-                }
-                prev = valueList[i];
-            }
-            return true;
-        }
-
     }
-
 }
-
-

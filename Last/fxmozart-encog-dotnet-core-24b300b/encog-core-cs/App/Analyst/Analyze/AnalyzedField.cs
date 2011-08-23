@@ -119,7 +119,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 try
                 {
-                    double d = CSVFormat.EgFormat.Parse(str);
+                    double d = this._script.DetermineFormat().Parse(str);
                     Max = Math.Max(d, Max);
                     Min = Math.Min(d, Min);
                     _total += d;

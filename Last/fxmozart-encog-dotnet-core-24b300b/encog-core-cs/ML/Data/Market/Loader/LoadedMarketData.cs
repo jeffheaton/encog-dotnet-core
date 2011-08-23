@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using Encog.ML.Data.Market.FinanceDataSet;
 
 namespace Encog.ML.Data.Market.Loader
 {
@@ -66,8 +65,6 @@ namespace Encog.ML.Data.Market.Loader
             get { return _ticker; }
         }
 
-      
-       
         /// <summary>
         /// The data that was downloaded.
         /// </summary>

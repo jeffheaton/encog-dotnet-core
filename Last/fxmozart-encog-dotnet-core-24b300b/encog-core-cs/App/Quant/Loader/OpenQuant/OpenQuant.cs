@@ -72,32 +72,19 @@ public interface IDataSeries : IEnumerable
              public const long Year = 0x1e13380L;
          }
 
+ 
 
-         public double[] FromIDataSeriesToDoubleArray(IDataSeries doubleSerie)
-         {
-             double[] doublearray = new double[doubleSerie.Count];
-             int index = 0;
-             foreach (double adouble in doubleSerie)
-             {
-                 doublearray[index] = adouble;
-             }
 
-             return doublearray;
-         }
+ 
 
-         public double[] FromDataArrayToDoubleArray(DataArray doubleSerie)
-         {
-             double[] doublearray = new double[doubleSerie.Count];
-             int index = 0;
-             foreach (double adouble in doubleSerie)
-             {
-                 doublearray[index] = adouble;
-             }
+        #region collect
 
-             return doublearray;
-         }
+      
+      
+
        
 
+        #endregion
 	
     }
 }

@@ -25,7 +25,7 @@ namespace Encog.Examples.Market
 
             // Gather training data for the last 2 years, stopping 60 days short of today.
             // The 60 days will be used to evaluate prediction.
-            begin = begin.AddDays(-800);
+            begin = begin.AddDays(-60);
             end = end.AddDays(-60);
             begin = begin.AddYears(-2);
 

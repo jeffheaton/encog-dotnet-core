@@ -32,7 +32,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Encog.ML.Data.Market.FinanceDataSet;
 using Encog.Util;
 using Encog.Util.CSV;
 using Encog.Util.HTTP;
@@ -95,11 +94,6 @@ namespace Encog.ML.Data.Market.Loader
                 istream.Close();
             }
             return result;
-        }
-
-        public ICollection<LoadedMarketData> Load(FinanceSymbols.Instrument ticker, IList<FinanceDataTypes> dataNeeded, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

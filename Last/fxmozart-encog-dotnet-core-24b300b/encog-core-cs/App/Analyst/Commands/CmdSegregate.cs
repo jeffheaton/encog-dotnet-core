@@ -73,9 +73,7 @@ namespace Encog.App.Analyst.Commands
             EncogLogging.Log(EncogLogging.LevelDebug, "source file:" + sourceID);
 
             // get formats
-            CSVFormat inputFormat = Script
-                .DetermineInputFormat(sourceID);
-            CSVFormat outputFormat = Script.DetermineOutputFormat();
+            CSVFormat format = Script.DetermineFormat();
 
             // prepare to segregate
             bool headers = Script.ExpectInputHeaders(sourceID);
@@ -95,8 +93,7 @@ namespace Encog.App.Analyst.Commands
             }
 
             seg.Report = new AnalystReportBridge(Analyst);
-            seg.Analyze(sourceFile, headers, inputFormat);
-            seg.OutputFormat = outputFormat;
+            seg.Analyze(sourceFile, headers, format);
 
             seg.Process();
             Analyst.CurrentQuantTask = null;

@@ -67,7 +67,7 @@ namespace Encog.App.Analyst.CSV.Balance
         {
             InputFilename = inputFile;
             ExpectInputHeaders = headers;
-            InputFormat = format;
+            Format = format;
 
             Analyzed = true;
 
@@ -110,7 +110,7 @@ namespace Encog.App.Analyst.CSV.Balance
             _counts = new Dictionary<String, Int32>();
 
             var csv = new ReadCSV(InputFilename.ToString(),
-                                  ExpectInputHeaders, InputFormat);
+                                  ExpectInputHeaders, Format);
 
             ResetStatus();
             while (csv.Next() && !ShouldStop())

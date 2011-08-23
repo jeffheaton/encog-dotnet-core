@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.ML.Data.Market.FinanceDataSet;
 using Encog.Util.CSV;
 using System.IO;
 using System.Windows.Forms;
 
 namespace Encog.ML.Data.Market.Loader
 {
-    /// <summary>
-    /// Loads a csv file and makes a marketdataset.
-    /// </summary>
-    public class CSVTicksFileLoader : IMarketLoader
+    public class CSVFileLoader : IMarketLoader
     {
 
         #region IMarketLoader Members
@@ -102,10 +98,7 @@ namespace Encog.ML.Data.Market.Loader
             return null;
         }
 
-        public ICollection<LoadedMarketData> Load(FinanceSymbols.Instrument ticker, IList<FinanceDataTypes> dataNeeded, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
+
 
         #endregion
 

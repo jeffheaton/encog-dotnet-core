@@ -51,12 +51,6 @@ namespace Encog.App.Analyst.Script.Prop
         public const String HeaderDatasourceRawFile = "HEADER:DATASOURCE_rawFile";
 
         /// <summary>
-        /// Property for: "HEADER:DATASOURCE_sourceFormat".
-        /// </summary>
-        ///
-        public const String HeaderDatasourceSourceFormat = "HEADER:DATASOURCE_sourceFormat";
-
-        /// <summary>
         /// Property for: "HEADER:DATASOURCE_sourceHeaders".
         /// </summary>
         ///

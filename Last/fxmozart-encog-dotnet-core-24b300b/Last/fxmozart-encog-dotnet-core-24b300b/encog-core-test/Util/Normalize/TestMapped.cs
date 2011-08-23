@@ -1,0 +1,66 @@
+﻿using Encog.Util.Normalize.Input;
+using Encog.Util.Normalize.Output.Mapped;
+using Encog.Util.Normalize.Target;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Encog.Util.Normalize
+{
+    [TestClass]
+    public class TestMapped
+    {
+        public static readonly double[][] ARRAY_2D = {
+                                                         new[] {1.0, 2.0, 3.0, 4.0, 5.0},
+                                                         new[] {6.0, 7.0, 8.0, 9.0}
+                                                     };
+
+        private DataNormalization Create(double[][] arrayOutput)
+        {
+            IInputField a, b;
+
+
+            var target = new NormalizationStorageArray2D(arrayOutput);
+            OutputFieldEncode a1;
+            OutputFieldEncode b1;
+
+            var norm = new DataNormalization();
+            norm.Report = new NullStatusReportable();
+            norm.Storage = target;
+            norm.AddInputField(a = new InputFieldArray2D(false, ARRAY_2D, 0));
+            norm.AddInputField(b = new InputFieldArray2D(false, ARRAY_2D, 1));
+            norm.AddOutputField(a1 = new OutputFieldEncode(a));
+            norm.AddOutputField(b1 = new OutputFieldEncode(b));
+            a1.AddRange(1.0, 2.0, 0.1);
+            b1.AddRange(0, 100, 0.2);
+
+            return norm;
+        }
+
+        public void Check(double[][] arrayOutput)
+        {
+            Assert.AreEqual(arrayOutput[0][0], 0.1, 0.1);
+            Assert.AreEqual(arrayOutput[1][0], 0.0, 0.1);
+            Assert.AreEqual(arrayOutput[0][1], 0.1, 0.1);
+            Assert.AreEqual(arrayOutput[1][1], 0.2, 0.1);
+        }
+
+        [TestMethod]
+        public void TestOutputFieldEncode()
+        {
+            double[][] arrayOutput = EngineArray.AllocateDouble2D(2, 2);
+            DataNormalization norm = Create(arrayOutput);
+            norm.Process();
+            Check(arrayOutput);
+        }
+
+        [TestMethod]
+        public void TestOutputFieldEncodeSerialize()
+        {
+            double[][] arrayOutput = EngineArray.AllocateDouble2D(2, 2);
+            DataNormalization norm = Create(arrayOutput);
+            norm = (DataNormalization) SerializeRoundTrip.RoundTrip(norm);
+            arrayOutput = ((NormalizationStorageArray2D) norm.Storage).GetArray();
+            norm.Process();
+            Check(arrayOutput);
+        }
+    }
+}

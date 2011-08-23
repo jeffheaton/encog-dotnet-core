@@ -78,9 +78,7 @@ namespace Encog.App.Analyst.Commands
             Script.MarkGenerated(targetID);
 
             // get formats
-            CSVFormat inputFormat = Script
-                .DetermineInputFormat(sourceID);
-            CSVFormat outputFormat = Script.DetermineOutputFormat();
+            CSVFormat format = Script.DetermineFormat();
 
             // prepare to normalize
             var norm = new AnalystNormalizeCSV {Script = Script};
@@ -88,8 +86,7 @@ namespace Encog.App.Analyst.Commands
             norm.Report = new AnalystReportBridge(Analyst);
 
             bool headers = Script.ExpectInputHeaders(sourceID);
-            norm.Analyze(sourceFile, headers, inputFormat, Analyst);
-            norm.OutputFormat = outputFormat;
+            norm.Analyze(sourceFile, headers, format, Analyst);
             norm.ProduceOutputHeaders = true;
             norm.Normalize(targetFile);
             Analyst.CurrentQuantTask = null;

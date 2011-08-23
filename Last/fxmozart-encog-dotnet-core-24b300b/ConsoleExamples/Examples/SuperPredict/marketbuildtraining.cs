@@ -1,34 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Encog.Engine.Network.Activation;
-using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.ML.Data.Market;
-using Encog.ML.Data.Market.Loader;
 using Encog.ML.Data.Temporal;
-using Encog.ML.Train;
-using Encog.ML.Train.Strategy;
-using Encog.Neural.Networks;
-using Encog.Neural.Networks.Training;
-using Encog.Neural.Networks.Training.Anneal;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Pattern;
+using Encog.Util;
 using Encog.Util.CSV;
-using Encog.Util.File;
-using Encog.Util.Simple;
+using Encog.Util.NetworkUtil;
 using NUnit.Framework;
 using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
 
-namespace Encog.Examples.RangeAndPredictions
+namespace Encog.Examples.SuperPredict
 {
 
     public class MarketBuildTraining
     {
-        public static void Generate(string fileName)
+        public static void Generate()
         {
 
 
@@ -65,48 +54,99 @@ namespace Encog.Examples.RangeAndPredictions
         }
 
    
-        [Test]
+
         public static void GetStuffs()
         {
             string fileName = "c:\\EURUSD_Hourly_Bid_1999.03.04_2011.03.14.csv";
-            List<double> Opens = SuperUtils.QuickParseCSV(fileName, "Open");
-            List<double> High = SuperUtils.QuickParseCSV(fileName, "High");
-            List<double> Low = SuperUtils.QuickParseCSV(fileName, "Low");
-            List<double> Close = SuperUtils.QuickParseCSV(fileName, "Close");
+            List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open");
+            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High");
+            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low");
+            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close");
 
             double[] Opensd = new double[Opens.Count];
             double[] Closed = new double[Close.Count];
             double[] Highd = new double[High.Count];
             double[] Lowd = new double[Low.Count];
+            Encog.Util.Arrayutil.NormalizeArray ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
 
 
 
-
-            Opensd= CreateNormalizatione(Opensd.ToArray());
-            Highd = CreateNormalizatione(High.ToArray());
-            Closed = CreateNormalizatione(Close.ToArray());
-            Lowd = CreateNormalizatione(Low.ToArray());
-
-
-
-        }
-        public IMLDataSet CreateSetFromInputs(double [][] input,int nbofInputs)
-        {
+            List<double> NormedOpened = SuperUtils.CopydoubleArrayToList(ArrayNormalizer.Process(Opens.ToArray()));
+            ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
+            List<double> NormedHigh = SuperUtils.CopydoubleArrayToList(ArrayNormalizer.Process(High.ToArray()));
+            ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
+            List<double> NormedLow = SuperUtils.CopydoubleArrayToList(ArrayNormalizer.Process(Low.ToArray()));
+            ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
+            List<double> NormedClose = SuperUtils.CopydoubleArrayToList(ArrayNormalizer.Process(Close.ToArray()));
+            ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
+           
             
+          
+            double [][] idealdb =CreateIdealOrInput(Closed.Length, NormedClose.ToArray());
+            double[][] inputsz = CreateIdealOrInput(Closed.Length, NormedHigh.ToArray(), NormedLow.ToArray(), NormedClose.ToArray(), NormedOpened.ToArray());
+            var x = GenerateTraining(inputsz, idealdb);
+
+
 
         }
 
-        public IMLDataSet GenerateTraining(double[][] input, double[][] ideal)
+
+        public TemporalMLDataSet AddToTraining(int inputsize, int outputsize,IActivationFunction fc, bool input, bool predict , TemporalDataDescription.Type aType ,double[] Arraydouble)
         {
-            IMLDataSet result = new BasicMLDataSet(input, ideal);
+            TemporalMLDataSet result = new TemporalMLDataSet(inputsize, outputsize);
+            TemporalDataDescription desc = new TemporalDataDescription(fc,aType, input,predict);
+
+
+            result.AddDescription(desc);
+            for (int year = 0; year < Arraydouble.Length; year++)
+            {
+                TemporalPoint point = new TemporalPoint(1);
+                point.Sequence = year;
+                point.Data[0] = Arraydouble[year];
+                result.Points.Add(point);
+            }
+        
             return result;
         }
 
 
 
+
+
+        public static double [][] CreateIdealOrInput(int nbofSeCondDimendsion ,params object[] inputs)
+        {
+            double[][] result = EngineArray.AllocateDouble2D(inputs.Length, nbofSeCondDimendsion);
+            int i = 0, k = 0;
+                foreach (double[] doubles in inputs)
+                {
+                    foreach (double d in doubles)
+                    {
+                        result[i][k] = d;
+                        k++;
+                    }
+                    if (i < inputs.Length -1)
+                    {
+                        i++;
+                        k = 0;
+                    }
+                }
+            return result;
+        }
+
+        public IMLDataSet Generate(int count, double [][]input,double [][]ideal)
+        {
+            return new BasicMLDataSet(input, ideal);
+        }
+        public static IMLDataSet GenerateTraining(double[][] input, double[][] ideal)
+        {
+            var result = new BasicMLDataSet(input, ideal);
+            return result;
+        }
+
+     
         public static double [] CreateNormalizatione(double [] input)
         {
-            double [] results = SuperUtils.NormalizeThisArray(input);
+            double [] results = NetworkUtility.NormalizeThisArray(input);
             return results;
         }
         public class PredictionInputs

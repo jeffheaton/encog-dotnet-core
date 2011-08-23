@@ -1,0 +1,55 @@
+//
+// Encog(tm) Core v3.0 - .Net Version
+// http://www.heatonresearch.com/encog/
+//
+// Copyright 2008-2011 Heaton Research, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//   
+// For more information on Heaton Research copyrights, licenses 
+// and trademarks visit:
+// http://www.heatonresearch.com/copyright
+//
+
+namespace Encog.Util.Normalize.Segregate
+{
+    /// <summary>
+    /// Segregators are used to exclude certain rows. You may want to exclude rows to
+    /// create training and validation sets. You may also simply wish to exclude some
+    /// rows because they do not apply to what you are currently training for.
+    /// </summary>
+    public interface ISegregator
+    {
+        /// <summary>
+        /// The normalization object that is being used with this segregator.
+        /// </summary>
+        DataNormalization Owner { get; }
+
+        /// <summary>
+        /// Setup this object to use the specified normalization object.
+        /// </summary>
+        /// <param name="normalization">The normalization object to use.</param>
+        void Init(DataNormalization normalization);
+
+        /// <summary>
+        /// Should this row be included, according to this segregator.
+        /// </summary>
+        /// <returns>True if this row should be included.</returns>
+        bool ShouldInclude();
+
+        /// <summary>
+        /// Init for a pass.
+        /// </summary>
+        void PassInit();
+    }
+}

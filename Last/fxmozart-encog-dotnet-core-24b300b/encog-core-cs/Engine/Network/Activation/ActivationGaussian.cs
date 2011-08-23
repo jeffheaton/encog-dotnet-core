@@ -150,15 +150,6 @@ namespace Encog.Engine.Network.Activation
                    *(width*width*b*b - 1);
         }
 
-
-        /// <summary>
-        /// Calculates the output value for the specified input value and optional activation function auxiliary arguments.
-        /// </summary>
-        public double BipolarGaussianCalculate(double x, double[] auxArgs)
-        {
-            return (2.0 * Math.Exp(-Math.Pow(x * 2.5, 2.0))) - 1.0;
-        }
-
         /// <inheritdoc />
         public virtual String[] ParamNames
         {

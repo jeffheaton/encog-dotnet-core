@@ -380,6 +380,9 @@ namespace Encog.Util.Normalize
             return result;
         }
 
+
+
+
         /// <summary>
         /// Called internally to obtain the current value for an input field.
         /// </summary>
@@ -394,7 +397,9 @@ namespace Encog.Util.Normalize
             {
                 var fieldCSV = (InputFieldCSV) field;
                 ReadCSV csv = _csvMap[field];
-                result = csv.GetDouble(fieldCSV.Offset);
+                if (String.IsNullOrEmpty(fieldCSV.ColumnName))
+                    result = csv.GetDouble(fieldCSV.Offset);
+                result = csv.GetDouble(fieldCSV.ColumnName);
             }
             else if (field is InputFieldMLDataSet)
             {
@@ -485,6 +490,45 @@ namespace Encog.Util.Normalize
         /// <summary>
         /// First pass, count everything, establish min/max.
         /// </summary>
+        private void FirstPass(bool headers)
+        {
+            OpenCSV(headers);
+            OpenDataSet();
+
+            _currentIndex = -1;
+            _recordCount = 0;
+
+            if (_report != null)
+            {
+                _report.Report(0, 0, "Analyzing file");
+            }
+            _lastReport = 0;
+            int index = 0;
+
+            InitForPass();
+
+            // loop over all of the records
+            while (Next())
+            {
+                DetermineInputFieldValues(index);
+
+                if (ShouldInclude())
+                {
+                    ApplyMinMax();
+                    _recordCount++;
+                    ReportResult("First pass, analyzing file", 0, _recordCount);
+                }
+                index++;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// First pass, count everything, establish min/max.
+        /// This version doesn't read column names in csvinputfields.
+        /// </summary>
         private void FirstPass()
         {
             OpenCSV();
@@ -516,6 +560,10 @@ namespace Encog.Util.Normalize
                 index++;
             }
         }
+
+
+
+  
 
         /// <summary>
         /// Calculate the number of output fields that are not used as ideal
@@ -635,6 +683,38 @@ namespace Encog.Util.Normalize
         }
 
         /// <summary>
+        /// Called internally to open the CSV file with header.
+        /// </summary>
+        private void OpenCSV(bool headers)
+        {
+            // clear out any CSV files already there
+            _csvMap.Clear();
+            _readCSV.Clear();
+
+            // only add each CSV once
+            IDictionary<String, ReadCSV> uniqueFiles = new Dictionary<String, ReadCSV>();
+
+            // find the unique files
+            foreach (IInputField field in _inputFields)
+            {
+                if (field is InputFieldCSV)
+                {
+                    var csvField = (InputFieldCSV)field;
+                    String file = csvField.File;
+                    if (!uniqueFiles.ContainsKey(file))
+                    {
+                        var csv = new ReadCSV(file, headers,
+                                              _csvFormat);
+                        uniqueFiles[file] = csv;
+                        _readCSV.Add(csv);
+                    }
+                    _csvMap[csvField] = uniqueFiles[file];
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Open any datasets that were used by the input layer.
         /// </summary>
         private void OpenDataSet()
@@ -685,7 +765,20 @@ namespace Encog.Util.Normalize
             }
             SecondPass();
         }
-
+        /// <summary>
+        /// Call this method to begin the normalization process.  Any status 
+        /// updates will be sent to the class specified in the constructor.
+        /// this version uses headers.
+        /// </summary>
+        public void Process(bool headers)
+        {
+            Init();
+            if (TwoPassesNeeded())
+            {
+                FirstPass(headers);
+            }
+            SecondPass(headers);
+        }
         /// <summary>
         /// Report on the current progress.
         /// </summary>
@@ -758,6 +851,65 @@ namespace Encog.Util.Normalize
             }
             _storage.Close();
         }
+
+
+
+
+        /// <summary>
+        /// The second pass actually writes the data to the output files.
+        /// </summary>
+        private void SecondPass(bool headers)
+        {
+            bool twopass = TwoPassesNeeded();
+
+            // move any CSV and datasets files back to the beginning.
+            OpenCSV(headers);
+            OpenDataSet();
+            InitForPass();
+
+            _currentIndex = -1;
+
+            // process the records
+            int size = GetOutputFieldCount();
+            var output = new double[size];
+
+            _storage.Open();
+            _lastReport = 0;
+            int index = 0;
+            int current = 0;
+            while (Next())
+            {
+                // read the value
+                foreach (IInputField field in _inputFields)
+                {
+                    DetermineInputFieldValue(field, index);
+                }
+
+                if (ShouldInclude())
+                {
+                    // handle groups
+                    InitForOutput();
+
+                    // write the value
+                    int outputIndex = 0;
+                    foreach (IOutputField ofield in _outputFields)
+                    {
+                        for (int sub = 0; sub < ofield.SubfieldCount; sub++)
+                        {
+                            output[outputIndex++] = ofield.Calculate(sub);
+                        }
+                    }
+
+                    ReportResult(twopass ? "Second pass, normalizing data" : "Processing data (single pass)",
+                                 _recordCount, ++current);
+                    _storage.Write(output, 0);
+                }
+
+                index++;
+            }
+            _storage.Close();
+        }
+
 
         /// <summary>
         /// Should this row be included? Check the segregatprs.
