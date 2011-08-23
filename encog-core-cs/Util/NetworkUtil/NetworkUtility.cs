@@ -25,6 +25,63 @@ namespace Encog.Util.NetworkUtil
     /// </summary>
     public class NetworkUtility
     {
+
+
+
+
+
+        /// <summary>
+        /// Saves the matrix to the desired file location.
+        /// </summary>
+        /// <param name="surface">The surface.</param>
+        /// <param name="fileName">Name of the file.</param>
+        private static void SaveMatrix(double[][] surface, string fileName)
+        {
+            using (var sw = new System.IO.StreamWriter(fileName, false))
+            {
+                for (int i = 0; i < surface.Length; i++)
+                {
+                    for (int j = 0; j < surface[i].Length; j++)
+                    {
+                        if (double.IsNaN(surface[i][j]))
+                            sw.Write(",");
+                        else
+                            sw.Write(surface[i][j] + ",");
+                    }
+                    sw.WriteLine();
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Loads a matrix from a file to a double[][] array.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
+        private static double[][] LoadMatrix(string fileName)
+        {
+            string[] allLines = System.IO.File.ReadAllLines(fileName);
+
+            double[][] matrix = new double[allLines.Length][];
+
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                string[] values = allLines[i].Split(',');
+                matrix[i] = new double[values.Length];
+
+                for (int j = 0; j < values.Length; j++)
+                {
+                    if (values[j] != "")
+                        matrix[i][j] = Convert.ToDouble(values[j]);
+                    else
+                        matrix[i][j] = Double.NaN;
+                }
+            }
+
+            return matrix;
+        }
         /// <summary>
         /// Processes  a data and ideal double array into a IMLDatapair.
         /// This is used to build inputs for a neural network.

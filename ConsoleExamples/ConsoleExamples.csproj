@@ -92,11 +92,13 @@
     <Compile Include="Examples\CSVPredict\marketprune.cs" />
     <Compile Include="Examples\CSVPredict\markettrain.cs" />
     <Compile Include="Examples\CSVPredict\MyTests.cs" />
+    <Compile Include="Examples\MultiRadial\MultiRadial.cs" />
     <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />
     <Compile Include="Examples\Analyzer\Prunes.cs" />
     <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
+    <Compile Include="Examples\SVM Predict\CreateSVMNetWork.cs" />
     <Compile Include="Examples\Util\City.cs" />
     <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
     <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
@@ -128,9 +130,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Examples\Ranges\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
