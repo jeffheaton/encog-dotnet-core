@@ -254,6 +254,7 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\Market\Loader\CSVFinal.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
     </Compile>

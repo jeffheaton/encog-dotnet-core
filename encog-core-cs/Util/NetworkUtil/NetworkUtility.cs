@@ -6,6 +6,7 @@ using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
+using Encog.ML.SVM;
 using Encog.Neural.Data.Basic;
 using Encog.Neural.Networks;
 using Encog.Persist;
@@ -346,7 +347,20 @@ namespace Encog.Util.NetworkUtil
             FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
             EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
             return;
+        }
 
+        /// <summary>
+        /// Saves the network to the specified directory with the specified parameter name.
+        /// This version saves super machine to file.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <param name="anetwork">The network to save..</param>
+        public static void SaveNetwork(string directory, string file, SupportVectorMachine anetwork)
+        {
+            FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
+            EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
+            return;
         }
 
         /// <summary>
@@ -369,7 +383,25 @@ namespace Encog.Util.NetworkUtil
             return network;
         }
 
-
+        /// <summary>
+        /// Loads an basic network from the specified directory and file.
+        /// You must load the network like this Loadnetwork(@directory,@file);
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static SupportVectorMachine LoadNetwork(string directory, string file, string net)
+        {
+            FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
+            // network file
+            if (!networkFile.Exists)
+            {
+                Console.WriteLine(@"Can't read file: " + networkFile);
+                return null;
+            }
+            var network = (SupportVectorMachine)EncogDirectoryPersistence.LoadObject(networkFile);
+            return network;
+        }
         /// <summary>
         /// Saves an IMLDataset to a file.
         /// </summary>

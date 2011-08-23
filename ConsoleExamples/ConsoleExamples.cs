@@ -46,6 +46,7 @@ using Encog.Examples.Persist;
 using Encog.Examples.Radial;
 using Encog.Examples.RangeandMarket;
 using Encog.Examples.SVM_Predict;
+using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
 using Encog.Examples.CSVMarketExample;
 
@@ -98,7 +99,7 @@ namespace ConsoleExamples
             examples.Add(PrunerLoader.Info);
             examples.Add(MultiRadial.Info);
             examples.Add(SVMExample.Info);
-
+            examples.Add(SVMPredictCSV.Info);
         }
 
         public void ListCommands()

@@ -182,7 +182,20 @@ namespace Encog.Examples.RangeandMarket
             return minitrainning;
         }
 
+        public static TemporalMLDataSet GenerateATemporalSet(string @fileName, int startLine, int HowMany, int WindowSize, int outputsize)
+        {
+             List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", startLine, HowMany);
+            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", startLine, HowMany);
+            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", startLine, HowMany);
+            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", startLine, HowMany);
+            List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, startLine, HowMany);
+            TemporalMLDataSet superTemportal = new TemporalMLDataSet(WindowSize, outputsize);
+            double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
+            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
+            return superTemportal;
+        }
         public static IMLMethod CreateElmanNetwork(int inputsize, int outputsize)
         {
             // construct an Elman type network

@@ -101,6 +101,13 @@
     <Compile Include="Examples\SVM Predict\CreateSVMNetWork.cs" />
     <Compile Include="Examples\SVM Predict\SVMExample.cs" />
     <Compile Include="Examples\SVM Predict\SVMPredictSunSpots.cs" />
+    <Compile Include="Examples\SVMPredict CSV\config.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketbuildtraining.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketevaluate.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketpredict.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketprune.cs" />
+    <Compile Include="Examples\SVMPredict CSV\markettrain.cs" />
+    <Compile Include="Examples\SVMPredict CSV\mytests.cs" />
     <Compile Include="Examples\Util\City.cs" />
     <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
     <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
