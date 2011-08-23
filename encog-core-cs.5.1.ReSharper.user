@@ -8,8 +8,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MyTests/f:config.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:NeuralPilot.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/f:MarketLoader.cs" caret="1020" fromTop="28" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:EncogAnalyst.cs" caret="24676" fromTop="21" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/f:IAnalystListener.cs" caret="861" fromTop="22" />
@@ -23,39 +21,55 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="212" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="482" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1546" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="567" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/d:Loader/f:csvfileloader.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Persist/f:PersistEncog.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="1401" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/f:ConsoleInterface.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/d:Loader/f:CSVFinal.cs" caret="938" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/f:DataNormalization.cs" caret="14531" fromTop="21" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3517" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Input/f:InputFieldCSV.cs" caret="3272" fromTop="63" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2834" fromTop="75" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:MyTests/f:marketpredict.cs" caret="1823" fromTop="42" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="21992" fromTop="48" />
+      <File id="d:Miscellaneous Files/f:PrunerLoader.cs/l:C!?GIT encog?Encog GIT New?encog-dotnet-core?ConsoleExamples?Examples?NetWorkPruner?PrunerLoader.cs" caret="976" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:Prunes.cs" caret="362" fromTop="15" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:RandomTrainer.cs" caret="1700" fromTop="39" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataSet.cs" caret="7524" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="6586" fromTop="23" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6208" fromTop="148" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="4" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2095" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6087" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6002" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6064" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="7597" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1864" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="1849" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5638" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6119" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="6379" fromTop="32" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:Bar.cs" caret="6633" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="5698" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:BarSeries.cs" caret="491" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="3122" fromTop="38" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2111" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1131" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="150" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:IDataseries.cs" caret="195" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuant.cs" caret="2103" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="863" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="480" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="1615" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2028" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="594" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="833" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Quant/d:Loader/d:OpenQuant/f:OpenQuantLoader.cs" caret="2687" fromTop="26" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="538" fromTop="21" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:Prunes.cs" caret="362" fromTop="15" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="722" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="4925" fromTop="41" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="3817" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="5020" fromTop="37" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="4131" fromTop="30" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="617" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="9266" fromTop="40" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6447" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="7659" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="8812" fromTop="42" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6457" fromTop="43" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6457" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="5309" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="5743" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6457" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6457" fromTop="4" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6457" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:CreateEval.cs" caret="6357" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="4468" fromTop="40" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="4616" fromTop="44" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:RandomTrainer.cs" caret="1693" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="7092" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="2804" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="4251" fromTop="24" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6903" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="5296" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="3247" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="3706" fromTop="33" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RangeandMarket/f:MarketAnalyzer.cs" caret="6208" fromTop="34" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
