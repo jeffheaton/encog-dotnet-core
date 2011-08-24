@@ -353,11 +353,11 @@ namespace Encog.Util.NetworkUtil
         /// <param name="directory">The directory.</param>
         /// <param name="file">The file.</param>
         /// <param name="anetwork">The network to save..</param>
-        public static void SaveNetwork(string directory, string file, BasicNetwork anetwork)
+        public static BasicNetwork SaveNetwork(string directory, string file, BasicNetwork anetwork)
         {
             FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
             EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
-            return;
+            return anetwork;
         }
 
         /// <summary>
@@ -367,11 +367,11 @@ namespace Encog.Util.NetworkUtil
         /// <param name="directory">The directory.</param>
         /// <param name="file">The file.</param>
         /// <param name="anetwork">The network to save..</param>
-        public static void SaveNetwork(string directory, string file, SupportVectorMachine anetwork)
+        public static SupportVectorMachine SaveNetwork(string directory, string file, SupportVectorMachine anetwork)
         {
             FileInfo networkFile = FileUtil.CombinePath(new FileInfo(directory), file);
             EncogDirectoryPersistence.SaveObject(networkFile, anetwork);
-            return;
+            return anetwork;
         }
 
         /// <summary>
@@ -481,9 +481,16 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static double[] ReturnArrayOnSize(double[] inputted, int inputsize)
         {
+            //lets say we receive an array of 105 doubles ...input size is 100.
+            //we need to just copy the last 100.
+            //so if inputted.Lenght > inputsize :
+            // start index = inputtedLenght - inputsize.
+
+            //if inputtedlenght is equal to input size , well our index will be 0..
+            //if inputted lenght is smaller than input...We return  null.
             double[] arr = new double[inputsize];
             int howBig = 0;
-            if (inputted.Length > inputsize)
+            if (inputted.Length >= inputsize)
             {
                 howBig = inputted.Length - inputsize;
             }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.SVM;
@@ -94,8 +91,7 @@ public class PredictSunspotSVM {
 
         // create arrays to hold the normalized sunspots
         normalizedSunspots = norm.Process(SUNSPOTS);
-        double[] test = norm.Process(SUNSPOTS);
-        closedLoopSunspots = EngineArray.ArrayCopy(normalizedSunspots);
+	    closedLoopSunspots = EngineArray.ArrayCopy(normalizedSunspots);
 
 	}
 	
@@ -122,9 +118,8 @@ public class PredictSunspotSVM {
 		
 		
 		Console.WriteLine(@"Year\tActual\tPredict\tClosed Loop Predict");
-	    int count = 0;
 
-		for(int year=EVALUATE_START;year<EVALUATE_END;year++)
+	    for(int year=EVALUATE_START;year<EVALUATE_END;year++)
 		{
 			// calculate based on actual data
 			IMLData input = new BasicMLData(WINDOW_SIZE);
@@ -145,7 +140,7 @@ public class PredictSunspotSVM {
 			}
 			output = network.Compute(input);
 			double closedLoopPrediction = output[0];
-			
+		   int classified = network.Classify(input);
 			// display
             //System.out.println((STARTING_YEAR+year)
             //        +"\t"+f.format(this.normalizedSunspots[year])
@@ -153,9 +148,10 @@ public class PredictSunspotSVM {
             //        +"\t"+f.format(closedLoopPrediction)
 
                 Console.WriteLine(((STARTING_YEAR + year)
-                               + "\t" + Format.FormatDouble(normalizedSunspots[year], 4)
-                               + "\t" + Format.FormatDouble(prediction, 4)
-                               + "\t" + Format.FormatDouble(closedLoopPrediction, 4)));
+                               + @"\t" + Format.FormatDouble(normalizedSunspots[year], 4)
+                               + @"\t" + Format.FormatDouble(prediction, 4)
+                               + @"\t" + Format.FormatDouble(closedLoopPrediction, 4))
+                               +@"\t"+ @"Classified :"+classified);
 			 
 			
 		}
