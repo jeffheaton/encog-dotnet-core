@@ -479,7 +479,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="inputted">The inputted.</param>
         /// <param name="inputsize">The input neuron size (window size).</param>
         /// <returns></returns>
-        public double[] ReturnArrayOnSize(double[] inputted, int inputsize)
+        public static double[] ReturnArrayOnSize(double[] inputted, int inputsize)
         {
             double[] arr = new double[inputsize];
             int howBig = 0;
