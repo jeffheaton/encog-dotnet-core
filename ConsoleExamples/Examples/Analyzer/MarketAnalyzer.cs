@@ -58,15 +58,19 @@ namespace Encog.Examples.RangeandMarket
                 if (app.Args.Length > 1)
                 {
                     Encog.Examples.RangeandMarket.RandomTrainer.RandomTrainerMethod(Convert.ToInt16(app.Args[1]), Convert.ToInt16(app.Args[2]));
-                   
+                    MakeAPause();
+                    app.Exit();
                 }
                 else
                 {
                     Console.WriteLine(@"You didn't input enough args in your request, will default to 3000 inputs , and 50 prediction size");
-                    Encog.Examples.RangeandMarket.RandomTrainer.RandomTrainerMethod(3000, 50);
-                    MakeAPause();
+                    Console.WriteLine(@"Error % "+ Encog.Examples.RangeandMarket.RandomTrainer.RandomTrainerMethod(3000, 50));
+                   
+                   
                 }
 
+                Console.ReadKey();
+                return;
             }
 
 
@@ -86,7 +90,7 @@ namespace Encog.Examples.RangeandMarket
                             (BasicNetwork) SuperUtils.LoadNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile);
                         CreateEval.EvaluateNetworks(network, set);
                         MakeAPause();
-                        app.Exit();
+                        return;
                     }
 
 
@@ -139,7 +143,8 @@ namespace Encog.Examples.RangeandMarket
                                          CONFIG.TrainingFile);
                         MakeAPause();
 
-
+                        app.Exit();
+                        return;
                     }
                     else
                     {
@@ -147,6 +152,7 @@ namespace Encog.Examples.RangeandMarket
                         Console.WriteLine("Exiting");
                         MakeAPause();
                         app.Exit();
+                        return;
                     }
                 }
             }

@@ -14,9 +14,11 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Propagation.Back;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.NetworkUtil;
+using Encog.Util.Simple;
 using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
 namespace Encog.Examples.RangeandMarket
 {
@@ -124,14 +126,24 @@ namespace Encog.Examples.RangeandMarket
 
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
         {
+            Backpropagation trainMain = new Backpropagation(network, minis,0.0001,0.6);
+            //set the number of threads below.
+            trainMain.ThreadCount = 0;
             // train the neural network
             ICalculateScore score = new TrainingSetScore(minis);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
-            IMLTrain trainMain = new Backpropagation(network, minis, 0.0001, 0.01);
+           // IMLTrain trainMain = new Backpropagation(network, minis, 0.0001, 0.01);
+            
             StopTrainingStrategy stop = new StopTrainingStrategy(0.0001, 200);
             trainMain.AddStrategy(new Greedy());
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
+
+            //prune strategy not in GIT!...Removing it.
+            //PruneStrategy strategypruning = new PruneStrategy(0.91d, 0.001d, 10, network,minis, 0, 20);
+            //trainMain.AddStrategy(strategypruning);
+
+            EncogUtility.TrainConsole(trainMain,network,minis, 15.2);
 
 
             var sw = new Stopwatch();
@@ -139,9 +151,11 @@ namespace Encog.Examples.RangeandMarket
             while (!stop.ShouldStop())
             {
                 trainMain.Iteration();
+                
                 Console.WriteLine(@"Iteration #:" + trainMain.IterationNumber + @" Error:" + trainMain.Error + @" Genetic Iteration:" + trainAlt.IterationNumber);
             }
             sw.Stop();
+            Console.WriteLine(@"Total elapsed time in seconds:" + TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds).Seconds);
 
             return trainMain.Error;
         }
@@ -200,12 +214,17 @@ namespace Encog.Examples.RangeandMarket
         {
             // construct an Elman type network
             ElmanPattern pattern = new ElmanPattern();
+
             pattern.ActivationFunction = new ActivationTANH();
             pattern.InputNeurons = inputsize;
-            pattern.AddHiddenLayer(20);
+            
+            pattern.AddHiddenLayer(0);
             pattern.OutputNeurons = outputsize;
             return pattern.Generate();
+            
         }
+
+        
 
 
     }

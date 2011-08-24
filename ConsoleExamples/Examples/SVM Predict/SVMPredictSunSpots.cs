@@ -130,10 +130,7 @@ public class PredictSunspotSVM {
 			IMLData input = new BasicMLData(WINDOW_SIZE);
 			for(int i=0;i<input.Count;i++)
 			{
-
 			    input.Data[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
-
-
 			    //input.setData(i,this.normalizedSunspots[(year-WINDOW_SIZE)+i]);
 			}
 			IMLData output = network.Compute(input);

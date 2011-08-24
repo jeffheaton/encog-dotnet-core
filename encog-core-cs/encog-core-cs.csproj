@@ -354,6 +354,7 @@
     <Compile Include="ML\IMLRegression.cs" />
     <Compile Include="ML\IMLResettable.cs" />
     <Compile Include="ML\TrainingImplementationType.cs" />
+    <Compile Include="ML\Train\Strategy\HiddenNeuron.cs" />
     <Compile Include="Neural\ART\BasicART.cs" />
     <Compile Include="Neural\ART\ART1.cs" />
     <Compile Include="Neural\ART\PersistART1.cs" />

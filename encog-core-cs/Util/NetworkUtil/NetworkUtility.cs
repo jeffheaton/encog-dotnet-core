@@ -746,5 +746,28 @@ namespace Encog.Util.NetworkUtil
             pattern.OutputNeurons = outputsize;
             return (BasicNetwork)pattern.Generate();
         }
+
+        /// <summary>
+        /// Creates the feedforward network.
+        /// </summary>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="outputsize">The outputsize.</param>
+        /// <param name="hiddenlayers">The hiddenlayers.</param>
+        /// <param name="hidden2layers">The hidden2layers.</param>
+        /// <returns></returns>
+        public static BasicNetwork CreateFeedforwardNetwork(int inputsize, int outputsize, int hiddenlayers, int hidden2layers)
+        {
+            // construct an Elman type network
+            FeedForwardPattern pattern = new FeedForwardPattern();
+            pattern.ActivationFunction = new ActivationTANH();
+            pattern.InputNeurons = inputsize;
+            pattern.AddHiddenLayer(hiddenlayers);
+            pattern.AddHiddenLayer(hidden2layers);
+            pattern.OutputNeurons = outputsize;
+            var network = pattern.Generate();
+            return (BasicNetwork)network;
+        }
+
+
     }
 }
