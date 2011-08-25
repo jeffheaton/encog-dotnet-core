@@ -87,7 +87,7 @@ namespace Encog.Examples.ElmanNetwork
             return pattern.Generate();
         }
 
-        private IMLMethod CreateFeedforwardNetwork()
+        private static IMLMethod CreateFeedforwardNetwork()
         {
             // construct a feedforward type network
             var pattern = new FeedForwardPattern();

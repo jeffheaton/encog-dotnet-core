@@ -45,6 +45,7 @@ using Encog.Examples.MultiRadial;
 using Encog.Examples.NetWorkPruner;
 using Encog.Examples.Persist;
 using Encog.Examples.RangeandMarket;
+using Encog.Examples.RateSP500;
 using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
@@ -100,6 +101,7 @@ namespace ConsoleExamples
             examples.Add(MultiRadial.Info);
             examples.Add(SVMExample.Info);
             examples.Add(SVMPredictCSV.Info);
+            examples.Add(PredictSP500.Info);
         }
 
         public void ListCommands()
