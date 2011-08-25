@@ -918,6 +918,23 @@ namespace Encog.Util.NetworkUtil
             return norm;
         }
 
+
+        /// <summary>
+        /// Returns the difference between two doubles in percents.
+        ///  </summary>
+        /// <param name="first">The first double.</param>
+        /// <param name="second">The second double.</param>
+        /// <returns>return the absolute percentage difference between two numbers.</returns>
+        public static double AveragePercents (double first,double second)
+        {
+            double diffs = Math.Abs(first - second);
+            double result = (first + second)/2;
+            return (diffs/result)*0.01;
+
+        }
+
+
+
         /// <summary>
         /// Saves a normalization to the specified folder with the specified name.
         /// </summary>
