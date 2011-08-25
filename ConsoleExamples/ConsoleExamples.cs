@@ -47,6 +47,7 @@ using Encog.Examples.Normalize;
 using Encog.Examples.Persist;
 using Encog.Examples.Predict;
 using Encog.Examples.RangeandMarket;
+using Encog.Examples.RateSP500;
 using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
