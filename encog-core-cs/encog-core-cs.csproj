@@ -125,7 +125,6 @@
     <Compile Include="App\Analyst\Wizard\AnalystWizard.cs" />
     <Compile Include="App\Analyst\Wizard\NormalizeRange.cs" />
     <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
-    <Compile Include="App\Finance\COTReportDownloader.cs" />
     <Compile Include="App\Finance\Indicators\Finance.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
@@ -139,7 +138,6 @@
     <Compile Include="App\Quant\Loader\OpenQuant\IDataseries.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuant.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuantLoader.cs" />
-    <Compile Include="App\Quant\Loader\SVMCSVREader.cs" />
     <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />
@@ -355,7 +353,6 @@
     <Compile Include="ML\IMLRegression.cs" />
     <Compile Include="ML\IMLResettable.cs" />
     <Compile Include="ML\TrainingImplementationType.cs" />
-    <Compile Include="ML\Train\Strategy\HiddenNeuron.cs" />
     <Compile Include="Neural\ART\BasicART.cs" />
     <Compile Include="Neural\ART\ART1.cs" />
     <Compile Include="Neural\ART\PersistART1.cs" />
@@ -547,7 +544,6 @@
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
-    <Compile Include="Util\NetworkUtil\ZipClass.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />

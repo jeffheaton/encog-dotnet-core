@@ -870,6 +870,20 @@ namespace Encog.Util.NetworkUtil
         {
             return ArrayNormalizer.Process(inputArray);
         }
+
+        /// <summary>
+        /// Normalizes an array with a given max low and max high.
+        /// </summary>
+        /// <param name="inputArray">The input array.</param>
+        /// <param name="low">The low for the normalized resulting arrray..</param>
+        /// <param name="high">The high for the normalized resulting array..</param>
+        /// <returns>
+        /// a normalized array of doubles
+        /// </returns>
+        public static double[] NormalizeThisArray(double[] inputArray,int low,int high)
+        {
+            return ArrayNormalizer.Process(inputArray,low,high);
+        }
         /// <summary>
         /// Denormalizes the double.
         /// </summary>
@@ -903,6 +917,23 @@ namespace Encog.Util.NetworkUtil
             }
             return norm;
         }
+
+
+        /// <summary>
+        /// Returns the difference between two doubles in percents.
+        ///  </summary>
+        /// <param name="first">The first double.</param>
+        /// <param name="second">The second double.</param>
+        /// <returns>return the absolute percentage difference between two numbers.</returns>
+        public static double AveragePercents (double first,double second)
+        {
+            double diffs = Math.Abs(first - second);
+            double result = (first + second)/2;
+            return (diffs/result)*0.01;
+
+        }
+
+
 
         /// <summary>
         /// Saves a normalization to the specified folder with the specified name.
