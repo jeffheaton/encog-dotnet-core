@@ -66,6 +66,19 @@ namespace Encog.Util.Arrayutil
             _normalizedLow = -1;
         }
 
+
+        /// <summary>
+        /// Construct the object, default NormalizedHigh and NormalizedLow to 1 and
+        /// -1.
+        /// </summary>
+        ///
+        public NormalizeArray(int low , int high)
+        {
+            _normalizedHigh =high;
+            _normalizedLow = low;
+        }
+
+
         /// <summary>
         /// Set the high value to normalize to.
         /// </summary>
@@ -107,6 +120,37 @@ namespace Encog.Util.Arrayutil
 
 
             foreach (double element  in  inputArray)
+            {
+                _stats.Analyze(element);
+            }
+
+            var result = new double[inputArray.Length];
+
+            for (int i = 0; i < inputArray.Length; i++)
+            {
+                result[i] = _stats.Normalize(inputArray[i]);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Normalize the array. Return the new normalized array.
+        /// </summary>
+        /// <param name="inputArray">The input array.</param>
+        /// <param name="low">The low of the normalized array.</param>
+        /// <param name="high">The high of the normalized array..</param>
+        /// <returns>
+        /// The normalized array.
+        /// </returns>
+        public double[] Process(double[] inputArray, int low, int high)
+        {
+            this.NormalizedHigh = high;
+            this.NormalizedLow = low;
+            _stats = new NormalizedField();
+            _stats.NormalizedHigh = high;
+            _stats.NormalizedLow = low;
+            foreach (double element in inputArray)
             {
                 _stats.Analyze(element);
             }
