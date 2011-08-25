@@ -104,7 +104,8 @@ namespace Encog.Util.Normalize
         /// This allows only one ReadCSV object to need to be created per actual CSV
         /// file.
         /// </summary>
-        [NonSerialized] private IDictionary<IInputField, ReadCSV> _csvMap;
+        [NonSerialized]
+        private IDictionary<IInputField, ReadCSV> _csvMap;
 
 
         /// <summary>
@@ -120,7 +121,8 @@ namespace Encog.Util.Normalize
         /// object. The NeuralDataFieldHolder object holds an Iterator, InputField and last 
         /// NeuralDataPair object loaded.
         /// </summary>
-        [NonSerialized] private IDictionary<IEnumerator<IMLDataPair>, MLDataFieldHolder> _dataSetIteratorMap;
+        [NonSerialized]
+        private IDictionary<IEnumerator<IMLDataPair>, MLDataFieldHolder> _dataSetIteratorMap;
 
         /// <summary>
         /// Output fields can be grouped together, if the value of one output field might 
@@ -143,7 +145,8 @@ namespace Encog.Util.Normalize
         /// Keep a collection of all of the ReadCSV classes to support all of the
         /// distinct CSV files that are to be read.
         /// </summary>
-        [NonSerialized] private ICollection<ReadCSV> _readCSV;
+        [NonSerialized]
+        private ICollection<ReadCSV> _readCSV;
 
         /// <summary>
         /// For each InputFieldNeuralDataSet input field an Iterator must be kept to
@@ -291,7 +294,7 @@ namespace Encog.Util.Normalize
             outputField.Ideal = ideal;
             if (outputField is OutputFieldGrouped)
             {
-                var ofg = (OutputFieldGrouped) outputField;
+                var ofg = (OutputFieldGrouped)outputField;
                 _groups.Add(ofg.Group);
             }
         }
@@ -380,6 +383,44 @@ namespace Encog.Util.Normalize
             return result;
         }
 
+
+
+        private void DetermineInputFieldValue(IInputField field, int index, bool headers)
+        {
+            double result;
+
+            if (field is InputFieldCSV)
+            {
+                var fieldCSV = (InputFieldCSV)field;
+                ReadCSV csv = _csvMap[field];
+                result = csv.GetDouble(fieldCSV.ColumnName);
+
+            }
+            else if (field is InputFieldMLDataSet)
+            {
+                var mlField = (InputFieldMLDataSet)field;
+                MLDataFieldHolder holder = _dataSetFieldMap
+                    [field];
+                IMLDataPair pair = holder.Pair;
+                int offset = mlField.Offset;
+                if (offset < pair.Input.Count)
+                {
+                    result = pair.Input[offset];
+                }
+                else
+                {
+                    offset -= pair.Input.Count;
+                    result = pair.Ideal[offset];
+                }
+            }
+            else
+            {
+                result = field.GetValue(index);
+            }
+
+            field.CurrentValue = result;
+            return;
+        }
         /// <summary>
         /// Called internally to obtain the current value for an input field.
         /// </summary>
@@ -392,13 +433,14 @@ namespace Encog.Util.Normalize
 
             if (field is InputFieldCSV)
             {
-                var fieldCSV = (InputFieldCSV) field;
+                var fieldCSV = (InputFieldCSV)field;
                 ReadCSV csv = _csvMap[field];
                 result = csv.GetDouble(fieldCSV.Offset);
+
             }
             else if (field is InputFieldMLDataSet)
             {
-                var mlField = (InputFieldMLDataSet) field;
+                var mlField = (InputFieldMLDataSet)field;
                 MLDataFieldHolder holder = _dataSetFieldMap
                     [field];
                 IMLDataPair pair = holder.Pair;
@@ -433,6 +475,21 @@ namespace Encog.Util.Normalize
                 DetermineInputFieldValue(field, index);
             }
         }
+
+
+        /// <summary>
+        /// Called internally to determine all of the input field values.
+        /// </summary>
+        /// <param name="index">The current index.</param>
+        /// <param name="headers">if set to <c>true</c> [headers].</param>
+        private void DetermineInputFieldValues(int index, bool headers)
+        {
+            foreach (IInputField field in _inputFields)
+            {
+                DetermineInputFieldValue(field, index, headers);
+            }
+        }
+
 
         /// <summary>
         /// Find an input field by its class.
@@ -485,6 +542,45 @@ namespace Encog.Util.Normalize
         /// <summary>
         /// First pass, count everything, establish min/max.
         /// </summary>
+        private void FirstPass(bool headers)
+        {
+            OpenCSV(headers);
+            OpenDataSet();
+
+            _currentIndex = -1;
+            _recordCount = 0;
+
+            if (_report != null)
+            {
+                _report.Report(0, 0, "Analyzing file");
+            }
+            _lastReport = 0;
+            int index = 0;
+
+            InitForPass();
+
+            // loop over all of the records
+            while (Next())
+            {
+                DetermineInputFieldValues(index, headers);
+
+                if (ShouldInclude())
+                {
+                    ApplyMinMax();
+                    _recordCount++;
+                    ReportResult("First pass, analyzing file", 0, _recordCount);
+                }
+                index++;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// First pass, count everything, establish min/max.
+        /// This version doesn't read column names in csvinputfields.
+        /// </summary>
         private void FirstPass()
         {
             OpenCSV();
@@ -516,6 +612,10 @@ namespace Encog.Util.Normalize
                 index++;
             }
         }
+
+
+
+
 
         /// <summary>
         /// Calculate the number of output fields that are not used as ideal
@@ -620,7 +720,7 @@ namespace Encog.Util.Normalize
             {
                 if (field is InputFieldCSV)
                 {
-                    var csvField = (InputFieldCSV) field;
+                    var csvField = (InputFieldCSV)field;
                     String file = csvField.File;
                     if (!uniqueFiles.ContainsKey(file))
                     {
@@ -633,6 +733,38 @@ namespace Encog.Util.Normalize
                 }
             }
         }
+
+        /// <summary>
+        /// Called internally to open the CSV file with header.
+        /// </summary>
+        private void OpenCSV(bool headers)
+        {
+            // clear out any CSV files already there
+            _csvMap.Clear();
+            _readCSV.Clear();
+
+            // only add each CSV once
+            IDictionary<String, ReadCSV> uniqueFiles = new Dictionary<String, ReadCSV>();
+
+            // find the unique files
+            foreach (IInputField field in _inputFields)
+            {
+                if (field is InputFieldCSV)
+                {
+                    var csvField = (InputFieldCSV)field;
+                    String file = csvField.File;
+                    if (!uniqueFiles.ContainsKey(file))
+                    {
+                        var csv = new ReadCSV(file, headers,
+                                              _csvFormat);
+                        uniqueFiles[file] = csv;
+                        _readCSV.Add(csv);
+                    }
+                    _csvMap[csvField] = uniqueFiles[file];
+                }
+            }
+        }
+
 
         /// <summary>
         /// Open any datasets that were used by the input layer.
@@ -652,7 +784,7 @@ namespace Encog.Util.Normalize
             {
                 if (field is InputFieldMLDataSet)
                 {
-                    var dataSetField = (InputFieldMLDataSet) field;
+                    var dataSetField = (InputFieldMLDataSet)field;
                     IMLDataSet dataSet = dataSetField.NeuralDataSet;
                     if (!uniqueSets.ContainsKey(dataSet))
                     {
@@ -685,7 +817,20 @@ namespace Encog.Util.Normalize
             }
             SecondPass();
         }
-
+        /// <summary>
+        /// Call this method to begin the normalization process.  Any status 
+        /// updates will be sent to the class specified in the constructor.
+        /// this version uses headers.
+        /// </summary>
+        public void Process(bool headers)
+        {
+            Init();
+            if (TwoPassesNeeded())
+            {
+                FirstPass(headers);
+            }
+            SecondPass(headers);
+        }
         /// <summary>
         /// Report on the current progress.
         /// </summary>
@@ -759,6 +904,65 @@ namespace Encog.Util.Normalize
             _storage.Close();
         }
 
+
+
+
+        /// <summary>
+        /// The second pass actually writes the data to the output files.
+        /// </summary>
+        private void SecondPass(bool headers)
+        {
+            bool twopass = TwoPassesNeeded();
+
+            // move any CSV and datasets files back to the beginning.
+            OpenCSV(headers);
+            OpenDataSet();
+            InitForPass();
+
+            _currentIndex = -1;
+
+            // process the records
+            int size = GetOutputFieldCount();
+            var output = new double[size];
+
+            _storage.Open();
+            _lastReport = 0;
+            int index = 0;
+            int current = 0;
+            while (Next())
+            {
+                // read the value
+                foreach (IInputField field in _inputFields)
+                {
+                    DetermineInputFieldValue(field, index, headers);
+                }
+
+                if (ShouldInclude())
+                {
+                    // handle groups
+                    InitForOutput();
+
+                    // write the value
+                    int outputIndex = 0;
+                    foreach (IOutputField ofield in _outputFields)
+                    {
+                        for (int sub = 0; sub < ofield.SubfieldCount; sub++)
+                        {
+                            output[outputIndex++] = ofield.Calculate(sub);
+                        }
+                    }
+
+                    ReportResult(twopass ? "Second pass, normalizing data" : "Processing data (single pass)",
+                                 _recordCount, ++current);
+                    _storage.Write(output, 0);
+                }
+
+                index++;
+            }
+            _storage.Close();
+        }
+
+
         /// <summary>
         /// Should this row be included? Check the segregatprs.
         /// </summary>
@@ -792,11 +996,11 @@ namespace Encog.Util.Normalize
 
         private void Init()
         {
-        _csvMap = new Dictionary<IInputField, ReadCSV>();
-        _dataSetFieldMap = new Dictionary<IInputField, MLDataFieldHolder>();
-        _dataSetIteratorMap = new Dictionary<IEnumerator<IMLDataPair>, MLDataFieldHolder>();
-        _readCSV = new List<ReadCSV>();
-        _readDataSet = new List<IEnumerator<IMLDataPair>>();
+            _csvMap = new Dictionary<IInputField, ReadCSV>();
+            _dataSetFieldMap = new Dictionary<IInputField, MLDataFieldHolder>();
+            _dataSetIteratorMap = new Dictionary<IEnumerator<IMLDataPair>, MLDataFieldHolder>();
+            _readCSV = new List<ReadCSV>();
+            _readDataSet = new List<IEnumerator<IMLDataPair>>();
 
 
         }

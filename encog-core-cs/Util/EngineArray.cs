@@ -402,5 +402,26 @@ namespace Encog.Util
             }
             return result;
         }
+
+
+        /// <summary>
+        /// Creates a jagged array and initializes it.
+        /// You can virtually create any kind of jagged array up to N dimension.
+        /// double[][] resultingArray = CreateArray  <double[ ]> (2, () => CreateArray<double>(100, () => 0));
+        /// Create a double[2] [100] , with all values at 0..
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cnt">The CNT.</param>
+        /// <param name="itemCreator">The item creator.</param>
+        /// <returns></returns>
+        public static T[] CreateArray<T>(int cnt, Func<T> itemCreator)
+        {
+            T[] result = new T[cnt];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = itemCreator();
+            }
+            return result;
+        }
     }
 }

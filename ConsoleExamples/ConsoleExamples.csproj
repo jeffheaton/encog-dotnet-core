@@ -58,6 +58,7 @@
     <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
     <Compile Include="Examples\Benchmark\ThreadCount.cs" />
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
+    <Compile Include="Examples\Analyzer\CreateEval.cs" />
     <Compile Include="Examples\Forest\Evaluate.cs" />
     <Compile Include="Examples\Forest\ForestConfig.cs" />
     <Compile Include="Examples\Forest\ForestCover.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Examples\Lunar\LunarLander.cs" />
     <Compile Include="Examples\Lunar\NeuralPilot.cs" />
     <Compile Include="Examples\Lunar\PilotScore.cs" />
+    <Compile Include="Examples\Analyzer\MarketAnalyzer.cs" />
     <Compile Include="Examples\Market\Config.cs" />
     <Compile Include="Examples\Market\MarketBuildTraining.cs" />
     <Compile Include="Examples\Market\MarketEvaluate.cs" />
@@ -83,15 +85,29 @@
     <Compile Include="Examples\Market\MarketPrune.cs" />
     <Compile Include="Examples\Market\MarketTrain.cs" />
     <Compile Include="Examples\Benchmark\MultiThreadBenchmark.cs" />
-    <Compile Include="Examples\MyTests\config.cs" />
-    <Compile Include="Examples\MyTests\marketbuildtraining.cs" />
-    <Compile Include="Examples\MyTests\marketevaluate.cs" />
-    <Compile Include="Examples\MyTests\marketpredict.cs" />
-    <Compile Include="Examples\MyTests\marketprune.cs" />
-    <Compile Include="Examples\MyTests\markettrain.cs" />
-    <Compile Include="Examples\MyTests\MyTests.cs" />
+    <Compile Include="Examples\CSVPredict\config.cs" />
+    <Compile Include="Examples\CSVPredict\marketbuildtraining.cs" />
+    <Compile Include="Examples\CSVPredict\marketevaluate.cs" />
+    <Compile Include="Examples\CSVPredict\marketpredict.cs" />
+    <Compile Include="Examples\CSVPredict\marketprune.cs" />
+    <Compile Include="Examples\CSVPredict\markettrain.cs" />
+    <Compile Include="Examples\CSVPredict\MyTests.cs" />
+    <Compile Include="Examples\MultiRadial\MultiRadial.cs" />
+    <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Persist\PersistEncog.cs" />
     <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Examples\Analyzer\Prunes.cs" />
+    <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
+    <Compile Include="Examples\SVM Predict\CreateSVMNetWork.cs" />
+    <Compile Include="Examples\SVM Predict\SVMExample.cs" />
+    <Compile Include="Examples\SVM Predict\SVMPredictSunSpots.cs" />
+    <Compile Include="Examples\SVMPredict CSV\config.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketbuildtraining.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketevaluate.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketpredict.cs" />
+    <Compile Include="Examples\SVMPredict CSV\marketprune.cs" />
+    <Compile Include="Examples\SVMPredict CSV\markettrain.cs" />
+    <Compile Include="Examples\SVMPredict CSV\mytests.cs" />
     <Compile Include="Examples\Util\City.cs" />
     <Compile Include="Examples\AnnealTSP\SolveTSP.cs" />
     <Compile Include="Examples\AnnealTSP\TSPSimulatedAnnealing.cs" />
@@ -123,6 +139,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

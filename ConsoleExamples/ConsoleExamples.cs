@@ -41,7 +41,12 @@ using Encog.Examples.Image;
 using Encog.Examples.JordanNetwork;
 using Encog.Examples.Lunar;
 using Encog.Examples.Market;
+using Encog.Examples.MultiRadial;
+using Encog.Examples.NetWorkPruner;
 using Encog.Examples.Persist;
+using Encog.Examples.RangeandMarket;
+using Encog.Examples.SVM_Predict;
+using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
 using Encog.Examples.CSVMarketExample;
 
@@ -90,6 +95,11 @@ namespace ConsoleExamples
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
             examples.Add(LunarLander.Info);
+            examples.Add(MarketAnalyzer.Info);
+            examples.Add(PrunerLoader.Info);
+            examples.Add(MultiRadial.Info);
+            examples.Add(SVMExample.Info);
+            examples.Add(SVMPredictCSV.Info);
         }
 
         public void ListCommands()

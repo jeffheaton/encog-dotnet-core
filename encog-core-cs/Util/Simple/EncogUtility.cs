@@ -168,7 +168,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="data">The neural data to format.</param>
         /// <returns>The formatted neural data.</returns>
-        private static String FormatNeuralData(IMLData data)
+        public static String FormatNeuralData(IMLData data)
         {
             var result = new StringBuilder();
             for (int i = 0; i < data.Count; i++)
@@ -237,6 +237,21 @@ namespace Encog.Util.Simple
 
 
         /// <summary>
+        /// Train the neural network, using SCG training, and output status to the
+        /// console.
+        /// </summary>
+        /// <param name="network">The network to train.</param>
+        /// <param name="trainingSet">The training set.</param>
+        /// <param name="seconds">The seconds.</param>
+        public static void TrainConsole(BasicNetwork network,
+                                        IMLDataSet trainingSet, double seconds)
+        {
+            Propagation train = new ResilientPropagation(network,
+                                                         trainingSet) { ThreadCount = 0 };
+            TrainConsole(train, network, trainingSet, seconds);
+        }
+
+        /// <summary>
         /// Train the network, using the specified training algorithm, and send the
         /// output to the console.
         /// </summary>
@@ -266,6 +281,40 @@ namespace Encog.Util.Simple
                                   + @" elapsed time = " + Format.FormatTimeSpan((int) elapsed)
                                   + @" time left = "
                                   + Format.FormatTimeSpan((int) remaining*60));
+                epoch++;
+            } while (remaining > 0 && !train.TrainingDone);
+            train.FinishTraining();
+        }
+
+
+        /// <summary>
+        /// Train the network, using the specified training algorithm, and send the
+        /// output to the console.
+        /// </summary>
+        /// <param name="train">The training method to use.</param>
+        /// <param name="network">The network to train.</param>
+        /// <param name="trainingSet">The training set.</param>
+        /// <param name="seconds">The second to train for.</param>
+        public static void TrainConsole(IMLTrain train,BasicNetwork network, IMLDataSet trainingSet,double seconds)
+        {
+            int epoch = 1;
+            double remaining;
+
+            Console.WriteLine(@"Beginning training...");
+            long start = Environment.TickCount;
+            do
+            {
+                train.Iteration();
+
+                double current = Environment.TickCount;
+                double elapsed = (current - start) / 1000;
+                remaining = seconds - elapsed;
+
+                Console.WriteLine(@"Iteration #" + Format.FormatInteger(epoch)
+                                  + @" Error:" + Format.FormatPercent(train.Error)
+                                  + @" elapsed time = " + Format.FormatTimeSpan((int)elapsed)
+                                  + @" time left = "
+                                  + Format.FormatTimeSpan((int)remaining));
                 epoch++;
             } while (remaining > 0 && !train.TrainingDone);
             train.FinishTraining();

@@ -99,12 +99,6 @@ namespace Encog.ML.Data.Market.Loader
             
             
                 CSVFormLoader formLoader = new CSVFormLoader();
-
-
-
-
-              
-
                     if (File.Exists(formLoader.Chosenfile))
                     {
                         LoadedFormat = formLoader.format;
