@@ -674,25 +674,20 @@ namespace Encog.Util.NetworkUtil
 
 
         /// <summary>
-        /// Prints the content of an array.
+        /// Prints the content of an array to the console.
         /// </summary>
         /// <param name="num">The num.</param>
-        public static void  traverseArray(int[][] num)
+        public static void  PrinteJaggedArray(int[][] num)
         {
-
-            for (int i = 0; i < num.Length; i++)//outer loop for iterating parents
+            foreach (int[] t in num)
             {
-
-                for (int j = 0; j < num[i].Length; j++)//Inner loop for iterating chileds
+                foreach (int t1 in t)
                 {
-
-                    Console.WriteLine("Values : {0}", num[i][j]);//displaying values of Jagged Array
-
+                    Console.WriteLine(@"Values : {0}", t1);//displaying values of Jagged Array
                 }
-
             }
-
         }
+
         /// <summary>
         /// Networkbuils the array by params.
         /// </summary>
