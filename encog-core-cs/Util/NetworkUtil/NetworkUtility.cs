@@ -870,6 +870,20 @@ namespace Encog.Util.NetworkUtil
         {
             return ArrayNormalizer.Process(inputArray);
         }
+
+        /// <summary>
+        /// Normalizes an array with a given max low and max high.
+        /// </summary>
+        /// <param name="inputArray">The input array.</param>
+        /// <param name="low">The low for the normalized resulting arrray..</param>
+        /// <param name="high">The high for the normalized resulting array..</param>
+        /// <returns>
+        /// a normalized array of doubles
+        /// </returns>
+        public static double[] NormalizeThisArray(double[] inputArray,int low,int high)
+        {
+            return ArrayNormalizer.Process(inputArray,low,high);
+        }
         /// <summary>
         /// Denormalizes the double.
         /// </summary>
