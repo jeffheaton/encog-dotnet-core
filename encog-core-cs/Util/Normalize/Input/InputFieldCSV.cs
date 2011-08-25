@@ -31,6 +31,7 @@ namespace Encog.Util.Normalize.Input
     [Serializable]
     public class InputFieldCSV : BasicInputField
     {
+       
         /// <summary>
         /// The file to read.
         /// </summary>
@@ -41,6 +42,8 @@ namespace Encog.Util.Normalize.Input
         /// </summary>
         private readonly int _offset;
 
+
+        private readonly string _columnName;
         /// <summary>
         /// Construct an InputFieldCSV with the default constructor.  This is mainly
         /// used for reflection.
@@ -48,6 +51,9 @@ namespace Encog.Util.Normalize.Input
         public InputFieldCSV()
         {
         }
+
+
+
 
         /// <summary>
         /// Construct a input field for a CSV file.
@@ -65,6 +71,21 @@ namespace Encog.Util.Normalize.Input
         }
 
         /// <summary>
+        /// Construct a input field for a CSV file.
+        /// </summary>
+        /// <param name="usedForNetworkInput">True if this field is used for actual
+        /// input to the neural network, as opposed to segregation only.</param>
+        /// <param name="file">The tile to read.</param>
+        /// <param name="columnname">The columnname you wish to read.</param>
+        public InputFieldCSV(bool usedForNetworkInput, String file,
+                             string columnname)
+        {
+            _file = file;
+            _columnName = columnname;
+
+            UsedForNetworkInput = usedForNetworkInput;
+        }
+        /// <summary>
         /// The file being read.
         /// </summary>
         public String File
@@ -78,6 +99,17 @@ namespace Encog.Util.Normalize.Input
         public int Offset
         {
             get { return _offset; }
+        }
+
+        /// <summary>
+        /// Gets the name of the column we want to read.
+        /// </summary>
+        /// <value>
+        /// The name of the column we want to read.
+        /// </value>
+        public string ColumnName
+        {
+            get { return _columnName; }
         }
     }
 }
