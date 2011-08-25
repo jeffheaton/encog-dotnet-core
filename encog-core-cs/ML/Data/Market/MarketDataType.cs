@@ -107,6 +107,18 @@ namespace Encog.ML.Data.Market
         /// Percentage moves from one bar to the next.
         /// </summary>
         PercentageMove,
+
+        /// <summary>
+        /// The weighted prices. ( High + Low + 2 * Close) /4.
+        /// </summary>
+        Weighted,
+
+
+        /// <summary>
+        /// The median of closing prices (high + low) /2
+        /// </summary>
+        Median,
+
     
     }
 }

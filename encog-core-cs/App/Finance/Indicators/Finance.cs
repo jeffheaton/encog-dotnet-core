@@ -38,11 +38,9 @@ namespace Encog.App.Finance.Indicators
         /// returns the current fitness score.
         /// </summary>
         /// <returns></returns>
-        public double GetFitNess()
+        public static double GetFitNess(int numberofWins, int NumbeofLosses,double netprofit , double drawdown)
         {
-           
-
-            return (NetProfit/Drawdown)*WinningPercentage;
+            return (netprofit / drawdown) * CalculateWinningPercentage(numberofWins, NumbeofLosses);
         }
 
 
@@ -127,13 +125,40 @@ namespace Encog.App.Finance.Indicators
         /// See Neural networks in the capital markets by John paul.
         /// </summary>
         /// <returns>double</returns>
-       public double SimpleForwardOscillator(double predictedClose, int length , double currentClose)
+       public static double SimpleForwardOscillator(double predictedClose, int length , double currentClose)
       {
 
           double result = predictedClose - Average(currentClose, length);
           return result;
 
       }
+
+       /// <summary>
+       /// Frequencies the specified lenght.
+       /// THe frequency used to calculate Phase indicators.
+       /// E.G one day is 1.
+       /// but 10 day Frequency is 1/10 = 0.10.
+       /// </summary>
+       /// <param name="lenght">The lenght.</param>
+       /// <returns></returns>
+       public static double Frequency(int lenght)
+       {
+           return 1/lenght;
+       }
+
+       /// <summary>
+       /// Calculates the forward oscillator.
+       /// Which is :Close N - Average(Close , X);
+       /// Where N is number of bars into the future and X is the length of our moving average.
+       /// if this indicator is positive , then we are in bullish mode else we are in bearish mode.
+       /// See Neural networks in the capital markets by John paul.
+       /// </summary>
+       /// <returns>double</returns>
+       public static double PhaseOscillator(double predictedClose, int length, double currentClose)
+       {
+           double result = predictedClose - Average(currentClose, length);
+           return result;
+       }
        /// <summary>
        /// Averages two doubles.
        /// </summary>

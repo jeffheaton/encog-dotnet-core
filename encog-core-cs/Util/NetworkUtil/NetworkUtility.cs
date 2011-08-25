@@ -9,7 +9,10 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.ML.SVM;
 using Encog.Neural.Data.Basic;
+using Encog.Neural.NEAT;
+using Encog.Neural.NEAT.Training;
 using Encog.Neural.Networks;
+using Encog.Neural.Networks.Training;
 using Encog.Neural.Pattern;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
@@ -39,6 +42,7 @@ namespace Encog.Util.NetworkUtil
         {
             TemporalWindowArray temp = new TemporalWindowArray(inputsize,outputsize);
             temp.Analyze(array);
+           
             return temp.Process(array);
         }
 
@@ -469,6 +473,21 @@ namespace Encog.Util.NetworkUtil
             return x;
         }
 
+
+        /// <summary>
+        /// Determines the angle on IMLData.
+        /// </summary>
+        /// <param name="angle">The angle.</param>
+        /// <returns></returns>
+        public static double DetermineAngle(IMLData angle)
+        {
+            double result = (Math.Atan2(angle[0], angle[1]) / Math.PI) * 180;
+            if (result < 0)
+                result += 360;
+
+            return result;
+        }
+
         /// <summary>
         /// Calculates and returns the copied array.
         /// This is used in live data , when you want have a full array of doubles but you want to cut from a starting position
@@ -549,6 +568,149 @@ namespace Encog.Util.NetworkUtil
             result.Generate();
             return result;
         }
+
+
+
+        /// <summary>
+        /// Takes 2 inputs arrays and makes a jagged array.
+        /// this is useful for creating neural network inputs.
+        /// </summary>
+        /// <param name="firstArray">The first array.</param>
+        /// <param name="SecondArray">The second array.</param>
+        /// <returns></returns>
+        public static double[][] FromDualToJagged(double []firstArray, double []SecondArray)
+        {
+            return  new[] {firstArray, SecondArray};
+
+        }
+
+        /// <summary>
+        /// Allocate a 2D array of doubles.
+        /// and makes an  ideal of a single array.
+        /// the rest must have the same number of points as this ideal.
+        /// </summary>
+        /// <param name="arrayone">The arrayone.</param>
+        /// <returns>
+        /// The array.
+        /// </returns>
+        public static double[][] CopyIdeal(double[] arrayone)
+        {
+
+            double[][] result = Encog.Util.EngineArray.AllocateDouble2D(arrayone.Length, 1);
+            for (int i = 0; i < arrayone.Length; i++)
+            {
+                result[i][0] = arrayone[i];
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Builds a jagged array ready for network input.
+        /// The first are the input , the second is the ideal.
+        /// This makes an input (IMLDataPair for a BasicMLDataset).
+        /// </summary>
+        /// <param name="first">The first.</param>
+        /// <param name="second">The second.</param>
+        /// <returns></returns>
+        public static double [][] NetworkbuilArray(double [] first , double [] second)
+        {
+            double[][] Resulting = new double[first.Length][];
+            Resulting[0] = first;
+            Resulting[1] = second;
+            return Resulting;
+        }
+
+
+        public static double[][] NetworkbuilArray(double[] first)
+        {
+            double[][] Resulting = new double[first.Length][];
+            int index = 0;
+            int column = 0;
+            //foreach (double d in first)
+            //{
+            //    Resulting[0] = first;
+            //}
+            
+            Resulting[0] = first;
+           
+            return Resulting;
+        }
+
+        /// <summary>
+        /// Processes a double array of data of input and a second array of data for ideals
+        /// you must input the input and output size.
+        /// this typically builds a supervised IMLDatapair, which you must add to a IMLDataset. 
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="ideal">The ideal.</param>
+        /// <param name="_inputWindow">The _input window.</param>
+        /// <param name="_predictWindow">The _predict window.</param>
+        /// <returns></returns>
+        public static IMLDataPair ProcessPairs(double[] data, double[] ideal, int _inputWindow, int _predictWindow)
+        {
+            IMLDataSet result = new BasicMLDataSet();
+            for (int i = 0; i < data.Length; i++)
+            {
+                IMLData inputData = new BasicMLData(_inputWindow);
+                IMLData idealData = new BasicMLData(_predictWindow);
+                int index = i;
+                // handle input window
+                for (int j = 0; j < _inputWindow; j++)
+                {
+                    inputData[j] = data[index++];
+                }
+                index = 0;
+                // handle predict window
+                for (int j = 0; j < _predictWindow; j++)
+                {
+                    idealData[j] = ideal[index++];
+                }
+                IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
+                return pair;
+            }
+            return null;
+        }
+
+
+        /// <summary>
+        /// Prints the content of an array.
+        /// </summary>
+        /// <param name="num">The num.</param>
+        public static void  traverseArray(int[][] num)
+        {
+
+            for (int i = 0; i < num.Length; i++)//outer loop for iterating parents
+            {
+
+                for (int j = 0; j < num[i].Length; j++)//Inner loop for iterating chileds
+                {
+
+                    Console.WriteLine("Values : {0}", num[i][j]);//displaying values of Jagged Array
+
+                }
+
+            }
+
+        }
+        /// <summary>
+        /// Networkbuils the array by params.
+        /// </summary>
+        /// <param name="Inputs">The inputs.</param>
+        /// <returns></returns>
+        public static double[][] NetworkbuilArrayByParams(params double [][] Inputs)
+        {
+            double[][] Resulting = new double[Inputs.Length][];
+
+            int i = Inputs.Length;
+            foreach (double[] doubles in Resulting)
+            {
+                for (int k = 0; k < Inputs.Length;k++ )
+                    Resulting[k] = doubles;
+            }
+            return Resulting;
+        }
+
 
         /// <summary>
         /// Generates a temporal data set with a given double serie or a any number of double series , making your inputs.
@@ -631,7 +793,28 @@ namespace Encog.Util.NetworkUtil
             return result;
         }
 
-
+        /// <summary>
+        /// Builds and trains a neat network.
+        /// </summary>
+        /// <param name="aset">The IMLDataset.</param>
+        /// <param name="inputcounts">The inputcounts.</param>
+        /// <param name="outputcounts">The outputcounts.</param>
+        /// <param name="populationsize">The populationsize.</param>
+        /// <param name="ToErrorTraining">To error rate you want to train too.</param>
+        /// <returns>a trained netnetwork.</returns>
+        public static NEATNetwork BuildTrainNeatNetwork(IMLDataSet aset, int inputcounts, int outputcounts, int populationsize, double ToErrorTraining)
+        {
+            NEATPopulation pop = new NEATPopulation(inputcounts, outputcounts, populationsize);
+            ICalculateScore score = new TrainingSetScore(aset);
+            // train the neural network
+            ActivationStep step = new ActivationStep();
+            step.Center = 0.5;
+            pop.OutputActivationFunction = step;
+            NEATTraining train = new NEATTraining(score, pop);
+            EncogUtility.TrainToError(train, ToErrorTraining);
+            NEATNetwork network = (NEATNetwork)train.Method;
+            return network;
+        }
 
         /// <summary>
         /// Processes the specified double serie into an IMLDataset.

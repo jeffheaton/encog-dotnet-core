@@ -350,13 +350,13 @@ namespace Encog.Examples.CPN
 
         private void NormalizeInput()
         {
-            int n, i;
-            double length1, length2;
+            int n;
 
             for (n = 0; n < PATTERN1.Length; n++)
             {
-                length1 = 0;
-                length2 = 0;
+                double length1 = 0;
+                double length2 = 0;
+                int i;
                 for (i = 0; i < inputNeurons; i++)
                 {
                     length1 += Sqr(input1[n][i]);
@@ -420,9 +420,7 @@ namespace Encog.Examples.CPN
 
         public double DetermineAngle(IMLData angle)
         {
-            double result;
-
-            result = (Math.Atan2(angle[0], angle[1])/Math.PI)*180;
+            double result = (Math.Atan2(angle[0], angle[1])/Math.PI)*180;
             if (result < 0)
                 result += 360;
 

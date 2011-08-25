@@ -139,6 +139,7 @@
     <Compile Include="App\Quant\Loader\OpenQuant\IDataseries.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuant.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\OpenQuantLoader.cs" />
+    <Compile Include="App\Quant\Loader\SVMCSVREader.cs" />
     <Compile Include="App\Quant\Loader\Yahoo\YahooDownload.cs" />
     <Compile Include="App\Quant\Ninja\NinjaFileConvert.cs" />
     <Compile Include="App\Quant\Ninja\NinjaStreamWriter.cs" />

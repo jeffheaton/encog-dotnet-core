@@ -168,7 +168,7 @@ namespace Encog.Util.Simple
         /// </summary>
         /// <param name="data">The neural data to format.</param>
         /// <returns>The formatted neural data.</returns>
-        private static String FormatNeuralData(IMLData data)
+        public static String FormatNeuralData(IMLData data)
         {
             var result = new StringBuilder();
             for (int i = 0; i < data.Count; i++)
