@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ConsoleExamples.Examples;
 using Encog.Engine.Network.Activation;
 using Encog.Examples.RateSP500;
 using Encog.MathUtil.Error;
@@ -23,7 +24,7 @@ using Encog.Util.Simple;
 using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
 namespace Encog.Examples.RateSP500
 {
-    public class PredictSP500
+    public class PredictSP500 :IExample
     {
 
         public const int TRAINING_SIZE = 500;
@@ -226,5 +227,30 @@ namespace Encog.Examples.RateSP500
 
         }
 
+        public void Execute(IExampleInterface app)
+        {
+            PredictSP500 predict = new PredictSP500();
+            if (app.Args.Length > 0 && app.Args[0].Equals("full", StringComparison.CurrentCultureIgnoreCase))
+                predict.run(true);
+            else
+                predict.run(false);
+
+
+            Console.ReadKey();
+        }
+
+
+        public static ExampleInfo Info
+        {
+            get
+            {
+                var info = new ExampleInfo(
+                    typeof(PredictSP500),
+                    "SP500",
+                    "Predicts the SNP500",
+                    "Reads CSV and predicts the SNP 500.");
+                return info;
+            }
+        }
     }
 }
