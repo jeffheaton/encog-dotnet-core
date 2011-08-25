@@ -1,19 +1,19 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Examples.RateSP500;
 using Encog.Util.CSV;
 
+#endregion
 
 namespace Encog.Examples.RateSP500
 {
     public class SP500Actual
     {
-        private List<InterestRate> rates = new List<InterestRate>();
-        private List<FinancialSample> samples = new List<FinancialSample>();
-        private int inputSize;
-        private int outputSize;
+        private readonly int inputSize;
+        private readonly int outputSize;
+        private readonly List<InterestRate> rates = new List<InterestRate>();
+        private readonly List<FinancialSample> samples = new List<FinancialSample>();
 
         public SP500Actual(int inputSize, int outputSize)
         {
@@ -24,12 +24,12 @@ namespace Encog.Examples.RateSP500
         public void calculatePercents()
         {
             double prev = -1;
-            foreach (FinancialSample sample in this.samples)
+            foreach (FinancialSample sample in samples)
             {
                 if (prev != -1)
                 {
                     double movement = sample.getAmount() - prev;
-                    double percent = movement / prev;
+                    double percent = movement/prev;
                     sample.setPercent(percent);
                 }
                 prev = sample.getAmount();
@@ -38,43 +38,39 @@ namespace Encog.Examples.RateSP500
 
         public void getInputData(int offset, double[] input)
         {
-            Object[] samplesArray = this.samples.ToArray();
+            Object[] samplesArray = samples.ToArray();
             // get SP500 & prime data
-            for (int i = 0; i < this.inputSize; i++)
+            for (int i = 0; i < inputSize; i++)
             {
-                FinancialSample sample = (FinancialSample)samplesArray[offset
-                       + i];
+                var sample = (FinancialSample) samplesArray[offset
+                                                            + i];
                 input[i] = sample.getPercent();
-                input[i + this.inputSize] = sample.getRate();
+                input[i + inputSize] = sample.getRate();
             }
         }
 
         public void getOutputData(int offset, double[] output)
         {
-            Object[] samplesArray = this.samples.ToArray();
-            for (int i = 0; i < this.outputSize; i++)
+            Object[] samplesArray = samples.ToArray();
+            for (int i = 0; i < outputSize; i++)
             {
-                FinancialSample sample = (FinancialSample)samplesArray[offset
-                       + this.inputSize + i];
+                var sample = (FinancialSample) samplesArray[offset
+                                                            + inputSize + i];
                 output[i] = sample.getPercent();
             }
-
         }
 
         public double getPrimeRate(DateTime date)
         {
             double currentRate = 0;
 
-            foreach (InterestRate rate in this.rates)
+            foreach (InterestRate rate in rates)
             {
                 if (rate.getEffectiveDate().CompareTo(date) > 0)
                 {
                     return currentRate;
                 }
-                else
-                {
-                    currentRate = rate.getRate();
-                }
+                currentRate = rate.getRate();
             }
             return currentRate;
         }
@@ -82,9 +78,10 @@ namespace Encog.Examples.RateSP500
         /**
          * @return the samples
          */
+
         public IList<FinancialSample> getSamples()
         {
-            return this.samples;
+            return samples;
         }
 
         public void load(String sp500Filename, String primeFilename)
@@ -97,49 +94,48 @@ namespace Encog.Examples.RateSP500
 
         public void loadPrime(String primeFilename)
         {
-            ReadCSV csv = new ReadCSV(primeFilename,true,CSVFormat.English);
+            var csv = new ReadCSV(primeFilename, true, CSVFormat.English);
 
             while (csv.Next())
             {
-                DateTime date = csv.GetDate("date");
+                var date = csv.GetDate("date");
                 double rate = csv.GetDouble("prime");
-                InterestRate ir = new InterestRate(date, rate);
-                this.rates.Add(ir);
+                var ir = new InterestRate(date, rate);
+                rates.Add(ir);
             }
 
             csv.Close();
-            this.rates.Sort();
+            rates.Sort();
         }
 
         public void loadSP500(String sp500Filename)
         {
-            ReadCSV csv = new ReadCSV(sp500Filename, true, CSVFormat.English);
+            var csv = new ReadCSV(sp500Filename, true, CSVFormat.English);
             while (csv.Next())
             {
-                DateTime date = csv.GetDate("date");
+                var date = csv.GetDate("date");
                 double amount = csv.GetDouble("adj close");
-                FinancialSample sample = new FinancialSample();
+                var sample = new FinancialSample();
                 sample.setAmount(amount);
                 sample.setDate(date);
-                this.samples.Add(sample);
+                samples.Add(sample);
             }
             csv.Close();
-            this.samples.Sort();
+            samples.Sort();
         }
 
         public int size()
         {
-            return this.samples.Count;
+            return samples.Count;
         }
 
         public void stitchInterestRates()
         {
-            foreach (FinancialSample sample in this.samples)
+            foreach (FinancialSample sample in samples)
             {
                 double rate = getPrimeRate(sample.getDate());
                 sample.setRate(rate);
             }
         }
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace Encog.Examples.RateSP500
 {
@@ -22,37 +20,37 @@ namespace Encog.Examples.RateSP500
         }
 
         /**
-         * @return the effectiveDate
+         * @return the effectiveDateInputDate
          */
         public DateTime getEffectiveDate()
         {
-            return this.effectiveDate;
+            return effectiveDate;
         }
 
         /**
-         * @return the rate
+         * @return the arate
          */
         public double getRate()
         {
-            return this.rate;
+            return rate;
         }
 
         /**
-         * @param effectiveDate
-         *            the effectiveDate to set
+         * @param effectiveDateInputDate
+         *            the effectiveDateInputDate to set
          */
-        public void setEffectiveDate(DateTime effectiveDate)
+        public void setEffectiveDate(DateTime effectiveDateInputDate)
         {
-            this.effectiveDate = effectiveDate;
+            effectiveDate = effectiveDateInputDate;
         }
 
         /**
-         * @param rate
-         *            the rate to set
+         * @param arate
+         *            the arate to set
          */
-        public void setRate(double rate)
+        public void setRate(double arate)
         {
-            this.rate = rate;
+            rate = arate;
         }
     }
 }
