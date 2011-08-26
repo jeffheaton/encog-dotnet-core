@@ -168,7 +168,7 @@ namespace Encog.MathUtil.Matrices.Hessian
 
             UpdateHessian(this.derivative);
 
-            sse += error.CalculateMSE();
+            sse += error.CalculateSSE();
         }
       
         /// <summary>

@@ -155,5 +155,14 @@ namespace Encog.MathUtil.Error
 
             _setSize++;
         }
+
+        /// <summary>
+        /// Calculate the error as sum of squares.
+        /// </summary>
+        /// <returns>The error.</returns>
+        public double CalculateSSE()
+        {
+            return _globalError / 2;
+        }
     }
 }
