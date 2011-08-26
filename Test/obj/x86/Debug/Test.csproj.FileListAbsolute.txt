@@ -1,0 +1,7 @@
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\bin\Debug\Test.exe
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\bin\Debug\Test.pdb
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\bin\Debug\encog-core-cs.dll
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\bin\Debug\encog-core-cs.pdb
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\obj\x86\Debug\Test.exe
+C:\Users\jheaton\dotnet\encog-dotnet-core\Test\obj\x86\Debug\Test.pdb

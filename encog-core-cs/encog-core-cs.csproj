@@ -209,6 +209,11 @@
     <Compile Include="MathUtil\Matrices\Decomposition\LUDecomposition.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\QRDecomposition.cs" />
     <Compile Include="MathUtil\Matrices\Decomposition\SingularValueDecomposition.cs" />
+    <Compile Include="MathUtil\Matrices\Hessian\BasicHessian.cs" />
+    <Compile Include="MathUtil\Matrices\Hessian\ChainRuleWorker.cs" />
+    <Compile Include="MathUtil\Matrices\Hessian\HessianCR.cs" />
+    <Compile Include="MathUtil\Matrices\Hessian\HessianFD.cs" />
+    <Compile Include="MathUtil\Matrices\Hessian\IComputeHessian.cs" />
     <Compile Include="MathUtil\Matrices\Matrix.cs" />
     <Compile Include="MathUtil\Matrices\MatrixError.cs" />
     <Compile Include="MathUtil\Matrices\MatrixMath.cs" />

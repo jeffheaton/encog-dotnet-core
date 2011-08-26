@@ -45,6 +45,11 @@ namespace Encog.Util
                                                  new[] {0.0}
                                              };
 
+        public static double[][] XORIdeal2 = {
+                                                 new[] {0.0,1.0}, new[] {1.0,0.0}, new[] {1.0,0.0},
+                                                 new[] {0.0,1.0}
+                                             };
+
         public static bool VerifyXOR(IMLRegression network, double tolerance)
         {
             for (int trainingSet = 0; trainingSet < XORIdeal.Length; trainingSet++)

@@ -76,5 +76,22 @@ namespace Encog.MathUtil
         {
             return rad*(180.0/Math.PI);
         }
+
+        /// <summary>
+        /// Compute the factorial (n!) for p.
+        /// </summary>
+        /// <param name="p">The number to compute the factorial for.</param>
+        /// <returns>The factorial.</returns>
+        public static double Factorial(int p)
+        {
+            double result = 1.0;
+
+            for (int i = 1; i <= p; i++)
+            {
+                result *= (double)i;
+            }
+
+            return result;
+        }
     }
 }
