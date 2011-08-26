@@ -1,6 +1,5 @@
 ﻿using System;
 using Encog.ML.Data;
-using Encog.Neural.Flat.Train.Prop;
 using Encog.Util;
 using Encog.Util.Validate;
 
@@ -18,6 +17,41 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
     public sealed class QuickPropagation : Propagation, ILearningRate
     {
         /// <summary>
+        /// This factor times the current weight is added to the slope 
+        /// at the start of each output epoch. Keeps weights from growing 
+        /// too big.
+        /// </summary>
+        public double Decay { get; set; }
+
+        /// <summary>
+        /// Used to scale for the size of the training set.
+        /// </summary>
+        public double EPS { get; set; }
+
+        /// <summary>
+        /// The last deltas.
+        /// </summary>
+        public double[] LastDelta { get; set; }
+
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
+        public double LearningRate { get; set; }
+
+        /// <summary>
+        /// Controls the amount of linear gradient descent 
+        /// to use in updating output weights.
+        /// </summary>
+        public double OutputEpsilon { get; set; }
+
+        /// <summary>
+        /// Used in computing whether the proposed step is 
+        /// too large.  Related to learningRate.
+        /// </summary>
+        public double Shrink { get; set; }
+
+
+        /// <summary>
         /// Continuation tag for the last gradients.
         /// </summary>
         public const String LastGradients = "LAST_GRADIENTS";
@@ -27,20 +61,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data.</param>
-        public QuickPropagation(IContainsFlat network, IMLDataSet training) : this(network, training, 2.0)
+        public QuickPropagation(BasicNetwork network, IMLDataSet training) : this(network, training, 2.0)
         {
         }
-
-        /**
-* 
-* 
-* @param network
-*            
-* @param training
-*            
-* @param theLearningRate
-*            
-*/
 
 
         /// <summary>
@@ -52,13 +75,11 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         ///            a learning rate to start with.  If it fails to converge, 
         ///            then drop it.  Just like backprop, except QPROP can 
         ///            take higher learning rates.</param>
-        public QuickPropagation(IContainsFlat network,
+        public QuickPropagation(BasicNetwork network,
                                 IMLDataSet training, double learnRate) : base(network, training)
         {
             ValidateNetwork.ValidateMethodToData(network, training);
-            var backFlat = new TrainFlatNetworkQPROP(
-                network.Flat, Training, learnRate);
-            FlatTraining = backFlat;
+            LearningRate = learnRate;
         }
 
         /// <inheritdoc />
@@ -66,71 +87,6 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         {
             get { return true; }
         }
-
-        /// <summary>
-        /// The last delta values.
-        /// </summary>
-        public double[] LastDelta
-        {
-            get { return ((TrainFlatNetworkQPROP) FlatTraining).LastDelta; }
-        }
-
-        /// <summary>
-        /// The output epsilon.
-        /// </summary>
-        public double OutputEpsilon
-        {
-            get
-            {
-                return ((TrainFlatNetworkQPROP) FlatTraining)
-                    .OutputEpsilon;
-            }
-            set
-            {
-                ((TrainFlatNetworkQPROP) FlatTraining)
-                    .OutputEpsilon = value;
-            }
-        }
-
-        /// <summary>
-        /// Shrink.
-        /// </summary>
-        public double Shrink
-        {
-            get
-            {
-                return ((TrainFlatNetworkQPROP) FlatTraining)
-                    .Shrink;
-            }
-            set
-            {
-                ((TrainFlatNetworkQPROP) FlatTraining)
-                    .Shrink = value;
-            }
-        }
-        
-        #region ILearningRate Members
-
-        /// <summary>
-        /// The learning rate, this is value is essentially a percent. It is
-	    ///         the degree to which the gradients are applied to the weight
-	    ///         matrix to allow learning.
-        /// </summary>
-        public double LearningRate
-        {
-            get
-            {
-                return ((TrainFlatNetworkQPROP) FlatTraining)
-                    .LearningRate;
-            }
-            set
-            {
-                ((TrainFlatNetworkQPROP) FlatTraining)
-                    .LearningRate = value;
-            }
-        }
-
-        #endregion
 
        
         /// <summary>
@@ -162,9 +118,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         public override TrainingContinuation Pause()
         {
             var result = new TrainingContinuation {TrainingType = (GetType().Name)};
-            var qprop = (TrainFlatNetworkQPROP) FlatTraining;
-            double[] d = qprop.LastGradient;
-            result.Contents[LastGradients] = d;
+            result.Contents[LastGradients] = LastGradient;
             return result;
         }
         
@@ -182,8 +136,87 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
             var lastGradient = (double[]) state.Contents[
                 LastGradients];
 
-            EngineArray.ArrayCopy(lastGradient,
-                                  ((TrainFlatNetworkQPROP) FlatTraining).LastGradient);
+            EngineArray.ArrayCopy(lastGradient,LastGradient);
         }
+
+        /// <summary>
+        /// Called to init the QPROP.
+        /// </summary>
+        public override void InitOthers()
+        {
+            EPS = OutputEpsilon / Training.Count;
+            Shrink = LearningRate / (1.0 + LearningRate);
+        }
+
+        /// <summary>
+        /// Update a weight.
+        /// </summary>
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>The weight delta.</returns>
+        public override double UpdateWeight(double[] gradients,
+                                            double[] lastGradient, int index)
+        {
+            double w = Network.Flat.Weights[index];
+            double d = LastDelta[index];
+            double s = -Gradients[index] + Decay * w;
+            double p = -lastGradient[index];
+            double nextStep = 0.0;
+
+            // The step must always be in direction opposite to the slope.
+            if (d < 0.0)
+            {
+                // If last step was negative...
+                if (s > 0.0)
+                {
+                    // Add in linear term if current slope is still positive.
+                    nextStep -= EPS * s;
+                }
+                // If current slope is close to or larger than prev slope...
+                if (s >= (Shrink * p))
+                {
+                    // Take maximum size negative step.
+                    nextStep += LearningRate * d;
+                }
+                else
+                {
+                    // Else, use quadratic estimate.
+                    nextStep += d * s / (p - s);
+                }
+            }
+            else if (d > 0.0)
+            {
+                // If last step was positive...
+                if (s < 0.0)
+                {
+                    // Add in linear term if current slope is still negative.
+                    nextStep -= EPS * s;
+                }
+                // If current slope is close to or more neg than prev slope...
+                if (s <= (Shrink * p))
+                {
+                    // Take maximum size negative step.
+                    nextStep += LearningRate * d;
+                }
+                else
+                {
+                    // Else, use quadratic estimate.
+                    nextStep += d * s / (p - s);
+                }
+            }
+            else
+            {
+                // Last step was zero, so use only linear term. 
+                nextStep -= EPS * s;
+            }
+
+            // update global data arrays
+            LastDelta[index] = nextStep;
+            LastGradient[index] = gradients[index];
+
+            return nextStep;
+        }
+
     }
 }

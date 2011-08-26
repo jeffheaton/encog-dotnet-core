@@ -87,8 +87,6 @@ namespace ConsoleExamples
             examples.Add(SimpleBenchmark.Info);
             examples.Add(XORFactory.Info);
             examples.Add(XORHelloWorld.Info);
-            examples.Add(XORFlat.Info);
-            examples.Add(XORDisplay.Info);
             examples.Add(AnalystExample.Info);
             examples.Add(XORNEAT.Info);
             examples.Add(ForestCover.Info);

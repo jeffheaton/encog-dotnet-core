@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using Encog.ML.Data;
 using Encog.ML.Factory.Parse;
 using Encog.ML.Train;
-using Encog.Neural.Flat.Train.Prop;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Util;
@@ -65,7 +64,7 @@ namespace Encog.ML.Factory.Train
                 MLTrainFactory.PropertyMaxStep, false,
                 RPROPConst.DefaultMaxStep);
 
-            return new ResilientPropagation((IContainsFlat) method, training,
+            return new ResilientPropagation((BasicNetwork) method, training,
                                             initialUpdate, maxStep);
         }
     }

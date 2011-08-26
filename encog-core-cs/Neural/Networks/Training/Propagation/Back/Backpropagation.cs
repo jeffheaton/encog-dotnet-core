@@ -22,7 +22,6 @@
 //
 using System;
 using Encog.ML.Data;
-using Encog.Neural.Flat.Train.Prop;
 using Encog.Neural.Networks.Training.Strategy;
 using Encog.Util.Validate;
 
@@ -60,13 +59,31 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public const String PropertyLastDelta = "LAST_DELTA";
 
         /// <summary>
+        /// The last delta values.
+        /// </summary>
+        ///
+        private double[] _lastDelta;
+
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
+        ///
+        private double _learningRate;
+
+        /// <summary>
+        /// The momentum.
+        /// </summary>
+        ///
+        private double _momentum;
+
+        /// <summary>
         /// Create a class to train using backpropagation. Use auto learn rate and
         /// momentum. Use the CPU to train.
         /// </summary>
         ///
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
-        public Backpropagation(IContainsFlat network, IMLDataSet training) : this(network, training, 0, 0)
+        public Backpropagation(BasicNetwork network, IMLDataSet training) : this(network, training, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
@@ -77,14 +94,14 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="training">The training set</param>
         /// <param name="learnRate"></param>
         /// <param name="momentum"></param>
-        public Backpropagation(IContainsFlat network,
+        public Backpropagation(BasicNetwork network,
                                IMLDataSet training, double learnRate,
                                double momentum) : base(network, training)
         {
             ValidateNetwork.ValidateMethodToData(network, training);
-            var backFlat = new TrainFlatNetworkBackPropagation(
-                network.Flat, Training, learnRate, momentum);
-            FlatTraining = backFlat;
+            _momentum = momentum;
+            _learningRate = learnRate;
+            _lastDelta = new double[Network.Flat.Weights.Length];
         }
 
         /// <inheritdoc />
@@ -97,7 +114,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <value>Ther last delta values.</value>
         public double[] LastDelta
         {
-            get { return ((TrainFlatNetworkBackPropagation) FlatTraining).LastDelta; }
+            get { return _lastDelta; }
         }
 
         #region ILearningRate Members
@@ -109,8 +126,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         public virtual double LearningRate
         {
-            get { return ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate; }
-            set { ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -124,8 +141,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// </summary>
         public virtual double Momentum
         {
-            get { return ((TrainFlatNetworkBackPropagation) FlatTraining).Momentum; }
-            set { ((TrainFlatNetworkBackPropagation) FlatTraining).LearningRate = value; }
+            get { return _momentum; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -161,9 +178,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public override sealed TrainingContinuation Pause()
         {
             var result = new TrainingContinuation {TrainingType = GetType().Name};
-            var backFlat = (TrainFlatNetworkBackPropagation) FlatTraining;
-            double[] d = backFlat.LastDelta;
-            result.Set(PropertyLastDelta, d);
+            result.Set(PropertyLastDelta, _lastDelta);
             return result;
         }
 
@@ -179,7 +194,31 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
                 throw new TrainingError("Invalid training resume data length");
             }
 
-            ((TrainFlatNetworkBackPropagation)FlatTraining).LastDelta = (double[])state.Get(PropertyLastDelta);
+            _lastDelta = (double[])state.Get(PropertyLastDelta);
+        }
+
+        /// <summary>
+        /// Update a weight.
+        /// </summary>
+        ///
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>The weight delta.</returns>
+        public override double UpdateWeight(double[] gradients,
+                                                   double[] lastGradient, int index)
+        {
+            double delta = (gradients[index] * _learningRate)
+                           + (_lastDelta[index] * _momentum);
+            _lastDelta[index] = delta;
+            return delta;
+        }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
         }
     }
 }

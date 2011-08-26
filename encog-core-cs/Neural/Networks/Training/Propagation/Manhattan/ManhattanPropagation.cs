@@ -20,8 +20,9 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using System;
 using Encog.ML.Data;
-using Encog.Neural.Flat.Train.Prop;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
 
 namespace Encog.Neural.Networks.Training.Propagation.Manhattan
 {
@@ -48,17 +49,30 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         internal const double DefaultZeroTolerance = 0.001d;
 
         /// <summary>
+        /// The zero tolerance to use.
+        /// </summary>
+        ///
+        private readonly double _zeroTolerance;
+
+        /// <summary>
+        /// The learning rate.
+        /// </summary>
+        ///
+        private double _learningRate;
+
+
+        /// <summary>
         /// Construct a Manhattan propagation training object.
         /// </summary>
         ///
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="learnRate">The learning rate.</param>
-        public ManhattanPropagation(IContainsFlat network,
+        public ManhattanPropagation(BasicNetwork network,
                                     IMLDataSet training, double learnRate) : base(network, training)
         {
-            FlatTraining = new TrainFlatNetworkManhattan(network.Flat,
-                                                         Training, learnRate);
+            _learningRate = learnRate;
+            _zeroTolerance = RPROPConst.DefaultZeroTolerance;            
         }
 
 
@@ -75,8 +89,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// </summary>
         public virtual double LearningRate
         {
-            get { return ((TrainFlatNetworkManhattan) FlatTraining).LearningRate; }
-            set { ((TrainFlatNetworkManhattan) FlatTraining).LearningRate = value; }
+            get { return _learningRate; }
+            set { _learningRate = value; }
         }
 
         #endregion
@@ -99,5 +113,38 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         public override sealed void Resume(TrainingContinuation state)
         {
         }
+
+        /// <summary>
+        /// Calculate the amount to change the weight by.
+        /// </summary>
+        ///
+        /// <param name="gradients">The gradients.</param>
+        /// <param name="lastGradient">The last gradients.</param>
+        /// <param name="index">The index to update.</param>
+        /// <returns>The amount to change the weight by.</returns>
+        public override sealed double UpdateWeight(double[] gradients,
+                                                   double[] lastGradient, int index)
+        {
+            if (Math.Abs(gradients[index]) < _zeroTolerance)
+            {
+                return 0;
+            }
+            else if (gradients[index] > 0)
+            {
+                return _learningRate;
+            }
+            else
+            {
+                return -_learningRate;
+            }
+        }
+
+        /// <summary>
+        /// Not needed for this training type.
+        /// </summary>
+        public override void InitOthers()
+        {
+        }
+
     }
 }

@@ -30,7 +30,6 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Flat;
-using Encog.Neural.Flat.Train.Prop;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training.Propagation.Back;
@@ -70,12 +69,9 @@ namespace Encog.Examples.Benchmark
             for (int i = 0; i < 10; i++)
             {
                 long time1 = BenchmarkEncog(input, output);
-                long time2 = BenchmarkEncogFlat(input, output);
                 var line = new StringBuilder();
                 line.Append(@"Regular: ");
                 line.Append(Format.FormatInteger((int) time1));
-                line.Append(@", Flat: ");
-                line.Append(Format.FormatInteger((int) time2));
 
                 Console.WriteLine(line.ToString());
             }
@@ -112,30 +108,6 @@ namespace Encog.Examples.Benchmark
             return sw.ElapsedMilliseconds;
         }
 
-        public static long BenchmarkEncogFlat(double[][] input, double[][] output)
-        {
-            var network = new FlatNetwork(input[0].Length, HIDDEN_COUNT, 0,
-                                          output[0].Length, false);
-            network.Randomize();
-            var trainingSet = new BasicMLDataSet(input, output);
-
-            var train = new TrainFlatNetworkBackPropagation(
-                network, trainingSet, 0.7, 0.7);
-
-            var a = new double[2];
-            var b = new double[1];
-
-            var sw = new Stopwatch();
-            sw.Start();
-            // run epoch of learning procedure
-            for (int i = 0; i < ITERATIONS; i++)
-            {
-                train.Iteration();
-            }
-            sw.Stop();
-
-            return sw.ElapsedMilliseconds;
-        }
 
         private static double[][] Generate(int rows, int columns)
         {
