@@ -26,7 +26,7 @@ namespace Encog.Examples.RateSP500
     public class PredictSP500 : IExample
     {
         public const int TRAINING_SIZE = 500;
-        public const int INPUT_SIZE = 10;
+        public const int INPUT_SIZE = 20;
         public const int OUTPUT_SIZE = 1;
         public const int NEURONS_HIDDEN_1 = 20;
         public const int NEURONS_HIDDEN_2 = 0;
@@ -69,7 +69,7 @@ namespace Encog.Examples.RateSP500
         public void Execute(IExampleInterface app)
         {
             PredictSP500 predict = new PredictSP500();
-            if (app.Args.Length > 0 && app.Args[0].Equals("full", StringComparison.CurrentCultureIgnoreCase))
+            if (app.Args.Length > 0 && app.Args[0].Equals("full"))
                 predict.run(true);
             else
                 predict.run(false);
@@ -82,7 +82,7 @@ namespace Encog.Examples.RateSP500
 
         public BasicNetwork createNetwork()
         {
-            BasicNetwork net = (BasicNetwork) CreateFeedforwardNetwork(INPUT_SIZE, OUTPUT_SIZE, NEURONS_HIDDEN_1);
+            BasicNetwork net = (BasicNetwork) CreateFeedforwardNetwork(INPUT_SIZE*2,OUTPUT_SIZE, NEURONS_HIDDEN_1);
 
             return net;
         }
@@ -94,8 +94,8 @@ namespace Encog.Examples.RateSP500
             var pattern = new FeedForwardPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
             pattern.InputNeurons = inputs;
-            pattern.AddHiddenLayer(outputs);
-            pattern.OutputNeurons = hidden;
+            pattern.AddHiddenLayer(hidden);
+            pattern.OutputNeurons = outputs;
             return pattern.Generate();
         }
 
@@ -148,8 +148,8 @@ namespace Encog.Examples.RateSP500
             ideal = new double[TRAINING_SIZE][]; //[OUTPUT_SIZE];
 
             // find where we are starting from
-            int startIndex =
-                actual.getSamples().TakeWhile(sample => sample.getDate().CompareTo(LEARN_FROM) <= 0).Count();
+            if (actual == null) return;
+            int startIndex = actual.getSamples().TakeWhile(sample => sample.getDate().CompareTo(LEARN_FROM) <= 0).Count();
 
             // create a sample factor across the training area
             int eligibleSamples = TRAINING_SIZE - startIndex;
@@ -179,6 +179,11 @@ namespace Encog.Examples.RateSP500
         {
             //try
             //{
+            PredictSP500 predict = new PredictSP500();
+          
+
+
+            //    Console.ReadKey();
             actual = new SP500Actual(INPUT_SIZE, OUTPUT_SIZE);
             actual.load("sp500.csv", "prime.csv");
 
@@ -186,7 +191,7 @@ namespace Encog.Examples.RateSP500
 
             if (full)
             {
-                createNetwork();
+               network= createNetwork();
                 generateTrainingSets();
 
                 trainNetworkBackprop();
@@ -218,7 +223,7 @@ namespace Encog.Examples.RateSP500
             // IMLTrain train = new Backpropagation(this.network, this.input,this.ideal, 0.000001, 0.1);
 
             IMLDataSet aset = new BasicMLDataSet(input, ideal);
-            new Backpropagation(network, aset);
+         
 
             int epoch = 1;
             // train the neural network
