@@ -21,17 +21,18 @@
 // http://www.heatonresearch.com/copyright
 //
 
-using Encog.ML.Train;
-using Encog.Util.Concurrency;
-using Encog.MathUtil.Matrices.Hessian;
-using Encog.ML.Data;
-using Encog.Util.Validate;
-using Encog.ML;
-using Encog.ML.Data.Basic;
 using Encog.MathUtil.Error;
 using Encog.MathUtil.Matrices.Decomposition;
+using Encog.MathUtil.Matrices.Hessian;
+using Encog.ML;
+using Encog.ML.Data;
+using Encog.ML.Data.Basic;
+using Encog.ML.Train;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Networks.Training.Propagation;
+using Encog.Util.Concurrency;
+using Encog.Util.Validate;
+
 namespace Encog.Neural.Networks.Training.Lma
 {
     /// <summary>
@@ -68,63 +69,63 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <summary>
         /// The amount to scale the lambda by.
         /// </summary>
-        public const double SCALE_LAMBDA = 10.0;
+        public const double ScaleLambda = 10.0;
 
         /// <summary>
         /// The max amount for the LAMBDA.
         /// </summary>
-        public const double LAMBDA_MAX = 1e25;
+        public const double LambdaMax = 1e25;
+
+        /// <summary>
+        /// The diagonal of the hessian.
+        /// </summary>
+        private readonly double[] _diagonal;
 
         /// <summary>
         /// Utility class to compute the Hessian.
         /// </summary>
-        private IComputeHessian hessian;
-
-        /// <summary>
-        /// The network that is to be trained.
-        /// </summary>
-        private BasicNetwork network;
+        private readonly IComputeHessian _hessian;
 
         /// <summary>
         /// The training set that we are using to train.
         /// </summary>
-        private IMLDataSet indexableTraining;
+        private readonly IMLDataSet _indexableTraining;
+
+        /// <summary>
+        /// The network that is to be trained.
+        /// </summary>
+        private readonly BasicNetwork _network;
+
+        /// <summary>
+        /// The training elements.
+        /// </summary>
+        private readonly IMLDataPair _pair;
 
         /// <summary>
         /// The training set length.
         /// </summary>
-        private int trainingLength;
+        private readonly int _trainingLength;
 
         /// <summary>
         /// How many weights are we dealing with?
         /// </summary>
-        private int weightCount;
+        private readonly int _weightCount;
 
         /// <summary>
-        /// The neural network weights and bias values.
+        /// The amount to change the weights by.
         /// </summary>
-        private double[] weights;
+        private double[] _deltas;
 
         /// <summary>
         /// The lambda, or damping factor. This is increased until a desirable
         /// adjustment is found.
         /// </summary>
-        private double lambda;
+        private double _lambda;
 
         /// <summary>
-        /// The diagonal of the hessian.
+        /// The neural network weights and bias values.
         /// </summary>
-        private double[] diagonal;
-
-        /// <summary>
-        /// The amount to change the weights by.
-        /// </summary>
-        private double[] deltas;
-
-        /// <summary>
-        /// The training elements.
-        /// </summary>
-        private IMLDataPair pair;
+        private double[] _weights;
 
         /// <summary>
         /// Construct the LMA object. Use the chain rule for Hessian calc.
@@ -132,12 +133,11 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="network">The network to train. Must have a single output neuron.</param>
         /// <param name="training">The training data to use. Must be indexable.</param>
         public LevenbergMarquardtTraining(BasicNetwork network,
-                IMLDataSet training)
+                                          IMLDataSet training)
             : this(network, training, new HessianCR())
         {
-
         }
-        
+
         /// <summary>
         /// Construct the LMA object. 
         /// </summary>
@@ -145,52 +145,34 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <param name="training">The training data to use. Must be indexable.</param>
         /// <param name="h">The Hessian calculator to use.</param>
         public LevenbergMarquardtTraining(BasicNetwork network,
-                IMLDataSet training, IComputeHessian h)
+                                          IMLDataSet training, IComputeHessian h)
             : base(TrainingImplementationType.Iterative)
         {
-
             ValidateNetwork.ValidateMethodToData(network, training);
 
             Training = training;
-            this.indexableTraining = Training;
-            this.network = network;
-            this.trainingLength = (int)this.indexableTraining.Count;
-            this.weightCount = this.network.Structure.CalculateSize();
-            this.lambda = 0.1;
-            this.deltas = new double[this.weightCount];
-            this.diagonal = new double[this.weightCount];
+            _indexableTraining = Training;
+            this._network = network;
+            _trainingLength = (int) _indexableTraining.Count;
+            _weightCount = this._network.Structure.CalculateSize();
+            _lambda = 0.1;
+            _deltas = new double[_weightCount];
+            _diagonal = new double[_weightCount];
 
-            BasicMLData input = new BasicMLData(
-                    this.indexableTraining.InputSize);
-            BasicMLData ideal = new BasicMLData(
-                    this.indexableTraining.IdealSize);
-            this.pair = new BasicMLDataPair(input, ideal);
+            var input = new BasicMLData(
+                _indexableTraining.InputSize);
+            var ideal = new BasicMLData(
+                _indexableTraining.IdealSize);
+            _pair = new BasicMLDataPair(input, ideal);
 
-            this.hessian = h;
-            this.hessian.Init(network, training);
-
-
-        }
-
-        /// <summary>
-        /// Save the diagonal of the Hessian.  Will be used to apply the lambda.
-        /// </summary>
-        private void SaveDiagonal()
-        {
-            double[][] h = this.hessian.Hessian;
-            for (int i = 0; i < this.weightCount; i++)
-            {
-                this.diagonal[i] = h[i][i];
-            }
+            _hessian = h;
+            _hessian.Init(network, training);
         }
 
         /// <inheritdoc/>
         public override bool CanContinue
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -198,9 +180,60 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         public override IMLMethod Method
         {
+            get { return _network; }
+        }
+
+        /// <summary>
+        /// The Hessian calculation method used.
+        /// </summary>
+        public IComputeHessian Hessian
+        {
+            get { return _hessian; }
+        }
+
+        #region IMultiThreadable Members
+
+        /// <summary>
+        /// The thread count, specify 0 for Encog to automatically select (default).  
+        /// If the underlying Hessian calculator does not support multithreading, an error 
+        /// will be thrown.  The default chain rule calc does support multithreading.
+        /// </summary>
+        public int ThreadCount
+        {
             get
             {
-                return this.network;
+                if (_hessian is IMultiThreadable)
+                {
+                    return ((IMultiThreadable) _hessian).ThreadCount;
+                }
+                throw new TrainingError("The Hessian object in use(" + _hessian.GetType().Name +
+                                        ") does not support multi-threaded mode.");
+            }
+            set
+            {
+                if (_hessian is IMultiThreadable)
+                {
+                    ((IMultiThreadable) _hessian).ThreadCount = value;
+                }
+                else
+                {
+                    throw new TrainingError("The Hessian object in use(" + _hessian.GetType().Name +
+                                            ") does not support multi-threaded mode.");
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Save the diagonal of the Hessian.  Will be used to apply the lambda.
+        /// </summary>
+        private void SaveDiagonal()
+        {
+            double[][] h = _hessian.Hessian;
+            for (int i = 0; i < _weightCount; i++)
+            {
+                _diagonal[i] = h[i][i];
             }
         }
 
@@ -210,13 +243,13 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <returns>The SSE error with the current weights.</returns>
         private double CalculateError()
         {
-            ErrorCalculation result = new ErrorCalculation();
+            var result = new ErrorCalculation();
 
-            for (int i = 0; i < this.trainingLength; i++)
+            for (int i = 0; i < _trainingLength; i++)
             {
-                this.indexableTraining.GetRecord(i, this.pair);
-                IMLData actual = this.network.Compute(this.pair.Input);
-                result.UpdateError(actual.Data, this.pair.Ideal.Data, pair.Significance);
+                _indexableTraining.GetRecord(i, _pair);
+                IMLData actual = _network.Compute(_pair.Input);
+                result.UpdateError(actual.Data, _pair.Ideal.Data, _pair.Significance);
             }
 
             return result.CalculateSSE();
@@ -227,10 +260,10 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         private void ApplyLambda()
         {
-            double[][] h = this.hessian.Hessian;
-            for (int i = 0; i < this.weightCount; i++)
+            double[][] h = _hessian.Hessian;
+            for (int i = 0; i < _weightCount; i++)
             {
-                h[i][i] = this.diagonal[i] + this.lambda;
+                h[i][i] = _diagonal[i] + _lambda;
             }
         }
 
@@ -239,15 +272,14 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         public override void Iteration()
         {
-
-            LUDecomposition decomposition = null;
+            LUDecomposition decomposition;
             PreIteration();
 
-            this.hessian.Clear();
-            this.weights = NetworkCODEC.NetworkToArray(this.network);
+            _hessian.Clear();
+            _weights = NetworkCODEC.NetworkToArray(_network);
 
-            this.hessian.Compute();
-            double currentError = this.hessian.SSE;
+            _hessian.Compute();
+            double currentError = _hessian.SSE;
             SaveDiagonal();
 
             double startingError = currentError;
@@ -256,11 +288,11 @@ namespace Encog.Neural.Networks.Training.Lma
             while (!done)
             {
                 ApplyLambda();
-                decomposition = new LUDecomposition(this.hessian.HessianMatrix);
+                decomposition = new LUDecomposition(_hessian.HessianMatrix);
 
                 if (decomposition.IsNonsingular)
                 {
-                    this.deltas = decomposition.Solve(this.hessian.Gradients);
+                    _deltas = decomposition.Solve(_hessian.Gradients);
 
                     UpdateWeights();
                     currentError = CalculateError();
@@ -268,16 +300,16 @@ namespace Encog.Neural.Networks.Training.Lma
 
                 if (currentError >= startingError)
                 {
-                    this.lambda *= LevenbergMarquardtTraining.SCALE_LAMBDA;
-                    if (this.lambda > LevenbergMarquardtTraining.LAMBDA_MAX)
+                    _lambda *= ScaleLambda;
+                    if (_lambda > LambdaMax)
                     {
-                        this.lambda = LevenbergMarquardtTraining.LAMBDA_MAX;
+                        _lambda = LambdaMax;
                         done = true;
                     }
                 }
                 else
                 {
-                    this.lambda /= LevenbergMarquardtTraining.SCALE_LAMBDA;
+                    _lambda /= ScaleLambda;
                     done = true;
                 }
             }
@@ -296,7 +328,6 @@ namespace Encog.Neural.Networks.Training.Lma
         /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
-
         }
 
         /// <summary>
@@ -304,56 +335,14 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         public void UpdateWeights()
         {
-            double[] w = (double[])this.weights.Clone();
+            var w = (double[]) _weights.Clone();
 
             for (int i = 0; i < w.Length; i++)
             {
-                w[i] += this.deltas[i];
+                w[i] += _deltas[i];
             }
 
-            NetworkCODEC.ArrayToNetwork(w, this.network);
-        }
-
-        /// <summary>
-        /// The Hessian calculation method used.
-        /// </summary>
-        public IComputeHessian Hessian
-        {
-            get
-            {
-                return hessian;
-            }
-        }
-
-        /// <summary>
-        /// The thread count, specify 0 for Encog to automatically select (default).  
-        /// If the underlying Hessian calculator does not support multithreading, an error 
-        /// will be thrown.  The default chain rule calc does support multithreading.
-        /// </summary>
-        public int ThreadCount
-        {
-            get
-            {
-                if (this.hessian is IMultiThreadable)
-                {
-                    return ((IMultiThreadable)this.hessian).ThreadCount;
-                }
-                else
-                {
-                    throw new TrainingError("The Hessian object in use(" + this.hessian.GetType().Name + ") does not support multi-threaded mode.");
-                }
-            }
-            set
-            {
-                if (this.hessian is IMultiThreadable)
-                {
-                    ((IMultiThreadable)this.hessian).ThreadCount = value;
-                }
-                else
-                {
-                    throw new TrainingError("The Hessian object in use(" + this.hessian.GetType().Name + ") does not support multi-threaded mode.");
-                }
-            }
+            NetworkCODEC.ArrayToNetwork(w, _network);
         }
     }
 }

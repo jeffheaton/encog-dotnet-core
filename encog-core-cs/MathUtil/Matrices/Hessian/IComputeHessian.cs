@@ -20,12 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Neural.Networks;
 using Encog.ML.Data;
+using Encog.Neural.Networks;
 
 namespace Encog.MathUtil.Matrices.Hessian
 {
@@ -40,19 +36,7 @@ namespace Encog.MathUtil.Matrices.Hessian
     /// http://en.wikipedia.org/wiki/Hessian_matrix
     /// </summary>
     public interface IComputeHessian
-    {        
-        /// <summary>
-        /// Init the class.  
-        /// </summary>
-        /// <param name="theNetwork">The neural network to train.</param>
-        /// <param name="theTraining">The training set to train with.</param>
-        void Init(BasicNetwork theNetwork, IMLDataSet theTraining);
-
-        /// <summary>
-        /// Compute the Hessian.
-        /// </summary>
-        void Compute();
-        
+    {
         /// <summary>
         /// The gradeints. 
         /// </summary>
@@ -64,11 +48,6 @@ namespace Encog.MathUtil.Matrices.Hessian
         double SSE { get; }
 
         /// <summary>
-        /// Clear the Hessian and gradients.
-        /// </summary>
-        void Clear();
-
-        /// <summary>
         /// The Hessian matrix.
         /// </summary>
         Matrix HessianMatrix { get; }
@@ -77,5 +56,22 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// Get the Hessian as a 2d array.
         /// </summary>
         double[][] Hessian { get; }
+
+        /// <summary>
+        /// Init the class.  
+        /// </summary>
+        /// <param name="theNetwork">The neural network to train.</param>
+        /// <param name="theTraining">The training set to train with.</param>
+        void Init(BasicNetwork theNetwork, IMLDataSet theTraining);
+
+        /// <summary>
+        /// Compute the Hessian.
+        /// </summary>
+        void Compute();
+
+        /// <summary>
+        /// Clear the Hessian and gradients.
+        /// </summary>
+        void Clear();
     }
 }

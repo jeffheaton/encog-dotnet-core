@@ -20,16 +20,12 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Util.Concurrency;
-using Encog.Neural.Flat;
-using Encog.ML.Data;
-using Encog.Util;
 using Encog.Engine.Network.Activation;
+using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Neural.Flat;
+using Encog.Util;
+using Encog.Util.Concurrency;
 
 namespace Encog.MathUtil.Matrices.Hessian
 {
@@ -43,97 +39,97 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <summary>
         /// The actual values from the neural network.
         /// </summary>
-        private double[] actual;
-
-        /// <summary>
-        /// The deltas for each layer.
-        /// </summary>
-        private double[] layerDelta;
-
-        /// <summary>
-        /// The neuron counts, per layer.
-        /// </summary>
-        private int[] layerCounts;
-
-        /// <summary>
-        /// The feed counts, per layer.
-        /// </summary>
-        private int[] layerFeedCounts;
-
-        /// <summary>
-        /// The layer indexes.
-        /// </summary>
-        private int[] layerIndex;
-
-        /// <summary>
-        /// The index to each layer's weights and thresholds.
-        /// </summary>
-        private int[] weightIndex;
-
-        /// <summary>
-        /// The output from each layer.
-        /// </summary>
-        private double[] layerOutput;
-
-        /// <summary>
-        /// The sums.
-        /// </summary>
-        private double[] layerSums;
-
-        /// <summary>
-        /// The weights and thresholds.
-        /// </summary>
-        private double[] weights;
-
-        /// <summary>
-        /// The flat network.
-        /// </summary>
-        private FlatNetwork flat;
+        private readonly double[] _actual;
 
         /// <summary>
         /// The current first derivatives.
         /// </summary>
-        private double[] derivative;
+        private readonly double[] _derivative;
 
         /// <summary>
-        /// The training data.
+        /// The flat network.
         /// </summary>
-        private IMLDataSet training;
-
-        /// <summary>
-        /// The output neuron to calculate for.
-        /// </summary>
-        private int outputNeuron;
-
-        /// <summary>
-        /// The total first derivatives.
-        /// </summary>
-        private double[] totDeriv;
+        private readonly FlatNetwork _flat;
 
         /// <summary>
         /// The gradients.
         /// </summary>
-        private double[] gradients;
-
-        /// <summary>
-        /// The error.
-        /// </summary>
-        private double error;
-
-        /// <summary>
-        /// The low range.
-        /// </summary>
-        private int low;
+        private readonly double[] _gradients;
 
         /// <summary>
         /// The high range.
         /// </summary>
-        private int high;
+        private readonly int _high;
+
+        /// <summary>
+        /// The neuron counts, per layer.
+        /// </summary>
+        private readonly int[] _layerCounts;
+
+        /// <summary>
+        /// The deltas for each layer.
+        /// </summary>
+        private readonly double[] _layerDelta;
+
+        /// <summary>
+        /// The feed counts, per layer.
+        /// </summary>
+        private readonly int[] _layerFeedCounts;
+
+        /// <summary>
+        /// The layer indexes.
+        /// </summary>
+        private readonly int[] _layerIndex;
+
+        /// <summary>
+        /// The output from each layer.
+        /// </summary>
+        private readonly double[] _layerOutput;
+
+        /// <summary>
+        /// The sums.
+        /// </summary>
+        private readonly double[] _layerSums;
+
+        /// <summary>
+        /// The low range.
+        /// </summary>
+        private readonly int _low;
 
         /// <summary>
         /// The pair to use for training.
         /// </summary>
-        private IMLDataPair pair;
+        private readonly IMLDataPair _pair;
+
+        /// <summary>
+        /// The total first derivatives.
+        /// </summary>
+        private readonly double[] _totDeriv;
+
+        /// <summary>
+        /// The training data.
+        /// </summary>
+        private readonly IMLDataSet _training;
+
+        /// <summary>
+        /// The index to each layer's weights and thresholds.
+        /// </summary>
+        private readonly int[] _weightIndex;
+
+        /// <summary>
+        /// The weights and thresholds.
+        /// </summary>
+        private readonly double[] _weights;
+
+        /// <summary>
+        /// The error.
+        /// </summary>
+        private double _error;
+
+        /// <summary>
+        /// The output neuron to calculate for.
+        /// </summary>
+        private int _outputNeuron;
 
         /// <summary>
         /// Construct the chain rule worker. 
@@ -144,49 +140,93 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="theHigh">The high range.</param>
         public ChainRuleWorker(FlatNetwork theNetwork, IMLDataSet theTraining, int theLow, int theHigh)
         {
-
             int weightCount = theNetwork.Weights.Length;
 
-            this.training = theTraining;
-            this.flat = theNetwork;
+            _training = theTraining;
+            _flat = theNetwork;
 
-            this.layerDelta = new double[flat.LayerOutput.Length];
-            this.actual = new double[flat.OutputCount];
-            this.derivative = new double[weightCount];
-            this.totDeriv = new double[weightCount];
-            this.gradients = new double[weightCount];
+            _layerDelta = new double[_flat.LayerOutput.Length];
+            _actual = new double[_flat.OutputCount];
+            _derivative = new double[weightCount];
+            _totDeriv = new double[weightCount];
+            _gradients = new double[weightCount];
 
-            this.weights = flat.Weights;
-            this.layerIndex = flat.LayerIndex;
-            this.layerCounts = flat.LayerCounts;
-            this.weightIndex = flat.WeightIndex;
-            this.layerOutput = flat.LayerOutput;
-            this.layerSums = flat.LayerSums;
-            this.layerFeedCounts = flat.LayerFeedCounts;
-            this.low = theLow;
-            this.high = theHigh;
-            this.pair = BasicMLDataPair.CreatePair(flat.InputCount, flat.OutputCount);
+            _weights = _flat.Weights;
+            _layerIndex = _flat.LayerIndex;
+            _layerCounts = _flat.LayerCounts;
+            _weightIndex = _flat.WeightIndex;
+            _layerOutput = _flat.LayerOutput;
+            _layerSums = _flat.LayerSums;
+            _layerFeedCounts = _flat.LayerFeedCounts;
+            _low = theLow;
+            _high = theHigh;
+            _pair = BasicMLDataPair.CreatePair(_flat.InputCount, _flat.OutputCount);
         }
 
+
+        /// <summary>
+        /// The output neuron we are processing.
+        /// </summary>
+        public int OutputNeuron
+        {
+            get { return _outputNeuron; }
+            set { _outputNeuron = value; }
+        }
+
+        /// <summary>
+        /// The first derivatives, used to calculate the Hessian.
+        /// </summary>
+        public double[] Derivative
+        {
+            get { return _totDeriv; }
+        }
+
+
+        /// <summary>
+        /// The gradients.
+        /// </summary>
+        public double[] Gradients
+        {
+            get { return _gradients; }
+        }
+
+        /// <summary>
+        /// The SSE error.
+        /// </summary>
+        public double Error
+        {
+            get { return _error; }
+        }
+
+        /// <summary>
+        /// The flat network.
+        /// </summary>
+        public FlatNetwork Network
+        {
+            get { return _flat; }
+        }
+
+        #region IEngineTask Members
 
         /// <inheritdoc/>
         public void Run()
         {
-            this.error = 0;
-            EngineArray.Fill(this.totDeriv, 0);
-            EngineArray.Fill(this.gradients, 0);
+            _error = 0;
+            EngineArray.Fill(_totDeriv, 0);
+            EngineArray.Fill(_gradients, 0);
 
 
             // Loop over every training element
-            for (int i = this.low; i <= this.high; i++)
+            for (int i = _low; i <= _high; i++)
             {
-                this.training.GetRecord(i, this.pair);
+                _training.GetRecord(i, _pair);
 
-                EngineArray.Fill(this.derivative, 0);
-                Process(outputNeuron, pair.InputArray, pair.IdealArray);
+                EngineArray.Fill(_derivative, 0);
+                Process(_outputNeuron, _pair.InputArray, _pair.IdealArray);
             }
         }
 
+        #endregion
 
         /// <summary>
         /// Process one training set element.
@@ -196,37 +236,35 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="ideal">The ideal values.</param>
         private void Process(int outputNeuron, double[] input, double[] ideal)
         {
+            _flat.Compute(input, _actual);
 
-            this.flat.Compute(input, this.actual);
+            double e = ideal[outputNeuron] - _actual[outputNeuron];
+            _error += e*e;
 
-            double e = ideal[outputNeuron] - this.actual[outputNeuron];
-            this.error += e * e;
-
-            for (int i = 0; i < this.actual.Length; i++)
+            for (int i = 0; i < _actual.Length; i++)
             {
-
                 if (i == outputNeuron)
                 {
-                    this.layerDelta[i] = this.flat.ActivationFunctions[0]
-                            .DerivativeFunction(this.layerSums[i],
-                                    this.layerOutput[i]);
+                    _layerDelta[i] = _flat.ActivationFunctions[0]
+                        .DerivativeFunction(_layerSums[i],
+                                            _layerOutput[i]);
                 }
                 else
                 {
-                    this.layerDelta[i] = 0;
+                    _layerDelta[i] = 0;
                 }
             }
 
-            for (int i = this.flat.BeginTraining; i < this.flat.EndTraining; i++)
+            for (int i = _flat.BeginTraining; i < _flat.EndTraining; i++)
             {
                 ProcessLevel(i);
             }
 
             // calculate gradients
-            for (int j = 0; j < this.weights.Length; j++)
+            for (int j = 0; j < _weights.Length; j++)
             {
-                this.gradients[j] += e * this.derivative[j];
-                totDeriv[j] += this.derivative[j];
+                _gradients[j] += e*_derivative[j];
+                _totDeriv[j] += _derivative[j];
             }
         }
 
@@ -236,97 +274,35 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="currentLevel">The level.</param>
         private void ProcessLevel(int currentLevel)
         {
-            int fromLayerIndex = this.layerIndex[currentLevel + 1];
-            int toLayerIndex = this.layerIndex[currentLevel];
-            int fromLayerSize = this.layerCounts[currentLevel + 1];
-            int toLayerSize = this.layerFeedCounts[currentLevel];
+            int fromLayerIndex = _layerIndex[currentLevel + 1];
+            int toLayerIndex = _layerIndex[currentLevel];
+            int fromLayerSize = _layerCounts[currentLevel + 1];
+            int toLayerSize = _layerFeedCounts[currentLevel];
 
-            int index = this.weightIndex[currentLevel];
-            IActivationFunction activation = this.flat
-                    .ActivationFunctions[currentLevel + 1];
+            int index = _weightIndex[currentLevel];
+            IActivationFunction activation = _flat
+                .ActivationFunctions[currentLevel + 1];
 
             // handle weights
             int yi = fromLayerIndex;
             for (int y = 0; y < fromLayerSize; y++)
             {
-                double output = this.layerOutput[yi];
+                double output = _layerOutput[yi];
                 double sum = 0;
                 int xi = toLayerIndex;
                 int wi = index + y;
                 for (int x = 0; x < toLayerSize; x++)
                 {
-                    this.derivative[wi] += output * this.layerDelta[xi];
-                    sum += this.weights[wi] * this.layerDelta[xi];
+                    _derivative[wi] += output*_layerDelta[xi];
+                    sum += _weights[wi]*_layerDelta[xi];
                     wi += fromLayerSize;
                     xi++;
                 }
 
-                this.layerDelta[yi] = sum
-                        * (activation.DerivativeFunction(this.layerSums[yi], this.layerOutput[yi]));
+                _layerDelta[yi] = sum
+                                 *(activation.DerivativeFunction(_layerSums[yi], _layerOutput[yi]));
                 yi++;
             }
         }
-
-
-        /// <summary>
-        /// The output neuron we are processing.
-        /// </summary>
-        public int OutputNeuron
-        {
-            get
-            {
-                return outputNeuron;
-            }
-            set
-            {
-                this.outputNeuron = value;
-            }
-        }
-        
-        /// <summary>
-        /// The first derivatives, used to calculate the Hessian.
-        /// </summary>
-        public double[] Derivative
-        {
-            get
-            {
-                return this.totDeriv;
-            }
-        }
-
-
-        /// <summary>
-        /// The gradients.
-        /// </summary>
-        public double[] Gradients
-        {
-            get
-            {
-                return gradients;
-            }
-        }
-
-        /// <summary>
-        /// The SSE error.
-        /// </summary>
-        public double Error
-        {
-            get
-            {
-                return this.error;
-            }
-        }
-
-        /// <summary>
-        /// The flat network.
-        /// </summary>
-        public FlatNetwork Network
-        {
-            get
-            {
-                return this.flat;
-            }
-        }
-
     }
 }

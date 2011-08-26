@@ -20,13 +20,9 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
-using Encog.Neural.Networks;
 using Encog.Neural.Flat;
+using Encog.Neural.Networks;
 using Encog.Util;
 
 namespace Encog.MathUtil.Matrices.Hessian
@@ -34,12 +30,32 @@ namespace Encog.MathUtil.Matrices.Hessian
     /// <summary>
     /// Some basic code used to calculate Hessian matrixes.
     /// </summary>
-    public abstract class BasicHessian: IComputeHessian
+    public abstract class BasicHessian : IComputeHessian
     {
         /// <summary>
-        /// The training data that provides the ideal values.
+        /// The derivatives.
         /// </summary>
-        protected IMLDataSet training;
+        protected double[] derivative;
+
+        /// <summary>
+        /// The flat network.
+        /// </summary>
+        protected FlatNetwork flat;
+
+        /// <summary>
+        /// The gradients of the Hessian.
+        /// </summary>
+        protected double[] gradients;
+
+        /// <summary>
+        /// The Hessian 2d array.
+        /// </summary>
+        protected double[][] hessian;
+
+        /// <summary>
+        /// The Hessian matrix.
+        /// </summary>
+        protected Matrix hessianMatrix;
 
         /// <summary>
         /// The neural network that we would like to train.
@@ -53,86 +69,61 @@ namespace Encog.MathUtil.Matrices.Hessian
         protected double sse;
 
         /// <summary>
-        /// The gradients of the Hessian.
+        /// The training data that provides the ideal values.
         /// </summary>
-        protected double[] gradients;
+        protected IMLDataSet training;
 
-        /// <summary>
-        /// The Hessian matrix.
-        /// </summary>
-        protected Matrix hessianMatrix;
-
-        /// <summary>
-        /// The Hessian 2d array.
-        /// </summary>
-        protected double[][] hessian;
-
-        /// <summary>
-        /// The derivatives.
-        /// </summary>
-        protected double[] derivative;
-
-        /// <summary>
-        /// The flat network.
-        /// </summary>
-        protected FlatNetwork flat;
+        #region IComputeHessian Members
 
         /// <inheritdoc/>
         public virtual void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
-
             int weightCount = theNetwork.Structure.Flat.Weights.Length;
-            this.flat = theNetwork.Flat;
-            this.training = theTraining;
-            this.network = theNetwork;
-            this.gradients = new double[weightCount];
-            this.hessianMatrix = new Matrix(weightCount, weightCount);
-            this.hessian = this.hessianMatrix.Data;
-            this.derivative = new double[weightCount];
+            flat = theNetwork.Flat;
+            training = theTraining;
+            network = theNetwork;
+            gradients = new double[weightCount];
+            hessianMatrix = new Matrix(weightCount, weightCount);
+            hessian = hessianMatrix.Data;
+            derivative = new double[weightCount];
         }
 
         /// <inheritdoc/>
         public double[] Gradients
         {
-            get
-            {
-                return gradients;
-            }
+            get { return gradients; }
         }
 
         /// <inheritdoc/>
         public Matrix HessianMatrix
         {
-            get
-            {
-                return hessianMatrix;
-            }
+            get { return hessianMatrix; }
         }
 
         /// <inheritdoc/>
         public double[][] Hessian
         {
-            get
-            {
-                return hessian;
-            }
+            get { return hessian; }
         }
 
         /// <inheritdoc/>
         public void Clear()
         {
-            EngineArray.Fill(this.gradients, 0);
-            this.hessianMatrix.Clear();
+            EngineArray.Fill(gradients, 0);
+            hessianMatrix.Clear();
         }
 
         /// <inheritdoc/>
         public double SSE
         {
-            get
-            {
-                return sse;
-            }
+            get { return sse; }
         }
+
+
+        /// <inheritdoc/>
+        public abstract void Compute();
+
+        #endregion
 
         /// <summary>
         /// Update the Hessian, sum's with what is in the Hessian already.  Call clear to clear out old Hessian.
@@ -141,19 +132,14 @@ namespace Encog.MathUtil.Matrices.Hessian
         public void UpdateHessian(double[] d)
         {
             // update the hessian
-            int weightCount = this.network.Flat.Weights.Length;
+            int weightCount = network.Flat.Weights.Length;
             for (int i = 0; i < weightCount; i++)
             {
                 for (int j = 0; j < weightCount; j++)
                 {
-                    this.hessian[i][j] += 2 * d[i] * d[j];
+                    hessian[i][j] += 2*d[i]*d[j];
                 }
             }
         }
-
-
-        /// <inheritdoc/>
-        public abstract void Compute();
-        
     }
 }

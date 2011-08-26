@@ -21,12 +21,10 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Encog.MathUtil.Error;
 using Encog.ML.Data;
 using Encog.Neural.Networks;
-using Encog.MathUtil.Error;
 using Encog.Util;
 
 namespace Encog.MathUtil.Matrices.Hessian
@@ -46,57 +44,64 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <summary>
         /// The initial step size for dStep.
         /// </summary>
-        public const double INITIAL_STEP = 0.001;
+        public const double InitialStep = 0.001;
 
-
-        /// <summary>
-        /// The derivative step size, used for the finite difference method.
-        /// </summary>
-        private double[] dStep;
-
-        /// <summary>
-        /// The derivative coefficient, used for the finite difference method.
-        /// </summary>
-        private double[] dCoeff;
 
         /// <summary>
         /// The center of the point array.
         /// </summary>
-        private int center;
+        private int _center;
 
         /// <summary>
-        /// The number of points requested per side.  This determines the accuracy of the calculation.
+        /// The derivative coefficient, used for the finite difference method.
         /// </summary>
-        private int pointsPerSide = 5;
+        private double[] _dCoeff;
+
+        /// <summary>
+        /// The derivative step size, used for the finite difference method.
+        /// </summary>
+        private double[] _dStep;
 
         /// <summary>
         /// The number of points actually used, which is (pointsPerSide*2)+1. 
         /// </summary>
-        private int pointCount;
+        private int _pointCount;
+
+        /// <summary>
+        /// The number of points requested per side.  This determines the accuracy of the calculation.
+        /// </summary>
+        private int _pointsPerSide = 5;
+
+        /// <summary>
+        /// The number of points per side.
+        /// </summary>
+        public int PointsPerSide
+        {
+            get { return _pointsPerSide; }
+            set { _pointsPerSide = value; }
+        }
 
         /// <inheritdoc/>
-        public void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
+        public new void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
-
             base.Init(theNetwork, theTraining);
             int weightCount = theNetwork.Structure.Flat.Weights.Length;
 
-            this.center = this.pointsPerSide + 1;
-            this.pointCount = (this.pointsPerSide * 2) + 1;
-            this.dCoeff = CreateCoefficients();
-            this.dStep = new double[weightCount];
+            _center = _pointsPerSide + 1;
+            _pointCount = (_pointsPerSide*2) + 1;
+            _dCoeff = CreateCoefficients();
+            _dStep = new double[weightCount];
 
             for (int i = 0; i < weightCount; i++)
             {
-                this.dStep[i] = INITIAL_STEP;
+                _dStep[i] = InitialStep;
             }
-
         }
 
         /// <inheritdoc/>
         public override void Compute()
         {
-            this.sse = 0;
+            sse = 0;
 
             for (int i = 0; i < network.OutputCount; i++)
             {
@@ -110,25 +115,23 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="outputNeuron">The output neuron to compute.</param>
         private void InternalCompute(int outputNeuron)
         {
-            double e;
-
             int row = 0;
-            ErrorCalculation error = new ErrorCalculation();
-            EngineArray.Fill(this.derivative, 0);
+            var error = new ErrorCalculation();
+            EngineArray.Fill(derivative, 0);
 
             // Loop over every training element
-            foreach (IMLDataPair pair in this.training)
+            foreach (var pair in training)
             {
-                IMLData networkOutput = this.network.Compute(pair.Input);
+                var networkOutput = network.Compute(pair.Input);
 
-                e = pair.Ideal.Data[outputNeuron] - networkOutput[outputNeuron];
+                double e = pair.Ideal.Data[outputNeuron] - networkOutput[outputNeuron];
                 error.UpdateError(networkOutput[outputNeuron], pair.Ideal[outputNeuron]);
 
                 int currentWeight = 0;
 
                 // loop over the output weights
                 int outputFeedCount = network.GetLayerTotalNeuronCount(network.LayerCount - 2);
-                for (int i = 0; i < this.network.OutputCount; i++)
+                for (int i = 0; i < network.OutputCount; i++)
                 {
                     for (int j = 0; j < outputFeedCount; j++)
                     {
@@ -137,40 +140,40 @@ namespace Encog.MathUtil.Matrices.Hessian
                         if (i == outputNeuron)
                         {
                             jc = ComputeDerivative(pair.Input, outputNeuron,
-                                    currentWeight, this.dStep,
-                                    networkOutput[outputNeuron], row);
+                                                   currentWeight, _dStep,
+                                                   networkOutput[outputNeuron], row);
                         }
                         else
                         {
                             jc = 0;
                         }
 
-                        this.gradients[currentWeight] += jc * e;
-                        this.derivative[currentWeight] += jc;
+                        gradients[currentWeight] += jc*e;
+                        derivative[currentWeight] += jc;
                         currentWeight++;
                     }
                 }
 
                 // Loop over every weight in the neural network
-                while (currentWeight < this.network.Flat.Weights.Length)
+                while (currentWeight < network.Flat.Weights.Length)
                 {
                     double jc = ComputeDerivative(
-                            pair.Input, outputNeuron, currentWeight,
-                            this.dStep,
-                            networkOutput[outputNeuron], row);
-                    this.derivative[currentWeight] += jc;
-                    this.gradients[currentWeight] += jc * e;
+                        pair.Input, outputNeuron, currentWeight,
+                        _dStep,
+                        networkOutput[outputNeuron], row);
+                    derivative[currentWeight] += jc;
+                    gradients[currentWeight] += jc*e;
                     currentWeight++;
                 }
 
                 row++;
             }
 
-            UpdateHessian(this.derivative);
+            UpdateHessian(derivative);
 
             sse += error.CalculateSSE();
         }
-      
+
         /// <summary>
         /// Computes the derivative of the output of the neural network with respect to a weight. 
         /// </summary>
@@ -182,40 +185,35 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="row">The training row currently being processed.</param>
         /// <returns>The derivative output.</returns>
         private double ComputeDerivative(IMLData inputData, int outputNeuron, int weight, double[] stepSize,
-                double networkOutput, int row)
+                                         double networkOutput, int row)
         {
-
             double temp = network.Flat.Weights[weight];
 
-            double[] points = new double[this.dCoeff.Length];
+            var points = new double[_dCoeff.Length];
 
-            stepSize[row] = Math.Max(INITIAL_STEP * Math.Abs(temp), INITIAL_STEP);
+            stepSize[row] = Math.Max(InitialStep*Math.Abs(temp), InitialStep);
 
-            points[this.center] = networkOutput;
+            points[_center] = networkOutput;
 
-            for (int i = 0; i < this.dCoeff.Length; i++)
+            for (int i = 0; i < _dCoeff.Length; i++)
             {
-                if (i == this.center)
+                if (i == _center)
                     continue;
 
-                double newWeight = temp + ((i - this.center))
-                        * stepSize[row];
+                double newWeight = temp + ((i - _center))
+                                   *stepSize[row];
 
-                this.network.Flat.Weights[weight] = newWeight;
+                network.Flat.Weights[weight] = newWeight;
 
-                IMLData output = this.network.Compute(inputData);
+                IMLData output = network.Compute(inputData);
                 points[i] = output.Data[outputNeuron];
             }
 
-            double result = 0.0;
-            for (int i = 0; i < this.dCoeff.Length; i++)
-            {
-                result += this.dCoeff[i] * points[i];
-            }
+            double result = _dCoeff.Select((t, i) => t*points[i]).Sum();
 
             result /= Math.Pow(stepSize[row], 1);
 
-            this.network.Flat.Weights[weight] = temp;
+            network.Flat.Weights[weight] = temp;
 
             return result;
         }
@@ -229,51 +227,34 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <returns>An array of the coefficients for FD.</returns>
         public double[] CreateCoefficients()
         {
+            var result = new double[_pointCount];
 
-            double[] result = new double[this.pointCount];
-
-            Matrix delts = new Matrix(this.pointCount, this.pointCount);
+            var delts = new Matrix(_pointCount, _pointCount);
             double[][] t = delts.Data;
 
-            for (int j = 0; j < this.pointCount; j++)
+            for (int j = 0; j < _pointCount; j++)
             {
-                double delt = (j - this.center);
+                double delt = (j - _center);
                 double x = 1.0;
 
-                for (int k = 0; k < this.pointCount; k++)
+                for (int k = 0; k < _pointCount; k++)
                 {
-                    t[j][k] = x / EncogMath.Factorial(k);
+                    t[j][k] = x/EncogMath.Factorial(k);
                     x *= delt;
                 }
             }
 
             Matrix invMatrix = delts.Inverse();
-            double f = EncogMath.Factorial(this.pointCount);
+            double f = EncogMath.Factorial(_pointCount);
 
 
-            for (int k = 0; k < this.pointCount; k++)
+            for (int k = 0; k < _pointCount; k++)
             {
-                result[k] = (Math.Round(invMatrix.Data[1][k] * f)) / f;
+                result[k] = (Math.Round(invMatrix.Data[1][k]*f))/f;
             }
-
 
 
             return result;
         }
-
-        /// <summary>
-        /// The number of points per side.
-        /// </summary>
-        public int PointsPerSide
-        {
-            get
-            {
-                return pointsPerSide;
-            }
-            set
-            {
-                this.pointsPerSide = value;
-            }
-        }        
     }
 }

@@ -20,14 +20,10 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Util.Concurrency;
-using Encog.Neural.Networks;
 using Encog.ML.Data;
 using Encog.Neural.Flat;
+using Encog.Neural.Networks;
+using Encog.Util.Concurrency;
 
 namespace Encog.MathUtil.Matrices.Hessian
 {
@@ -39,43 +35,55 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <summary>
         /// The number of threads to use.
         /// </summary>
-        private int numThreads;
+        private int _numThreads;
 
         /// <summary>
         /// The workers.
         /// </summary>
-        private ChainRuleWorker[] workers;
+        private ChainRuleWorker[] _workers;
 
+        #region IMultiThreadable Members
+
+        /// <summary>
+        /// Set the number of threads. Specify zero to tell Encog to automatically
+        /// determine the best number of threads for the processor. If OpenCL is used
+        /// as the target device, then this value is not used.
+        /// </summary>
+        public int ThreadCount
+        {
+            get { return _numThreads; }
+            set { _numThreads = value; }
+        }
+
+        #endregion
 
         /// <inheritdoc/>
         public override void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
-
             base.Init(theNetwork, theTraining);
             int weightCount = theNetwork.Structure.Flat.Weights.Length;
 
-            this.training = theTraining;
-            this.network = theNetwork;
+            training = theTraining;
+            network = theNetwork;
 
-            this.hessianMatrix = new Matrix(weightCount, weightCount);
-            this.hessian = this.hessianMatrix.Data;
+            hessianMatrix = new Matrix(weightCount, weightCount);
+            hessian = hessianMatrix.Data;
 
             // create worker(s)
-            DetermineWorkload determine = new DetermineWorkload(
-                    this.numThreads, (int)this.training.Count);
+            var determine = new DetermineWorkload(
+                _numThreads, (int) training.Count);
 
-            this.workers = new ChainRuleWorker[determine.ThreadCount];
+            _workers = new ChainRuleWorker[determine.ThreadCount];
 
             int index = 0;
 
             // handle CPU
             foreach (IntRange r in determine.CalculateWorkers())
             {
-                this.workers[index++] = new ChainRuleWorker((FlatNetwork)this.flat.Clone(),
-                        this.training.OpenAdditional(), r.Low,
-                        r.High);
+                _workers[index++] = new ChainRuleWorker((FlatNetwork) flat.Clone(),
+                                                       training.OpenAdditional(), r.Low,
+                                                       r.High);
             }
-
         }
 
         /// <inheritdoc/>
@@ -83,23 +91,21 @@ namespace Encog.MathUtil.Matrices.Hessian
         {
             Clear();
             double e = 0;
-            int weightCount = this.network.Flat.Weights.Length;
+            int weightCount = network.Flat.Weights.Length;
 
-            for (int outputNeuron = 0; outputNeuron < this.network.OutputCount; outputNeuron++)
+            for (int outputNeuron = 0; outputNeuron < network.OutputCount; outputNeuron++)
             {
-
                 // handle context
-                if (this.flat.HasContext)
+                if (flat.HasContext)
                 {
-                    this.workers[0].Network.ClearContext();
+                    _workers[0].Network.ClearContext();
                 }
 
-                if (this.workers.Length > 1)
+                if (_workers.Length > 1)
                 {
-
                     TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
 
-                    foreach (ChainRuleWorker worker in this.workers)
+                    foreach (ChainRuleWorker worker in _workers)
                     {
                         worker.OutputNeuron = outputNeuron;
                         EngineConcurrency.Instance.ProcessTask(worker, group);
@@ -109,41 +115,24 @@ namespace Encog.MathUtil.Matrices.Hessian
                 }
                 else
                 {
-                    this.workers[0].OutputNeuron = outputNeuron;
-                    this.workers[0].Run();
+                    _workers[0].OutputNeuron = outputNeuron;
+                    _workers[0].Run();
                 }
 
                 // aggregate workers
 
-                foreach (ChainRuleWorker worker in this.workers)
+                foreach (ChainRuleWorker worker in _workers)
                 {
                     e += worker.Error;
                     for (int i = 0; i < weightCount; i++)
                     {
-                        this.gradients[i] += worker.Gradients[i];
+                        gradients[i] += worker.Gradients[i];
                     }
                     UpdateHessian(worker.Derivative);
                 }
             }
 
-            sse = e / 2;
-        }
-
-        /// <summary>
-        /// Set the number of threads. Specify zero to tell Encog to automatically
-        /// determine the best number of threads for the processor. If OpenCL is used
-        /// as the target device, then this value is not used.
-        /// </summary>
-        public int ThreadCount
-        {
-            get
-            {
-                return this.numThreads;
-            }
-            set
-            {
-                this.numThreads = value;
-            }
+            sse = e/2;
         }
     }
 }
