@@ -9,9 +9,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Basic/f:BasicMLDataSet.cs" caret="6861" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/d:Loader/f:CSVFinal.cs" caret="3405" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="2943" fromTop="23" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="5724" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="3016" fromTop="21" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORNEAT.cs" caret="1294" fromTop="26" />
@@ -29,7 +26,6 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:SCG/f:ScaledConjugateGradient.cs" caret="906" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:GradientWorker.cs" caret="1033" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/d:Train/f:RPROPFactory.cs" caret="2493" fromTop="15" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3232" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:SimpleBenchmark.cs" caret="2482" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="11009" fromTop="11" />
@@ -39,25 +35,12 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="8986" fromTop="20" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="1747" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="9920" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:EncogBenchmarkExample.cs" caret="1501" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="1810" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="23" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="9007" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="273" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="1735" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="1867" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="2032" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="2195" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="2354" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="2539" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="2843" fromTop="4" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="3855" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="4197" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="7677" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="2549" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="273" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="11844" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="321" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3125" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3276" fromTop="15" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3415" fromTop="7" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3567" fromTop="12" />
@@ -70,7 +53,24 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4616" fromTop="9" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4757" fromTop="14" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="7751" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="9920" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="9929" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="17" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="8" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="2299" fromTop="5" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="1728" fromTop="12" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="473" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="16" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -180,10 +180,10 @@
       <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
       <Item value="Console`0" priority="25" />
-      <Item value="examples" priority="2" />
+      <Item value="examples" priority="3" />
       <Item value="Examples" priority="2" />
       <Item value="XOR" priority="1" />
-      <Item value="IExample`0" priority="5" />
+      <Item value="IExample`0" priority="6" />
       <Item value="XORHelloWorld`0" priority="0" />
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
@@ -304,6 +304,7 @@
       <Item value="LastGradients" priority="0" />
       <Item value="_updateValues" priority="1" />
       <Item value="CurrentError" priority="0" />
+      <Item value="FahlmanEncoder`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -384,7 +385,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.EngineArray">
       <Item value="AllocateBool2D`0" priority="0" />
-      <Item value="AllocateDouble2D`0" priority="11" />
+      <Item value="AllocateDouble2D`0" priority="12" />
       <Item value="PutAll`2" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.ML.Genetic.Population.IPopulation">
@@ -433,7 +434,7 @@
       <Item value="ClassMembers" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="4" />
+      <Item value="Add`0" priority="5" />
       <Item value="Sort`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
@@ -618,6 +619,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Neural.Networks.Training.Propagation.Resilient.RPROPConst">
       <Item value="DefaultZeroTolerance" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Examples.Benchmark.FahlmanEncoder">
+      <Item value="Info" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

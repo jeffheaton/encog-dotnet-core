@@ -98,6 +98,7 @@ namespace ConsoleExamples
             examples.Add(MultiRadial.Info);
             examples.Add(SVMExample.Info);
             examples.Add(SVMPredictCSV.Info);
+            examples.Add(FahlmanEncoder.Info);
         }
 
         public void ListCommands()
