@@ -11,6 +11,8 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
+using Encog.Neural.NEAT;
+using Encog.Neural.NEAT.Training;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
@@ -18,6 +20,7 @@ using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.CSV;
+using Encog.Util.Simple;
 
 #endregion
 
@@ -111,7 +114,7 @@ namespace Encog.Examples.RateSP500
                 if (sample.getDate().CompareTo(PREDICT_FROM) > 0)
                 {
                     StringBuilder str = new StringBuilder();
-                    str.Append(ReadCSV.ParseDate(sample.getDate().ToShortDateString(), "yyyy-MM-dd"));
+                    str.Append(sample.getDate());
                     str.Append(":Start=");
                     str.Append(sample.getAmount());
 
@@ -223,28 +226,56 @@ namespace Encog.Examples.RateSP500
             // IMLTrain train = new Backpropagation(this.network, this.input,this.ideal, 0.000001, 0.1);
 
             IMLDataSet aset = new BasicMLDataSet(input, ideal);
-         
-
             int epoch = 1;
             // train the neural network
             ICalculateScore score = new TrainingSetScore(aset);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
-
-
             IMLTrain trainMain = new Backpropagation(network, aset, 0.001, 0.0);
-
             StopTrainingStrategy stop = new StopTrainingStrategy();
+            var pop = new NEATPopulation(INPUT_SIZE, OUTPUT_SIZE, 1000);
+            // train the neural network
+            var step = new ActivationStep();
+            step.Center = 0.5;
+            pop.OutputActivationFunction = step;
+            var train = new NEATTraining(score, pop);
             trainMain.AddStrategy(new Greedy());
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
+            trainMain.AddStrategy(new HybridStrategy(train));
 
+
+            network.ClearContext();
 
             while (!stop.ShouldStop())
             {
                 trainMain.Iteration();
-                Console.WriteLine(@"Training " + @"Epoch #" + epoch + @" Error:" + trainMain.Error);
+                train.Iteration();
+                Console.WriteLine(@"Training " + @"Epoch #" + epoch + @" Error:" + trainMain.Error+ " Genetic iteration:"+trainAlt.IterationNumber+ "neat iteration:"+train.IterationNumber );
                 epoch++;
             }
         }
+
+
+
+        public void StartPrediction()
+        {
+            
+        }
+
+        #region Direction enum
+
+        public enum Direction
+        {
+            Up,
+            Down
+        } ;
+
+        #endregion
+
+        public static Direction DetermineDirection(double d)
+        {
+            return d < 0 ? Direction.Down : Direction.Up;
+        }
+
     }
 }

@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Encog.Engine.Network.Activation;
-using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.ML.Train;
-using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
-using Encog.Neural.Networks.Training;
-using Encog.Neural.Networks.Training.Anneal;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Util.Simple;
-using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
-namespace Encog.Examples.RangeandMarket
+using Encog.Util.NetworkUtil;
+
+namespace Encog.Examples.Analyzer
 {
     static class RandomTrainer
     {
@@ -34,12 +24,12 @@ namespace Encog.Examples.RangeandMarket
             double[] inp5 = MakeInputs(inputs);
             double[] inp6 = MakeInputs(inputs);
 
-            var pair = SuperUtils.ProcessPair(firstinput, firstinput, inputs, predictWindow);
-            var pair2 = SuperUtils.ProcessPair(SecondInput, firstinput, inputs, predictWindow);
-            var pair3 = SuperUtils.ProcessPair(ThirdInputs, firstinput, inputs, predictWindow);
-            var pair4 = SuperUtils.ProcessPair(FourthInputs, firstinput, inputs, predictWindow);
-            var pair5 = SuperUtils.ProcessPair(inp5, firstinput, inputs, predictWindow);
-            var pair6 = SuperUtils.ProcessPair(inp6, firstinput, inputs, predictWindow);
+            var pair = NetworkUtility.ProcessPair(firstinput, firstinput, inputs, predictWindow);
+            var pair2 = NetworkUtility.ProcessPair(SecondInput, firstinput, inputs, predictWindow);
+            var pair3 = NetworkUtility.ProcessPair(ThirdInputs, firstinput, inputs, predictWindow);
+            var pair4 = NetworkUtility.ProcessPair(FourthInputs, firstinput, inputs, predictWindow);
+            var pair5 = NetworkUtility.ProcessPair(inp5, firstinput, inputs, predictWindow);
+            var pair6 = NetworkUtility.ProcessPair(inp6, firstinput, inputs, predictWindow);
             BasicMLDataSet SuperSet = new BasicMLDataSet();
             SuperSet.Add(pair);
             SuperSet.Add(pair2);

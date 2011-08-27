@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using Encog.Engine.Network.Activation;
 using Encog.ML;
 using Encog.ML.Data;
@@ -14,13 +13,12 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.NetworkUtil;
 using Encog.Util.Simple;
-using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
-namespace Encog.Examples.RangeandMarket
+
+namespace Encog.Examples.Analyzer
 {
     public static class CreateEval
     {
@@ -29,25 +27,27 @@ namespace Encog.Examples.RangeandMarket
 
 
         #region create an evaluation set from a file and train it
+// ReSharper disable UnusedMember.Local
         private static void CreateEvaluationSet(string @fileName)
+// ReSharper restore UnusedMember.Local
         {
-            List<double> Opens = SuperUtils.QuickParseCSV(fileName, "Open", 1200, 1200);
-            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", 1200, 1200);
-            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", 1200, 1200);
-            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", 1200, 1200);
-            List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, 1200, 1200);
-            TemporalMLDataSet superTemportal = new TemporalMLDataSet(100, 1);
+            List<double> Opens = QuickCSVUtils.QuickParseCSV(fileName, "Open", 1200, 1200);
+            List<double> High = QuickCSVUtils.QuickParseCSV(fileName, "High", 1200, 1200);
+            List<double> Low = QuickCSVUtils.QuickParseCSV(fileName, "Low", 1200, 1200);
+            List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", 1200, 1200);
+            List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, 1200, 1200);
+         
 
             double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
 
-            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+            TemporalMLDataSet superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
-            IMLDataPair aPairInput = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
-            IMLDataPair aPairInput3 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
-            IMLDataPair aPairInput5 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
+            IMLDataPair aPairInput = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
+            IMLDataPair aPairInput5 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
@@ -63,21 +63,20 @@ namespace Encog.Examples.RangeandMarket
 
             double temporalErrorRate = EvaluateNetworks(network, superTemportal);
 
-            Console.WriteLine("Percent Correct with normal Data Set:" + normalCorrectRate + " Percent Correct with temporal Dataset:" +
+            Console.WriteLine(@"Percent Correct with normal Data Set:" + normalCorrectRate + @" Percent Correct with temporal Dataset:" +
                       temporalErrorRate);
 
 
 
 
 
-            Console.WriteLine("Paused , Press a key to continue to evaluation");
+            Console.WriteLine(@"Paused , Press a key to continue to evaluation");
             Console.ReadKey();
         }
         public static double EvaluateNetworks(BasicNetwork network, BasicMLDataSet set)
         {
             int count = 0;
             int correct = 0;
-            int CurrentIndex = 0;
             foreach (IMLDataPair pair in set)
             {
                 IMLData input = pair.Input;
@@ -94,9 +93,9 @@ namespace Encog.Examples.RangeandMarket
                 if (actualDirection == predictDirection)
                     correct++;
                 count++;
-                Console.WriteLine("Number" + "count" + @": actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                Console.WriteLine(@"Number" + @"count" + @": actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
                                   + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
-                CurrentIndex++;
+               
             }
             double percent = correct / (double)count;
             Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
@@ -162,28 +161,17 @@ namespace Encog.Examples.RangeandMarket
 
         public static BasicMLDataSet CreateEvaluationSetAndLoad(string @fileName, int startLine, int HowMany, int WindowSize, int outputsize)
         {
-            List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", startLine, HowMany);
-            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", startLine, HowMany);
-            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", startLine, HowMany);
-            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", startLine, HowMany);
-            List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, startLine, HowMany);
-
-
-            TemporalMLDataSet superTemportal = new TemporalMLDataSet(WindowSize, outputsize);
-
+            List<double> Opens = QuickCSVUtils.QuickParseCSV(fileName, "Open", startLine, HowMany);
+            List<double> High = QuickCSVUtils.QuickParseCSV(fileName, "High", startLine, HowMany);
+            // List<double> Low = QuickCSVUtils.QuickParseCSV(fileName, "Low", startLine, HowMany);
+            List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", startLine, HowMany);
+            List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, startLine, HowMany);
             double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
-
-
-
-
-            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
-                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
-
-            IMLDataPair aPairInput = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput3 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput2 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput4 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput5 = SuperUtils.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput3 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput2 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput4 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput5 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), WindowSize, outputsize);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
@@ -198,18 +186,16 @@ namespace Encog.Examples.RangeandMarket
 
         public static TemporalMLDataSet GenerateATemporalSet(string @fileName, int startLine, int HowMany, int WindowSize, int outputsize)
         {
-             List<double> Opens = NetworkUtility.QuickParseCSV(fileName, "Open", startLine, HowMany);
-            List<double> High = NetworkUtility.QuickParseCSV(fileName, "High", startLine, HowMany);
-            List<double> Low = NetworkUtility.QuickParseCSV(fileName, "Low", startLine, HowMany);
-            List<double> Close = NetworkUtility.QuickParseCSV(fileName, "Close", startLine, HowMany);
-            List<double> Volume = NetworkUtility.QuickParseCSV(fileName, 5, startLine, HowMany);
-            TemporalMLDataSet superTemportal = new TemporalMLDataSet(WindowSize, outputsize);
-            double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
-            superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
-                                                                                                  Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+            List<double> Opens = QuickCSVUtils.QuickParseCSV(fileName, "Open", startLine, HowMany);
+            List<double> High = QuickCSVUtils.QuickParseCSV(fileName, "High", startLine, HowMany);
+            List<double> Low = QuickCSVUtils.QuickParseCSV(fileName, "Low", startLine, HowMany);
+            List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", startLine, HowMany);
+            List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, startLine, HowMany);
 
-            return superTemportal;
+          return NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(WindowSize,outputsize, Opens.ToArray(),Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
         }
+
+
         public static IMLMethod CreateElmanNetwork(int inputsize, int outputsize)
         {
             // construct an Elman type network

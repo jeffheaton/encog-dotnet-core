@@ -26,6 +26,7 @@ using ConsoleExamples.Examples;
 using Encog.Examples;
 using Encog.Examples.Adaline;
 using Encog.Examples.Analyst;
+using Encog.Examples.Analyzer;
 using Encog.Examples.AnnealTSP;
 using Encog.Examples.ARTExample;
 using Encog.Examples.BAM;

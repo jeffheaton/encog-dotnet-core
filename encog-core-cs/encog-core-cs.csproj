@@ -26,7 +26,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -540,6 +540,7 @@
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
+    <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />

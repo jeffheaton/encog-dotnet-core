@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using ConsoleExamples.Examples;
+using Encog.Examples.Analyzer;
 using Encog.Examples.RangeandMarket;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;

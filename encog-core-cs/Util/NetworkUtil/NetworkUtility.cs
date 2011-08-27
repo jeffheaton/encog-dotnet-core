@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Encog.Engine.Network.Activation;
+using Encog.MathUtil;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
@@ -23,13 +25,14 @@ using Encog.Util.Normalize.Input;
 using Encog.Util.Normalize.Output;
 using Encog.Util.Normalize.Target;
 using Encog.Util.Simple;
+using Convert = System.Convert;
 
 namespace Encog.Util.NetworkUtil
 {
     /// <summary>
     /// A class with many helpers.
     /// </summary>
-    public class NetworkUtility
+    public partial class NetworkUtility
     {
         /// <summary>
         /// Quickly an IMLDataset from a double array using the TemporalWindow array.
@@ -145,9 +148,15 @@ namespace Encog.Util.NetworkUtil
             return 0.0;
         }
 
+        /// <summary>
+        /// Calculates the ranges in two double series.
+        /// Can be used to make inputs for a neural network.
+        /// </summary>
+        /// <param name="closingValues">The closing values.</param>
+        /// <param name="OpeningValues">The opening values.</param>
+        /// <returns></returns>
         public static double[] CalculateRanges(double[] closingValues, double[] OpeningValues)
         {
-            double range = 0;
             List<double> results = new List<double>();
             //if one is bigger than the other, something is wrong.
             if (closingValues.Length != OpeningValues.Length)
@@ -155,7 +164,7 @@ namespace Encog.Util.NetworkUtil
 
             for (int i = 0; i < closingValues.Length; i++)
             {
-                range = Math.Abs(closingValues[i] - OpeningValues[i]);
+                double range = Math.Abs(closingValues[i] - OpeningValues[i]);
                 results.Add(range);
                 i++;
             }
@@ -163,7 +172,9 @@ namespace Encog.Util.NetworkUtil
 
         }
         /// <summary>
-        /// Calculates the percents in a double serie.
+        /// Calculates the percent changes in a double serie.
+        /// Emulates how the temporal datasets are normalizing.
+        /// useful if you are using a temporal dataset and you want to pass inputs to your neural network after it has been trained.
         /// </summary>
         /// <param name="inputs">The inputs.</param>
         /// <returns></returns>
@@ -182,157 +193,7 @@ namespace Encog.Util.NetworkUtil
             }
             return result.ToArray();
         }
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="formatused">The formatused.</param>
-        /// <param name="Name">The name of the column to parse..</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, CSVFormat formatused, string Name)
-        {
-            List<double> returnedArrays = new List<double>();
-
-            ReadCSV csv = new ReadCSV(file, true, formatused);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            while (csv.Next())
-            {
-                returnedArrays.Add(csv.GetDouble(Name));
-            }
-            return returnedArrays;
-        }
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="Name">The name of the column to parse.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, string Name)
-        {
-            List<double> returnedArrays = new List<double>();
-
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            while (csv.Next())
-            {
-                returnedArrays.Add(csv.GetDouble(Name));
-            }
-            return returnedArrays;
-        }
-
-
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// You can input the size (number of lines) to read.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="Name">The name of the column to parse.</param>
-        /// <param name="size">The size.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, string Name, int size)
-        {
-            List<double> returnedArrays = new List<double>();
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            int currentRead = 0;
-            while (csv.Next() && currentRead < size)
-            {
-                returnedArrays.Add(csv.GetDouble(Name));
-                currentRead++;
-            }
-            return returnedArrays;
-        }
-
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// You can input the size (number of lines) to read and the number of lines you want to skip from the start line
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="Name">The name of the column to parse.</param>
-        /// <param name="size">The size.</param>
-        /// <param name="StartLine">The start line (how many lines you want to skip from the start of the file.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, string Name, int size, int StartLine)
-        {
-            List<double> returnedArrays = new List<double>();
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            int currentRead = 0;
-            int currentLine = 0;
-            while (csv.Next())
-            {
-                if (currentRead < size && currentLine > StartLine)
-                {
-                    returnedArrays.Add(csv.GetDouble(Name));
-                    currentRead++;
-                }
-                currentLine++;
-            }
-            return returnedArrays;
-        }
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// You can input the size (number of lines) to read.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="columnNumber">The column number to get.</param>
-        /// <param name="size">The size.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, int columnNumber, int size)
-        {
-            List<double> returnedArrays = new List<double>();
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            int currentRead = 0;
-            while (csv.Next() && currentRead < size)
-            {
-                returnedArrays.Add(csv.GetDouble(columnNumber));
-                currentRead++;
-            }
-            return returnedArrays;
-        }
-
-
-        /// <summary>
-        /// parses one column of a csv and returns an array of doubles.
-        /// you can only return one double array with this method.
-        /// We are assuming CSVFormat english in this quick parse csv method.
-        /// You can input the size (number of lines) to read , and the number of lines you want to skip start from the first line.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="columnNumber">The column number to get.</param>
-        /// <param name="size">The size.</param>
-        /// <param name="startLine">The start line (how many lines you want to skip from the first line.</param>
-        /// <returns></returns>
-        public static List<double> QuickParseCSV(string file, int columnNumber, int size, int startLine)
-        {
-            List<double> returnedArrays = new List<double>();
-            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
-            List<string> ColumnNames = csv.ColumnNames.ToList();
-            int currentRead = 0;
-            int currentLine = 0;
-            while (csv.Next())
-            {
-                if (currentRead < size && currentLine > startLine)
-                {
-                    returnedArrays.Add(csv.GetDouble(columnNumber));
-                    currentRead++;
-                }
-                currentLine++;
-            }
-            return returnedArrays;
-        }
-
-
+       
         /// <summary>
         /// Loads an IMLDataset training file in a given directory.
         /// </summary>
@@ -456,14 +317,14 @@ namespace Encog.Util.NetworkUtil
         }
         /// <summary>
         /// Makes random inputs by randomizing with encog randomize , the normal random from net framework library.
-        /// a quick and easy way to test data and networks.
+        /// a quick and easy way to test data and and train networks.
         /// </summary>
         /// <param name="number">The number.</param>
         /// <returns></returns>
         public static double[] MakeInputs(int number)
         {
             Random rdn = new Random();
-            Encog.MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
+            MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
             double[] x = new double[number];
             for (int i = 0; i < number; i++)
             {
@@ -549,6 +410,8 @@ namespace Encog.Util.NetworkUtil
             result.AddDescription(desc);
             TemporalPoint point = new TemporalPoint(Arraydouble.Length);
             int currentindex;
+
+
            for (int w =0 ;w <Arraydouble[0].Length;w++)
            {
                //We have filled in one dimension now lets put them in our temporal dataset.
@@ -615,7 +478,7 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static double [][] NetworkbuilArray(double [] first , double [] second)
         {
-            double[][] Resulting = new double[first.Length][];
+            double[][] Resulting = new double[2][];
             Resulting[0] = first;
             Resulting[1] = second;
             return Resulting;
@@ -625,15 +488,7 @@ namespace Encog.Util.NetworkUtil
         public static double[][] NetworkbuilArray(double[] first)
         {
             double[][] Resulting = new double[first.Length][];
-            int index = 0;
-            int column = 0;
-            //foreach (double d in first)
-            //{
-            //    Resulting[0] = first;
-            //}
-            
             Resulting[0] = first;
-           
             return Resulting;
         }
 
@@ -772,9 +627,8 @@ namespace Encog.Util.NetworkUtil
         public static TemporalMLDataSet GenerateTrainingWithDeltaChangeOnSerie(double[] inputserie, int windowsize, int predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
-
             TemporalDataDescription desc = new TemporalDataDescription(
-                    TemporalDataDescription.Type.DeltaChange, true, true);
+            TemporalDataDescription.Type.DeltaChange, true, true);
             result.AddDescription(desc);
 
             for (int index = 0; index < inputserie.Length - 1; index++)
@@ -855,7 +709,111 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         public static readonly Encog.Util.Arrayutil.NormalizeArray ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
 
-        
+
+
+      
+
+        /// <summary>
+        /// Generates a jagged array with as many inputs as needed one one ideal.
+        /// This is useful for neural networks with multiple inputs.
+        /// </summary>
+        /// <param name="ideal">The ideal.</param>
+        /// <param name="inputs">The inputs.</param>
+        /// <returns>the jagged array used as input for the neural network.</returns>
+        public static double[][] GenerateInputz(params double[][] inputs)
+        {
+            ArrayList al = new ArrayList();
+            foreach (double[] doublear in inputs)
+            {
+                al.Add((double[])doublear);
+            }
+            return (double[][])al.ToArray(typeof(double[]));
+        }
+
+
+
+        /// <summary>
+        /// Generates from an input and an ideal double array a jagged array.
+        /// Jagged array are used in supervised learning.
+        /// both ideal and array must have the same lenght.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="ideal">The ideal.</param>
+        /// <returns>the jagged array.</returns>
+        public static double[][] Generate(double []input, double[] ideal)
+        {
+            double[][] result = EngineArray.AllocateDouble2D(2, input.Length);
+            int first = 0;
+            foreach (double d in input)
+            {
+                result[0][first++] = d;
+            }
+            first = 0;
+            foreach (double d in ideal)
+            {
+                result[1][first++] = d;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Generates from an input and an ideal double array a jagged array.
+        /// Jagged array are used in supervised learning.
+        /// both ideal and array must have the same lenght.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="ideal">The ideal.</param>
+        /// <returns>the jagged array.</returns>
+        public static double[][] GenerateSimpleJagged(double[] input)
+        {
+            double[][] result = EngineArray.AllocateDouble2D(1, input.Length);
+            int first = 0;
+            foreach (double d in input)
+            {
+                result[0][first++] = d;
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Doubles the inputs to array.
+        /// Lets say you have 600 numbers, but each of those number actually represent a serie
+        /// in which there is 2 inputs, so you actually have 300 inputs with 2 numbers.
+        /// This makes a jagged array ready for neural networks and arranges each double in its proper double array.
+        /// Lets say you are receiving prices from multiple instruments and want to put them in a neural network..This would be useful.
+        /// Could also be useful if you are reading a csv, and need to make each cell in a row an input....
+        /// You are reading the keno.csv , there are 10 Balls, but 15000 lines of drawings..
+        /// With this method , you can just pass the 15000 lines, and give a lenght of 10..The rest is done automatically.
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <param name="lenght">The lenght.</param>
+        /// <returns>the jagged array of doubles</returns>
+        public static double [][]DoubleInputsToArray(List<double> inputs, int lenght)
+        {
+            //we must be able to fit all our numbers in the same double array..no spill over.
+           if (inputs.Count % lenght != 0)
+                return null;
+           int dimension = inputs.Count / lenght;
+
+            double[][] result = EngineArray.AllocateDouble2D(dimension, lenght);
+            foreach (double doubles in inputs)
+            {
+                foreach (double[] d in result)
+                {
+                    //now we loop through the index.
+                    int index = 0;
+                    for (index =0; index <result.Length;index++)
+                    {
+                        for(int j =0;j< lenght;j++)
+                        {
+                            result[index][j] = doubles;
+                        }
+                    }
+                }
+            }
+            return (result);
+        }
         /// <summary>
         /// Normalizes an array.
         /// </summary>
@@ -922,9 +880,11 @@ namespace Encog.Util.NetworkUtil
         /// <returns>return the absolute percentage difference between two numbers.</returns>
         public static double AveragePercents (double first,double second)
         {
-            double diffs = Math.Abs(first - second);
-            double result = (first + second)/2;
-            return (diffs/result)*0.01;
+            //double diffs = (first - second);
+            //double result = (first + second)/2;
+            //return 1-((result/diffs)*0.01);
+
+           return  Math.Abs(first - second) / (first + second) * 100;
 
         }
 

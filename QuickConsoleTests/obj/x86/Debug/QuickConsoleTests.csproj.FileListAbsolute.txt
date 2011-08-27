@@ -1,8 +1,0 @@
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\bin\Debug\QuickConsoleTests.exe
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\bin\Debug\QuickConsoleTests.pdb
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\bin\Debug\encog-core-cs.dll
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\bin\Debug\encog-core-cs.pdb
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\bin\Debug\encog-core-cs.xml
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\obj\x86\Debug\QuickConsoleTests.exe
-C:\GIT encog\Last\fxmozart-encog-dotnet-core-24b300b\QuickConsoleTests\obj\x86\Debug\QuickConsoleTests.pdb
