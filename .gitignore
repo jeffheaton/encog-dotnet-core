@@ -34,3 +34,6 @@ encog-core-cs.5.1.ReSharper.user
 encog-core-cs.5.1.ReSharper.user
 encog-core-cs.5.1.ReSharper.user
 QuickConsoleTests/Program.cs
+encog-core-cs.sln.vsdoc
+EncogCmd/EncogCmd.csproj.vs10x
+encog-core-cs/encog-core-cs.vsdoc

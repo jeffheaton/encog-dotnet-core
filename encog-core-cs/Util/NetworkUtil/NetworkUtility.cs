@@ -54,7 +54,7 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         /// <param name="surface">The surface.</param>
         /// <param name="fileName">Name of the file.</param>
-        private static void SaveMatrix(double[][] surface, string fileName)
+        public static void SaveMatrix(double[][] surface, string fileName)
         {
             using (var sw = new System.IO.StreamWriter(fileName, false))
             {
@@ -79,7 +79,7 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
-        private static double[][] LoadMatrix(string fileName)
+        public static double[][] LoadMatrix(string fileName)
         {
             string[] allLines = System.IO.File.ReadAllLines(fileName);
 
@@ -447,25 +447,7 @@ namespace Encog.Util.NetworkUtil
 
         }
 
-        /// <summary>
-        /// Allocate a 2D array of doubles.
-        /// and makes an  ideal of a single array.
-        /// the rest must have the same number of points as this ideal.
-        /// </summary>
-        /// <param name="arrayone">The arrayone.</param>
-        /// <returns>
-        /// The array.
-        /// </returns>
-        public static double[][] CopyIdeal(double[] arrayone)
-        {
-
-            double[][] result = Encog.Util.EngineArray.AllocateDouble2D(arrayone.Length, 1);
-            for (int i = 0; i < arrayone.Length; i++)
-            {
-                result[i][0] = arrayone[i];
-            }
-            return result;
-        }
+      
 
 
         /// <summary>
@@ -795,25 +777,47 @@ namespace Encog.Util.NetworkUtil
            if (inputs.Count % lenght != 0)
                 return null;
            int dimension = inputs.Count / lenght;
-
+            int total = inputs.Count;
+            int currentindex = 0;
             double[][] result = EngineArray.AllocateDouble2D(dimension, lenght);
-            foreach (double doubles in inputs)
-            {
-                foreach (double[] d in result)
-                {
+           
                     //now we loop through the index.
                     int index = 0;
                     for (index =0; index <result.Length;index++)
                     {
                         for(int j =0;j< lenght;j++)
                         {
-                            result[index][j] = doubles;
+                            result[index][j] = inputs[currentindex++];
                         }
                     }
+                
+           
+            return (result);
+        }
+
+
+        public static double[][] DoubleInputsToArraySimple(List<double> inputs, int lenght)
+        {
+            //we must be able to fit all our numbers in the same double array..no spill over.
+            if (inputs.Count % lenght != 0)
+                return null;
+            int dimension = inputs.Count / lenght;
+
+            double[][] result = EngineArray.AllocateDouble2D(dimension, lenght);
+            foreach (double doubles in inputs)
+            {
+                for (int index = 0; index < result.Length; index++)
+                {
+                    for (int j = 0; j < lenght; j++)
+                    {
+                        result[index][j] = doubles;
+                    }
                 }
+
             }
             return (result);
         }
+
         /// <summary>
         /// Normalizes an array.
         /// </summary>

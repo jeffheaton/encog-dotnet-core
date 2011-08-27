@@ -114,42 +114,45 @@ namespace Encog.App.Quant.Loader.Yahoo
                 WebRequest httpData = WebRequest.Create(urlData);
                 var responseData = (HttpWebResponse) httpData.GetResponse();
 
-                Stream istreamData = responseData.GetResponseStream();
-                var csvData = new ReadCSV(istreamData, true, CSVFormat.English);
-
-                TextWriter tw = new StreamWriter(output);
-                tw.WriteLine("date,time,open price,high price,low price,close price,volume,adjusted price");
-
-                while (csvData.Next())
+                if (responseData != null)
                 {
-                    DateTime date = csvData.GetDate("date");
-                    double adjustedClose = csvData.GetDouble("adj close");
-                    double open = csvData.GetDouble("open");
-                    double close = csvData.GetDouble("close");
-                    double high = csvData.GetDouble("high");
-                    double low = csvData.GetDouble("low");
-                    var volume = (long) csvData.GetDouble("volume");
+                    Stream istreamData = responseData.GetResponseStream();
+                    var csvData = new ReadCSV(istreamData, true, CSVFormat.English);
 
-                    var line = new StringBuilder();
-                    line.Append(NumericDateUtil.DateTime2Long(date));
-                    line.Append(outputFormat.Separator);
-                    line.Append(NumericDateUtil.Time2Int(date));
-                    line.Append(outputFormat.Separator);
-                    line.Append(outputFormat.Format(open, Precision));
-                    line.Append(outputFormat.Separator);
-                    line.Append(outputFormat.Format(high, Precision));
-                    line.Append(outputFormat.Separator);
-                    line.Append(outputFormat.Format(low, Precision));
-                    line.Append(outputFormat.Separator);
-                    line.Append(outputFormat.Format(close, Precision));
-                    line.Append(outputFormat.Separator);
-                    line.Append(volume);
-                    line.Append(outputFormat.Separator);
-                    line.Append(outputFormat.Format(adjustedClose, Precision));
-                    tw.WriteLine(line.ToString());
+                    TextWriter tw = new StreamWriter(output);
+                    tw.WriteLine("date,time,open price,high price,low price,close price,volume,adjusted price");
+
+                    while (csvData.Next())
+                    {
+                        DateTime date = csvData.GetDate("date");
+                        double adjustedClose = csvData.GetDouble("adj close");
+                        double open = csvData.GetDouble("open");
+                        double close = csvData.GetDouble("close");
+                        double high = csvData.GetDouble("high");
+                        double low = csvData.GetDouble("low");
+                        var volume = (long) csvData.GetDouble("volume");
+
+                        var line = new StringBuilder();
+                        line.Append(NumericDateUtil.DateTime2Long(date));
+                        line.Append(outputFormat.Separator);
+                        line.Append(NumericDateUtil.Time2Int(date));
+                        line.Append(outputFormat.Separator);
+                        line.Append(outputFormat.Format(open, Precision));
+                        line.Append(outputFormat.Separator);
+                        line.Append(outputFormat.Format(high, Precision));
+                        line.Append(outputFormat.Separator);
+                        line.Append(outputFormat.Format(low, Precision));
+                        line.Append(outputFormat.Separator);
+                        line.Append(outputFormat.Format(close, Precision));
+                        line.Append(outputFormat.Separator);
+                        line.Append(volume);
+                        line.Append(outputFormat.Separator);
+                        line.Append(outputFormat.Format(adjustedClose, Precision));
+                        tw.WriteLine(line.ToString());
+                    }
+
+                    tw.Close();
                 }
-
-                tw.Close();
             }
             catch (WebException ex)
             {

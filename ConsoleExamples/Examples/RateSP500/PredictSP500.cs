@@ -20,7 +20,6 @@ using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.CSV;
-using Encog.Util.Simple;
 
 #endregion
 
@@ -135,9 +134,7 @@ namespace Encog.Examples.RateSP500
                     ErrorCalculation error = new ErrorCalculation();
                     error.UpdateError(Output.Data, actualOutput, 1);
                     str.Append(error.CalculateRMS().ToString("N2"));
-
                     // 
-
                     Console.WriteLine(str.ToString());
                 }
 
@@ -181,13 +178,7 @@ namespace Encog.Examples.RateSP500
         public void run(bool full)
         {
             //try
-            //{
-            PredictSP500 predict = new PredictSP500();
-          
-
-
-            //    Console.ReadKey();
-            actual = new SP500Actual(INPUT_SIZE, OUTPUT_SIZE);
+           actual = new SP500Actual(INPUT_SIZE, OUTPUT_SIZE);
             actual.load("sp500.csv", "prime.csv");
 
             Console.WriteLine(@"Samples read: " + actual.size());
@@ -250,7 +241,7 @@ namespace Encog.Examples.RateSP500
             {
                 trainMain.Iteration();
                 train.Iteration();
-                Console.WriteLine(@"Training " + @"Epoch #" + epoch + @" Error:" + trainMain.Error+ " Genetic iteration:"+trainAlt.IterationNumber+ "neat iteration:"+train.IterationNumber );
+                Console.WriteLine(@"Training " + @"Epoch #" + epoch + @" Error:" + trainMain.Error+ @" Genetic iteration:"+trainAlt.IterationNumber+ @"neat iteration:"+train.IterationNumber );
                 epoch++;
             }
         }
