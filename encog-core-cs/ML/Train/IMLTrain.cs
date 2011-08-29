@@ -47,7 +47,13 @@ namespace Encog.ML.Train
 
 
         /// <summary>
-        /// The current error.
+        /// Returns the training error. This value is calculated as the
+	    /// training data is evaluated by the iteration function. This has
+	    /// two important ramifications. First, the value returned by
+	    /// getError() is meaningless prior to a call to iteration. Secondly,
+	    /// the error is calculated BEFORE training is applied by the call to
+	    /// iteration. The timing of the error calculation is done for
+	    /// performance reasons.
         /// </summary>
         double Error { get; set; }
 

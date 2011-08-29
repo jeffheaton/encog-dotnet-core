@@ -272,6 +272,7 @@ namespace Encog.Neural.Prune
 
             // construct the new weights
             int weightsIndex = 0;
+            int oldWeightsIndex = 0;
 
             for (int fromLayer = flat.LayerCounts.Length - 2; fromLayer >= 0; fromLayer--)
             {
@@ -297,8 +298,7 @@ namespace Encog.Neural.Prune
                         }
                         else
                         {
-                            newWeights[weightsIndex++] = _network.GetWeight(
-                                fromLayer, fromNeuron, toNeuron);
+                            newWeights[weightsIndex++] = _network.Flat.Weights[oldWeightsIndex++];
                         }
                     }
                 }
@@ -533,6 +533,7 @@ namespace Encog.Neural.Prune
             }
 
             flat.LayerOutput = new double[neuronCount];
+            flat.LayerSums = new double[neuronCount];
             flat.ClearContext();
 
             flat.InputCount = flat.LayerFeedCounts[flat.LayerCounts.Length - 1];
