@@ -34,26 +34,24 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianCR.cs" caret="1414" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="8986" fromTop="20" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="1747" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="9920" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:EncogBenchmarkExample.cs" caret="1501" fromTop="14" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="1810" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2441" fromTop="7" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3276" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3415" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3567" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3729" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3879" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4009" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4137" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4282" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4421" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4616" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4757" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="7751" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="9929" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3744" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3906" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4056" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4186" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4314" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4459" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4598" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4793" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4934" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="7928" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="10106" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="13" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="7" />
@@ -71,6 +69,8 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="473" fromTop="13" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2604" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2885" fromTop="14" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
