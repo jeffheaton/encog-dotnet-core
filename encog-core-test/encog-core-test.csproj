@@ -82,7 +82,6 @@
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
-    <Compile Include="Neural\Prune\TestPruneSelective.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
     <Compile Include="Persist\TestPersistART.cs" />
