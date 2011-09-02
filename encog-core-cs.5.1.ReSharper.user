@@ -9,7 +9,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Finance/d:Indicators/f:Finance.cs" caret="5724" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="3016" fromTop="21" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORNEAT.cs" caret="1294" fromTop="26" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="3547" fromTop="13" />
@@ -39,9 +38,9 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="23" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2441" fromTop="7" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="13" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3744" fromTop="12" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3906" fromTop="17" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4056" fromTop="8" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4186" fromTop="13" />
@@ -71,6 +70,7 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2604" fromTop="10" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2885" fromTop="14" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="13" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -271,7 +271,7 @@
       <Item value="assignedTotal" priority="0" />
       <Item value="args" priority="5" />
       <Item value="System" priority="0" />
-      <Item value="train" priority="0" />
+      <Item value="train" priority="1" />
       <Item value="ParseCommand`0" priority="1" />
       <Item value="_data" priority="1" />
       <Item value="Dictionary&lt;string,string&gt;" priority="0" />
@@ -305,6 +305,7 @@
       <Item value="_updateValues" priority="1" />
       <Item value="CurrentError" priority="0" />
       <Item value="FahlmanEncoder`0" priority="0" />
+      <Item value="method" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -622,6 +623,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Examples.Benchmark.FahlmanEncoder">
       <Item value="Info" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Train.IMLTrain">
+      <Item value="Method" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>
