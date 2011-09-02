@@ -37,6 +37,7 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Buffer/f:EncogEGBFile.cs" caret="6453" fromTop="5" />
       <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10200" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="2301" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="10" />
     </RecentFiles>
     <RecentEdits>
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyst/f:AnalystExample.cs" caret="3265" fromTop="4" />
@@ -45,6 +46,7 @@
       <File id="DCD16E74-CC9A-4FB6-972E-2834FAC9E441/f:EncogCmd.cs" caret="10200" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="1222" fromTop="5" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Properties/f:AssemblyInfo.cs" caret="2294" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="10" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -245,7 +247,7 @@
       <Item value="assignedTotal" priority="0" />
       <Item value="args" priority="5" />
       <Item value="System" priority="0" />
-      <Item value="train" priority="0" />
+      <Item value="train" priority="1" />
       <Item value="ParseCommand`0" priority="1" />
       <Item value="_data" priority="1" />
       <Item value="Dictionary&lt;string,string&gt;" priority="0" />
@@ -262,6 +264,7 @@
       <Item value="IHandleMissingValues`0" priority="0" />
       <Item value="_missing" priority="1" />
       <Item value="encog" priority="0" />
+      <Item value="method" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -566,6 +569,9 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
       <Item value="MaxIteration" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Encog.ML.Train.IMLTrain">
+      <Item value="Method" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

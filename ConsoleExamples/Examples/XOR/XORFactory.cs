@@ -318,6 +318,7 @@ namespace Encog.Examples.XOR
 
             // fourth, train and evaluate.
             EncogUtility.TrainToError(train, 0.01);
+            method = train.Method;
             EncogUtility.Evaluate((IMLRegression) method, dataSet);
 
             // finally, write out what we did
