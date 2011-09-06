@@ -790,8 +790,6 @@ namespace Encog.Util.NetworkUtil
                             result[index][j] = inputs[currentindex++];
                         }
                     }
-                
-           
             return (result);
         }
 
