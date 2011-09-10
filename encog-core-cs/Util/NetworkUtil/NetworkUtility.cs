@@ -321,7 +321,7 @@ namespace Encog.Util.NetworkUtil
         /// </summary>
         /// <param name="number">The number.</param>
         /// <returns></returns>
-        public static double[] MakeInputs(int number)
+        public static double[] MakeRandomInputs(int number)
         {
             Random rdn = new Random();
             MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
@@ -387,7 +387,7 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static IMLDataSet ReturnRandomizedDataSet(int sizeofInputs, int sizeOfOutputs)
         {
-            double[] res = MakeInputs(sizeofInputs);
+            double[] res = MakeRandomInputs(sizeofInputs);
            return QuickTrainingFromDoubleArray(res, sizeofInputs, sizeOfOutputs);
 
         }
@@ -815,7 +815,19 @@ namespace Encog.Util.NetworkUtil
             }
             return (result);
         }
+        /// <summary>
+        /// Makes the data set with a jagged input array and a jagged ideals array.
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <param name="ideals">The ideals.</param>
+        /// <returns></returns>
+        public static IMLDataSet MakeDataSet (double [][] inputs , double [][] ideals)
+        {
+            IMLDataSet theset = new BasicMLDataSet(inputs, ideals);
 
+            return theset;
+
+        }
         /// <summary>
         /// Normalizes an array.
         /// </summary>
