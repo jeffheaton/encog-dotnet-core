@@ -29,6 +29,7 @@ using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training.Propagation.Back;
+using Encog.Neural.Networks.Training.Propagation.Resilient;
 
 namespace Encog.Examples.XOR
 {
@@ -38,28 +39,28 @@ namespace Encog.Examples.XOR
         /// Input for the XOR function.
         /// </summary>
         public static double[][] XORInput = {
-                                                new double[2] {0.0, 0.0},
-                                                new double[2] {1.0, 0.0},
-                                                new double[2] {0.0, 1.0},
-                                                new double[2] {1.0, 1.0}
-                                            };
+            new[] {0.0, 0.0},
+            new[] {1.0, 0.0},
+            new[] {0.0, 1.0},
+            new[] {1.0, 1.0}
+        };
 
         /// <summary>
         /// Ideal output for the XOR function.
         /// </summary>
         public static double[][] XORIdeal = {
-                                                new double[1] {0.0},
-                                                new double[1] {1.0},
-                                                new double[1] {1.0},
-                                                new double[1] {0.0}
-                                            };
+            new[] {0.0},
+            new[] {1.0},
+            new[] {1.0},
+            new[] {0.0}
+        };
 
         public static ExampleInfo Info
         {
             get
             {
                 var info = new ExampleInfo(
-                    typeof (XORHelloWorld),
+                    typeof(XORHelloWorld),
                     "xor",
                     "Simple XOR with backprop, no factories or helper functions.",
                     "This example shows how to train an XOR with no factories or helper functions.");
@@ -87,7 +88,7 @@ namespace Encog.Examples.XOR
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
 
             // train the neural network
-            IMLTrain train = new Backpropagation(network, trainingSet, 0.7, 0.8);
+            IMLTrain train = new ResilientPropagation(network, trainingSet);
 
             int epoch = 1;
 
