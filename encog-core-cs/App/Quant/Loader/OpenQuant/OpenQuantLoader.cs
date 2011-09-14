@@ -71,7 +71,7 @@ namespace Encog.App.Quant.Loader.OpenQuant
             }
             catch (Exception ex)
             {
-
+                EncogError er = new EncogError(ex);
                 Console.WriteLine("Error :" + ex.Message);
                 Console.WriteLine("Error :" + ex.StackTrace);
                 Console.WriteLine("Error:" + ex.InnerException);
