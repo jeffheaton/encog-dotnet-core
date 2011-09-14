@@ -43,7 +43,9 @@ using Encog.Examples.Lunar;
 using Encog.Examples.Market;
 using Encog.Examples.MultiRadial;
 using Encog.Examples.NetWorkPruner;
+using Encog.Examples.Normalize;
 using Encog.Examples.Persist;
+using Encog.Examples.Predict;
 using Encog.Examples.RangeandMarket;
 using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
@@ -99,6 +101,9 @@ namespace ConsoleExamples
             examples.Add(SVMExample.Info);
             examples.Add(SVMPredictCSV.Info);
             examples.Add(FahlmanEncoder.Info);
+            examples.Add(PredictSunspot.Info);
+            examples.Add(SimpleNormalize.Info);
+            examples.Add(NormalizeFile.Info);
         }
 
         public void ListCommands()
