@@ -9,68 +9,53 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="3016" fromTop="21" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORNEAT.cs" caret="1294" fromTop="26" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="3547" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:NormalizeArray.cs" caret="4512" fromTop="24" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="2741" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="37914" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Lunar/f:LunarLander.cs" caret="442" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/f:ITrain.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatLayer.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:Quick/f:QuickPropagation.cs" caret="35" fromTop="1" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:Back/f:Backpropagation.cs" caret="883" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:Manhattan/f:ManhattanPropagation.cs" caret="883" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:Resilient/f:ResilientPropagation.cs" caret="883" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/d:SCG/f:ScaledConjugateGradient.cs" caret="906" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:GradientWorker.cs" caret="1033" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Factory/d:Train/f:RPROPFactory.cs" caret="2493" fromTop="15" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:SimpleBenchmark.cs" caret="2482" fromTop="11" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="11009" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:BasicHessian.cs" caret="2684" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:ChainRuleWorker.cs" caret="5307" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianCR.cs" caret="1414" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="8986" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="1747" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:EncogBenchmarkExample.cs" caret="1501" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="1810" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="23" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2441" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:FileUtil.cs" caret="8527" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Predict/f:PredictSunspot.cs" caret="8142" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1165" fromTop="8" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2203" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:TemporalWindowArray.cs" caret="4400" fromTop="99" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="1108" fromTop="30" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8509" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVM Predict/f:CreateSVMNetWork.cs" caret="4282" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="3334" fromTop="39" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="2087" fromTop="17" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Util/f:TemporalXOR.cs" caret="1867" fromTop="34" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Normalize/f:SimpleNormalize.cs" caret="883" fromTop="29" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="6697" fromTop="26" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RateSP500/f:SP500Actual.cs" caret="1758" fromTop="33" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:RateSP500/f:PredictSP500.cs" caret="1699" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3906" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4056" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4186" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4314" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4459" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4598" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4793" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4934" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="7928" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="10106" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="9" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="17" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="2299" fromTop="5" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="1728" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="473" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="3804" fromTop="11" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2604" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2885" fromTop="14" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="13" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="3391" fromTop="45" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="2610" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="2435" fromTop="28" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="16093" fromTop="24" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="11822" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="13432" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="653" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="1288" fromTop="30" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="1804" fromTop="27" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="2521" fromTop="31" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9706" fromTop="22" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8496" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8509" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="1420" fromTop="29" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="1433" fromTop="29" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVM Predict/f:CreateSVMNetWork.cs" caret="733" fromTop="21" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVM Predict/f:CreateSVMNetWork.cs" caret="2831" fromTop="35" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVM Predict/f:CreateSVMNetWork.cs" caret="4282" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20623" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="19043" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="19351" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20464" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20369" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20369" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20369" fromTop="29" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20369" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20369" fromTop="24" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20226" fromTop="29" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:TrainerHelper.cs" caret="20396" fromTop="35" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Normalize/f:SimpleNormalize.cs" caret="854" fromTop="27" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -86,7 +71,7 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="long" priority="1" />
-      <Item value="new" priority="27" />
+      <Item value="new" priority="26" />
       <Item value="svm_node" priority="1" />
       <Item value="result" priority="10" />
       <Item value="for" priority="10" />
@@ -120,8 +105,8 @@
       <Item value="Directory`0" priority="1" />
       <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="17" />
-      <Item value="private" priority="7" />
+      <Item value="this" priority="16" />
+      <Item value="private" priority="6" />
       <Item value="bool" priority="1" />
       <Item value="BasicMLDataSet`0" priority="0" />
       <Item value="Population" priority="4" />
@@ -134,10 +119,10 @@
       <Item value="FileInfo" priority="1" />
       <Item value="MLRegression`0" priority="0" />
       <Item value="MLTrain`0" priority="0" />
-      <Item value="BasicNetwork`0" priority="18" />
+      <Item value="BasicNetwork`0" priority="5" />
       <Item value="NEATNetwork`0" priority="1" />
       <Item value="Hopfield" priority="1" />
-      <Item value="network" priority="4" />
+      <Item value="network" priority="3" />
       <Item value="pattern1" priority="0" />
       <Item value="using" priority="2" />
       <Item value="Encog" priority="3" />
@@ -180,10 +165,10 @@
       <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
       <Item value="Console`0" priority="25" />
-      <Item value="examples" priority="3" />
+      <Item value="examples" priority="2" />
       <Item value="Examples" priority="2" />
       <Item value="XOR" priority="1" />
-      <Item value="IExample`0" priority="6" />
+      <Item value="IExample`0" priority="5" />
       <Item value="XORHelloWorld`0" priority="0" />
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
@@ -193,10 +178,10 @@
       <Item value="StringBuilder" priority="0" />
       <Item value="builder" priority="1" />
       <Item value="theFlatSpots" priority="0" />
-      <Item value="_flatSpot" priority="1" />
+      <Item value="_flatSpot" priority="0" />
       <Item value="ShouldFixFlatSpot" priority="0" />
       <Item value="true" priority="2" />
-      <Item value="value" priority="3" />
+      <Item value="value" priority="2" />
       <Item value="Engine.Network.Activation" priority="0" />
       <Item value="Extract" priority="0" />
       <Item value="TestMethod" priority="23" />
@@ -271,7 +256,7 @@
       <Item value="assignedTotal" priority="0" />
       <Item value="args" priority="5" />
       <Item value="System" priority="0" />
-      <Item value="train" priority="1" />
+      <Item value="train" priority="0" />
       <Item value="ParseCommand`0" priority="1" />
       <Item value="_data" priority="1" />
       <Item value="Dictionary&lt;string,string&gt;" priority="0" />
@@ -288,24 +273,6 @@
       <Item value="IHandleMissingValues`0" priority="0" />
       <Item value="_missing" priority="1" />
       <Item value="encog" priority="0" />
-      <Item value="_flat" priority="1" />
-      <Item value="_training" priority="0" />
-      <Item value="_numThreads" priority="1" />
-      <Item value="momentum" priority="0" />
-      <Item value="learnRate" priority="2" />
-      <Item value="Network" priority="2" />
-      <Item value="_learningRate" priority="4" />
-      <Item value="_momentum" priority="0" />
-      <Item value="_lastDelta" priority="1" />
-      <Item value="LastDelta" priority="0" />
-      <Item value="LastGradient" priority="1" />
-      <Item value="LearningRate" priority="0" />
-      <Item value="RPROPConst`0" priority="0" />
-      <Item value="LastGradients" priority="0" />
-      <Item value="_updateValues" priority="1" />
-      <Item value="CurrentError" priority="0" />
-      <Item value="FahlmanEncoder`0" priority="0" />
-      <Item value="method" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -386,7 +353,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.EngineArray">
       <Item value="AllocateBool2D`0" priority="0" />
-      <Item value="AllocateDouble2D`0" priority="12" />
+      <Item value="AllocateDouble2D`0" priority="11" />
       <Item value="PutAll`2" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.ML.Genetic.Population.IPopulation">
@@ -435,7 +402,7 @@
       <Item value="ClassMembers" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="5" />
+      <Item value="Add`0" priority="4" />
       <Item value="Sort`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
@@ -585,7 +552,6 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.BasicNetwork">
       <Item value="Structure" priority="0" />
-      <Item value="Flat" priority="8" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.Training.Propagation.Resilient.ResilientPropagation">
       <Item value="ThreadCount" priority="0" />
@@ -611,21 +577,6 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
       <Item value="MaxIteration" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.Neural.Flat.FlatNetwork">
-      <Item value="Weights" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.Neural.Networks.Training.Propagation.Back.Backpropagation">
-      <Item value="_lastDelta" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.Neural.Networks.Training.Propagation.Resilient.RPROPConst">
-      <Item value="DefaultZeroTolerance" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.Examples.Benchmark.FahlmanEncoder">
-      <Item value="Info" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.ML.Train.IMLTrain">
-      <Item value="Method" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

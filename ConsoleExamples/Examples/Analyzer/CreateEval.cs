@@ -40,14 +40,14 @@ namespace Encog.Examples.Analyzer
 
             double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
 
-            TemporalMLDataSet superTemportal = NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
+            TemporalMLDataSet superTemportal = TrainerHelper.GenerateTrainingWithPercentChangeOnSerie(100, 1, Opens.ToArray(),
                                                                                                   Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
 
-            IMLDataPair aPairInput = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
-            IMLDataPair aPairInput3 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
-            IMLDataPair aPairInput2 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
-            IMLDataPair aPairInput4 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
-            IMLDataPair aPairInput5 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
+            IMLDataPair aPairInput = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), 100, 1);
+            IMLDataPair aPairInput3 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), 100, 1);
+            IMLDataPair aPairInput2 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), 100, 1);
+            IMLDataPair aPairInput4 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), 100, 1);
+            IMLDataPair aPairInput5 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), 100, 1);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
@@ -167,11 +167,11 @@ namespace Encog.Examples.Analyzer
             List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", startLine, HowMany);
             List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, startLine, HowMany);
             double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
-            IMLDataPair aPairInput = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput3 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput2 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput4 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), WindowSize, outputsize);
-            IMLDataPair aPairInput5 = NetworkUtility.ProcessPair(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Opens.ToArray()), NetworkUtility.CalculatePercents(Opens.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput3 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Close.ToArray()), NetworkUtility.CalculatePercents(Close.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput2 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(High.ToArray()), NetworkUtility.CalculatePercents(High.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput4 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Volume.ToArray()), NetworkUtility.CalculatePercents(Volume.ToArray()), WindowSize, outputsize);
+            IMLDataPair aPairInput5 = TrainerHelper.ProcessPairs(NetworkUtility.CalculatePercents(Ranges.ToArray()), NetworkUtility.CalculatePercents(Ranges.ToArray()), WindowSize, outputsize);
             List<IMLDataPair> listData = new List<IMLDataPair>();
             listData.Add(aPairInput);
             listData.Add(aPairInput2);
@@ -192,7 +192,7 @@ namespace Encog.Examples.Analyzer
             List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", startLine, HowMany);
             List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, startLine, HowMany);
 
-          return NetworkUtility.GenerateTrainingWithPercentChangeOnSerie(WindowSize,outputsize, Opens.ToArray(),Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+            return TrainerHelper.GenerateTrainingWithPercentChangeOnSerie(WindowSize, outputsize, Opens.ToArray(), Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
         }
 
 

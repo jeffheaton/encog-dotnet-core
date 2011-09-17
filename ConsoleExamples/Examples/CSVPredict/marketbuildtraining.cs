@@ -16,18 +16,20 @@ namespace Encog.Examples.CSVMarketExample
 
           
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
-            IMarketLoader loader = new CSVLoader();
+            //Lets use the CSVFinal..(and not the CSV Form loader).
+            IMarketLoader loader = new CSVFinal();
+            loader.GetFile(fileName);
             var market = new MarketMLDataSet(loader,Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
-            var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Trade, true, true);
+            var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
             market.AddDescription(desc);
             string currentDirectory =@"c:\";
             loader.GetFile(fileName);
 
             var end = DateTime.Now; // end today
             var begin = new DateTime(end.Ticks); // begin 30 days ago
-
+           
             // Gather training data for the last 2 years, stopping 60 days short of today.
             // The 60 days will be used to evaluate prediction.
             begin = begin.AddDays(-200);

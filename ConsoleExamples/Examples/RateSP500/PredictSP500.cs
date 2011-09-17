@@ -177,8 +177,9 @@ namespace Encog.Examples.RateSP500
 
         public void run(bool full)
         {
-            //try
-           actual = new SP500Actual(INPUT_SIZE, OUTPUT_SIZE);
+           try
+           {
+               actual = new SP500Actual(INPUT_SIZE, OUTPUT_SIZE);
             actual.load("sp500.csv", "prime.csv");
 
             Console.WriteLine(@"Samples read: " + actual.size());
@@ -199,12 +200,12 @@ namespace Encog.Examples.RateSP500
 
             display();
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    Console.WriteLine(e.StackTrace);
-            // }
+           }
+           catch (Exception e)
+           {
+               Console.WriteLine(e);
+               Console.WriteLine(e.StackTrace);
+           }
         }
 
         public void saveNeuralNetwork()

@@ -24,12 +24,12 @@ namespace Encog.Examples.Analyzer
             double[] inp5 = MakeInputs(inputs);
             double[] inp6 = MakeInputs(inputs);
 
-            var pair = NetworkUtility.ProcessPair(firstinput, firstinput, inputs, predictWindow);
-            var pair2 = NetworkUtility.ProcessPair(SecondInput, firstinput, inputs, predictWindow);
-            var pair3 = NetworkUtility.ProcessPair(ThirdInputs, firstinput, inputs, predictWindow);
-            var pair4 = NetworkUtility.ProcessPair(FourthInputs, firstinput, inputs, predictWindow);
-            var pair5 = NetworkUtility.ProcessPair(inp5, firstinput, inputs, predictWindow);
-            var pair6 = NetworkUtility.ProcessPair(inp6, firstinput, inputs, predictWindow);
+            var pair = TrainerHelper.ProcessPairs(firstinput, firstinput, inputs, predictWindow);
+            var pair2 = TrainerHelper.ProcessPairs(SecondInput, firstinput, inputs, predictWindow);
+            var pair3 = TrainerHelper.ProcessPairs(ThirdInputs, firstinput, inputs, predictWindow);
+            var pair4 = TrainerHelper.ProcessPairs(FourthInputs, firstinput, inputs, predictWindow);
+            var pair5 = TrainerHelper.ProcessPairs(inp5, firstinput, inputs, predictWindow);
+            var pair6 = TrainerHelper.ProcessPairs(inp6, firstinput, inputs, predictWindow);
             BasicMLDataSet SuperSet = new BasicMLDataSet();
             SuperSet.Add(pair);
             SuperSet.Add(pair2);

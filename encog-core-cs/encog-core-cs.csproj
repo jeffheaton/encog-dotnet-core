@@ -23,11 +23,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug1\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\encog-core-cs.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug1\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -548,6 +548,7 @@
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
+    <Compile Include="Util\NetworkUtil\TrainerHelper.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />
@@ -668,10 +669,10 @@
     <EmbeddedResource Include="Resources\analyst.csv" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Encog.snk" />
+    <Folder Include="App\Quant\Loader\NinjaLoader\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Quant\Loader\NinjaLoader\" />
+    <None Include="Encog.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
