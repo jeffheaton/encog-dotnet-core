@@ -79,9 +79,11 @@ namespace Encog.Examples.ElmanNetwork
         private IMLMethod CreateElmanNetwork()
         {
             // construct an Elman type network
-            var pattern = new ElmanPattern();
-            pattern.ActivationFunction = new ActivationSigmoid();
-            pattern.InputNeurons = 1;
+            var pattern = new ElmanPattern
+                {
+                    ActivationFunction = new ActivationSigmoid(),
+                    InputNeurons = 1
+                };
             pattern.AddHiddenLayer(6);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
