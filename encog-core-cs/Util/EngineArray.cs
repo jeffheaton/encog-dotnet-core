@@ -148,7 +148,7 @@ namespace Encog.Util
         public static void ArrayCopy(double[] source, int sourceIndex, double[] output, int targetIndex, int size)
         {
            
-            Buffer.BlockCopy(source, sourceIndex, output, targetIndex, size * doubleLenght);
+            Buffer.BlockCopy(source, sourceIndex *doubleLenght, output, targetIndex * doubleLenght , size * doubleLenght);
            // Array.Copy(source, sourceIndex, output, targetIndex, size);
         }
 
