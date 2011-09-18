@@ -9,13 +9,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:Propagation/f:Propagation.cs" caret="11009" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:BasicHessian.cs" caret="2684" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:ChainRuleWorker.cs" caret="5307" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianCR.cs" caret="1414" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:HessianFD.cs" caret="8986" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/d:Matrices/d:Hessian/f:IComputeHessian.cs" caret="1747" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:EncogBenchmarkExample.cs" caret="1501" fromTop="14" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="655" fromTop="23" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="2441" fromTop="7" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORFactory.cs" caret="9425" fromTop="13" />
@@ -38,21 +31,16 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1521" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1402" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1051" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="3102" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2739" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="16519" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystWizard.cs" caret="2723" fromTop="16" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="3195" fromTop="11" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystClassification.cs" caret="2268" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystRegression.cs" caret="2253" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Normalize/d:Target/f:NormalizationStorageCSV.cs" caret="2650" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14607" fromTop="14" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4793" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="4934" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="7928" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="10106" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="7" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="9" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="17" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:FahlmanEncoder.cs" caret="0" fromTop="8" />
@@ -71,6 +59,18 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="2298" fromTop="4" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="3116" fromTop="10" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:JordanNetwork/f:JordanExample.cs" caret="3807" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14722" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14722" fromTop="9" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystWizard.cs" caret="2723" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystWizard.cs" caret="2723" fromTop="16" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystClassification.cs" caret="2268" fromTop="8" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystClassification.cs" caret="2268" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystRegression.cs" caret="2253" fromTop="8" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystRegression.cs" caret="2253" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="4810" fromTop="1" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="4205" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14722" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="14607" fromTop="14" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

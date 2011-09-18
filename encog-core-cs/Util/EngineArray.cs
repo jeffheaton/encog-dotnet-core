@@ -30,6 +30,8 @@ namespace Encog.Util
     /// </summary>
     public class EngineArray
     {
+        public const int DoubleSize = sizeof(double);
+
         /// <summary>
         /// Copy a double array.
         /// </summary>
@@ -134,7 +136,8 @@ namespace Encog.Util
         /// <param name="size">The size to copy.</param>
         public static void ArrayCopy(double[] source, int sourceIndex, double[] output, int targetIndex, int size)
         {
-            Array.Copy(source, sourceIndex, output, targetIndex, size);
+            //Array.Copy(source, sourceIndex, output, targetIndex, size);
+            Buffer.BlockCopy(source, sourceIndex*DoubleSize,output,targetIndex*DoubleSize,size*DoubleSize);
         }
 
         /// <summary>
