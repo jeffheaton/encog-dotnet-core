@@ -516,7 +516,10 @@ namespace Encog.Util.NetworkUtil
 
 
         /// <summary>
-        /// Adds the inputs.
+        /// Prepare realtime inputs, and place them in an understandable one dimensional input neuron array.
+        /// This method does not use linq.
+        /// you can use this method if you have many inputs and need to format them as inputs with a specified "window"/input size.
+        /// You can add as many inputs as wanted to this input layer (parametrable inputs).
         /// </summary>
         /// <param name="inputsize">The inputsize.</param>
         /// <param name="firstinputt">The firstinputt.</param>
@@ -547,6 +550,55 @@ namespace Encog.Util.NetworkUtil
                 }
             }
             return (double[][])FirstList.ToArray(typeof(double[]));
+        }
+
+        /// <summary>
+        /// Makes a data set with parametrable inputs and one output double array.
+        /// you can provide as many inputs as needed and the timelapse size (input size).
+        /// for more information on this method read the AddInputs Method.
+        /// </summary>
+        /// <param name="outputs">The outputs.</param>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="firstinputt">The firstinputt.</param>
+        /// <returns></returns>
+        public static IMLDataSet MakeDataSet(double[] outputs, int inputsize, params double[][] firstinputt)
+        {
+
+            IMLDataSet set = new BasicMLDataSet();
+            ArrayList outputsar = new ArrayList();
+            ArrayList FirstList = new ArrayList();
+            List<double> listused = new List<double>();
+            int lenghtofArrays = firstinputt[0].Length;
+
+            //There must be NO modulo...or the arrays would not be divisile by this input size.
+            if (lenghtofArrays % inputsize != 0)
+                return null;
+            //we add each input one , after the other in a list of doubles till we reach the input size
+            for (int i = 0; i < lenghtofArrays; i++)
+            {
+                for (int k = 0; k < firstinputt.Length; k++)
+                {
+                    if (listused.Count < inputsize * firstinputt.Length)
+                    {
+                        listused.Add(firstinputt[k][i]);
+                        if (listused.Count == inputsize * firstinputt.Length)
+                        {
+                            FirstList.Add(listused.ToArray());
+                            listused.Clear();
+                        }
+                    }
+                }
+            }
+
+            foreach (double d in outputs)
+            {
+                listused.Add(d);
+                outputsar.Add(listused.ToArray());
+                listused.Clear();
+            }
+            set = new BasicMLDataSet((double[][])FirstList.ToArray(typeof(double[])), (double[][])
+             outputsar.ToArray(typeof(double[])));
+            return set;
         }
 
 
