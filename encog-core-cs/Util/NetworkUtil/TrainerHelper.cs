@@ -491,13 +491,13 @@ namespace Encog.Util.NetworkUtil
         /// <param name="inputsize">The inputsize.</param>
         /// <param name="firstinputt">The firstinputt.</param>
         /// <returns>a ready to use one dimensional array with all the inputs setup.</returns>
-        public static double[] AddInputsViaLinq(int inputsize, params double[][] firstinputt)
+        public static double[][] AddInputsViaLinq(int inputsize, params double[][] firstinputt)
         {
             ArrayList arlist = new ArrayList(4);
             ArrayList FirstList = new ArrayList();
             List<double> listused = new List<double>();
             int lenghtofArrays = firstinputt[0].Length;
-            //There must be NO modulo...or the arrays would not be divisile by this input size.
+            //There must be NO modulo...or the arrays would not be divisible by this input size.
             if (lenghtofArrays % inputsize != 0)
                 return null;
             //we add each input one , after the other in a list of doubles till we reach the input size
@@ -511,7 +511,7 @@ namespace Encog.Util.NetworkUtil
                     listused.Clear();
                 }
             }
-            return (double[])FirstList.ToArray(typeof(double));
+            return (double[][])FirstList.ToArray(typeof(double[]));
         }
 
 
@@ -521,7 +521,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="inputsize">The inputsize.</param>
         /// <param name="firstinputt">The firstinputt.</param>
         /// <returns></returns>
-        public static double[] AddInputs(int inputsize, params double[][] firstinputt)
+        public static double[][] AddInputs(int inputsize, params double[][] firstinputt)
         {
             ArrayList arlist = new ArrayList(4);
             ArrayList FirstList = new ArrayList();
@@ -546,7 +546,7 @@ namespace Encog.Util.NetworkUtil
                     }
                 }
             }
-            return (double[])FirstList.ToArray(typeof(double));
+            return (double[][])FirstList.ToArray(typeof(double[]));
         }
 
 
