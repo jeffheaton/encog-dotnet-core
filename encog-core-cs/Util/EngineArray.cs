@@ -73,7 +73,7 @@ namespace Encog.Util
         public static void ArrayCopy(double[] src, double[] dst)
         {
             //Array.Copy(src, dst, src.Length);
-            Buffer.BlockCopy(src, 0, dst, 0, src.Length * doubleLenght);
+            Buffer.BlockCopy(src, 0, dst, 0, Buffer.ByteLength(src));
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Encog.Util
         public static void ArrayCopy(int[] src, int[] dst)
         {
             //Buffer block copy is 13 times faster.
-            Buffer.BlockCopy(src, 0, dst, 0, src.Length*IntLenght);
+            Buffer.BlockCopy(src, 0, dst, 0, Buffer.ByteLength(src));
             //Array.Copy(src, dst, src.Length);
         }
 
@@ -147,9 +147,8 @@ namespace Encog.Util
         /// <param name="size">The size to copy.</param>
         public static void ArrayCopy(double[] source, int sourceIndex, double[] output, int targetIndex, int size)
         {
-           
-            Buffer.BlockCopy(source, sourceIndex *doubleLenght, output, targetIndex * doubleLenght , size * doubleLenght);
-           // Array.Copy(source, sourceIndex, output, targetIndex, size);
+           Buffer.BlockCopy(source, sourceIndex * doubleLenght, output, targetIndex * doubleLenght, size * doubleLenght);
+           //Array.Copy(source, sourceIndex, output, targetIndex, size) ;
         }
 
         /// <summary>

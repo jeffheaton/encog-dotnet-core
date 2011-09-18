@@ -463,24 +463,91 @@ namespace Encog.Util.NetworkUtil
         }
 
         /// <summary>
-        /// Generates a jagged array with as many inputs as wanted.
-        /// This is useful for neural networks when you have already formated your data arrays and need to create a double [][]
+        /// Generates an array with as many double array inputs as wanted.
+        /// This is useful for neural networks when you have already formated your data arrays and need to create a double []
+        /// with all the inputs following each others.
         /// </summary>
         /// <param name="inputs">The inputs.</param>
         /// <returns>
-        /// the jagged array used as input for the neural network.
+        /// the double [] array with all inputs.
         /// </returns>
-        public static double[][] GenerateInputz(params double[][] inputs)
+        public static double[] GenerateInputz(params double[][] inputs)
         {
             ArrayList al = new ArrayList();
             foreach (double[] doublear in inputs)
             {
                 al.Add((double[])doublear);
             }
-            return (double[][])al.ToArray(typeof(double[]));
+            return (double[])al.ToArray(typeof(double));
         }
 
 
+        /// <summary>
+        /// Prepare realtime inputs, and place them in an understandable one dimensional input neuron array.
+        /// This method uses linq.
+        /// you can use this method if you have many inputs and need to format them as inputs with a specified "window"/input size.
+        /// You can add as many inputs as wanted to this input layer (parametrable inputs).
+        /// </summary>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="firstinputt">The firstinputt.</param>
+        /// <returns>a ready to use one dimensional array with all the inputs setup.</returns>
+        public static double[] AddInputsViaLinq(int inputsize, params double[][] firstinputt)
+        {
+            ArrayList arlist = new ArrayList(4);
+            ArrayList FirstList = new ArrayList();
+            List<double> listused = new List<double>();
+            int lenghtofArrays = firstinputt[0].Length;
+            //There must be NO modulo...or the arrays would not be divisile by this input size.
+            if (lenghtofArrays % inputsize != 0)
+                return null;
+            //we add each input one , after the other in a list of doubles till we reach the input size
+            for (int i = 0; i < lenghtofArrays; i++)
+            {
+                foreach (double[] t in firstinputt.Where(t => listused.Count < inputsize*firstinputt.Length))
+                {
+                    listused.Add(t[i]);
+                    if (listused.Count != inputsize*firstinputt.Length) continue;
+                    FirstList.Add(listused.ToArray());
+                    listused.Clear();
+                }
+            }
+            return (double[])FirstList.ToArray(typeof(double));
+        }
+
+
+        /// <summary>
+        /// Adds the inputs.
+        /// </summary>
+        /// <param name="inputsize">The inputsize.</param>
+        /// <param name="firstinputt">The firstinputt.</param>
+        /// <returns></returns>
+        public static double[] AddInputs(int inputsize, params double[][] firstinputt)
+        {
+            ArrayList arlist = new ArrayList(4);
+            ArrayList FirstList = new ArrayList();
+            List<double> listused = new List<double>();
+            int lenghtofArrays = firstinputt[0].Length;
+            //There must be NO modulo...or the arrays would not be divisile by this input size.
+            if (lenghtofArrays % inputsize != 0)
+                return null;
+            //we add each input one , after the other in a list of doubles till we reach the input size
+            for (int i = 0; i < lenghtofArrays; i++)
+            {
+                for (int k = 0; k < firstinputt.Length; k++)
+                {
+                    if (listused.Count < inputsize * firstinputt.Length)
+                    {
+                        listused.Add(firstinputt[k][i]);
+                        if (listused.Count == inputsize * firstinputt.Length)
+                        {
+                            FirstList.Add(listused.ToArray());
+                            listused.Clear();
+                        }
+                    }
+                }
+            }
+            return (double[])FirstList.ToArray(typeof(double));
+        }
 
 
         /// <summary>
