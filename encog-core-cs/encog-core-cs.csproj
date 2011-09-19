@@ -178,6 +178,8 @@
     <Compile Include="EncogError.cs" />
     <Compile Include="Engine\Network\Activation\ActivationBiPolar.cs" />
     <Compile Include="Engine\Network\Activation\ActivationCompetitive.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationElliott.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationElliottSymmetric.cs" />
     <Compile Include="Engine\Network\Activation\ActivationGaussian.cs" />
     <Compile Include="Engine\Network\Activation\ActivationLinear.cs" />
     <Compile Include="Engine\Network\Activation\ActivationLOG.cs" />
