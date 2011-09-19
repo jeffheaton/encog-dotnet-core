@@ -524,6 +524,7 @@
     <Compile Include="Util\Arrayutil\TemporalType.cs" />
     <Compile Include="Util\Arrayutil\TemporalWindowArray.cs" />
     <Compile Include="Util\Arrayutil\TemporalWindowField.cs" />
+    <Compile Include="Util\Banchmark\EncoderTrainingFactory.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
     <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
     <Compile Include="Util\Concurrency\IEngineTask.cs" />

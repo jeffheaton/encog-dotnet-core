@@ -47,15 +47,15 @@ namespace Encog.Engine.Network.Activation
         /// <returns>The object to be cloned.</returns>
         public object Clone()
         {
-            return new ActivationElliott();
+            return new ActivationElliottSymmetric();
         }
 
         /// <inheritdoc />
         public double DerivativeFunction(double b, double a)
         {
             double s = _p[0];
-            double d = (1.0 + Math.Abs(b * s));
-            return (s * 1.0) / (d * d);
+    	    double d = (1.0+Math.Abs(b*s));
+    	    return  (s*1.0)/(d*d);
         }
 
         /// <inheritdoc />
