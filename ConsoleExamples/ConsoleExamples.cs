@@ -105,6 +105,7 @@ namespace ConsoleExamples
             examples.Add(SimpleNormalize.Info);
             examples.Add(NormalizeFile.Info);
             examples.Add(ElliottBenchmark.Info);
+            examples.Add(XORPSO.Info);
         }
 
         public void ListCommands()

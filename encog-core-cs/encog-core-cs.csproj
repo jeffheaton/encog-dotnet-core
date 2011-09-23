@@ -235,6 +235,7 @@
     <Compile Include="MathUtil\RBF\MultiquadricFunction.cs" />
     <Compile Include="MathUtil\RBF\IRadialBasisFunction.cs" />
     <Compile Include="MathUtil\RBF\RBFEnum.cs" />
+    <Compile Include="MathUtil\VectorAlgebra.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
@@ -429,6 +430,8 @@
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\RPROPType.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
+    <Compile Include="Neural\Networks\Training\PSO\NeuralPSO.cs" />
+    <Compile Include="Neural\Networks\Training\PSO\NeuralPSOWorker.cs" />
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />
@@ -662,6 +665,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\analyst.csv" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
