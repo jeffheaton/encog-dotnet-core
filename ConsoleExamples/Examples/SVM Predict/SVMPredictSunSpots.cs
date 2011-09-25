@@ -3,6 +3,11 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.SVM;
 using Encog.ML.SVM.Training;
+using Encog.ML.Train;
+using Encog.ML.Train.Strategy;
+using Encog.Neural.Networks.Training;
+using Encog.Neural.Networks.Training.Anneal;
+using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Util;
 using Encog.Util.Arrayutil;
 
@@ -94,7 +99,9 @@ public class PredictSunspotSVM {
 	    closedLoopSunspots = EngineArray.ArrayCopy(normalizedSunspots);
 
 	}
-	
+
+    private static SupportVectorMachine networkx = new SupportVectorMachine();
+
 	public static IMLDataSet generateTraining() {		
 		TemporalWindowArray temp = new TemporalWindowArray(WINDOW_SIZE, 1);
 		temp.Analyze(normalizedSunspots);
@@ -113,11 +120,29 @@ public class PredictSunspotSVM {
 		train.Iteration();
 	}
 	
+
+    public static SupportVectorMachine SVMSearch(SupportVectorMachine anetwork, IMLDataSet training)
+    {
+        SVMSearchTrain bestsearch = new SVMSearchTrain(anetwork, training);
+        StopTrainingStrategy stop = new StopTrainingStrategy(0.00000000001, 1);
+        bestsearch.AddStrategy(stop);
+        while (bestsearch.IterationNumber < 30 && !stop.ShouldStop())
+        {
+            bestsearch.Iteration();
+            Console.WriteLine("Iteration #" + bestsearch.IterationNumber + " Error :" + bestsearch.Error);
+        }
+       
+        bestsearch.FinishTraining();
+       
+       return anetwork;
+    }
+
+
 	public static void predict(SupportVectorMachine network)
 	{
 		
 		
-		Console.WriteLine(@"Year\tActual\tPredict\tClosed Loop Predict");
+		Console.WriteLine(@"Year \t Actual\t Predict\t Closed Loops");
 
 	    for(int year=EVALUATE_START;year<EVALUATE_END;year++)
 		{
@@ -128,19 +153,21 @@ public class PredictSunspotSVM {
 			    input.Data[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
 			    //input.setData(i,this.normalizedSunspots[(year-WINDOW_SIZE)+i]);
 			}
-			IMLData output = network.Compute(input);
-			double prediction = output.Data[0];
-			closedLoopSunspots[year] = prediction;
-			
-			// calculate "closed loop", based on predicted data
-			for(int i=0;i<input.Count;i++)
-			{
+            IMLData output = network.Compute(input);
+            double prediction = output.Data[0];
+            closedLoopSunspots[year] = prediction;
+
+            // calculate "closed loop", based on predicted data
+            for (int i = 0; i < input.Count; i++)
+            {
                 input.Data[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
-				//input.setData(i,this.closedLoopSunspots[(year-WINDOW_SIZE)+i]);
-			}
-			output = network.Compute(input);
-			double closedLoopPrediction = output[0];
-		   int classified = network.Classify(input);
+                //input.setData(i,this.closedLoopSunspots[(year-WINDOW_SIZE)+i]);
+            }
+            output = network.Compute(input);
+            double closedLoopPrediction = output[0];
+
+		
+
 			// display
             //System.out.println((STARTING_YEAR+year)
             //        +"\t"+f.format(this.normalizedSunspots[year])
@@ -148,15 +175,73 @@ public class PredictSunspotSVM {
             //        +"\t"+f.format(closedLoopPrediction)
 
                 Console.WriteLine(((STARTING_YEAR + year)
-                               + @"\t" + Format.FormatDouble(normalizedSunspots[year], 4)
-                               + @"\t" + Format.FormatDouble(prediction, 4)
-                               + @"\t" + Format.FormatDouble(closedLoopPrediction, 4))
-                               +@"\t"+ @"Classified :"+classified);
+                               + @"\t " + Format.FormatDouble(SUNSPOTS[year], 4)
+                               + @"\t " + Format.FormatDouble(normalizedSunspots[year], 4)
+                               + @"\t " + Format.FormatDouble(prediction, 4)
+                               + @"\t " + Format.FormatDouble(closedLoopPrediction, 4)
+                              ));
 			 
 			
 		}
 	}
+
+
+
+    public static void predict(SupportVectorMachine network, SupportVectorMachine network2)
+    {
+
+
+        Console.WriteLine(@"Year\tActual\tPredict\tClosed Loops");
+
+        for (int year = EVALUATE_START; year < EVALUATE_END; year++)
+        {
+            // calculate based on actual data
+            IMLData input = new BasicMLData(WINDOW_SIZE);
+            for (int i = 0; i < input.Count; i++)
+            {
+                input.Data[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
+                //input.setData(i,this.normalizedSunspots[(year-WINDOW_SIZE)+i]);
+            }
+            IMLData output = network.Compute(input);
+            IMLData output2 = network2.Compute(input);
+
+            double prediction = output.Data[0];
+            double prediction2 = output2.Data[0];
+            closedLoopSunspots[year] = prediction;
+
+            // calculate "closed loop", based on predicted data
+            for (int i = 0; i < input.Count; i++)
+            {
+                input.Data[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
+                //input.setData(i,this.closedLoopSunspots[(year-WINDOW_SIZE)+i]);
+            }
+            output = network.Compute(input);
+            double closedLoopPrediction = output[0];
+
+            IMLData output3 = network2.Compute(input);
+            double closedLoopPrediction2 = output[0];
+
+            // display
+            //System.out.println((STARTING_YEAR+year)
+            //        +"\t"+f.format(this.normalizedSunspots[year])
+            //        +"\t"+f.format(prediction)
+            //        +"\t"+f.format(closedLoopPrediction)
+
+            Console.WriteLine(((STARTING_YEAR + year)
+                           + @"\t " + Format.FormatDouble(SUNSPOTS[year], 4)
+                           + @"\t " + Format.FormatDouble(normalizedSunspots[year], 4)
+                           + @"\t " + Format.FormatDouble(prediction, 4)
+                            + @"\t " + Format.FormatDouble(prediction2, 4)
+                           + @"\t " + Format.FormatDouble(closedLoopPrediction, 4)
+                             + @"\t " + Format.FormatDouble(closedLoopPrediction2, 4)
+                          ));
+
+
+        }
+    }
 	
+
+
 	public static void run()
 	{
 		normalizeSunspots(0.1,0.9);
@@ -164,9 +249,14 @@ public class PredictSunspotSVM {
 
 		SupportVectorMachine network = createNetwork();
 		IMLDataSet training = generateTraining();
-		train(network,training);
-		predict(network);
+        SupportVectorMachine trained = SVMSearch(network, training);
 		
+        train(trained,training);
+        predict(trained);
+
+
+       
+	   
 	}
 	
 	    #region Direction enum
