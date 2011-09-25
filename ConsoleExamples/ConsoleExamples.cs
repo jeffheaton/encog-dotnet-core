@@ -106,6 +106,8 @@ namespace ConsoleExamples
             examples.Add(PredictSunspot.Info);
             examples.Add(SimpleNormalize.Info);
             examples.Add(NormalizeFile.Info);
+            examples.Add(ElliottBenchmark.Info);
+            examples.Add(XORPSO.Info);
         }
 
         public void ListCommands()

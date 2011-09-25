@@ -90,8 +90,10 @@ namespace Encog.Examples.JordanNetwork
         private IMLMethod CreateJordanNetwork()
         {
             // construct an Jordan type network
-            var pattern = new JordanPattern();
-            pattern.ActivationFunction = new ActivationSigmoid();
+            var pattern = new JordanPattern
+                {
+                    ActivationFunction = new ActivationSigmoid()
+                };
             pattern.InputNeurons = 1;
             pattern.AddHiddenLayer(2);
             pattern.OutputNeurons = 1;
