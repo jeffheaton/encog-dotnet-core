@@ -483,14 +483,14 @@ namespace Encog.Util.NetworkUtil
 
 
         /// <summary>
-        /// Prepare realtime inputs, and place them in an understandable one dimensional input neuron array.
+        /// Prepare realtime inputs, and place them in an understandable one jagged input neuron array.
         /// This method uses linq.
         /// you can use this method if you have many inputs and need to format them as inputs with a specified "window"/input size.
         /// You can add as many inputs as wanted to this input layer (parametrable inputs).
         /// </summary>
         /// <param name="inputsize">The inputsize.</param>
         /// <param name="firstinputt">The firstinputt.</param>
-        /// <returns>a ready to use one dimensional array with all the inputs setup.</returns>
+        /// <returns>a ready to use jagged array with all the inputs setup.</returns>
         public static double[][] AddInputsViaLinq(int inputsize, params double[][] firstinputt)
         {
             ArrayList arlist = new ArrayList(4);
@@ -516,14 +516,13 @@ namespace Encog.Util.NetworkUtil
 
 
         /// <summary>
-        /// Prepare realtime inputs, and place them in an understandable one dimensional input neuron array.
-        /// This method does not use linq.
+        /// Prepare realtime inputs, and place them in an understandable one jagged input neuron array.
         /// you can use this method if you have many inputs and need to format them as inputs with a specified "window"/input size.
         /// You can add as many inputs as wanted to this input layer (parametrable inputs).
         /// </summary>
         /// <param name="inputsize">The inputsize.</param>
         /// <param name="firstinputt">The firstinputt.</param>
-        /// <returns></returns>
+        /// <returns>a ready to use jagged array with all the inputs setup.</returns>
         public static double[][] AddInputs(int inputsize, params double[][] firstinputt)
         {
             ArrayList arlist = new ArrayList(4);
@@ -563,7 +562,6 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static IMLDataSet MakeDataSet(double[] outputs, int inputsize, params double[][] firstinputt)
         {
-
             IMLDataSet set = new BasicMLDataSet();
             ArrayList outputsar = new ArrayList();
             ArrayList FirstList = new ArrayList();
@@ -589,7 +587,6 @@ namespace Encog.Util.NetworkUtil
                     }
                 }
             }
-
             foreach (double d in outputs)
             {
                 listused.Add(d);
@@ -633,9 +630,7 @@ namespace Encog.Util.NetworkUtil
             IMLDataSet set = new BasicMLDataSet();
             //we know now how many items we have in each data series (all series should be of equal lenght).
             int dimension = inputs[0].Length;
-
             //we will take predictwindow of each serie and make new series.
-
             List<double> InputList = new List<double>();
             int index = 0;
             int currentArrayObserved = 0;
