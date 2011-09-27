@@ -128,7 +128,7 @@ namespace Encog.App.Finance.Indicators
        public static double SimpleForwardOscillator(double predictedClose, int length , double currentClose)
       {
 
-          double result = predictedClose - Average(currentClose, length);
+          double result = predictedClose - Avg(currentClose, length);
           return result;
 
       }
@@ -156,37 +156,16 @@ namespace Encog.App.Finance.Indicators
        /// <returns>double</returns>
        public static double PhaseOscillator(double predictedClose, int length, double currentClose)
        {
-           double result = predictedClose - Average(currentClose, length);
+           double result = predictedClose - Avg(currentClose, length);
            return result;
        }
-       /// <summary>
-       /// Averages two doubles.
-       /// </summary>
-       /// <param name="a">A.</param>
-       /// <param name="b">The b.</param>
-       /// <returns></returns>
-       static double Average(double a, double b)
+      
+
+
+       static double Avg(double a, double b)
        {
-          if(a == b) return a;
-
-          if(a > b) return Average(b, a);
-
-          while(true)
-          {
-            a++;
-            if (a == b)
-            {
-              double mod = (b < 0) ? -b : b;
-              return (mod % 2 == 0) ? b : a-1;
-            }
-
-            b--;
-
-            if (a == b) 
-              return a;
-          }
+           return (a + b)/2;
        }
-
        internal List<double> _movingAverageSeries;
        /// <summary>
        /// Gets the moving average serie.

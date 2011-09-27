@@ -9,7 +9,8 @@ using Encog.Util.CSV;
 namespace Encog.ML.Data.Market.Loader
 {
     /// <summary>
-    /// Loads CSVs and places them in a MarketDataset. 
+    /// Use this class to loads CSVs and places them in a MarketDataset.
+    /// You must call GetFile to point to the CSV you want to use.
     /// </summary>
     public class CSVFinal : IMarketLoader
     {

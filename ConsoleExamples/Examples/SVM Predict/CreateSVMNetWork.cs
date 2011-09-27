@@ -19,6 +19,7 @@ using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Manhattan;
 using Encog.Util.Simple;
 using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
+using SuperUtilsTrainer = Encog.Util.NetworkUtil.TrainerHelper;
 namespace Encog.Examples.SVM_Predict
 {
     class CreateSVMNetWork
@@ -61,10 +62,10 @@ namespace Encog.Examples.SVM_Predict
             double[] SecondInput = MakeInputs(inputs);
             double[] ThirdInputs = MakeInputs(inputs);
             double[] FourthInputs = MakeInputs(inputs);
-            var pair = SuperUtils.ProcessPair(firstinput, FourthInputs, inputs, predictWindow);
-            var pair2 = SuperUtils.ProcessPair(SecondInput, FourthInputs, inputs, predictWindow);
-            var pair3 = SuperUtils.ProcessPair(ThirdInputs, FourthInputs, inputs, predictWindow);
-            var pair4 = SuperUtils.ProcessPair(FourthInputs, FourthInputs, inputs, predictWindow);
+            var pair = SuperUtilsTrainer.ProcessPairs(firstinput, FourthInputs, inputs, predictWindow);
+            var pair2 = SuperUtilsTrainer.ProcessPairs(SecondInput, FourthInputs, inputs, predictWindow);
+            var pair3 = SuperUtilsTrainer.ProcessPairs(ThirdInputs, FourthInputs, inputs, predictWindow);
+            var pair4 = SuperUtilsTrainer.ProcessPairs(FourthInputs, FourthInputs, inputs, predictWindow);
             BasicMLDataSet SuperSet = new BasicMLDataSet();
             SuperSet.Add(pair);
             SuperSet.Add(pair2);
@@ -90,10 +91,10 @@ namespace Encog.Examples.SVM_Predict
             double[] SecondInput = MakeInputs(inputs);
             double[] ThirdInputs = MakeInputs(inputs);
             double[] FourthInputs = MakeInputs(inputs);
-            var pair = SuperUtils.ProcessPair(firstinput, FourthInputs, inputs, predictWindow);
-            var pair2 = SuperUtils.ProcessPair(SecondInput, FourthInputs, inputs, predictWindow);
-            var pair3 = SuperUtils.ProcessPair(ThirdInputs, FourthInputs, inputs, predictWindow);
-            var pair4 = SuperUtils.ProcessPair(FourthInputs, FourthInputs, inputs, predictWindow);
+            var pair = SuperUtilsTrainer.ProcessPairs(firstinput, FourthInputs, inputs, predictWindow);
+            var pair2 = SuperUtilsTrainer.ProcessPairs(SecondInput, FourthInputs, inputs, predictWindow);
+            var pair3 = SuperUtilsTrainer.ProcessPairs(ThirdInputs, FourthInputs, inputs, predictWindow);
+            var pair4 = SuperUtilsTrainer.ProcessPairs(FourthInputs, FourthInputs, inputs, predictWindow);
             BasicMLDataSet SuperSet = new BasicMLDataSet();
             SuperSet.Add(pair);
             SuperSet.Add(pair2);

@@ -9,6 +9,10 @@ using System.Windows.Forms;
 
 namespace Encog.ML.Data.Market.Loader
 {
+    /// <summary>
+    /// CSVLoader class.
+    /// This class is used to load CSV's into a 
+    /// </summary>
     public class CSVLoader :IMarketLoader
     {
 

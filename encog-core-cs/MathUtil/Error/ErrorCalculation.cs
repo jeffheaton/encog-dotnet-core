@@ -47,7 +47,7 @@ namespace Encog.MathUtil.Error
 
         /// <summary>
         /// The error calculation mode, this is static and therefore global to
-        /// all Enocg training. If a particular training method only supports a
+        /// all Encog training. If a particular training method only supports a
         /// particular error calculation method, it may override this value. It will
         /// not change the value set here, rather the training will occur with its
         /// preferred training method. Currently the only training method that does
