@@ -674,7 +674,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\analyst.csv" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
     <Folder Include="App\Quant\Loader\NinjaLoader\" />
   </ItemGroup>
   <ItemGroup>
@@ -682,8 +682,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat"
-gacutil   -i "$(TargetPath)" /f</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
