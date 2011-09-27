@@ -1,32 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using ConsoleExamples.Examples;
-using Encog.Engine.Network.Activation;
-using Encog.Examples.CSVMarketExample;
-using Encog.ML;
-using Encog.ML.Data;
-using Encog.ML.Data.Basic;
-using Encog.ML.Data.Temporal;
-using Encog.ML.Train;
-using Encog.ML.Train.Strategy;
-using Encog.Neural.Networks;
-using Encog.Neural.Networks.Training;
-using Encog.Neural.Networks.Training.Anneal;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Pattern;
-using Encog.Neural.Prune;
-using Encog.Persist;
-using Encog.Util;
-using Encog.Util.File;
-using Encog.Util.NetworkUtil;
 using Encog.Examples.RangeandMarket;
-using Encog.Util.Simple;
-using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
-namespace Encog.Examples.RangeandMarket
+using Encog.ML.Data.Basic;
+using Encog.Neural.Networks;
+using Encog.Util.NetworkUtil;
+
+namespace Encog.Examples.Analyzer
 {
     class MarketAnalyzer :IExample
     {
@@ -57,14 +37,14 @@ namespace Encog.Examples.RangeandMarket
             {
                 if (app.Args.Length > 1)
                 {
-                    Encog.Examples.RangeandMarket.RandomTrainer.RandomTrainerMethod(Convert.ToInt16(app.Args[1]), Convert.ToInt16(app.Args[2]));
+                    RandomTrainer.RandomTrainerMethod(Convert.ToInt16(app.Args[1]), Convert.ToInt16(app.Args[2]));
                     MakeAPause();
                     app.Exit();
                 }
                 else
                 {
                     Console.WriteLine(@"You didn't input enough args in your request, will default to 3000 inputs , and 50 prediction size");
-                    Console.WriteLine(@"Error % "+ Encog.Examples.RangeandMarket.RandomTrainer.RandomTrainerMethod(3000, 50));
+                    Console.WriteLine(@"Error % "+ RandomTrainer.RandomTrainerMethod(3000, 50));
                    
                    
                 }
@@ -87,7 +67,7 @@ namespace Encog.Examples.RangeandMarket
 
                          //create our network.
                         BasicNetwork network =
-                            (BasicNetwork) SuperUtils.LoadNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile);
+                            (BasicNetwork) NetworkUtility.LoadNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile);
                         CreateEval.EvaluateNetworks(network, set);
                         MakeAPause();
                         return;
@@ -134,8 +114,8 @@ namespace Encog.Examples.RangeandMarket
                         double LastError = CreateEval.TrainNetworks(network, set);
 
                         Console.WriteLine("NetWork Trained to :" + LastError);
-                        SuperUtils.SaveTraining(CONFIG.DIRECTORY, CONFIG.TrainingFile, set);
-                        SuperUtils.SaveNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile, network);
+                        NetworkUtility.SaveTraining(CONFIG.DIRECTORY, CONFIG.TrainingFile, set);
+                        NetworkUtility.SaveNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile, network);
                         Console.WriteLine("Network Saved to :" + CONFIG.DIRECTORY + " File Named :" +
                                           CONFIG.NetWorkFile);
 

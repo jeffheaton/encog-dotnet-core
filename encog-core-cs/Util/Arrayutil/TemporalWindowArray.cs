@@ -170,5 +170,61 @@ namespace Encog.Util.Arrayutil
 
             return result;
         }
+
+
+
+
+        /// <summary>
+        /// Processes the specified data array in an IMLDataset.
+        /// You can send a [][] array directly with this method.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        public IMLDataSet Process(double[][] data)
+        {
+            IMLDataSet result = new BasicMLDataSet();
+            foreach (double[] doubles in data)
+            {
+                result.Add(ProcessToPair(doubles));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Process the data array and returns an IMLdatapair.
+        /// </summary>
+        ///
+        /// <param name="data">The array to process.</param>
+        /// <returns>An IMLDatapair containing data.</returns>
+        public IMLDataPair ProcessToPair(double[] data)
+        {
+
+            IMLDataPair pair = null;
+            int totalWindowSize = _inputWindow + _predictWindow;
+            int stopPoint = data.Length - totalWindowSize;
+
+            for (int i = 0; i < stopPoint; i++)
+            {
+                IMLData inputData = new BasicMLData(_inputWindow);
+                IMLData idealData = new BasicMLData(_predictWindow);
+
+                int index = i;
+
+                // handle input window
+                for (int j = 0; j < _inputWindow; j++)
+                {
+                    inputData[j] = data[index++];
+                }
+
+                // handle predict window
+                for (int j = 0; j < _predictWindow; j++)
+                {
+                    idealData[j] = data[index++];
+                }
+
+                pair = new BasicMLDataPair(inputData, idealData);
+            }
+            return pair;
+        }
     }
 }

@@ -253,5 +253,27 @@ namespace Encog.Util.File
             }
         }
 
+
+
+        /// <summary>
+        ///Move a file or directory to a destination path.
+        /// </summary>
+        /// <param name="fromPath">From path.</param>
+        /// <param name="toPath">To path.</param>
+        /// <returns>true if we were able to move the file or directory.</returns>
+        public static bool MoveFileOrDirectory(string fromPath, string toPath)
+            {
+                if (System.IO.File.Exists(fromPath))
+                {
+                    System.IO.File.Move(fromPath, toPath);
+                    return true;
+                }
+                if (System.IO.Directory.Exists(fromPath))
+                {
+                    System.IO.Directory.Move(fromPath, toPath);
+                    return true;
+                }
+                return false;
+            }
     }
 }

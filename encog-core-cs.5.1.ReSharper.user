@@ -86,7 +86,7 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="long" priority="1" />
-      <Item value="new" priority="27" />
+      <Item value="new" priority="26" />
       <Item value="svm_node" priority="1" />
       <Item value="result" priority="10" />
       <Item value="for" priority="10" />
@@ -120,8 +120,8 @@
       <Item value="Directory`0" priority="1" />
       <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="17" />
-      <Item value="private" priority="7" />
+      <Item value="this" priority="16" />
+      <Item value="private" priority="6" />
       <Item value="bool" priority="1" />
       <Item value="BasicMLDataSet`0" priority="0" />
       <Item value="Population" priority="4" />
@@ -134,10 +134,10 @@
       <Item value="FileInfo" priority="1" />
       <Item value="MLRegression`0" priority="0" />
       <Item value="MLTrain`0" priority="0" />
-      <Item value="BasicNetwork`0" priority="18" />
+      <Item value="BasicNetwork`0" priority="5" />
       <Item value="NEATNetwork`0" priority="1" />
       <Item value="Hopfield" priority="1" />
-      <Item value="network" priority="4" />
+      <Item value="network" priority="3" />
       <Item value="pattern1" priority="0" />
       <Item value="using" priority="2" />
       <Item value="Encog" priority="3" />
@@ -180,10 +180,10 @@
       <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
       <Item value="Console`0" priority="25" />
-      <Item value="examples" priority="3" />
+      <Item value="examples" priority="2" />
       <Item value="Examples" priority="2" />
       <Item value="XOR" priority="1" />
-      <Item value="IExample`0" priority="6" />
+      <Item value="IExample`0" priority="5" />
       <Item value="XORHelloWorld`0" priority="0" />
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
@@ -193,10 +193,10 @@
       <Item value="StringBuilder" priority="0" />
       <Item value="builder" priority="1" />
       <Item value="theFlatSpots" priority="0" />
-      <Item value="_flatSpot" priority="1" />
+      <Item value="_flatSpot" priority="0" />
       <Item value="ShouldFixFlatSpot" priority="0" />
       <Item value="true" priority="2" />
-      <Item value="value" priority="3" />
+      <Item value="value" priority="2" />
       <Item value="Engine.Network.Activation" priority="0" />
       <Item value="Extract" priority="0" />
       <Item value="TestMethod" priority="23" />
@@ -271,7 +271,7 @@
       <Item value="assignedTotal" priority="0" />
       <Item value="args" priority="5" />
       <Item value="System" priority="0" />
-      <Item value="train" priority="1" />
+      <Item value="train" priority="0" />
       <Item value="ParseCommand`0" priority="1" />
       <Item value="_data" priority="1" />
       <Item value="Dictionary&lt;string,string&gt;" priority="0" />
@@ -288,24 +288,6 @@
       <Item value="IHandleMissingValues`0" priority="0" />
       <Item value="_missing" priority="1" />
       <Item value="encog" priority="0" />
-      <Item value="_flat" priority="1" />
-      <Item value="_training" priority="0" />
-      <Item value="_numThreads" priority="1" />
-      <Item value="momentum" priority="0" />
-      <Item value="learnRate" priority="2" />
-      <Item value="Network" priority="2" />
-      <Item value="_learningRate" priority="4" />
-      <Item value="_momentum" priority="0" />
-      <Item value="_lastDelta" priority="1" />
-      <Item value="LastDelta" priority="0" />
-      <Item value="LastGradient" priority="1" />
-      <Item value="LearningRate" priority="0" />
-      <Item value="RPROPConst`0" priority="0" />
-      <Item value="LastGradients" priority="0" />
-      <Item value="_updateValues" priority="1" />
-      <Item value="CurrentError" priority="0" />
-      <Item value="FahlmanEncoder`0" priority="0" />
-      <Item value="method" priority="0" />
       <Item value="object" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
@@ -387,7 +369,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.EngineArray">
       <Item value="AllocateBool2D`0" priority="0" />
-      <Item value="AllocateDouble2D`0" priority="12" />
+      <Item value="AllocateDouble2D`0" priority="11" />
       <Item value="PutAll`2" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.ML.Genetic.Population.IPopulation">
@@ -436,7 +418,7 @@
       <Item value="ClassMembers" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="5" />
+      <Item value="Add`0" priority="4" />
       <Item value="Sort`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.Script.Prop.ScriptProperties">
@@ -586,7 +568,6 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.BasicNetwork">
       <Item value="Structure" priority="0" />
-      <Item value="Flat" priority="8" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.Training.Propagation.Resilient.ResilientPropagation">
       <Item value="ThreadCount" priority="0" />
@@ -612,21 +593,6 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
       <Item value="MaxIteration" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.Neural.Flat.FlatNetwork">
-      <Item value="Weights" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.Neural.Networks.Training.Propagation.Back.Backpropagation">
-      <Item value="_lastDelta" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.Neural.Networks.Training.Propagation.Resilient.RPROPConst">
-      <Item value="DefaultZeroTolerance" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:@Encog.Examples.Benchmark.FahlmanEncoder">
-      <Item value="Info" priority="0" />
-    </ItemStatistics>
-    <ItemStatistics item="Qualified:Encog.ML.Train.IMLTrain">
-      <Item value="Method" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

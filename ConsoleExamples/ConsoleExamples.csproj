@@ -103,6 +103,10 @@
     <Compile Include="Examples\Analyzer\Prunes.cs" />
     <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
     <Compile Include="Examples\Predict\PredictSunspot.cs" />
+    <Compile Include="Examples\RateSP500\FinancialSample.cs" />
+    <Compile Include="Examples\RateSP500\InterestRate.cs" />
+    <Compile Include="Examples\RateSP500\PredictSP500.cs" />
+    <Compile Include="Examples\RateSP500\SP500Actual.cs" />
     <Compile Include="Examples\SVM Predict\CreateSVMNetWork.cs" />
     <Compile Include="Examples\SVM Predict\SVMExample.cs" />
     <Compile Include="Examples\SVM Predict\SVMPredictSunSpots.cs" />

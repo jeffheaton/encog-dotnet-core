@@ -16,17 +16,18 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug1\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug1\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +37,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Encog.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -546,6 +553,8 @@
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
+    <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
+    <Compile Include="Util\NetworkUtil\TrainerHelper.cs" />
     <Compile Include="Util\Normalize\DataNormalization.cs" />
     <Compile Include="Util\Normalize\Input\BasicInputField.cs" />
     <Compile Include="Util\Normalize\Input\IHasFixedLength.cs" />
@@ -666,7 +675,16 @@
     <EmbeddedResource Include="Resources\analyst.csv" />
   </ItemGroup>
   <ItemGroup />
+    <Folder Include="App\Quant\Loader\NinjaLoader\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Encog.snk" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat"
+gacutil   -i "$(TargetPath)" /f</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
