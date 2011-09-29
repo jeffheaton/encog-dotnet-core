@@ -7,6 +7,7 @@ using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Genetic;
 using Encog.Neural.Pattern;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.Examples.Lunar
 {
@@ -54,7 +55,7 @@ namespace Encog.Examples.Lunar
             else
             {
                 train = new NeuralGeneticAlgorithm(
-                    network, new FanInRandomizer(),
+                    network, new NguyenWidrowRandomizer(),
                     new PilotScore(), 500, 0.1, 0.25);
             }
 

@@ -47,6 +47,13 @@ namespace Encog.MathUtil.Randomize
         {
         }
 
+        /// <summary>
+        /// Construct a Nguyen-Widrow randomizer. Use -1 and 1 as range.
+        /// </summary>
+        public NguyenWidrowRandomizer(): base(-1,1)
+        {
+        }
+
         #region IRandomizer Members
 
         /// <summary>
