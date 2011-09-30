@@ -85,10 +85,10 @@ namespace Encog.Util.NetworkUtil
 
         /// <summary>
         /// Processes the specified double serie into an IMLDataset.
-        /// To use this method, you must provide a formated double array with first the input data and the ideal data in the end.
+        /// To use this method, you must provide a formated double array.
         /// The number of points in the input window makes the input array , and the predict window will create the array used in ideal.
         /// Example you have an array with 1, 2, 3 , 4 , 5.
-        /// You can use this method to make an IMLDataset 4 inputs and 1 ideal.
+        /// You can use this method to make an IMLDataset 4 inputs and 1 ideal (5).
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="_inputWindow">The _input window.</param>
