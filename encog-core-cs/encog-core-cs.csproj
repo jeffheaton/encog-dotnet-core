@@ -23,11 +23,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug1\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug1\encog-core-cs.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -280,6 +280,7 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
+    <Compile Include="ML\Data\Market\Loader\StreamLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
@@ -552,6 +553,7 @@
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTMLReport.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
+    <Compile Include="Util\NetworkUtil\DateNormalize.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
     <Compile Include="Util\NetworkUtil\TrainerHelper.cs" />
@@ -673,9 +675,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\analyst.csv" />
-  </ItemGroup>
-  <ItemGroup />
-    <Folder Include="App\Quant\Loader\NinjaLoader\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Encog.snk" />

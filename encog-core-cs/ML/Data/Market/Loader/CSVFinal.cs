@@ -32,7 +32,7 @@ namespace Encog.ML.Data.Market.Loader
         /// <param name="to">To.</param>
         /// <param name="File">The file.</param>
         /// <returns></returns>
-        ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IList<MarketDataType> neededTypes, DateTime from, DateTime to, string File)
+        ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IEnumerable<MarketDataType> neededTypes, DateTime from, DateTime to, string File)
         {
             try
             {
@@ -48,11 +48,11 @@ namespace Encog.ML.Data.Market.Loader
                 DateTime ParsedDate = from;
                 bool writeonce = true;
 
-                //  Time,Open,High,Low,Close,Volume
                 while (csv.Next())
                 {
                     DateTime date = csv.GetDate(0);
                     ParsedDate = date;
+
                     if (writeonce)
                     {
                         Console.WriteLine(@"First parsed date in csv:" + ParsedDate.ToShortDateString());
@@ -62,7 +62,7 @@ namespace Encog.ML.Data.Market.Loader
                                           from.ToShortDateString());
                         writeonce = false;
                     }
-                    if (ParsedDate > from && ParsedDate < to)
+                    if (ParsedDate >= from && ParsedDate <= to)
                     {
                         DateTime datex = csv.GetDate(0);
                         double open = csv.GetDouble(1);
@@ -119,6 +119,8 @@ namespace Encog.ML.Data.Market.Loader
 
         public ICollection<LoadedMarketData> Load(TickerSymbol ticker, IList<MarketDataType> dataNeeded, DateTime from, DateTime to)
         {
+
+           
             return File.Exists(LoadedFile) ? (ReadAndCallLoader(ticker, dataNeeded, from, to, LoadedFile)) : null;
         }
 
