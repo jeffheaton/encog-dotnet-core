@@ -52,63 +52,6 @@ namespace Encog.Util.NetworkUtil
 
 
 
-        #region normalizes days and month in a date.
-
-        public static double [] NormalizeMonth(int month)
-        {
-            var eq = new Equilateral(12, -1, 1);
-            return eq.Encode(month);
-        }
-
-        public static int DenormalizeMonth(double [] montharry)
-        {
-            var eq = new Equilateral(12, -1, 1);
-            return eq.Decode(montharry);
-        }
-
-        public static double[] NormalizeDays(int days)
-        {
-            var eq = new Equilateral(31, -1, 1);
-            return eq.Encode(days);
-        }
-        public static int DenormalizeDays(double [] days)
-        {
-            var eq = new Equilateral(31, -1, 1);
-            return eq.Decode(days);
-        }
-        public static double[] NormalizeHour(int hour)
-        {
-            var eq = new Equilateral(24, -1, 1);
-            return eq.Encode(hour);
-        }
-        public static int DenormalizeHour(double[] days)
-        {
-            var eq = new Equilateral(24, -1, 1);
-            return eq.Decode(days);
-        }
-
-        public static double[] NormalizeYear(int year)
-        {
-            var eq = new Equilateral(2011, -1, 1);
-            return eq.Encode(year);
-        }
-        public static int DenormalizeYear(double[] year)
-        {
-            var eq = new Equilateral(2011, -1, 1);
-            return eq.Decode(year);
-        }
-        public static double[] NormalizeYear(int hour, int MaxYear)
-        {
-            var eq = new Equilateral(MaxYear, -1, 1);
-            return eq.Encode(hour);
-        }
-        public static int DenormalizeYear(double[] days, int MaxYear)
-        {
-            var eq = new Equilateral(MaxYear, -1, 1);
-            return eq.Decode(days);
-        }
-
-        #endregion
         /// <summary>
         /// Doubles the List of doubles into a jagged array.
         /// This is exactly similar as the MakeDoubleJaggedInputFromArray just it takes a List of double as parameter.
