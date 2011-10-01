@@ -42,7 +42,7 @@ namespace Encog.ML.Data.Market.Loader
                 ReadCSV csv = new ReadCSV(File, true, CSVFormat.English);
                 //In case we want to use a different date format...and have used the SetDateFormat method, our DateFormat must then not be null..
                 //We will use the ?? operator to check for nullables.
-                csv.DateFormat = DateFormat ?? "yyyy.MM.dd HH:mm:ss";
+                csv.DateFormat = DateFormat ?? "yyyy-MM-dd HH:mm:ss";
                 csv.TimeFormat = "HH:mm:ss";
 
                 DateTime ParsedDate = from;

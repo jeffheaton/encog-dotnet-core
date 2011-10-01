@@ -26,14 +26,17 @@ using Encog.Engine.Network.Activation;
 using Encog.Examples.Util;
 using Encog.ML;
 using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
+using Encog.Neural.Networks.Training.Lma;
 using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Pattern;
-
+using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
+using SuperUtilsTrainer = Encog.Util.NetworkUtil.TrainerHelper;
 namespace Encog.Examples.ElmanNetwork
 {
     public class ElmanExample : IExample
@@ -48,7 +51,7 @@ namespace Encog.Examples.ElmanNetwork
                     typeof (ElmanExample),
                     "xor-elman",
                     "Elman Temporal XOR",
-                    "Uses a temporal sequence, made up of the XOR truth table, as the basis for prediction.  Compares Elman to traditional feedforward.");
+                    "Uses a temporal sequence, made up of the XOR truth table, as the basis for prediction.  Compares Elman to traditional feedforward....You can also use xor-elman 300 to make a xor data set of 300 size");
                 return info;
             }
         }
@@ -58,15 +61,20 @@ namespace Encog.Examples.ElmanNetwork
         public void Execute(IExampleInterface app)
         {
             this.app = app;
-
             var temp = new TemporalXOR();
             IMLDataSet trainingSet = temp.Generate(100);
+            if (app.Args.Length >0)
+            {
+                trainingSet = temp.Generate(Convert.ToInt16(app.Args[0]));
+              
+            }
+        
 
-            var elmanNetwork = (BasicNetwork) CreateElmanNetwork();
-            var feedforwardNetwork = (BasicNetwork) CreateFeedforwardNetwork();
+            var elmanNetwork = (BasicNetwork) CreateElmanNetwork(trainingSet.InputSize);
+            var feedforwardNetwork = (BasicNetwork) CreateFeedforwardNetwork(trainingSet.InputSize);
 
-            double elmanError = TrainNetwork("Elman", elmanNetwork, trainingSet);
-            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet);
+            double elmanError = TrainNetwork("Elman", elmanNetwork, trainingSet, "Leven");
+            double feedforwardError = TrainNetwork("Feedforward", feedforwardNetwork, trainingSet, "Leven");
 
             app.WriteLine("Best error rate with Elman Network: " + elmanError);
             app.WriteLine("Best error rate with Feedforward Network: " + feedforwardError);
@@ -76,39 +84,45 @@ namespace Encog.Examples.ElmanNetwork
 
         #endregion
 
-        private IMLMethod CreateElmanNetwork()
+
+
+        private IMLMethod CreateElmanNetwork(int input)
         {
             // construct an Elman type network
             var pattern = new ElmanPattern
                 {
                     ActivationFunction = new ActivationSigmoid(),
-                    InputNeurons = 1
+                    InputNeurons = input
                 };
-            pattern.AddHiddenLayer(6);
+            pattern.AddHiddenLayer(5);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
 
-        private static IMLMethod CreateFeedforwardNetwork()
+        private static IMLMethod CreateFeedforwardNetwork(int input)
         {
             // construct a feedforward type network
             var pattern = new FeedForwardPattern();
             pattern.ActivationFunction = new ActivationSigmoid();
-            pattern.InputNeurons = 1;
-            pattern.AddHiddenLayer(6);
+            pattern.InputNeurons = input;
+            pattern.AddHiddenLayer(5);
             pattern.OutputNeurons = 1;
             return pattern.Generate();
         }
 
-        private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet)
+        private double TrainNetwork(String what, BasicNetwork network, IMLDataSet trainingSet, string Method)
         {
             // train the neural network
             ICalculateScore score = new TrainingSetScore(trainingSet);
-            IMLTrain trainAlt = new NeuralSimulatedAnnealing(
-                network, score, 10, 2, 100);
-
-
-            IMLTrain trainMain = new Backpropagation(network, trainingSet, 0.00001, 0.0);
+            IMLTrain trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
+            IMLTrain trainMain;
+            if (Method.Equals("Leven"))
+            {
+                Console.WriteLine("Using LevenbergMarquardtTraining");
+                trainMain = new LevenbergMarquardtTraining(network, trainingSet);
+            }
+            else
+                 trainMain = new Backpropagation(network, trainingSet);
 
             var stop = new StopTrainingStrategy();
             trainMain.AddStrategy(new Greedy());

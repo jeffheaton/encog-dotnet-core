@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Encog.Util.CSV;
 
 namespace Encog.Util.NetworkUtil
@@ -124,7 +125,62 @@ namespace Encog.Util.NetworkUtil
             return returnedArrays;
         }
 
+        /// <summary>
+        /// use this method to find a date in your csv , and it will return the line number..
+        /// This is useful for evaluation purpose when you need to find the line number so you can check against the real price and the network output prices.
+        ///You must specify the DateFormat ("yyyy-MM-dd HH:mm:ss") for example.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="datetoFind">The date to find.</param>
+        /// <param name="DateFormat">The date format.</param>
+        /// <returns></returns>
+        public static int QuickParseCSVForDate(string file, DateTime datetoFind, String DateFormat)
+        {
+           
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+           int currentLine = 0;
+            csv.DateFormat = DateFormat;
+            while (csv.Next())
+            {
+                    csv.GetDate(0);
+                if (csv.GetDate(0) == datetoFind)
+                {
+                    return currentLine;
+                }
+                else
+                    currentLine++;
+            }
+            return currentLine;
+        }
+        /// <summary>
+        /// use this method to find a date in your csv , and it will return the line number..
+        /// This is useful for evaluation purpose when you need to find the line number so you can check against the real price and the network output prices.
+        /// You can specifiy which column number you date are with this method.
+        /// You must specify the DateFormat ("yyyy-MM-dd HH:mm:ss") for example.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="datetoFind">The date to find.</param>
+        /// <param name="DateFormat">The date format.</param>
+        /// <param name="Columnnumber">The columnnumber.</param>
+        /// <returns></returns>
+        public static int QuickParseCSVForDate(string file, DateTime datetoFind, String DateFormat,int Columnnumber)
+        {
 
+            ReadCSV csv = new ReadCSV(file, true, CSVFormat.English);
+            int currentLine = 0;
+            csv.DateFormat = DateFormat;
+            while (csv.Next())
+            {
+                DateTime x = csv.GetDate(Columnnumber);
+                if (x == datetoFind)
+                {
+                    return currentLine;
+                }
+                else
+                    currentLine++;
+            }
+            return currentLine;
+        }
         /// <summary>
         /// parses one column of a csv and returns an array of doubles.
         /// you can only return one double array with this method.

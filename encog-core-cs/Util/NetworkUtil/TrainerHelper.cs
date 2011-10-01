@@ -601,18 +601,41 @@ namespace Encog.Util.NetworkUtil
         }
 
 
-        /// <summary>
-        /// Returns a randomized IMLDataset ready for use.
-        /// </summary>
-        /// <param name="sizeofInputs">The sizeof inputs.</param>
-        /// <param name="sizeOfOutputs">The size of outputs.</param>
-        /// <returns></returns>
-        public static IMLDataSet ReturnRandomizedDataSet(int sizeofInputs, int sizeOfOutputs)
-        {
-            double[] res = NetworkUtility.MakeRandomInputs(sizeofInputs);
-            return QuickTrainingFromDoubleArray(res, sizeofInputs, sizeOfOutputs);
-        }
 
+        
+        
+        public static double[] MakeInputs(int number)
+        {
+            Random rdn = new Random();
+            Encog.MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
+            double[] x = new double[number];
+            for (int i = 0; i < number; i++)
+            {
+                x[i] = encogRnd.Randomize((rdn.NextDouble()));
+
+            }
+            return x;
+        }
+        /// <summary>
+        /// Makes a random dataset with the number of IMLDatapairs.
+        /// Quite useful to test networks (benchmarks).
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <param name="predictWindow">The predict window.</param>
+        /// <param name="numberofPairs">The numberof pairs.</param>
+        /// <returns></returns>
+        public static BasicMLDataSet MakeRandomIMLDataset(int inputs, int predictWindow, int numberofPairs)
+        {
+            BasicMLDataSet SuperSet = new BasicMLDataSet();
+            for (int i = 0; i < numberofPairs;i++ )
+            {
+                double[] firstinput = MakeInputs(inputs);
+                double[] secondideal = MakeInputs(inputs);
+                IMLDataPair pair = ProcessPairs(firstinput, secondideal, inputs, predictWindow);
+                SuperSet.Add(pair);
+            }
+            return SuperSet;
+        }
 
 
         /// <summary>

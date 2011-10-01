@@ -53,7 +53,7 @@ using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
 using Encog.Examples.CSVMarketExample;
-
+using Encog.Examples.ForexExample;
 namespace ConsoleExamples
 {
     /// <summary>
@@ -96,6 +96,7 @@ namespace ConsoleExamples
             examples.Add(ForestCover.Info);
             examples.Add(Encog.Examples.Market.MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
+            examples.Add(ForexExample.Info);
             examples.Add(LunarLander.Info);
             examples.Add(MarketAnalyzer.Info);
             examples.Add(PrunerLoader.Info);
