@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Encog.Engine.Network.Activation;
 using Encog.Fuzzy;
+using Encog.Fuzzy.Core;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
@@ -127,13 +128,13 @@ namespace Encog.Examples.Analyzer
                 // inference section
 
                 // setting inputs
-                IS.SetInput("FrontalDistance", outputs);
-                FuzzyOutput fuzzyOutput = IS.ExecuteInference("Angle");
+                IS.SetInput("NearFarDistance", outputs);
+                FuzzyOutput fuzzyOutput = IS.ExecuteInference("Percentage");
 
                 // showing the fuzzy output
                 foreach (FuzzyOutput.OutputConstraint oc in fuzzyOutput.OutputList)
                 {
-                    Console.WriteLine(oc.Label + " is " + oc.FiringStrength.ToString());
+                    Console.WriteLine("Network is :"+oc.Label + @" by " + oc.FiringStrength.ToString());
                 }
 
                 //LinguisticVariable rs =  IS.GetLinguisticVariable("Steel") ; //.NumericInput = 12;
@@ -187,36 +188,102 @@ namespace Encog.Examples.Analyzer
         {
 
 
-            // linguistic labels (fuzzy sets) that compose the distances
-            FuzzySet fsNear = new FuzzySet("Near", new TrapezoidalFunction(0.15F, 0.50F, TrapezoidalFunction.EdgeType.Right));
+            //// linguistic labels (fuzzy sets) that compose the distances
+            //FuzzySet fsNear = new FuzzySet("Near", new TrapezoidalFunction(0.15F, 0.50F, TrapezoidalFunction.EdgeType.Right));
 
-                FuzzySet fsMedium = new FuzzySet( "Medium",
-                    new TrapezoidalFunction( 0.15F, 0.5F, 0.60F, 1F ) );
-                FuzzySet fsFar = new FuzzySet( "Far",
-                    new TrapezoidalFunction( 0.6F, 1F, TrapezoidalFunction.EdgeType.Left ) );
+            //// creating an array of points representing a typical trapezoidal function /-\
+            //Point[] points = new Point[4];
+            //// point where membership starts to rise
+            //points[0] = new Point(-1, 0);
+            //// maximum membership (1) reached at the second point 
+            //points[1] = new Point(00, -0.01f);
+            //// membership starts to fall at the third point 
+            //points[2] = new Point(30, 1);
+            //// membership gets to zero at the last point 
+            //points[3] = new Point(40, 0);
+            //// creating the instance
 
+          
+            TrapezoidalFunction functionc = new TrapezoidalFunction(-1, 0, 0, 0);
+            FuzzySet fsCooli = new FuzzySet("UnderZero", functionc);
+            TrapezoidalFunction functionjustnegative = new TrapezoidalFunction(-0.2f, 0, 0, 0);
+            FuzzySet fsjustneg = new FuzzySet("JustNegative", functionjustnegative);
+            TrapezoidalFunction functionFlat = new TrapezoidalFunction(-0.1f, 1, 0, 0);
+            FuzzySet fsFlat = new FuzzySet("Flat", functionc);
+            TrapezoidalFunction functionb = new TrapezoidalFunction(0f, 0f, 1f, 1f);
+            FuzzySet fsAboveZero = new FuzzySet("AboveZero", functionb);
+
+
+            TrapezoidalFunction functionSmallPositive = new TrapezoidalFunction(0.01f, 0f, 0.05f, 0.06f);
+            FuzzySet fsJustPositive = new FuzzySet("JustPositive", functionb);
+
+
+            //// creating the instance
+            //SingletonFunction membershipFunction1 = new SingletonFunction(-1);
+            //// getting membership for several points
+            //for (int i = -1; i < 3; i++)
+            //    Console.WriteLine("For -1:"+membershipFunction1.GetMembership(i));
+
+            //// creating the instance
+            //SingletonFunction membershipFunction2 = new SingletonFunction(1);
+            //// getting membership for several points
+            //for (int i = -1; i < 3; i++)
+            //    Console.WriteLine("For 1 :"+membershipFunction2.GetMembership(i));
+
+                //// create the linguistic labels (fuzzy sets) that compose the temperature 
+                //TrapezoidalFunction FunNear = new TrapezoidalFunction(0.1f, 1.5f, TrapezoidalFunction.EdgeType.Right);
+                //FuzzySet fsNear = new FuzzySet("Near", FunNear);
+            
+                //FuzzySet fsFar = new FuzzySet("Far", funcFar);
                 // front distance (input)
-                LinguisticVariable lvFront = new LinguisticVariable( "FrontalDistance",-1, 1 );
-                lvFront.AddLabel( fsNear );
-                lvFront.AddLabel( fsMedium );
-                lvFront.AddLabel( fsFar );
+                LinguisticVariable lvFront = new LinguisticVariable( "NearFarDistance",-1, 1 );
 
+
+            lvFront.AddLabel(fsCooli);
+                lvFront.AddLabel( fsAboveZero );
+            lvFront.AddLabel(fsjustneg);
+            lvFront.AddLabel(fsFlat);
+            lvFront.AddLabel(fsJustPositive);
                 // linguistic labels (fuzzy sets) that compose the angle
 
                 // linguistic labels (fuzzy sets) that compose the angle
-                FuzzySet fsnegative = new FuzzySet("Negative", new TrapezoidalFunction(-1F, -1, -1F, -1F));
-                FuzzySet fsZero = new FuzzySet( "Zero",new TrapezoidalFunction( -1F, 0.5F, 0.5F, 1F ) );
-                FuzzySet fsLP = new FuzzySet( "LittlePositive",new TrapezoidalFunction( 0.5F, 0.1F, 0.2F, 0.25F ) );
-                FuzzySet fsP = new FuzzySet( "Positive",new TrapezoidalFunction( 0.2F, 0.25F, 0.35F, 0.40F ) );
-                FuzzySet fsVP = new FuzzySet( "VeryPositive",new TrapezoidalFunction( 0.35F, 0.40F, TrapezoidalFunction.EdgeType.Left ));
+                //FuzzySet fsnegative = new FuzzySet("Negative", new TrapezoidalFunction(-1F, -1, -1F, -1F));
+                //FuzzySet fsZero = new FuzzySet( "Zero",new TrapezoidalFunction( -1F, 0.5F, 0.5F, 1F ) );
+                //FuzzySet fsLP = new FuzzySet( "LittlePositive",new TrapezoidalFunction( 0.5F, 0.1F, 0.2F, 0.25F ) );
+                //FuzzySet fsP = new FuzzySet( "Positive",new TrapezoidalFunction( 0.2F, 0.25F, 0.35F, 0.40F ) );
+                //FuzzySet fsVP = new FuzzySet( "VeryPositive",new TrapezoidalFunction( 0.35F, 0.40F, TrapezoidalFunction.EdgeType.Left ));
+
+                // creating the instance
+                SingletonFunction membershipFunction = new SingletonFunction(-1);
+                // getting membership for several points
+                for (int i = -2; i < 1; i++)
+                    Console.WriteLine(membershipFunction.GetMembership(i));
+
+                // create the linguistic labels (fuzzy sets) that compose the temperature 
+                TrapezoidalFunction function1 = new TrapezoidalFunction(-1, 0.5f, 0, 0.5f);
+                FuzzySet fsCold = new FuzzySet("Negative", function1);
+                TrapezoidalFunction function2 = new TrapezoidalFunction(0f, 0f, 1f, 0f);
+                FuzzySet fsCool = new FuzzySet("Positive", function2);
+                TrapezoidalFunction function3 = new TrapezoidalFunction(-0.1f, 0f, 1f, 0f);
+                FuzzySet fsCrap = new FuzzySet("NextToFlat", function3);
+                TrapezoidalFunction function4 = new TrapezoidalFunction(0.5f, 0f, 0.5f, 0f);
+                FuzzySet Nearpositive = new FuzzySet("NearPositive", function3);
+                //TrapezoidalFunction function3 = new TrapezoidalFunction(2f, 2.5f, 3.0f, 3.5f);
+                //FuzzySet fsWarm = new FuzzySet("Positive", function3);
+                //TrapezoidalFunction function4 = new TrapezoidalFunction(3.0f, 3.5f, TrapezoidalFunction.EdgeType.Left);
+                //FuzzySet fsHot = new FuzzySet("VeryPositive", function4);
+
+
+
 
                 // angle
-                LinguisticVariable lvAngle = new LinguisticVariable( "Angle", -1, 1);
-                lvAngle.AddLabel( fsZero );
-                lvAngle.AddLabel( fsLP );
-                lvAngle.AddLabel( fsP );
-                lvAngle.AddLabel( fsVP );
-
+                LinguisticVariable lvAngle = new LinguisticVariable( "Percentage", -1, 1);
+                lvAngle.AddLabel( fsCold );
+                lvAngle.AddLabel( fsCool );
+            lvAngle.AddLabel(fsCrap);
+            lvAngle.AddLabel(fsFlat);
+            lvAngle.AddLabel(Nearpositive);
+            lvAngle.AddLabel(fsAboveZero);
                 // the database
                 Database fuzzyDB = new Database( );
                 fuzzyDB.AddVariable( lvFront );
@@ -226,13 +293,14 @@ namespace Encog.Examples.Analyzer
                 IS = new InferenceSystem( fuzzyDB, new CentroidDefuzzifier( 1000 ) );
 
                 // going straight
-                IS.NewRule( "Rule 1", "IF FrontalDistance IS Far THEN Angle IS Zero" );
+                IS.NewRule("Rule 1", "IF NearFarDistance IS UnderZero THEN Percentage IS Negative");
                 // turning left
-                IS.NewRule( "Rule 2", "IF FrontalDistance IS Near THEN Angle IS Positive" );
+                IS.NewRule("Rule 2", "IF NearFarDistance IS AboveZero THEN Percentage IS AboveZero");
 
-                IS.NewRule("Rule 3", "IF FrontalDistance IS Medium THEN Angle IS LittlePositive");
+                IS.NewRule("Rule 3", "IF NearFarDistance IS JustNegative THEN Percentage IS NextToFlat");
+
+                IS.NewRule("Rule 4", "IF NearFarDistance IS JustPositive THEN Percentage IS NearPositive");
              
-
 
         }
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
