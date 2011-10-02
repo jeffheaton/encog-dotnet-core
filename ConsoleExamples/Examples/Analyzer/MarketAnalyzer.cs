@@ -59,19 +59,20 @@ namespace Encog.Examples.Analyzer
                 if (app.Args.Length > 0)
                 {
                     //We have enough arguments, lets test them.
-                    if (File.Exists(app.Args[1]))
-                    {
 
-                        BasicMLDataSet set = CreateEval.CreateEvaluationSetAndLoad(app.Args[1], CONFIG.EvalHowMany, CONFIG.EvalStartFrom, CONFIG.Inputs,
-                                                  CONFIG.Outputs);
+
+                    BasicMLDataSet set = Encog.Util.NetworkUtil.TrainerHelper.MakeRandomIMLDataset(CONFIG.Inputs,
+                                                                                                   CONFIG.Outputs, 20
+                                                                                                   );
+                    CreateEval.InitFuzzyEngine();
+
 
                          //create our network.
-                        BasicNetwork network =
-                            (BasicNetwork) NetworkUtility.LoadNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile);
+                         BasicNetwork network =(BasicNetwork) NetworkUtility.LoadNetwork(CONFIG.DIRECTORY, CONFIG.NetWorkFile);
                         CreateEval.EvaluateNetworks(network, set);
                         MakeAPause();
                         return;
-                    }
+                    
 
 
                 }

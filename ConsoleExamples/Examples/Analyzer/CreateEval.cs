@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Encog.Engine.Network.Activation;
+using Encog.Fuzzy;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
@@ -24,18 +25,21 @@ namespace Encog.Examples.Analyzer
     {
 
 
-
+        private static double Angle;
 
         #region create an evaluation set from a file and train it
 // ReSharper disable UnusedMember.Local
-        private static void CreateEvaluationSet(string @fileName)
+        private static void CreateEvaluationSet()
 // ReSharper restore UnusedMember.Local
         {
-            List<double> Opens = QuickCSVUtils.QuickParseCSV(fileName, "Open", 1200, 1200);
-            List<double> High = QuickCSVUtils.QuickParseCSV(fileName, "High", 1200, 1200);
-            List<double> Low = QuickCSVUtils.QuickParseCSV(fileName, "Low", 1200, 1200);
-            List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", 1200, 1200);
-            List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, 1200, 1200);
+
+
+            string file = "DB!EURUSD.Bar.Time.600.csv";
+            List<double> Opens = QuickCSVUtils.QuickParseCSV(file, "Open", 1200, 1200);
+            List<double> High = QuickCSVUtils.QuickParseCSV(file, "High", 1200, 1200);
+            List<double> Low = QuickCSVUtils.QuickParseCSV(file, "Low", 1200, 1200);
+            List<double> Close = QuickCSVUtils.QuickParseCSV(file, "Close", 1200, 1200);
+            List<double> Volume = QuickCSVUtils.QuickParseCSV(file, 5, 1200, 1200);
          
 
             double[] Ranges = NetworkUtility.CalculateRanges(Opens.ToArray(), Close.ToArray());
@@ -95,16 +99,68 @@ namespace Encog.Examples.Analyzer
                 count++;
                 Console.WriteLine(@"Number" + @"count" + @": actual=" + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
                                   + @",predict=" + Format.FormatDouble(predict, 4) + @"(" + predictDirection + @")" + @",diff=" + diff);
-               
+
+                DoInference((float)predict);
             }
             double percent = correct / (double)count;
             Console.WriteLine(@"Direction correct:" + correct + @"/" + count);
-            Console.WriteLine(@"Directional Accuracy:"
-                              + Format.FormatPercent(percent));
+            Console.WriteLine(@"Directional Accuracy:" + Format.FormatPercent(percent));
+
+           
 
             return percent;
         }
         #endregion
+
+        // Run one epoch of the Fuzzy Inference System 
+        private static void DoInference(float outputs)
+        {
+            // Setting inputs
+          //  IS.SetInput("Steel", Convert.ToSingle(outputs));
+
+            //IS.SetInput("LeftDistance", Convert.ToSingle(outputs));
+            //IS.SetInput("FrontalDistance", Convert.ToSingle(outputs));
+
+            // Setting outputs
+            try
+            {
+                // inference section
+
+                // setting inputs
+                IS.SetInput("FrontalDistance", outputs);
+                FuzzyOutput fuzzyOutput = IS.ExecuteInference("Angle");
+
+                // showing the fuzzy output
+                foreach (FuzzyOutput.OutputConstraint oc in fuzzyOutput.OutputList)
+                {
+                    Console.WriteLine(oc.Label + " is " + oc.FiringStrength.ToString());
+                }
+
+                //LinguisticVariable rs =  IS.GetLinguisticVariable("Steel") ; //.NumericInput = 12;
+                //rs.NumericInput = outputs * 100;
+
+                //LinguisticVariable rs1 = IS.GetLinguisticVariable("Stove"); //.NumericInput = 12;
+                //rs1.NumericInput = outputs * 100;
+                //float membercold =   rs.GetLabel("Cold").GetMembership(20);
+                //float memberhot =  rs.GetLabel("Hot").GetMembership(50);
+                //// testing the firing strength
+              
+                //float first = IS.GetRule("Test1").EvaluateFiringStrength();
+
+
+                //Console.WriteLine("Firing Strenth:" + first  + " membership cold:"+ membercold + " memberhot:"+memberhot);
+
+                //float membershitHot =   rs.GetLabelMembership("Hot", outputs);
+
+                //double NewAngle = IS.Evaluate("Angle");
+                //Console.WriteLine(NewAngle.ToString("Steel: ##0.#0"));
+                //Angle += NewAngle;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :"+ex.Message);
+            }
+        }
 
         #region Direction enum
 
@@ -123,6 +179,62 @@ namespace Encog.Examples.Analyzer
 
         #endregion
 
+
+        public static InferenceSystem IS;
+
+        // Hardcode initializing the Fuzzy Inference System
+        public static void InitFuzzyEngine()
+        {
+
+
+            // linguistic labels (fuzzy sets) that compose the distances
+            FuzzySet fsNear = new FuzzySet("Near", new TrapezoidalFunction(0.15F, 0.50F, TrapezoidalFunction.EdgeType.Right));
+
+                FuzzySet fsMedium = new FuzzySet( "Medium",
+                    new TrapezoidalFunction( 0.15F, 0.5F, 0.60F, 1F ) );
+                FuzzySet fsFar = new FuzzySet( "Far",
+                    new TrapezoidalFunction( 0.6F, 1F, TrapezoidalFunction.EdgeType.Left ) );
+
+                // front distance (input)
+                LinguisticVariable lvFront = new LinguisticVariable( "FrontalDistance",-1, 1 );
+                lvFront.AddLabel( fsNear );
+                lvFront.AddLabel( fsMedium );
+                lvFront.AddLabel( fsFar );
+
+                // linguistic labels (fuzzy sets) that compose the angle
+
+                // linguistic labels (fuzzy sets) that compose the angle
+                FuzzySet fsnegative = new FuzzySet("Negative", new TrapezoidalFunction(-1F, -1, -1F, -1F));
+                FuzzySet fsZero = new FuzzySet( "Zero",new TrapezoidalFunction( -1F, 0.5F, 0.5F, 1F ) );
+                FuzzySet fsLP = new FuzzySet( "LittlePositive",new TrapezoidalFunction( 0.5F, 0.1F, 0.2F, 0.25F ) );
+                FuzzySet fsP = new FuzzySet( "Positive",new TrapezoidalFunction( 0.2F, 0.25F, 0.35F, 0.40F ) );
+                FuzzySet fsVP = new FuzzySet( "VeryPositive",new TrapezoidalFunction( 0.35F, 0.40F, TrapezoidalFunction.EdgeType.Left ));
+
+                // angle
+                LinguisticVariable lvAngle = new LinguisticVariable( "Angle", -1, 1);
+                lvAngle.AddLabel( fsZero );
+                lvAngle.AddLabel( fsLP );
+                lvAngle.AddLabel( fsP );
+                lvAngle.AddLabel( fsVP );
+
+                // the database
+                Database fuzzyDB = new Database( );
+                fuzzyDB.AddVariable( lvFront );
+                fuzzyDB.AddVariable( lvAngle );
+
+                // creating the inference system
+                IS = new InferenceSystem( fuzzyDB, new CentroidDefuzzifier( 1000 ) );
+
+                // going straight
+                IS.NewRule( "Rule 1", "IF FrontalDistance IS Far THEN Angle IS Zero" );
+                // turning left
+                IS.NewRule( "Rule 2", "IF FrontalDistance IS Near THEN Angle IS Positive" );
+
+                IS.NewRule("Rule 3", "IF FrontalDistance IS Medium THEN Angle IS LittlePositive");
+             
+
+
+        }
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
         {
             Backpropagation trainMain = new Backpropagation(network, minis,0.0001,0.6);

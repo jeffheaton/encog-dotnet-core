@@ -167,5 +167,7 @@ namespace Encog.MathUtil
 
             return result.ToString();
         }
+
+
     }
 }

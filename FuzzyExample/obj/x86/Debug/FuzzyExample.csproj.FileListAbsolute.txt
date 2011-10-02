@@ -1,0 +1,10 @@
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\bin\Debug\FuzzyExample.exe
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\bin\Debug\FuzzyExample.pdb
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.Form1.resources
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.Properties.Resources.resources
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\ResGen.read.1.tlog
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\ResGen.write.1.tlog
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.exe
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.pdb
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.OutputForm.resources

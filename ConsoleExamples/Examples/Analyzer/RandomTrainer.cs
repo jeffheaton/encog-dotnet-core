@@ -1,5 +1,6 @@
 ﻿using System;
 using Encog.Engine.Network.Activation;
+using Encog.Fuzzy;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
@@ -9,7 +10,7 @@ namespace Encog.Examples.Analyzer
 {
     static class RandomTrainer
     {
-
+       
         /// <summary>
         /// Trains a random trainer.
         /// </summary>

@@ -94,8 +94,7 @@ namespace Encog.MathUtil
         /// <param name="high">The high end of the range of values to generate.</param>
         /// <param name="low"> The low end of the range of values to generate.</param>
         /// <returns>One row for each set, the columns are the activations for that set.</returns>
-        private static double[][] Equilat(int n,
-                                   double high, double low)
+        private static double[][] Equilat(int n,double high, double low)
         {
             var result = new double[n][]; // n - 1
             for (int i = 0; i < n; i++)

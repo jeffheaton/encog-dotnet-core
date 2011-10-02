@@ -197,6 +197,37 @@
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="Fuzzy\Clause.cs" />
+    <Compile Include="Fuzzy\Core\Delegates.cs" />
+    <Compile Include="Fuzzy\Core\DoublePoint.cs" />
+    <Compile Include="Fuzzy\Core\DoubleRange.cs" />
+    <Compile Include="Fuzzy\Core\EventArgs.cs" />
+    <Compile Include="Fuzzy\Core\Exceptions.cs" />
+    <Compile Include="Fuzzy\Core\IntPoint.cs" />
+    <Compile Include="Fuzzy\Core\Parallel.cs" />
+    <Compile Include="Fuzzy\Core\Point.cs" />
+    <Compile Include="Fuzzy\Core\PolishExpression.cs" />
+    <Compile Include="Fuzzy\Core\Range.cs" />
+    <Compile Include="Fuzzy\Database.cs" />
+    <Compile Include="Fuzzy\Defuzzification\CentroidDefuzzifier.cs" />
+    <Compile Include="Fuzzy\Defuzzification\IDefuzzifier.cs" />
+    <Compile Include="Fuzzy\FuzzyOutput.cs" />
+    <Compile Include="Fuzzy\FuzzySet.cs" />
+    <Compile Include="Fuzzy\InferenceSystem.cs" />
+    <Compile Include="Fuzzy\LinguisticVariable.cs" />
+    <Compile Include="Fuzzy\Membership Functions\IMembershipFunction.cs" />
+    <Compile Include="Fuzzy\Membership Functions\PiecewiseLinearFunction.cs" />
+    <Compile Include="Fuzzy\Membership Functions\SingletonFunction.cs" />
+    <Compile Include="Fuzzy\Membership Functions\TrapezoidalFunction.cs" />
+    <Compile Include="Fuzzy\Operators\ICoNorm.cs" />
+    <Compile Include="Fuzzy\Operators\INorm.cs" />
+    <Compile Include="Fuzzy\Operators\IUnaryOperator.cs" />
+    <Compile Include="Fuzzy\Operators\MaximumCoNorm.cs" />
+    <Compile Include="Fuzzy\Operators\MinimumNorm.cs" />
+    <Compile Include="Fuzzy\Operators\NotOperator.cs" />
+    <Compile Include="Fuzzy\Operators\ProductNorm.cs" />
+    <Compile Include="Fuzzy\Rule.cs" />
+    <Compile Include="Fuzzy\Rulebase.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
@@ -678,9 +709,12 @@
   <ItemGroup>
     <None Include="Encog.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fuzzy\AForge.Fuzzy.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat"
+    <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat"
 gacutil   -i "$(TargetPath)" /f</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
