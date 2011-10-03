@@ -8,3 +8,4 @@ C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\
 C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.exe
 C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.pdb
 C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.OutputForm.resources
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\FuzzyExample\obj\x86\Debug\FuzzyExample.GetCoordinates.resources

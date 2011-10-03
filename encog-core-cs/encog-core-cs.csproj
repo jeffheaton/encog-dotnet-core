@@ -216,6 +216,7 @@
     <Compile Include="Fuzzy\InferenceSystem.cs" />
     <Compile Include="Fuzzy\LinguisticVariable.cs" />
     <Compile Include="Fuzzy\Membership Functions\IMembershipFunction.cs" />
+    <Compile Include="Fuzzy\Membership Functions\IMembershipFunctionDoubles.cs" />
     <Compile Include="Fuzzy\Membership Functions\PiecewiseLinearFunction.cs" />
     <Compile Include="Fuzzy\Membership Functions\SingletonFunction.cs" />
     <Compile Include="Fuzzy\Membership Functions\TrapezoidalFunction.cs" />

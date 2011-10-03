@@ -70,6 +70,7 @@
     <Compile Include="Engine\Network\Activation\TestActivationSIN.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationSoftMax.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationTANH.cs" />
+    <Compile Include="FuzzyTests\FuzzyTests.cs" />
     <Compile Include="MathUtil\Matrices\Hessian\TestHessian.cs" />
     <Compile Include="MathUtil\Matrices\TestBiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrix.cs" />

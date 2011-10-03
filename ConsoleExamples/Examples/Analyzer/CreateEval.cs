@@ -214,12 +214,28 @@ namespace Encog.Examples.Analyzer
             FuzzySet fsAboveZero = new FuzzySet("AboveZero", functionb);
 
 
+           // assigning coordinates in the constructor
+            Point p1 = new Point( -1,0 );
+            // creating a point and assigning coordinates later
+            Point p2;
+            p2.X = 0;
+            p2.Y = 1;
+            // calculating distance between two points
+            Console.WriteLine(p1.DistanceTo(p2));
+
+
+            //PiecewiseLinearFunction funclinear = new PiecewiseLinearFunction(p1);
+
             TrapezoidalFunction functionSmallPositive = new TrapezoidalFunction(0.01f, 0f, 0.05f, 0.06f);
             FuzzySet fsJustPositive = new FuzzySet("JustPositive", functionb);
 
 
             //// creating the instance
-            //SingletonFunction membershipFunction1 = new SingletonFunction(-1);
+             SingletonFunction membershipFunction1 = new SingletonFunction(-1);
+
+
+            FuzzySet MysetTests = new FuzzySet("Negative", membershipFunction1);
+
             //// getting membership for several points
             //for (int i = -1; i < 3; i++)
             //    Console.WriteLine("For -1:"+membershipFunction1.GetMembership(i));

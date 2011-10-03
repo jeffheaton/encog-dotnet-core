@@ -21,9 +21,9 @@ namespace FuzzyExample
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             // create 2 fuzzy sets to represent the Cool and Warm temperatures
-            TrapezoidalFunction function1 = new TrapezoidalFunction(13, 18, 23, 28);
+            TrapezoidalFunction function1 = new TrapezoidalFunction(0, 50, 0, 50);
             FuzzySet fsCool = new FuzzySet("Cool", function1);
-            TrapezoidalFunction function2 = new TrapezoidalFunction(23, 28, 33, 38);
+            TrapezoidalFunction function2 = new TrapezoidalFunction(50, 100, 50, 100);
             FuzzySet fsWarm = new FuzzySet("Warm", function2);
 
             // get membership of some points to the cool fuzzy set
@@ -251,6 +251,13 @@ namespace FuzzyExample
 
 
           
+
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            GetCoordinates formCord = new GetCoordinates();
+            formCord.Show();
 
         }
 
