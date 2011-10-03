@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using Encog.Engine.Network.Activation;
 using Encog.Fuzzy;
-using Encog.Fuzzy.Core;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
@@ -19,6 +21,8 @@ using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.NetworkUtil;
 using Encog.Util.Simple;
+using ErrorViewerForm;
+using Point = Encog.Fuzzy.Core.Point;
 
 namespace Encog.Examples.Analyzer
 {
@@ -338,18 +342,47 @@ namespace Encog.Examples.Analyzer
             //PruneStrategy strategypruning = new PruneStrategy(0.91d, 0.001d, 10, network,minis, 0, 20);
             //trainMain.AddStrategy(strategypruning);
 
-            EncogUtility.TrainConsole(trainMain,network,minis, 15.2);
+         //   EncogUtility.TrainConsole(trainMain,network,minis, 15.2);
 
+            List<double> IterationsErrors = new List<double>();
+            Form1 forms = new Form1();
 
+            //ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
+            forms.chart1.Series.Clear();
+
+            forms.chart1.Series.Add("Error Rates");
+            forms.chart1.Series.Add("Error Improvements");
+            List<double> iMRPOVEMENTS = new List<double>();
+
+            double prevError = 0;
             var sw = new Stopwatch();
             sw.Start();
             while (!stop.ShouldStop())
             {
+                prevError = trainMain.Error;
                 trainMain.Iteration();
+                IterationsErrors.Add(trainMain.Error);
+
                 
+             
                 Console.WriteLine(@"Iteration #:" + trainMain.IterationNumber + @" Error:" + trainMain.Error + @" Genetic Iteration:" + trainAlt.IterationNumber);
             }
             sw.Stop();
+            forms.chart1.Series["Error Rates"].Points.DataBindY(IterationsErrors);
+            forms.chart1.Series[0].ToolTip = "F5";
+            forms.chart1.Series[0].ChartType = SeriesChartType.FastLine;
+            forms.chart1.Series[0].Color = Color.Yellow;
+            forms.chart1.Invalidate();
+
+            //forms.chart1.Series["Error Improvements"].Points.DataBindY(iMRPOVEMENTS);
+            //forms.chart1.Series[1].ToolTip = "F5";
+            //forms.chart1.Series[1].ChartType = SeriesChartType.FastLine;
+            //forms.chart1.Series[1].Color = Color.Peru;
+            //forms.chart1.Invalidate();
+            forms.ShowDialog();
+           
+
+
             Console.WriteLine(@"Total elapsed time in seconds:" + TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds).Seconds);
 
             return trainMain.Error;
@@ -380,7 +413,7 @@ namespace Encog.Examples.Analyzer
             return minitrainning;
         }
 
-        public static TemporalMLDataSet GenerateATemporalSet(string @fileName, int startLine, int HowMany, int WindowSize, int outputsize)
+        public static TemporalMLDataSet GenerateATemporalSet(string @fileName, int startLine, int HowMany, ulong WindowSize, int outputsize)
         {
             List<double> Opens = QuickCSVUtils.QuickParseCSV(fileName, "Open", startLine, HowMany);
             List<double> High = QuickCSVUtils.QuickParseCSV(fileName, "High", startLine, HowMany);
@@ -388,7 +421,7 @@ namespace Encog.Examples.Analyzer
             List<double> Close = QuickCSVUtils.QuickParseCSV(fileName, "Close", startLine, HowMany);
             List<double> Volume = QuickCSVUtils.QuickParseCSV(fileName, 5, startLine, HowMany);
 
-            return TrainerHelper.GenerateTrainingWithPercentChangeOnSerie(WindowSize, outputsize, Opens.ToArray(), Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
+            return TrainerHelper.GenerateTrainingWithPercentChangeOnSerie((ulong)WindowSize, (ulong)outputsize, Opens.ToArray(), Close.ToArray(), High.ToArray(), Low.ToArray(), Volume.ToArray());
         }
 
 

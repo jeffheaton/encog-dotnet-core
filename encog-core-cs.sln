@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpNeatDomainsExtra", "..
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Accord.Documentation", "..\..\..\Program Files (x86)\Accord.NET\Framework\Sources\Accord.Docs\Accord.Documentation\Accord.Documentation.shfbproj", "{048ACC63-3B91-4E14-B5A3-38E7898426FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorViewerForm", "ErrorViewerForm\ErrorViewerForm.csproj", "{E9983214-04A3-4F9D-A50D-57B77C035741}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = encog-core-cs.vsmdi
@@ -257,6 +259,21 @@ Global
 		{3A1B9DEC-AECE-42F3-BAD9-9172482C43AB}.Sandcastle|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3A1B9DEC-AECE-42F3-BAD9-9172482C43AB}.Sandcastle|Mixed Platforms.Build.0 = Release|Any CPU
 		{3A1B9DEC-AECE-42F3-BAD9-9172482C43AB}.Sandcastle|x86.ActiveCfg = Release|Any CPU
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Debug|x86.ActiveCfg = Debug|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Debug|x86.Build.0 = Debug|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Release|Any CPU.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Release|x86.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Release|x86.Build.0 = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Sandcastle|Any CPU.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Sandcastle|Mixed Platforms.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Sandcastle|Mixed Platforms.Build.0 = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Sandcastle|x86.ActiveCfg = Release|x86
+		{E9983214-04A3-4F9D-A50D-57B77C035741}.Sandcastle|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

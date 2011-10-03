@@ -74,6 +74,8 @@ namespace Encog.Fuzzy
             }
         }
 
+
+
         /// <summary>
         /// The rightmost x value of the fuzzy set's membership function.
         /// </summary>
@@ -111,5 +113,7 @@ namespace Encog.Fuzzy
         {
             return function.GetMembership( x );
         }
+
+
     }
 }

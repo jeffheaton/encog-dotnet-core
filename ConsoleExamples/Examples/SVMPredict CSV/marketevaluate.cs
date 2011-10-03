@@ -34,7 +34,7 @@ namespace Encog.Examples.SVMPredictCSV
             loader.GetFile(newfileLoad);
 
             var result = new MarketMLDataSet(loader,
-                                             CONFIG.INPUT_WINDOW, CONFIG.PREDICT_WINDOW);
+                                             (ulong)CONFIG.INPUT_WINDOW, (ulong)CONFIG.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER,
                                               //   MarketDataType.Close, true, true);
 

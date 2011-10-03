@@ -255,7 +255,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="windowsize">The windowsize.</param>
         /// <param name="predictsize">The predictsize.</param>
         /// <returns></returns>
-        public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie(double[] inputserie, int windowsize, int predictsize)
+        public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie(double[] inputserie, UInt64 windowsize,  UInt64 predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
             TemporalDataDescription desc = new TemporalDataDescription(TemporalDataDescription.Type.PercentChange, true, true);
@@ -263,7 +263,7 @@ namespace Encog.Util.NetworkUtil
             for (int index = 0; index < inputserie.Length - 1; index++)
             {
                 TemporalPoint point = new TemporalPoint(1);
-                point.Sequence = index;
+                point.Sequence = (UInt64)index;
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }

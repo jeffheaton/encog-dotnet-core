@@ -30,7 +30,7 @@ namespace Encog.Examples.SVMPredictCSV
           
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
             IMarketLoader loader = new CSVFinal();
-            var market = new MarketMLDataSet(loader,CONFIG.INPUT_WINDOW, CONFIG.PREDICT_WINDOW);
+            var market = new MarketMLDataSet(loader,(ulong)CONFIG.INPUT_WINDOW, (ulong)CONFIG.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
             var desc = new MarketDataDescription(CONFIG.TICKER, MarketDataType.Close, true, true);

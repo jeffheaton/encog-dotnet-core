@@ -44,8 +44,8 @@ namespace Encog.ML.Data.Market
         /// <summary>
         /// A map between the data points and actual data.
         /// </summary>
-        private readonly IDictionary<int, TemporalPoint> _pointIndex =
-            new Dictionary<int, TemporalPoint>();
+        private readonly IDictionary<UInt64, TemporalPoint> _pointIndex =
+            new Dictionary<UInt64, TemporalPoint>();
 
         /// <summary>
         /// Construct a market data set object.
@@ -53,8 +53,7 @@ namespace Encog.ML.Data.Market
         /// <param name="loader">The loader to use to get the financial data.</param>
         /// <param name="inputWindowSize">The input window size, that is how many datapoints do we use to predict.</param>
         /// <param name="predictWindowSize">How many datapoints do we want to predict.</param>
-        public MarketMLDataSet(IMarketLoader loader,
-                                   int inputWindowSize, int predictWindowSize)
+        public MarketMLDataSet(IMarketLoader loader,UInt64 inputWindowSize, UInt64 predictWindowSize)
             : base(inputWindowSize, predictWindowSize)
         {
             _loader = loader;
@@ -68,7 +67,7 @@ namespace Encog.ML.Data.Market
         /// <param name="inputWindowSize">Size of the input window.</param>
         /// <param name="predictWindowSize">Size of the predict window.</param>
         /// <param name="unit">The time unit to use.</param>
-        public MarketMLDataSet(IMarketLoader loader, int inputWindowSize, int predictWindowSize, TimeUnit unit)
+        public MarketMLDataSet(IMarketLoader loader,  UInt64 inputWindowSize, UInt64 predictWindowSize, TimeUnit unit)
             : base(inputWindowSize, predictWindowSize)
         {
 
@@ -108,7 +107,7 @@ namespace Encog.ML.Data.Market
         /// <returns>Returns the TemporalPoint created for the specified date.</returns>
         public override TemporalPoint CreatePoint(DateTime when)
         {
-            int sequence = GetSequenceFromDate(when);
+            UInt64 sequence = GetSequenceFromDate(when);
             TemporalPoint result;
 
             if (_pointIndex.ContainsKey(sequence))

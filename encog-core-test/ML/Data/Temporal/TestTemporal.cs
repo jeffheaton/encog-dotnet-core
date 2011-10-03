@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Temporal
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.Raw, false, true));
             for (int i = 0; i < 10; i++)
             {
-                TemporalPoint tp = temporal.CreatePoint(i);
+                TemporalPoint tp = temporal.CreatePoint((ulong)i);
                 tp.Data[0] = 1.0 + (i*3);
                 tp.Data[1] = 2.0 + (i*3);
                 tp.Data[2] = 3.0 + (i*3);
@@ -137,7 +137,7 @@ namespace Encog.ML.Data.Temporal
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.Raw, false, true));
             for (int i = 0; i < 10; i++)
             {
-                TemporalPoint tp = temporal.CreatePoint(i);
+                TemporalPoint tp = temporal.CreatePoint((ulong)i);
                 tp.Data[0] = 1.0 + (i*3);
                 tp.Data[1] = 2.0 + (i*3);
                 tp.Data[2] = 3.0 + (i*3);
@@ -179,7 +179,7 @@ namespace Encog.ML.Data.Temporal
             temporal.AddDescription(new TemporalDataDescription(TemporalDataDescription.Type.Raw, false, true));
             for (int i = 0; i < 10; i++)
             {
-                TemporalPoint tp = temporal.CreatePoint(i);
+                TemporalPoint tp = temporal.CreatePoint((ulong)i);
                 tp.Data[0] = 1.0 + (i*3);
                 tp.Data[1] = 2.0 + (i*3);
                 tp.Data[2] = 3.0 + (i*3);
@@ -218,7 +218,7 @@ namespace Encog.ML.Data.Temporal
                                                                 false, true));
             for (int i = 0; i < 10; i++)
             {
-                TemporalPoint tp = temporal.CreatePoint(i);
+                TemporalPoint tp = temporal.CreatePoint((ulong)i);
                 tp.Data[0] = 1.0 + (i*3);
                 tp.Data[1] = 2.0 + (i*3);
                 tp.Data[2] = 3.0 + (i*3);

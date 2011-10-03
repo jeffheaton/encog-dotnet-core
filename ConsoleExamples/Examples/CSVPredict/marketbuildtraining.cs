@@ -19,7 +19,7 @@ namespace Encog.Examples.CSVMarketExample
             //Lets use the CSVFinal..(and not the CSV Form loader).
             IMarketLoader loader = new CSVFinal();
             loader.GetFile(fileName);
-            var market = new MarketMLDataSet(loader,Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
+            var market = new MarketMLDataSet(loader,(ulong)Config.INPUT_WINDOW, (ulong)Config.PREDICT_WINDOW);
           //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
             var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);

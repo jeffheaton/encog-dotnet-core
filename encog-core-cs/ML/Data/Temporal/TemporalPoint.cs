@@ -38,13 +38,13 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The sequence number for this point.
         /// </summary>
-        private int _sequence;
+        private UInt64 _sequence;
 
         /// <summary>
         /// Construct a temporal point of the specified size.
         /// </summary>
         /// <param name="size">The size to create the temporal point for.</param>
-        public TemporalPoint(int size)
+        public TemporalPoint(UInt64 size)
         {
             _data = new double[size];
         }
@@ -61,7 +61,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The sequence number, used to sort.
         /// </summary>
-        public int Sequence
+        public UInt64 Sequence
         {
             get { return _sequence; }
             set { _sequence = value; }

@@ -81,6 +81,55 @@ namespace Encog.Fuzzy
             }
         }
 
+        public double GetMembership(double x)
+        {
+            // no values belong to the fuzzy set, if there are no points in the piecewise function
+            if (points.Length == 0)
+                return 0.0f;
+
+            // if X value is less than the first point, so first point's Y will be returned as membership
+            if (x < points[0].X)
+                return points[0].Y;
+
+            // looking for the line that contais the X value
+            for (int i = 1, n = points.Length; i < n; i++)
+            {
+                // the line with X value starts in points[i-1].X and ends at points[i].X
+                if (x < points[i].X)
+                {
+                    // points to calculate line's equation
+                    double y1 = points[i].Y;
+                    double y0 = points[i - 1].Y;
+                    double x1 = points[i].X;
+                    double x0 = points[i - 1].X;
+                    // angular coefficient
+                    double m = (y1 - y0) / (x1 - x0);
+                    // returning the membership - the Y value for this X
+                    return m * (x - x0) + y0;
+                }
+            }
+
+            // X value is more than last point, so last point Y will be returned as membership
+            return points[points.Length - 1].Y;
+        }
+
+        /// <summary>
+        /// The leftmost x value of the membership function.
+        /// </summary>
+        public double LeftLimitDouble
+        {
+            get { return points[points.Length - 1].X; }
+        }
+
+
+        /// <summary>
+        /// The rightmost x value of the membership function.
+        /// </summary>
+        public double RightLimitDouble
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PiecewiseLinearFunction"/> class. 
         /// </summary>
@@ -164,5 +213,9 @@ namespace Encog.Fuzzy
             // X value is more than last point, so last point Y will be returned as membership
             return points[points.Length - 1].Y;
         }
+
+
+
+       
     }
 }

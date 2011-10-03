@@ -1,0 +1,9 @@
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\bin\Debug\ErrorViewerForm.exe
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\bin\Debug\ErrorViewerForm.pdb
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ErrorViewerForm.Form1.resources
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ErrorViewerForm.Properties.Resources.resources
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ResGen.read.1.tlog
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ResGen.write.1.tlog
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ErrorViewerForm.exe
+C:\LastGit\WorkingEncogs\fxmozart-encog-Developments\ErrorViewerForm\obj\x86\Debug\ErrorViewerForm.pdb

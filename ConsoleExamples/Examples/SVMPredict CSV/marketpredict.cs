@@ -118,7 +118,7 @@ namespace Encog.Examples.SVMPredictCSV
             //BasicMLDataSet set = CreateEval.CreateEvaluationSetAndLoad(app.Args[1],1000,500,CONFIG.INPUT_WINDOW,CONFIG.PREDICT_WINDOW);
 
 
-            TemporalMLDataSet Tempo = CreateEval.GenerateATemporalSet(app.Args[1], 1000, 500, CONFIG.INPUT_WINDOW, CONFIG.PREDICT_WINDOW);
+            TemporalMLDataSet Tempo = CreateEval.GenerateATemporalSet(app.Args[1], 1000, 500,(ulong) CONFIG.INPUT_WINDOW,CONFIG.PREDICT_WINDOW);
 
             SupportVectorMachine machine =  createNetwork();
 

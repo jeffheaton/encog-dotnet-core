@@ -9,14 +9,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:AForge.Fuzzy.xml" caret="80506" fromTop="27" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rulebase.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:IntRange.cs" caret="6026" fromTop="157" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:NumericRange.cs" caret="5093" fromTop="138" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:MathUtil/f:Equilateral.cs" caret="798" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Delegates.cs" caret="192" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Range.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:PolishExpression.cs" caret="5479" fromTop="144" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Point.cs" caret="14301" fromTop="377" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Parallel.cs" caret="8204" fromTop="235" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Exceptions.cs" caret="3530" fromTop="111" />
@@ -26,51 +18,59 @@
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:IntPoint.cs" caret="12903" fromTop="0" />
       <File id="62E79D7C-B8F0-47C6-8AF5-5244E2B6B775/f:OutputForm.cs" caret="570" fromTop="25" />
       <File id="0E2AEE8E-8B7C-4257-ABB8-356B4885745E/f:ListItem.cs" caret="0" fromTop="0" />
-      <File id="62E79D7C-B8F0-47C6-8AF5-5244E2B6B775/f:Form1.cs" caret="4319" fromTop="33" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="6844" fromTop="22" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:IDefuzzifier.cs" caret="1098" fromTop="6" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Database.cs" caret="2640" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="3750" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rule.cs" caret="13889" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:TrapezoidalFunction.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="4246" fromTop="49" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="2369" fromTop="16" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:InferenceSystem.cs" caret="11363" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="7022" fromTop="38" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9068" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:TrapezoidalFunction.cs" caret="751" fromTop="19" />
+      <File id="62E79D7C-B8F0-47C6-8AF5-5244E2B6B775/f:Form1.cs" caret="889" fromTop="19" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rulebase.cs" caret="1502" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rule.cs" caret="13889" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:AForge.Fuzzy.xml" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunctionDoubles.cs" caret="354" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4799" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:SingletonFunction.cs" caret="1853" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="8996" fromTop="34" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="1870" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:IDefuzzifier.cs" caret="1799" fromTop="17" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:FuzzyTests/f:FuzzyTests.cs" caret="3029" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="4255" fromTop="116" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:ErrorControl.cs" caret="410" fromTop="16" />
+      <File id="E9983214-04A3-4F9D-A50D-57B77C035741/f:Form1.cs" caret="426" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15916" fromTop="134" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3666" fromTop="15" />
     </RecentFiles>
     <RecentEdits>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="6484" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="13" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="11" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="4" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="5" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="31" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="35" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="35" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="35" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="25" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="26" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10036" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10053" fromTop="34" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9614" fromTop="21" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="5222" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="6693" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="6950" fromTop="24" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8194" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9183" fromTop="21" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="2369" fromTop="16" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="5897" fromTop="15" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="10053" fromTop="30" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="5616" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8194" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9183" fromTop="23" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="7727" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="8590" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="9068" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="8680" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4555" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4226" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4799" fromTop="25" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="3549" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="3550" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="4502" fromTop="31" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="4563" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="5353" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="5353" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="8996" fromTop="34" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="4862" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="4862" fromTop="9" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="1870" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:IDefuzzifier.cs" caret="1799" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="3020" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="4267" fromTop="116" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:ErrorControl.cs" caret="410" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15649" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15991" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="16762" fromTop="27" />
+      <File id="E9983214-04A3-4F9D-A50D-57B77C035741/f:Form1.cs" caret="449" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="16427" fromTop="30" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3447" fromTop="20" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="4836" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="5184" fromTop="33" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3666" fromTop="15" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

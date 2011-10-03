@@ -74,12 +74,12 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// How big would we like the input size to be.
         /// </summary>
-        private int _desiredSetSize;
+        private UInt64 _desiredSetSize;
 
         /// <summary>
         /// The highest sequence.
         /// </summary>
-        private int _highSequence;
+        private UInt64 _highSequence;
 
         /// <summary>
         /// How many input neurons will be used.
@@ -89,22 +89,22 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The size of the input window, this is the data being used to predict.
         /// </summary>
-        private int _inputWindowSize;
+        private  UInt64 _inputWindowSize;
 
         /// <summary>
         /// The lowest sequence.
         /// </summary>
-        private int _lowSequence;
+        private UInt64 _lowSequence;
 
         /// <summary>
         /// How many output neurons will there be.
         /// </summary>
-        private int _outputNeuronCount;
+        private  UInt64 _outputNeuronCount;
 
         /// <summary>
         /// The size of the prediction window.
         /// </summary>
-        private int _predictWindowSize;
+        private UInt64 _predictWindowSize;
 
         /// <summary>
         /// What is the granularity of the temporal points? Days, months, years,
@@ -122,14 +122,13 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="inputWindowSize">What is the input window size.</param>
         /// <param name="predictWindowSize">What is the prediction window size.</param>
-        public TemporalMLDataSet(int inputWindowSize,
-                                     int predictWindowSize)
+        public TemporalMLDataSet(UInt64 inputWindowSize,UInt64 predictWindowSize)
         {
             _inputWindowSize = inputWindowSize;
             _predictWindowSize = predictWindowSize;
-            _lowSequence = int.MinValue;
-            _highSequence = int.MaxValue;
-            _desiredSetSize = int.MaxValue;
+            _lowSequence = UInt64.MinValue;
+            _highSequence = UInt64.MaxValue;
+            _desiredSetSize = UInt64.MaxValue;
             _startingPoint = DateTime.MinValue;
             _sequenceGrandularity = TimeUnit.Days;
         }
@@ -154,7 +153,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// Get the size of the input window.
         /// </summary>
-        public virtual int InputWindowSize
+        public virtual  UInt64 InputWindowSize
         {
             get { return _inputWindowSize; }
             set { _inputWindowSize = value; }
@@ -163,7 +162,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The prediction window size.
         /// </summary>
-        public virtual int PredictWindowSize
+        public virtual UInt64 PredictWindowSize
         {
             get { return _predictWindowSize; }
             set { _predictWindowSize = value; }
@@ -172,7 +171,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The low value for the sequence.
         /// </summary>
-        public virtual int LowSequence
+        public virtual UInt64 LowSequence
         {
             get { return _lowSequence; }
             set { _lowSequence = value; }
@@ -181,7 +180,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The high value for the sequence.
         /// </summary>
-        public virtual int HighSequence
+        public virtual UInt64 HighSequence
         {
             get { return _highSequence; }
             set { _highSequence = value; }
@@ -190,7 +189,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The desired dataset size.
         /// </summary>
-        public virtual int DesiredSetSize
+        public virtual UInt64 DesiredSetSize
         {
             get { return _desiredSetSize; }
             set { _desiredSetSize = value; }
@@ -208,7 +207,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The number of output neurons.
         /// </summary>
-        public virtual int OutputNeuronCount
+        public virtual  UInt64 OutputNeuronCount
         {
             get { return _outputNeuronCount; }
             set { _outputNeuronCount = value; }
@@ -247,7 +246,7 @@ namespace Encog.ML.Data.Temporal
             }
 
             int index = _descriptions.Count;
-            desc.Index = index;
+            desc.Index = (UInt64)index;
 
             _descriptions.Add(desc);
             CalculateNeuronCounts();
@@ -300,9 +299,9 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="sequence">The sequence number.</param>
         /// <returns>A new TemporalPoint object.</returns>
-        public virtual TemporalPoint CreatePoint(int sequence)
+        public virtual TemporalPoint CreatePoint(UInt64 sequence)
         {
-            var point = new TemporalPoint(_descriptions.Count) {Sequence = sequence};
+            var point = new TemporalPoint((UInt64)_descriptions.Count) {Sequence = sequence};
             _points.Add(point);
             return point;
         }
@@ -314,21 +313,20 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="when">The date to generate the sequence number for.</param>
         /// <returns>A sequence number.</returns>
-        public virtual int GetSequenceFromDate(DateTime when)
+        public virtual UInt64 GetSequenceFromDate(DateTime when)
         {
-            int sequence;
+            UInt64 sequence;
 
             if (_startingPoint != DateTime.MinValue)
             {
                 var span = new TimeSpanUtil(_startingPoint, when);
-                sequence = (int) span.GetSpan(_sequenceGrandularity);
+                sequence = (UInt64) span.GetSpan(_sequenceGrandularity);
             }
             else
             {
                 _startingPoint = when;
                 sequence = 0;
             }
-
             return sequence;
         }
 
@@ -342,8 +340,8 @@ namespace Encog.ML.Data.Temporal
         /// <returns>The point TemporalPoint created.</returns>
         public virtual TemporalPoint CreatePoint(DateTime when)
         {
-            int sequence = GetSequenceFromDate(when);
-            var point = new TemporalPoint(_descriptions.Count) {Sequence = sequence};
+            UInt64 sequence = GetSequenceFromDate(when);
+            var point = new TemporalPoint((ulong)_descriptions.Count) {Sequence = sequence};
             _points.Add(point);
             return point;
         }
@@ -353,9 +351,9 @@ namespace Encog.ML.Data.Temporal
         /// points that the training set will be generated on.
         /// </summary>
         /// <returns>The number of points.</returns>
-        public virtual int CalculatePointsInRange()
+        public virtual UInt64 CalculatePointsInRange()
         {
-            return _points.Count(IsPointInRange);
+            return (UInt64)_points.Count(IsPointInRange);
         }
 
         /// <summary>
@@ -363,10 +361,10 @@ namespace Encog.ML.Data.Temporal
         /// that will be generated.
         /// </summary>
         /// <returns>The size of the training set.</returns>
-        public virtual int CalculateActualSetSize()
+        public virtual UInt64 CalculateActualSetSize()
         {
-            int result = CalculatePointsInRange();
-            result = Math.Min(_desiredSetSize, result);
+            UInt64 result = CalculatePointsInRange();
+            result = Math.Min((UInt64)_desiredSetSize, (UInt64)result);
             return result;
         }
 
@@ -383,7 +381,7 @@ namespace Encog.ML.Data.Temporal
             {
                 if (desc.IsInput)
                 {
-                    _inputNeuronCount += _inputWindowSize;
+                    _inputNeuronCount +=(int)_inputWindowSize;
                 }
                 if (desc.IsPredict)
                 {
@@ -408,9 +406,9 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="index">The index to generate neural data for.</param>
         /// <returns>The input neural data generated.</returns>
-        public virtual BasicNeuralData GenerateInputNeuralData(int index)
+        public virtual BasicNeuralData GenerateInputNeuralData( UInt64 index)
         {
-            if (index + _inputWindowSize > _points.Count)
+            if (index + (UInt64)_inputWindowSize > (UInt64)_points.Count)
             {
                 throw new TemporalError("Can't generate input temporal data "
                                         + "beyond the end of provided data.");
@@ -419,14 +417,13 @@ namespace Encog.ML.Data.Temporal
             var result = new BasicNeuralData(_inputNeuronCount);
             int resultIndex = 0;
 
-            for (int i = 0; i < _inputWindowSize; i++)
+            for (UInt64 i = 0; i < (UInt64)_inputWindowSize; i++)
             {
                 foreach (TemporalDataDescription desc in _descriptions)
                 {
                     if (desc.IsInput)
                     {
-                        result[resultIndex++] = FormatData(desc, index
-                                                                 + i);
+                        result[resultIndex++] = FormatData(desc,index + i);
                     }
                 }
             }
@@ -440,10 +437,10 @@ namespace Encog.ML.Data.Temporal
         /// <param name="index">The index to get data from.</param>
         /// <returns>The requested data.</returns>
         private double GetDataRaw(TemporalDataDescription desc,
-                                  int index)
+                                   UInt64 index)
         {
-            TemporalPoint point = _points[index - 1];
-            return point[desc.Index];
+            TemporalPoint point = _points[(int)index - 1];
+            return point[(int)desc.Index];
         }
 
         /// <summary>
@@ -453,16 +450,16 @@ namespace Encog.ML.Data.Temporal
         /// <param name="index">The index to get data from.</param>
         /// <returns>The requested data.</returns>
         private double GetDataDeltaChange(TemporalDataDescription desc,
-                                          int index)
+                                          UInt64 index)
         {
             if (index == 0)
             {
                 return 0.0;
             }
-            TemporalPoint point = _points[index];
-            TemporalPoint previousPoint = _points[index - 1];
-            return point[desc.Index]
-                   - previousPoint[desc.Index];
+            TemporalPoint point = _points[(int)index];
+            TemporalPoint previousPoint = _points[(int)index - 1];
+            return point[(int)desc.Index]
+                   - previousPoint[(int)desc.Index];
         }
 
 
@@ -472,17 +469,16 @@ namespace Encog.ML.Data.Temporal
         /// <param name="desc">The data description.</param>
         /// <param name="index">The index to get data from.</param>
         /// <returns>The requested data.</returns>
-        private double GetDataPercentChange(TemporalDataDescription desc,
-                                            int index)
+        private double GetDataPercentChange(TemporalDataDescription desc,UInt64 index)
         {
             if (index == 0)
             {
                 return 0.0;
             }
-            TemporalPoint point = _points[index];
-            TemporalPoint previousPoint = _points[index - 1];
-            double currentValue = point[desc.Index];
-            double previousValue = previousPoint[desc.Index];
+            TemporalPoint point = _points[(int)index];
+            TemporalPoint previousPoint = _points[(int)index - 1];
+            double currentValue = point[(int)desc.Index];
+            double previousValue = previousPoint[(int)desc.Index];
             return (currentValue - previousValue)/previousValue;
         }
 
@@ -492,8 +488,7 @@ namespace Encog.ML.Data.Temporal
         /// <param name="desc">The data description.</param>
         /// <param name="index">The index to format the data at.</param>
         /// <returns>The formatted data.</returns>
-        private double FormatData(TemporalDataDescription desc,
-                                  int index)
+        private double FormatData(TemporalDataDescription desc,UInt64 index)
         {
             var result = new double[1];
 
@@ -525,25 +520,24 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="index">The index to generate for.</param>
         /// <returns>The neural data generated.</returns>
-        public virtual BasicNeuralData GenerateOutputNeuralData(int index)
+        public virtual BasicNeuralData GenerateOutputNeuralData( Int64 index)
         {
-            if (index + _predictWindowSize > _points.Count)
+            if ((UInt64)index + _predictWindowSize > (UInt64)_points.Count)
             {
                 throw new TemporalError("Can't generate prediction temporal data "
                                         + "beyond the end of provided data.");
             }
 
-            var result = new BasicNeuralData(_outputNeuronCount);
+            var result = new BasicNeuralData((int)_outputNeuronCount);
             int resultIndex = 0;
 
-            for (int i = 0; i < _predictWindowSize; i++)
+            for (UInt64 i = 0; i < (UInt64)_predictWindowSize; i++)
             {
                 foreach (TemporalDataDescription desc in _descriptions)
                 {
                     if (desc.IsPredict)
                     {
-                        result[resultIndex++] = FormatData(desc, index
-                                                                 + i);
+                        result[resultIndex++] = FormatData(desc, (ulong) index + i);
                     }
                 }
             }
@@ -582,16 +576,14 @@ namespace Encog.ML.Data.Temporal
         public virtual void Generate()
         {
             SortPoints();
-            int start = CalculateStartIndex() + 1;
-            int setSize = CalculateActualSetSize();
-            int range = start
-                        + (setSize - _predictWindowSize - _inputWindowSize);
+            UInt64 start = (UInt64)CalculateStartIndex() + 1;
+            UInt64 setSize = CalculateActualSetSize();
+            UInt64 range = start + ((UInt64)setSize - (UInt64)_predictWindowSize - (UInt64)_inputWindowSize);
 
-            for (int i = start; i < range; i++)
+            for (UInt64 i = start; i < range; i++)
             {
                 BasicNeuralData input = GenerateInputNeuralData(i);
-                BasicNeuralData ideal = GenerateOutputNeuralData(i
-                                                                 + _inputWindowSize);
+                BasicNeuralData ideal = GenerateOutputNeuralData(Convert.ToInt64(i + (UInt64)_inputWindowSize));
                 var pair = new BasicNeuralDataPair(input, ideal);
                 base.Add(pair);
             }

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using System;
 using Encog.Engine.Network.Activation;
 
 namespace Encog.ML.Data.Temporal
@@ -134,7 +135,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// Get the index.
         /// </summary>
-        public int Index { get; set; }
+        public UInt64 Index { get; set; }
 
         /// <summary>
         /// The type of data this is.

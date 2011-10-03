@@ -15,7 +15,7 @@ namespace Encog.Examples.Market
         {
             IMarketLoader loader = new YahooFinanceLoader();
             var market = new MarketMLDataSet(loader,
-                                             Config.INPUT_WINDOW, Config.PREDICT_WINDOW);
+                                            (ulong) Config.INPUT_WINDOW, (ulong)Config.PREDICT_WINDOW);
             var desc = new MarketDataDescription(
                 Config.TICKER, MarketDataType.AdjustedClose, true, true);
             market.AddDescription(desc);

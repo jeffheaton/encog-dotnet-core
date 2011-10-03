@@ -208,7 +208,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="windowsize">The windowsize.</param>
         /// <param name="predictsize">The predictsize.</param>
         /// <returns>A temporalMLDataset</returns>
-        public static TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie, int windowsize, int predictsize)
+        public static TemporalMLDataSet GenerateTrainingWithRawSerie(double[] inputserie,  UInt64 windowsize, UInt64 predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
             TemporalDataDescription desc = new TemporalDataDescription(
@@ -217,7 +217,7 @@ namespace Encog.Util.NetworkUtil
             for (int index = 0; index < inputserie.Length - 1; index++)
             {
                 TemporalPoint point = new TemporalPoint(1);
-                point.Sequence = index;
+                point.Sequence = (UInt64)index;
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
@@ -234,7 +234,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="windowsize">The windowsize.</param>
         /// <param name="predictsize">The predictsize.</param>
         /// <returns></returns>
-        public static TemporalMLDataSet GenerateTrainingWithDeltaChangeOnSerie(double[] inputserie, int windowsize, int predictsize)
+        public static TemporalMLDataSet GenerateTrainingWithDeltaChangeOnSerie(double[] inputserie, UInt64 windowsize, UInt64 predictsize)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
             TemporalDataDescription desc = new TemporalDataDescription(
@@ -244,7 +244,7 @@ namespace Encog.Util.NetworkUtil
             for (int index = 0; index < inputserie.Length - 1; index++)
             {
                 TemporalPoint point = new TemporalPoint(1);
-                point.Sequence = index;
+                point.Sequence = (UInt64)index;
                 point.Data[0] = inputserie[index];
                 result.Points.Add(point);
             }
@@ -262,7 +262,7 @@ namespace Encog.Util.NetworkUtil
         /// <param name="predictsize">The predictsize.</param>
         /// <param name="inputserie">The inputserie.</param>
         /// <returns></returns>
-        public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie(int windowsize, int predictsize, params double[][] inputserie)
+        public static TemporalMLDataSet GenerateTrainingWithPercentChangeOnSerie( UInt64 windowsize,  UInt64 predictsize, params double[][] inputserie)
         {
             TemporalMLDataSet result = new TemporalMLDataSet(windowsize, predictsize);
             TemporalDataDescription desc = new TemporalDataDescription(TemporalDataDescription.Type.PercentChange, true,
@@ -273,7 +273,7 @@ namespace Encog.Util.NetworkUtil
                 for (int j = 0; j < t.Length; j++)
                 {
                     TemporalPoint point = new TemporalPoint(1);
-                    point.Sequence = j;
+                    point.Sequence = (UInt64)j;
                     point.Data[0] = t[j];
                     result.Points.Add(point);
                 }
@@ -642,11 +642,11 @@ namespace Encog.Util.NetworkUtil
         /// This is the most used method in finance.
         /// You send directly your double arrays and get an IMLData set ready for network training.
         /// You must place your ideal data as the last double data array.
-        /// IF you have 1 data of closing prices, 1 moving average, 1 data series of interest rates , and the data you want to predict 
+        /// IF you have 1 data of closing prices, 1 moving average, 1 data series of interest rates , and the data you want to predict
         /// This method will look the lenght of the first Data input to calculate how many points to take from each array.
         /// this is the method you will use to make your Dataset.
         /// </summary>
-        /// <param name="number">The number.</param>
+        /// <param name="predwindow">The predwindow.</param>
         /// <param name="inputs">The inputs.</param>
         /// <returns></returns>
         public static IMLDataSet MakeSetFromInputsSources(int predwindow, params double[][] inputs)

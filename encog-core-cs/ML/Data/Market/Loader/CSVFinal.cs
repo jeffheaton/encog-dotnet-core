@@ -128,13 +128,7 @@ namespace Encog.ML.Data.Market.Loader
 
         #endregion
 
-        #region IMarketLoader Members
-
-
-
-
-        #endregion
-
+     
         #region IMarketLoader Members
 
 

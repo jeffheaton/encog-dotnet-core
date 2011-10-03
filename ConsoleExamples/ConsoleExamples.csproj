@@ -45,6 +45,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -152,6 +154,10 @@
       <Project>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</Project>
       <Name>encog-core-cs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ErrorViewerForm\ErrorViewerForm.csproj">
+      <Project>{E9983214-04A3-4F9D-A50D-57B77C035741}</Project>
+      <Name>ErrorViewerForm</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="DB!EURUSD.Bar.Time.600.csv">
@@ -162,7 +168,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -91,7 +91,7 @@ namespace Encog.Examples.ForexExample
             var desc = new TemporalDataDescription(TemporalDataDescription.Type.Raw, true, true);
             result.AddDescription(desc);
 
-            for (int year = TrainStart; year < TrainEnd; year++)
+            for (ulong year = TrainStart; year < TrainEnd; year++)
             {
                 var point = new TemporalPoint(1) { Sequence = year };
                 point.Data[0] = _normalizedSunspots[year];
