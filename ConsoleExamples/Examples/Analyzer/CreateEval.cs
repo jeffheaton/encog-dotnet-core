@@ -345,13 +345,13 @@ namespace Encog.Examples.Analyzer
          //   EncogUtility.TrainConsole(trainMain,network,minis, 15.2);
 
             List<double> IterationsErrors = new List<double>();
-            Form1 forms = new Form1();
+            //Form1 forms = new Form1();
 
-            //ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
-            forms.chart1.Series.Clear();
+            ////ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
+            //forms.chart1.Series.Clear();
 
-            forms.chart1.Series.Add("Error Rates");
-            forms.chart1.Series.Add("Error Improvements");
+            //forms.chart1.Series.Add("Error Rates");
+            //forms.chart1.Series.Add("Error Improvements");
             List<double> iMRPOVEMENTS = new List<double>();
 
             double prevError = 0;
@@ -368,18 +368,18 @@ namespace Encog.Examples.Analyzer
                 Console.WriteLine(@"Iteration #:" + trainMain.IterationNumber + @" Error:" + trainMain.Error + @" Genetic Iteration:" + trainAlt.IterationNumber);
             }
             sw.Stop();
-            forms.chart1.Series["Error Rates"].Points.DataBindY(IterationsErrors);
-            forms.chart1.Series[0].ToolTip = "F5";
-            forms.chart1.Series[0].ChartType = SeriesChartType.FastLine;
-            forms.chart1.Series[0].Color = Color.Yellow;
-            forms.chart1.Invalidate();
-
-            //forms.chart1.Series["Error Improvements"].Points.DataBindY(iMRPOVEMENTS);
-            //forms.chart1.Series[1].ToolTip = "F5";
-            //forms.chart1.Series[1].ChartType = SeriesChartType.FastLine;
-            //forms.chart1.Series[1].Color = Color.Peru;
+            //forms.chart1.Series["Error Rates"].Points.DataBindY(IterationsErrors);
+            //forms.chart1.Series[0].ToolTip = "F5";
+            //forms.chart1.Series[0].ChartType = SeriesChartType.FastLine;
+            //forms.chart1.Series[0].Color = Color.Yellow;
             //forms.chart1.Invalidate();
-            forms.ShowDialog();
+
+            ////forms.chart1.Series["Error Improvements"].Points.DataBindY(iMRPOVEMENTS);
+            ////forms.chart1.Series[1].ToolTip = "F5";
+            ////forms.chart1.Series[1].ChartType = SeriesChartType.FastLine;
+            ////forms.chart1.Series[1].Color = Color.Peru;
+            ////forms.chart1.Invalidate();
+            //forms.ShowDialog();
            
 
 

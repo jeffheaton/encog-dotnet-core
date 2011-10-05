@@ -43,7 +43,7 @@ namespace Encog.ML.Data.Market.Loader
                 //In case we want to use a different date format...and have used the SetDateFormat method, our DateFormat must then not be null..
                 //We will use the ?? operator to check for nullables.
                 csv.DateFormat = DateFormat ?? "yyyy-MM-dd HH:mm:ss";
-                csv.TimeFormat = "HH:mm:ss";
+                csv.TimeFormat =TimeFormat ??  "HH:mm:ss";
 
                 DateTime ParsedDate = from;
                 bool writeonce = true;
@@ -107,6 +107,17 @@ namespace Encog.ML.Data.Market.Loader
         /// The date format.
         /// </value>
         public string DateFormat { get; set; }
+
+
+
+        /// <summary>
+        /// Gets or sets the date format for the whole csv file.
+        /// </summary>
+        /// <value>
+        /// The date format.
+        /// </value>
+        public string TimeFormat { get; set; }
+
         /// <summary>
         /// Sets the date format for the csv file.
         /// </summary>

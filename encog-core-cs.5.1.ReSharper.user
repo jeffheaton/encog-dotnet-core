@@ -9,68 +9,67 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Point.cs" caret="14301" fromTop="377" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Parallel.cs" caret="8204" fromTop="235" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:Exceptions.cs" caret="3530" fromTop="111" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:EventArgs.cs" caret="716" fromTop="28" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:DoubleRange.cs" caret="8063" fromTop="240" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:DoublePoint.cs" caret="14689" fromTop="377" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Core/f:IntPoint.cs" caret="12903" fromTop="0" />
-      <File id="62E79D7C-B8F0-47C6-8AF5-5244E2B6B775/f:OutputForm.cs" caret="570" fromTop="25" />
-      <File id="0E2AEE8E-8B7C-4257-ABB8-356B4885745E/f:ListItem.cs" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Database.cs" caret="2640" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:InferenceSystem.cs" caret="11363" fromTop="30" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:TrapezoidalFunction.cs" caret="751" fromTop="19" />
-      <File id="62E79D7C-B8F0-47C6-8AF5-5244E2B6B775/f:Form1.cs" caret="889" fromTop="19" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rulebase.cs" caret="1502" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:Rule.cs" caret="13889" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:AForge.Fuzzy.xml" caret="0" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunctionDoubles.cs" caret="354" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4799" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:SingletonFunction.cs" caret="1853" fromTop="31" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="8996" fromTop="34" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="1870" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:IDefuzzifier.cs" caret="1799" fromTop="17" />
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:FuzzyTests/f:FuzzyTests.cs" caret="3029" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="4255" fromTop="116" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:ErrorControl.cs" caret="410" fromTop="16" />
-      <File id="E9983214-04A3-4F9D-A50D-57B77C035741/f:Form1.cs" caret="426" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15916" fromTop="134" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="0" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3666" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketMLDataSet.cs" caret="2343" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:CSVPredict/f:marketbuildtraining.cs" caret="691" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVMPredict CSV/f:marketbuildtraining.cs" caret="881" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketBuildTraining.cs" caret="528" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="809" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:CSVPredict/f:marketevaluate.cs" caret="906" fromTop="19" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVMPredict CSV/f:marketevaluate.cs" caret="923" fromTop="19" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Temporal/f:TestTemporal.cs" caret="10021" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ForexExample/f:markettrain.cs" caret="3130" fromTop="17" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:RandomTrainer.cs" caret="2480" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/f:EncogPluginBase.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/f:IEncogPluginService1.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/f:EncogPluginBaseConst.cs" caret="0" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/f:IEncogPluginLogging1.cs" caret="961" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/d:SystemPlugin/f:SystemTrainingPlugin.cs" caret="660" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Plugin/d:SystemPlugin/f:SystemActivationPlugin.cs" caret="1384" fromTop="52" />
+      <File id="862A1DDF-EE31-4DB1-9D34-378BA05F144B/f:app.config" caret="1206" fromTop="16" />
+      <File id="862A1DDF-EE31-4DB1-9D34-378BA05F144B/f:frmMain.cs" caret="6665" fromTop="223" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:EngineArray.cs" caret="920" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:App/d:Analyst/d:Commands/f:CmdBalance.cs" caret="2485" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:FileUtil.cs" caret="7480" fromTop="18" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Predict/f:PredictSunspot.cs" caret="8263" fromTop="25" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:SVMPredict CSV/f:marketpredict.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="0" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Normalize/f:NormalizeFile.cs" caret="572" fromTop="0" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Normalize/f:SimpleNormalize.cs" caret="543" fromTop="9" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Forest/f:Evaluate.cs" caret="1642" fromTop="27" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="18155" fromTop="16" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="3895" fromTop="61" />
+      <File id="775A8A4C-AFA6-4D1A-AD1F-08E9829B0417/f:UnmanagedExports.cs" caret="886" fromTop="32" />
     </RecentFiles>
     <RecentEdits>
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="8680" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4555" fromTop="35" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4226" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:PiecewiseLinearFunction.cs" caret="4799" fromTop="25" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Membership Functions/f:IMembershipFunction.cs" caret="1319" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="3549" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="3550" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="4502" fromTop="31" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="4563" fromTop="35" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="5353" fromTop="35" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="5353" fromTop="35" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:LinguisticVariable.cs" caret="8996" fromTop="34" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="4862" fromTop="26" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="4862" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:CentroidDefuzzifier.cs" caret="1870" fromTop="0" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/d:Defuzzification/f:IDefuzzifier.cs" caret="1799" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="3020" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Fuzzy/f:FuzzySet.cs" caret="4267" fromTop="116" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/f:ErrorControl.cs" caret="410" fromTop="16" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15649" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="15991" fromTop="18" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="16762" fromTop="27" />
-      <File id="E9983214-04A3-4F9D-A50D-57B77C035741/f:Form1.cs" caret="449" fromTop="19" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:CreateEval.cs" caret="16427" fromTop="30" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3447" fromTop="20" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="4836" fromTop="25" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="5184" fromTop="33" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Analyzer/f:MarketAnalyzer.cs" caret="3666" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="20265" fromTop="17" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="3242" fromTop="26" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="5323" fromTop="22" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="776" fromTop="24" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="850" fromTop="26" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="1477" fromTop="29" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="909" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="19444" fromTop="35" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="18699" fromTop="23" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="18809" fromTop="22" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="19010" fromTop="16" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="19058" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="19368" fromTop="21" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="3131" fromTop="26" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="18306" fromTop="32" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="17492" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="17805" fromTop="14" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="432" fromTop="13" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="2868" fromTop="26" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="2399" fromTop="8" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="2587" fromTop="14" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="2758" fromTop="19" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="1854" fromTop="21" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="1227" fromTop="13" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="2256" fromTop="29" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="3832" fromTop="24" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="5038" fromTop="24" />
+      <File id="46715A67-B134-473C-ACE4-EF6AA1C0E688/f:UnmanagedExports.cs" caret="5209" fromTop="29" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:NetworkUtil/f:NetworkUtility.cs" caret="18155" fromTop="16" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

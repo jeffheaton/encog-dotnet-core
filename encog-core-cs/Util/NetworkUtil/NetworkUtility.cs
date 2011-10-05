@@ -20,6 +20,7 @@ using Encog.Persist;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
 using Encog.Util.File;
+using Encog.Util.Logging;
 using Encog.Util.Normalize;
 using Encog.Util.Normalize.Input;
 using Encog.Util.Normalize.Output;
@@ -213,13 +214,29 @@ namespace Encog.Util.NetworkUtil
             var network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(networkFile);
             return network;
         }
-
+        /// <summary>
+        /// Loads an basic network from the specified directory and file.
+        /// You must load the network like this Fileinfo.
+        /// </summary>
+        /// <param name="networkfile">The networkfile.</param>
+        /// <returns>a network ready for encog.</returns>
+        public static BasicNetwork LoadNetwork(FileInfo networkfile)
+        {
+            if (!System.IO.File.Exists(networkfile.FullName))
+            {
+                EncogLogging.Log(EncogLogging.LevelError, "the file does not exists");
+                return null;
+            }
+            var network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(networkfile);
+            return network;
+        }
         /// <summary>
         /// Loads an basic network from the specified directory and file.
         /// You must load the network like this Loadnetwork(@directory,@file);
         /// </summary>
         /// <param name="directory">The directory.</param>
         /// <param name="file">The file.</param>
+        /// <param name="net">The net just give an empty string , to load a vectormachine..</param>
         /// <returns></returns>
         public static SupportVectorMachine LoadNetwork(string directory, string file, string net)
         {
@@ -410,6 +427,83 @@ namespace Encog.Util.NetworkUtil
             return norm;
         }
 
+
+        /// <summary>
+        /// Arrays a normalization array.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static NormalizeArray ArrayNormalizeLoader(FileInfo infoNormalizationArrayFile)
+        {
+
+            NormalizeArray norm = new NormalizeArray();
+           
+            try
+            {
+                if (infoNormalizationArrayFile.Exists)
+                {
+                    norm = (NormalizeArray)SerializeObject.Load(infoNormalizationArrayFile.FullName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"Can't find normalization resource: " + infoNormalizationArrayFile.DirectoryName +@" file "+ @" Error:" + ex);
+                EncogLogging.Log(EncogLogging.LevelError, "Couldn't find your normalization array file at :" + infoNormalizationArrayFile.Directory + " File:" + infoNormalizationArrayFile.Name + "  " + ex);
+                return null;
+            }
+            return norm;
+        }
+        /// <summary>
+        /// Arrays a normalization array.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static NormalizeArray ArrayNormalizeLoader(string directory ,string file)
+        {
+
+            NormalizeArray norm = new NormalizeArray();
+            FileInfo NormalizationArray = FileUtil.CombinePath(new FileInfo(directory), file);
+            try
+            {
+                if (NormalizationArray.Exists)
+                {
+                    norm = (NormalizeArray)SerializeObject.Load(NormalizationArray.FullName);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"Can't find normalization resource: " + directory + file + @" Error:"+ex);
+                EncogLogging.Log(EncogLogging.LevelError, "Couldn't find your normalization array file at :"+NormalizationArray.Directory+ " File:" + NormalizationArray.Name + "  " +ex);
+                return null;
+            }
+            return norm;
+
+
+        }
+        /// <summary>
+        /// Loads a normalization from the specified directory and file.
+        /// </summary>
+        /// <param name="filetoLoad">The fileto load.</param>
+        /// <returns>
+        /// a datanormalization object
+        /// </returns>
+        public static DataNormalization LoadNormalization(FileInfo filetoLoad)
+        {
+            DataNormalization norm = null;
+
+            if (!System.IO.File.Exists(filetoLoad.FullName))
+            {
+                EncogLogging.Log(EncogLogging.LevelError, "Couldn't find the data normalization file");
+            }
+            if (System.IO.File.Exists(filetoLoad.FullName))
+            {
+              norm = (DataNormalization)SerializeObject.Load(filetoLoad.FullName);
+            }
+            return norm;
+        }
 
         /// <summary>
         /// Returns the difference between two doubles in percents.
