@@ -147,6 +147,11 @@ namespace Encog.App.Analyst.Analyze
                 .ConvertToCSVFormat(_format);
             var csv = new ReadCSV(_filename, _headers, csvFormat);
 
+            if (!csv.Next())
+            {
+                throw new AnalystError("Can't analyze file, it is empty.");
+            }
+
             // pass one, calculate the min/max
             while (csv.Next())
             {
