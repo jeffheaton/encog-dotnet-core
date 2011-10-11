@@ -158,6 +158,14 @@ namespace Encog.Neural.Networks.Training.Propagation
             set { _numThreads = value; }
         }
 
+        /// <summary>
+        /// Increase the iteration count by one.
+        /// </summary>
+        public void RollIteration()
+        {
+            _iteration++;
+        }
+
         #region Train Members
 
 
@@ -179,7 +187,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             {
                 PreIteration();
 
-                _iteration++;
+                RollIteration();
 
                 CalculateGradients();
 

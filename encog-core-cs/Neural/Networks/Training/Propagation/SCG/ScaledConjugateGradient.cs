@@ -243,6 +243,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
             {
                 Init();
             }
+            RollIteration();
             int numWeights = _weights.Length;
             // Storage space for previous iteration values.
 
