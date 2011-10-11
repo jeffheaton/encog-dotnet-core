@@ -23,6 +23,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Encog.Util.File;
 using Encog.Util.Logging;
 
 namespace Encog.Persist
@@ -90,6 +91,19 @@ namespace Encog.Persist
                         EncogLogging.Log(e);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Load an EG object as a reousrce.
+        /// </summary>
+        /// <param name="res">The resource to load.</param>
+        /// <returns>The loaded object.</returns>
+        public static Object LoadResourceObject(String res)
+        {
+            using (Stream s = ResourceLoader.CreateStream(res))
+            {
+                return LoadObject(s);
             }
         }
 

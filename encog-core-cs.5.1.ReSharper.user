@@ -9,18 +9,6 @@
   </SettingsComponent>
   <RecentFiles>
     <RecentFiles>
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORHelloWorld.cs" caret="2274" fromTop="4" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationCompetitive.cs" caret="3629" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationLinear.cs" caret="2176" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationSoftMax.cs" caret="2039" fromTop="8" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Benchmark/f:MultiThreadBenchmark.cs" caret="1165" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="1241" fromTop="10" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="1343" fromTop="5" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORNEAT.cs" caret="2667" fromTop="35" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:JordanNetwork/f:JordanExample.cs" caret="1282" fromTop="0" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ARTExample/f:ClassifyART1.cs" caret="4001" fromTop="37" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Temporal/f:TemporalMLDataSet.cs" caret="1036" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Temporal/f:TemporalDataDescription.cs" caret="0" fromTop="0" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Temporal/f:TemporalPoint.cs" caret="0" fromTop="0" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Predict/f:PredictSunspot.cs" caret="9015" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:ML/d:Data/d:Market/f:MarketDataType.cs" caret="0" fromTop="0" />
@@ -28,7 +16,6 @@
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketTrain.cs" caret="1521" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPrune.cs" caret="1402" fromTop="18" />
       <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketPredict.cs" caret="1051" fromTop="12" />
-      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2739" fromTop="12" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Flat/f:FlatNetwork.cs" caret="16519" fromTop="10" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystWizard.cs" caret="2723" fromTop="16" />
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:App/d:Analyst/f:TestAnalystClassification.cs" caret="2268" fromTop="10" />
@@ -38,39 +25,52 @@
       <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="3195" fromTop="11" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationGaussian.cs" caret="3758" fromTop="15" />
       <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="1888" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="477" fromTop="12" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:Market/f:MarketEvaluate.cs" caret="2739" fromTop="12" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/f:ConsoleExamples.cs" caret="2719" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:LMA/f:LevenbergMarquardtTraining.cs" caret="3136" fromTop="13" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:XOR/f:XORPSO.cs" caret="2759" fromTop="11" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="3775" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="6541" fromTop="12" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:CompareArray.cs" caret="156" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/f:ReflectionUtil.cs" caret="3779" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:ResourceLoader.cs" caret="1437" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="4834" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:Directory.cs" caret="0" fromTop="0" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Util/f:NetworkUtil.cs" caret="922" fromTop="6" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3021" fromTop="8" />
     </RecentFiles>
     <RecentEdits>
-      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:ML/d:Data/d:Buffer/f:TestBinaryData.cs" caret="3204" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="15" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="16" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="12" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="9" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="17" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="18" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2638" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="593" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="700" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="827" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="1085" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="1673" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="1889" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2102" fromTop="6" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2519" fromTop="11" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="2372" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliott.cs" caret="1535" fromTop="7" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="2669" fromTop="20" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="628" fromTop="14" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="939" fromTop="8" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="1109" fromTop="5" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="1418" fromTop="13" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="1693" fromTop="10" />
-      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Engine/d:Network/d:Activation/f:ActivationElliottSymmetric.cs" caret="1888" fromTop="15" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="16" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="3911" fromTop="10" />
+      <File id="A65A5878-6336-4ACF-9C40-540F8FAF2CC7/d:Examples/d:ElmanNetwork/f:ElmanExample.cs" caret="4055" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="8" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="18224" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="858" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="6541" fromTop="14" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Neural/d:Networks/d:Training/d:PSO/f:NeuralPSO.cs" caret="6541" fromTop="12" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="4438" fromTop="20" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3772" fromTop="20" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3772" fromTop="5" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="404" fromTop="10" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="1444" fromTop="10" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:CompareArray.cs" caret="461" fromTop="17" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:Arrayutil/f:CompareArray.cs" caret="199" fromTop="9" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3762" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="2766" fromTop="20" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="2766" fromTop="11" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="2766" fromTop="0" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="2766" fromTop="7" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Persist/f:EncogDirectoryPersistence.cs" caret="3181" fromTop="18" />
+      <File id="AC6FADF9-0904-4EBD-B22C-1C787C7E7A95/d:Util/d:File/f:ResourceLoader.cs" caret="1437" fromTop="7" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3651" fromTop="17" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="2836" fromTop="3" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3043" fromTop="9" />
+      <File id="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8/d:Neural/d:Networks/f:TestConsistency.cs" caret="3246" fromTop="15" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -89,16 +89,16 @@
       <Item value="new" priority="26" />
       <Item value="svm_node" priority="1" />
       <Item value="result" priority="10" />
-      <Item value="for" priority="10" />
-      <Item value="int" priority="12" />
-      <Item value="i" priority="23" />
+      <Item value="for" priority="12" />
+      <Item value="int" priority="13" />
+      <Item value="i" priority="27" />
       <Item value="training" priority="0" />
       <Item value="paras" priority="3" />
       <Item value="foreach" priority="2" />
       <Item value="String`0" priority="21" />
       <Item value="key" priority="0" />
       <Item value="value_ren" priority="0" />
-      <Item value="public" priority="11" />
+      <Item value="public" priority="12" />
       <Item value="const" priority="1" />
       <Item value="ReflectionUtil`0" priority="0" />
       <Item value="Exception`0" priority="0" />
@@ -115,14 +115,14 @@
       <Item value="EncogFramework`0" priority="2" />
       <Item value="header" priority="0" />
       <Item value="tok" priority="0" />
-      <Item value="Length" priority="6" />
+      <Item value="Length" priority="7" />
       <Item value="t" priority="8" />
       <Item value="Directory`0" priority="1" />
       <Item value="ThreadSafeRandom`0" priority="2" />
       <Item value="vecNeurons" priority="1" />
-      <Item value="this" priority="16" />
+      <Item value="this" priority="17" />
       <Item value="private" priority="6" />
-      <Item value="bool" priority="1" />
+      <Item value="bool" priority="2" />
       <Item value="BasicMLDataSet`0" priority="0" />
       <Item value="Population" priority="4" />
       <Item value="speciesArray" priority="0" />
@@ -137,9 +137,9 @@
       <Item value="BasicNetwork`0" priority="5" />
       <Item value="NEATNetwork`0" priority="1" />
       <Item value="Hopfield" priority="1" />
-      <Item value="network" priority="3" />
+      <Item value="network" priority="4" />
       <Item value="pattern1" priority="0" />
-      <Item value="using" priority="2" />
+      <Item value="using" priority="3" />
       <Item value="Encog" priority="3" />
       <Item value="Neural" priority="0" />
       <Item value="BAMNetwork`0" priority="1" />
@@ -152,9 +152,9 @@
       <Item value="CPNNetwork`0" priority="4" />
       <Item value="BasicTrainSOM`0" priority="0" />
       <Item value="SOMNetwork`0" priority="3" />
-      <Item value="if" priority="17" />
+      <Item value="if" priority="18" />
       <Item value="else" priority="6" />
-      <Item value="return" priority="17" />
+      <Item value="return" priority="20" />
       <Item value="null" priority="8" />
       <Item value="CSVFormat`0" priority="1" />
       <Item value="csv" priority="0" />
@@ -176,7 +176,7 @@
       <Item value="revertedData" priority="0" />
       <Item value="oldList" priority="1" />
       <Item value="ClassItem" priority="0" />
-      <Item value="double" priority="3" />
+      <Item value="double" priority="9" />
       <Item value="app" priority="4" />
       <Item value="ConsoleExamples" priority="0" />
       <Item value="Console`0" priority="25" />
@@ -188,7 +188,7 @@
       <Item value="XORFlat`0" priority="0" />
       <Item value="ToString`0" priority="0" />
       <Item value="XORDisplay`0" priority="0" />
-      <Item value="static" priority="0" />
+      <Item value="static" priority="1" />
       <Item value="StringBuilder`0" priority="0" />
       <Item value="StringBuilder" priority="0" />
       <Item value="builder" priority="1" />
@@ -200,7 +200,7 @@
       <Item value="Engine.Network.Activation" priority="0" />
       <Item value="Extract" priority="0" />
       <Item value="TestMethod" priority="23" />
-      <Item value="Assert`0" priority="1" />
+      <Item value="Assert`0" priority="2" />
       <Item value="Data" priority="0" />
       <Item value="Buffer" priority="0" />
       <Item value="Specific" priority="1" />
@@ -216,7 +216,7 @@
       <Item value="FileUtil`0" priority="4" />
       <Item value="File" priority="2" />
       <Item value="Directory" priority="0" />
-      <Item value="readonly" priority="4" />
+      <Item value="readonly" priority="6" />
       <Item value="Serializable" priority="6" />
       <Item value="map" priority="1" />
       <Item value="IDictionary" priority="3" />
@@ -238,7 +238,7 @@
       <Item value="NonSerialized" priority="7" />
       <Item value="geneticAlgorithm" priority="0" />
       <Item value="Selection" priority="0" />
-      <Item value="false" priority="2" />
+      <Item value="false" priority="4" />
       <Item value="input" priority="6" />
       <Item value="Temporal" priority="0" />
       <Item value="Market" priority="1" />
@@ -289,6 +289,15 @@
       <Item value="_missing" priority="1" />
       <Item value="encog" priority="0" />
       <Item value="object" priority="0" />
+      <Item value="base" priority="0" />
+      <Item value="d1" priority="1" />
+      <Item value="Math`0" priority="0" />
+      <Item value="d2" priority="0" />
+      <Item value="diff" priority="0" />
+      <Item value="ResourceInputStream" priority="0" />
+      <Item value="res" priority="0" />
+      <Item value="LoadObject`0" priority="0" />
+      <Item value="s" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.MathUtil.LIBSVM.svm_problem">
       <Item value="l" priority="0" />
@@ -469,9 +478,9 @@
       <Item value="geneticAlgorithm" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.VisualStudio.TestTools.UnitTesting.Assert">
-      <Item value="IsTrue`0" priority="3" />
+      <Item value="IsTrue`0" priority="4" />
       <Item value="IsNotNull`0" priority="0" />
-      <Item value="AreEqual`0" priority="22" />
+      <Item value="AreEqual`0" priority="25" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Encog.Util.XOR">
       <Item value="XORInput" priority="15" />
@@ -568,6 +577,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.BasicNetwork">
       <Item value="Structure" priority="0" />
+      <Item value="Flat" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.Neural.Networks.Training.Propagation.Resilient.ResilientPropagation">
       <Item value="ThreadCount" priority="0" />
@@ -593,6 +603,15 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:Encog.App.Analyst.EncogAnalyst">
       <Item value="MaxIteration" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Math">
+      <Item value="Abs`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.Arrayutil.CompareArray">
+      <Item value="Compare`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Encog.Util.File.ResourceLoader">
+      <Item value="CreateStream`0" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

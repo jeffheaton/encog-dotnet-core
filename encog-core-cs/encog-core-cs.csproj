@@ -527,6 +527,7 @@
     <Compile Include="Plugin\SystemPlugin\SystemMethodsPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemTrainingPlugin.cs" />
     <Compile Include="Util\Arrayutil\ClassItem.cs" />
+    <Compile Include="Util\Arrayutil\CompareArray.cs" />
     <Compile Include="Util\Arrayutil\NormalizationAction.cs" />
     <Compile Include="Util\Arrayutil\NormalizationActionExtension.cs" />
     <Compile Include="Util\Arrayutil\NormalizeArray.cs" />

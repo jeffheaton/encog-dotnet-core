@@ -131,8 +131,6 @@ namespace Encog.Neural.Networks.Training.PSO
         /// can be updated *before* the other particles have been modified.
         /// </summary>
         private bool m_pseudoAsynchronousUpdate = false;
-        private BasicNetwork network;
-        private ML.Data.IMLDataSet trainingSet;
 
         /// <summary>
         /// Constructor. 
@@ -168,19 +166,6 @@ namespace Encog.Neural.Networks.Training.PSO
             m_bestVector = NetworkCODEC.NetworkToArray(m_bestNetwork);
 
             m_va = new VectorAlgebra();
-        }
-
-        /// <summary>
-        /// Construct a PSO using a training set score function, 20 particles and the
-        /// NguyenWidrowRandomizer randomizer.
-        /// </summary>
-        /// <param name="network">The network to train. an initialised Encog network. 
-        ///                          The networks in the swarm will be created with 
-        ///                          the same topology as this network.</param>
-        /// <param name="trainingSet">The training set.</param>
-        public NeuralPSO(BasicNetwork network, ML.Data.IMLDataSet trainingSet) :
-            this(network, new NguyenWidrowRandomizer(-1, 1), new TrainingSetScore(trainingSet), 20)
-        {            
         }
 
         /// <summary>

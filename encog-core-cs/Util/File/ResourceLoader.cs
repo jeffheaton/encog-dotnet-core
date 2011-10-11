@@ -42,7 +42,7 @@ namespace Encog.Util.File
         /// <summary>
         /// Create a stream to read the resource.
         /// </summary>
-        /// <param name="resource">The resource to load.</param>
+        /// <param name="resource">The resource to load.  This should be in the form Encog.Resources.classes.txt</param>
         /// <returns>A stream.</returns>
         public static Stream CreateStream(String resource)
         {

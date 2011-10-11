@@ -81,6 +81,7 @@
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
+    <Compile Include="Neural\Networks\TestConsistency.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
@@ -118,7 +119,9 @@
       <Name>encog-core-cs</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\encodernet.eg" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\hello.txt" />
   </ItemGroup>
