@@ -109,7 +109,7 @@ namespace CSVanalyze.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2011-12-07")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2011-03-03")]
         public global::System.DateTime EvalEndDate {
             get {
                 return ((global::System.DateTime)(this["EvalEndDate"]));

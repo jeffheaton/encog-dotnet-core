@@ -24,7 +24,7 @@
       <Value Profile="(Default)">2011-01-01</Value>
     </Setting>
     <Setting Name="EvalEndDate" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">2011-12-07</Value>
+      <Value Profile="(Default)">2011-03-03</Value>
     </Setting>
     <Setting Name="MaxTrainingTime" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>

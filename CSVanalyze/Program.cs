@@ -7,6 +7,7 @@ using CSVanalyze.Properties;
 using Encog.Neural.Networks;
 using Encog.ML.Data;
 using Encog.ML.Data.Market;
+using Encog.Util;
 using SuperUtils = Encog.Util.NetworkUtil.NetworkUtility;
 using QuickCSV = Encog.Util.NetworkUtil.QuickCSVUtils;
 using TrainingHelpers = Encog.Util.NetworkUtil.TrainerHelper;
@@ -19,6 +20,8 @@ namespace CSVanalyze
 
         static Dictionary<string, BasicNetwork> NetworkHolderDictionnary = new Dictionary<string, BasicNetwork>();
         static Dictionary<string, MarketMLDataSet> MarketTrainingsDictionary = new Dictionary<string, MarketMLDataSet>();
+
+        private static List<EvaluationResults> EvaluationResultList = new List<EvaluationResults>();
 
         static void Main(string[] args)
         {
@@ -60,7 +63,7 @@ namespace CSVanalyze
                 //    TrainParser();
                 //    break;
                 case "Eval":
-                    DoEvaluator();
+                    DoEvaluator(args[1]);
                     break;
                 case "prune":
                     break;
@@ -182,9 +185,147 @@ namespace CSVanalyze
         #region command calls
 
 
-        private static void DoEvaluator()
+        private static void DoEvaluator(string argumentfile)
         {
-            throw new NotImplementedException();
+            //if (!CheckNetWorkFileExistance())
+            //    return;
+            if (!File.Exists(argumentfile))
+            {
+                Console.WriteLine(@"couldnt find the file you specified to make an evaluation");
+                return;
+            }
+
+            //we have the elman network files...Lets start doing some evals.
+
+            //first lets grab a month of data , and we can use it as our evaluation.
+
+            //Lets create the networks.
+            
+                //Lets get the current file we will save this network on.
+            string Elman = "Elman";
+
+             string currentfileOpen = "Network" + Elman + "Open.eg";
+            BasicNetwork elmhannetwork = SuperUtils.LoadNetwork(ExecutingDirectory, currentfileOpen);
+            NetworkHolderDictionnary.Add(Elman+"Open", elmhannetwork);
+
+            currentfileOpen =  "Network" + Elman + "Close.eg";
+            elmhannetwork = SuperUtils.LoadNetwork(ExecutingDirectory, currentfileOpen);
+            NetworkHolderDictionnary.Add(Elman+"Close", elmhannetwork);
+
+            currentfileOpen = "Network" + Elman + "High.eg";
+            elmhannetwork = SuperUtils.LoadNetwork(ExecutingDirectory, currentfileOpen);
+            NetworkHolderDictionnary.Add(Elman+"High", elmhannetwork);
+
+            currentfileOpen = "Network" + Elman + "Low.eg";
+            elmhannetwork = SuperUtils.LoadNetwork(ExecutingDirectory, currentfileOpen);
+            NetworkHolderDictionnary.Add(Elman+"Low", elmhannetwork);
+
+            //lets grab data for evaluation.
+            //Lets add all the types we will work with.
+            List<MarketDataType> TypeUsed = new List<MarketDataType>();
+            AddTypes(TypeUsed);
+
+            DateTime FromDate = Settings.Default.EvalStartDate;
+            DateTime ToDate = Settings.Default.EvalEndDate;
+            //Lets load data and save it in a file ready for re use later.
+            MarketMLDataSet SetOpen = Loader.GrabEvaluationData(argumentfile, TypeUsed, "Open", true,FromDate,ToDate);
+            MarketTrainingsDictionary.Add("Open", SetOpen);
+
+            MarketMLDataSet SetClose = Loader.GrabEvaluationData(argumentfile, TypeUsed, "Close", true, FromDate, ToDate);
+            MarketTrainingsDictionary.Add("Close", SetClose);
+
+            MarketMLDataSet SetHigh = Loader.GrabEvaluationData(argumentfile, TypeUsed, "High", true, FromDate, ToDate);
+            MarketTrainingsDictionary.Add("High", SetHigh);
+
+            MarketMLDataSet SetLow = Loader.GrabEvaluationData(argumentfile, TypeUsed, "Low", true, FromDate, ToDate);
+      
+            MarketTrainingsDictionary.Add("Low", SetLow);
+
+            
+
+            //now lets start evaluating this network ..
+            //we have all the market training, now lets train our networks.
+      
+            foreach (KeyValuePair<string, MarketMLDataSet> keyValuePair in MarketTrainingsDictionary)
+            {
+               EvaluateNetwork(keyValuePair.Value,NetworkHolderDictionnary[Elman+keyValuePair.Key], keyValuePair.Key, "Elman "+keyValuePair.Key);
+            }
+            foreach (EvaluationResults resultse in EvaluationResultList)
+            {
+                Console.WriteLine(@"Network :" + resultse.NetworkName + @" on data set:" + resultse.DataSetName +
+                                  @" Percent correct : " + resultse.PercentCorrent +
+                                  @" Accuracy :" + resultse.CorrentRight + @" \ " + resultse.Counts);
+
+
+            }
+          
+        }
+
+        /// <summary>
+        /// Evaluates the network with the specified data
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="network">The network.</param>
+        private static void EvaluateNetwork(IEnumerable<IMLDataPair> data, BasicNetwork network, string what, string whatnetwork)
+        {
+            int count = 0;
+            int correct = 0;
+            foreach (IMLDataPair pair in data)
+            {
+                IMLData input = pair.Input;
+                IMLData actualData = pair.Ideal;
+                IMLData predictData = network.Compute(input);
+
+                double actual = actualData[0];
+                double predict = predictData[0];
+                double diff = Math.Abs(predict - actual);
+
+                Direction actualDirection = DetermineDirection(actual);
+                Direction predictDirection = DetermineDirection(predict);
+
+                if (actualDirection == predictDirection)
+                    correct++;
+
+                count++;
+
+
+                Console.WriteLine(whatnetwork +@" Minutes " + count + @":actual="
+                                  + Format.FormatDouble(actual, 4) + @"(" + actualDirection + @")"
+                                  + @",predict=" + Format.FormatDouble(predict, 4) + @"("
+                                  + predictDirection + @")" + @",diff=" + diff + @" on dataset:"+ what);
+            }
+            double percent = correct / (double)count;
+            Console.WriteLine(@"Direction correct:" + correct + @"/" + count +@" On data set:"+what);
+            Console.WriteLine(@"Directional Accuracy:" + Format.FormatPercent(percent));
+
+
+            EvaluationResults res = new EvaluationResults();
+            res.CorrentRight = correct;
+            res.Counts = count;
+            res.DataSetName = what;
+            res.NetworkName = whatnetwork;
+            res.PercentCorrent = percent;
+            EvaluationResultList.Add(res);
+           
+        }
+
+
+        public class EvaluationResults
+        {
+           public double PercentCorrent { get; set; }
+           public double CorrentRight { get; set; }
+           public int Counts { get; set; }
+           public string NetworkName { get; set; }
+           public string DataSetName { get; set; }
+        }
+        private static bool CheckNetWorkFileExistance()
+        {
+            if (!File.Exists(Settings.Default.NetworkElmanClose) || !File.Exists(Settings.Default.NetworkElmanHigh) || !File.Exists(Settings.Default.NetworkElmanLow) || !File.Exists(Settings.Default.NetworkElmanOpen))
+            {
+                Console.WriteLine(@"It seems the elman network files can't be found, you should run the training generator by using the command line: Generate [file]");
+                return false;
+            }
+            return true;
         }
 
         private static void DoGenerate(string file)
@@ -265,15 +406,35 @@ namespace CSVanalyze
             foreach (string networkstring in NetworkHolderDictionnary.Keys)
             {
                 //Lets get the current file we will save this network on.
-                string currentfile = "Network" + networkstring + "Low.eg";
-                BasicNetwork nets = Training.TrainNetwork(networkstring, NetworkHolderDictionnary[networkstring], MarketTrainingsDictionary["Low"], false);
+                string currentfile = "Network" + networkstring + "Close.eg";
+                BasicNetwork nets = Training.TrainNetwork(networkstring, NetworkHolderDictionnary[networkstring], MarketTrainingsDictionary["Close"], false);
                 SuperUtils.SaveNetwork(ExecutingDirectory, currentfile, nets);
             }
 
         }
 
 
+        #region Direction enum
 
+        public enum Direction
+        {
+            Up,
+            Down
+        } ;
+
+        public static Direction DetermineDirection(double d)
+        {
+            return d < 0 ? Direction.Down : Direction.Up;
+        }
+
+        public static double GrabPriceFromDate(DateTime theDate)
+        {
+
+
+            return 0;
+        }
+
+        #endregion
         #region add market data types
         
         /// <summary>

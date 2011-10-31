@@ -135,6 +135,55 @@ namespace CSVanalyze
             return market;
         }
 
+        public static MarketMLDataSet GrabEvaluationData(string fileName, List<MarketDataType> TypesToLoad, string PredictItem, bool save, DateTime from , DateTime to)
+        {
+
+            if (!File.Exists(fileName))
+            {
+                Console.WriteLine(@"Couldn't file the file: :" + fileName);
+                return null;
+            }
+            Settings mysettings = new Settings();
+            FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
+
+            IMarketLoader loader = new CSVMetaTrader();
+            var market = new MarketMLDataSet(loader, (ulong)mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong)mysettings.OutPutSize);
+            //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
+
+            foreach (MarketDataType marketDataType in TypesToLoad)
+            {
+                if (marketDataType.ToString().Equals(PredictItem))
+                {
+                    var description = new MarketDataDescription(new TickerSymbol(Settings.Default.Symbol), marketDataType, true, true);
+                    market.AddDescription(description);
+                }
+                else
+                {
+                    var description = new MarketDataDescription(new TickerSymbol(Settings.Default.Symbol), marketDataType, true, false);
+                    market.AddDescription(description);
+                }
+
+            }
+            //Lets load the data , as we have prepared everything normally.
+            loader.GetFile(fileName);
+            market.SequenceGrandularity = TimeUnit.Ticks;
+
+
+            Console.WriteLine("You have :" + market.Descriptions.Count + " Data descriptions" + " Granularity is :" + market.SequenceGrandularity);
+            var end = to; // end today
+            var begin = from; // begin 30 days ago
+
+            Console.WriteLine(" Start date is :" + begin + " end date:" + end);
+
+            Console.WriteLine("Starting the loading data process.....");
+            market.Load(begin, end);
+            market.Generate();
+
+            if (save)
+                EncogUtility.SaveEGB(FileUtil.CombinePath(dataDir, Config.TRAINING_FILE), market);
+            return market;
+        }
+
         
         #endregion
     
