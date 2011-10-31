@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
+//using System.Windows.Forms.DataVisualization.Charting;
 using Encog.Engine.Network.Activation;
 using Encog.Fuzzy;
 using Encog.ML;
@@ -23,7 +23,7 @@ using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.NetworkUtil;
 using Encog.Util.Simple;
-using ErrorViewerForm;
+//using ErrorViewerForm;
 using Point = Encog.Fuzzy.Core.Point;
 
 namespace Encog.Examples.Analyzer
@@ -326,19 +326,19 @@ namespace Encog.Examples.Analyzer
 
         }
 
-        public static void AddAllPoints(List<double> doubletoAdds, Series serieused)
-        {
-            foreach (double doubletoAdd in doubletoAdds)
-            {
-                serieused.Points.AddY(doubletoAdd);
-            }
-        }
+        //public static void AddAllPoints(List<double> doubletoAdds, Series serieused)
+        //{
+        //    foreach (double doubletoAdd in doubletoAdds)
+        //    {
+        //        serieused.Points.AddY(doubletoAdd);
+        //    }
+        //}
 
 
-        static List<int> iterationsInts = new List<int>();
+        //static List<int> iterationsInts = new List<int>();
 
-        static List<double> IterationsErrors = new List<double>();
-        static pointsAdder pointAdds = new pointsAdder(AddPoint);
+        //static List<double> IterationsErrors = new List<double>();
+        //static pointsAdder pointAdds = new pointsAdder(AddPoint);
         private static Form chartForm;
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
         {
@@ -394,9 +394,9 @@ namespace Encog.Examples.Analyzer
             sw.Start();
        
 
-            Thread t = new Thread(new ThreadStart(ShowForm));
-            t.IsBackground = false;
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(ShowForm));
+            //t.IsBackground = false;
+            //t.Start();
 
             //formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
 
@@ -404,16 +404,16 @@ namespace Encog.Examples.Analyzer
 
             while (!stop.ShouldStop() && trainMain.IterationNumber < 300)
             {
-                prevError = trainMain.Error;
-                trainMain.Iteration();
-                IterationsErrors.Add(trainMain.Error);
+        //        prevError = trainMain.Error;
+        //        trainMain.Iteration();
+        //        IterationsErrors.Add(trainMain.Error);
 
 
-                iterationsInts.Add(trainMain.IterationNumber);
+        //        iterationsInts.Add(trainMain.IterationNumber);
 
-               // errocharts.Series[0].Points.AddY(trainMain.Error);
+        //       // errocharts.Series[0].Points.AddY(trainMain.Error);
 
-        //        formError.PointsAddage(trainMain.Error);
+        ////        formError.PointsAddage(trainMain.Error);
 
                 //Errorform.AddPoint(trainMain.Error);
               //  Errorform.chart1.Invalidate();
@@ -423,9 +423,9 @@ namespace Encog.Examples.Analyzer
                 Console.WriteLine(@"Iteration #:" + trainMain.IterationNumber + @" Error:" + trainMain.Error + @" Genetic Iteration:" + trainAlt.IterationNumber);
             }
             sw.Stop();
-            formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
+            //formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
 
-            formError.chart1.Invalidate();
+            //formError.chart1.Invalidate();
 
             //AddAllPoints(IterationsErrors, formError.chart1.Series[0]);
             //formError.Show();
@@ -481,18 +481,18 @@ namespace Encog.Examples.Analyzer
 
             return trainMain.Error;
         }
-        public delegate void pointsAdder(double Values, Chart charts);
-       static ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
+       // public delegate void pointsAdder(double Values, Chart charts);
+       //static ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
       
-        public static void ShowForm()
-        {
+       // public static void ShowForm()
+       // {
             
-            formError.ShowDialog();
-        }
-        public static void AddPoint(double doublevalue, Chart chart)
-        {
-            chart.Series["Error"].Points.AddXY(DateTime.Now, doublevalue);
-        }
+       //     formError.ShowDialog();
+       // }
+       // public static void AddPoint(double doublevalue, Chart chart)
+       // {
+       //     chart.Series["Error"].Points.AddXY(DateTime.Now, doublevalue);
+       // }
 
 
        
@@ -506,15 +506,15 @@ namespace Encog.Examples.Analyzer
             //    // errocharts.Series[0].Points.AddY(IterationsErrors.Last());
           //  pointAdds.Invoke(IterationsErrors[IterationsErrors.Count]);
 
-            try
-            {
-                formError.Invoke(formError.Redrawer);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error :" + ex.Message);
+            //try
+            //{
+            //    formError.Invoke(formError.Redrawer);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error :" + ex.Message);
 
-            }
+            //}
           
 
             //formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
