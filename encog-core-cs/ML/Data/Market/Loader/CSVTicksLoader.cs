@@ -80,6 +80,16 @@ namespace Encog.ML.Data.Market.Loader
             throw new LoaderError(@"Something went wrong reading the csv");
         }
 
+        /// <summary>
+        /// Gets the file we want to parse.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public string GetFile(string file)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

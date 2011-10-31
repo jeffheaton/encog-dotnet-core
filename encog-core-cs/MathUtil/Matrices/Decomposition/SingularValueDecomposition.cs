@@ -611,7 +611,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
         /// <summary>
         /// Return the diagonal matrix of singular values
         /// </summary>
-        public Matrix S
+        public Matrix pen
         {
             get
             {

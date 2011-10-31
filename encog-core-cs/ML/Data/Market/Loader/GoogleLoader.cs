@@ -91,5 +91,15 @@ namespace Encog.ML.Data.Market.Loader
                 }
             return result;
         }
+
+        /// <summary>
+        /// Gets the file we want to parse.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public string GetFile(string file)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
