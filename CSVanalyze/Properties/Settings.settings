@@ -1,0 +1,87 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CSVanalyze.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="InputSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="OutPutSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Hidden1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="Hidden2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="StartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2008-01-01</Value>
+    </Setting>
+    <Setting Name="EndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2008-02-01</Value>
+    </Setting>
+    <Setting Name="EvalStartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2011-01-01</Value>
+    </Setting>
+    <Setting Name="EvalEndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2011-12-07</Value>
+    </Setting>
+    <Setting Name="MaxTrainingTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="MaxEpochs" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="TrainingOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TrainingOpen.egb</Value>
+    </Setting>
+    <Setting Name="TrainingClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TrainingClose.egb</Value>
+    </Setting>
+    <Setting Name="TrainingHigh" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TrainingHigh.egb</Value>
+    </Setting>
+    <Setting Name="TrainingLow" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TrainingLow.egb</Value>
+    </Setting>
+    <Setting Name="NetworkFeedOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FeedNetworkOpen.eg</Value>
+    </Setting>
+    <Setting Name="NetworkElmanOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ElmanNetworkOpen.eg</Value>
+    </Setting>
+    <Setting Name="NetworkElmanClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ElmannetworkClose.eg</Value>
+    </Setting>
+    <Setting Name="NetworkElmanHigh" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ElmannetworkHigh.eg</Value>
+    </Setting>
+    <Setting Name="NetworkElmanLow" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ElmannetworkLow.eg</Value>
+    </Setting>
+    <Setting Name="NetworkFeedHigh" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FeedNetworkHigh.eg</Value>
+    </Setting>
+    <Setting Name="NetworkFeedLow" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FeedNetWorkLow.eg</Value>
+    </Setting>
+    <Setting Name="NetworkFeedClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FeednetworkClose.eg</Value>
+    </Setting>
+    <Setting Name="NetworkJordanOpen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">JordanNetworkOpen.eg</Value>
+    </Setting>
+    <Setting Name="NetworkJordanHigh" Type="System.String" Scope="User">
+      <Value Profile="(Default)">JordanNetworkHigh.eg</Value>
+    </Setting>
+    <Setting Name="NetworkJordanLow" Type="System.String" Scope="User">
+      <Value Profile="(Default)">JordanNetworkLow.eg</Value>
+    </Setting>
+    <Setting Name="NetworkJordanClose" Type="System.String" Scope="User">
+      <Value Profile="(Default)">JordanNetworkClose.eg</Value>
+    </Setting>
+    <Setting Name="Symbol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EURGBP</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

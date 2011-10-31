@@ -45,6 +45,15 @@
     <AssemblyOriginatorKeyFile>Encog.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework, Version=1.0.4109.34242, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -138,6 +147,8 @@
     <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />
     <Compile Include="App\Quant\Indicators\Predictive\BestReturn.cs" />
     <Compile Include="App\Quant\Indicators\ProcessIndicators.cs" />
+    <Compile Include="App\Quant\Loader\EconomicCalendars\EconomicIndicatorsLoader.cs" />
+    <Compile Include="App\Quant\Loader\EconomicCalendars\FFCalNews.cs" />
     <Compile Include="App\Quant\Loader\LoaderError.cs" />
     <Compile Include="App\Quant\Loader\MarketLoader.cs" />
     <Compile Include="App\Quant\Loader\OpenQuant\Bar.cs" />
@@ -151,6 +162,7 @@
     <Compile Include="App\Quant\QuantError.cs" />
     <Compile Include="App\Quant\QuantTask.cs" />
     <Compile Include="App\Quant\Util\BarBuffer.cs" />
+    <Compile Include="App\Quant\Util\BarMaker.cs" />
     <Compile Include="Bot\BotError.cs" />
     <Compile Include="Bot\BotUtil.cs" />
     <Compile Include="Bot\Browse\Address.cs" />
@@ -180,6 +192,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>encog-core-cs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="EncogForm\EncogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EncogForm\EncogForm.Designer.cs">
+      <DependentUpon>EncogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EncogForm\networkComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EncogForm\networkComponent.Designer.cs">
+      <DependentUpon>networkComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="EncogFramework.cs" />
     <Compile Include="EncogError.cs" />
@@ -312,6 +336,7 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
+    <Compile Include="ML\Data\Market\Loader\MetaTraderCSVLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
@@ -558,6 +583,11 @@
     <Compile Include="Plugin\SystemPlugin\SystemLoggingPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemMethodsPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemTrainingPlugin.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Util\Arrayutil\ClassItem.cs" />
     <Compile Include="Util\Arrayutil\NormalizationAction.cs" />
     <Compile Include="Util\Arrayutil\NormalizationActionExtension.cs" />
@@ -576,6 +606,7 @@
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\PoolItem.cs" />
     <Compile Include="Util\Concurrency\TaskGroup.cs" />
+    <Compile Include="Util\Debugger\DebugLinqQueries.cs" />
     <Compile Include="Util\EncogValidate.cs" />
     <Compile Include="Util\EngineArray.cs" />
     <Compile Include="Util\Error\CalculateRegressionError.cs" />
@@ -695,8 +726,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EncogForm\EncogForm.resx">
+      <DependentUpon>EncogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EncogForm\networkComponent.resx">
+      <DependentUpon>networkComponent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ML\Data\Market\Loader\CSVFormLoader.resx">
       <DependentUpon>CSVFormLoader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\classes.txt" />
     <EmbeddedResource Include="Util\Simple\TrainingDialog.resx">
@@ -712,6 +753,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fuzzy\AForge.Fuzzy.xml" />
+    <None Include="packages.config" />
+    <None Include="Resources\EncogLogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

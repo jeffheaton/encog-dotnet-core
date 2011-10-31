@@ -578,5 +578,74 @@ namespace Encog.Util.NetworkUtil
         }
 
 
+
+
+        public enum DirectionEnum
+        {
+            Equal = 0,
+            Up,
+            Down
+        }
+
+
+
+
+        /// <summary>
+        /// Establishes the direction of a double array.
+        /// the direction can be either flat, up or down.
+        /// this method looks for all points in the double serie and establishes
+        /// the direction from each point to the next and places them in an array 
+        /// of directionEnum.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <returns></returns>
+        static public DirectionEnum[] EstablishDirection(double[] values)
+        {
+            DirectionEnum[] results = new DirectionEnum[values.Length];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                if (values[i - 1] > values[i])
+                {
+                    results[i] = DirectionEnum.Down;
+                }
+                else if (values[i - 1] < values[i])
+                {
+                    results[i] = DirectionEnum.Up;
+                }
+            }
+
+            return results;
+        }
+
+
+
+        /// <summary>
+        /// Establishes the direction of a double array versus another double array.
+        /// the direction can be either flat, up or down.
+        /// this method looks for all points in the double serie and establishes
+        /// the direction from each point to the next and places them in an array 
+        /// of directionEnum.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <returns>the direction enum array.</returns>
+        static public DirectionEnum[] EstablishDirection(double[] values, double [] secondvalues)
+        {
+            DirectionEnum[] results = new DirectionEnum[values.Length];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                if (values[i] > secondvalues[i])
+                {
+                    results[i] = DirectionEnum.Down;
+                }
+                else if (values[i] < secondvalues[i])
+                {
+                    results[i] = DirectionEnum.Up;
+                }
+            }
+
+            return results;
+        }
     }
 }

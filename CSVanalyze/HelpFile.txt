@@ -1,0 +1,8 @@
+﻿It seems you have entered a wrong command.
+The valid commands are:
+
+Generate: Builds the files used by the neural networks (Datasets).
+Train : Trains a neural network with a selected CSV..For more information type help Train.
+Eval  : Evaluates a neural network with a selected CSV ...For more information type help Eval.
+Prune : Prunes a trained network..For more information type Help prune.
+Compare: Compares multiple networks .. For more information type help compare.

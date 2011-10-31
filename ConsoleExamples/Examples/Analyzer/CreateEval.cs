@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Encog.Engine.Network.Activation;
@@ -323,17 +325,33 @@ namespace Encog.Examples.Analyzer
              
 
         }
+
+        public static void AddAllPoints(List<double> doubletoAdds, Series serieused)
+        {
+            foreach (double doubletoAdd in doubletoAdds)
+            {
+                serieused.Points.AddY(doubletoAdd);
+            }
+        }
+
+
+        static List<int> iterationsInts = new List<int>();
+
+        static List<double> IterationsErrors = new List<double>();
+        static pointsAdder pointAdds = new pointsAdder(AddPoint);
+        private static Form chartForm;
         public static double TrainNetworks(BasicNetwork network, IMLDataSet minis)
         {
             Backpropagation trainMain = new Backpropagation(network, minis,0.0001,0.6);
             //set the number of threads below.
-            trainMain.ThreadCount = 0;
+           
             // train the neural network
             ICalculateScore score = new TrainingSetScore(minis);
             IMLTrain trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
            // IMLTrain trainMain = new Backpropagation(network, minis, 0.0001, 0.01);
             
-            StopTrainingStrategy stop = new StopTrainingStrategy(0.0001, 200);
+
+                StopTrainingStrategy stop = new StopTrainingStrategy(0.0001, 200);
             trainMain.AddStrategy(new Greedy());
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
@@ -344,30 +362,75 @@ namespace Encog.Examples.Analyzer
 
          //   EncogUtility.TrainConsole(trainMain,network,minis, 15.2);
 
-            List<double> IterationsErrors = new List<double>();
+         
             //Form1 forms = new Form1();
 
-            ////ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
-            //forms.chart1.Series.Clear();
+           
+           
 
             //forms.chart1.Series.Add("Error Rates");
             //forms.chart1.Series.Add("Error Improvements");
             List<double> iMRPOVEMENTS = new List<double>();
+          
+            
+            //Errorform.AddAllErrorSerie(IterationsErrors.ToArray());
+          //  Errorform.Show();
+          
+            //chartForm  = new Form();
 
+            //errocharts = new Chart();
+            //errocharts.Dock = DockStyle.Fill;
+            //errocharts.Series.Add("Error");
+            //errocharts.Series[0].ChartType = SeriesChartType.Line;
+            //errocharts.Series[0].Color = Color.AliceBlue;
+            //chartForm.Controls.Add(errocharts);
+         
+            System.Timers.Timer MyTimer = new System.Timers.Timer(1000);
+            MyTimer.Enabled = true;
+            MyTimer.AutoReset = true;
+         //  MyTimer.Elapsed += new System.Timers.ElapsedEventHandler(MyTimer_Elapsed);
             double prevError = 0;
             var sw = new Stopwatch();
             sw.Start();
-            while (!stop.ShouldStop())
+       
+
+            Thread t = new Thread(new ThreadStart(ShowForm));
+            t.IsBackground = false;
+            t.Start();
+
+            //formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
+
+            //formError.chart1.DataBind();
+
+            while (!stop.ShouldStop() && trainMain.IterationNumber < 300)
             {
                 prevError = trainMain.Error;
                 trainMain.Iteration();
                 IterationsErrors.Add(trainMain.Error);
 
-                
-             
+
+                iterationsInts.Add(trainMain.IterationNumber);
+
+               // errocharts.Series[0].Points.AddY(trainMain.Error);
+
+        //        formError.PointsAddage(trainMain.Error);
+
+                //Errorform.AddPoint(trainMain.Error);
+              //  Errorform.chart1.Invalidate();
+
+               
+                //errocharts.Invalidate();
                 Console.WriteLine(@"Iteration #:" + trainMain.IterationNumber + @" Error:" + trainMain.Error + @" Genetic Iteration:" + trainAlt.IterationNumber);
             }
             sw.Stop();
+            formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
+
+            formError.chart1.Invalidate();
+
+            //AddAllPoints(IterationsErrors, formError.chart1.Series[0]);
+            //formError.Show();
+          //  Errorform.Invalidate();
+
             //forms.chart1.Series["Error Rates"].Points.DataBindY(IterationsErrors);
             //forms.chart1.Series[0].ToolTip = "F5";
             //forms.chart1.Series[0].ChartType = SeriesChartType.FastLine;
@@ -380,12 +443,86 @@ namespace Encog.Examples.Analyzer
             ////forms.chart1.Series[1].Color = Color.Peru;
             ////forms.chart1.Invalidate();
             //forms.ShowDialog();
+
+            //formError.chart1.Series[0].XAxisType = AxisType.Primary;
+            //formError.chart1.Series[0].IsXValueIndexed = true;
            
+          
+          
+            //formError.Invalidate();
+            //formError.ShowDialog();
+           // Thread pthread = new Thread(ShowForm);
+           
+
+           // System.Drawing.PointF[] pointArray = new System.Drawing.PointF[iterationsInts.Count];
+           // int index = 0;
+           // foreach (double d in IterationsErrors)
+           // {
+           //     pointArray[index] = new System.Drawing.PointF((float)index,(float)(d *100));
+           //     index++;
+
+           // }
+           // Graphics g = formcontrols.CreateGraphics();
+           // Pen apen = new Pen(Color.Blue, 10);
+         
+           //// paths.AddLines(pointArray);
+           // Pen p = new Pen(Color.Black, 2);
+           // g.DrawLine(p, 25, 25, 375, 375);
+
+           //g.DrawLines(p, pointArray);
+
+            //pthread.IsBackground = false;
+
+
+
 
 
             Console.WriteLine(@"Total elapsed time in seconds:" + TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds).Seconds);
 
             return trainMain.Error;
+        }
+        public delegate void pointsAdder(double Values, Chart charts);
+       static ErrorViewerForm.Form1 formError = new ErrorViewerForm.Form1();
+      
+        public static void ShowForm()
+        {
+            
+            formError.ShowDialog();
+        }
+        public static void AddPoint(double doublevalue, Chart chart)
+        {
+            chart.Series["Error"].Points.AddXY(DateTime.Now, doublevalue);
+        }
+
+
+       
+
+        static void MyTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+
+            //if (IterationsErrors.Count > 0)
+            //    pointAdds.Invoke(IterationsErrors.Last());
+            //    // errocharts.Series[0].Points.AddY(IterationsErrors.Last());
+          //  pointAdds.Invoke(IterationsErrors[IterationsErrors.Count]);
+
+            try
+            {
+                formError.Invoke(formError.Redrawer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+
+            }
+          
+
+            //formError.chart1.Series[0].Points.DataBindXY(iterationsInts, IterationsErrors);
+            //    formError.Invalidate(true);
+            //     formError.chart1.Invalidate();
+            //    errocharts.Invalidate();
+            //  chartForm.Invalidate(true);
+
         }
 
         public static BasicMLDataSet CreateEvaluationSetAndLoad(string @fileName, int startLine, int HowMany, int WindowSize, int outputsize)

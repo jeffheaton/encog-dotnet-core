@@ -41,6 +41,14 @@ namespace Encog.ML.Data.Market
         /// </summary>
         private readonly IMarketLoader _loader;
 
+
+        /// <summary>
+        /// Gets or sets the types needed (MarketDataTypes) that you want to use in your market dataset.
+        /// </summary>
+        /// <value>
+        /// The types needed.
+        /// </value>
+        private List<MarketDataType> TypesNeeded = new List<MarketDataType>();
         /// <summary>
         /// A map between the data points and actual data.
         /// </summary>
@@ -57,7 +65,7 @@ namespace Encog.ML.Data.Market
             : base(inputWindowSize, predictWindowSize)
         {
             _loader = loader;
-            SequenceGrandularity = TimeUnit.Days;
+            SequenceGrandularity = TimeUnit.Ticks;
         }
 
         /// <summary>
@@ -139,20 +147,25 @@ namespace Encog.ML.Data.Market
 
             // clear out any loaded points
             Points.Clear();
-
+            string symbolstring = "";
             // first obtain a collection of symbols that need to be looked up
             IDictionary<TickerSymbol, object> set = new Dictionary<TickerSymbol, object>();
             foreach (TemporalDataDescription desc in Descriptions)
             {
                 var mdesc = (MarketDataDescription) desc;
-                set[mdesc.Ticker] = null;
+                set[mdesc.Ticker] = mdesc.DataType;
+                TypesNeeded.Add(mdesc.DataType);
+                symbolstring = mdesc.Ticker.Symbol;
             }
+          
+            
+            LoadSymbol(new TickerSymbol(symbolstring),begin, end);
 
-            // now loop over each symbol and load the data
-            foreach (TickerSymbol symbol in set.Keys)
-            {
-                LoadSymbol(symbol, begin, end);
-            }
+            //// now loop over each symbol and load the data
+            //foreach (TickerSymbol symbol in set.Keys)
+            //{
+            //    LoadSymbol(symbol, begin, end);
+            //}
 
             // resort the points
             SortPoints();
@@ -185,17 +198,16 @@ namespace Encog.ML.Data.Market
         /// <param name="ticker">The ticker symbol to load.</param>
         /// <param name="from">Load data from this date.</param>
         /// <param name="to">Load data to this date.</param>
-        private void LoadSymbol(TickerSymbol ticker, DateTime from,
-                                DateTime to)
+        private void LoadSymbol(TickerSymbol ticker, DateTime from,DateTime to)
         {
-            ICollection<LoadedMarketData> data = Loader.Load(ticker,
-                                                             null, from, to);
+            ICollection<LoadedMarketData> data = Loader.Load(ticker, TypesNeeded, from, to);
             foreach (LoadedMarketData item in data)
             {
+                     
                 TemporalPoint point = CreatePoint(item.When);
-
                 LoadPointFromMarketData(ticker, point, item);
             }
         }
+
     }
 }

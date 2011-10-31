@@ -308,7 +308,7 @@ namespace Encog.ML.Data.Temporal
 
         /// <summary>
         /// Create a sequence number from a time. The first date will be zero, and
-        /// subsequent dates will be increased according to the grandularity
+        /// subsequent dates will be increased according to the granularity
         /// specified. 
         /// </summary>
         /// <param name="when">The date to generate the sequence number for.</param>
@@ -329,6 +329,19 @@ namespace Encog.ML.Data.Temporal
             }
             return sequence;
         }
+        /// <summary>
+        /// Create a sequence number from a time. The first date will be zero, and
+        /// subsequent dates will be increased according to the grandularity
+        /// specified. 
+        /// </summary>
+        /// <param name="when">The date to generate the sequence number for.</param>
+        /// <returns>A sequence number.</returns>
+        public virtual DateTime GetDateFromSequence(Int64 sequence)
+        {
+            DateTime date = new DateTime(sequence);
+            return date;
+        }
+
 
 
         /// <summary>

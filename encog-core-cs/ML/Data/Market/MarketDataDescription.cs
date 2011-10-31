@@ -86,9 +86,7 @@ namespace Encog.ML.Data.Market
         /// <param name="dataType">The data type needed.</param>
         /// <param name="input">Is this field used for input?</param>
         /// <param name="predict">Is this field used for prediction?</param>
-        public MarketDataDescription(TickerSymbol ticker,
-                                     MarketDataType dataType, bool input,
-                                     bool predict)
+        public MarketDataDescription(TickerSymbol ticker, MarketDataType dataType, bool input, bool predict)
             : this(ticker, dataType, Type.PercentChange, null, input, predict)
         {
         }
