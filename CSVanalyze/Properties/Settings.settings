@@ -83,5 +83,8 @@
     <Setting Name="Symbol" Type="System.String" Scope="User">
       <Value Profile="(Default)">EURGBP</Value>
     </Setting>
+    <Setting Name="OutputsAll" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

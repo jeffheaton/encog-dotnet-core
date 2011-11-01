@@ -346,5 +346,17 @@ namespace CSVanalyze.Properties {
                 this["Symbol"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OutputsAll {
+            get {
+                return ((bool)(this["OutputsAll"]));
+            }
+            set {
+                this["OutputsAll"] = value;
+            }
+        }
     }
 }

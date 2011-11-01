@@ -24,6 +24,8 @@ namespace CSVanalyze
             Console.WriteLine("Current Ending Date :" + mysettings.EndDate.ToShortDateString());
             Console.WriteLine("Current Evaluation Date Start:" + mysettings.EvalStartDate.ToShortDateString());
             Console.WriteLine("Current Evaluation Date Start:" + mysettings.EvalEndDate.ToShortDateString());
+            Console.WriteLine("Current Output all to :" + mysettings.OutputsAll);
+
         }
 
 
@@ -56,7 +58,11 @@ namespace CSVanalyze
 
                     mysettings.Hidden1 = Int16.Parse(NewValue);
                 }
+                if (aSettingName == "OutputsAll")
+                {
 
+                    mysettings.OutputsAll = bool.Parse(NewValue);
+                }
                 if (aSettingName == "Hidden2")
                 {
                     mysettings.Hidden2 = Int16.Parse(NewValue);

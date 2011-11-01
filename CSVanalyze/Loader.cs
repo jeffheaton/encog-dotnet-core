@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Encog.ML.Data;
+using Encog.ML.Data.FXDataSet;
 using Encog.ML.Data.Market;
 using Encog.ML.Data.Market.Loader;
 using Encog.Util.File;
@@ -48,7 +49,7 @@ namespace CSVanalyze
             //Lets use the CSVFinal..(and not the CSV Form loader).
             IMarketLoader loader = new CSVMetaTrader();
             loader.GetFile(fileName);
-            var market = new MarketMLDataSet(loader, (ulong) mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong) mysettings.OutPutSize);
+            var market = new FXDataSet(loader, (ulong) mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong) mysettings.OutPutSize);
             //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
             
             foreach (MarketDataType marketDataType in TypesToLoad)
@@ -86,7 +87,7 @@ namespace CSVanalyze
         /// <param name="PredictItem">The predict item.</param>
         /// <param name="save">if set to <c>true</c> [save].</param>
         /// <returns></returns>
-        public static MarketMLDataSet GrabData(string fileName, List<MarketDataType> TypesToLoad, string PredictItem, bool save)
+        public static FXDataSet GrabData(string fileName, List<MarketDataType> TypesToLoad, string PredictItem, bool save)
         {
 
             if (!File.Exists(fileName))
@@ -98,7 +99,7 @@ namespace CSVanalyze
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
 
             IMarketLoader loader = new CSVMetaTrader();          
-            var market = new MarketMLDataSet(loader, (ulong)mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong)mysettings.OutPutSize);
+            var market = new FXDataSet(loader, (ulong)mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong)mysettings.OutPutSize);
             //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
             foreach (MarketDataType marketDataType in TypesToLoad)
@@ -135,7 +136,7 @@ namespace CSVanalyze
             return market;
         }
 
-        public static MarketMLDataSet GrabEvaluationData(string fileName, List<MarketDataType> TypesToLoad, string PredictItem, bool save, DateTime from , DateTime to)
+        public static FXDataSet GrabEvaluationData(string fileName, List<MarketDataType> TypesToLoad, string PredictItem, bool save, DateTime from , DateTime to)
         {
 
             if (!File.Exists(fileName))
@@ -147,7 +148,7 @@ namespace CSVanalyze
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
 
             IMarketLoader loader = new CSVMetaTrader();
-            var market = new MarketMLDataSet(loader, (ulong)mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong)mysettings.OutPutSize);
+            var market = new FXDataSet(loader, (ulong)mysettings.InputSize * (ulong)TypesToLoad.Count, (ulong)mysettings.OutPutSize);
             //  var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
 
             foreach (MarketDataType marketDataType in TypesToLoad)
