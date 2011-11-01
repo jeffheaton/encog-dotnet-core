@@ -76,6 +76,7 @@
     <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
+    <Compile Include="ML\Data\Market\CSVLoaderTest.cs" />
     <Compile Include="ML\Data\Market\TestMarketData.cs" />
     <Compile Include="ML\Data\Market\TestYahooLoader.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
@@ -120,7 +121,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\encodernet.eg" />
+    <None Include="smallCSV.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\hello.txt" />

@@ -95,7 +95,7 @@ namespace Encog.ML.Data.Market
             {
                 throw new MarketError(
                     "Only MarketDataDescription objects may be used "
-                    + "with the MarketNeuralDataSet container.");
+                    + "with the MarketMLDataSet container.");
             }
             base.AddDescription(desc);
         }

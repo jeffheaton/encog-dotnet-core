@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Engine.Network.Activation;
+using Encog.MathUtil;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
@@ -51,7 +52,6 @@ namespace Encog.Util.NetworkUtil
 
 
 
-
         /// <summary>
         /// Doubles the List of doubles into a jagged array.
         /// This is exactly similar as the MakeDoubleJaggedInputFromArray just it takes a List of double as parameter.
@@ -85,10 +85,10 @@ namespace Encog.Util.NetworkUtil
 
         /// <summary>
         /// Processes the specified double serie into an IMLDataset.
-        /// To use this method, you must provide a formated double array with first the input data and the ideal data in the end.
+        /// To use this method, you must provide a formated double array.
         /// The number of points in the input window makes the input array , and the predict window will create the array used in ideal.
         /// Example you have an array with 1, 2, 3 , 4 , 5.
-        /// You can use this method to make an IMLDataset 4 inputs and 1 ideal.
+        /// You can use this method to make an IMLDataset 4 inputs and 1 ideal (5).
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="_inputWindow">The _input window.</param>
@@ -177,6 +177,8 @@ namespace Encog.Util.NetworkUtil
 
     /// <summary>
     /// Grabs every Predict point in a double serie.
+    /// This is useful if you have a double series and you need to grab every 5 points for examples and make an ourput serie (like in elmhan networks).
+    /// E.G , 1, 2, 1, 2,5 ...and you just need the 5..
     /// </summary>
     /// <param name="inputs">The inputs.</param>
     /// <param name="PredictSize">Size of the predict.</param>
@@ -599,18 +601,41 @@ namespace Encog.Util.NetworkUtil
         }
 
 
-        /// <summary>
-        /// Returns a randomized IMLDataset ready for use.
-        /// </summary>
-        /// <param name="sizeofInputs">The sizeof inputs.</param>
-        /// <param name="sizeOfOutputs">The size of outputs.</param>
-        /// <returns></returns>
-        public static IMLDataSet ReturnRandomizedDataSet(int sizeofInputs, int sizeOfOutputs)
-        {
-            double[] res = NetworkUtility.MakeRandomInputs(sizeofInputs);
-            return QuickTrainingFromDoubleArray(res, sizeofInputs, sizeOfOutputs);
-        }
 
+        
+        
+        public static double[] MakeInputs(int number)
+        {
+            Random rdn = new Random();
+            Encog.MathUtil.Randomize.RangeRandomizer encogRnd = new Encog.MathUtil.Randomize.RangeRandomizer(-1, 1);
+            double[] x = new double[number];
+            for (int i = 0; i < number; i++)
+            {
+                x[i] = encogRnd.Randomize((rdn.NextDouble()));
+
+            }
+            return x;
+        }
+        /// <summary>
+        /// Makes a random dataset with the number of IMLDatapairs.
+        /// Quite useful to test networks (benchmarks).
+        /// </summary>
+        /// <param name="inputs">The inputs.</param>
+        /// <param name="predictWindow">The predict window.</param>
+        /// <param name="numberofPairs">The numberof pairs.</param>
+        /// <returns></returns>
+        public static BasicMLDataSet MakeRandomIMLDataset(int inputs, int predictWindow, int numberofPairs)
+        {
+            BasicMLDataSet SuperSet = new BasicMLDataSet();
+            for (int i = 0; i < numberofPairs;i++ )
+            {
+                double[] firstinput = MakeInputs(inputs);
+                double[] secondideal = MakeInputs(inputs);
+                IMLDataPair pair = ProcessPairs(firstinput, secondideal, inputs, predictWindow);
+                SuperSet.Add(pair);
+            }
+            return SuperSet;
+        }
 
 
         /// <summary>
