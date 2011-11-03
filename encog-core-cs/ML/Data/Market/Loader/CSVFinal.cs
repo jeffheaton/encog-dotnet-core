@@ -34,8 +34,6 @@ namespace Encog.ML.Data.Market.Loader
         /// <returns></returns>
         ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IEnumerable<MarketDataType> neededTypes, DateTime from, DateTime to, string File)
         {
-            try
-            {
                 //We got a file, lets load it.
 
                 ICollection<LoadedMarketData> result = new List<LoadedMarketData>();
@@ -91,13 +89,6 @@ namespace Encog.ML.Data.Market.Loader
 
                 csv.Close();
                 return result;
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine(@"Something went wrong reading the csv:" + ex.Message);
-                return null;
-            }
         }
 
         /// <summary>
