@@ -125,7 +125,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         /// <param name="training">The training set to use.</param>
         /// <param name="initialUpdate"></param>
         /// <param name="maxStep">The maximum that a delta can reach.</param>
-        public ResilientPropagation(BasicNetwork network,
+        public ResilientPropagation(IContainsFlat network,
                                     IMLDataSet training, double initialUpdate,
                                     double maxStep) : base(network, training)
         {

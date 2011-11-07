@@ -64,7 +64,7 @@ namespace Encog.ML.Factory.Train
                 MLTrainFactory.PropertyMaxStep, false,
                 RPROPConst.DefaultMaxStep);
 
-            return new ResilientPropagation((BasicNetwork) method, training,
+            return new ResilientPropagation( (IContainsFlat)method, training,
                                             initialUpdate, maxStep);
         }
     }

@@ -54,7 +54,10 @@ namespace Encog.Neural.Networks.Training.Propagation
         ///
         private readonly double[] _lastGradient;
 
-        private BasicNetwork _network;
+        /// <summary>
+        /// The network to train.
+        /// </summary>
+        private IContainsFlat _network;
 
         /// <summary>
         /// The network to train.
@@ -131,7 +134,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         ///
         /// <param name="network">The network.</param>
         /// <param name="training">The training set.</param>
-        protected Propagation(BasicNetwork network, IMLDataSet training) : base(TrainingImplementationType.Iterative)
+        protected Propagation(IContainsFlat network, IMLDataSet training) : base(TrainingImplementationType.Iterative)
         {
             _network = network;
             _flat = network.Flat;
@@ -261,7 +264,7 @@ namespace Encog.Neural.Networks.Training.Propagation
 
 
         /// <inheritdoc/>
-        public BasicNetwork Network
+        public IContainsFlat Network
         {
             get { return _network; }
         }

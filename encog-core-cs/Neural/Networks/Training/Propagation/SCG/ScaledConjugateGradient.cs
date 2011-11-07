@@ -199,7 +199,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
         ///
         public override void CalculateGradients()
         {
-            int outCount = Network.OutputCount;
+            int outCount = Network.Flat.OutputCount;
 
             base.CalculateGradients();
 
