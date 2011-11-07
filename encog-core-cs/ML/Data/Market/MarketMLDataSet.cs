@@ -44,8 +44,8 @@ namespace Encog.ML.Data.Market
         /// <summary>
         /// A map between the data points and actual data.
         /// </summary>
-        private readonly IDictionary<UInt64, TemporalPoint> _pointIndex =
-            new Dictionary<UInt64, TemporalPoint>();
+        private readonly IDictionary<Int64, TemporalPoint> _pointIndex =
+            new Dictionary<Int64, TemporalPoint>();
 
         /// <summary>
         /// Construct a market data set object.
@@ -53,8 +53,8 @@ namespace Encog.ML.Data.Market
         /// <param name="loader">The loader to use to get the financial data.</param>
         /// <param name="inputWindowSize">The input window size, that is how many datapoints do we use to predict.</param>
         /// <param name="predictWindowSize">How many datapoints do we want to predict.</param>
-        public MarketMLDataSet(IMarketLoader loader,UInt64 inputWindowSize, UInt64 predictWindowSize)
-            : base(inputWindowSize, predictWindowSize)
+        public MarketMLDataSet(IMarketLoader loader,Int64 inputWindowSize, Int64 predictWindowSize)
+            : base((int)inputWindowSize, (int)predictWindowSize)
         {
             _loader = loader;
             SequenceGrandularity = TimeUnit.Days;
@@ -67,8 +67,8 @@ namespace Encog.ML.Data.Market
         /// <param name="inputWindowSize">Size of the input window.</param>
         /// <param name="predictWindowSize">Size of the predict window.</param>
         /// <param name="unit">The time unit to use.</param>
-        public MarketMLDataSet(IMarketLoader loader,  UInt64 inputWindowSize, UInt64 predictWindowSize, TimeUnit unit)
-            : base(inputWindowSize, predictWindowSize)
+        public MarketMLDataSet(IMarketLoader loader,  Int64 inputWindowSize, Int64 predictWindowSize, TimeUnit unit)
+            : base((int)inputWindowSize, (int)predictWindowSize)
         {
 
             _loader = loader;
@@ -107,7 +107,7 @@ namespace Encog.ML.Data.Market
         /// <returns>Returns the TemporalPoint created for the specified date.</returns>
         public override TemporalPoint CreatePoint(DateTime when)
         {
-            UInt64 sequence = GetSequenceFromDate(when);
+            Int64 sequence = (Int64)GetSequenceFromDate(when);
             TemporalPoint result;
 
             if (_pointIndex.ContainsKey(sequence))
@@ -117,7 +117,7 @@ namespace Encog.ML.Data.Market
             else
             {
                 result = base.CreatePoint(when);
-                _pointIndex[result.Sequence] = result;
+                _pointIndex[(int)result.Sequence] = result;
             }
 
             return result;
