@@ -142,7 +142,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         public virtual double Momentum
         {
             get { return _momentum; }
-            set { _learningRate = value; }
+            set { _momentum = value; }
         }
 
         #endregion
