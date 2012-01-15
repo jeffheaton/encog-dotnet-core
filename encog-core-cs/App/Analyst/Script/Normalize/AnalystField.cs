@@ -136,6 +136,7 @@ namespace Encog.App.Analyst.Script.Normalize
             _name = field._name;
             _output = field._output;
             _timeSlice = field._timeSlice;
+            FixSingleValue();
         }
 
         /// <summary>
@@ -154,6 +155,7 @@ namespace Encog.App.Analyst.Script.Normalize
             _actualHigh = Double.MinValue;
             _actualLow = Double.MaxValue;
             _action = NormalizationAction.Normalize;
+            FixSingleValue();
         }
 
         /// <summary>
@@ -189,6 +191,7 @@ namespace Encog.App.Analyst.Script.Normalize
             _normalizedHigh = nhigh;
             _normalizedLow = nlow;
             _name = theName;
+            FixSingleValue();
         }
 
         /// <summary>
@@ -209,6 +212,7 @@ namespace Encog.App.Analyst.Script.Normalize
             _action = theAction;
             _normalizedHigh = high;
             _normalizedLow = low;
+            FixSingleValue();
         }
 
         /// <summary>
