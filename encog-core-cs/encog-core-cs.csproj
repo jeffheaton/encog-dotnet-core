@@ -38,12 +38,15 @@
     <DocumentationFile>bin\Release\encog-core-cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Encog.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cloo">
+      <HintPath>..\..\..\..\Users\Olivier\Documents\Visual Studio 2010\Libraries\Cloo\Cloo\bin\Release\Cloo.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -196,6 +199,27 @@
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="Engine\Network\Activation\IActivationFunctionCL.cs" />
+    <Compile Include="Engine\OpenCL\Data\BasicEngineData.cs" />
+    <Compile Include="Engine\OpenCL\Data\BasicEngineDataSet.cs" />
+    <Compile Include="Engine\OpenCL\Data\EngineData.cs" />
+    <Compile Include="Engine\OpenCL\Data\EngineDataSet.cs" />
+    <Compile Include="Engine\OpenCL\Data\EngineIndexableSet.cs" />
+    <Compile Include="Engine\OpenCL\EncogCL.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLDevice.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLError.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLItem.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLPlatform.cs" />
+    <Compile Include="Engine\OpenCL\EncogCLQueue.cs" />
+    <Compile Include="Engine\OpenCL\EncogEngine.cs" />
+    <Compile Include="Engine\OpenCL\EncogEngineError.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\MissingOpenCLAdapterError.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\OpenCLError.cs" />
+    <Compile Include="Engine\OpenCL\exceptions\OutOfOpenCLResources.cs" />
+    <Compile Include="Engine\OpenCL\Kernels\EncogKernel.cs" />
+    <Compile Include="Engine\OpenCL\Kernels\KernelNetworkTrain.cs" />
+    <Compile Include="Engine\OpenCL\Kernels\KernelVectorAdd.cs" />
+    <Compile Include="Engine\OpenCL\OpenCLTrainingProfile.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
@@ -279,7 +303,6 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
-    <Compile Include="ML\Data\Market\Loader\MultiCsvLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
