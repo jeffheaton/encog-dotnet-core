@@ -39,6 +39,7 @@ namespace Encog.Engine.Data
     using System.Runtime.Serialization;
     using System.Text;
 
+#pragma warning disable 1587
     /// <summary>
     /// A basic implementation of the EngineData interface. This implementation
     /// simply holds and input and ideal NeuralData object.
@@ -46,9 +47,12 @@ namespace Encog.Engine.Data
     /// For unsupervised training the input property should be valid, however the
     /// ideal property should contain null.
     /// </summary>
+#pragma warning restore 1587
 #if !SILVERLIGHT
+
     [Serializable]
 #endif
+
     public class BasicEngineData : IEngineData
     {
 
@@ -164,7 +168,7 @@ namespace Encog.Engine.Data
         /// <inheritdoc />
         public override System.String ToString()
         {
-            StringBuilder builder = new StringBuilder("[NeuralDataPair:");
+            StringBuilder builder = new StringBuilder("[MLDataPair:");
             builder.Append("Input:");
             builder.Append(InputArray);
             builder.Append("Ideal:");

@@ -119,7 +119,7 @@ namespace Encog.Engine
 
 #if !SILVERLIGHT
         /// <summary>
-        /// If Encog is not using GPU/CL processing this attribute will benull. Otherwise it holds the Encog CL object.
+        /// If Encog is not using GPU/CL processing this attribute will be null. Otherwise it holds the Encog CL object.
         /// </summary>
         public EncogCL CL
         {

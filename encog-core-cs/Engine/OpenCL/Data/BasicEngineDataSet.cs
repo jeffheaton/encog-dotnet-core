@@ -8,12 +8,14 @@ namespace Encog.Engine.Data
     using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
 
+#pragma warning disable 1587
     /// <summary>
     /// Data is stored in an ArrayList. This class is memory based, so large enough
     /// datasets could cause memory issues. Many other dataset types extend this
     /// class.
     /// </summary>
     ///
+#pragma warning restore 1587
 #if !SILVERLIGHT
     [Serializable]
 #endif
@@ -59,8 +61,8 @@ namespace Encog.Engine.Data
                 /* foreach */
                 foreach (double[] element in input)
                 {
-                    double[] inputData_0 = element;
-                    this.Add(inputData_0);
+                    double[] inputData0 = element;
+                    this.Add(inputData0);
                 }
             }
         }
