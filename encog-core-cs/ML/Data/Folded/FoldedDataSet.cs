@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Encog.Neural.Networks.Training;
+using Encog.ML.Data.Basic;
 
 namespace Encog.ML.Data.Folded
 {
@@ -285,6 +286,17 @@ namespace Encog.ML.Data.Folded
             _foldSize = (int) (_underlying.Count/_numFolds);
             _lastFoldSize = (int) (_underlying.Count - (_foldSize*_numFolds));
             CurrentFold = 0;
+        }
+
+        /// <inheritdoc/>
+        public IMLDataPair this[int x]
+        {
+            get
+            {
+                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
+                this.GetRecord(x, result);
+                return result;
+            }
         }
     }
 }

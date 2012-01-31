@@ -389,5 +389,10 @@ namespace Encog.ML.Data.Basic
                 return _data[0].Supervised;
             }
         }
+
+        public IMLDataPair this[int x]
+        {
+            get { return _data[x]; }
+        }
     }
 }

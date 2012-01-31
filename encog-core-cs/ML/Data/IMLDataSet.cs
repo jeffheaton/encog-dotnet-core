@@ -110,5 +110,12 @@ namespace Encog.ML.Data
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
         IMLDataSet OpenAdditional();
+
+        /// <summary>
+        /// Get the specified record.
+        /// </summary>
+        /// <param name="x">The index to access.</param>
+        /// <returns></returns>
+        IMLDataPair this[int x] { get; }
     }
 }

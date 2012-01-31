@@ -375,5 +375,16 @@ namespace Encog.ML.Data.Buffer
             get { return _owner; }
             set { _owner = value; }
         }
+
+        /// <inheritdoc/>
+        public IMLDataPair this[int x]
+        {
+            get
+            {
+                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
+                this.GetRecord(x, result);
+                return result;
+            }
+        }
     }
 }

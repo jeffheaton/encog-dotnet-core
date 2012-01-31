@@ -248,6 +248,7 @@
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
     <Compile Include="ML\Data\Buffer\BufferedDataError.cs" />
     <Compile Include="ML\Data\Buffer\BufferedMLDataSet.cs" />
@@ -268,6 +269,7 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\IMLSequenceSet.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFinal.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
@@ -279,7 +281,6 @@
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
-    <Compile Include="ML\Data\Market\Loader\MultiCsvLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\YahooFinanceLoader.cs" />
     <Compile Include="ML\Data\Market\MarketDataDescription.cs" />
     <Compile Include="ML\Data\Market\MarketDataType.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="ML\Data\Market\MarketMLDataSet.cs" />
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
+    <Compile Include="ML\Data\MLDataError.cs" />
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
     <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />
