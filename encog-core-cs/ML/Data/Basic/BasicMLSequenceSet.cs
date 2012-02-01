@@ -47,6 +47,11 @@ namespace Encog.ML.Data.Basic
             {
                 get
                 {
+                    if (_currentSequenceIndex >= _owner.SequenceCount)
+                    {
+                        throw new InvalidOperationException("Trying to read past the end of the dataset.");
+                    }
+
                     if (_currentIndex < 0)
                     {
                         throw new InvalidOperationException("Must call MoveNext before reading Current.");
@@ -70,6 +75,11 @@ namespace Encog.ML.Data.Basic
             {
                 get
                 {
+                    if (_currentSequenceIndex >= _owner.SequenceCount)
+                    {
+                        throw new InvalidOperationException("Trying to read past the end of the dataset.");
+                    }
+
                     if (_currentIndex < 0)
                     {
                         throw new InvalidOperationException("Must call MoveNext before reading Current.");
@@ -83,22 +93,22 @@ namespace Encog.ML.Data.Basic
             /// </summary>
             /// <returns>True if there is a next item.</returns>
             public bool MoveNext()
-            {
-                IMLDataSet current = _owner.GetSequence(_currentSequenceIndex);
-
-                if (_currentSequenceIndex >= _owner.SequenceCount && _currentIndex >= _owner.Count)
+            {                
+                if (_currentSequenceIndex >= _owner.SequenceCount )
                 {
                     return false;
                 }
 
+                IMLDataSet current = _owner.GetSequence(_currentSequenceIndex);
                 _currentIndex++;
+
                 if (_currentIndex >= current.Count)
                 {
                     _currentIndex = 0;
                     _currentSequenceIndex++;
                 }
 
-                if (_currentSequenceIndex >= _owner.SequenceCount && _currentIndex >= _owner.Count)
+                if (_currentSequenceIndex >= _owner.SequenceCount)
                 {
                     return false;
                 }
