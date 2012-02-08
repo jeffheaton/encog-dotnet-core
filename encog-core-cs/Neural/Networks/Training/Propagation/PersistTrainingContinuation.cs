@@ -79,8 +79,7 @@ namespace Encog.Neural.Networks.Training.Propagation
                         }
                         else
                         {
-                            double[] list = EncogFileSection
-                                .ParseDoubleArray(paras, key);
+                            double[] list = section.ParseDoubleArray(paras, key);
                             result.Put(key, list);
                         }
                     }
