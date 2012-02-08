@@ -32,7 +32,12 @@ namespace Encog.ML.Data.Market.Loader
         /// <param name="to">To.</param>
         /// <param name="File">The file.</param>
         /// <returns></returns>
-        ICollection<LoadedMarketData> ReadAndCallLoader(TickerSymbol symbol, IEnumerable<MarketDataType> neededTypes, DateTime from, DateTime to, string File)
+        ICollection<LoadedMarketData> ReadAndCallLoader(
+            TickerSymbol symbol, 
+            IEnumerable<MarketDataType> neededTypes, 
+            DateTime from, 
+            DateTime to, 
+            string File)
         {
                 //We got a file, lets load it.
 

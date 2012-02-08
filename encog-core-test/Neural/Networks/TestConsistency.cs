@@ -61,9 +61,9 @@ namespace Encog.Neural.Networks
         public void TestFileConsistency()
         {
             var training = EncoderTrainingFactory.generateTraining(4, false);
-            var network = (BasicNetwork)EncogDirectoryPersistence.LoadResourceObject("Encog.Resources.encodernet.eg");
+            var network = (BasicNetwork)EncogDirectoryPersistence.LoadResourceObject("Encog.Resources.xor-nn.eg");
             var e = network.CalculateError(training);
-            Assert.AreEqual(0.0767386807494191, e, 0.00001);
+            Assert.AreEqual(0.046796914913558987, e, 0.00001);
         }
     }
 }
