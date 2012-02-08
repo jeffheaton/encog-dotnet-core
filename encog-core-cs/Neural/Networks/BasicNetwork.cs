@@ -359,7 +359,7 @@ namespace Encog.Neural.Networks
             }
             else
             {
-                (new NguyenWidrowRandomizer(-1, 1)).Randomize(this);
+                (new NguyenWidrowRandomizer()).Randomize(this);
             }
         }
 

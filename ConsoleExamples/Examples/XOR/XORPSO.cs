@@ -80,7 +80,7 @@ namespace Encog.Examples.XOR
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
             BasicNetwork network = EncogUtility.SimpleFeedForward(2, 2, 0, 1, false);
             ICalculateScore score = new TrainingSetScore(trainingSet);
-            IRandomizer randomizer = new NguyenWidrowRandomizer(-1, 1);
+            IRandomizer randomizer = new NguyenWidrowRandomizer();
 
             IMLTrain train = new NeuralPSO(network, randomizer, score, 20);
 
