@@ -426,5 +426,18 @@ namespace Encog.Util
             }
             return result;
         }
+
+        /// <summary>
+        /// Fill the array with the specified value.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="v">The value.</param>
+        public static void Fill(bool[] array, bool v)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = v;
+            }
+        }
     }
 }

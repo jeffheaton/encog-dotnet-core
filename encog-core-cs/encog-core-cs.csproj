@@ -244,6 +244,21 @@
     <Compile Include="MathUtil\VectorAlgebra.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
+    <Compile Include="ML\Bayesian\BayesianChoice.cs" />
+    <Compile Include="ML\Bayesian\BayesianError.cs" />
+    <Compile Include="ML\Bayesian\BayesianEvent.cs" />
+    <Compile Include="ML\Bayesian\BayesianNetwork.cs" />
+    <Compile Include="ML\Bayesian\EventType.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedChoice.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedEvent.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedProbability.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParseProbability.cs" />
+    <Compile Include="ML\Bayesian\Query\BasicQuery.cs" />
+    <Compile Include="ML\Bayesian\Query\Enumeration\EnumerationQuery.cs" />
+    <Compile Include="ML\Bayesian\Query\EventState.cs" />
+    <Compile Include="ML\Bayesian\Query\IBayesianQuery.cs" />
+    <Compile Include="ML\Bayesian\Table\BayesianTable.cs" />
+    <Compile Include="ML\Bayesian\Table\TableLine.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
@@ -681,6 +696,7 @@
   <ItemGroup>
     <None Include="Encog.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
