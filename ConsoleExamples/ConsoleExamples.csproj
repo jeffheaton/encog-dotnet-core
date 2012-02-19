@@ -70,6 +70,7 @@
     <Compile Include="Examples\Forest\GenerateData.cs" />
     <Compile Include="Examples\Forest\TrainNetwork.cs" />
     <Compile Include="Examples\ForexExample\markettrain.cs" />
+    <Compile Include="Examples\Fuzzy\FuzzyExample.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
     <Compile Include="Examples\GeneticTSP\ICalculateGenomeScore.cs" />
     <Compile Include="Examples\GeneticTSP\TSPGenome.cs" />

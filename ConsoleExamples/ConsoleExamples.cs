@@ -56,6 +56,8 @@ using Encog.Examples.CSVMarketExample;
 using Encog.Examples.ForexExample;
 namespace ConsoleExamples
 {
+    using Encog.Examples.Fuzzy;
+
     /// <summary>
     /// Console examples
     /// 
@@ -109,6 +111,7 @@ namespace ConsoleExamples
             examples.Add(NormalizeFile.Info);
             examples.Add(ElliottBenchmark.Info);
             examples.Add(XORPSO.Info);
+            examples.Add(FuzzyExample.Info);
         }
 
         public void ListCommands()
