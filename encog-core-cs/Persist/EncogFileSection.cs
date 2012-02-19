@@ -38,6 +38,11 @@ namespace Encog.Persist
     public class EncogFileSection
     {
         /// <summary>
+        /// Any large arrays that were read.
+        /// </summary>
+        private IList<double[]> _largeArrays = new List<double[]>();
+
+        /// <summary>
         /// The lines in this section/subsection.
         /// </summary>
         ///
@@ -216,19 +221,29 @@ namespace Encog.Persist
         /// <param name="paras">The name-value pairs.</param>
         /// <param name="name">The name to parse.</param>
         /// <returns>The parsed double array value.</returns>
-        public static double[] ParseDoubleArray(IDictionary<String, String> paras,
+        public double[] ParseDoubleArray(IDictionary<String, String> paras,
                                                 String name)
         {
             String v = null;
             try
             {
-                v = paras[name];
-                if (v == null)
+                
+                if ( !paras.ContainsKey(name) )
                 {
                     throw new PersistError("Missing property: " + name);
                 }
 
-                return NumberList.FromList(CSVFormat.EgFormat, v);
+                v = paras[name];
+
+                if (v.StartsWith("##"))
+                {
+                    int i = int.Parse(v.Substring(2));
+                    return _largeArrays[i];
+                }
+                else
+                {
+                    return NumberList.FromList(CSVFormat.EgFormat, v);
+                }
             }
             catch (FormatException )
             {
@@ -379,6 +394,21 @@ namespace Encog.Persist
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Large arrays.
+        /// </summary>
+        public IList<double[]> LargeArrays
+        {
+            get
+            {
+                return _largeArrays;
+            }
+            set
+            {
+                _largeArrays = value;
+            }
         }
 
         /// <inheritdoc/>

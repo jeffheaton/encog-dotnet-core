@@ -82,7 +82,7 @@ namespace Encog.Examples.Benchmark
         public void Execute(IExampleInterface app)
         {
             var rangeRandom = new RangeRandomizer(-1, 1);
-            var nwrRandom = new NguyenWidrowRandomizer(-1, 1);
+            var nwrRandom = new NguyenWidrowRandomizer();
             var fanRandom = new FanInRandomizer();
             var gaussianRandom = new GaussianRandomizer(0, 1);
 

@@ -63,7 +63,7 @@ namespace Encog.App.Analyst
             Assert.AreEqual(5, encog.Script.Normalize.NormalizedFields.Count);
             Assert.AreEqual(4.3, encog.Script.Fields[0].Min, 0.001);
             Assert.AreEqual(7.9, encog.Script.Fields[0].Max, 0.001);
-            Assert.AreEqual(5.84333, encog.Script.Fields[0].Mean, 0.001);
+            Assert.AreEqual(5.8483221477, encog.Script.Fields[0].Mean, 0.001);
             Assert.AreEqual(encog.Script.Fields[0].Class, false);
             Assert.AreEqual(encog.Script.Fields[0].Real, true);
             Assert.AreEqual(encog.Script.Fields[0].Integer, false);

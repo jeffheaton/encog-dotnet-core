@@ -74,6 +74,7 @@
     <Compile Include="MathUtil\Matrices\TestBiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrix.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
+    <Compile Include="ML\Data\Basic\TestBasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
     <Compile Include="ML\Data\Market\CSVLoaderTest.cs" />
@@ -121,6 +122,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\xor-nn.eg" />
     <None Include="smallCSV.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

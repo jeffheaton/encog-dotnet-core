@@ -104,17 +104,14 @@ namespace Encog.Neural.Networks
                         p, BasicNetwork.TagLayerContextCount);
                     flat.LayerIndex = EncogFileSection.ParseIntArray(p,
                                                                      BasicNetwork.TagLayerIndex);
-                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
-                                                                         PersistConst.Output);
+                    flat.LayerOutput = section.ParseDoubleArray(p,PersistConst.Output);
                     flat.LayerSums = new double[flat.LayerOutput.Length];
                     flat.OutputCount = EncogFileSection.ParseInt(p,
                                                                  PersistConst.OutputCount);
                     flat.WeightIndex = EncogFileSection.ParseIntArray(p,
                                                                       BasicNetwork.TagWeightIndex);
-                    flat.Weights = EncogFileSection.ParseDoubleArray(p,
-                                                                     PersistConst.Weights);
-                    flat.BiasActivation = EncogFileSection.ParseDoubleArray(
-                        p, BasicNetwork.TagBiasActivation);
+                    flat.Weights = section.ParseDoubleArray(p, PersistConst.Weights);
+                    flat.BiasActivation = section.ParseDoubleArray(p, BasicNetwork.TagBiasActivation);
                 }
                 else if (section.SectionName.Equals("BASIC")
                          && section.SubSectionName.Equals("ACTIVATION"))

@@ -204,8 +204,7 @@ namespace Encog.ML.SVM
 							params_0, PersistSVM.PARAM_START_ITERATIONS);*/
                     result.Params.svm_type = EncogFileSection.ParseInt(p,
                                                                        ParamSVMType);
-                    result.Params.weight = EncogFileSection.ParseDoubleArray(
-                        p, ParamWeight);
+                    result.Params.weight = section.ParseDoubleArray(p, ParamWeight);
                     result.Params.weight_label = EncogFileSection
                         .ParseIntArray(p, ParamWeightLabel);
                 }

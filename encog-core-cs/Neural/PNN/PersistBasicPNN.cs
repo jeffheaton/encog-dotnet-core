@@ -99,8 +99,7 @@ namespace Encog.Neural.Pnn
                     outmodel = StringToOutputMode(paras[PropertyOutputMode]);
                     error = EncogFileSection
                         .ParseDouble(paras, PersistConst.Error);
-                    sigma = EncogFileSection.ParseDoubleArray(paras,
-                                                              PersistConst.Sigma);
+                    sigma = section.ParseDoubleArray(paras, PersistConst.Sigma);
                 }
                 if (section.SectionName.Equals("PNN")
                     && section.SubSectionName.Equals("SAMPLES"))

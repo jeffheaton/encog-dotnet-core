@@ -38,6 +38,11 @@ namespace Encog.Persist
     public class EncogWriteHelper
     {
         /// <summary>
+        /// The current large array that we are on.
+        /// </summary>
+        private int _largeArrayNumber;
+
+        /// <summary>
         /// A quote char.
         /// </summary>
         ///
@@ -221,6 +226,7 @@ namespace Encog.Persist
         public void AddSubSection(String str)
         {
             xout.WriteLine("[" + currentSection + ":" + str + "]");
+            _largeArrayNumber = 0;
         }
 
         /// <summary>
@@ -343,9 +349,44 @@ namespace Encog.Persist
         /// <param name="d">The double value.</param>
         public void WriteProperty(String name, double[] d)
         {
-            var result = new StringBuilder();
-            NumberList.ToList(CSVFormat.EgFormat, result, d);
-            WriteProperty(name, result.ToString());
+            if (d.Length < 2048)
+            {
+                var result = new StringBuilder();
+                NumberList.ToList(CSVFormat.EgFormat, result, d);
+                WriteProperty(name, result.ToString());
+            }
+            else
+            {
+                xout.Write(name);
+                xout.Write("=##");
+                xout.WriteLine(_largeArrayNumber++);
+                xout.Write("##double#");
+                xout.WriteLine(d.Length);
+
+                int index = 0;
+
+                while (index < d.Length)
+                {
+                    bool first = true;
+                    for (int i = 0; (i < 2048) && (index < d.Length); i++)
+                    {
+                        if (!first)
+                        {
+                            xout.Write(",");
+                        }
+                        else
+                        {
+                            xout.Write("   ");
+                        }
+                        xout.Write(CSVFormat.EgFormat.Format(d[index],
+                                EncogFramework.DefaultPrecision));
+                        index++;
+                        first = false;
+                    }
+                    xout.WriteLine();
+                }
+                xout.WriteLine("##end");
+            }
         }
 
         /// <summary>

@@ -30,37 +30,29 @@ namespace Encog.ML.Data.Market
         [TestMethod]
         public void TestCSVLoader()
         {
+            var loader = new CSVFinal();
+            loader.DateFormat = "yyyy.MM.dd hh:mm:ss";
 
+            var tickerAAPL = new TickerSymbol("AAPL", "NY");
 
+            var desc = new MarketDataDescription(tickerAAPL, MarketDataType.Close, true, true);
+            MarketMLDataSet marketData = new MarketMLDataSet(loader, 5, 1);
+            marketData.AddDescription(desc);
+            marketData.SequenceGrandularity = Util.Time.TimeUnit.Hours;
+            var begin = new DateTime(2006, 1, 1);
+            var end = new DateTime(2007, 7, 31);
+            loader.GetFile((AssemblyDirectory + "\\smallCSV.csv"));
+            marketData.Load(begin, end);
+            marketData.Generate();
+            // first test the points
+            IEnumerator<TemporalPoint> itr = marketData.Points.GetEnumerator();
+            itr.MoveNext();
+            TemporalPoint point = itr.Current;
 
-                var loader = new CSVFinal();
-
-
-                var tickerAAPL = new TickerSymbol("AAPL", "NY");
-
-                
-
-                var desc = new MarketDataDescription(tickerAAPL, MarketDataType.Close, true, true);
-                MarketMLDataSet marketData = new MarketMLDataSet(loader, 5, 1);
-                marketData.AddDescription(desc);
-                marketData.SequenceGrandularity = Util.Time.TimeUnit.Hours;
-                var begin = new DateTime(2006, 1, 1);
-                var end = new DateTime(2007, 7, 31);
-                loader.GetFile((AssemblyDirectory + "\\smallCSV.csv"));
-                marketData.Load(begin, end);
-                marketData.Generate();
-                // first test the points
-                IEnumerator<TemporalPoint> itr = marketData.Points.GetEnumerator();
-                itr.MoveNext();
-                TemporalPoint point = itr.Current;
-
-                Assert.AreEqual(0, point.Sequence);
-                Assert.AreEqual(1, point.Data.Length);
-                Assert.AreEqual(1.12884, point[0]);
-                Assert.AreEqual(5, marketData.Points.Count);
-
-
-
+            Assert.AreEqual(0, point.Sequence);
+            Assert.AreEqual(1, point.Data.Length);
+            Assert.AreEqual(1.12884, point[0]);
+            Assert.AreEqual(5, marketData.Points.Count);
         }
     }
 }

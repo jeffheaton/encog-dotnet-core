@@ -23,6 +23,8 @@
 using System;
 using Encog.ML;
 using Encog.Neural.Networks;
+using Encog.Engine.Network.Activation;
+using Encog.MathUtil.Matrices;
 
 namespace Encog.MathUtil.Randomize
 {
@@ -32,104 +34,106 @@ namespace Encog.MathUtil.Randomize
     /// most trainable neural network.
     /// </summary>
     ///
-    public class NguyenWidrowRandomizer : RangeRandomizer
+    public class NguyenWidrowRandomizer : IRandomizer
     {
-        private double _beta;
-        private int _inputCount;
-
         /// <summary>
-        /// Construct a Nguyen-Widrow randomizer.
+        /// Message to indicate which operations are not allowed.
         /// </summary>
-        ///
-        /// <param name="min">The min of the range.</param>
-        /// <param name="max">The max of the range.</param>
-        public NguyenWidrowRandomizer(double min, double max) : base(min, max)
-        {
-        }
+        public static String MSG = "This type of randomization is not supported by Nguyen-Widrow";
 
         /// <summary>
-        /// Construct a Nguyen-Widrow randomizer. Use -1 and 1 as range.
-        /// </summary>
-        public NguyenWidrowRandomizer(): base(-1,1)
-        {
-        }
-
-        #region IRandomizer Members
-
-        /// <summary>
-        /// The Nguyen-Widrow initialization algorithm is the following :
-        /// 
-        /// 1. Initialize all weight of hidden layers with (ranged) random values
-        /// 2. For each hidden layer
-        /// 2.1 calculate beta value, 0.7/// Nth(#neurons of input layer) root of
-        /// #neurons of current layer 
-        /// 2.2 for each synapse
-        /// 2.1.1 for each weight 
-        /// 2.1.2 Adjust weight by dividing by norm of weight for neuron and
-        /// multiplying by beta value
+        /// Randomize the specified BasicNetwork.
         /// </summary>
         /// <param name="method">The network to randomize.</param>
-        public override sealed void Randomize(IMLMethod method)
+        public void Randomize(IMLMethod method)
         {
             if (!(method is BasicNetwork))
             {
-                throw new EncogError("Ngyyen Widrow only works on BasicNetwork.");
+                throw new EncogError("Nguyen-Widrow only supports BasicNetwork.");
             }
 
-            var network = (BasicNetwork) method;
+            BasicNetwork network = (BasicNetwork)method;
 
-            new RangeRandomizer(Min, Max).Randomize(network);
-
-            int hiddenNeurons = 0;
-
-            for (int i = 1; i < network.LayerCount - 1; i++)
+            for (int fromLayer = 0; fromLayer < network.LayerCount - 1; fromLayer++)
             {
-                hiddenNeurons += network.GetLayerTotalNeuronCount(i);
+                RandomizeSynapse(network, fromLayer);
             }
 
-            // can't really do much, use regular randomization
-            if (hiddenNeurons < 1)
-            {
-                return;
-            }
-
-            _inputCount = network.InputCount;
-            _beta = 0.7d*Math.Pow(hiddenNeurons, 1.0d/network.InputCount);
-
-            base.Randomize(network);
         }
 
-        #endregion
+        /// <summary>
+        /// Calculate the range of an activation function.
+        /// </summary>
+        /// <param name="af">The actionvation function to calculate for.</param>
+        /// <param name="r">The value to collect the range at.</param>
+        /// <returns>The range.</returns>
+        private double CalculateRange(IActivationFunction af, double r)
+        {
+            double[] d = { r };
+            af.ActivationFunction(d, 0, 1);
+            return d[0];
+        }
 
         /// <summary>
-        /// Randomize one level of a neural network.
+        /// Randomize the connections between two layers.
         /// </summary>
-        ///
-        /// <param name="network">The network to randomize</param>
-        /// <param name="fromLayer">The from level to randomize.</param>
-        public override void Randomize(BasicNetwork network, int fromLayer)
+        /// <param name="network">The network to randomize.</param>
+        /// <param name="fromLayer">The starting layer.</param>
+        private void RandomizeSynapse(BasicNetwork network, int fromLayer)
         {
-            int fromCount = network.GetLayerTotalNeuronCount(fromLayer);
-            int toCount = network.GetLayerNeuronCount(fromLayer + 1);
+            int toLayer = fromLayer + 1;
+            int toCount = network.GetLayerNeuronCount(toLayer);
+            int fromCount = network.GetLayerNeuronCount(fromLayer);
+            int fromCountTotalCount = network.GetLayerTotalNeuronCount(fromLayer);
+            IActivationFunction af = network.GetActivation(toLayer);
+            double low = CalculateRange(af, Double.NegativeInfinity);
+            double high = CalculateRange(af, Double.PositiveInfinity);
+
+            double b = 0.7d * Math.Pow(toCount, (1d / fromCount)) / (high - low);
 
             for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
             {
-                double n = 0.0;
-                for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
+                if (fromCount != fromCountTotalCount)
                 {
-                    double w = network.GetWeight(fromLayer, fromNeuron, toNeuron);
-                    n += w * w;
+                    double w = RangeRandomizer.Randomize(-b, b);
+                    network.SetWeight(fromLayer, fromCount, toNeuron, w);
                 }
-                n = Math.Sqrt(n);
-
-
                 for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
                 {
-                    double w = network.GetWeight(fromLayer, fromNeuron, toNeuron);
-                    w = _beta * w / n;
+                    double w = RangeRandomizer.Randomize(0, b);
                     network.SetWeight(fromLayer, fromNeuron, toNeuron, w);
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public double Randomize(double d)
+        {
+            throw new EncogError(MSG);
+        }
+
+        /// <inheritdoc/>
+        public void Randomize(double[] d)
+        {
+            throw new EncogError(MSG);
+        }
+
+        /// <inheritdoc/>
+        public void Randomize(double[][] d)
+        {
+            throw new EncogError(MSG);
+        }
+
+        /// <inheritdoc/>
+        public void Randomize(Matrix m)
+        {
+            throw new EncogError(MSG);
+        }
+
+        /// <inheritdoc/>
+        public void Randomize(double[] d, int begin, int size)
+        {
+            throw new EncogError(MSG);
         }
     }
 }

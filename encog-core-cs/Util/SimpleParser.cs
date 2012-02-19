@@ -248,5 +248,23 @@ namespace Encog.Util
 
             return result.ToString();
         }
+
+        /// <summary>
+        /// Read forward to the specified characters.
+        /// </summary>
+        /// <param name="chs">The characters to stop at.</param>
+        /// <returns>The string that was read.</returns>
+        public String ReadToChars(String chs)
+        {
+            StringBuilder result = new StringBuilder();
+
+            while (chs.IndexOf(this.Peek()) == -1 && !EOL())
+            {
+                result.Append(ReadChar());
+            }
+
+            return result.ToString();
+        }
+
     }
 }

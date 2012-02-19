@@ -268,10 +268,26 @@
     <Compile Include="MathUtil\VectorAlgebra.cs" />
     <Compile Include="ML\Anneal\SimulatedAnnealing.cs" />
     <Compile Include="ML\BasicML.cs" />
+    <Compile Include="ML\Bayesian\BayesianChoice.cs" />
+    <Compile Include="ML\Bayesian\BayesianError.cs" />
+    <Compile Include="ML\Bayesian\BayesianEvent.cs" />
+    <Compile Include="ML\Bayesian\BayesianNetwork.cs" />
+    <Compile Include="ML\Bayesian\EventType.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedChoice.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedEvent.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParsedProbability.cs" />
+    <Compile Include="ML\Bayesian\Parse\ParseProbability.cs" />
+    <Compile Include="ML\Bayesian\Query\BasicQuery.cs" />
+    <Compile Include="ML\Bayesian\Query\Enumeration\EnumerationQuery.cs" />
+    <Compile Include="ML\Bayesian\Query\EventState.cs" />
+    <Compile Include="ML\Bayesian\Query\IBayesianQuery.cs" />
+    <Compile Include="ML\Bayesian\Table\BayesianTable.cs" />
+    <Compile Include="ML\Bayesian\Table\TableLine.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
     <Compile Include="ML\Data\Buffer\BufferedDataError.cs" />
     <Compile Include="ML\Data\Buffer\BufferedMLDataSet.cs" />
@@ -292,6 +308,7 @@
     <Compile Include="ML\Data\IMLDataError.cs" />
     <Compile Include="ML\Data\IMLDataPair.cs" />
     <Compile Include="ML\Data\IMLDataSet.cs" />
+    <Compile Include="ML\Data\IMLSequenceSet.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFinal.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
       <SubType>Form</SubType>
@@ -310,6 +327,7 @@
     <Compile Include="ML\Data\Market\MarketMLDataSet.cs" />
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
+    <Compile Include="ML\Data\MLDataError.cs" />
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
     <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />
@@ -702,6 +720,7 @@
   <ItemGroup>
     <None Include="Encog.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

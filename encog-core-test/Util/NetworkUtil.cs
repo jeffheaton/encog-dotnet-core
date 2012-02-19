@@ -61,7 +61,7 @@ namespace Encog.Util
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 3));
             network.AddLayer(new BasicLayer(null, false, 1));
             network.Structure.FinalizeStructure();
-            (new NguyenWidrowRandomizer(-1, 1)).Randomize(network);
+            (new NguyenWidrowRandomizer()).Randomize(network);
 
             return network;
         }

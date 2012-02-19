@@ -97,21 +97,18 @@ namespace Encog.Neural.Rbf
                                                                       BasicNetwork.TagLayerCounts);
                     flat.LayerFeedCounts = EncogFileSection.ParseIntArray(p,
                                                                           BasicNetwork.TagLayerFeedCounts);
-                    flat.LayerContextCount = EncogFileSection.ParseIntArray(
-                        p, BasicNetwork.TagLayerContextCount);
+                    flat.LayerContextCount = EncogFileSection.ParseIntArray(p, BasicNetwork.TagLayerContextCount);
                     flat.LayerIndex = EncogFileSection.ParseIntArray(p,
                                                                      BasicNetwork.TagLayerIndex);
-                    flat.LayerOutput = EncogFileSection.ParseDoubleArray(p,
+                    flat.LayerOutput = section.ParseDoubleArray(p,
                                                                          PersistConst.Output);
                     flat.LayerSums = new double[flat.LayerOutput.Length];
-                    flat.OutputCount = EncogFileSection.ParseInt(p,
-                                                                 PersistConst.OutputCount);
+                    flat.OutputCount = EncogFileSection.ParseInt(p,PersistConst.OutputCount);
                     flat.WeightIndex = EncogFileSection.ParseIntArray(p,
                                                                       BasicNetwork.TagWeightIndex);
-                    flat.Weights = EncogFileSection.ParseDoubleArray(p,
+                    flat.Weights = section.ParseDoubleArray(p,
                                                                      PersistConst.Weights);
-                    flat.BiasActivation = EncogFileSection.ParseDoubleArray(
-                        p, BasicNetwork.TagBiasActivation);
+                    flat.BiasActivation = section.ParseDoubleArray(p, BasicNetwork.TagBiasActivation);
                 }
                 else if (section.SectionName.Equals("RBF-NETWORK")
                          && section.SubSectionName.Equals("ACTIVATION"))
