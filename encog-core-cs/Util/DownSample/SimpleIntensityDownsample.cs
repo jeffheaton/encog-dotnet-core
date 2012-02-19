@@ -44,7 +44,7 @@ namespace Encog.Util.DownSample
             Image = image;
             ProcessImage(image);
 
-            var result = new double[height*width*3];
+            var result = new double[height * width * 3];
 
             // now downsample
 
@@ -55,7 +55,7 @@ namespace Encog.Util.DownSample
                 {
                     DownSampleRegion(x, y);
                     result[index++] = (CurrentRed + CurrentBlue
-                                       + CurrentGreen)/3;
+                                       + CurrentGreen) / 3;
                 }
             }
 

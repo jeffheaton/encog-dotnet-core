@@ -165,7 +165,7 @@ namespace Encog.Persist
                         return result.ToString();
                     }
 
-                    ch = (char) b;
+                    ch = (char)b;
 
                     if ((ch != 13) && (ch != 10))
                     {
@@ -193,7 +193,7 @@ namespace Encog.Persist
 
             try
             {
-				filename.Delete();
+                filename.Delete();
                 fos = filename.OpenWrite();
                 SaveObject(fos, obj);
             }
@@ -241,7 +241,7 @@ namespace Encog.Persist
                 DateTime now = DateTime.Now;
                 pw.WriteLine("encog," + p.PersistClassString + ",java,"
                              + EncogFramework.Version + "," + p.FileVersion + ","
-                             + (now.Ticks/10000));
+                             + (now.Ticks / 10000));
                 pw.Flush();
                 p.Save(os, obj);
             }
@@ -265,14 +265,18 @@ namespace Encog.Persist
                 var path = new FileInfo(Path.Combine(_parent.FullName, name));
                 TextReader br = new StreamReader(path.OpenRead());
                 String header = br.ReadLine();
-                String[] paras = header.Split(',');
-                br.Close();
-                return paras[1];
+                if (header != null)
+                {
+                    String[] paras = header.Split(',');
+                    br.Close();
+                    return paras[1];
+                }
             }
             catch (IOException ex)
             {
                 throw new PersistError(ex);
             }
+            throw new PersistError("Header error");
         }
 
 
