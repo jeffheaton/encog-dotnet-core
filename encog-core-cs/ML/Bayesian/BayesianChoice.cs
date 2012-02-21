@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Util.CSV;
 
@@ -17,17 +15,17 @@ namespace Encog.ML.Bayesian
         /// <summary>
         /// The label for this choice.
         /// </summary>
-        private String _label;
-
-        /// <summary>
-        /// The min values, if continuous, or the index if discrete.
-        /// </summary>
-        private double _min;
+        private readonly String _label;
 
         /// <summary>
         /// The max values, if continuous, or the index if discrete.
         /// </summary>
-        private double _max;
+        private readonly double _max;
+
+        /// <summary>
+        /// The min values, if continuous, or the index if discrete.
+        /// </summary>
+        private readonly double _min;
 
         /// <summary>
         /// Construct a continuous choice that covers the specified range. 
@@ -59,10 +57,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public String Label
         {
-            get
-            {
-                return _label;
-            }
+            get { return _label; }
         }
 
         /// <summary>
@@ -70,10 +65,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public double Min
         {
-            get
-            {
-                return _min;
-            }
+            get { return _min; }
         }
 
         /// <summary>
@@ -81,10 +73,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public double Max
         {
-            get
-            {
-                return _max;
-            }
+            get { return _max; }
         }
 
         /// <summary>
@@ -93,14 +82,11 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public bool IsIndex
         {
-            get
-            {
-                return Math.Abs(_min - _max) < EncogFramework.DefaultDoubleEqual;
-            }
+            get { return Math.Abs(_min - _max) < EncogFramework.DefaultDoubleEqual; }
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             return _label;
         }
@@ -111,8 +97,8 @@ namespace Encog.ML.Bayesian
         /// <returns>A string representation of this choice.</returns>
         public String ToFullString()
         {
-            StringBuilder result = new StringBuilder();
-            result.Append(this.Label);
+            var result = new StringBuilder();
+            result.Append(Label);
             if (!IsIndex)
             {
                 result.Append(":");

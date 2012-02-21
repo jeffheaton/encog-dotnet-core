@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.Bayesian.Query
 {
@@ -38,6 +36,16 @@ namespace Encog.ML.Bayesian.Query
         IList<BayesianEvent> OutcomeEvents { get; }
 
         /// <summary>
+        /// Return a string that represents this query as a probability "problem".
+        /// </summary>
+        String Problem { get; }
+
+        /// <summary>
+        /// Obtains the probability after execute has been called.
+        /// </summary>
+        double Probability { get; }
+
+        /// <summary>
         /// Reset all event types back to hidden.
         /// </summary>
         void Reset();
@@ -57,11 +65,11 @@ namespace Encog.ML.Bayesian.Query
         /// <returns>The event state.</returns>
         EventState GetEventState(BayesianEvent theEvent);
 
-        /**
-         * Get the event type.
-         * @param event The event to check.
-         * @return The current event type for this event.
-         */
+        ///<summary>
+        /// Get the event type.
+        ///</summary>
+        ///<param name="theEvent">The event to check.</param>
+        ///<returns>The current event type for this event.</returns>
         EventType GetEventType(BayesianEvent theEvent);
 
         /// <summary>
@@ -79,19 +87,9 @@ namespace Encog.ML.Bayesian.Query
         void SetEventValue(BayesianEvent theEvent, int d);
 
         /// <summary>
-        /// Return a string that represents this query as a probability "problem".
-        /// </summary>
-        String Problem { get; }
-
-        /// <summary>
         /// Execute the query.
         /// </summary>
         void Execute();
-
-        /// <summary>
-        /// Obtains the probability after execute has been called.
-        /// </summary>
-        double Probability { get; }
 
         /// <summary>
         /// Finalize the structure, once all events and dependencies are in place.

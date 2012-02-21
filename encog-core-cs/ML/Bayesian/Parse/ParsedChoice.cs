@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.Bayesian.Parse
 {
@@ -13,17 +10,17 @@ namespace Encog.ML.Bayesian.Parse
         /// <summary>
         /// The label for this choice.
         /// </summary>
-        readonly private String label;
-
-        /// <summary>
-        /// The min value for this choice.
-        /// </summary>
-        readonly private double min;
+        private readonly String _label;
 
         /// <summary>
         /// The max value for this choice.
         /// </summary>
-        readonly private double max;
+        private readonly double _max;
+
+        /// <summary>
+        /// The min value for this choice.
+        /// </summary>
+        private readonly double _min;
 
         /// <summary>
         /// Construct a continuous choice, with a min and max. 
@@ -33,9 +30,9 @@ namespace Encog.ML.Bayesian.Parse
         /// <param name="max">The max value, for this choice.</param>
         public ParsedChoice(String label, double min, double max)
         {
-            this.label = label;
-            this.min = min;
-            this.max = max;
+            _label = label;
+            _min = min;
+            _max = max;
         }
 
         /// <summary>
@@ -45,9 +42,9 @@ namespace Encog.ML.Bayesian.Parse
         /// <param name="index">The index.</param>
         public ParsedChoice(String label, int index)
         {
-            this.label = label;
-            this.min = index;
-            this.max = index;
+            _label = label;
+            _min = index;
+            _max = index;
         }
 
         /// <summary>
@@ -55,10 +52,7 @@ namespace Encog.ML.Bayesian.Parse
         /// </summary>
         public String Label
         {
-            get
-            {
-                return label;
-            }
+            get { return _label; }
         }
 
         /// <summary>
@@ -66,10 +60,7 @@ namespace Encog.ML.Bayesian.Parse
         /// </summary>
         public double Min
         {
-            get
-            {
-                return min;
-            }
+            get { return _min; }
         }
 
         /// <summary>
@@ -77,10 +68,7 @@ namespace Encog.ML.Bayesian.Parse
         /// </summary>
         public double Max
         {
-            get
-            {
-                return max;
-            }
+            get { return _max; }
         }
 
         /// <summary>
@@ -88,16 +76,13 @@ namespace Encog.ML.Bayesian.Parse
         /// </summary>
         public bool IsIndex
         {
-            get
-            {
-                return Math.Abs(this.min - this.max) < EncogFramework.DefaultDoubleEqual;
-            }
+            get { return Math.Abs(_min - _max) < EncogFramework.DefaultDoubleEqual; }
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
-            return this.label;
+            return _label;
         }
     }
 }

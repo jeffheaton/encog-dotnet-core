@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Encog.ML.Data;
 using Encog.MathUtil;
 using Encog.ML.Bayesian.Query.Enumeration;
+using Encog.ML.Data;
 
 namespace Encog.ML.Bayesian.Training.Search.k2
 {
@@ -14,44 +12,79 @@ namespace Encog.ML.Bayesian.Training.Search.k2
     public class SearchK2 : IBayesSearch
     {
         /// <summary>
-        /// The data to use.
-        /// </summary>
-        private IMLDataSet data;
-
-        /// <summary>
-        /// The network to optimize.
-        /// </summary>
-        private BayesianNetwork network;
-
-        /// <summary>
-        /// The trainer being used.
-        /// </summary>
-        private TrainBayesian train;
-
-        /// <summary>
-        /// The last calculated value for p.
-        /// </summary>
-        private double lastCalculatedP;
-
-        /// <summary>
         /// The node ordering.
         /// </summary>
-        private IList<BayesianEvent> nodeOrdering = new List<BayesianEvent>();
+        private readonly IList<BayesianEvent> _nodeOrdering = new List<BayesianEvent>();
+
+        /// <summary>
+        /// The data to use.
+        /// </summary>
+        private IMLDataSet _data;
 
         /// <summary>
         /// The current index.
         /// </summary>
-        private int index = -1;
+        private int _index = -1;
+
+        /// <summary>
+        /// The last calculated value for p.
+        /// </summary>
+        private double _lastCalculatedP;
+
+        /// <summary>
+        /// The network to optimize.
+        /// </summary>
+        private BayesianNetwork _network;
+
+        /// <summary>
+        /// The trainer being used.
+        /// </summary>
+        private TrainBayesian _train;
+
+        #region IBayesSearch Members
 
         /// <inheritdoc/>
         public void Init(TrainBayesian theTrainer, BayesianNetwork theNetwork, IMLDataSet theData)
         {
-            this.network = theNetwork;
-            this.data = theData;
-            this.train = theTrainer;
+            _network = theNetwork;
+            _data = theData;
+            _train = theTrainer;
             OrderNodes();
-            this.index = -1;
+            _index = -1;
         }
+
+        /// <inheritdoc/>
+        public bool Iteration()
+        {
+            if (_index == -1)
+            {
+                OrderNodes();
+            }
+            else
+            {
+                BayesianEvent e = _nodeOrdering[_index];
+                double oldP = CalculateG(_network, e, e.Parents);
+
+                while (e.Parents.Count < _train.MaximumParents)
+                {
+                    BayesianEvent z = FindZ(e, _index, oldP);
+                    if (z != null)
+                    {
+                        _network.CreateDependency(z, e);
+                        oldP = _lastCalculatedP;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            _index++;
+            return (_index < _data.InputSize);
+        }
+
+        #endregion
 
         /// <summary>
         /// Basically the goal here is to get the classification target, if it exists,
@@ -59,25 +92,25 @@ namespace Encog.ML.Bayesian.Training.Search.k2
         /// </summary>
         private void OrderNodes()
         {
-            this.nodeOrdering.Clear();
+            _nodeOrdering.Clear();
 
             // is there a classification target?
-            if (this.network.ClassificationTarget != -1)
+            if (_network.ClassificationTarget != -1)
             {
-                this.nodeOrdering.Add(this.network.ClassificationTargetEvent);
+                _nodeOrdering.Add(_network.ClassificationTargetEvent);
             }
 
 
             // now add the others
-            foreach (BayesianEvent e in this.network.Events)
+            foreach (BayesianEvent e in _network.Events)
             {
-                if (!this.nodeOrdering.Contains(e))
+                if (!_nodeOrdering.Contains(e))
                 {
-                    this.nodeOrdering.Add(e);
+                    _nodeOrdering.Add(e);
                 }
             }
         }
-        
+
         /// <summary>
         /// Find the value for z.
         /// </summary>
@@ -92,23 +125,23 @@ namespace Encog.ML.Bayesian.Training.Search.k2
             //System.out.println("Finding parent for: " + event.toString());
             for (int i = 0; i < n; i++)
             {
-                BayesianEvent trialParent = this.nodeOrdering[i];
+                BayesianEvent trialParent = _nodeOrdering[i];
                 IList<BayesianEvent> parents = new List<BayesianEvent>();
-                parents.CopyTo(e.Parents.ToArray<BayesianEvent>(), 0);
+                parents.CopyTo(e.Parents.ToArray(), 0);
                 parents.Add(trialParent);
                 //System.out.println("Calculating adding " + trialParent.toString() + " to " + event.toString());
-                this.lastCalculatedP = this.CalculateG(network, e, parents);
+                _lastCalculatedP = CalculateG(_network, e, parents);
                 //System.out.println("lastP:" + this.lastCalculatedP);
                 //System.out.println("old:" + old);
-                if (this.lastCalculatedP > old && this.lastCalculatedP > maxChildP)
+                if (_lastCalculatedP > old && _lastCalculatedP > maxChildP)
                 {
                     result = trialParent;
-                    maxChildP = this.lastCalculatedP;
+                    maxChildP = _lastCalculatedP;
                     //System.out.println("Current best is: " + result.toString());
                 }
             }
 
-            this.lastCalculatedP = maxChildP;
+            _lastCalculatedP = maxChildP;
             return result;
         }
 
@@ -125,14 +158,14 @@ namespace Encog.ML.Bayesian.Training.Search.k2
         /// <param name="desiredValue">The desired value.</param>
         /// <returns>The value N. </returns>
         public int CalculateN(BayesianNetwork network, BayesianEvent e,
-                IList<BayesianEvent> parents, int[] parentInstance, int desiredValue)
+                              IList<BayesianEvent> parents, int[] parentInstance, int desiredValue)
         {
             int result = 0;
             int eventIndex = network.GetEventIndex(e);
 
-            foreach (IMLDataPair pair in this.data)
+            foreach (IMLDataPair pair in _data)
             {
-                int[] d = this.network.DetermineClasses(pair.Input);
+                int[] d = _network.DetermineClasses(pair.Input);
 
                 if (d[eventIndex] == desiredValue)
                 {
@@ -170,13 +203,13 @@ namespace Encog.ML.Bayesian.Training.Search.k2
         /// <param name="parentInstance">The parent instance we are looking for.</param>
         /// <returns>The value N. </returns>
         public int CalculateN(BayesianNetwork network, BayesianEvent e,
-                IList<BayesianEvent> parents, int[] parentInstance)
+                              IList<BayesianEvent> parents, int[] parentInstance)
         {
             int result = 0;
 
-            foreach (IMLDataPair pair in this.data)
+            foreach (IMLDataPair pair in _data)
             {
-                int[] d = this.network.DetermineClasses(pair.Input);
+                int[] d = _network.DetermineClasses(pair.Input);
 
                 bool reject = false;
 
@@ -184,7 +217,7 @@ namespace Encog.ML.Bayesian.Training.Search.k2
                 {
                     BayesianEvent parentEvent = parents[i];
                     int parentIndex = network.GetEventIndex(parentEvent);
-                    if (parentInstance[i] != ((int)d[parentIndex]))
+                    if (parentInstance[i] != (d[parentIndex]))
                     {
                         reject = true;
                         break;
@@ -199,7 +232,7 @@ namespace Encog.ML.Bayesian.Training.Search.k2
             return result;
         }
 
-        
+
         /// <summary>
         /// Calculate G. 
         /// </summary>
@@ -208,19 +241,19 @@ namespace Encog.ML.Bayesian.Training.Search.k2
         /// <param name="parents">The parents.</param>
         /// <returns>The value for G.</returns>
         public double CalculateG(BayesianNetwork network,
-                BayesianEvent e, IList<BayesianEvent> parents)
+                                 BayesianEvent e, IList<BayesianEvent> parents)
         {
             double result = 1.0;
             int r = e.Choices.Count;
 
-            int[] args = new int[parents.Count];
+            var args = new int[parents.Count];
 
             do
             {
                 double n = EncogMath.Factorial(r - 1);
                 double d = EncogMath.Factorial(CalculateN(network, e,
-                        parents, args) + r - 1);
-                double p1 = n / d;
+                                                          parents, args) + r - 1);
+                double p1 = n/d;
 
                 double p2 = 1;
                 for (int k = 0; k < e.Choices.Count; k++)
@@ -228,44 +261,10 @@ namespace Encog.ML.Bayesian.Training.Search.k2
                     p2 *= EncogMath.Factorial(CalculateN(network, e, parents, args, k));
                 }
 
-                result *= p1 * p2;
+                result *= p1*p2;
             } while (EnumerationQuery.Roll(parents, args));
 
             return result;
         }
-
-
-        /// <inheritdoc/>
-        public bool Iteration()
-        {
-
-            if (index == -1)
-            {
-                OrderNodes();
-            }
-            else
-            {
-                BayesianEvent e = this.nodeOrdering[index];
-                double oldP = this.CalculateG(network, e, e.Parents);
-
-                while (e.Parents.Count < this.train.MaximumParents)
-                {
-                    BayesianEvent z = FindZ(e, index, oldP);
-                    if (z != null)
-                    {
-                        this.network.CreateDependency(z, e);
-                        oldP = this.lastCalculatedP;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            index++;
-            return (index < this.data.InputSize);
-        }
-
     }
 }

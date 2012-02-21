@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Encog.ML.Bayesian.Table;
 using Encog.ML.Data;
-using Encog.ML.Bayesian.Table;
 
 namespace Encog.ML.Bayesian.Training.Estimator
 {
@@ -12,20 +8,35 @@ namespace Encog.ML.Bayesian.Training.Estimator
     /// </summary>
     public class SimpleEstimator : IBayesEstimator
     {
-        private IMLDataSet data;
-        private BayesianNetwork network;
-        private TrainBayesian trainer;
-        private int index;
+        private IMLDataSet _data;
+        private int _index;
+        private BayesianNetwork _network;
+
+        #region IBayesEstimator Members
 
         /// <inheritdoc/>
         public void Init(TrainBayesian theTrainer, BayesianNetwork theNetwork, IMLDataSet theData)
         {
-            this.network = theNetwork;
-            this.data = theData;
-            this.trainer = theTrainer;
-            this.index = 0;
+            _network = theNetwork;
+            _data = theData;
+            _index = 0;
         }
 
+
+        /// <inheritdoc/>
+        public bool Iteration()
+        {
+            BayesianEvent e = _network.Events[_index];
+            foreach (TableLine line in e.Table.Lines)
+            {
+                line.Probability = (CalculateProbability(e, line.Result, line.Arguments));
+            }
+            _index++;
+
+            return _index < _network.Events.Count;
+        }
+
+        #endregion
 
         /// <summary>
         /// Calculate the probability.
@@ -36,14 +47,14 @@ namespace Encog.ML.Bayesian.Training.Estimator
         /// <returns>The probability.</returns>
         public double CalculateProbability(BayesianEvent e, int result, int[] args)
         {
-            int eventIndex = this.network.Events.IndexOf(e);
+            int eventIndex = _network.Events.IndexOf(e);
             int x = 0;
             int y = 0;
 
             // calculate overall probability
-            foreach (IMLDataPair pair in this.data)
+            foreach (IMLDataPair pair in _data)
             {
-                int[] d = this.network.DetermineClasses(pair.Input);
+                int[] d = _network.DetermineClasses(pair.Input);
 
                 if (args.Length == 0)
                 {
@@ -61,7 +72,7 @@ namespace Encog.ML.Bayesian.Training.Estimator
                     bool givenMatch = true;
                     foreach (BayesianEvent givenEvent in e.Parents)
                     {
-                        int givenIndex = this.network.GetEventIndex(givenEvent);
+                        int givenIndex = _network.GetEventIndex(givenEvent);
                         if (args[i] != d[givenIndex])
                         {
                             givenMatch = false;
@@ -81,20 +92,7 @@ namespace Encog.ML.Bayesian.Training.Estimator
             double den = x + e.Choices.Count;
 
 
-            return num / den;
-        }
-
-        /// <inheritdoc/>
-        public bool Iteration()
-        {
-            BayesianEvent e = this.network.Events[this.index];
-            foreach (TableLine line in e.Table.Lines)
-            {
-                line.Probability = (CalculateProbability(e, line.Result, line.Arguments));
-            }
-            index++;
-
-            return index < this.network.Events.Count;
+            return num/den;
         }
     }
 }

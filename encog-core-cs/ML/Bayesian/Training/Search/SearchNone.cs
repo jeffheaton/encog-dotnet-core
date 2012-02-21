@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
+﻿using Encog.ML.Data;
 
 namespace Encog.ML.Bayesian.Training.Search
 {
@@ -11,18 +7,20 @@ namespace Encog.ML.Bayesian.Training.Search
     /// </summary>
     public class SearchNone : IBayesSearch
     {
+        #region IBayesSearch Members
+
         /// <inheritdoc/>
         public void Init(TrainBayesian theTrainer, BayesianNetwork theNetwork,
-                IMLDataSet theData)
+                         IMLDataSet theData)
         {
-
         }
 
         /// <inheritdoc/>
         public bool Iteration()
         {
             return false;
-
         }
+
+        #endregion
     }
 }

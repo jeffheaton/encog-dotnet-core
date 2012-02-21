@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
+﻿using Encog.ML.Data;
 
 namespace Encog.ML.Bayesian.Training.Search
 {
@@ -18,7 +14,7 @@ namespace Encog.ML.Bayesian.Training.Search
         /// <param name="theNetwork">The network to use.</param>
         /// <param name="theData">The data to use.</param>
         void Init(TrainBayesian theTrainer, BayesianNetwork theNetwork, IMLDataSet theData);
-        
+
         /// <summary>
         /// Perform an iteration. 
         /// </summary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.Util;
@@ -22,29 +21,24 @@ namespace Encog.ML.Bayesian.Query.Sample
         /// <summary>
         /// The default sample size.
         /// </summary>
-        public const int DEFAULT_SAMPLE_SIZE = 100000;
-
-        /// <summary>
-        /// The sample size.
-        /// </summary>
-        public int SampleSize { get; set; }
-
-        /// <summary>
-        /// The number of usable samples. This is the set size for the average
-        /// probability.
-        /// </summary>
-        private int usableSamples;
+        public const int DefaultSampleSize = 100000;
 
         /// <summary>
         /// The number of samples that matched the result the query is looking for.
         /// </summary>
-        private int goodSamples;
+        private int _goodSamples;
 
         /// <summary>
         /// The total number of samples generated. This should match sampleSize at
         /// the end of a query.
         /// </summary>
-        private int totalSamples;
+        private int _totalSamples;
+
+        /// <summary>
+        /// The number of usable samples. This is the set size for the average
+        /// probability.
+        /// </summary>
+        private int _usableSamples;
 
         /// <summary>
         /// Construct a sampling query. 
@@ -53,7 +47,18 @@ namespace Encog.ML.Bayesian.Query.Sample
         public SamplingQuery(BayesianNetwork theNetwork)
             : base(theNetwork)
         {
-            SampleSize = DEFAULT_SAMPLE_SIZE;
+            SampleSize = DefaultSampleSize;
+        }
+
+        /// <summary>
+        /// The sample size.
+        /// </summary>
+        public int SampleSize { get; set; }
+
+        /// <inheritdoc/>
+        public override double Probability
+        {
+            get { return _goodSamples/(double) _usableSamples; }
         }
 
         /// <summary>
@@ -63,16 +68,15 @@ namespace Encog.ML.Bayesian.Query.Sample
         /// <returns>The arguments for that event, based on the other event values.</returns>
         private int[] ObtainArgs(BayesianEvent e)
         {
-            int[] result = new int[e.Parents.Count];
+            var result = new int[e.Parents.Count];
 
             int index = 0;
             foreach (BayesianEvent parentEvent in e.Parents)
             {
-                EventState state = this.GetEventState(parentEvent);
+                EventState state = GetEventState(parentEvent);
                 if (!state.IsCalculated)
                     return null;
                 result[index++] = state.Value;
-
             }
             return result;
         }
@@ -107,24 +111,18 @@ namespace Encog.ML.Bayesian.Query.Sample
         /// <returns>The uncalculated count.</returns>
         private int CountUnCalculated()
         {
-            int result = 0;
-            foreach (EventState state in Events.Values)
-            {
-                if (!state.IsCalculated)
-                    result++;
-            }
-            return result;
+            return Events.Values.Count(state => !state.IsCalculated);
         }
 
         /// <inheritdoc/>
         public override void Execute()
         {
             LocateEventTypes();
-            this.usableSamples = 0;
-            this.goodSamples = 0;
-            this.totalSamples = 0;
+            _usableSamples = 0;
+            _goodSamples = 0;
+            _totalSamples = 0;
 
-            for (int i = 0; i < this.SampleSize; i++)
+            for (int i = 0; i < SampleSize; i++)
             {
                 Reset();
 
@@ -140,30 +138,21 @@ namespace Encog.ML.Bayesian.Query.Sample
                     if (uncalculated == lastUncalculated)
                     {
                         throw new BayesianError(
-                                "Unable to calculate all nodes in the graph.");
+                            "Unable to calculate all nodes in the graph.");
                     }
                     lastUncalculated = uncalculated;
                 } while (uncalculated > 0);
 
                 // System.out.println("Sample:\n" + this.dumpCurrentState());
-                this.totalSamples++;
+                _totalSamples++;
                 if (IsNeededEvidence)
                 {
-                    this.usableSamples++;
+                    _usableSamples++;
                     if (SatisfiesDesiredOutcome)
                     {
-                        this.goodSamples++;
+                        _goodSamples++;
                     }
                 }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override double Probability
-        {
-            get
-            {
-                return (double)this.goodSamples / (double)this.usableSamples;
             }
         }
 
@@ -173,7 +162,7 @@ namespace Encog.ML.Bayesian.Query.Sample
         /// <returns>The state.</returns>
         public String DumpCurrentState()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             foreach (EventState state in Events.Values)
             {
                 result.Append(state.ToString());
@@ -188,23 +177,23 @@ namespace Encog.ML.Bayesian.Query.Sample
         /// <returns></returns>
         public override IBayesianQuery Clone()
         {
-            return new SamplingQuery(this.Network);
+            return new SamplingQuery(Network);
         }
 
         /// <inheritdoc/>
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[SamplingQuery: ");
             result.Append(Problem);
             result.Append("=");
             result.Append(Format.FormatPercent(Probability));
             result.Append(" ;good/usable=");
-            result.Append(Format.FormatInteger(this.goodSamples));
+            result.Append(Format.FormatInteger(_goodSamples));
             result.Append("/");
-            result.Append(Format.FormatInteger(this.usableSamples));
+            result.Append(Format.FormatInteger(_usableSamples));
             result.Append(";totalSamples=");
-            result.Append(Format.FormatInteger(this.totalSamples));
+            result.Append(Format.FormatInteger(_totalSamples));
             return result.ToString();
         }
     }

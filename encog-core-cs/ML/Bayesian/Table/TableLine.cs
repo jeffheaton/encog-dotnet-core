@@ -21,8 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Util;
 
@@ -35,20 +33,15 @@ namespace Encog.ML.Bayesian.Table
     public class TableLine
     {
         /// <summary>
-        /// The probability.
+        /// The arguments.
         /// </summary>
-        public double Probability { get; set; }
+        private readonly int[] _arguments;
 
         /// <summary>
         /// The result.
         /// </summary>
         private readonly int _result;
 
-        /// <summary>
-        /// The arguments.
-        /// </summary>
-        private readonly int[] _arguments;
-       
         /// <summary>
         /// Construct a truth table line. 
         /// </summary>
@@ -62,16 +55,18 @@ namespace Encog.ML.Bayesian.Table
             _arguments = EngineArray.ArrayCopy(args);
         }
 
+        /// <summary>
+        /// The probability.
+        /// </summary>
+        public double Probability { get; set; }
+
 
         /// <summary>
         /// Arguments.
         /// </summary>
         public int[] Arguments
         {
-            get
-            {
-                return _arguments;
-            }
+            get { return _arguments; }
         }
 
         /// <summary>
@@ -79,24 +74,21 @@ namespace Encog.ML.Bayesian.Table
         /// </summary>
         public int Result
         {
-            get
-            {
-                return _result;
-            }
+            get { return _result; }
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
-            StringBuilder r = new StringBuilder();
+            var r = new StringBuilder();
             r.Append("result=");
             r.Append(_result);
             r.Append(",probability=");
             r.Append(Format.FormatDouble(Probability, 2));
             r.Append("|");
-            for (int i = 0; i < _arguments.Length; i++)
+            foreach (int t in _arguments)
             {
-                r.Append(Format.FormatDouble(_arguments[i], 2));
+                r.Append(Format.FormatDouble(t, 2));
                 r.Append(" ");
             }
             return r.ToString();
@@ -109,7 +101,6 @@ namespace Encog.ML.Bayesian.Table
         /// <returns>True if the same.</returns>
         public bool CompareArgs(int[] args)
         {
-
             if (args.Length != _arguments.Length)
             {
                 return false;
@@ -125,6 +116,5 @@ namespace Encog.ML.Bayesian.Table
 
             return true;
         }
-
     }
 }

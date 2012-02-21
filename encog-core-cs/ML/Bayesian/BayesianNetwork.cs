@@ -24,12 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Encog.ML.Bayesian.Query;
-using Encog.Util;
-using Encog.ML.Data;
 using Encog.ML.Bayesian.Parse;
-using Encog.Util.CSV;
+using Encog.ML.Bayesian.Query;
 using Encog.ML.Bayesian.Query.Enumeration;
+using Encog.ML.Data;
+using Encog.Util;
+using Encog.Util.CSV;
 
 namespace Encog.ML.Bayesian
 {
@@ -48,17 +48,40 @@ namespace Encog.ML.Bayesian
         /// <summary>
         /// Default choices for a boolean event.
         /// </summary>
-        public static readonly String[] CHOICES_TRUE_FALSE = { "true", "false" };
+        public static readonly String[] ChoicesTrueFalse = {"true", "false"};
 
         /// <summary>
         /// Mapping between the event string names, and the actual events.
         /// </summary>
-        private readonly IDictionary<String, BayesianEvent> eventMap = new Dictionary<String, BayesianEvent>();
+        private readonly IDictionary<String, BayesianEvent> _eventMap = new Dictionary<String, BayesianEvent>();
 
         /// <summary>
         /// A listing of all of the events.
         /// </summary>
-        private readonly IList<BayesianEvent> events = new List<BayesianEvent>();
+        private readonly IList<BayesianEvent> _events = new List<BayesianEvent>();
+
+        /// <summary>
+        /// The probabilities of each classification.
+        /// </summary>
+        private double[] _classificationProbabilities;
+
+        /// <summary>
+        /// Specifies the classification target.
+        /// </summary>
+        private int _classificationTarget;
+
+        /// <summary>
+        /// Specifies if each input is present.
+        /// </summary>
+        private bool[] _inputPresent;
+
+        /// <summary>
+        /// Construct a Bayesian network.
+        /// </summary>
+        public BayesianNetwork()
+        {
+            Query = new EnumerationQuery(this);
+        }
 
         /// <summary>
         /// The current Bayesian query.
@@ -66,37 +89,11 @@ namespace Encog.ML.Bayesian
         public IBayesianQuery Query { get; set; }
 
         /// <summary>
-        /// Specifies if each input is present.
-        /// </summary>
-        private bool[] inputPresent;
-
-        /// <summary>
-        /// Specifies the classification target.
-        /// </summary>
-        private int classificationTarget;
-
-        /// <summary>
-        /// The probabilities of each classification.
-        /// </summary>
-        private double[] classificationProbabilities;
-
-        /// <summary>
-        /// Construct a Bayesian network.
-        /// </summary>
-        public BayesianNetwork()
-        {
-            this.Query = new EnumerationQuery(this);
-        }
-
-        /// <summary>
         /// The mapping from string names to events.
         /// </summary>
         public IDictionary<String, BayesianEvent> EventMap
         {
-            get
-            {
-                return eventMap;
-            }
+            get { return _eventMap; }
         }
 
         /// <summary>
@@ -104,187 +101,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public IList<BayesianEvent> Events
         {
-            get
-            {
-                return this.events;
-            }
-        }
-
-        /// <summary>
-        /// Get an event based on the string label. 
-        /// </summary>
-        /// <param name="label">The label to locate.</param>
-        /// <returns>The event found.</returns>
-        public BayesianEvent GetEvent(String label)
-        {
-            if (this.eventMap.ContainsKey(label))
-                return null;
-            else
-                return this.eventMap[label];
-        }
-        
-        /// <summary>
-        /// Get an event based on label, throw an error if not found.
-        /// </summary>
-        /// <param name="label">THe event label to find.</param>
-        /// <returns>The event.</returns>
-        public BayesianEvent GetEventError(String label)
-        {
-            if (!EventExists(label))
-                throw (new BayesianError("Undefined label: " + label));
-            return this.eventMap[label];
-        }
-
-
-        /// <summary>
-        /// Return true if the specified event exists. 
-        /// </summary>
-        /// <param name="label">The label we are searching for.</param>
-        /// <returns>True, if the event exists by label.</returns>
-        public bool EventExists(String label)
-        {
-            return this.eventMap.ContainsKey(label);
-        }
-        
-        /// <summary>
-        /// Create, or register, the specified event with this bayesian network. 
-        /// </summary>
-        /// <param name="theEvent">The event to add.</param>
-        public void CreateEvent(BayesianEvent theEvent)
-        {
-            if (EventExists(theEvent.Label))
-            {
-                throw new BayesianError("The label \"" + theEvent.Label
-                        + "\" has already been defined.");
-            }
-
-            this.eventMap[theEvent.Label] = theEvent;
-            this.events.Add(theEvent);
-        }
-
-        
-        /// <summary>
-        /// Create an event specified on the label and options provided. 
-        /// </summary>
-        /// <param name="label">The label to create this event as.</param>
-        /// <param name="options">The options, or states, that this event can have.</param>
-        /// <returns>The newly created event.</returns>
-        public BayesianEvent CreateEvent(String label, IList<BayesianChoice> options)
-        {
-            if (label == null)
-            {
-                throw new BayesianError("Can't create event with null label name");
-            }
-
-            if (EventExists(label))
-            {
-                throw new BayesianError("The label \"" + label
-                        + "\" has already been defined.");
-            }
-
-            BayesianEvent e;
-
-            if (options.Count == 0)
-            {
-                e = new BayesianEvent(label);
-            }
-            else
-            {
-                e = new BayesianEvent(label, options);
-
-            }
-            CreateEvent(e);
-            return e;
-        }
-
-        /// <summary>
-        /// Create the specified events based on a variable number of options, or choices. 
-        /// </summary>
-        /// <param name="label">The label of the event to create.</param>
-        /// <param name="options">The states that the event can have.</param>
-        /// <returns>The newly created event.</returns>
-        public BayesianEvent CreateEvent(String label, params String[] options)
-        {
-            if (label == null)
-            {
-                throw new BayesianError("Can't create event with null label name");
-            }
-
-            if (EventExists(label))
-            {
-                throw new BayesianError("The label \"" + label
-                        + "\" has already been defined.");
-            }
-
-            BayesianEvent e;
-
-            if (options.Length == 0)
-            {
-                e = new BayesianEvent(label);
-            }
-            else
-            {
-                e = new BayesianEvent(label, options);
-
-            }
-            CreateEvent(e);
-            return e;
-        }
-
-        /// <summary>
-        /// Create a dependency between two events. 
-        /// </summary>
-        /// <param name="parentEvent">The parent event.</param>
-        /// <param name="childEvent">The child event.</param>
-        public void CreateDependency(BayesianEvent parentEvent,
-                BayesianEvent childEvent)
-        {
-            // does the dependency exist?
-            if (!HasDependency(parentEvent, childEvent))
-            {
-                // create the dependency
-                parentEvent.AddChild(childEvent);
-                childEvent.AddParent(parentEvent);
-            }
-        }
-        
-        /// <summary>
-        /// Determine if the two events have a dependency. 
-        /// </summary>
-        /// <param name="parentEvent">The parent event.</param>
-        /// <param name="childEvent">The child event.</param>
-        /// <returns>True if a dependency exists.</returns>
-        private bool HasDependency(BayesianEvent parentEvent,
-                BayesianEvent childEvent)
-        {
-            return (parentEvent.Children.Contains(childEvent));
-        }
-
-        /// <summary>
-        /// Create a dependency between a parent and multiple children. 
-        /// </summary>
-        /// <param name="parentEvent">The parent event.</param>
-        /// <param name="children">The child events.</param>
-        public void CreateDependency(BayesianEvent parentEvent,
-                params BayesianEvent[] children)
-        {
-            foreach (BayesianEvent childEvent in children)
-            {
-                parentEvent.AddChild(childEvent);
-                childEvent.AddParent(parentEvent);
-            }
-        }
-
-        /// <summary>
-        /// Create a dependency between two labels.
-        /// </summary>
-        /// <param name="parentEventLabel">The parent event.</param>
-        /// <param name="childEventLabel">The child event.</param>
-        public void CreateDependency(String parentEventLabel, String childEventLabel)
-        {
-            BayesianEvent parentEvent = GetEventError(parentEventLabel);
-            BayesianEvent childEvent = GetEventError(childEventLabel);
-            CreateDependency(parentEvent, childEvent);
+            get { return _events; }
         }
 
         /// <summary>
@@ -294,10 +111,10 @@ namespace Encog.ML.Bayesian
         {
             get
             {
-                StringBuilder result = new StringBuilder();
+                var result = new StringBuilder();
                 bool first = true;
 
-                foreach (BayesianEvent e in this.events)
+                foreach (BayesianEvent e in _events)
                 {
                     if (!first)
                         result.Append(" ");
@@ -323,12 +140,7 @@ namespace Encog.ML.Bayesian
                     BayesianEvent e = GetEvent(eventLabel);
                     if (e == null)
                     {
-                        IList<BayesianChoice> cl = new List<BayesianChoice>();
-
-                        foreach (ParsedChoice c in parsedEvent.ChoiceList)
-                        {
-                            cl.Add(new BayesianChoice(c.Label, c.Min, c.Max));
-                        }
+                        IList<BayesianChoice> cl = parsedEvent.ChoiceList.Select(c => new BayesianChoice(c.Label, c.Min, c.Max)).ToList();
 
                         CreateEvent(eventLabel, cl);
                     }
@@ -336,9 +148,8 @@ namespace Encog.ML.Bayesian
 
 
                 // now remove all events that were not covered
-                for (int i = 0; i < events.Count; i++)
+                foreach (BayesianEvent e in _events)
                 {
-                    BayesianEvent e = this.events[i];
                     if (!labelList.Contains(e.Label))
                     {
                         RemoveEvent(e);
@@ -360,15 +171,14 @@ namespace Encog.ML.Bayesian
                         if (!e.HasGiven(given.Label))
                         {
                             BayesianEvent givenEvent = RequireEvent(given.Label);
-                            this.CreateDependency(givenEvent, e);
+                            CreateDependency(givenEvent, e);
                         }
                         givenList.Add(given.Label);
                     }
 
                     // now remove givens that were not covered
-                    for (int i = 0; i < e.Parents.Count; i++)
+                    foreach (BayesianEvent event2 in e.Parents)
                     {
-                        BayesianEvent event2 = e.Parents[i];
                         if (!givenList.Contains(event2.Label))
                         {
                             RemoveDependency(event2, e);
@@ -378,12 +188,370 @@ namespace Encog.ML.Bayesian
 
                 // finalize the structure
                 FinalizeStructure();
-                if (this.Query != null)
+                if (Query != null)
                 {
-                    this.Query.FinalizeStructure();
+                    Query.FinalizeStructure();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the classification target. 
+        /// </summary>
+        public int ClassificationTarget
+        {
+            get { return _classificationTarget; }
+        }
+
+        /// <summary>
+        /// The classification target.
+        /// </summary>
+        public BayesianEvent ClassificationTargetEvent
+        {
+            get
+            {
+                if (_classificationTarget == -1)
+                {
+                    throw new BayesianError("No classification target defined.");
                 }
 
+                return _events[_classificationTarget];
             }
+        }
+
+        /// <summary>
+        /// Returns a string representation of the classification structure.
+        ///         Of the form P(a|b,c,d)
+        /// </summary>
+        public String ClassificationStructure
+        {
+            get
+            {
+                var result = new StringBuilder();
+
+                result.Append("P(");
+                bool first = true;
+
+                for (int i = 0; i < Events.Count; i++)
+                {
+                    BayesianEvent e = _events[i];
+                    EventState state = Query.GetEventState(e);
+                    if (state.CurrentEventType == EventType.Outcome)
+                    {
+                        if (!first)
+                        {
+                            result.Append(",");
+                        }
+                        result.Append(e.Label);
+                        first = false;
+                    }
+                }
+
+                result.Append("|");
+
+                first = true;
+                for (int i = 0; i < Events.Count; i++)
+                {
+                    BayesianEvent e = _events[i];
+                    if (Query.GetEventState(e).CurrentEventType == EventType.Evidence)
+                    {
+                        if (!first)
+                        {
+                            result.Append(",");
+                        }
+                        result.Append(e.Label);
+                        first = false;
+                    }
+                }
+
+                result.Append(")");
+                return result.ToString();
+            }
+        }
+
+        /// <summary>
+        /// True if this network has a valid classification target.
+        /// </summary>
+        public bool HasValidClassificationTarget
+        {
+            get
+            {
+                if (_classificationTarget < 0
+                    || _classificationTarget >= _events.Count)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        #region IMLClassification Members
+
+        /// <inheritdoc/>
+        public int InputCount
+        {
+            get { return _events.Count; }
+        }
+
+        /// <inheritdoc/>
+        public int OutputCount
+        {
+            get { return 1; }
+        }
+
+        /// <summary>
+        /// Classify the input. 
+        /// </summary>
+        /// <param name="input">The input to classify.</param>
+        /// <returns>The classification.</returns>
+        public int Classify(IMLData input)
+        {
+            if (_classificationTarget < 0 || _classificationTarget >= _events.Count)
+            {
+                throw new BayesianError("Must specify classification target by calling setClassificationTarget.");
+            }
+
+            int[] d = DetermineClasses(input);
+
+            // properly tag all of the events
+            for (int i = 0; i < _events.Count; i++)
+            {
+                BayesianEvent e = _events[i];
+                if (i == _classificationTarget)
+                {
+                    Query.DefineEventType(e, EventType.Outcome);
+                }
+                else if (_inputPresent[i])
+                {
+                    Query.DefineEventType(e, EventType.Evidence);
+                    Query.SetEventValue(e, d[i]);
+                }
+                else
+                {
+                    Query.DefineEventType(e, EventType.Hidden);
+                    Query.SetEventValue(e, d[i]);
+                }
+            }
+
+
+            // loop over and try each outcome choice
+            BayesianEvent outcomeEvent = _events[_classificationTarget];
+            _classificationProbabilities = new double[outcomeEvent.Choices.Count];
+            for (int i = 0; i < outcomeEvent.Choices.Count; i++)
+            {
+                Query.SetEventValue(outcomeEvent, i);
+                Query.Execute();
+                _classificationProbabilities[i] = Query.Probability;
+            }
+
+
+            return EngineArray.MaxIndex(_classificationProbabilities);
+        }
+
+        #endregion
+
+        #region IMLError Members
+
+        /// <inheritdoc/>
+        public double CalculateError(IMLDataSet data)
+        {
+            if (!HasValidClassificationTarget)
+                return 1.0;
+
+            // Call the following just to thrown an error if there is no classification target
+            ClassificationTarget.ToString();
+
+            int badCount = 0;
+            int totalCount = 0;
+
+            foreach (IMLDataPair pair in data)
+            {
+                int c = Classify(pair.Input);
+                totalCount++;
+                if (c != pair.Input[_classificationTarget])
+                {
+                    badCount++;
+                }
+            }
+
+            return badCount/(double) totalCount;
+        }
+
+        #endregion
+
+        #region IMLResettable Members
+
+        /// <inheritdoc/>
+        public void Reset()
+        {
+            Reset(0);
+        }
+
+        /// <inheritdoc/>
+        public void Reset(int seed)
+        {
+            foreach (BayesianEvent e in _events)
+            {
+                e.Reset();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Get an event based on the string label. 
+        /// </summary>
+        /// <param name="label">The label to locate.</param>
+        /// <returns>The event found.</returns>
+        public BayesianEvent GetEvent(String label)
+        {
+            if (_eventMap.ContainsKey(label))
+                return null;
+            return _eventMap[label];
+        }
+
+        /// <summary>
+        /// Get an event based on label, throw an error if not found.
+        /// </summary>
+        /// <param name="label">THe event label to find.</param>
+        /// <returns>The event.</returns>
+        public BayesianEvent GetEventError(String label)
+        {
+            if (!EventExists(label))
+                throw (new BayesianError("Undefined label: " + label));
+            return _eventMap[label];
+        }
+
+
+        /// <summary>
+        /// Return true if the specified event exists. 
+        /// </summary>
+        /// <param name="label">The label we are searching for.</param>
+        /// <returns>True, if the event exists by label.</returns>
+        public bool EventExists(String label)
+        {
+            return _eventMap.ContainsKey(label);
+        }
+
+        /// <summary>
+        /// Create, or register, the specified event with this bayesian network. 
+        /// </summary>
+        /// <param name="theEvent">The event to add.</param>
+        public void CreateEvent(BayesianEvent theEvent)
+        {
+            if (EventExists(theEvent.Label))
+            {
+                throw new BayesianError("The label \"" + theEvent.Label
+                                        + "\" has already been defined.");
+            }
+
+            _eventMap[theEvent.Label] = theEvent;
+            _events.Add(theEvent);
+        }
+
+
+        /// <summary>
+        /// Create an event specified on the label and options provided. 
+        /// </summary>
+        /// <param name="label">The label to create this event as.</param>
+        /// <param name="options">The options, or states, that this event can have.</param>
+        /// <returns>The newly created event.</returns>
+        public BayesianEvent CreateEvent(String label, IList<BayesianChoice> options)
+        {
+            if (label == null)
+            {
+                throw new BayesianError("Can't create event with null label name");
+            }
+
+            if (EventExists(label))
+            {
+                throw new BayesianError("The label \"" + label
+                                        + "\" has already been defined.");
+            }
+
+            BayesianEvent e = options.Count == 0 ? new BayesianEvent(label) : new BayesianEvent(label, options);
+            CreateEvent(e);
+            return e;
+        }
+
+        /// <summary>
+        /// Create the specified events based on a variable number of options, or choices. 
+        /// </summary>
+        /// <param name="label">The label of the event to create.</param>
+        /// <param name="options">The states that the event can have.</param>
+        /// <returns>The newly created event.</returns>
+        public BayesianEvent CreateEvent(String label, params String[] options)
+        {
+            if (label == null)
+            {
+                throw new BayesianError("Can't create event with null label name");
+            }
+
+            if (EventExists(label))
+            {
+                throw new BayesianError("The label \"" + label
+                                        + "\" has already been defined.");
+            }
+
+            BayesianEvent e = options.Length == 0 ? new BayesianEvent(label) : new BayesianEvent(label, options);
+            CreateEvent(e);
+            return e;
+        }
+
+        /// <summary>
+        /// Create a dependency between two events. 
+        /// </summary>
+        /// <param name="parentEvent">The parent event.</param>
+        /// <param name="childEvent">The child event.</param>
+        public void CreateDependency(BayesianEvent parentEvent,
+                                     BayesianEvent childEvent)
+        {
+            // does the dependency exist?
+            if (!HasDependency(parentEvent, childEvent))
+            {
+                // create the dependency
+                parentEvent.AddChild(childEvent);
+                childEvent.AddParent(parentEvent);
+            }
+        }
+
+        /// <summary>
+        /// Determine if the two events have a dependency. 
+        /// </summary>
+        /// <param name="parentEvent">The parent event.</param>
+        /// <param name="childEvent">The child event.</param>
+        /// <returns>True if a dependency exists.</returns>
+        private static bool HasDependency(BayesianEvent parentEvent,
+                                   BayesianEvent childEvent)
+        {
+            return (parentEvent.Children.Contains(childEvent));
+        }
+
+        /// <summary>
+        /// Create a dependency between a parent and multiple children. 
+        /// </summary>
+        /// <param name="parentEvent">The parent event.</param>
+        /// <param name="children">The child events.</param>
+        public void CreateDependency(BayesianEvent parentEvent,
+                                     params BayesianEvent[] children)
+        {
+            foreach (BayesianEvent childEvent in children)
+            {
+                parentEvent.AddChild(childEvent);
+                childEvent.AddParent(parentEvent);
+            }
+        }
+
+        /// <summary>
+        /// Create a dependency between two labels.
+        /// </summary>
+        /// <param name="parentEventLabel">The parent event.</param>
+        /// <param name="childEventLabel">The child event.</param>
+        public void CreateDependency(String parentEventLabel, String childEventLabel)
+        {
+            BayesianEvent parentEvent = GetEventError(parentEventLabel);
+            BayesianEvent childEvent = GetEventError(childEventLabel);
+            CreateDependency(parentEvent, childEvent);
         }
 
         /// <summary>
@@ -391,11 +559,10 @@ namespace Encog.ML.Bayesian
         /// </summary>
         /// <param name="parent">The parent event.</param>
         /// <param name="child">The child event.</param>
-        private void RemoveDependency(BayesianEvent parent, BayesianEvent child)
+        private static void RemoveDependency(BayesianEvent parent, BayesianEvent child)
         {
             parent.Children.Remove(child);
             child.Parents.Remove(parent);
-
         }
 
         /// <summary>
@@ -408,17 +575,17 @@ namespace Encog.ML.Bayesian
             {
                 e.Children.Remove(theEvent);
             }
-            this.eventMap.Remove(theEvent.Label);
-            this.events.Remove(theEvent);
+            _eventMap.Remove(theEvent.Label);
+            _events.Remove(theEvent);
         }
 
         /// <inheritdoc/>
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             bool first = true;
 
-            foreach (BayesianEvent e in this.events)
+            foreach (BayesianEvent e in _events)
             {
                 if (!first)
                     result.Append(" ");
@@ -429,37 +596,33 @@ namespace Encog.ML.Bayesian
             return result.ToString();
         }
 
-        /**
-         * @return The number of parameters in this Bayesian network.
-         */
+        ///<summary>
+        /// Calculate the parameter count.
+        ///</summary>
+        ///<returns>The number of parameters in this Bayesian network.</returns>
         public int CalculateParameterCount()
         {
-            int result = 0;
-            foreach (BayesianEvent e in this.eventMap.Values)
-            {
-                result += e.CalculateParameterCount();
-            }
-            return result;
+            return _eventMap.Values.Sum(e => e.CalculateParameterCount());
         }
 
-        /**
-         * Finalize the structure of this Bayesian network.
-         */
+        /// <summary>
+        /// Finalize the structure of this Bayesian network.
+        /// </summary>
         public void FinalizeStructure()
         {
-            foreach (BayesianEvent e in this.eventMap.Values)
+            foreach (BayesianEvent e in _eventMap.Values)
             {
-                e.finalizeStructure();
+                e.FinalizeStructure();
             }
 
-            if (this.Query != null)
+            if (Query != null)
             {
-                this.Query.FinalizeStructure();
+                Query.FinalizeStructure();
             }
 
-            this.inputPresent = new bool[this.events.Count];
-            EngineArray.Fill(this.inputPresent, true);
-            this.classificationTarget = -1;
+            _inputPresent = new bool[_events.Count];
+            EngineArray.Fill(_inputPresent, true);
+            _classificationTarget = -1;
         }
 
         /// <summary>
@@ -467,7 +630,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public void Validate()
         {
-            foreach (BayesianEvent e in this.eventMap.Values)
+            foreach (BayesianEvent e in _eventMap.Values)
             {
                 e.Validate();
             }
@@ -479,15 +642,9 @@ namespace Encog.ML.Bayesian
         /// <param name="given">The events to check.</param>
         /// <param name="e">See if e is amoung given.</param>
         /// <returns>True if e is amoung given.</returns>
-        private bool IsGiven(BayesianEvent[] given, BayesianEvent e)
+        private static bool IsGiven(IEnumerable<BayesianEvent> given, BayesianEvent e)
         {
-            foreach (BayesianEvent e2 in given)
-            {
-                if (e == e2)
-                    return true;
-            }
-
-            return false;
+            return given.Any(e2 => e == e2);
         }
 
 
@@ -502,30 +659,19 @@ namespace Encog.ML.Bayesian
             if (a == b)
                 return true;
 
-            foreach (BayesianEvent e in b.Children)
-            {
-                if (IsDescendant(a, e))
-                    return true;
-            }
-            return false;
+            return b.Children.Any(e => IsDescendant(a, e));
         }
 
-        
+
         /// <summary>
         /// True if this event is given or conditionally dependant on the others. 
         /// </summary>
         /// <param name="given">The others to check.</param>
         /// <param name="e">The event to check.</param>
         /// <returns>True, if is given or descendant.</returns>
-        private bool IsGivenOrDescendant(BayesianEvent[] given, BayesianEvent e)
+        private bool IsGivenOrDescendant(IEnumerable<BayesianEvent> given, BayesianEvent e)
         {
-            foreach (BayesianEvent e2 in given)
-            {
-                if (IsDescendant(e2, e))
-                    return true;
-            }
-
-            return false;
+            return given.Any(e2 => IsDescendant(e2, e));
         }
 
 
@@ -539,10 +685,9 @@ namespace Encog.ML.Bayesian
         /// <param name="given">Given events.</param>
         /// <returns>True if conditionally independent.</returns>
         private bool IsCondIndependent(bool previousHead, BayesianEvent a,
-                BayesianEvent goal, IDictionary<BayesianEvent, Object> searched,
-                params BayesianEvent[] given)
+                                       BayesianEvent goal, IDictionary<BayesianEvent, Object> searched,
+                                       params BayesianEvent[] given)
         {
-
             // did we find it?
             if (a == goal)
             {
@@ -583,50 +728,30 @@ namespace Encog.ML.Bayesian
         /// <param name="given">What is "given".</param>
         /// <returns>True of they are cond. independent.</returns>
         public bool IsCondIndependent(BayesianEvent a, BayesianEvent b,
-                params BayesianEvent[] given)
+                                      params BayesianEvent[] given)
         {
             IDictionary<BayesianEvent, Object> searched = new Dictionary<BayesianEvent, Object>();
             return IsCondIndependent(false, a, b, searched, given);
         }
 
         /// <inheritdoc/>
-        public int InputCount
-        {
-            get
-            {
-                return this.events.Count;
-            }
-        }
-
-        /// <inheritdoc/>
-        public int OutputCount
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        /// <inheritdoc/>
         public double ComputeProbability(IMLData input)
         {
-
             // copy the input to evidence
             int inputIndex = 0;
-            for (int i = 0; i < this.events.Count; i++)
+            foreach (BayesianEvent e in _events)
             {
-                BayesianEvent e = this.events[i];
                 EventState state = Query.GetEventState(e);
                 if (state.CurrentEventType == EventType.Evidence)
                 {
-                    state.Value = ((int)input[inputIndex++]);
+                    state.Value = ((int) input[inputIndex++]);
                 }
             }
 
             // execute the query
-            this.Query.Execute();
+            Query.Execute();
 
-            return this.Query.Probability;
+            return Query.Probability;
         }
 
 
@@ -637,7 +762,7 @@ namespace Encog.ML.Bayesian
         /// <param name="probability">The probability.</param>
         public void DefineProbability(String line, double probability)
         {
-            ParseProbability parse = new ParseProbability(this);
+            var parse = new ParseProbability(this);
             ParsedProbability parsedProbability = parse.Parse(line);
             parsedProbability.DefineTruthTable(this, probability);
         }
@@ -652,18 +777,17 @@ namespace Encog.ML.Bayesian
             bool error = false;
             double prob = 0.0;
             String left = "";
-            String right = "";
 
             if (index != -1)
             {
                 left = line.Substring(0, index);
-                right = line.Substring(index + 1);
+                String right = line.Substring(index + 1);
 
                 try
                 {
                     prob = CSVFormat.EgFormat.Parse(right);
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     error = true;
                 }
@@ -671,7 +795,8 @@ namespace Encog.ML.Bayesian
 
             if (error || index == -1)
             {
-                throw new BayesianError("Probability must be of the form \"P(event|condition1,condition2,etc.)=0.5\".  Conditions are optional.");
+                throw new BayesianError(
+                    "Probability must be of the form \"P(event|condition1,condition2,etc.)=0.5\".  Conditions are optional.");
             }
             DefineProbability(left, prob);
         }
@@ -697,7 +822,7 @@ namespace Encog.ML.Bayesian
         /// <param name="line">The relationship to define.</param>
         public void DefineRelationship(String line)
         {
-            ParseProbability parse = new ParseProbability(this);
+            var parse = new ParseProbability(this);
             ParsedProbability parsedProbability = parse.Parse(line);
             parsedProbability.DefineRelationships(this);
         }
@@ -709,16 +834,16 @@ namespace Encog.ML.Bayesian
         /// <returns>The probability.</returns>
         public double PerformQuery(String line)
         {
-            if (this.Query == null)
+            if (Query == null)
             {
                 throw new BayesianError("This Bayesian network does not have a query to define.");
             }
 
-            ParseProbability parse = new ParseProbability(this);
+            var parse = new ParseProbability(this);
             ParsedProbability parsedProbability = parse.Parse(line);
 
             // create a temp query
-            IBayesianQuery q = this.Query.Clone();
+            IBayesianQuery q = Query.Clone();
 
             // first, mark all events as hidden
             q.Reset();
@@ -726,7 +851,7 @@ namespace Encog.ML.Bayesian
             // deal with evidence (input)
             foreach (ParsedEvent parsedEvent in parsedProbability.GivenEvents)
             {
-                BayesianEvent e = this.RequireEvent(parsedEvent.Label);
+                BayesianEvent e = RequireEvent(parsedEvent.Label);
                 q.DefineEventType(e, EventType.Evidence);
                 q.SetEventValue(e, parsedEvent.ResolveValue(e));
             }
@@ -751,11 +876,16 @@ namespace Encog.ML.Bayesian
             // Not needed		
         }
 
+        ///<summary>
+        /// Get the index of the given event.
+        ///</summary>
+        ///<param name="theEvent">The event to get the index of.</param>
+        ///<returns>The index of the event.</returns>
         public int GetEventIndex(BayesianEvent theEvent)
         {
-            for (int i = 0; i < this.events.Count; i++)
+            for (int i = 0; i < _events.Count; i++)
             {
-                if (theEvent == events[i])
+                if (theEvent == _events[i])
                     return i;
             }
 
@@ -767,30 +897,13 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public void RemoveAllRelations()
         {
-            foreach (BayesianEvent e in this.events)
+            foreach (BayesianEvent e in _events)
             {
                 e.RemoveAllRelations();
             }
         }
 
-        /// <inheritdoc/>
-        public void Reset()
-        {
-            Reset(0);
 
-        }
-
-        /// <inheritdoc/>
-        public void Reset(int seed)
-        {
-            foreach (BayesianEvent e in this.events)
-            {
-                e.Reset();
-            }
-
-        }
-
-        
         /// <summary>
         /// Determine the classes for the specified input. 
         /// </summary>
@@ -798,11 +911,11 @@ namespace Encog.ML.Bayesian
         /// <returns>An array of class indexes.</returns>
         public int[] DetermineClasses(IMLData input)
         {
-            int[] result = new int[input.Count];
+            var result = new int[input.Count];
 
             for (int i = 0; i < input.Count; i++)
             {
-                BayesianEvent e = this.events[i];
+                BayesianEvent e = _events[i];
                 int classIndex = e.MatchChoiceToRange(input[i]);
                 result[i] = classIndex;
             }
@@ -811,75 +924,13 @@ namespace Encog.ML.Bayesian
         }
 
         /// <summary>
-        /// Classify the input. 
-        /// </summary>
-        /// <param name="input">The input to classify.</param>
-        /// <returns>The classification.</returns>
-        public int Classify(IMLData input)
-        {
-
-            if (this.classificationTarget < 0 || this.classificationTarget >= this.events.Count)
-            {
-                throw new BayesianError("Must specify classification target by calling setClassificationTarget.");
-            }
-
-            int[] d = this.DetermineClasses(input);
-
-            // properly tag all of the events
-            for (int i = 0; i < this.events.Count; i++)
-            {
-                BayesianEvent e = this.events[i];
-                if (i == this.classificationTarget)
-                {
-                    this.Query.DefineEventType(e, EventType.Outcome);
-                }
-                else if (this.inputPresent[i])
-                {
-                    this.Query.DefineEventType(e, EventType.Evidence);
-                    this.Query.SetEventValue(e, d[i]);
-                }
-                else
-                {
-                    this.Query.DefineEventType(e, EventType.Hidden);
-                    this.Query.SetEventValue(e, d[i]);
-                }
-            }
-
-
-            // loop over and try each outcome choice
-            BayesianEvent outcomeEvent = this.events[this.classificationTarget];
-            this.classificationProbabilities = new double[outcomeEvent.Choices.Count];
-            for (int i = 0; i < outcomeEvent.Choices.Count; i++)
-            {
-                this.Query.SetEventValue(outcomeEvent, i);
-                this.Query.Execute();
-                classificationProbabilities[i] = this.Query.Probability;
-            }
-
-
-            return EngineArray.MaxIndex(this.classificationProbabilities);
-        }
-
-
-        /// <summary>
-        /// Get the classification target. 
-        /// </summary>
-        public int ClassificationTarget
-        {
-            get
-            {
-                return classificationTarget;
-            }
-        }
-        
-        /// <summary>
         /// Determine if the specified input is present. 
         /// </summary>
         /// <param name="idx">The index of the input.</param>
         /// <returns>True, if the input is present.</returns>
         public bool IsInputPresent(int idx)
         {
-            return this.inputPresent[idx];
+            return _inputPresent[idx];
         }
 
         /// <summary>
@@ -901,9 +952,9 @@ namespace Encog.ML.Bayesian
             }
 
             // first define everything to be hidden
-            foreach (BayesianEvent e in this.events)
+            foreach (BayesianEvent e in _events)
             {
-                this.Query.DefineEventType(e, EventType.Hidden);
+                Query.DefineEventType(e, EventType.Hidden);
             }
 
             // define the base event
@@ -914,130 +965,18 @@ namespace Encog.ML.Bayesian
                 return;
             }
 
-            BayesianEvent be = this.GetEvent(prob.ChildEvent.Label);
-            this.classificationTarget = this.events.IndexOf(be);
-            this.Query.DefineEventType(be, EventType.Outcome);
+            BayesianEvent be = GetEvent(prob.ChildEvent.Label);
+            _classificationTarget = _events.IndexOf(be);
+            Query.DefineEventType(be, EventType.Outcome);
 
             // define the given events
             foreach (ParsedEvent parsedGiven in prob.GivenEvents)
             {
-                BayesianEvent given = this.GetEvent(parsedGiven.Label);
-                this.Query.DefineEventType(given, EventType.Evidence);
+                BayesianEvent given = GetEvent(parsedGiven.Label);
+                Query.DefineEventType(given, EventType.Evidence);
             }
 
-            this.Query.LocateEventTypes();
-
-        }
-
-        /// <summary>
-        /// The classification target.
-        /// </summary>
-        public BayesianEvent ClassificationTargetEvent
-        {
-            get
-            {
-                if (this.classificationTarget == -1)
-                {
-                    throw new BayesianError("No classification target defined.");
-                }
-
-                return this.events[this.classificationTarget];
-            }
-        }
-
-        /// <inheritdoc/>
-        public double CalculateError(IMLDataSet data)
-        {
-
-            if (!this.HasValidClassificationTarget )
-                return 1.0;
-
-            // Call the following just to thrown an error if there is no classification target
-            ClassificationTarget.ToString();
-
-            int badCount = 0;
-            int totalCount = 0;
-
-            foreach (IMLDataPair pair in data)
-            {
-                int c = this.Classify(pair.Input);
-                totalCount++;
-                if (c != pair.Input[this.classificationTarget])
-                {
-                    badCount++;
-                }
-            }
-
-            return (double)badCount / (double)totalCount;
-        }
-
-        /// <summary>
-        /// Returns a string representation of the classification structure.
-        ///         Of the form P(a|b,c,d)
-        /// </summary>
-        public String ClassificationStructure
-        {
-            get
-            {
-                StringBuilder result = new StringBuilder();
-
-                result.Append("P(");
-                bool first = true;
-
-                for (int i = 0; i < this.Events.Count; i++)
-                {
-                    BayesianEvent e = this.events[i];
-                    EventState state = this.Query.GetEventState(e);
-                    if (state.CurrentEventType == EventType.Outcome)
-                    {
-                        if (!first)
-                        {
-                            result.Append(",");
-                        }
-                        result.Append(e.Label);
-                        first = false;
-                    }
-                }
-
-                result.Append("|");
-
-                first = true;
-                for (int i = 0; i < this.Events.Count; i++)
-                {
-                    BayesianEvent e = this.events[i];
-                    if (this.Query.GetEventState(e).CurrentEventType == EventType.Evidence)
-                    {
-                        if (!first)
-                        {
-                            result.Append(",");
-                        }
-                        result.Append(e.Label);
-                        first = false;
-                    }
-                }
-
-                result.Append(")");
-                return result.ToString();
-            }
-        }
-
-        /// <summary>
-        /// True if this network has a valid classification target.
-        /// </summary>
-        public bool HasValidClassificationTarget
-        {
-            get
-            {
-                if (this.classificationTarget < 0
-                        || this.classificationTarget >= this.events.Count)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
+            Query.LocateEventTypes();
         }
     }
 }

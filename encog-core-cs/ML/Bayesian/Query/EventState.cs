@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Util;
 
@@ -13,30 +11,15 @@ namespace Encog.ML.Bayesian.Query
     public class EventState
     {
         /// <summary>
-        /// Has this event been calculated yet?
-        /// </summary>
-        public bool IsCalculated { get; set; }
-
-        /// <summary>
-        /// The current value of this event.
-        /// </summary>
-        private int value;
-
-        /// <summary>
         /// The event that this state is connected to.
         /// </summary>
         private readonly BayesianEvent _event;
 
         /// <summary>
-        /// The type of event that this is for the query.
+        /// The current value of this event.
         /// </summary>
-        public EventType CurrentEventType { get; set; }
+        private int _value;
 
-        /// <summary>
-        /// The value that we are comparing to, for probability.
-        /// </summary>
-        public int CompareValue { get; set; }
-        
         /// <summary>
         /// Construct an event state for the specified event. 
         /// </summary>
@@ -49,18 +32,30 @@ namespace Encog.ML.Bayesian.Query
         }
 
         /// <summary>
+        /// Has this event been calculated yet?
+        /// </summary>
+        public bool IsCalculated { get; set; }
+
+        /// <summary>
+        /// The type of event that this is for the query.
+        /// </summary>
+        public EventType CurrentEventType { get; set; }
+
+        /// <summary>
+        /// The value that we are comparing to, for probability.
+        /// </summary>
+        public int CompareValue { get; set; }
+
+        /// <summary>
         /// The value.
         /// </summary>
         public int Value
         {
-            get
-            {
-                return value;
-            }
+            get { return _value; }
             set
             {
-                this.IsCalculated = true;
-                this.value = value;
+                IsCalculated = true;
+                _value = value;
             }
         }
 
@@ -70,21 +65,9 @@ namespace Encog.ML.Bayesian.Query
         /// </summary>
         public BayesianEvent Event
         {
-            get
-            {
-                return _event;
-            }
+            get { return _event; }
         }
 
-
-        /// <summary>
-        /// Randomize according to the arguments.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
-        public void Randomize(params int[] args)
-        {
-            Value = _event.Table.GenerateRandom(args);
-        }
 
         /// <summary>
         /// Is this event satisified.
@@ -96,26 +79,35 @@ namespace Encog.ML.Bayesian.Query
                 if (CurrentEventType == EventType.Hidden)
                 {
                     throw new BayesianError(
-                            "Satisfy can't be called on a hidden event.");
+                        "Satisfy can't be called on a hidden event.");
                 }
-                return Math.Abs(this.CompareValue - this.value) < EncogFramework.DefaultDoubleEqual;
+                return Math.Abs(CompareValue - _value) < EncogFramework.DefaultDoubleEqual;
             }
+        }
+
+        /// <summary>
+        /// Randomize according to the arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        public void Randomize(params int[] args)
+        {
+            Value = _event.Table.GenerateRandom(args);
         }
 
         /// <inheritdoc/>
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[EventState:event=");
             result.Append(_event.ToString());
             result.Append(",type=");
-            result.Append(this.CurrentEventType.ToString());
+            result.Append(CurrentEventType.ToString());
             result.Append(",value=");
-            result.Append(Format.FormatDouble(this.value, 2));
+            result.Append(Format.FormatDouble(_value, 2));
             result.Append(",compare=");
-            result.Append(Format.FormatDouble(this.CompareValue, 2));
+            result.Append(Format.FormatDouble(CompareValue, 2));
             result.Append(",calc=");
-            result.Append(this.IsCalculated ? "y" : "n");
+            result.Append(IsCalculated ? "y" : "n");
             result.Append("]");
             return result.ToString();
         }

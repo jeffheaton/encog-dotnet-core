@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.ML.Bayesian.Query
@@ -12,143 +11,41 @@ namespace Encog.ML.Bayesian.Query
     public abstract class BasicQuery : IBayesianQuery
     {
         /// <summary>
-        /// The network to be queried.
-        /// </summary>
-        private readonly BayesianNetwork network;
-
-        /// <summary>
         /// A mapping of the events to event states.
         /// </summary>
-        private readonly IDictionary<BayesianEvent, EventState> events = new Dictionary<BayesianEvent, EventState>();
+        private readonly IDictionary<BayesianEvent, EventState> _events = new Dictionary<BayesianEvent, EventState>();
 
         /// <summary>
         /// The evidence events.
         /// </summary>
-        private readonly IList<BayesianEvent> evidenceEvents = new List<BayesianEvent>();
+        private readonly IList<BayesianEvent> _evidenceEvents = new List<BayesianEvent>();
 
         /// <summary>
-        /// Default constructor.
+        /// The network to be queried.
         /// </summary>
-        public BasicQuery()
-        {
-            this.network = null;
-        }
+        private readonly BayesianNetwork _network;
 
         /// <summary>
         /// The outcome events.
         /// </summary>
-        private readonly IList<BayesianEvent> outcomeEvents = new List<BayesianEvent>();
+        private readonly IList<BayesianEvent> _outcomeEvents = new List<BayesianEvent>();
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        protected BasicQuery()
+        {
+            _network = null;
+        }
 
         /// <summary>
         /// Construct a basic query.
         /// </summary>
         /// <param name="theNetwork">The network to use for this query.</param>
-        public BasicQuery(BayesianNetwork theNetwork)
+        protected BasicQuery(BayesianNetwork theNetwork)
         {
-            this.network = theNetwork;
+            _network = theNetwork;
             FinalizeStructure();
-        }
-
-        /// <summary>
-        /// Finalize the query structure.
-        /// </summary>
-        public void FinalizeStructure()
-        {
-            this.events.Clear();
-            foreach (BayesianEvent e in this.network.Events)
-            {
-                events[e] = new EventState(e);
-            }
-        }
-
-        /// <inheritdoc/>
-        public BayesianNetwork Network
-        {
-            get
-            {
-                return network;
-            }
-        }
-
-        /// <inheritdoc/>
-        public IDictionary<BayesianEvent, EventState> Events
-        {
-            get
-            {
-                return events;
-            }
-        }
-
-
-
-        /// <inheritdoc/>
-        public IList<BayesianEvent> EvidenceEvents
-        {
-            get
-            {
-                return evidenceEvents;
-            }
-        }
-
-        /// <inheritdoc/>
-        public IList<BayesianEvent> OutcomeEvents
-        {
-            get
-            {
-                return outcomeEvents;
-            }
-        }
-
-        /// <summary>
-        /// Called to locate the evidence and outcome events.
-        /// </summary>
-        public void LocateEventTypes()
-        {
-            this.evidenceEvents.Clear();
-            this.outcomeEvents.Clear();
-
-            foreach (BayesianEvent e in this.network.Events)
-            {
-                switch (GetEventType(e))
-                {
-                    case EventType.Evidence:
-                        this.evidenceEvents.Add(e);
-                        break;
-                    case EventType.Outcome:
-                        this.outcomeEvents.Add(e);
-                        break;
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Reset()
-        {
-            foreach (EventState s in this.events.Values)
-            {
-                s.IsCalculated = false;
-            }
-        }
-
-
-        /// <inheritdoc/>
-        public void DefineEventType(BayesianEvent theEvent, EventType et)
-        {
-            GetEventState(theEvent).CurrentEventType = et;
-        }
-
-        /// <inheritdoc/>
-        public EventState GetEventState(BayesianEvent theEvent)
-        {
-            if (!this.events.ContainsKey(theEvent))
-                return null;
-            return this.events[theEvent];
-        }
-
-        /// <inheritdoc/>
-        public EventType GetEventType(BayesianEvent theEvent)
-        {
-            return GetEventState(theEvent).CurrentEventType;
         }
 
         /// <summary>
@@ -159,7 +56,7 @@ namespace Encog.ML.Bayesian.Query
         {
             get
             {
-                foreach (BayesianEvent evidenceEvent in this.evidenceEvents)
+                foreach (BayesianEvent evidenceEvent in _evidenceEvents)
                 {
                     EventState state = GetEventState(evidenceEvent);
                     if (!state.IsSatisfied)
@@ -179,7 +76,7 @@ namespace Encog.ML.Bayesian.Query
         {
             get
             {
-                foreach (BayesianEvent outcomeEvent in this.outcomeEvents)
+                foreach (BayesianEvent outcomeEvent in _outcomeEvents)
                 {
                     EventState state = GetEventState(outcomeEvent);
                     if (!state.IsSatisfied)
@@ -189,6 +86,97 @@ namespace Encog.ML.Bayesian.Query
                 }
                 return true;
             }
+        }
+
+        #region IBayesianQuery Members
+
+        /// <summary>
+        /// Finalize the query structure.
+        /// </summary>
+        public void FinalizeStructure()
+        {
+            _events.Clear();
+            foreach (BayesianEvent e in _network.Events)
+            {
+                _events[e] = new EventState(e);
+            }
+        }
+
+        /// <inheritdoc/>
+        public BayesianNetwork Network
+        {
+            get { return _network; }
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<BayesianEvent, EventState> Events
+        {
+            get { return _events; }
+        }
+
+
+        /// <inheritdoc/>
+        public IList<BayesianEvent> EvidenceEvents
+        {
+            get { return _evidenceEvents; }
+        }
+
+        /// <inheritdoc/>
+        public IList<BayesianEvent> OutcomeEvents
+        {
+            get { return _outcomeEvents; }
+        }
+
+        /// <summary>
+        /// Called to locate the evidence and outcome events.
+        /// </summary>
+        public void LocateEventTypes()
+        {
+            _evidenceEvents.Clear();
+            _outcomeEvents.Clear();
+
+            foreach (BayesianEvent e in _network.Events)
+            {
+                switch (GetEventType(e))
+                {
+                    case EventType.Evidence:
+                        _evidenceEvents.Add(e);
+                        break;
+                    case EventType.Outcome:
+                        _outcomeEvents.Add(e);
+                        break;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Reset()
+        {
+            foreach (EventState s in _events.Values)
+            {
+                s.IsCalculated = false;
+            }
+        }
+
+
+        /// <inheritdoc/>
+        public void DefineEventType(BayesianEvent theEvent, EventType et)
+        {
+            GetEventState(theEvent).CurrentEventType = et;
+        }
+
+        /// <inheritdoc/>
+        public EventState GetEventState(BayesianEvent theEvent)
+        {
+            if (!_events.ContainsKey(theEvent))
+                return null;
+            return _events[theEvent];
+        }
+
+        /// <inheritdoc/>
+        public EventType GetEventType(BayesianEvent theEvent)
+        {
+            return GetEventState(theEvent).CurrentEventType;
         }
 
         /// <inheritdoc/>
@@ -214,14 +202,13 @@ namespace Encog.ML.Bayesian.Query
         {
             get
             {
-
-                if (this.outcomeEvents.Count == 0)
+                if (_outcomeEvents.Count == 0)
                     return "";
 
-                StringBuilder result = new StringBuilder();
+                var result = new StringBuilder();
                 result.Append("P(");
                 bool first = true;
-                foreach (BayesianEvent e in this.outcomeEvents)
+                foreach (BayesianEvent e in _outcomeEvents)
                 {
                     if (!first)
                     {
@@ -233,7 +220,7 @@ namespace Encog.ML.Bayesian.Query
                 result.Append("|");
 
                 first = true;
-                foreach (BayesianEvent e in this.evidenceEvents)
+                foreach (BayesianEvent e in _evidenceEvents)
                 {
                     if (!first)
                     {
@@ -266,6 +253,6 @@ namespace Encog.ML.Bayesian.Query
         /// <inheritdoc/>
         public abstract void Execute();
 
-
+        #endregion
     }
 }

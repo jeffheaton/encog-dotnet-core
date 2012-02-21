@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Encog.ML.Bayesian.Training
+﻿namespace Encog.ML.Bayesian.Training
 {
     /// <summary>
     /// The method by which a Bayesian network should be initialized.

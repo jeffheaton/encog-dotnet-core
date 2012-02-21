@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Util.CSV;
 
 namespace Encog.ML.Bayesian.BIF
@@ -12,29 +10,34 @@ namespace Encog.ML.Bayesian.BIF
     public class BIFDefinition
     {
         /// <summary>
-        /// The "for" definition.
-        /// </summary>
-        public String ForDefinition { get; set; }
-
-        /// <summary>
         /// Given definitions.
         /// </summary>
-        private IList<String> givenDefinitions = new List<String>();
+        private readonly IList<String> _givenDefinitions = new List<String>();
 
         /// <summary>
         /// The table of probabilities.
         /// </summary>
-        private double[] table;
+        private double[] _table;
+
+        /// <summary>
+        /// The "for" definition.
+        /// </summary>
+        public String ForDefinition { get; set; }
 
         /// <summary>
         /// The table of probabilities.
         /// </summary>
         public double[] Table
         {
-            get
-            {
-                return table;
-            }
+            get { return _table; }
+        }
+
+        /// <summary>
+        /// The given defintions.
+        /// </summary>
+        public IList<String> GivenDefinitions
+        {
+            get { return _givenDefinitions; }
         }
 
         /// <summary>
@@ -43,7 +46,6 @@ namespace Encog.ML.Bayesian.BIF
         /// <param name="s">A space separated string.</param>
         public void SetTable(String s)
         {
-
             // parse a space separated list of numbers
             String[] tok = s.Split(' ');
             IList<Double> list = new List<Double>();
@@ -61,21 +63,10 @@ namespace Encog.ML.Bayesian.BIF
             }
 
             // now copy to regular array
-            this.table = new double[list.Count];
-            for (int i = 0; i < this.table.Length; i++)
+            _table = new double[list.Count];
+            for (int i = 0; i < _table.Length; i++)
             {
-                this.table[i] = list[i];
-            }
-        }
-
-        /// <summary>
-        /// The given defintions.
-        /// </summary>
-        public IList<String> GivenDefinitions
-        {
-            get
-            {
-                return givenDefinitions;
+                _table[i] = list[i];
             }
         }
 
@@ -85,9 +76,7 @@ namespace Encog.ML.Bayesian.BIF
         /// <param name="s">The given to add.</param>
         public void AddGiven(String s)
         {
-            this.givenDefinitions.Add(s);
-
+            _givenDefinitions.Add(s);
         }
-
     }
 }

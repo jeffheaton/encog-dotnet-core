@@ -37,16 +37,6 @@ namespace Encog.ML.Bayesian
     public class BayesianEvent
     {
         /// <summary>
-        /// The label for this event.
-        /// </summary>
-        private readonly String _label;
-
-        /// <summary>
-        /// The parents, or given.
-        /// </summary>
-        private readonly IList<BayesianEvent> _parents = new List<BayesianEvent>();
-
-        /// <summary>
         /// The children, or events that use us as a given.
         /// </summary>
         private readonly IList<BayesianEvent> _children = new List<BayesianEvent>();
@@ -57,36 +47,41 @@ namespace Encog.ML.Bayesian
         private readonly IList<BayesianChoice> _choices = new List<BayesianChoice>();
 
         /// <summary>
+        /// The label for this event.
+        /// </summary>
+        private readonly String _label;
+
+        /// <summary>
+        /// The parents, or given.
+        /// </summary>
+        private readonly IList<BayesianEvent> _parents = new List<BayesianEvent>();
+
+        /// <summary>
         /// The truth table for this event.
         /// </summary>
         private BayesianTable _table;
 
         /// <summary>
-        /// The index of the minimum choice.
+        /// The value of the maximum choice.
         /// </summary>
-        private int minimumChoiceIndex;
+        private double _maximumChoice;
 
         /// <summary>
         /// THe value of the minimum choice.
         /// </summary>
-        private double minimumChoice;
+        private double _minimumChoice;
 
         /// <summary>
-        /// The index of the maximum choice.
+        /// The index of the minimum choice.
         /// </summary>
-        private int maximumChoiceIndex;
-
-        /// <summary>
-        /// The value of the maximum choice.
-        /// </summary>
-        private double maximumChoice;
+        private int _minimumChoiceIndex;
 
         /// <summary>
         /// Construct an event with the specified label and choices.
         /// </summary>
         /// <param name="theLabel">The label.</param>
         /// <param name="theChoices">The choices, or states.</param>
-        public BayesianEvent(String theLabel, IList<BayesianChoice> theChoices)
+        public BayesianEvent(String theLabel, IEnumerable<BayesianChoice> theChoices)
         {
             _label = theLabel;
             _choices.CopyTo(theChoices.ToArray(), 0);
@@ -97,7 +92,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         /// <param name="theLabel">The label.</param>
         /// <param name="theChoices">The choices, or states.</param>
-        public BayesianEvent(String theLabel, String[] theChoices)
+        public BayesianEvent(String theLabel, IEnumerable<string> theChoices)
         {
             _label = theLabel;
 
@@ -113,9 +108,8 @@ namespace Encog.ML.Bayesian
         /// </summary>
         /// <param name="theLabel">The label.</param>
         public BayesianEvent(String theLabel)
-            : this(theLabel, BayesianNetwork.CHOICES_TRUE_FALSE)
+            : this(theLabel, BayesianNetwork.ChoicesTrueFalse)
         {
-
         }
 
         /// <summary>
@@ -123,10 +117,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public IList<BayesianEvent> Parents
         {
-            get
-            {
-                return _parents;
-            }
+            get { return _parents; }
         }
 
         /// <summary>
@@ -134,10 +125,7 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public IList<BayesianEvent> Children
         {
-            get
-            {
-                return _children;
-            }
+            get { return _children; }
         }
 
         /// <summary>
@@ -145,10 +133,47 @@ namespace Encog.ML.Bayesian
         /// </summary>
         public String Label
         {
-            get
-            {
-                return _label;
-            }
+            get { return _label; }
+        }
+
+        /// <summary>
+        /// True, if this event has parents.
+        /// </summary>
+        public bool HasParents
+        {
+            get { return _parents.Count > 0; }
+        }
+
+        /// <summary>
+        /// True, if this event has parents.
+        /// </summary>
+        public bool HasChildren
+        {
+            get { return _parents.Count > 0; }
+        }
+
+        /// <summary>
+        /// the choices
+        /// </summary>
+        public IList<BayesianChoice> Choices
+        {
+            get { return _choices; }
+        }
+
+        /// <summary>
+        /// the table
+        /// </summary>
+        public BayesianTable Table
+        {
+            get { return _table; }
+        }
+
+        /// <summary>
+        /// True, if this is a boolean event.
+        /// </summary>
+        public bool IsBoolean
+        {
+            get { return _choices.Count == 2; }
         }
 
         /// <summary>
@@ -170,37 +195,15 @@ namespace Encog.ML.Bayesian
         }
 
         /// <summary>
-        /// True, if this event has parents.
-        /// </summary>
-        public bool HasParents
-        {
-            get
-            {
-                return _parents.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// True, if this event has parents.
-        /// </summary>
-        public bool HasChildren
-        {
-            get
-            {
-                return _parents.Count > 0;
-            }
-        }
-
-        /// <summary>
         /// A full string that contains all info for this event.
         /// </summary>
         /// <returns>A full string that contains all info for this event.</returns>
         public String ToFullString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
             result.Append("P(");
-            result.Append(this.Label);
+            result.Append(Label);
 
             result.Append("[");
             bool first = true;
@@ -234,12 +237,12 @@ namespace Encog.ML.Bayesian
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
             result.Append("P(");
-            result.Append(this.Label);
+            result.Append(Label);
 
             if (HasParents)
             {
@@ -267,59 +270,30 @@ namespace Encog.ML.Bayesian
         {
             int result = _choices.Count - 1;
 
-            foreach (BayesianEvent parent in _parents)
-            {
-                result *= _choices.Count;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// the choices
-        /// </summary>
-        public IList<BayesianChoice> Choices
-        {
-            get
-            {
-                return _choices;
-            }
-        }
-
-        /// <summary>
-        /// the table
-        /// </summary>
-        public BayesianTable Table
-        {
-            get
-            {
-                return _table;
-            }
+            return _parents.Aggregate(result, (current, parent) => current*_choices.Count);
         }
 
         /// <summary>
         /// Finalize the structure.
         /// </summary>
-        public void finalizeStructure()
+        public void FinalizeStructure()
         {
             // find min/max choice
-            this.minimumChoiceIndex = -1;
-            this.maximumChoiceIndex = -1;
-            this.minimumChoice = Double.PositiveInfinity;
-            this.maximumChoice = Double.NegativeInfinity;
+            _minimumChoiceIndex = -1;
+            _minimumChoice = Double.PositiveInfinity;
+            _maximumChoice = Double.NegativeInfinity;
 
             int index = 0;
             foreach (BayesianChoice choice in _choices)
             {
-                if (choice.Min < this.minimumChoice)
+                if (choice.Min < _minimumChoice)
                 {
-                    this.minimumChoice = choice.Min;
-                    this.minimumChoiceIndex = index;
+                    _minimumChoice = choice.Min;
+                    _minimumChoiceIndex = index;
                 }
-                if (choice.Max > this.maximumChoice)
+                if (choice.Max > _maximumChoice)
                 {
-                    this.maximumChoice = choice.Max;
-                    this.maximumChoiceIndex = index;
+                    _maximumChoice = choice.Max;
                 }
                 index++;
             }
@@ -334,7 +308,6 @@ namespace Encog.ML.Bayesian
             {
                 _table.Reset();
             }
-
         }
 
         /// <summary>
@@ -343,17 +316,6 @@ namespace Encog.ML.Bayesian
         public void Validate()
         {
             _table.Validate();
-        }
-
-        /// <summary>
-        /// True, if this is a boolean event.
-        /// </summary>
-        public bool IsBoolean
-        {
-            get
-            {
-                return _choices.Count == 2;
-            }
         }
 
         /// <summary>
@@ -377,9 +339,8 @@ namespace Encog.ML.Bayesian
 
             while (!done)
             {
-
                 // EventState state = this.parents.get(currentIndex);
-                int v = (int)args[currentIndex];
+                var v = (int) args[currentIndex];
                 v++;
                 if (v >= _parents[currentIndex].Choices.Count)
                 {
@@ -388,7 +349,6 @@ namespace Encog.ML.Bayesian
                 else
                 {
                     args[currentIndex] = v;
-                    done = true;
                     break;
                 }
 
@@ -412,7 +372,7 @@ namespace Encog.ML.Bayesian
             _children.Clear();
             _parents.Clear();
         }
-        
+
         /// <summary>
         /// Format the event name with +, - and =.  For example +a or -1, or a=red.
         /// </summary>
@@ -421,18 +381,11 @@ namespace Encog.ML.Bayesian
         /// <returns>The formatted name.</returns>
         public static String FormatEventName(BayesianEvent theEvent, int value)
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
 
             if (theEvent.IsBoolean)
             {
-                if (value == 0)
-                {
-                    str.Append("+");
-                }
-                else
-                {
-                    str.Append("-");
-                }
+                str.Append(value == 0 ? "+" : "-");
             }
             str.Append(theEvent.Label);
             if (!theEvent.IsBoolean)
@@ -442,7 +395,6 @@ namespace Encog.ML.Bayesian
             }
 
             return str.ToString();
-
         }
 
         /// <summary>
@@ -452,14 +404,7 @@ namespace Encog.ML.Bayesian
         /// <returns>True if the event has the specified given.</returns>
         public bool HasGiven(String l)
         {
-            foreach (BayesianEvent e in _parents)
-            {
-                if (e.Label.Equals(l))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _parents.Any(e => e.Label.Equals(l));
         }
 
         /// <summary>
@@ -485,7 +430,7 @@ namespace Encog.ML.Bayesian
         {
             if (_choices.Count > 0 && _choices[0].IsIndex)
             {
-                return (int)d;
+                return (int) d;
             }
 
             int index = 0;
@@ -507,13 +452,13 @@ namespace Encog.ML.Bayesian
 
             // out of range?
 
-            if (d < this.minimumChoice)
-                return this.minimumChoiceIndex;
-            if (d > this.maximumChoice)
-                return this.minimumChoiceIndex;
+            if (d < _minimumChoice)
+                return _minimumChoiceIndex;
+            if (d > _maximumChoice)
+                return _minimumChoiceIndex;
 
             throw new BayesianError("Can't find a choice to map the value of " + d
-                    + " to for event " + this.ToString());
+                                    + " to for event " + ToString());
         }
     }
 }
