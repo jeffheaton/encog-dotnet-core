@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Encog.Util.CSV;
 using System.IO;
-using System.Linq;
 using System.Globalization;
 namespace Encog.ML.Data.Market.Loader
 {

@@ -248,6 +248,8 @@
     <Compile Include="ML\Bayesian\BayesianError.cs" />
     <Compile Include="ML\Bayesian\BayesianEvent.cs" />
     <Compile Include="ML\Bayesian\BayesianNetwork.cs" />
+    <Compile Include="ML\Bayesian\BIF\BIFDefinition.cs" />
+    <Compile Include="ML\Bayesian\BIF\BIFVariable.cs" />
     <Compile Include="ML\Bayesian\EventType.cs" />
     <Compile Include="ML\Bayesian\Parse\ParsedChoice.cs" />
     <Compile Include="ML\Bayesian\Parse\ParsedEvent.cs" />
@@ -257,8 +259,16 @@
     <Compile Include="ML\Bayesian\Query\Enumeration\EnumerationQuery.cs" />
     <Compile Include="ML\Bayesian\Query\EventState.cs" />
     <Compile Include="ML\Bayesian\Query\IBayesianQuery.cs" />
+    <Compile Include="ML\Bayesian\Query\Sample\SamplingQuery.cs" />
     <Compile Include="ML\Bayesian\Table\BayesianTable.cs" />
     <Compile Include="ML\Bayesian\Table\TableLine.cs" />
+    <Compile Include="ML\Bayesian\Training\BayesianInit.cs" />
+    <Compile Include="ML\Bayesian\Training\Estimator\IBayesEstimator.cs" />
+    <Compile Include="ML\Bayesian\Training\Estimator\SimpleEstimator.cs" />
+    <Compile Include="ML\Bayesian\Training\Search\IBayesSearch.cs" />
+    <Compile Include="ML\Bayesian\Training\Search\k2\SearchK2.cs" />
+    <Compile Include="ML\Bayesian\Training\Search\SearchNone.cs" />
+    <Compile Include="ML\Bayesian\Training\TrainBayesian.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
