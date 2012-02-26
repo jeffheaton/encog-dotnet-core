@@ -54,8 +54,11 @@ using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
 using Encog.Examples.CSVMarketExample;
 using Encog.Examples.ForexExample;
+using Encog.Examples.Bayes_Carrots;
 namespace ConsoleExamples
 {
+    using Encog.Examples.Fuzzy;
+
     /// <summary>
     /// Console examples
     /// 
@@ -109,6 +112,8 @@ namespace ConsoleExamples
             examples.Add(NormalizeFile.Info);
             examples.Add(ElliottBenchmark.Info);
             examples.Add(XORPSO.Info);
+            examples.Add(FuzzyExample.Info);
+            examples.Add(BayesCarrots.Info);
         }
 
         public void ListCommands()

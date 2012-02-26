@@ -17,23 +17,23 @@ namespace Encog.Examples.NetWorkPruner
 {
     class PrunerLoader : IExample
     {
-        //public const string MaketTrainingToLoad = @"c:\EncogOutput\ELMHANmarketdTrainingFile.egb";
-   private IExampleInterface app;
 
-   public static ExampleInfo Info
-   {
-       get
-       {
-           var info = new ExampleInfo(
-               typeof(PrunerLoader),
-               "Prunate",
-               "Prunes network",
-               "This example will prune networks. You must pass the training file of the network , and it will start the pruning process");
-           return info;
-       }
+        private IExampleInterface app;
+
+        public static ExampleInfo Info
+        {
+            get
+            {
+                var info = new ExampleInfo(
+                    typeof(PrunerLoader),
+                    "Prunate",
+                    "Prunes network",
+                    "This example will prune networks. You must pass the training file of the network , and it will start the pruning process");
+                return info;
+            }
 
 
-   }
+        }
         public static void Incremental(FileInfo dataDir, string networkfiletosave, string trainingfile)
         {
             FileInfo file = FileUtil.CombinePath(dataDir, networkfiletosave);
@@ -63,9 +63,12 @@ namespace Encog.Examples.NetWorkPruner
 
             prune.Process();
 
-            Encog.Util.NetworkUtil.NetworkUtility.SaveTraining(dataDir.Directory.FullName, trainingfile, training);
+            if (dataDir.Directory != null)
+            {
+                Encog.Util.NetworkUtil.NetworkUtility.SaveTraining(dataDir.Directory.FullName, trainingfile, training);
 
-            EncogDirectoryPersistence.SaveObject(file, prune.BestNetwork);
+                EncogDirectoryPersistence.SaveObject(file, prune.BestNetwork);
+            }
         }
 
         public void Execute(IExampleInterface app)
@@ -77,7 +80,7 @@ namespace Encog.Examples.NetWorkPruner
             else
             {
                 var dataDir = new FileInfo(app.Args[1]);
-                if (String.Compare(app.Args[0], "prune", true) == 0)
+                if (System.String.Compare(app.Args[0], "prune", System.StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     PrunerLoader.Incremental(dataDir, app.Args[2], app.Args[3]);
                 }
