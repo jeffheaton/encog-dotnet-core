@@ -405,7 +405,7 @@ namespace Encog.ML.Bayesian
         /// <returns>The event found.</returns>
         public BayesianEvent GetEvent(String label)
         {
-            if (_eventMap.ContainsKey(label))
+            if (!_eventMap.ContainsKey(label))
                 return null;
             return _eventMap[label];
         }

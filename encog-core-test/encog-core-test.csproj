@@ -74,6 +74,10 @@
     <Compile Include="MathUtil\Matrices\TestBiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrix.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
+    <Compile Include="ML\Bayes\TestBayesNet.cs" />
+    <Compile Include="ML\Bayes\TestEnumerationQuery.cs" />
+    <Compile Include="ML\Bayes\TestK2.cs" />
+    <Compile Include="ML\Bayes\TestSamplingQuery.cs" />
     <Compile Include="ML\Data\Basic\TestBasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
