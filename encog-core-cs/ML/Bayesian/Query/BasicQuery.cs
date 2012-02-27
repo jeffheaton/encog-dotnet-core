@@ -8,6 +8,7 @@ namespace Encog.ML.Bayesian.Query
     /// Provides basic functionality for a Bayesian query. This class is abstract,
     /// and is not used directly. Rather, other queries make use of it.
     /// </summary>
+    [Serializable]
     public abstract class BasicQuery : IBayesianQuery
     {
         /// <summary>

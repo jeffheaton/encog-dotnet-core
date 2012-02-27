@@ -84,7 +84,10 @@ namespace Encog.ML.Bayesian
         public BayesianEvent(String theLabel, IEnumerable<BayesianChoice> theChoices)
         {
             _label = theLabel;
-            _choices.CopyTo(theChoices.ToArray(), 0);
+            foreach (BayesianChoice choice in theChoices)
+            {
+                _choices.Add(choice);
+            }
         }
 
         /// <summary>

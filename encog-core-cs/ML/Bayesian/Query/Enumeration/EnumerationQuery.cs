@@ -13,6 +13,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
     /// However, enumeration can be slow for large Bayesian networks. For a quick
     /// estimate of probability the sampling query can be used.
     /// </summary>
+    [Serializable]
     public class EnumerationQuery : BasicQuery
     {
         /// <summary>

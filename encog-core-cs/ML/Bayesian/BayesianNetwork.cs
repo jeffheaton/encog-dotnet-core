@@ -43,7 +43,7 @@ namespace Encog.ML.Bayesian
     /// http://www.heatonresearch.com/wiki/Bayesian_Network
     /// </summary>
     [Serializable]
-    public class BayesianNetwork : IMLClassification, IMLResettable, IMLError
+    public class BayesianNetwork : BasicML, IMLClassification, IMLResettable, IMLError
     {
         /// <summary>
         /// Default choices for a boolean event.
@@ -871,7 +871,7 @@ namespace Encog.ML.Bayesian
         }
 
         /// <inheritdoc/>
-        public void UpdateProperties()
+        public override void UpdateProperties()
         {
             // Not needed		
         }
@@ -978,5 +978,6 @@ namespace Encog.ML.Bayesian
 
             Query.LocateEventTypes();
         }
+
     }
 }

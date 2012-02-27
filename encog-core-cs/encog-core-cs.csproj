@@ -255,6 +255,7 @@
     <Compile Include="ML\Bayesian\Parse\ParsedEvent.cs" />
     <Compile Include="ML\Bayesian\Parse\ParsedProbability.cs" />
     <Compile Include="ML\Bayesian\Parse\ParseProbability.cs" />
+    <Compile Include="ML\Bayesian\PersistBayes.cs" />
     <Compile Include="ML\Bayesian\Query\BasicQuery.cs" />
     <Compile Include="ML\Bayesian\Query\Enumeration\EnumerationQuery.cs" />
     <Compile Include="ML\Bayesian\Query\EventState.cs" />

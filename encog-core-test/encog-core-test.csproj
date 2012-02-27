@@ -94,6 +94,7 @@
     <Compile Include="Persist\TestPersistART.cs" />
     <Compile Include="Persist\TestPersistBAM.cs" />
     <Compile Include="Persist\TestPersistBasicNetwork.cs" />
+    <Compile Include="Persist\TestPersistBayes.cs" />
     <Compile Include="Persist\TestPersistBoltzmann.cs" />
     <Compile Include="Persist\TestPersistCPN.cs" />
     <Compile Include="Persist\TestPersistHopfield.cs" />

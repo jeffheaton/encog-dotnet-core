@@ -1,3 +1,4 @@
+Encog.ML.Bayesian.BayesianNetwork
 Encog.Bot.BotError
 Encog.Bot.BotUtil
 Encog.Bot.Browse.Address

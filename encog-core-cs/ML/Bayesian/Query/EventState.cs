@@ -8,6 +8,7 @@ namespace Encog.ML.Bayesian.Query
     /// Holds the state of an event during a query. This allows the event to actually
     /// hold a value, as well as an anticipated value (compareValue).
     /// </summary>
+    [Serializable]
     public class EventState
     {
         /// <summary>
