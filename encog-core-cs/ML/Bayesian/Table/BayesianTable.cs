@@ -123,7 +123,7 @@ namespace Encog.ML.Bayesian.Table
             if (args.Length != _event.Parents.Count)
             {
                 throw new BayesianError("Truth table line with " + args.Length
-                        + ", specied for event with "
+                        + ", specified for event with "
                         + _event.Parents.Count
                         + " parents.  These numbers must be the same");
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.ML.Bayesian;
+using Encog.ML.Bayesian.Query.Enumeration;
 
 namespace Encog.ML.Bayes
 {
@@ -65,6 +66,6 @@ namespace Encog.ML.Bayes
             Assert.IsFalse(network.IsCondIndependent(b, c, d));
             Assert.IsTrue(network.IsCondIndependent(a, c, a));
             Assert.IsFalse(network.IsCondIndependent(a, c, a, d));
-        }
+        }       
     }
 }

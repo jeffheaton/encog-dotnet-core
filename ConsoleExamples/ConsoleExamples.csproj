@@ -58,6 +58,7 @@
     <Compile Include="ConsoleExamples.cs" />
     <Compile Include="Examples\Adaline\AdalineDigits.cs" />
     <Compile Include="Examples\Analyst\AnalystExample.cs" />
+    <Compile Include="Examples\Bayesian\BayesianTaxi.cs" />
     <Compile Include="Examples\Benchmark\ElliottBenchmark.cs" />
     <Compile Include="Examples\Benchmark\FahlmanEncoder.cs" />
     <Compile Include="Examples\Benchmark\SimpleBenchmark.cs" />
