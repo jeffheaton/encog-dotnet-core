@@ -391,5 +391,23 @@ namespace Encog.MathUtil.Matrices
             }
             return Math.Sqrt(rtn);
         }
+
+        /// <summary>
+        /// Multiply the matrix by a vector.
+        /// </summary>
+        /// <param name="a">The matrix.</param>
+        /// <param name="d">The vector.</param>
+        /// <returns>The resulting vector.</returns>
+        public static double[] Multiply(Matrix a, double[] d)
+        {
+            double[] p = new double[a.Rows];
+            double[][] aData = a.Data;
+
+            for (int r = 0; r < a.Rows; r++)
+                for (int i = 0; i < a.Cols; i++)
+                    p[r] += aData[r][i] * d[i];
+
+            return p;
+        }
     }
 }

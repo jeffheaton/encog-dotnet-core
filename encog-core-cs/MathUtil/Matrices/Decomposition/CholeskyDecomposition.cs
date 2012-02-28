@@ -64,7 +64,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
             // Initialize.
             double[][] a = matrix.Data;
             n = matrix.Rows;
-            l = EngineArray.AllocateDouble2D(n,n);
+            l = EngineArray.AllocateDouble2D(n, n);
             isspd = (matrix.Cols == n);
             // Main loop.
             for (int j = 0; j < n; j++)
@@ -78,11 +78,11 @@ namespace Encog.MathUtil.Matrices.Decomposition
                     double s = 0.0;
                     for (int i = 0; i < k; i++)
                     {
-                        s += lrowk[i]*lrowj[i];
+                        s += lrowk[i] * lrowj[i];
                     }
-                    s = (a[j][k] - s)/l[k][k];
+                    s = (a[j][k] - s) / l[k][k];
                     lrowj[k] = s;
-                    d = d + s*s;
+                    d = d + s * s;
                     isspd = isspd & (a[k][j] == a[j][k]);
                 }
                 d = a[j][j] - d;
@@ -140,7 +140,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
                 {
                     for (int i = 0; i < k; i++)
                     {
-                        x[k][j] -= x[i][j]*l[k][i];
+                        x[k][j] -= x[i][j] * l[k][i];
                     }
                     x[k][j] /= l[k][k];
                 }
@@ -153,13 +153,64 @@ namespace Encog.MathUtil.Matrices.Decomposition
                 {
                     for (int i = k + 1; i < n; i++)
                     {
-                        x[k][j] -= x[i][j]*l[i][k];
+                        x[k][j] -= x[i][j] * l[i][k];
                     }
                     x[k][j] /= l[k][k];
                 }
             }
 
             return new Matrix(x);
+        }
+
+        public Matrix InverseCholesky()
+        {
+            double[][] li = LowerTriangularInverse(l);
+            double[][] ic = EngineArray.AllocateDouble2D(n, n);
+
+            for (int r = 0; r < n; r++)
+                for (int c = 0; c < n; c++)
+                    for (int i = 0; i < n; i++)
+                        ic[r][c] += li[i][r] * li[i][c];
+
+            return new Matrix(ic);
+        }
+
+
+        private double[][] LowerTriangularInverse(double[][] m)
+        {
+
+            double[][] lti = EngineArray.AllocateDouble2D(m.Length, m.Length);
+
+            for (int j = 0; j < m.Length; j++)
+            {
+                if (m[j][j] == 0)
+                    throw new EncogError("Error, the natrix is not full rank");
+
+                lti[j][j] = 1.0 / m[j][j];
+
+                for (int i = j + 1; i < m.Length; i++)
+                {
+                    double sum = 0.0;
+
+                    for (int k = j; k < i; k++)
+                        sum -= m[i][k] * lti[k][j];
+
+                    lti[i][j] = sum / m[i][i];
+                }
+            }
+
+            return lti;
+
+        }
+
+        public double GetDeterminant()
+        {
+            double result = 1;
+
+            for (int i = 0; i < n; i++)
+                result *= l[i][i];
+
+            return result * result;
         }
     }
 }

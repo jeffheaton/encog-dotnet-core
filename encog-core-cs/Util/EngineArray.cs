@@ -439,5 +439,48 @@ namespace Encog.Util
                 array[i] = v;
             }
         }
+
+        /// <summary>
+        /// Add two vectors.
+        /// </summary>
+        /// <param name="d">First vector.</param>
+        /// <param name="m">Second vector.</param>
+        /// <returns>Result vector.</returns>
+        public static double[] Add(double[] d, double[] m)
+        {
+            double[] result = new double[d.Length];
+            for (int i = 0; i < d.Length; i++)
+            {
+                result[i] = d[i] + m[i];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Subtract two vectors.
+        /// </summary>
+        /// <param name="a">First vector.</param>
+        /// <param name="b">Second vector.</param>
+        /// <returns>Result vector.</returns>
+        public static double[] Subtract(double[] a, double[] b)
+        {
+            double[] result = new double[a.Length];
+            for (int i = 0; i < a.Length; i++)
+            {
+                result[i] = a[i] - b[i];
+            }
+            return result;
+        }
+
+        internal static int[][] AllocateInt2D(int rows, int cols)
+        {
+            var result = new int[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                result[i] = new int[cols];
+            }
+            return result;
+
+        }
     }
 }

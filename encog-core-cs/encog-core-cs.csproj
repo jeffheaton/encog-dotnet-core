@@ -378,6 +378,16 @@
     <Compile Include="ML\Genetic\Selection\TruncateSelection.cs" />
     <Compile Include="ML\Genetic\Species\BasicSpecies.cs" />
     <Compile Include="ML\Genetic\Species\Species.cs" />
+    <Compile Include="ML\HMM\Alog\ForwardBackwardCalculator.cs" />
+    <Compile Include="ML\HMM\Alog\ForwardBackwardScaledCalculator.cs" />
+    <Compile Include="ML\HMM\Alog\KullbackLeiblerDistanceCalculator.cs" />
+    <Compile Include="ML\HMM\Alog\MarkovGenerator.cs" />
+    <Compile Include="ML\HMM\Alog\ViterbiCalculator.cs" />
+    <Compile Include="ML\HMM\Distributions\ContinousDistribution.cs" />
+    <Compile Include="ML\HMM\Distributions\DiscreteDistribution.cs" />
+    <Compile Include="ML\HMM\Distributions\IStateDistribution.cs" />
+    <Compile Include="ML\HMM\HiddenMarkovModel.cs" />
+    <Compile Include="ML\IMLStateSequence.cs" />
     <Compile Include="ML\KMeans\Centroid.cs" />
     <Compile Include="ML\KMeans\KMeansCluster.cs" />
     <Compile Include="ML\KMeans\KMeansClustering.cs" />
