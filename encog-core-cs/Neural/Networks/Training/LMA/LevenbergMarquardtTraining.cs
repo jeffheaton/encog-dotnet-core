@@ -300,21 +300,22 @@ namespace Encog.Neural.Networks.Training.Lma
 
                     UpdateWeights();
                     currentError = CalculateError();
-                }
 
-                if (currentError >= startingError)
-                {
-                    _lambda *= ScaleLambda;
-                    if (_lambda > LambdaMax)
+                    if (currentError < startingError)
                     {
-                        _lambda = LambdaMax;
+                        _lambda /= LevenbergMarquardtTraining.ScaleLambda;
                         done = true;
                     }
                 }
-                else
+
+                if (!done)
                 {
-                    _lambda /= ScaleLambda;
-                    done = true;
+                    _lambda *= LevenbergMarquardtTraining.ScaleLambda;
+                    if (_lambda > LevenbergMarquardtTraining.LambdaMax)
+                    {
+                        _lambda = LevenbergMarquardtTraining.LambdaMax;
+                        done = true;
+                    }
                 }
             }
 
