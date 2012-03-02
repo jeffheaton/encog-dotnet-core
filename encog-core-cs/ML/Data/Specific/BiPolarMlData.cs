@@ -23,6 +23,7 @@
 using System;
 using Encog.MathUtil.Matrices;
 using System.Text;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data.Specific
 {
@@ -147,5 +148,15 @@ namespace Encog.ML.Data.Specific
             result.Append(']');
             return (result.ToString());
         }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        /// <returns>Nothing.</returns>
+        public ICentroid<IMLData> CreateCentroid()
+        {
+            return null;
+        }
+
     }
 }

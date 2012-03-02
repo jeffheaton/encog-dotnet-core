@@ -50,6 +50,6 @@ namespace Encog.ML
 
 
         /// <returns>The number of clusters.</returns>
-        int NumClusters();
+        int Count { get;  }
     }
 }

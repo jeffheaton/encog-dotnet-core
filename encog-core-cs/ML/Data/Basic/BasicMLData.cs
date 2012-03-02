@@ -23,6 +23,7 @@
 using System;
 using System.Text;
 using Encog.Util;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data.Basic
 {
@@ -123,5 +124,61 @@ namespace Encog.ML.Data.Basic
         {
             EngineArray.Fill(_data, 0);
         }
+
+        /// <inheritdoc/>
+        public ICentroid<IMLData> CreateCentroid()
+        {
+            return new BasicMLDataCentroid(this);
+        }
+
+        /// <summary>
+        /// Add one data element to another.  This does not modify the object.
+        /// </summary>
+        /// <param name="o">The other data element</param>
+        /// <returns>The result.</returns>
+        public IMLData Plus(IMLData o)
+        {
+            if (Count != o.Count)
+                throw new EncogError("Lengths must match.");
+
+            var result = new BasicMLData(Count);
+            for (int i = 0; i < Count; i++)
+                result[i] = this[i] + o[i];
+
+            return result;
+        }
+
+        /// <summary>
+        /// Multiply one data element with another.  This does not modify the object.
+        /// </summary>
+        /// <param name="d">The other data element</param>
+        /// <returns>The result.</returns>
+        public IMLData Times(double d)
+        {
+            IMLData result = new BasicMLData(Count);
+
+            for (int i = 0; i < Count; i++)
+                result[i] = this[i] * d;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Subtract one data element from another.  This does not modify the object.
+        /// </summary>
+        /// <param name="o">The other data element</param>
+        /// <returns>The result.</returns>
+        public IMLData Minus(IMLData o)
+        {
+            if (Count != o.Count)
+                throw new EncogError("Counts must match.");
+
+            IMLData result = new BasicMLData(Count);
+            for (int i = 0; i < Count; i++)
+                result[i] = this[i] - o[i];
+
+            return result;
+        }
+
     }
 }

@@ -22,6 +22,7 @@
 //
 using System;
 using System.Text;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data.Basic
 {
@@ -188,8 +189,18 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         public double Significance
         {
-            get { return this._significance; }
-            set { this._significance = value;  }
+            get { return _significance; }
+            set { _significance = value;  }
+        }
+
+        /// <inheritdoc/>
+        public ICentroid<IMLDataPair> CreateCentroid()
+        {
+            if (!(Input is BasicMLData))
+            {
+                throw new EncogError("The input data type of " + Input.GetType().Name + " must be BasicMLData.");
+            }
+            return new BasicMLDataPairCentroid(this);
         }
     }
 }

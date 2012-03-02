@@ -20,10 +20,12 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.ML.KMeans;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Kmeans
 {
@@ -37,131 +39,55 @@ namespace Encog.ML.Kmeans
     public class KMeansClustering : IMLClustering
     {
         /// <summary>
-        /// The clusters.
+        /// Number of clusters.
         /// </summary>
-        ///
-        private readonly KMeansCluster[] _clusters;
+        private readonly int _k;
 
         /// <summary>
-        /// The dataset to cluster.
+        /// The kmeans utility.
         /// </summary>
-        ///
-        private readonly IMLDataSet _set;
+        private readonly KMeansUtil<BasicMLDataPair> _kmeans;
 
         /// <summary>
-        /// Within-cluster sum of squares (WCSS).
+        /// The clusters
         /// </summary>
-        ///
-        private double _wcss;
+        private IMLCluster[] _clusters;
 
         /// <summary>
         /// Construct the K-Means object.
         /// </summary>
-        ///
-        /// <param name="k">The number of clusters to use.</param>
+        /// <param name="theK">The number of clusters to use.</param>
         /// <param name="theSet">The dataset to cluster.</param>
-        public KMeansClustering(int k, IMLDataSet theSet)
+        public KMeansClustering(int theK, IMLDataSet theSet)
         {
-            _clusters = new KMeansCluster[k];
-            for (int i = 0; i < k; i++)
+            IList<BasicMLDataPair> list = new List<BasicMLDataPair>();
+            foreach (IMLDataPair pair in theSet)
             {
-                _clusters[i] = new KMeansCluster();
+                list.Add((BasicMLDataPair) pair);
             }
-            _set = theSet;
-
-            SetInitialCentroids();
-
-            // break up the data over the clusters
-            int clusterNumber = 0;
-
-
-            foreach (IMLDataPair pair  in  _set)
-            {
-                _clusters[clusterNumber].Add(pair.Input);
-
-                clusterNumber++;
-
-                if (clusterNumber >= _clusters.Length)
-                {
-                    clusterNumber = 0;
-                }
-            }
-
-            CalcWcss();
-
-
-            foreach (KMeansCluster element  in  _clusters)
-            {
-                element.Centroid.CalcCentroid();
-            }
-
-            CalcWcss();
+            _k = theK;
+            _kmeans = new KMeansUtil<BasicMLDataPair>(_k, list as IList);
         }
 
-
-        /// <value>Within-cluster sum of squares (WCSS).</value>
-        public double WCSS
-        {
-            get { return _wcss; }
-        }
-
-        #region MLClustering Members
-
-        /// <value>The clusters.</value>
-        public IMLCluster[] Clusters
-        {
-            get { return _clusters; }
-        }
-
+        #region IMLClustering Members
 
         /// <summary>
         /// Perform a single training iteration.
         /// </summary>
-        ///
         public void Iteration()
         {
-            // loop over all clusters
-            foreach (KMeansCluster element  in  _clusters)
+            _kmeans.Process();
+            _clusters = new IMLCluster[_k];
+            for (int i = 0; i < _k; i++)
             {
-                for (int k = 0; k < element.Size(); k++)
-                {
-                    IMLData data = element.Get(k);
-                    double distance = CalculateEuclideanDistance(
-                        element.Centroid, data);
-                    KMeansCluster tempCluster = null;
-                    bool match = false;
-
-
-                    foreach (KMeansCluster cluster  in  _clusters)
-                    {
-                        double d = CalculateEuclideanDistance(cluster.Centroid,
-                                                              element.Get(k));
-                        if (distance > d)
-                        {
-                            distance = d;
-                            tempCluster = cluster;
-                            match = true;
-                        }
-                    }
-
-                    if (match)
-                    {
-                        tempCluster.Add(element.Get(k));
-                        element.Remove(element.Get(k));
-
-                        foreach (KMeansCluster element2  in  _clusters)
-                        {
-                            element2.Centroid.CalcCentroid();
-                        }
-                        CalcWcss();
-                    }
-                }
+                _clusters[i] = new BasicCluster(_kmeans.GetCluster(i));
             }
         }
 
         /// <summary>
         /// The number of iterations to perform.
         /// </summary>
+        /// <param name="count">The count of iterations.</param>
         public void Iteration(int count)
         {
             for (int i = 0; i < count; i++)
@@ -171,101 +97,23 @@ namespace Encog.ML.Kmeans
         }
 
 
-        /// <returns>The number of clusters.</returns>
-        public int NumClusters()
+        /// <summary>
+        /// The clusters.
+        /// </summary>
+        public IMLCluster[] Clusters
         {
-            return _clusters.Length;
+            get { return _clusters; }
+        }
+
+
+        /// <summary>
+        /// The number of clusters.
+        /// </summary>
+        public int Count
+        {
+            get { return _k; }
         }
 
         #endregion
-
-        /// <summary>
-        /// Calculate the euclidean distance between a centroid and data.
-        /// </summary>
-        ///
-        /// <param name="c">The centroid to use.</param>
-        /// <param name="data">The data to use.</param>
-        /// <returns>The distance.</returns>
-        public static double CalculateEuclideanDistance(Centroid c,
-                                                        IMLData data)
-        {
-            double[] d = data.Data;
-            double sum = c.Centers.Select((t, i) => Math.Pow(d[i] - t, 2)).Sum();
-
-            return Math.Sqrt(sum);
-        }
-
-        /// <summary>
-        /// Calculate the within-cluster sum of squares (WCSS).
-        /// </summary>
-        ///
-        private void CalcWcss()
-        {
-            double temp = _clusters.Aggregate<KMeansCluster, double>(0, (current, element) => current + element.SumSqr);
-
-            _wcss = temp;
-        }
-
-        /// <summary>
-        /// Get the maximum, over all the data, for the specified index.
-        /// </summary>
-        ///
-        /// <param name="index">An index into the input data.</param>
-        /// <returns>The maximum value.</returns>
-        private double GetMaxValue(int index)
-        {
-            double result = Double.MinValue;
-            long count = _set.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                IMLDataPair pair = BasicMLDataPair.CreatePair(
-                    _set.InputSize, _set.IdealSize);
-                _set.GetRecord(index, pair);
-                result = Math.Max(result, pair.InputArray[index]);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Get the minimum, over all the data, for the specified index.
-        /// </summary>
-        ///
-        /// <param name="index">An index into the input data.</param>
-        /// <returns>The minimum value.</returns>
-        private double GetMinValue(int index)
-        {
-            double result = Double.MaxValue;
-            long count = _set.Count;
-            IMLDataPair pair = BasicMLDataPair.CreatePair(
-                _set.InputSize, _set.IdealSize);
-
-            for (int i = 0; i < count; i++)
-            {
-                _set.GetRecord(index, pair);
-                result = Math.Min(result, pair.InputArray[index]);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Setup the initial centroids.
-        /// </summary>
-        ///
-        private void SetInitialCentroids()
-        {
-            for (int n = 1; n <= _clusters.Length; n++)
-            {
-                var temp = new double[_set.InputSize];
-                for (int j = 0; j < temp.Length; j++)
-                {
-                    temp[j] = (((GetMaxValue(j) - GetMinValue(j))/(_clusters.Length + 1))*n)
-                              + GetMinValue(j);
-                }
-                var c1 = new Centroid(temp);
-                _clusters[n - 1].Centroid = c1;
-                c1.Cluster = _clusters[n - 1];
-            }
-        }
     }
 }

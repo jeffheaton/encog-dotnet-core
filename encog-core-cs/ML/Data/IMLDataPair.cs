@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data
 {
@@ -28,7 +29,7 @@ namespace Encog.ML.Data
     /// A neural data pair holds both the input and ideal data.  If this
     /// is an unsupervised data element, then only input is provided.
     /// </summary>
-    public interface IMLDataPair : ICloneable
+    public interface IMLDataPair : ICloneable, ICentroidFactory<IMLDataPair>
     {
         /// <summary>
         /// The input that the neural network.

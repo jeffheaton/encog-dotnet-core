@@ -21,13 +21,14 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data
 {
     /// <summary>
     /// Neural data, basically an array of values.
     /// </summary>
-    public interface IMLData : ICloneable
+    public interface IMLData : ICloneable, ICentroidFactory<IMLData>
     {
         /// <summary>
         /// Get or set the specified index.

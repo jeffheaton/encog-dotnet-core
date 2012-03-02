@@ -272,7 +272,9 @@
     <Compile Include="ML\Bayesian\Training\TrainBayesian.cs" />
     <Compile Include="ML\Data\Basic\BasicMLComplexData.cs" />
     <Compile Include="ML\Data\Basic\BasicMLData.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataCentroid.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataPair.cs" />
+    <Compile Include="ML\Data\Basic\BasicMLDataPairCentroid.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
     <Compile Include="ML\Data\Basic\BasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
@@ -388,8 +390,7 @@
     <Compile Include="ML\HMM\Distributions\IStateDistribution.cs" />
     <Compile Include="ML\HMM\HiddenMarkovModel.cs" />
     <Compile Include="ML\IMLStateSequence.cs" />
-    <Compile Include="ML\KMeans\Centroid.cs" />
-    <Compile Include="ML\KMeans\KMeansCluster.cs" />
+    <Compile Include="ML\KMeans\BasicCluster.cs" />
     <Compile Include="ML\KMeans\KMeansClustering.cs" />
     <Compile Include="ML\IMLAutoAssocation.cs" />
     <Compile Include="ML\IMLClassification.cs" />
@@ -590,6 +591,10 @@
     <Compile Include="Util\File\FileUtil.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\HTMLReport.cs" />
+    <Compile Include="Util\KMeans\Cluster.cs" />
+    <Compile Include="Util\KMeans\ICentroid.cs" />
+    <Compile Include="Util\KMeans\ICentroidFactory.cs" />
+    <Compile Include="Util\KMeans\KMeansUtil.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\DateNormalize.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />

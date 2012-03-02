@@ -87,6 +87,7 @@
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
+    <Compile Include="ML\KMeans\TestKMeans.cs" />
     <Compile Include="Neural\Networks\TestConsistency.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using Encog.MathUtil;
+using Encog.Util.KMeans;
 
 namespace Encog.ML.Data.Basic
 {
@@ -186,6 +187,15 @@ namespace Encog.ML.Data.Basic
             }
             builder.Append("]");
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Not supported.
+        /// </summary>
+        /// <returns>Nothing.</returns>
+        public ICentroid<IMLData> CreateCentroid()
+        {
+            return null;
         }
     }
 }

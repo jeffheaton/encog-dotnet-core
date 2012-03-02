@@ -67,6 +67,6 @@ namespace Encog.ML
 
 
         /// <returns>The number of items.</returns>
-        int Size();
+        int Count { get; }
     }
 }
