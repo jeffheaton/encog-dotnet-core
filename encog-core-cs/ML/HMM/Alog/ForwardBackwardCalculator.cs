@@ -155,7 +155,7 @@ namespace Encog.ML.HMM.Alog
                  IMLDataPair o, int i)
         {
             this.alpha[0][i] = hmm.GetPi(i)
-                    * hmm.getStateDistribution(i).Probability(o);
+                    * hmm.StateDistributions[i].Probability(o);
         }
 
         /**
@@ -170,10 +170,10 @@ namespace Encog.ML.HMM.Alog
 		double sum = 0.0;
 
 		for (int i = 0; i < hmm.StateCount; i++) {
-			sum += this.alpha[t - 1][i] * hmm.getTransitionProbability(i, j);
+			sum += this.alpha[t - 1][i] * hmm.TransitionProbability[i][j];
 		}
 
-		this.alpha[t][j] = sum * hmm.getStateDistribution(j).Probability(o);
+		this.alpha[t][j] = sum * hmm.StateDistributions[j].Probability(o);
 	}
 
         /**
@@ -209,8 +209,8 @@ namespace Encog.ML.HMM.Alog
 
             for (int j = 0; j < hmm.StateCount; j++)
             {
-                sum += this.beta[t + 1][j] * hmm.getTransitionProbability(i, j)
-                        * hmm.getStateDistribution(j).Probability(o);
+                sum += this.beta[t + 1][j] * hmm.TransitionProbability[i][j]
+                        * hmm.StateDistributions[j].Probability(o);
             }
 
             this.beta[t][i] = sum;
@@ -240,7 +240,7 @@ namespace Encog.ML.HMM.Alog
                 for (int i = 0; i < hmm.StateCount; i++)
                 {
                     this.probability += hmm.GetPi(i)
-                            * hmm.getStateDistribution(i).Probability(oseq[0])
+                            * hmm.StateDistributions[i].Probability(oseq[0])
                             * this.beta[0][i];
                 }
             }

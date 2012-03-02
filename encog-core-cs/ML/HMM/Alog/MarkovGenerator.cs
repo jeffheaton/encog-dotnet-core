@@ -67,13 +67,12 @@ namespace Encog.ML.HMM.Alog
 
         public IMLDataPair Observation()
         {
-            IMLDataPair o = this.hmm.getStateDistribution(this.currentState).Generate();
+            IMLDataPair o = this.hmm.StateDistributions[this.currentState].Generate();
             double rand = ThreadSafeRandom.NextDouble();
 
             for (int j = 0; j < (this.hmm.StateCount - 1); j++)
             {
-                if ((rand -= this.hmm
-                        .getTransitionProbability(this.currentState, j)) < 0)
+                if ((rand -= this.hmm.TransitionProbability[this.currentState][j]) < 0)
                 {
                     this.currentState = j;
                     return o;

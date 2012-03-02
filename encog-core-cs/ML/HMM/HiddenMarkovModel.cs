@@ -193,19 +193,17 @@ namespace Encog.ML.HMM
             }
         }
 
-        public IStateDistribution getStateDistribution(int i)
+        public IStateDistribution[] StateDistributions
         {
-            return this.stateDistributions[i];
+            get
+            {
+                return this.stateDistributions;
+            }
         }
 
         public int[] GetStatesForSequence(IMLDataSet seq)
         {
             return (new ViterbiCalculator(seq, this)).CopyStateSequence();
-        }
-
-        public double getTransitionProbability(int i, int j)
-        {
-            return this.transitionProbability[i][j];
         }
 
         public bool IsContinuous
@@ -248,13 +246,13 @@ namespace Encog.ML.HMM
             for (int i = 0; i < (states.Length - 1); i++)
             {
                 oseqIterator.MoveNext();
-                probability *= getStateDistribution(states[i]).Probability(
+                probability *= this.stateDistributions[i].Probability(
                         oseqIterator.Current)
-                        * getTransitionProbability(states[i], states[i + 1]);
+                        * this.transitionProbability[states[i]][states[i + 1]];
             }
 
             return probability
-                    * getStateDistribution(states[states.Length - 1]).Probability(
+                    * this.stateDistributions[states.Length - 1].Probability(
                             seq[states.Length - 1]);
         }
 

@@ -389,6 +389,10 @@
     <Compile Include="ML\HMM\Distributions\DiscreteDistribution.cs" />
     <Compile Include="ML\HMM\Distributions\IStateDistribution.cs" />
     <Compile Include="ML\HMM\HiddenMarkovModel.cs" />
+    <Compile Include="ML\HMM\HMM\BW\BaseBaumWelch.cs" />
+    <Compile Include="ML\HMM\HMM\BW\TrainBaumWelchScaled.cs" />
+    <Compile Include="ML\HMM\HMM\KMeans\Clusters.cs" />
+    <Compile Include="ML\HMM\HMM\KMeans\TrainKMeans.cs" />
     <Compile Include="ML\IMLStateSequence.cs" />
     <Compile Include="ML\KMeans\BasicCluster.cs" />
     <Compile Include="ML\KMeans\KMeansClustering.cs" />

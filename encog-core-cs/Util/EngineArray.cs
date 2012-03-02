@@ -482,5 +482,20 @@ namespace Encog.Util
             return result;
 
         }
+
+        public static double[][][] AllocDouble3D(int x, int y, int z)
+        {
+            var result = new double[x][][];
+            for (int i = 0; i < x; i++)
+            {
+                result[i] = new double[y][];
+                for (int j = 0; j < y; j++)
+                {
+                    result[i][j] = new double[z];
+                }
+            }
+            return result;
+
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Encog.ML.HMM.Alog
             for (int i = 0; i < hmm.StateCount; i++)
             {
                 this.delta[0][i] = -Math.Log(hmm.GetPi(i))
-                        - Math.Log(hmm.getStateDistribution(i).Probability(
+                        - Math.Log(hmm.StateDistributions[i].Probability(
                                 oseq[0]));
                 this.psy[0][i] = 0;
             }
@@ -85,7 +85,7 @@ namespace Encog.ML.HMM.Alog
             for (int i = 0; i < hmm.StateCount; i++)
             {
                 double thisDelta = this.delta[t - 1][i]
-                        - Math.Log(hmm.getTransitionProbability(i, j));
+                        - Math.Log(hmm.TransitionProbability[i][j]);
 
                 if (minDelta > thisDelta)
                 {
@@ -95,7 +95,7 @@ namespace Encog.ML.HMM.Alog
             }
 
             this.delta[t][j] = minDelta
-                    - Math.Log(hmm.getStateDistribution(j).Probability(o));
+                    - Math.Log(hmm.StateDistributions[j].Probability(o));
             this.psy[t][j] = min_psy;
         }
 
