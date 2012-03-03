@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Train;
+﻿using System.Collections.Generic;
 using Encog.ML.Data;
-using Encog.ML.Train.Strategy;
 using Encog.ML.Data.Basic;
-using Encog.ML.HMM.Distributions;
 using Encog.ML.HMM.Alog;
+using Encog.ML.HMM.Distributions;
+using Encog.ML.Train;
+using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks.Training.Propagation;
 
 namespace Encog.ML.HMM.Train.KMeans
@@ -28,37 +25,32 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <summary>
         /// The clusters.
         /// </summary>
-        private Clusters clusters;
-
-        /// <summary>
-        /// The number of states.
-        /// </summary>
-        private int states;
-
-        /// <summary>
-        /// Keep track of if we are done.
-        /// </summary>
-        private bool done;
+        private readonly Clusters _clusters;
 
         /// <summary>
         /// The HMM to use as a model.
         /// </summary>
-        private HiddenMarkovModel modelHMM;
+        private readonly HiddenMarkovModel _modelHmm;
 
         /// <summary>
-        /// The iteration number that we are currently on.
+        /// The number of states.
         /// </summary>
-        public int IterationNumber { get; set; }
-
-        /// <summary>
-        /// The current HMM.
-        /// </summary>
-        private HiddenMarkovModel method;
+        private readonly int _states;
 
         /// <summary>
         /// The training data.
         /// </summary>
-        private IMLSequenceSet training;
+        private readonly IMLSequenceSet _training;
+
+        /// <summary>
+        /// Keep track of if we are done.
+        /// </summary>
+        private bool _done;
+
+        /// <summary>
+        /// The current HMM.
+        /// </summary>
+        private HiddenMarkovModel _method;
 
         /// <summary>
         /// Construct a KMeans trainer. 
@@ -66,15 +58,22 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <param name="method">The HMM.</param>
         /// <param name="sequences">The training data.</param>
         public TrainKMeans(HiddenMarkovModel method,
-                IMLSequenceSet sequences)
+                           IMLSequenceSet sequences)
         {
-            this.method = method;
-            this.modelHMM = method;
-            this.states = method.StateCount;
-            this.training = sequences;
-            this.clusters = new Clusters(this.states, sequences);
-            this.done = false;
+            _method = method;
+            _modelHmm = method;
+            _states = method.StateCount;
+            _training = sequences;
+            _clusters = new Clusters(_states, sequences);
+            _done = false;
         }
+
+        #region IMLTrain Members
+
+        /// <summary>
+        /// The iteration number that we are currently on.
+        /// </summary>
+        public int IterationNumber { get; set; }
 
         /// <inheritdoc/>
         public void AddStrategy(IStrategy strategy)
@@ -84,88 +83,64 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <inheritdoc/>
         public bool CanContinue
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <inheritdoc/>
         public void FinishTraining()
         {
-
         }
 
         /// <inheritdoc/>
         public double Error
         {
-            get
-            {
-                return this.done ? 0 : 100;
-            }
-            set
-            {
-            }
+            get { return _done ? 0 : 100; }
+            set { }
         }
 
         /// <inheritdoc/>
         public TrainingImplementationType ImplementationType
         {
-            get
-            {
-                return TrainingImplementationType.Iterative;
-            }
+            get { return TrainingImplementationType.Iterative; }
         }
 
 
         /// <inheritdoc/>
         public IMLMethod Method
         {
-            get
-            {
-                return this.method;
-            }
+            get { return _method; }
         }
 
         /// <inheritdoc/>
         public IList<IStrategy> Strategies
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         /// <inheritdoc/>
         public IMLDataSet Training
         {
-            get
-            {
-                return this.training;
-            }
+            get { return _training; }
         }
 
         /// <inheritdoc/>
         public bool TrainingDone
         {
-            get
-            {
-                return this.done;
-            }
+            get { return _done; }
         }
 
         /// <inheritdoc/>
         public void Iteration()
         {
-            HiddenMarkovModel hmm = this.modelHMM.CloneStructure();
+            HiddenMarkovModel hmm = _modelHmm.CloneStructure();
 
             LearnPi(hmm);
             LearnTransition(hmm);
             LearnOpdf(hmm);
 
-            this.done = OptimizeCluster(hmm);
+            _done = OptimizeCluster(hmm);
 
-            this.method = hmm;
+            _method = hmm;
         }
 
         /// <inheritdoc/>
@@ -175,8 +150,20 @@ namespace Encog.ML.HMM.Train.KMeans
             {
                 Iteration();
             }
-
         }
+
+        /// <inheritdoc/>
+        public TrainingContinuation Pause()
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public void Resume(TrainingContinuation state)
+        {
+        }
+
+        #endregion
 
         /// <summary>
         /// Learn the distribution. 
@@ -186,12 +173,12 @@ namespace Encog.ML.HMM.Train.KMeans
         {
             for (int i = 0; i < hmm.StateCount; i++)
             {
-                ICollection<IMLDataPair> clusterObservations = this.clusters
-                        .Cluster(i);
+                ICollection<IMLDataPair> clusterObservations = _clusters
+                    .Cluster(i);
 
                 if (clusterObservations.Count < 1)
                 {
-                    IStateDistribution o = this.modelHMM.CreateNewDistribution();
+                    IStateDistribution o = _modelHmm.CreateNewDistribution();
                     hmm.StateDistributions[i] = o;
                 }
                 else
@@ -212,24 +199,24 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <param name="hmm">The HMM.</param>
         private void LearnPi(HiddenMarkovModel hmm)
         {
-            double[] pi = new double[this.states];
+            var pi = new double[_states];
 
-            for (int i = 0; i < this.states; i++)
+            for (int i = 0; i < _states; i++)
             {
                 pi[i] = 0.0;
             }
 
-            foreach (IMLDataSet sequence in this.training.Sequences)
+            foreach (IMLDataSet sequence in _training.Sequences)
             {
-                pi[this.clusters.Cluster(sequence[0])]++;
+                pi[_clusters.Cluster(sequence[0])]++;
             }
 
-            for (int i = 0; i < this.states; i++)
+            for (int i = 0; i < _states; i++)
             {
-                hmm.Pi[i] = pi[i] / (int)this.training.Count;
+                hmm.Pi[i] = pi[i]/(int) _training.Count;
             }
         }
-        
+
         /// <summary>
         /// Learn the state transitions. 
         /// </summary>
@@ -244,22 +231,21 @@ namespace Encog.ML.HMM.Train.KMeans
                 }
             }
 
-            foreach (IMLDataSet obsSeq in this.training.Sequences)
+            foreach (IMLDataSet obsSeq in _training.Sequences)
             {
                 if (obsSeq.Count < 2)
                 {
                     continue;
                 }
 
-                int first_state;
-                int second_state = this.clusters.Cluster(obsSeq[0]);
+                int secondState = _clusters.Cluster(obsSeq[0]);
                 for (int i = 1; i < obsSeq.Count; i++)
                 {
-                    first_state = second_state;
-                    second_state = this.clusters.Cluster(obsSeq[i]);
+                    int firstState = secondState;
+                    secondState = _clusters.Cluster(obsSeq[i]);
 
-                    hmm.TransitionProbability[first_state][second_state] =
-                            hmm.TransitionProbability[first_state][second_state] + 1.0;
+                    hmm.TransitionProbability[firstState][secondState] =
+                        hmm.TransitionProbability[firstState][secondState] + 1.0;
                 }
             }
 
@@ -277,7 +263,7 @@ namespace Encog.ML.HMM.Train.KMeans
                 {
                     for (int j = 0; j < hmm.StateCount; j++)
                     {
-                        hmm.TransitionProbability[i][j] = 1.0 / hmm.StateCount;
+                        hmm.TransitionProbability[i][j] = 1.0/hmm.StateCount;
                     }
                 }
                 else
@@ -300,39 +286,25 @@ namespace Encog.ML.HMM.Train.KMeans
         {
             bool result = false;
 
-            foreach (IMLDataSet obsSeq in this.training.Sequences)
+            foreach (IMLDataSet obsSeq in _training.Sequences)
             {
-                ViterbiCalculator vc = new ViterbiCalculator(obsSeq, hmm);
+                var vc = new ViterbiCalculator(obsSeq, hmm);
                 int[] states = vc.CopyStateSequence();
 
                 for (int i = 0; i < states.Length; i++)
                 {
                     IMLDataPair o = obsSeq[i];
 
-                    if (this.clusters.Cluster(o) != states[i])
+                    if (_clusters.Cluster(o) != states[i])
                     {
                         result = true;
-                        this.clusters.Remove(o, this.clusters.Cluster(o));
-                        this.clusters.Put(o, states[i]);
+                        _clusters.Remove(o, _clusters.Cluster(o));
+                        _clusters.Put(o, states[i]);
                     }
                 }
             }
 
             return !result;
         }
-
-        /// <inheritdoc/>
-        public TrainingContinuation Pause()
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public void Resume(TrainingContinuation state)
-        {
-        }
-
-
-
     }
 }

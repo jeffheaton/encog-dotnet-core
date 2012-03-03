@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.HMM.Distributions;
-using Encog.Util;
 using Encog.ML.Data;
 using Encog.ML.HMM.Alog;
+using Encog.ML.HMM.Distributions;
+using Encog.Util;
 
 namespace Encog.ML.HMM
 {
@@ -60,171 +58,131 @@ namespace Encog.ML.HMM
         public const String TAG_COVARIANCE = "covariance";
 
         public const String TAG_PROBABILITIES = "probabilities";
+        private readonly int[] _items;
+        private readonly IStateDistribution[] _stateDistributions;
 
-        /**
-         * The initial probabilities for each state.
-         */
+        /// <summary>
+        /// The initial probabilities for each state.
+        /// </summary>
         private double[] pi;
 
-        /**
-         * The transitional probabilities between the states.
-         */
-        private double[][] transitionProbability;
+        /// <summary>
+        /// The transitional probabilities between the states.
+        /// </summary>
+        private double[][] _transitionProbability;
 
-        /**
-         * The mapping of observation probabilities to the
-         * states.
-         */
-        private readonly IStateDistribution[] stateDistributions;
 
-        /**
-         * The counts for each item in a discrete HMM.
-         */
-        private int[] items;
-
-        /**
-         * Construct a discrete HMM with the specified number of states.
-         * @param states The number of states.
-         */
+        /// <summary>
+        /// Construct a discrete HMM with the specified number of states.
+        /// </summary>
+        /// <param name="states">The number of states.</param>
         public HiddenMarkovModel(int states)
         {
-            this.items = null;
-            this.pi = new double[states];
-            this.transitionProbability = EngineArray.AllocateDouble2D(states, states);
-            this.stateDistributions = new IStateDistribution[states];
+            _items = null;
+            pi = new double[states];
+            _transitionProbability = EngineArray.AllocateDouble2D(states, states);
+            _stateDistributions = new IStateDistribution[states];
 
             for (int i = 0; i < states; i++)
             {
-                this.pi[i] = 1.0 / states;
+                pi[i] = 1.0/states;
 
-                this.stateDistributions[i] = new ContinousDistribution(
-                        StateCount);
+                _stateDistributions[i] = new ContinousDistribution(
+                    StateCount);
 
                 for (int j = 0; j < states; j++)
                 {
-                    this.transitionProbability[i][j] = 1.0 / states;
+                    _transitionProbability[i][j] = 1.0/states;
                 }
             }
         }
 
         public HiddenMarkovModel(int theStates, int theItems)
-            : this(theStates, new int[] { theItems })
+            : this(theStates, new[] {theItems})
         {
-
         }
 
         public HiddenMarkovModel(int theStates, int[] theItems)
         {
-            this.items = theItems;
-            this.pi = new double[theStates];
-            this.transitionProbability = EngineArray.AllocateDouble2D(theStates, theStates);
-            this.stateDistributions = new IStateDistribution[theStates];
+            _items = theItems;
+            pi = new double[theStates];
+            _transitionProbability = EngineArray.AllocateDouble2D(theStates, theStates);
+            _stateDistributions = new IStateDistribution[theStates];
 
             for (int i = 0; i < theStates; i++)
             {
-                this.pi[i] = 1.0 / theStates;
-                this.stateDistributions[i] = new DiscreteDistribution(this.items);
+                pi[i] = 1.0/theStates;
+                _stateDistributions[i] = new DiscreteDistribution(_items);
 
                 for (int j = 0; j < theStates; j++)
                 {
-                    this.transitionProbability[i][j] = 1.0 / theStates;
+                    _transitionProbability[i][j] = 1.0/theStates;
                 }
             }
         }
 
-        public HiddenMarkovModel Clone()
-        {
-            HiddenMarkovModel hmm = CloneStructure();
-
-            hmm.pi = (double[])this.pi.Clone();
-            hmm.transitionProbability = (double[][])this.transitionProbability.Clone();
-
-            for (int i = 0; i < this.transitionProbability.Length; i++)
-            {
-                hmm.transitionProbability[i] = (double[])this.transitionProbability[i].Clone();
-            }
-
-            for (int i = 0; i < hmm.stateDistributions.Length; i++)
-            {
-                hmm.stateDistributions[i] = this.stateDistributions[i].Clone();
-            }
-
-            return hmm;
-        }
-
-        public HiddenMarkovModel CloneStructure()
-        {
-            HiddenMarkovModel hmm;
-
-            if (IsDiscrete)
-            {
-                hmm = new HiddenMarkovModel(StateCount, this.items);
-            }
-            else
-            {
-                hmm = new HiddenMarkovModel(StateCount);
-            }
-
-            return hmm;
-        }
-
-        public IStateDistribution CreateNewDistribution()
-        {
-            if (IsContinuous)
-            {
-                return new ContinousDistribution(StateCount);
-            }
-            else
-            {
-                return new DiscreteDistribution(this.items);
-            }
-        }
-
-        public double GetPi(int i)
-        {
-            return this.pi[i];
-        }
-
         public int StateCount
         {
-            get
-            {
-                return this.pi.Length;
-            }
+            get { return pi.Length; }
         }
 
         public IStateDistribution[] StateDistributions
         {
-            get
-            {
-                return this.stateDistributions;
-            }
-        }
-
-        public int[] GetStatesForSequence(IMLDataSet seq)
-        {
-            return (new ViterbiCalculator(seq, this)).CopyStateSequence();
+            get { return _stateDistributions; }
         }
 
         public bool IsContinuous
         {
-            get
-            {
-                return this.items == null;
-            }
+            get { return _items == null; }
         }
 
         public bool IsDiscrete
         {
-            get
+            get { return !IsContinuous; }
+        }
+
+        public int[] Items
+        {
+            get { return _items; }
+        }
+
+        /// <summary>
+        /// Initial state probabilities.
+        /// </summary>
+        public double[] Pi
+        {
+            get { return pi; }
+            set
             {
-                return !IsContinuous;
+                if (value.Length != pi.Length)
+                {
+                    throw new EncogError("The length of pi, must match the number of states.");
+                }
+                pi = value;
             }
         }
 
-        public double LnProbability(IMLDataSet seq)
+        /// <summary>
+        /// The probabilities of moving from one state to another.
+        /// </summary>
+        public double[][] TransitionProbability
         {
-            return (new ForwardBackwardScaledCalculator(seq, this)).LnProbability();
+            get { return _transitionProbability; }
+            set
+            {
+                if (value.Length != _transitionProbability.Length || value[0].Length != _transitionProbability[0].Length)
+                {
+                    throw new EncogError("Dimensions of transationalProbability must match number of states.");
+                }
+                _transitionProbability = value;
+            }
+        }
+
+        #region IMLStateSequence Members
+
+        public int[] GetStatesForSequence(IMLDataSet seq)
+        {
+            return (new ViterbiCalculator(seq, this)).CopyStateSequence();
         }
 
         public double Probability(IMLDataSet seq)
@@ -246,65 +204,78 @@ namespace Encog.ML.HMM
             for (int i = 0; i < (states.Length - 1); i++)
             {
                 oseqIterator.MoveNext();
-                probability *= this.stateDistributions[i].Probability(
-                        oseqIterator.Current)
-                        * this.transitionProbability[states[i]][states[i + 1]];
+                probability *= _stateDistributions[i].Probability(
+                    oseqIterator.Current)
+                               *_transitionProbability[states[i]][states[i + 1]];
             }
 
             return probability
-                    * this.stateDistributions[states.Length - 1].Probability(
-                            seq[states.Length - 1]);
+                   *_stateDistributions[states.Length - 1].Probability(
+                       seq[states.Length - 1]);
+        }
+
+        #endregion
+
+        public HiddenMarkovModel Clone()
+        {
+            HiddenMarkovModel hmm = CloneStructure();
+
+            hmm.pi = (double[]) pi.Clone();
+            hmm._transitionProbability = (double[][]) _transitionProbability.Clone();
+
+            for (int i = 0; i < _transitionProbability.Length; i++)
+            {
+                hmm._transitionProbability[i] = (double[]) _transitionProbability[i].Clone();
+            }
+
+            for (int i = 0; i < hmm._stateDistributions.Length; i++)
+            {
+                hmm._stateDistributions[i] = _stateDistributions[i].Clone();
+            }
+
+            return hmm;
+        }
+
+        public HiddenMarkovModel CloneStructure()
+        {
+            HiddenMarkovModel hmm;
+
+            if (IsDiscrete)
+            {
+                hmm = new HiddenMarkovModel(StateCount, _items);
+            }
+            else
+            {
+                hmm = new HiddenMarkovModel(StateCount);
+            }
+
+            return hmm;
+        }
+
+        public IStateDistribution CreateNewDistribution()
+        {
+            if (IsContinuous)
+            {
+                return new ContinousDistribution(StateCount);
+            }
+            else
+            {
+                return new DiscreteDistribution(_items);
+            }
+        }
+
+        public double GetPi(int i)
+        {
+            return pi[i];
+        }
+
+        public double LnProbability(IMLDataSet seq)
+        {
+            return (new ForwardBackwardScaledCalculator(seq, this)).LnProbability();
         }
 
         public override void UpdateProperties()
         {
-
-        }
-
-        public int[] Items
-        {
-            get
-            {
-                return this.items;
-            }
-        }
-
-        /// <summary>
-        /// Initial state probabilities.
-        /// </summary>
-        public double[] Pi
-        {
-            get
-            {
-                return this.pi;
-            }
-            set
-            {
-                if (value.Length != this.pi.Length)
-                {
-                    throw new EncogError("The length of pi, must match the number of states.");
-                }
-                this.pi = value;
-            }
-        }
-
-        /// <summary>
-        /// The probabilities of moving from one state to another.
-        /// </summary>
-        public double[][] TransitionProbability
-        {
-            get
-            {
-                return this.transitionProbability;
-            }
-            set
-            {
-                if (value.Length != this.transitionProbability.Length || value[0].Length != this.transitionProbability[0].Length)
-                {
-                    throw new EncogError("Dimensions of transationalProbability must match number of states.");
-                }
-                this.transitionProbability = value;
-            }
         }
     }
 }

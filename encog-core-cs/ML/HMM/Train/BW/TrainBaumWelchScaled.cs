@@ -48,7 +48,7 @@ namespace Encog.ML.HMM.Train.BW
 
             for (int t = 0; t < (sequence.Count - 1); t++)
             {
-                IMLDataPair observation = sequence[t];
+                IMLDataPair observation = sequence[t+1];
 
                 for (int i = 0; i < hmm.StateCount; i++)
                 {

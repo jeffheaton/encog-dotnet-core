@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Encog.Util.KMeans
 {
@@ -33,7 +32,7 @@ namespace Encog.Util.KMeans
         public Cluster(T d)
         {
             _contents.Add(d);
-            _centroid = ((ICentroidFactory<T>)d).CreateCentroid();
+            _centroid = ((ICentroidFactory<T>) d).CreateCentroid();
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Encog.Util.KMeans
         public void Add(T e)
         {
             if (_centroid == null)
-                _centroid = ((ICentroidFactory<T>)e) as ICentroid<T>;
+                _centroid = ((ICentroidFactory<T>) e) as ICentroid<T>;
             else
                 _centroid.Add(e);
 

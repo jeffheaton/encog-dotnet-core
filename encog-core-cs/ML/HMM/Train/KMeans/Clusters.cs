@@ -1,10 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.Util.KMeans;
-using System.Collections;
 
 namespace Encog.ML.HMM.Train.KMeans
 {
@@ -14,14 +11,14 @@ namespace Encog.ML.HMM.Train.KMeans
     public class Clusters
     {
         /// <summary>
-        /// Provide quick access to the clusters.
-        /// </summary>
-        private IDictionary<IMLDataPair, int> clustersHash;
-
-        /// <summary>
         /// A list of all of the clusters.
         /// </summary>
-        private IList<ICollection<IMLDataPair>> clusters;
+        private readonly IList<ICollection<IMLDataPair>> _clusters;
+
+        /// <summary>
+        /// Provide quick access to the clusters.
+        /// </summary>
+        private readonly IDictionary<IMLDataPair, int> _clustersHash;
 
         /// <summary>
         /// Construct the clusters objects. 
@@ -30,30 +27,29 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <param name="observations">The observations.</param>
         public Clusters(int k, IMLDataSet observations)
         {
-
-            this.clustersHash = new Dictionary<IMLDataPair, int>();
-            this.clusters = new List<ICollection<IMLDataPair>>();
+            _clustersHash = new Dictionary<IMLDataPair, int>();
+            _clusters = new List<ICollection<IMLDataPair>>();
 
             IList list = new List<IMLDataPair>();
             foreach (IMLDataPair pair in observations)
             {
                 list.Add(pair);
             }
-            KMeansUtil<IMLDataPair> kmc = new KMeansUtil<IMLDataPair>(k, list);
+            var kmc = new KMeansUtil<IMLDataPair>(k, list);
             kmc.Process();
 
             for (int i = 0; i < k; i++)
             {
                 ICollection<IMLDataPair> cluster = kmc.Get(i);
-                this.clusters.Add(cluster);
+                _clusters.Add(cluster);
 
                 foreach (IMLDataPair element in cluster)
                 {
-                    this.clustersHash[element] = i;
+                    _clustersHash[element] = i;
                 }
             }
         }
-        
+
         /// <summary>
         /// Get the speicified cluster. 
         /// </summary>
@@ -61,9 +57,9 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <returns>The items in that cluster.</returns>
         public ICollection<IMLDataPair> Cluster(int n)
         {
-            return this.clusters[n];
+            return _clusters[n];
         }
-        
+
         /// <summary>
         /// Get the cluster for the specified data pair. 
         /// </summary>
@@ -71,9 +67,9 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <returns>The cluster the pair is in.</returns>
         public int Cluster(IMLDataPair o)
         {
-            return this.clustersHash[o];
+            return _clustersHash[o];
         }
-        
+
         /// <summary>
         /// Determine if the specified object is in one of the clusters. 
         /// </summary>
@@ -92,8 +88,8 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <param name="n">The cluster number.</param>
         public void Put(IMLDataPair o, int n)
         {
-            this.clustersHash[o] = n;
-            this.clusters[n].Add(o);
+            _clustersHash[o] = n;
+            _clusters[n].Add(o);
         }
 
         /// <summary>
@@ -103,8 +99,8 @@ namespace Encog.ML.HMM.Train.KMeans
         /// <param name="n">The cluster to remove from.</param>
         public void Remove(IMLDataPair o, int n)
         {
-            this.clustersHash[o] = -1;
-            this.clusters[n].Remove(o);
+            _clustersHash[o] = -1;
+            _clusters[n].Remove(o);
         }
     }
 }
