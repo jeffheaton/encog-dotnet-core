@@ -30,7 +30,7 @@ namespace Encog.MathUtil.Randomize
     /// <summary>
     /// Provides basic functionality that most randomizers will need.
     /// </summary>
-    ///
+    [Serializable]
     public abstract class BasicRandomizer : IRandomizer
     {
         /// <summary>

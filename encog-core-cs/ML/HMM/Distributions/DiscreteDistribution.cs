@@ -2,6 +2,7 @@
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Util;
+using System;
 
 namespace Encog.ML.HMM.Distributions
 {
@@ -9,6 +10,7 @@ namespace Encog.ML.HMM.Distributions
     /// A discrete distribution is a distribution with a finite set of states that it
     /// can be in.
     /// </summary>
+    [Serializable]
     public class DiscreteDistribution : IStateDistribution
     {
         /// <summary>

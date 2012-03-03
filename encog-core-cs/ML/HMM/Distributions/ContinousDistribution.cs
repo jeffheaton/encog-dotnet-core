@@ -12,6 +12,7 @@ namespace Encog.ML.HMM.Distributions
     /// A continuous distribution represents an infinite range of choices between two
     /// real numbers. A gaussian distribution is used to distribute the probability.
     /// </summary>
+    [Serializable]
     public class ContinousDistribution : IStateDistribution
     {
         /// <summary>
