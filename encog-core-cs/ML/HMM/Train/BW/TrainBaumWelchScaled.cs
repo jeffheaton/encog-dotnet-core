@@ -6,7 +6,7 @@ using Encog.ML.Data;
 using Encog.ML.HMM.Alog;
 using Encog.Util;
 
-namespace Encog.ML.HMM.HMM.BW
+namespace Encog.ML.HMM.Train.BW
 {
     /// <summary>
     /// Baum Welch Learning allows a HMM to be constructed from a series of sequence

@@ -10,7 +10,7 @@ using Encog.Util;
 using Encog.ML.HMM.Distributions;
 using Encog.Neural.Networks.Training.Propagation;
 
-namespace Encog.ML.HMM.HMM.BW
+namespace Encog.ML.HMM.Train.BW
 {
     /// <summary>
     /// This class provides the base implementation for Baum-Welch learning for

@@ -6,7 +6,7 @@ using Encog.ML.Data;
 using Encog.Util.KMeans;
 using System.Collections;
 
-namespace Encog.ML.HMM.HMM.KMeans
+namespace Encog.ML.HMM.Train.KMeans
 {
     /// <summary>
     /// Clusters used for the KMeans HMM training algorithm.

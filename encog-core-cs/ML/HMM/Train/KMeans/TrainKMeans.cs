@@ -10,7 +10,7 @@ using Encog.ML.HMM.Distributions;
 using Encog.ML.HMM.Alog;
 using Encog.Neural.Networks.Training.Propagation;
 
-namespace Encog.ML.HMM.HMM.KMeans
+namespace Encog.ML.HMM.Train.KMeans
 {
     /// <summary>
     /// Train a Hidden Markov Model (HMM) with the KMeans algorithm. Makes use of
