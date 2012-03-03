@@ -123,7 +123,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             // Loop over all input data.
             for (int i = 0; i < input.Count; i++)
             {
-                double diff = input[i] - matrix[i, outputNeuron];
+                double diff = input[i] - matrix[outputNeuron,i];
                 result += diff*diff;
             }
             return BoundMath.Sqrt(result);

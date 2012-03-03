@@ -34,72 +34,80 @@ namespace Encog.Neural.SOM
     ///
     public class PersistSOM : IEncogPersistor
     {
-        #region EncogPersistor Members
+        /**
+	 * {@inheritDoc}
+	 */
 
-        /// <inheritdoc/>
-        public virtual int FileVersion
+        #region IEncogPersistor Members
+
+        public int FileVersion
         {
             get { return 1; }
         }
 
+        /**
+	 * {@inheritDoc}
+	 */
 
-        /// <inheritdoc/>
-        public virtual String PersistClassString
+        public String PersistClassString
         {
-            get { return "SOM"; }
+            get { return "SOMNetwork"; }
         }
 
 
-        /// <inheritdoc/>
-        public Object Read(Stream mask0)
+        /**
+	 * {@inheritDoc}
+	 */
+
+        public Object Read(Stream istream)
         {
             var result = new SOMNetwork();
-            var ins0 = new EncogReadHelper(mask0);
+            var reader = new EncogReadHelper(istream);
             EncogFileSection section;
 
-            while ((section = ins0.ReadNextSection()) != null)
+            while ((section = reader.ReadNextSection()) != null)
             {
                 if (section.SectionName.Equals("SOM")
                     && section.SubSectionName.Equals("PARAMS"))
                 {
-                    IDictionary<String, String> paras = section.ParseParams();
-                    EngineArray.PutAll(paras, result.Properties);
+                    IDictionary<String, String> p = section.ParseParams();
+                    EngineArray.PutAll(p, result.Properties);
                 }
                 if (section.SectionName.Equals("SOM")
                     && section.SubSectionName.Equals("NETWORK"))
                 {
                     IDictionary<String, String> p = section.ParseParams();
                     result.Weights = EncogFileSection.ParseMatrix(p,
-                                                                  PersistConst.Weights);
-                    result.OutputCount = EncogFileSection.ParseInt(p,
-                                                                         PersistConst.OutputCount);
-                    result.InputCount = EncogFileSection.ParseInt(p,
-                                                                  PersistConst.InputCount);
+                                                                  PersistConst.Weights)
+                        ;
                 }
             }
 
             return result;
         }
 
-        /// <inheritdoc/>
+        /**
+	 * {@inheritDoc}
+	 */
+
         public void Save(Stream os, Object obj)
         {
-            var xout = new EncogWriteHelper(os);
+            var writer = new EncogWriteHelper(os);
             var som = (SOMNetwork) obj;
-            xout.AddSection("SOM");
-            xout.AddSubSection("PARAMS");
-            xout.AddProperties(som.Properties);
-            xout.AddSubSection("NETWORK");
-            xout.WriteProperty(PersistConst.Weights, som.Weights);
-            xout.WriteProperty(PersistConst.InputCount, som.InputCount);
-            xout.WriteProperty(PersistConst.OutputCount, som.OutputCount);
-            xout.Flush();
+            writer.AddSection("SOM");
+            writer.AddSubSection("PARAMS");
+            writer.AddProperties(som.Properties);
+            writer.AddSubSection("NETWORK");
+            writer.WriteProperty(PersistConst.Weights, som.Weights);
+            writer.WriteProperty(PersistConst.InputCount, som.InputCount);
+            writer.WriteProperty(PersistConst.OutputCount, som.OutputCount);
+            writer.Flush();
         }
 
-        /// <inheritdoc/>
+
         public Type NativeType
         {
-            get { return typeof(SOMNetwork); }
+            get { return typeof (SOMNetwork); }
         }
 
         #endregion

@@ -112,9 +112,9 @@ namespace SOMColors
 			    for(int x = 0; x< WIDTH; x++)
 			    {
 				    int index = (y*WIDTH)+x;
-				    int red = ConvertColor(this.network.Weights[0, index]);
-                    int green = ConvertColor(this.network.Weights[1, index]);
-                    int blue = ConvertColor(this.network.Weights[2, index]);
+				    int red = ConvertColor(this.network.Weights[index,0]);
+                    int green = ConvertColor(this.network.Weights[index,1]);
+                    int blue = ConvertColor(this.network.Weights[index,2]);
                     Color c = Color.FromArgb(red, green, blue);
                     Brush brush = new SolidBrush(c);
                     g.FillRectangle(brush, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);

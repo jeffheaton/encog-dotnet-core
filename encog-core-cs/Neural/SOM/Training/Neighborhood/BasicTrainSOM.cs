@@ -25,6 +25,7 @@ using System.Text;
 using Encog.MathUtil.Matrices;
 using Encog.ML;
 using Encog.ML.Data;
+using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation;
@@ -62,99 +63,72 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Utility class used to determine the BMU.
         /// </summary>
-        ///
         private readonly BestMatchingUnit _bmuUtil;
 
         /// <summary>
         /// Holds the corrections for any matrix being trained.
         /// </summary>
-        ///
         private readonly Matrix _correctionMatrix;
 
         /// <summary>
         /// How many neurons in the input layer.
         /// </summary>
-        ///
         private readonly int _inputNeuronCount;
 
         /// <summary>
         /// The neighborhood function to use to determine to what degree a neuron
         /// should be "trained".
         /// </summary>
-        ///
         private readonly INeighborhoodFunction _neighborhood;
 
         /// <summary>
         /// The network being trained.
         /// </summary>
-        ///
         private readonly SOMNetwork _network;
 
         /// <summary>
         /// How many neurons in the output layer.
         /// </summary>
-        ///
         private readonly int _outputNeuronCount;
 
         /// <summary>
         /// This is the current autodecay radius.
         /// </summary>
-        ///
         private double _autoDecayRadius;
 
         /// <summary>
         /// This is the current autodecay learning rate.
         /// </summary>
-        ///
         private double _autoDecayRate;
 
         /// <summary>
         /// When used with autodecay, this is the ending radius.
         /// </summary>
-        ///
         private double _endRadius;
 
         /// <summary>
         /// When used with autodecay, this is the ending learning rate.
         /// </summary>
-        ///
         private double _endRate;
-
-        /// <summary>
-        /// True is a winner is to be forced, see class description, or forceWinners
-        /// method. By default, this is true.
-        /// </summary>
-        ///
-        private bool _forceWinner;
-
-        /// <summary>
-        /// The learning rate. To what degree should changes be applied.
-        /// </summary>
-        ///
-        private double _learningRate;
 
         /// <summary>
         /// The current radius.
         /// </summary>
-        ///
         private double _radius;
 
         /// <summary>
         /// When used with autodecay, this is the starting radius.
         /// </summary>
-        ///
         private double _startRadius;
 
         /// <summary>
         /// When used with autodecay, this is the starting learning rate.
         /// </summary>
-        ///
         private double _startRate;
 
         /// <summary>
         /// Create an instance of competitive training.
         /// </summary>
-        ///
         /// <param name="network">The network to train.</param>
         /// <param name="learningRate">The learning rate, how much to apply per iteration.</param>
         /// <param name="training">The training set (unsupervised).</param>
@@ -165,75 +139,67 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         {
             _neighborhood = neighborhood;
             Training = training;
-            _learningRate = learningRate;
+            LearningRate = learningRate;
             _network = network;
             _inputNeuronCount = network.InputCount;
             _outputNeuronCount = network.OutputCount;
-            _forceWinner = false;
-            Error = 0;
+            ForceWinner = false;
 
             // setup the correction matrix
-            _correctionMatrix = new Matrix(_inputNeuronCount,
-                                          _outputNeuronCount);
+            _correctionMatrix = new Matrix(_outputNeuronCount, _inputNeuronCount);
 
             // create the BMU class
             _bmuUtil = new BestMatchingUnit(network);
         }
 
-        /// <inheritdoc />
-        public override sealed bool CanContinue
+        /// <summary>
+        /// True is a winner is to be forced, see class description, or forceWinners
+        /// method. By default, this is true.
+        /// </summary>
+        public bool ForceWinner { get; set; }
+
+        /// <inheritdoc/>
+        public override bool CanContinue
         {
             get { return false; }
         }
 
-        /// <value>The input neuron count.</value>
+        /// <summary>
+        /// The input neuron count.
+        /// </summary>
         public int InputNeuronCount
         {
             get { return _inputNeuronCount; }
         }
 
-
         /// <inheritdoc/>
         public override IMLMethod Method
         {
-            get { return null; }
+            get { return _network; }
         }
 
-
-        /// <value>The network neighborhood function.</value>
+        /// <summary>
+        /// The network neighborhood function.
+        /// </summary>
         public INeighborhoodFunction Neighborhood
         {
             get { return _neighborhood; }
         }
 
-
-        /// <value>The output neuron count.</value>
+        /// <summary>
+        /// The output neuron count.
+        /// </summary>
         public int OutputNeuronCount
         {
             get { return _outputNeuronCount; }
         }
 
-
-        /// <summary>
-        /// Determine if a winner is to be forced. See class description for more
-        /// info.
-        /// </summary>
-        public bool ForceWinner
-        {
-            get { return _forceWinner; }
-            set { _forceWinner = value; }
-        }
-
         #region ILearningRate Members
 
         /// <summary>
-        /// Set the learning rate. This is the rate at which the weights are changed.
+        /// The learning rate. To what degree should changes be applied.
         /// </summary>
-        public double LearningRate
-        {
-            get { return _learningRate; }
-            set { _learningRate = value; }
-        }
+        public double LearningRate { get; set; }
 
         #endregion
 
@@ -241,7 +207,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Loop over the synapses to be trained and apply any corrections that were
         /// determined by this training iteration.
         /// </summary>
-        ///
         private void ApplyCorrection()
         {
             _network.Weights.Set(_correctionMatrix);
@@ -250,7 +215,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Should be called each iteration if autodecay is desired.
         /// </summary>
-        ///
         public void AutoDecay()
         {
             if (_radius > _endRadius)
@@ -258,19 +222,19 @@ namespace Encog.Neural.SOM.Training.Neighborhood
                 _radius += _autoDecayRadius;
             }
 
-            if (_learningRate > _endRate)
+            if (LearningRate > _endRate)
             {
-                _learningRate += _autoDecayRate;
+                LearningRate += _autoDecayRate;
             }
-            Neighborhood.Radius = _radius;
+            _neighborhood.Radius = _radius;
         }
+
 
         /// <summary>
         /// Copy the specified input pattern to the weight matrix. This causes an
         /// output neuron to learn this pattern "exactly". This is useful when a
         /// winner is to be forced.
         /// </summary>
-        ///
         /// <param name="matrix">The matrix that is the target of the copy.</param>
         /// <param name="outputNeuron">The output neuron to set.</param>
         /// <param name="input">The input pattern to copy.</param>
@@ -279,39 +243,36 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         {
             for (int inputNeuron = 0; inputNeuron < _inputNeuronCount; inputNeuron++)
             {
-                matrix[inputNeuron, outputNeuron] = input[inputNeuron];
+                matrix.Data[outputNeuron][inputNeuron] = input[inputNeuron];
             }
         }
 
         /// <summary>
         /// Called to decay the learning rate and radius by the specified amount.
         /// </summary>
-        ///
         /// <param name="d">The percent to decay by.</param>
         public void Decay(double d)
         {
-            _radius *= (1.0d - d);
-            _learningRate *= (1.0d - d);
+            _radius *= (1.0 - d);
+            LearningRate *= (1.0 - d);
         }
 
         /// <summary>
         /// Decay the learning rate and radius by the specified amount.
         /// </summary>
-        ///
         /// <param name="decayRate">The percent to decay the learning rate by.</param>
         /// <param name="decayRadius">The percent to decay the radius by.</param>
         public void Decay(double decayRate, double decayRadius)
         {
-            _radius *= (1.0d - decayRadius);
-            _learningRate *= (1.0d - decayRate);
-            Neighborhood.Radius = _radius;
+            _radius *= (1.0 - decayRadius);
+            LearningRate *= (1.0 - decayRate);
+            _neighborhood.Radius = _radius;
         }
 
         /// <summary>
         /// Determine the weight adjustment for a single neuron during a training
         /// iteration.
         /// </summary>
-        ///
         /// <param name="weight">The starting weight.</param>
         /// <param name="input">The input to this neuron.</param>
         /// <param name="currentNeuron">The neuron who's weight is being updated.</param>
@@ -322,7 +283,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         {
             double newWeight = weight
                                + (_neighborhood.Function(currentNeuron, bmu)
-                                  *_learningRate*(input - weight));
+                                  *LearningRate*(input - weight));
             return newWeight;
         }
 
@@ -330,18 +291,17 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Force any neurons that did not win to off-load patterns from overworked
         /// neurons.
         /// </summary>
-        ///
-        /// <param name="won"></param>
-        /// <param name="leastRepresented"></param>
         /// <param name="matrix">The synapse to modify.</param>
+        /// <param name="won">An array that specifies how many times each output neuron has "won".</param>
+        /// <param name="leastRepresented">The training pattern that is the least represented by this neural network.</param>
         /// <returns>True if a winner was forced.</returns>
         private bool ForceWinners(Matrix matrix, int[] won,
                                   IMLData leastRepresented)
         {
-            double maxActivation = Double.MinValue;
+            double maxActivation = Double.NegativeInfinity;
             int maxActivationNeuron = -1;
 
-            IMLData output = _network.Compute(leastRepresented);
+            IMLData output = Compute(_network, leastRepresented);
 
             // Loop over all of the output neurons. Consider any neurons that were
             // not the BMU (winner) for any pattern. Track which of these
@@ -374,8 +334,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Perform one training iteration.
         /// </summary>
-        ///
-        public override sealed void Iteration()
+        public override void Iteration()
         {
             EncogLogging.Log(EncogLogging.LevelInfo,
                              "Performing SOM Training iteration.");
@@ -385,29 +344,27 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             // Reset the BMU and begin this iteration.
             _bmuUtil.Reset();
             var won = new int[_outputNeuronCount];
-            double leastRepresentedActivation = Double.MaxValue;
+            double leastRepresentedActivation = Double.PositiveInfinity;
             IMLData leastRepresented = null;
 
             // Reset the correction matrix for this synapse and iteration.
             _correctionMatrix.Clear();
 
-
-            // Determine the BMU foreach each training element.
-            foreach (IMLDataPair pair  in  Training)
+            // Determine the BMU for each training element.
+            foreach (IMLDataPair pair in Training)
             {
                 IMLData input = pair.Input;
 
                 int bmu = _bmuUtil.CalculateBMU(input);
+                won[bmu]++;
 
                 // If we are to force a winner each time, then track how many
                 // times each output neuron becomes the BMU (winner).
-                if (_forceWinner)
+                if (ForceWinner)
                 {
-                    won[bmu]++;
-
                     // Get the "output" from the network for this pattern. This
                     // gets the activation level of the BMU.
-                    IMLData output = _network.Compute(pair.Input);
+                    IMLData output = Compute(_network, pair.Input);
 
                     // Track which training entry produces the least BMU. This
                     // pattern is the least represented by the network.
@@ -420,7 +377,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
 
                 Train(bmu, _network.Weights, input);
 
-                if (_forceWinner)
+                if (ForceWinner)
                 {
                     // force any non-winning neurons to share the burden somewhat\
                     if (!ForceWinners(_network.Weights, won,
@@ -436,24 +393,18 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             }
 
             // update the error
-            Error = _bmuUtil.WorstDistance/100.0d;
+            Error = _bmuUtil.WorstDistance/100.0;
 
             PostIteration();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public override sealed TrainingContinuation Pause()
+        /// <inheritdoc/>
+        public override TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
+        /// <inheritdoc/>
         public override void Resume(TrainingContinuation state)
         {
         }
@@ -462,8 +413,8 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Setup autodecay. This will decrease the radius and learning rate from the
         /// start values to the end values.
         /// </summary>
-        ///
-        /// <param name="plannedIterations"></param>
+        /// <param name="plannedIterations">The number of iterations that are planned. This allows the
+        /// decay rate to be determined.</param>
         /// <param name="startRate">The starting learning rate.</param>
         /// <param name="endRate">The ending learning rate.</param>
         /// <param name="startRadius">The starting radius.</param>
@@ -484,25 +435,21 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Set the learning rate and radius.
         /// </summary>
-        ///
         /// <param name="rate">The new learning rate.</param>
         /// <param name="radius">The new radius.</param>
         public void SetParams(double rate, double radius)
         {
             _radius = radius;
-            _learningRate = rate;
-            Neighborhood.Radius = radius;
+            LearningRate = rate;
+            _neighborhood.Radius = radius;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        public override sealed String ToString()
+        /// <inheritdoc/>
+        public override String ToString()
         {
             var result = new StringBuilder();
             result.Append("Rate=");
-            result.Append(Format.FormatPercent(_learningRate));
+            result.Append(Format.FormatPercent(LearningRate));
             result.Append(", Radius=");
             result.Append(Format.FormatDouble(_radius, 2));
             return result.ToString();
@@ -511,7 +458,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Train for the specified synapse and BMU.
         /// </summary>
-        ///
         /// <param name="bmu">The best matching unit for this input.</param>
         /// <param name="matrix">The synapse to train.</param>
         /// <param name="input">The input to train for.</param>
@@ -527,7 +473,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <summary>
         /// Train for the specified pattern.
         /// </summary>
-        ///
         /// <param name="matrix">The synapse to train.</param>
         /// <param name="input">The input pattern to train for.</param>
         /// <param name="current">The current output neuron being trained.</param>
@@ -537,13 +482,13 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         {
             for (int inputNeuron = 0; inputNeuron < _inputNeuronCount; inputNeuron++)
             {
-                double currentWeight = matrix[inputNeuron, current];
+                double currentWeight = matrix.Data[current][inputNeuron];
                 double inputValue = input[inputNeuron];
 
                 double newWeight = DetermineNewWeight(currentWeight,
                                                       inputValue, current, bmu);
 
-                _correctionMatrix[inputNeuron, current] = newWeight;
+                _correctionMatrix.Data[current][inputNeuron] = newWeight;
             }
         }
 
@@ -551,7 +496,6 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// Train the specified pattern. Find a winning neuron and adjust all neurons
         /// according to the neighborhood function.
         /// </summary>
-        ///
         /// <param name="pattern">The pattern to train.</param>
         public void TrainPattern(IMLData pattern)
         {
@@ -559,6 +503,27 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             int bmu = _bmuUtil.CalculateBMU(input);
             Train(bmu, _network.Weights, input);
             ApplyCorrection();
+        }
+
+        /// <summary>
+        /// Calculate the output of the SOM, for each output neuron.  Typically,
+        /// you will use the classify method instead of calling this method.
+        /// </summary>
+        /// <param name="som">The SOM to use.</param>
+        /// <param name="input">The input.</param>
+        /// <returns>The output.</returns>
+        private static IMLData Compute(SOMNetwork som, IMLData input)
+        {
+            IMLData result = new BasicMLData(som.OutputCount);
+
+            for (int i = 0; i < som.OutputCount; i++)
+            {
+                Matrix optr = som.Weights.GetRow(i);
+                Matrix inputMatrix = Matrix.CreateRowMatrix(input.Data);
+                result[i] = MatrixMath.DotProduct(inputMatrix, optr);
+            }
+
+            return result;
         }
     }
 }

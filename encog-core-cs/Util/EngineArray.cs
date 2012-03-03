@@ -513,5 +513,22 @@ namespace Encog.Util
                 }
             }
         }
+
+        /// <summary>
+        /// Calculate the Euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="p1">The first vector.</param>
+        /// <param name="p2">The second vector.</param>
+        /// <returns>The distance.</returns>
+        public static double EuclideanDistance(double[] p1, double[] p2)
+        {
+            double sum = 0;
+            for (int i = 0; i < p1.Length; i++)
+            {
+                double d = p1[i] - p2[i];
+                sum += d * d;
+            }
+            return Math.Sqrt(sum);
+        }
     }
 }
