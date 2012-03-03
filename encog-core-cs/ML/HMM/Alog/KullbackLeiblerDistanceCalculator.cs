@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Data;
+﻿using Encog.ML.Data;
 
 namespace Encog.ML.HMM.Alog
 {
@@ -16,34 +12,32 @@ namespace Encog.ML.HMM.Alog
     /// </summary>
     public class KullbackLeiblerDistanceCalculator
     {
-        public int Len { get; set; }
-        public int SequenceCount { get; set; }
-
         public KullbackLeiblerDistanceCalculator()
         {
             Len = 1000;
             SequenceCount = 10;
         }
 
+        public int Len { get; set; }
+        public int SequenceCount { get; set; }
+
         public double Distance(HiddenMarkovModel hmm1,
-             HiddenMarkovModel hmm2)
+                               HiddenMarkovModel hmm2)
         {
             double distance = 0.0;
 
-            for (int i = 0; i < this.SequenceCount; i++)
+            for (int i = 0; i < SequenceCount; i++)
             {
-
                 IMLDataSet oseq = new MarkovGenerator(hmm1)
-                        .ObservationSequence(this.Len);
+                    .ObservationSequence(Len);
 
                 distance += (new ForwardBackwardScaledCalculator(oseq, hmm1)
-                        .LnProbability() - new ForwardBackwardScaledCalculator(
-                        oseq, hmm2).LnProbability())
-                        / this.Len;
+                                 .LnProbability() - new ForwardBackwardScaledCalculator(
+                                                        oseq, hmm2).LnProbability())
+                            /Len;
             }
 
-            return distance / this.SequenceCount;
+            return distance/SequenceCount;
         }
-
     }
 }

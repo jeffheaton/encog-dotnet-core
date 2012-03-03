@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Encog.MathUtil;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.MathUtil;
 
 namespace Encog.ML.HMM.Alog
 {
@@ -15,17 +11,22 @@ namespace Encog.ML.HMM.Alog
     /// </summary>
     public class MarkovGenerator
     {
-        private HiddenMarkovModel hmm;
-        private int currentState;
+        private readonly HiddenMarkovModel _hmm;
+        private int _currentState;
 
         public MarkovGenerator(HiddenMarkovModel hmm)
         {
-            this.hmm = hmm;
+            this._hmm = hmm;
             NewSequence();
         }
 
+        public int CurrentState
+        {
+            get { return _currentState; }
+        }
+
         public IMLSequenceSet GenerateSequences(int observationCount,
-                 int observationLength)
+                                                int observationLength)
         {
             IMLSequenceSet result = new BasicMLSequenceSet();
 
@@ -38,48 +39,40 @@ namespace Encog.ML.HMM.Alog
             return result;
         }
 
-        public int CurrentState
-        {
-            get
-            {
-                return this.currentState;
-            }
-        }
-
         public void NewSequence()
         {
             double rand = ThreadSafeRandom.NextDouble();
             double current = 0.0;
 
-            for (int i = 0; i < (this.hmm.StateCount - 1); i++)
+            for (int i = 0; i < (_hmm.StateCount - 1); i++)
             {
-                current += this.hmm.GetPi(i);
+                current += _hmm.GetPi(i);
 
                 if (current > rand)
                 {
-                    this.currentState = i;
+                    _currentState = i;
                     return;
                 }
             }
 
-            this.currentState = this.hmm.StateCount - 1;
+            _currentState = _hmm.StateCount - 1;
         }
 
         public IMLDataPair Observation()
         {
-            IMLDataPair o = this.hmm.StateDistributions[this.currentState].Generate();
+            IMLDataPair o = _hmm.StateDistributions[_currentState].Generate();
             double rand = ThreadSafeRandom.NextDouble();
 
-            for (int j = 0; j < (this.hmm.StateCount - 1); j++)
+            for (int j = 0; j < (_hmm.StateCount - 1); j++)
             {
-                if ((rand -= this.hmm.TransitionProbability[this.currentState][j]) < 0)
+                if ((rand -= _hmm.TransitionProbability[_currentState][j]) < 0)
                 {
-                    this.currentState = j;
+                    _currentState = j;
                     return o;
                 }
             }
 
-            this.currentState = this.hmm.StateCount - 1;
+            _currentState = _hmm.StateCount - 1;
             return o;
         }
 

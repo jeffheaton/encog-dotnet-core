@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Data;
 using Encog.Util;
 
@@ -15,53 +13,76 @@ namespace Encog.ML.HMM.Alog
     /// </summary>
     public class ForwardBackwardScaledCalculator : ForwardBackwardCalculator
     {
-        private double[] ctFactors;
-        private double lnProbability;
+        /// <summary>
+        /// The factors.
+        /// </summary>
+        private readonly double[] _ctFactors;
 
-        public ForwardBackwardScaledCalculator(IMLDataSet oseq,
-                HiddenMarkovModel hmm)
-            : this(oseq, hmm, true, false)
+        /// <summary>
+        /// Log probability.
+        /// </summary>
+        private double _lnProbability;
+
+        /// <summary>
+        /// Construct the calculator.
+        /// </summary>
+        /// <param name="seq">The sequences.</param>
+        /// <param name="hmm">The Hidden Markov Model.</param>
+        public ForwardBackwardScaledCalculator(IMLDataSet seq,
+                                               HiddenMarkovModel hmm)
+            : this(seq, hmm, true, false)
         {
-
         }
 
+        /// <summary>
+        /// Construct the calculator.
+        /// </summary>
+        /// <param name="seq">The sequence.</param>
+        /// <param name="hmm">The HMM.</param>
+        /// <param name="doAlpha">Should alpha be calculated.</param>
+        /// <param name="doBeta">Should beta be calculated.</param>
         public ForwardBackwardScaledCalculator(
-                IMLDataSet oseq, HiddenMarkovModel hmm,
-                bool doAlpha, bool doBeta)
+            IMLDataSet seq, HiddenMarkovModel hmm,
+            bool doAlpha, bool doBeta)
         {
-            if (oseq.Count < 1)
+            if (seq.Count < 1)
             {
                 throw new EncogError("Count cannot be less than one.");
             }
 
-            this.ctFactors = new double[oseq.Count];
-            EngineArray.Fill(this.ctFactors, 0.0);
+            _ctFactors = new double[seq.Count];
+            EngineArray.Fill(_ctFactors, 0.0);
 
-            ComputeAlpha(hmm, oseq);
+            ComputeAlpha(hmm, seq);
 
             if (doBeta)
             {
-                ComputeBeta(hmm, oseq);
+                ComputeBeta(hmm, seq);
             }
 
-            ComputeProbability(oseq, hmm, doAlpha, doBeta);
+            ComputeProbability(seq, hmm, doAlpha, doBeta);
         }
 
+        /// <summary>
+        /// Compute alpha.
+        /// </summary>
+        /// <param name="hmm">The HMM.</param>
+        /// <param name="seq">The sequence.</param>
         protected void ComputeAlpha(HiddenMarkovModel hmm,
-                IMLDataSet oseq)
+                                    IMLDataSet seq)
         {
-            this.alpha = EngineArray.AllocateDouble2D((int)oseq.Count, hmm.StateCount);
+            Alpha = EngineArray.AllocateDouble2D((int) seq.Count, hmm.StateCount);
 
             for (int i = 0; i < hmm.StateCount; i++)
             {
-                ComputeAlphaInit(hmm, oseq[0], i);
+                ComputeAlphaInit(hmm, seq[0], i);
             }
-            Scale(this.ctFactors, this.alpha, 0);
+            Scale(_ctFactors, Alpha, 0);
 
-            IEnumerator<IMLDataPair> seqIterator = oseq.GetEnumerator();
+            IEnumerator<IMLDataPair> seqIterator = seq.GetEnumerator();
             if (seqIterator.MoveNext())
             {
-                for (int t = 1; t < oseq.Count; t++)
+                for (int t = 1; t < seq.Count; t++)
                 {
                     seqIterator.MoveNext();
                     IMLDataPair observation = seqIterator.Current;
@@ -70,48 +91,62 @@ namespace Encog.ML.HMM.Alog
                     {
                         ComputeAlphaStep(hmm, observation, t, i);
                     }
-                    Scale(this.ctFactors, this.alpha, t);
+                    Scale(_ctFactors, Alpha, t);
                 }
             }
-
-
         }
 
-        protected void ComputeBeta(HiddenMarkovModel hmm, IMLDataSet oseq) {
-		this.beta = EngineArray.AllocateDouble2D((int)oseq.Count,hmm.StateCount);
-
-		for (int i = 0; i < hmm.StateCount; i++) {
-			this.beta[oseq.Count - 1][i] = 1.0 / this.ctFactors[oseq.Count - 1];
-		}
-
-		for (int t = (int)(oseq.Count - 2); t >= 0; t--) {
-			for (int i = 0; i < hmm.StateCount; i++) {
-				ComputeBetaStep(hmm, oseq[t + 1], t, i);
-				this.beta[t][i] /= this.ctFactors[t];
-			}
-		}
-	}
-
-        private void ComputeProbability(IMLDataSet oseq,
-                HiddenMarkovModel hmm, bool doAlha, bool doBeta)
+        /// <summary>
+        /// Compute beta.
+        /// </summary>
+        /// <param name="hmm">The HMM.</param>
+        /// <param name="oseq">The sequence.</param>
+        protected new void ComputeBeta(HiddenMarkovModel hmm, IMLDataSet oseq)
         {
-            this.lnProbability = 0.0;
+            Beta = EngineArray.AllocateDouble2D((int) oseq.Count, hmm.StateCount);
 
-            for (int t = 0; t < oseq.Count; t++)
+            for (int i = 0; i < hmm.StateCount; i++)
             {
-                this.lnProbability += Math.Log(this.ctFactors[t]);
+                Beta[oseq.Count - 1][i] = 1.0/_ctFactors[oseq.Count - 1];
             }
 
-            this.probability = Math.Exp(this.lnProbability);
+            for (var t = (int) (oseq.Count - 2); t >= 0; t--)
+            {
+                for (int i = 0; i < hmm.StateCount; i++)
+                {
+                    ComputeBetaStep(hmm, oseq[t + 1], t, i);
+                    Beta[t][i] /= _ctFactors[t];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Compute the probability.
+        /// </summary>
+        /// <param name="seq">The sequence.</param>
+        /// <param name="hmm">The HMM.</param>
+        /// <param name="doAlha">The alpha.</param>
+        /// <param name="doBeta">The beta.</param>
+        private void ComputeProbability(IMLDataSet seq,
+                                        HiddenMarkovModel hmm, bool doAlha, bool doBeta)
+        {
+            _lnProbability = 0.0;
+
+            for (int t = 0; t < seq.Count; t++)
+            {
+                _lnProbability += Math.Log(_ctFactors[t]);
+            }
+
+            probability = Math.Exp(_lnProbability);
         }
 
         public double LnProbability()
         {
-            return this.lnProbability;
+            return _lnProbability;
         }
 
         private void Scale(double[] ctFactors, double[][] array,
-                 int t)
+                           int t)
         {
             double[] table = array[t];
             double sum = 0.0;

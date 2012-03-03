@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Encog.MathUtil;
 using Encog.ML.Data;
-using Encog.Util;
 using Encog.ML.Data.Basic;
-using Encog.MathUtil;
+using Encog.Util;
 
 namespace Encog.ML.HMM.Distributions
 {
@@ -18,7 +14,7 @@ namespace Encog.ML.HMM.Distributions
         /// <summary>
         /// The probabilities of moving between states.
         /// </summary>
-        private double[][] probabilities;
+        private readonly double[][] _probabilities;
 
 
         /// <summary>
@@ -27,27 +23,25 @@ namespace Encog.ML.HMM.Distributions
         /// <param name="theProbabilities">The probabilities.</param>
         public DiscreteDistribution(double[][] theProbabilities)
         {
-
             if (theProbabilities.Length == 0)
             {
                 throw new EncogError("Invalid empty array");
             }
 
-            this.probabilities = new double[theProbabilities.Length][];
+            _probabilities = new double[theProbabilities.Length][];
 
             for (int i = 0; i < theProbabilities.Length; i++)
             {
-
                 if (theProbabilities[i].Length == 0)
                 {
                     throw new EncogError("Invalid empty array");
                 }
 
-                this.probabilities[i] = new double[theProbabilities[i].Length];
+                _probabilities[i] = new double[theProbabilities[i].Length];
 
-                for (int j = 0; j < probabilities[i].Length; j++)
+                for (int j = 0; j < _probabilities[i].Length; j++)
                 {
-                    if ((this.probabilities[i][j] = theProbabilities[i][j]) < 0.0)
+                    if ((_probabilities[i][j] = theProbabilities[i][j]) < 0.0)
                     {
                         throw new EncogError("Invalid probability.");
                     }
@@ -61,18 +55,28 @@ namespace Encog.ML.HMM.Distributions
         /// <param name="cx">The count of each.</param>
         public DiscreteDistribution(int[] cx)
         {
-            this.probabilities = new double[cx.Length][];
+            _probabilities = new double[cx.Length][];
             for (int i = 0; i < cx.Length; i++)
             {
                 int c = cx[i];
-                this.probabilities[i] = new double[c];
+                _probabilities[i] = new double[c];
 
                 for (int j = 0; j < c; j++)
                 {
-                    this.probabilities[i][j] = 1.0 / c;
+                    _probabilities[i][j] = 1.0/c;
                 }
             }
         }
+
+        /// <summary>
+        /// The state probabilities.
+        /// </summary>
+        public double[][] Probabilities
+        {
+            get { return _probabilities; }
+        }
+
+        #region IStateDistribution Members
 
         /// <summary>
         /// Fit this distribution to the specified data.
@@ -85,22 +89,21 @@ namespace Encog.ML.HMM.Distributions
                 throw new EncogError("Empty observation set");
             }
 
-            for (int i = 0; i < this.probabilities.Length; i++)
+            for (int i = 0; i < _probabilities.Length; i++)
             {
-
-                for (int j = 0; j < this.probabilities[i].Length; j++)
+                for (int j = 0; j < _probabilities[i].Length; j++)
                 {
-                    this.probabilities[i][j] = 0.0;
+                    _probabilities[i][j] = 0.0;
                 }
 
                 foreach (IMLDataPair o in co)
                 {
-                    this.probabilities[i][(int)o.Input[i]]++;
+                    _probabilities[i][(int) o.Input[i]]++;
                 }
 
-                for (int j = 0; j < this.probabilities[i].Length; j++)
+                for (int j = 0; j < _probabilities[i].Length; j++)
                 {
-                    this.probabilities[i][j] /= co.Count;
+                    _probabilities[i][j] /= co.Count;
                 }
             }
         }
@@ -117,14 +120,14 @@ namespace Encog.ML.HMM.Distributions
                 throw new EncogError("Invalid weight size.");
             }
 
-            for (int i = 0; i < this.probabilities.Length; i++)
+            for (int i = 0; i < _probabilities.Length; i++)
             {
-                EngineArray.Fill(this.probabilities[i], 0.0);
+                EngineArray.Fill(_probabilities[i], 0.0);
 
                 int j = 0;
                 foreach (IMLDataPair o in co)
                 {
-                    this.probabilities[i][(int)o.Input[i]] += weights[j++];
+                    _probabilities[i][(int) o.Input[i]] += weights[j++];
                 }
             }
         }
@@ -136,16 +139,16 @@ namespace Encog.ML.HMM.Distributions
         /// <returns>The random element.</returns>
         public IMLDataPair Generate()
         {
-            IMLData result = new BasicMLData(this.probabilities.Length);
+            IMLData result = new BasicMLData(_probabilities.Length);
 
-            for (int i = 0; i < this.probabilities.Length; i++)
+            for (int i = 0; i < _probabilities.Length; i++)
             {
                 double rand = ThreadSafeRandom.NextDouble();
 
-                result[i] = this.probabilities[i].Length - 1;
-                for (int j = 0; j < (this.probabilities[i].Length - 1); j++)
+                result[i] = _probabilities[i].Length - 1;
+                for (int j = 0; j < (_probabilities[i].Length - 1); j++)
                 {
-                    if ((rand -= this.probabilities[i][j]) < 0.0)
+                    if ((rand -= _probabilities[i][j]) < 0.0)
                     {
                         result[i] = j;
                         break;
@@ -163,39 +166,29 @@ namespace Encog.ML.HMM.Distributions
         /// <returns>The probability.</returns>
         public double Probability(IMLDataPair o)
         {
-
             double result = 1;
 
-            for (int i = 0; i < this.probabilities.Length; i++)
+            for (int i = 0; i < _probabilities.Length; i++)
             {
-                if (o.Input[i] > (this.probabilities[i].Length - 1))
+                if (o.Input[i] > (_probabilities[i].Length - 1))
                 {
                     throw new EncogError("Wrong observation value");
                 }
-                result *= this.probabilities[i][(int)o.Input[i]];
+                result *= _probabilities[i][(int) o.Input[i]];
             }
 
             return result;
         }
 
         /// <summary>
-        /// The state probabilities.
-        /// </summary>
-        public double[][] Probabilities
-        {
-            get
-            {
-                return this.probabilities;
-            }
-        }
-        
-        /// <summary>
         /// Clone.
         /// </summary>
         /// <returns>A clone of the distribution.</returns>
         IStateDistribution IStateDistribution.Clone()
         {
-            return null;
+            return new DiscreteDistribution((double[][])_probabilities.Clone());
         }
+
+        #endregion
     }
 }

@@ -497,5 +497,21 @@ namespace Encog.Util
             return result;
 
         }
+
+        /// <summary>
+        /// Copy one double 2d array to another.
+        /// </summary>
+        /// <param name="source">The source array.</param>
+        /// <param name="target">The target array.</param>
+        public static void ArrayCopy(double[][] source, double[][] target)
+        {
+            for(var row=0;row<source.Length;row++)
+            {
+                for(var col=0;col<source[row].Length;col++)
+                {
+                    target[row][col] = source[row][col];
+                }
+            }
+        }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.MathUtil.Matrices;
 using Encog.MathUtil.Matrices.Decomposition;
-using Encog.Util;
+using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.MathUtil.Randomize;
+using Encog.Util;
 
 namespace Encog.ML.HMM.Distributions
 {
@@ -18,44 +15,44 @@ namespace Encog.ML.HMM.Distributions
     public class ContinousDistribution : IStateDistribution
     {
         /// <summary>
+        /// The covariance matrix.
+        /// </summary>
+        private readonly Matrix _covariance;
+
+        /// <summary>
         /// The dimensions.
         /// </summary>
-        private int dimension;
+        private readonly int _dimension;
 
         /// <summary>
         /// The means for each dimension.
         /// </summary>
-        private double[] mean;
-
-        /// <summary>
-        /// The covariance matrix.
-        /// </summary>
-        private Matrix covariance;
-
-        /// <summary>
-        /// The covariance left side.
-        /// </summary>
-        private Matrix covarianceL = null;
-
-        /// <summary>
-        /// The covariance inverse.
-        /// </summary>
-        private Matrix covarianceInv = null;
-
-        /// <summary>
-        /// The covariance determinant.
-        /// </summary>
-        private double covarianceDet;
-
-        /// <summary>
-        /// Used to perform a decomposition.
-        /// </summary>
-        private CholeskyDecomposition cd;
+        private readonly double[] _mean;
 
         /// <summary>
         /// Random number generator.
         /// </summary>
-        private GaussianRandomizer randomizer = new GaussianRandomizer(0.0, 1.0);
+        private readonly GaussianRandomizer _randomizer = new GaussianRandomizer(0.0, 1.0);
+
+        /// <summary>
+        /// Used to perform a decomposition.
+        /// </summary>
+        private CholeskyDecomposition _cd;
+
+        /// <summary>
+        /// The covariance determinant.
+        /// </summary>
+        private double _covarianceDet;
+
+        /// <summary>
+        /// The covariance inverse.
+        /// </summary>
+        private Matrix _covarianceInv;
+
+        /// <summary>
+        /// The covariance left side.
+        /// </summary>
+        private Matrix _covarianceL;
 
         /// <summary>
         /// Construct a continuous distribution. 
@@ -63,14 +60,14 @@ namespace Encog.ML.HMM.Distributions
         /// <param name="mean">The mean.</param>
         /// <param name="covariance">The covariance.</param>
         public ContinousDistribution(double[] mean,
-                double[][] covariance)
+                                     double[][] covariance)
         {
-            this.dimension = covariance.Length;
-            this.mean = EngineArray.ArrayCopy(mean);
-            this.covariance = new Matrix(covariance);
+            _dimension = covariance.Length;
+            _mean = EngineArray.ArrayCopy(mean);
+            _covariance = new Matrix(covariance);
             Update(covariance);
         }
-        
+
         /// <summary>
         /// Construct a continuous distribution with the specified number of dimensions. 
         /// </summary>
@@ -82,17 +79,34 @@ namespace Encog.ML.HMM.Distributions
                 throw new EncogError("Invalid number of dimensions");
             }
 
-            this.dimension = dimension;
-            this.mean = new double[dimension];
-            this.covariance = new Matrix(dimension, dimension);
-
+            _dimension = dimension;
+            _mean = new double[dimension];
+            _covariance = new Matrix(dimension, dimension);
         }
+
+        /// <summary>
+        /// The mean for the dimensions of the gaussian curve.
+        /// </summary>
+        public double[] Mean
+        {
+            get { return _mean; }
+        }
+
+        /// <summary>
+        /// The covariance matrix.
+        /// </summary>
+        public Matrix Covariance
+        {
+            get { return _covariance; }
+        }
+
+        #region IStateDistribution Members
 
         /// <inheritdoc/>
         public void Fit(IMLDataSet co)
         {
-            double[] weights = new double[co.Count];
-            EngineArray.Fill(weights, 1.0 / co.Count);
+            var weights = new double[co.Count];
+            EngineArray.Fill(weights, 1.0/co.Count);
 
             Fit(co, weights);
         }
@@ -108,35 +122,35 @@ namespace Encog.ML.HMM.Distributions
             }
 
             // Compute mean
-            double[] mean = new double[this.dimension];
-            for (int r = 0; r < this.dimension; r++)
+            var mean = new double[_dimension];
+            for (int r = 0; r < _dimension; r++)
             {
                 i = 0;
 
                 foreach (IMLDataPair o in co)
                 {
-                    mean[r] += o.Input[r] * weights[i++];
+                    mean[r] += o.Input[r]*weights[i++];
                 }
             }
 
             // Compute covariance
-            double[][] covariance = EngineArray.AllocateDouble2D(this.dimension, this.dimension);
+            double[][] covariance = EngineArray.AllocateDouble2D(_dimension, _dimension);
             i = 0;
             foreach (IMLDataPair o in co)
             {
                 double[] obs = o.Input.Data;
-                double[] omm = new double[obs.Length];
+                var omm = new double[obs.Length];
 
                 for (int j = 0; j < obs.Length; j++)
                 {
                     omm[j] = obs[j] - mean[j];
                 }
 
-                for (int r = 0; r < this.dimension; r++)
+                for (int r = 0; r < _dimension; r++)
                 {
-                    for (int c = 0; c < this.dimension; c++)
+                    for (int c = 0; c < _dimension; c++)
                     {
-                        covariance[r][c] += omm[r] * omm[c] * weights[i];
+                        covariance[r][c] += omm[r]*omm[c]*weights[i];
                     }
                 }
 
@@ -149,16 +163,16 @@ namespace Encog.ML.HMM.Distributions
         /// <inheritdoc/>
         public IMLDataPair Generate()
         {
-            double[] d = new double[this.dimension];
+            var d = new double[_dimension];
 
-            for (int i = 0; i < this.dimension; i++)
+            for (int i = 0; i < _dimension; i++)
             {
-                d[i] = this.randomizer.Randomize(0);
+                d[i] = _randomizer.Randomize(0);
             }
 
-            double[] d2 = MatrixMath.Multiply(this.covarianceL, d);
+            double[] d2 = MatrixMath.Multiply(_covarianceL, d);
             return new BasicMLDataPair(new BasicMLData(EngineArray.Add(d2,
-                    this.mean)));
+                                                                       _mean)));
         }
 
         /// <inheritdoc/>
@@ -166,14 +180,22 @@ namespace Encog.ML.HMM.Distributions
         {
             double[] v = o.InputArray;
             Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(v,
-                    this.mean));
-            Matrix t = MatrixMath.Multiply(this.covarianceInv, vmm);
+                                                                        _mean));
+            Matrix t = MatrixMath.Multiply(_covarianceInv, vmm);
             double expArg = MatrixMath.Multiply(MatrixMath.Transpose(vmm), t)
-                    [0, 0] * -0.5;
+                                [0, 0]*-0.5;
             return Math.Exp(expArg)
-                    / (Math.Pow(2.0 * Math.PI, this.dimension / 2.0) * Math.Pow(
-                            this.covarianceDet, 0.5));
+                   /(Math.Pow(2.0*Math.PI, _dimension/2.0)*Math.Pow(
+                       _covarianceDet, 0.5));
         }
+
+        /// <inheritdoc/>
+        IStateDistribution IStateDistribution.Clone()
+        {
+            return new ContinousDistribution((double[]) _mean.Clone(), (double[][]) _covariance.Data.Clone());
+        }
+
+        #endregion
 
         /// <summary>
         /// Update the covariance.  
@@ -181,38 +203,10 @@ namespace Encog.ML.HMM.Distributions
         /// <param name="covariance">The new covariance.</param>
         public void Update(double[][] covariance)
         {
-            this.cd = new CholeskyDecomposition(new Matrix(covariance));
-            this.covarianceL = this.cd.L;
-            this.covarianceInv = this.cd.InverseCholesky();
-            this.covarianceDet = this.cd.GetDeterminant();
-        }
-
-        /// <summary>
-        /// The mean for the dimensions of the gaussian curve.
-        /// </summary>
-        public double[] Mean
-        {
-            get
-            {
-                return this.mean;
-            }
-        }
-
-        /// <summary>
-        /// The covariance matrix.
-        /// </summary>
-        public Matrix Covariance
-        {
-            get
-            {
-                return this.covariance;
-            }
-        }
-
-        /// <inheritdoc/>
-        IStateDistribution IStateDistribution.Clone()
-        {
-            return null;
+            _cd = new CholeskyDecomposition(new Matrix(covariance));
+            _covarianceL = _cd.L;
+            _covarianceInv = _cd.InverseCholesky();
+            _covarianceDet = _cd.GetDeterminant();
         }
     }
 }

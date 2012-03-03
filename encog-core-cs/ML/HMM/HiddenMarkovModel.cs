@@ -41,7 +41,7 @@ namespace Encog.ML.HMM
     /// 
     /// </summary>
     [Serializable]
-    public class HiddenMarkovModel : BasicML, IMLStateSequence
+    public class HiddenMarkovModel : BasicML, IMLStateSequence, ICloneable
     {
         public const String TAG_STATES = "sates";
 
@@ -276,6 +276,18 @@ namespace Encog.ML.HMM
 
         public override void UpdateProperties()
         {
+        }
+
+        object ICloneable.Clone()
+        {
+            var result = new HiddenMarkovModel(StateCount);
+            EngineArray.ArrayCopy(Pi, result.Pi);
+            EngineArray.ArrayCopy(TransitionProbability, result.TransitionProbability);
+            for (int i = 0; i < StateCount;i++)
+            {
+                result.StateDistributions[i] = StateDistributions[i].Clone();
+            }
+            return result;
         }
     }
 }

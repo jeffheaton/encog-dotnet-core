@@ -73,7 +73,6 @@ namespace Encog.MathUtil.Matrices.Decomposition
                 double d = 0.0;
                 for (int k = 0; k < j; k++)
                 {
-                    l[k] = new double[n];
                     double[] lrowk = l[k];
                     double s = 0.0;
                     for (int i = 0; i < k; i++)
@@ -184,7 +183,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
             for (int j = 0; j < m.Length; j++)
             {
                 if (m[j][j] == 0)
-                    throw new EncogError("Error, the natrix is not full rank");
+                    throw new EncogError("Error, the matrix is not full rank");
 
                 lti[j][j] = 1.0 / m[j][j];
 
