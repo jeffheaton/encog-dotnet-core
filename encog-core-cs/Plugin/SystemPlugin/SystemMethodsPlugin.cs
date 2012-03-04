@@ -1,44 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Factory.Method;
 using Encog.Engine.Network.Activation;
 using Encog.ML;
-using Encog.ML.Factory;
 using Encog.ML.Data;
+using Encog.ML.Factory;
+using Encog.ML.Factory.Method;
 using Encog.ML.Train;
 
 namespace Encog.Plugin.SystemPlugin
 {
+    /// <summary>
+    /// System plugin for core ML Methods.
+    /// </summary>
     public class SystemMethodsPlugin : IEncogPluginService1
     {
         /// <summary>
+        /// A factory used to create Bayesian networks
+        /// </summary>
+        private readonly BayesianFactory _bayesianFactory = new BayesianFactory();
+
+        /// <summary>
         /// A factory used to create feedforward neural networks.
         /// </summary>
-        private FeedforwardFactory feedforwardFactory
+        private readonly FeedforwardFactory _feedforwardFactory
             = new FeedforwardFactory();
-
-        /// <summary>
-        /// A factory used to create support vector machines.
-        /// </summary>
-        private SVMFactory svmFactory = new SVMFactory();
-
-        /// <summary>
-        /// A factory used to create RBF networks.
-        /// </summary>
-        private RBFNetworkFactory rbfFactory = new RBFNetworkFactory();
 
         /// <summary>
         /// The factory for PNN's.
         /// </summary>
-        private PNNFactory pnnFactory = new PNNFactory();
+        private readonly PNNFactory _pnnFactory = new PNNFactory();
+
+        /// <summary>
+        /// A factory used to create RBF networks.
+        /// </summary>
+        private readonly RBFNetworkFactory _rbfFactory = new RBFNetworkFactory();
 
         /// <summary>
         /// A factory used to create SOM's.
         /// </summary>
-        private SOMFactory somFactory = new SOMFactory();
+        private readonly SOMFactory _somFactory = new SOMFactory();
 
+        /// <summary>
+        /// A factory used to create support vector machines.
+        /// </summary>
+        private readonly SVMFactory _svmFactory = new SVMFactory();
+
+        #region IEncogPluginService1 Members
 
         /// <inheritdoc/>
         public String PluginDescription
@@ -46,17 +52,14 @@ namespace Encog.Plugin.SystemPlugin
             get
             {
                 return "This plugin provides the built in machine " +
-                        "learning methods for Encog.";
+                       "learning methods for Encog.";
             }
         }
 
         /// <inheritdoc/>
         public String PluginName
         {
-            get
-            {
-                return "HRI-System-Methods";
-            }
+            get { return "HRI-System-Methods"; }
         }
 
         /// <summary>
@@ -64,10 +67,7 @@ namespace Encog.Plugin.SystemPlugin
         /// </summary>
         public int PluginType
         {
-            get
-            {
-                return 1;
-            }
+            get { return 1; }
         }
 
 
@@ -79,45 +79,49 @@ namespace Encog.Plugin.SystemPlugin
 
         /// <inheritdoc/>
         public IMLMethod CreateMethod(String methodType, String architecture,
-                int input, int output)
+                                      int input, int output)
         {
             if (MLMethodFactory.TypeFeedforward.Equals(methodType))
             {
-                return this.feedforwardFactory.Create(architecture, input, output);
+                return _feedforwardFactory.Create(architecture, input, output);
             }
-            else if (MLMethodFactory.TypeRbfnetwork.Equals(methodType))
+            if (MLMethodFactory.TypeRbfnetwork.Equals(methodType))
             {
-                return this.rbfFactory.Create(architecture, input, output);
+                return _rbfFactory.Create(architecture, input, output);
             }
-            else if (MLMethodFactory.TypeSVM.Equals(methodType))
+            if (MLMethodFactory.TypeSVM.Equals(methodType))
             {
-                return this.svmFactory.Create(architecture, input, output);
+                return _svmFactory.Create(architecture, input, output);
             }
-            else if (MLMethodFactory.TypeSVM.Equals(methodType))
+            if (MLMethodFactory.TypeSVM.Equals(methodType))
             {
-                return this.somFactory.Create(architecture, input, output);
+                return _somFactory.Create(architecture, input, output);
             }
-            else if (MLMethodFactory.TypePNN.Equals(methodType))
+            if (MLMethodFactory.TypePNN.Equals(methodType))
             {
-                return this.pnnFactory.Create(architecture, input, output);
+                return _pnnFactory.Create(architecture, input, output);
             }
+            if (MLMethodFactory.TypeBayesian.Equals(methodType))
+            {
+                return _bayesianFactory.Create(architecture, input, output);
+            }
+
             throw new EncogError("Unknown method type: " + methodType);
         }
 
         /// <inheritdoc/>
         public IMLTrain CreateTraining(IMLMethod method, IMLDataSet training,
-                String type, String args)
+                                       String type, String args)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public int PluginServiceType 
+        public int PluginServiceType
         {
-            get
-            {
-                return EncogPluginBaseConst.SERVICE_TYPE_GENERAL;
-            }
+            get { return EncogPluginBaseConst.SERVICE_TYPE_GENERAL; }
         }
+
+        #endregion
     }
 }

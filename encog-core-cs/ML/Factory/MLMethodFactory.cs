@@ -33,6 +33,11 @@ namespace Encog.ML.Factory
     public class MLMethodFactory
     {
         /// <summary>
+        /// String constant for a bayesian neural network.
+        /// </summary>
+	    public const String TypeBayesian = "bayesian";
+
+        /// <summary>
         /// String constant for feedforward neural networks.
         /// </summary>
         ///

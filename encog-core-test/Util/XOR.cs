@@ -29,6 +29,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.Util.Simple;
 using Encog.Neural.Networks.Structure;
 using Encog.ML;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.Util
 {
@@ -120,5 +121,23 @@ namespace Encog.Util
             return new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
         }
 
+
+        public static IMLDataSet CreateNoisyXORDataSet(int count)
+        {
+            IMLDataSet result = new BasicMLDataSet();
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    IMLData inputData = new BasicMLData(XORInput[j]);
+                    IMLData idealData = new BasicMLData(XORIdeal[j]);
+                    IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
+                    inputData.Data[0] = inputData.Data[0] + RangeRandomizer.Randomize(-0.1, 0.1);
+                    inputData.Data[1] = inputData.Data[1] + RangeRandomizer.Randomize(-0.1, 0.1);
+                    result.Add(pair);
+                }
+            }
+            return result;
+        }
     }
 }

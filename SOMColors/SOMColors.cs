@@ -24,38 +24,35 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Encog.MathUtil;
+using Encog.MathUtil.Randomize;
+using Encog.MathUtil.RBF;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.Neural.Networks;
-using Encog.MathUtil.Randomize;
-using Encog.MathUtil;
-using Encog.Neural.Networks.Layers;
-using Encog.Neural.Pattern;
-using Encog.Neural.SOM.Training.Neighborhood;
-using Encog.MathUtil.RBF;
 using Encog.Neural.SOM;
+using Encog.Neural.SOM.Training.Neighborhood;
 
 namespace SOMColors
 {
     public partial class SOMColors : Form
     {
         public const int CELL_SIZE = 8;
-	    public const int WIDTH = 50;
-	    public const int HEIGHT = 50;
+        public const int WIDTH = 50;
+        public const int HEIGHT = 50;
 
-        private SOMNetwork network;
-        private INeighborhoodFunction gaussian;
-        private IList<IMLData> samples;
+        private readonly INeighborhoodFunction gaussian;
+        private readonly SOMNetwork network;
+        private readonly IList<IMLData> samples;
+        private readonly BasicTrainSOM train;
         private int iteration;
-        private BasicTrainSOM train;
 
         public SOMColors()
         {
             InitializeComponent();
 
-            this.network = CreateNetwork();
-            this.gaussian = new NeighborhoodRBF(RBFEnum.Gaussian ,SOMColors.WIDTH, SOMColors.HEIGHT);
-            this.train = new BasicTrainSOM(this.network, 0.01, null, gaussian);
+            network = CreateNetwork();
+            gaussian = new NeighborhoodRBF(RBFEnum.Gaussian, WIDTH, HEIGHT);
+            train = new BasicTrainSOM(network, 0.01, null, gaussian);
 
             train.ForceWinner = false;
 
@@ -69,57 +66,57 @@ namespace SOMColors
                 samples.Add(data);
             }
 
-            this.train.SetAutoDecay(100, 0.8, 0.003, 30, 5);
+            train.SetAutoDecay(100, 0.8, 0.003, 30, 5);
         }
 
         private SOMNetwork CreateNetwork()
         {
-            SOMNetwork result = new SOMNetwork(3, SOMColors.WIDTH * SOMColors.HEIGHT);            
+            var result = new SOMNetwork(3, WIDTH*HEIGHT);
             result.Reset();
             return result;
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)
         {
-            this.iteration++;
-            if (this.iteration > 100)
-                this.updateTimer.Enabled = false;
+            iteration++;
+            if (iteration > 100)
+                updateTimer.Enabled = false;
 
 
-            int idx = (int)(ThreadSafeRandom.NextDouble()*samples.Count);
-			IMLData c = samples[idx];
-			
-			this.train.TrainPattern(c);
-			this.train.AutoDecay();
+            var idx = (int) (ThreadSafeRandom.NextDouble()*samples.Count);
+            IMLData c = samples[idx];
+
+            train.TrainPattern(c);
+            train.AutoDecay();
             DrawMap();
-			//System.out.println("Iteration " + i + ","+ this.train.toString());
+            //System.out.println("Iteration " + i + ","+ this.train.toString());
         }
 
         private int ConvertColor(double d)
         {
-            double result = 128 * d;
+            double result = 128*d;
             result += 128;
             result = Math.Min(result, 255);
             result = Math.Max(result, 0);
-            return (int)result;
+            return (int) result;
         }
 
         private void DrawMap()
         {
-            Graphics g = this.CreateGraphics();
-            for(int y = 0; y< HEIGHT; y++)
-		    {
-			    for(int x = 0; x< WIDTH; x++)
-			    {
-				    int index = (y*WIDTH)+x;
-				    int red = ConvertColor(this.network.Weights[index,0]);
-                    int green = ConvertColor(this.network.Weights[index,1]);
-                    int blue = ConvertColor(this.network.Weights[index,2]);
+            Graphics g = CreateGraphics();
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                for (int x = 0; x < WIDTH; x++)
+                {
+                    int index = (y*WIDTH) + x;
+                    int red = ConvertColor(network.Weights[index, 0]);
+                    int green = ConvertColor(network.Weights[index, 1]);
+                    int blue = ConvertColor(network.Weights[index, 2]);
                     Color c = Color.FromArgb(red, green, blue);
                     Brush brush = new SolidBrush(c);
-                    g.FillRectangle(brush, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    			}
-    		}	
+                    g.FillRectangle(brush, x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                }
+            }
             g.Dispose();
         }
     }

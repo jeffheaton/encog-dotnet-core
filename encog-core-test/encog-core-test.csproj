@@ -90,6 +90,9 @@
     <Compile Include="ML\HMM\TestHMM.cs" />
     <Compile Include="ML\KMeans\TestKMeans.cs" />
     <Compile Include="Neural\Networks\TestConsistency.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\TestNeighborhood.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\TestCompetitive.cs" />
+    <Compile Include="Neural\Networks\Training\TestFolded.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />

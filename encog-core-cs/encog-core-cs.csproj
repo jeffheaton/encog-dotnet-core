@@ -324,6 +324,7 @@
     <Compile Include="ML\Data\Temporal\TemporalError.cs" />
     <Compile Include="ML\Data\Temporal\TemporalMLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TemporalPoint.cs" />
+    <Compile Include="ML\Factory\Method\BayesianFactory.cs" />
     <Compile Include="ML\Factory\Method\FeedforwardFactory.cs" />
     <Compile Include="ML\Factory\Method\PNNFactory.cs" />
     <Compile Include="ML\Factory\Method\RBFNetworkFactory.cs" />
