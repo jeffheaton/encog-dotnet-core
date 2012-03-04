@@ -35,6 +35,32 @@ namespace Encog.ML.Factory
     public class MLTrainFactory
     {
         /// <summary>
+        /// The maximum number of parents for K2.
+        /// </summary>
+        public const string PropertyMaxParents = "MAXPARENTS";
+
+
+        ///<summary>
+        /// The number of particles.
+        ///</summary>
+        public const String PropertyParticles = "PARTICLES";
+
+        /// <summary>
+        /// Nelder Mead training for Bayesian.
+        /// </summary>
+        public const String TypeNelderMead = "nm";
+
+        /// <summary>
+        /// K2 training for Bayesian.
+        /// </summary>
+        public const String TypeBayesian = "bayesian";
+
+        /// <summary>
+        /// PSO training.
+        /// </summary>
+        public const String TypePSO = "pso";
+
+        /// <summary>
         /// String constant for RPROP training.
         /// </summary>
         ///
