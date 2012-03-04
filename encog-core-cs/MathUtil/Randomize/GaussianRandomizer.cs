@@ -38,7 +38,7 @@ namespace Encog.MathUtil.Randomize
     /// http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
     /// Ported from C++ version provided by Everett F. Carter Jr., 1994
     /// </summary>
-    ///
+    [Serializable]
     public class GaussianRandomizer : BasicRandomizer
     {
         /// <summary>

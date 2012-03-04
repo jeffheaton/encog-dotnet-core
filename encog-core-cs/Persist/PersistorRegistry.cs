@@ -35,6 +35,7 @@ using Encog.Neural.Rbf;
 using Encog.Neural.SOM;
 using Encog.Neural.Thermal;
 using Encog.ML.Bayesian;
+using Encog.ML.HMM;
 
 namespace Encog.Persist
 {
@@ -84,6 +85,7 @@ namespace Encog.Persist
             Add(new PersistCPN());
             Add(new PersistTrainingContinuation());
             Add(new PersistBayes());
+            Add(new PersistHMM());
         }
 
         /// <value>The singleton instance.</value>

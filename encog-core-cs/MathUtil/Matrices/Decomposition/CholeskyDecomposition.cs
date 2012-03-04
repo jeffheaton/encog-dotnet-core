@@ -38,6 +38,7 @@ namespace Encog.MathUtil.Matrices.Decomposition
     /// This file based on a class from the public domain JAMA package.
     /// http://math.nist.gov/javanumerics/jama/
     /// </summary>
+    [Serializable]
     public class CholeskyDecomposition
     {
         /// <summary>
