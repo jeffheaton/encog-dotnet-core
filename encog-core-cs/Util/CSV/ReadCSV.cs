@@ -257,6 +257,9 @@ namespace Encog.Util.CSV
         /// <returns>The column as a string.</returns>
         public String Get(int i)
         {
+            if( i>=_data.Length ) {
+                throw new EncogError("Can't access column " + i + " in a file that has only " + _data.Length + " columns.");     
+            } 
             return _data[i];
         }
 

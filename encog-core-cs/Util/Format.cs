@@ -90,6 +90,8 @@ namespace Encog.Util
         /// <returns>The double as a string.</returns>
         public static String FormatDouble(double d, int i)
         {
+            if (Double.IsNaN(d) || Double.IsInfinity(d))
+                return "NaN"; 
             return d.ToString("N" + i);
         }
 
@@ -137,6 +139,8 @@ namespace Encog.Util
         /// <returns>The formatted percent.</returns>
         public static String FormatPercent(double e)
         {
+            if( Double.IsNaN(e) || Double.IsInfinity(e) ) 
+                return "NaN"; 
             return (e*100.0).ToString("N6") + "%";
         }
 
@@ -147,6 +151,8 @@ namespace Encog.Util
         /// <returns>The formatted percent.</returns>
         public static String FormatPercentWhole(double e)
         {
+            if (Double.IsNaN(e) || Double.IsInfinity(e))
+                return "NaN"; 
             return (e*100.0).ToString("N0") + "%";
         }
 

@@ -312,6 +312,11 @@ namespace Encog.App.Analyst.Wizard
         private AnalystFileFormat _format;
 
         /// <summary>
+        /// The maximum allowed training error.
+        /// </summary>
+        public double MaxError { get; set;  }
+
+        /// <summary>
         /// Construct the analyst wizard.
         /// </summary>
         ///
@@ -334,6 +339,7 @@ namespace Encog.App.Analyst.Wizard
             _lagWindowSize = 0;
             _includeTargetField = false;
             _missing = new DiscardMissing();
+            MaxError = DefaultTrainError;
         }
 
         /// <summary>
@@ -677,7 +683,7 @@ namespace Encog.App.Analyst.Wizard
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
                                           "rprop");
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
 
         /// <summary>
@@ -848,7 +854,7 @@ namespace Encog.App.Analyst.Wizard
                 ScriptProperties.MlTrainType, outputColumns > 1 ? "rprop" : "svd");
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          DefaultTrainError);
+                                          Max);
         }
 
         /// <summary>
@@ -983,7 +989,7 @@ namespace Encog.App.Analyst.Wizard
 
             // ScriptProperties.ML_TRAIN_arguments
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
 
         /// <summary>
@@ -1004,7 +1010,7 @@ namespace Encog.App.Analyst.Wizard
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
                                           MLTrainFactory.TypeSVMSearch);
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
 
         /// <summary>

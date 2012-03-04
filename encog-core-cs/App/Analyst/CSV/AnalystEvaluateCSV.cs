@@ -167,6 +167,11 @@ namespace Encog.App.Analyst.CSV
 
             IMLData output;
 
+            foreach (AnalystField field in _analyst.Script.Normalize.NormalizedFields)
+            {
+                field.Init();
+            } 
+
             int outputLength = _analyst.DetermineTotalInputFieldCount();
 
             StreamWriter tw = PrepareOutputFile(outputFile);

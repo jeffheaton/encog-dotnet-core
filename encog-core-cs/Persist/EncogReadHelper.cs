@@ -104,7 +104,7 @@ namespace Encog.Persist
             try
             {
                 String line;
-                IList<double[]> largeArrays = new List<double[]>();
+                var largeArrays = new List<double[]>();
 
                 while ((line = reader.ReadLine()) != null)
                 {

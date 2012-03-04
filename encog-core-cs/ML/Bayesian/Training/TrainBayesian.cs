@@ -167,6 +167,8 @@ namespace Encog.ML.Bayesian.Training
                     _network.CreateDependency(classificationTarget, e);
                 }
             }
+
+            _network.FinalizeStructure();
         }
 
         /// <summary>
@@ -180,6 +182,7 @@ namespace Encog.ML.Bayesian.Training
             {
                 case BayesianInit.InitEmpty:
                     _network.RemoveAllRelations();
+                    _network.FinalizeStructure();
                     break;
                 case BayesianInit.InitNoChange:
                     break;

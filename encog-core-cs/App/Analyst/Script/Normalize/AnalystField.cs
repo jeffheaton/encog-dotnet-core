@@ -407,6 +407,15 @@ namespace Encog.App.Analyst.Script.Normalize
                              - _normalizedHigh*_actualLow + _actualHigh
                              *_normalizedLow)
                             /(_normalizedLow - _normalizedHigh);
+
+            // typically caused by a number that should not have been normalized
+            // (i.e. normalization or actual range is infinitly small.
+
+            if (Double.IsNaN(result))
+            {
+                return v;
+            } 
+
             return result;
         }
 
@@ -706,14 +715,22 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <summary>
         /// Normalize the specified value.
         /// </summary>
-        ///
         /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double Normalize(double v)
         {
-            return ((v - _actualLow)/(_actualHigh - _actualLow))
-                   *(_normalizedHigh - _normalizedLow)
-                   + _normalizedLow;
+            double result = ((v - _actualLow) / (_actualHigh - _actualLow))
+                * (_normalizedHigh - _normalizedLow)
+                + _normalizedLow;
+    
+            // typically caused by a number that should not have been normalized
+            // (i.e. normalization or actual range is infinitely small.
+
+            if( Double.IsNaN(result) ) {
+                return v;
+            }
+
+            return result;             
         }
 
         /// <inheritdoc/>

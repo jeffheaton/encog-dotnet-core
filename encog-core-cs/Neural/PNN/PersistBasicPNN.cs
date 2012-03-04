@@ -44,8 +44,6 @@ namespace Encog.Neural.Pnn
         ///
         public const String PropertyOutputMode = "outputMode";
 
-        #region EncogPersistor Members
-
         /// <summary>
         /// File version.
         /// </summary>
@@ -168,23 +166,24 @@ namespace Encog.Neural.Pnn
 
             xout.AddSubSection("SAMPLES");
 
-            foreach (IMLDataPair pair  in  pnn.Samples)
+            if (pnn.Samples != null)
             {
-                for (int i = 0; i < pair.Input.Count; i++)
+                foreach (IMLDataPair pair in pnn.Samples)
                 {
-                    xout.AddColumn(pair.Input[i]);
-                }
-                for (int i = 0; i < pair.Ideal.Count; i++)
-                {
-                    xout.AddColumn(pair.Ideal[i]);
-                }
-                xout.WriteLine();
-            }
+                    for (int i = 0; i < pair.Input.Count; i++)
+                    {
+                        xout.AddColumn(pair.Input[i]);
+                    }
 
+                    for (int i = 0; i < pair.Ideal.Count; i++)
+                    {
+                        xout.AddColumn(pair.Ideal[i]);
+                    }
+                    xout.WriteLine();
+                }                
+            }
             xout.Flush();
         }
-
-        #endregion
 
         /// <summary>
         /// Convert a kernel type to a string.
