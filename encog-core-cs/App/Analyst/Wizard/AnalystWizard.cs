@@ -854,7 +854,7 @@ namespace Encog.App.Analyst.Wizard
                 ScriptProperties.MlTrainType, outputColumns > 1 ? "rprop" : "svd");
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          Max);
+                                          MaxError);
         }
 
         /// <summary>

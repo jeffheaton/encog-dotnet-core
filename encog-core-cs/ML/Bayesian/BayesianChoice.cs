@@ -10,7 +10,7 @@ namespace Encog.ML.Bayesian
     /// discrete ranges.
     /// </summary>
     [Serializable]
-    public class BayesianChoice
+    public class BayesianChoice: IComparable<BayesianChoice>
     {
         /// <summary>
         /// The label for this choice.
@@ -107,6 +107,19 @@ namespace Encog.ML.Bayesian
                 result.Append(CSVFormat.EgFormat.Format(Max, 4));
             }
             return result.ToString();
+        }
+
+        /// <inheritdoc/>
+        public int CompareTo(BayesianChoice other)
+        {
+            if (_max < other.Max)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
         }
     }
 }

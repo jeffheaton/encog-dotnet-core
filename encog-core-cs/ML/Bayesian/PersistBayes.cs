@@ -166,7 +166,7 @@ namespace Encog.ML.Bayesian
                             {
                                 throw new BayesianError("Argument value " + arg + " is out of range for event " + parentEvent.ToString());
                             }
-                            str.Append(parentEvent.Choices[arg]);
+                            str.Append(parentEvent.GetChoice(arg));
                         }
                     }
                     str.Append(")=");

@@ -44,7 +44,7 @@ namespace Encog.ML.Bayesian
         /// <summary>
         /// The discrete choices that make up the state of this event.
         /// </summary>
-        private readonly IList<BayesianChoice> _choices = new List<BayesianChoice>();
+        private readonly ICollection<BayesianChoice> _choices = new SortedSet<BayesianChoice>();
 
         /// <summary>
         /// The label for this event.
@@ -158,7 +158,7 @@ namespace Encog.ML.Bayesian
         /// <summary>
         /// the choices
         /// </summary>
-        public IList<BayesianChoice> Choices
+        public ICollection<BayesianChoice> Choices
         {
             get { return _choices; }
         }
@@ -431,37 +431,44 @@ namespace Encog.ML.Bayesian
         /// <returns>The range that the value was mapped into.</returns>
         public int MatchChoiceToRange(double d)
         {
-            if (_choices.Count > 0 && _choices[0].IsIndex)
+            if (Choices.Count > 0 && Choices.First().IsIndex)
             {
-                return (int) d;
+                return (int)d;
             }
 
-            int index = 0;
-            foreach (BayesianChoice choice in _choices)
+            var index = 0;
+            foreach (var choice in Choices)
             {
-                if (d > choice.Min && d < choice.Max)
+                if (d < choice.Max)
                 {
                     return index;
                 }
 
-                if (Math.Abs(d - choice.Min) < EncogFramework.DefaultDoubleEqual)
-                    return index;
-
-                if (Math.Abs(d - choice.Max) < EncogFramework.DefaultDoubleEqual)
-                    return index;
-
                 index++;
             }
 
-            // out of range?
+            return Math.Min(index, Choices.Count - 1);
+        }
 
-            if (d < _minimumChoice)
-                return _minimumChoiceIndex;
-            if (d > _maximumChoice)
-                return _minimumChoiceIndex;
+        /// <summary>
+        /// Return the choice specified by the index.  This requires searching
+        /// through a list.  Do not call in performance critical areas.
+        /// </summary>
+        /// <param name="arg">The argument number.</param>
+        /// <returns>The bayesian choice found.</returns>
+        public BayesianChoice GetChoice(int arg)
+        {
+            int a = arg;
 
-            throw new BayesianError("Can't find a choice to map the value of " + d
-                                    + " to for event " + ToString());
+            foreach (BayesianChoice choice in _choices)
+            {
+                if (a == 0)
+                {
+                    return choice;
+                }
+                a--;
+            }
+            return null;
         }
     }
 }
