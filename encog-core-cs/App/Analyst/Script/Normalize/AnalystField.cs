@@ -409,11 +409,10 @@ namespace Encog.App.Analyst.Script.Normalize
                             /(_normalizedLow - _normalizedHigh);
 
             // typically caused by a number that should not have been normalized
-            // (i.e. normalization or actual range is infinitly small.
-
+            // (i.e. normalization or actual range is infinitely small.
             if (Double.IsNaN(result))
             {
-                return v;
+                return ((NormalizedHigh - NormalizedLow) / 2) + NormalizedLow;
             } 
 
             return result;
@@ -726,9 +725,12 @@ namespace Encog.App.Analyst.Script.Normalize
             // typically caused by a number that should not have been normalized
             // (i.e. normalization or actual range is infinitely small.
 
-            if( Double.IsNaN(result) ) {
-                return v;
-            }
+            // typically caused by a number that should not have been normalized
+            // (i.e. normalization or actual range is infinitely small.
+            if (Double.IsNaN(result))
+            {
+                return ((NormalizedHigh - NormalizedLow) / 2) + NormalizedLow;
+            } 
 
             return result;             
         }

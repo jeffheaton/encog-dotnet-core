@@ -256,6 +256,17 @@ namespace Encog.App.Analyst.Analyze
                                  Complete = Complete
                              };
 
+            // if max and min are the same, we are dealing with a zero-sized range,
+            // which will cause other issues.  This is caused by ever number in the
+            // column having exactly (or nearly exactly) the same value.  Provide a
+            // small range around that value so that every value in this column normalizes
+            // to the midpoint of the desired normalization range, typically 0 or 0.5.
+            if (Math.Abs(Max - Min) < EncogFramework.DefaultDoubleEqual)
+            {
+                result.Min = Min - 0.0001;
+                result.Max = Min + 0.0001;
+            }
+
             result.ClassMembers.Clear();
 
             if (result.Class)
