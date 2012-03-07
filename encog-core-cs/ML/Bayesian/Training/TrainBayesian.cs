@@ -238,6 +238,8 @@ namespace Encog.ML.Bayesian.Training
         /// <inheritdoc/>
         public override void Iteration()
         {
+            PreIteration();
+
             switch (_p)
             {
                 case Phase.Init:
@@ -256,6 +258,8 @@ namespace Encog.ML.Bayesian.Training
                     IterationFinish();
                     break;
             }
+
+            PostIteration();
         }
 
         /// <inheritdoc/>

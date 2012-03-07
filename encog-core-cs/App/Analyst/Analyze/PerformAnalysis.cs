@@ -232,12 +232,6 @@ namespace Encog.App.Analyst.Analyze
                     {
                         field.Class = false;
                     }
-
-                    if (field.Integer
-                        && (field.AnalyzedClassMembers.Count <= 2))
-                    {
-                        field.Class = false;
-                    }
                 }
             }
 

@@ -974,9 +974,36 @@ namespace Encog.ML.Bayesian
             {
                 BayesianEvent given = GetEvent(parsedGiven.Label);
                 Query.DefineEventType(given, EventType.Evidence);
+
             }
 
             Query.LocateEventTypes();
+
+            // set the values
+            foreach (ParsedEvent parsedGiven in prob.GivenEvents)
+            {
+                BayesianEvent e = GetEvent(parsedGiven.Label);
+                Query.SetEventValue(e, ParseInt(parsedGiven.Value));
+            }
+
+            Query.SetEventValue(be, ParseInt(prob.BaseEvents[0].Value));
+        }
+
+        private int ParseInt(String str)
+        {
+            if (str == null)
+            {
+                return 0;
+            }
+
+            try
+            {
+                return int.Parse(str);
+            }
+            catch (FormatException ex)
+            {
+                return 0;
+            }
         }
 
     }

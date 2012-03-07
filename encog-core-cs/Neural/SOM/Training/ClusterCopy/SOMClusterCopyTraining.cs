@@ -53,6 +53,11 @@ namespace Encog.Neural.Som.Training.Clustercopy
         {
             _network = network;
             Training = training;
+            if (_network.OutputCount < training.Count)
+            {
+                throw new NeuralNetworkError(
+                        "To use cluster copy training you must have at least as many output neurons as training elements.");
+            }	
         }
 
         /// <inheritdoc />

@@ -22,6 +22,7 @@
 //
 using Encog.ML;
 using Encog.ML.Data;
+using Encog.Neural.PNN;
 
 namespace Encog.Util.Validate
 {
@@ -66,13 +67,16 @@ namespace Encog.Util.Validate
                     + trainingInputCount + ". They must be the same.");
             }
 
-            if (trainingOutputCount > 0 && methodOutputCount != trainingOutputCount)
+            if( !(method is BasicPNN) )
             {
-                throw new EncogError(
-                    "The machine learning method has an output length of "
-                    + methodOutputCount
-                    + ", but the training data has "
-                    + trainingOutputCount + ". They must be the same.");
+                if (trainingOutputCount > 0 && methodOutputCount != trainingOutputCount)
+                {
+                    throw new EncogError(
+                        "The machine learning method has an output length of "
+                        + methodOutputCount
+                        + ", but the training data has "
+                        + trainingOutputCount + ". They must be the same.");
+                }
             }
         }
     }
