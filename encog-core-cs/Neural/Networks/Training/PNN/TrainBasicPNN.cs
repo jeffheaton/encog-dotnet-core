@@ -27,6 +27,7 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.PNN;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.PNN
 {
@@ -336,15 +337,13 @@ namespace Encog.Neural.Networks.Training.PNN
                     if (deriv)
                     {
                         output = ComputeDeriv(input, pair.Ideal);
-                        //output_4.GetData(0); //**FIX**?
                     }
                     else
                     {
                         output = _network.Compute(input);
-                        //output_4.GetData(0); **FIX**?
                     }
 
-                    xout[0] = output[0];
+                    EngineArray.ArrayCopy(output.Data,xout);
 
                     for (int i = 0; i < xout.Length; i++)
                     {

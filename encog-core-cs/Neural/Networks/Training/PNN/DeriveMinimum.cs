@@ -22,6 +22,7 @@
 //
 using System;
 using Encog.Util;
+using Encog.Util.Logging;
 
 namespace Encog.Neural.Networks.Training.PNN
 {
@@ -82,6 +83,9 @@ namespace Encog.Neural.Networks.Training.PNN
                 {
                     break;
                 }
+
+                EncogLogging.Log(EncogLogging.LevelInfo,
+                    "Beginning internal Iteration #" + iteration + ", currentError=" + fbest + ",target=" + maxError); 
 
                 // Check for convergence
                 double toler;

@@ -217,14 +217,22 @@ namespace Encog.App.Analyst.Commands
             Analyst.ReportTrainingBegin();
             int maxIteration = Analyst.MaxIteration;
 
-            do
+            if (train.ImplementationType == TrainingImplementationType.OnePass)
             {
                 train.Iteration();
                 Analyst.ReportTraining(train);
-            } while ((train.Error > targetError)
-                     && !Analyst.ShouldStopCommand()
-                     && !train.TrainingDone
-                     && ((maxIteration == -1) || (train.IterationNumber < maxIteration)));
+            }
+            else
+            {
+                do
+                {
+                    train.Iteration();
+                    Analyst.ReportTraining(train);
+                } while ((train.Error > targetError)
+                         && !Analyst.ShouldStopCommand()
+                         && !train.TrainingDone
+                         && ((maxIteration == -1) || (train.IterationNumber < maxIteration)));
+            }
             train.FinishTraining();
 
             Analyst.ReportTrainingEnd();
