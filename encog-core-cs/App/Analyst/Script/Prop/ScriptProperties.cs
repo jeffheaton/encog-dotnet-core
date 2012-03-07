@@ -194,6 +194,12 @@ namespace Encog.App.Analyst.Script.Prop
         public const String MlConfigArchitecture = "ML:CONFIG_architecture";
 
         /// <summary>
+        /// Property for "ML:CONFIG_query"
+        /// </summary>
+	    public const String MLConfigQuery = "ML:CONFIG_query";
+
+
+        /// <summary>
         /// Property for: "ML:TRAIN_type". 
         /// </summary>
         ///
@@ -622,6 +628,6 @@ namespace Encog.App.Analyst.Script.Prop
             result.Append(_data.ToString());
             result.Append("]");
             return result.ToString();
-        }
+        }        
     }
 }

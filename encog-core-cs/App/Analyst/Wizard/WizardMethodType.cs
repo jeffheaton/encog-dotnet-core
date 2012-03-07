@@ -57,6 +57,10 @@ namespace Encog.App.Analyst.Wizard
         /// SOM neural network.
         /// </summary>
         ///
-        SOM
+        SOM,
+        /// <summary>
+        /// Bayesian network.
+        /// </summary>
+        BayesianNetwork
     }
 }

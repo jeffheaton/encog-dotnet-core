@@ -75,7 +75,7 @@ namespace EncogCmd
                 return;
             }
 
-            wizard.TargetField = _cmd.PromptString("targetField", "");
+            wizard.TargetFieldName = _cmd.PromptString("targetField", "");
 
             String m = _cmd.PromptString("method", "ff").ToLower();
 

@@ -332,5 +332,15 @@ namespace Encog.App.Analyst.Script
             var s = new ScriptSave(this);
             s.Save(stream);
         }
+
+        /// <summary>
+        /// Find the specified analyst field, by name.
+        /// </summary>
+        /// <param name="name">The name of the analyst field.</param>
+        /// <returns>The analyst field.</returns>
+        public AnalystField FindAnalystField(string name)
+        {
+            return _normalize.NormalizedFields.FirstOrDefault(f => string.Compare(name, f.Name, true) == 0);
+        }
     }
 }
