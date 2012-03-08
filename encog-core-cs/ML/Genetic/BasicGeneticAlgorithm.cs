@@ -21,8 +21,8 @@
 // http://www.heatonresearch.com/copyright
 //
 using Encog.ML.Genetic.Genome;
-using Encog.Util.Concurrency;
 using Encog.MathUtil;
+using System.Threading.Tasks;
 
 namespace Encog.ML.Genetic
 {
@@ -54,7 +54,6 @@ namespace Encog.ML.Genetic
         {
             if (_first)
             {
-                EngineConcurrency.Instance.ThreadCount = ThreadCount;
                 Population.Claim(this);
                 _first = false;
             }
@@ -65,14 +64,11 @@ namespace Encog.ML.Genetic
                                  - offspringCount;
             var matingPopulationSize = (int) (Population.PopulationSize*MatingPopulation);
 
-            TaskGroup group = EngineConcurrency.Instance
-                .CreateTaskGroup();
-
             // mate and form the next generation
-            for (int i = 0; i < countToMate; i++)
+            Parallel.For(0, countToMate, i =>
             {
                 IGenome mother = Population.Genomes[i];
-                var fatherInt = (int)(ThreadSafeRandom.NextDouble()*matingPopulationSize);
+                var fatherInt = (int)(ThreadSafeRandom.NextDouble() * matingPopulationSize);
                 IGenome father = Population.Genomes[fatherInt];
                 IGenome child1 = Population.Genomes[offspringIndex];
                 IGenome child2 = Population.Genomes[offspringIndex + 1];
@@ -80,13 +76,10 @@ namespace Encog.ML.Genetic
                 var worker = new MateWorker(mother, father, child1,
                                             child2);
 
-                EngineConcurrency.Instance.ProcessTask(worker, group);
-                
+                worker.Run();                
 
                 offspringIndex += 2;
-            }
-
-            group.WaitForComplete();
+            });
 
             // sort the next generation
             Population.Sort();
