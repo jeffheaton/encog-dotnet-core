@@ -165,6 +165,7 @@ namespace Encog.Persist
 
                             currentSubSectionName = newSubSection;
                         }
+                        section.LargeArrays = largeArrays;
                         return section;
                     }
                     else if (line.Length < 1)
