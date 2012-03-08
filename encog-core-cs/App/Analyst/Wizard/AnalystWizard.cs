@@ -1345,6 +1345,7 @@ namespace Encog.App.Analyst.Wizard
         public void Wizard(FileInfo analyzeFile, bool b,
                            AnalystFileFormat format)
         {
+            _script.BasePath = analyzeFile.DirectoryName;
             _format = format;
             _script.Properties.SetProperty(
                 ScriptProperties.HeaderDatasourceSourceHeaders, b);

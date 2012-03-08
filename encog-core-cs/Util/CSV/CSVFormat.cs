@@ -162,6 +162,14 @@ namespace Encog.Util.CSV
         /// <returns>The number that has been parsed.</returns>
         public double Parse(String str)
         {
+            if (string.Compare(str, "?", true)==0)
+            {
+                return double.NaN;
+            }
+            if (string.Compare(str, "NaN", true) == 0)
+            {
+                return double.NaN;
+            }
             return double.Parse(str.Trim(), _numberFormat);
         }
 
