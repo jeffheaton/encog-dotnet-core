@@ -530,8 +530,7 @@ namespace Encog.App.Analyst.Wizard
                     // otherwise, just return the last regression field
                     foreach (AnalystField field in fields)
                     {
-                        DataField df = _script
-                            .FindDataField(TargetFieldName);
+                        DataField df = _script.FindDataField(field.Name);
                         if (!df.Class && (df.Real || df.Integer))
                         {
                             TargetField = field;
