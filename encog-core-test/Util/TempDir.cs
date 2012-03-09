@@ -45,5 +45,15 @@ namespace Encog.Util
         {
             return _tempdir.ToString();
         }
+
+        public void ClearContents()
+        {
+            var di = new DirectoryInfo(_tempdir.ToString());
+            var list = di.GetFiles();
+            foreach (var fileInfo in list)
+            {
+                fileInfo.Delete();
+            }
+        }
     }
 }

@@ -91,7 +91,7 @@ namespace Encog.Neural.PNN
             _inputCount = inputCount;
             _outputCount = outputCount;
             Trained = false;
-            Error = Double.MinValue;
+            Error = -1000;
             _confusion = null;
             Exclude = -1;
 

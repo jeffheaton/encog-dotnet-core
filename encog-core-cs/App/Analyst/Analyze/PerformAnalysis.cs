@@ -143,14 +143,10 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="target">The Encog analyst object to analyze.</param>
         public void Process(EncogAnalyst target)
         {
+            int count = 0;
             CSVFormat csvFormat = ConvertStringConst
                 .ConvertToCSVFormat(_format);
             var csv = new ReadCSV(_filename, _headers, csvFormat);
-
-            if (!csv.Next())
-            {
-                throw new AnalystError("Can't analyze file, it is empty.");
-            }
 
             // pass one, calculate the min/max
             while (csv.Next())
@@ -167,8 +163,13 @@ namespace Encog.App.Analyst.Analyze
                         _fields[i].Analyze1(csv.Get(i));
                     }
                 }
+                count++;
             }
 
+            if (count==0)
+            {
+                throw new AnalystError("Can't analyze file, it is empty.");
+            }
 
             if (_fields != null)
             {

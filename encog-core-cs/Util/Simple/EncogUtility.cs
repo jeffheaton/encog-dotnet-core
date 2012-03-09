@@ -123,6 +123,8 @@ namespace Encog.Util.Simple
                 buffer.Add(inputData, idealData);
             }
             buffer.EndLoad();
+            buffer.Close();
+            csv.Close();          
         }
 
         /// <summary>
@@ -487,7 +489,9 @@ namespace Encog.Util.Simple
         public static IMLDataSet LoadEGB2Memory(FileInfo filename)
         {
             var buffer = new BufferedMLDataSet(filename.ToString());
-            return buffer.LoadToMemory();
+            var result = buffer.LoadToMemory();
+            buffer.Close();
+            return result;
         }
 
         /// <summary>
