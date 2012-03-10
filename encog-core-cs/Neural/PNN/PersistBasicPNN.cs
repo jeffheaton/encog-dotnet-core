@@ -114,11 +114,9 @@ namespace Encog.Neural.Pnn
                                 CSVFormat.EgFormat.Parse(cols[index++]);
                         }
                         IMLData idealData = new BasicMLData(inputCount);
-                        for (int i = 0; i < outputCount; i++)
-                        {
-                            idealData[i] =
-                                CSVFormat.EgFormat.Parse(cols[index++]);
-                        }
+
+                        idealData[0] = CSVFormat.EgFormat.Parse(cols[index++]);
+                        
                         IMLDataPair pair = new BasicMLDataPair(inputData,
                                                               idealData);
                         samples.Add(pair);

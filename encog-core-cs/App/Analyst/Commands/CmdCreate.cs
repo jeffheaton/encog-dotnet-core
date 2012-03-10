@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using Encog.App.Analyst.Script.Prop;
 using Encog.ML;
+using Encog.ML.Bayesian;
 using Encog.ML.Data.Buffer;
 using Encog.ML.Factory;
 using Encog.Persist;
@@ -91,7 +92,13 @@ namespace Encog.App.Analyst.Commands
             egb.Close();
 
             var factory = new MLMethodFactory();
-            IMLMethod obj = factory.Create(type, arch, input, ideal);
+            var obj = factory.Create(type, arch, input, ideal);
+
+            if( obj is BayesianNetwork ) 
+            {
+                var query = Prop.GetPropertyString(ScriptProperties.MLConfigQuery);
+			    ((BayesianNetwork)obj).DefineClassificationStructure(query);			
+		    }
 
             EncogDirectoryPersistence.SaveObject(resourceFile, obj);
 

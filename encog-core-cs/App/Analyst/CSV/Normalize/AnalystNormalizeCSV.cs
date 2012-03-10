@@ -118,6 +118,11 @@ namespace Encog.App.Analyst.CSV.Normalize
                         d = stat.Normalize(d);
                         output[outputIndex++] = d;
                     }
+                    else if (stat.Action == NormalizationAction.PassThrough)
+                    {
+                        double d = csv.Format.Parse(str);
+                        output[outputIndex++] = d;
+                    } 
                     else
                     {
                         double[] d = stat.Encode(str.Trim());

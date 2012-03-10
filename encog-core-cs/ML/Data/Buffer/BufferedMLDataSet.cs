@@ -154,7 +154,10 @@ namespace Encog.ML.Data.Buffer
 
             egb.SetLocation((int) index);
             egb.Read(inputTarget);
-            egb.Read(idealTarget);
+            if (idealTarget != null)
+            {
+                egb.Read(idealTarget);
+            }
             pair.Significance = egb.Read();
         }
 

@@ -93,7 +93,7 @@ namespace Encog.Plugin.SystemPlugin
             {
                 return _svmFactory.Create(architecture, input, output);
             }
-            if (MLMethodFactory.TypeSVM.Equals(methodType))
+            if (MLMethodFactory.TypeSOM.Equals(methodType))
             {
                 return _somFactory.Create(architecture, input, output);
             }

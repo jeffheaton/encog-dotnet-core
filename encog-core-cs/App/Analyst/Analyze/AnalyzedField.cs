@@ -203,7 +203,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-                    double d = CSVFormat.EgFormat.Parse(str);
+                    double d = this._script.DetermineFormat().Parse(str);
                     _devTotal += Math.Pow((d - Mean), 2);
                 }
             }

@@ -433,7 +433,12 @@ namespace Encog.ML.Bayesian
         {
             if (Choices.Count > 0 && Choices.First().IsIndex)
             {
-                return (int)d;
+                var result = (int) d;              
+                if (result > Choices.Count)
+                {
+                    throw new BayesianError("The item id " + result + " is not valid for event " + this.ToString());
+                }
+                return result;
             }
 
             var index = 0;

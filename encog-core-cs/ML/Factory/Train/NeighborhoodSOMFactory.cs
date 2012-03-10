@@ -51,7 +51,7 @@ namespace Encog.ML.Factory.Train
         public IMLTrain Create(IMLMethod method,
                               IMLDataSet training, String argsStr)
         {
-            if (!(method is SupportVectorMachine))
+            if (!(method is SOMNetwork))
             {
                 throw new EncogError(
                     "Neighborhood training cannot be used on a method of type: "

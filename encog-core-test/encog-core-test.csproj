@@ -48,7 +48,6 @@
     <Compile Include="App\Analyst\AnalystTestingUtility.cs" />
     <Compile Include="App\Analyst\TestAnalystClassification.cs" />
     <Compile Include="App\Analyst\TestAnalystRegression.cs" />
-    <Compile Include="App\Analyst\TestAnalystWizard.cs" />
     <Compile Include="App\Analyst\TestEncogAnalyst.cs" />
     <Compile Include="App\CSV\TestBalanceCSV.cs" />
     <Compile Include="App\CSV\TestFilter.cs" />
