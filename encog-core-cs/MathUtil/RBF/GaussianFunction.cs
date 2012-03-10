@@ -30,9 +30,7 @@ namespace Encog.MathUtil.RBF
     /// <summary>
     /// Implements a radial function based on the gaussian function.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class GaussianFunction : BasicRBF
     {
         /// <summary>

@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if !SILVERLIGHT
 using System.Drawing;
 
 namespace Encog.Util.DownSample
@@ -97,5 +96,3 @@ namespace Encog.Util.DownSample
         void ProcessImage(Bitmap image);
     }
 }
-
-#endif

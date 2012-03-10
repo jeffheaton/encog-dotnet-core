@@ -33,9 +33,7 @@ namespace Encog.MathUtil.RBF
     /// Contributed to Encog By M.Dean and M.Fletcher
     /// University of Cambridge, Dept. of Physics, UK
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class MultiquadricFunction : BasicRBF
     {
         /// <summary>

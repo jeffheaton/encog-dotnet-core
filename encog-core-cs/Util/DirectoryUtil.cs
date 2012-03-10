@@ -77,7 +77,6 @@ namespace Encog.Util
         }
 
 
-#if !SILVERLIGHT
         /// <summary>
         /// Read the entire contents of a stream into a string.
         /// </summary>
@@ -106,9 +105,7 @@ namespace Encog.Util
                 throw new EncogError(e);
             }
         }
-#endif
 
-#if !SILVERLIGHT
         /// <summary>
         /// Read the entire contents of a stream into a string.
         /// </summary>
@@ -121,6 +118,5 @@ namespace Encog.Util
             stream.Close();
             return result;
         }
-#endif
     }
 }

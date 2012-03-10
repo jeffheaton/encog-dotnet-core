@@ -120,9 +120,7 @@ namespace Encog.Util.Banchmark
 
             EvalCpu();
             EvalMemory();
-#if !SILVERLIGHT
             EvalBinary();
-#endif
 
             var result = new StringBuilder();
 

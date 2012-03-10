@@ -20,8 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if !SILVERLIGHT
-
 using System;
 using Encog.ML.Data.Basic;
 using Encog.Neural;
@@ -179,5 +177,3 @@ namespace Encog.ML.Data.Image
         }
     }
 }
-
-#endif

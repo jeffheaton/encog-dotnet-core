@@ -39,9 +39,6 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util.CSV;
 using Encog.App.Analyst.CSV.Basic;
-#if !SILVERLIGHT
-
-#endif
 
 namespace Encog.Util.Simple
 {
@@ -322,7 +319,6 @@ namespace Encog.Util.Simple
             train.FinishTraining();
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Train using RPROP and display progress to a dialog box.
         /// </summary>
@@ -335,9 +331,7 @@ namespace Encog.Util.Simple
                                                          trainingSet) {ThreadCount = 0};
             TrainDialog(train, network, trainingSet);
         }
-#endif
 
-#if !SILVERLIGHT
         /// <summary>
         /// Train, using the specified training method, display progress to a dialog
         /// box.
@@ -351,7 +345,6 @@ namespace Encog.Util.Simple
             var dialog = new TrainingDialog {Train = train};
             dialog.ShowDialog();
         }
-#endif
 
         /// <summary>
         /// Train the network, to a specific error, send the output to the console.

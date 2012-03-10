@@ -32,9 +32,7 @@ namespace Encog.ML.Data.Specific
     /// Bipolar data contains two values.  True is stored as 1, and false
     /// is stored as -1.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class BiPolarMLData : IMLData
     {
         /// <summary>

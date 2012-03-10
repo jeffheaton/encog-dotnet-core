@@ -33,17 +33,13 @@ namespace Encog.ML.Data.Basic
     /// so large enough datasets could cause memory issues.  Many other dataset
     /// types extend this class.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class BasicMLDataSet : IMLDataSet, IEnumerable<IMLDataPair>
     {
         /// <summary>
         /// The enumerator for the basic neural data set.
         /// </summary>
-#if !SILVERLIGHT
         [Serializable]
-#endif
         public class BasicNeuralEnumerator : IEnumerator<IMLDataPair>
         {
             /// <summary>

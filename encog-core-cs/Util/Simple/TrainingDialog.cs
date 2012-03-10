@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if !SILVERLIGHT
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -133,5 +132,3 @@ namespace Encog.Util.Simple
         }
     }
 }
-
-#endif

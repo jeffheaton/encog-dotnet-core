@@ -30,9 +30,7 @@ namespace Encog.ML.Data.Basic
     /// Basic implementation of a data pair.  Holds both input and ideal data.
     /// If this is unsupervised training then ideal should be null.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class BasicMLDataPair : IMLDataPair
     {
         /// <summary>

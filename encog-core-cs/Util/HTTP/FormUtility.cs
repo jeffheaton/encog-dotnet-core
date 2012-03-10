@@ -24,11 +24,6 @@ using System;
 using System.IO;
 using System.Web;
 using Encog.MathUtil;
-#if SILVERLIGHT
-using System.Windows.Browser;
-#else
-
-#endif
 
 namespace Encog.Util.HTTP
 {

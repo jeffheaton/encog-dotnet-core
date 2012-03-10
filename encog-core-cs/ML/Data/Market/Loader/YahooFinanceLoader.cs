@@ -26,8 +26,6 @@
 // For information on Heaton Research trademarks, visit:
 // 
 // http://www.heatonresearch.com/copyright.html
-
-#if !SILVERLIGHT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -141,5 +139,3 @@ namespace Encog.ML.Data.Market.Loader
         #endregion
     }
 }
-
-#endif

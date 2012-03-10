@@ -46,7 +46,6 @@ namespace Encog.Util.File
         /// <returns>A stream.</returns>
         public static Stream CreateStream(String resource)
         {
-#if !SILVERLIGHT
             Stream result = null;
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -58,10 +57,6 @@ namespace Encog.Util.File
             }
 
             return result;
-#else 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            return assembly.GetManifestResourceStream(resource);
-#endif
         }
 
         /// <summary>

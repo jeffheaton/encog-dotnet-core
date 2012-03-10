@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if !SILVERLIGHT
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -66,5 +65,3 @@ namespace Encog.Util
         }
     }
 }
-
-#endif

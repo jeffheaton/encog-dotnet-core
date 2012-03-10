@@ -196,7 +196,6 @@
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
-    <Compile Include="ICloneable.cs" />
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
     <Compile Include="MathUtil\BoundNumbers.cs" />

@@ -35,9 +35,7 @@ namespace Encog.MathUtil.Matrices
     /// of the classes developed in this book will make use of the
     /// matrix classes in this package.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class Matrix
     {
         /// <summary>

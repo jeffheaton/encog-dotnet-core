@@ -27,9 +27,7 @@ namespace Encog.MathUtil.RBF
     /// <summary>
     /// Implements the basic features needed for an RBF.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public abstract class BasicRBF : IRadialBasisFunction
     {
         /// <summary>

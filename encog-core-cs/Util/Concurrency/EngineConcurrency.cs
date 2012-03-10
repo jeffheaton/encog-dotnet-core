@@ -124,9 +124,7 @@ namespace Encog.Util.Concurrency
         /// </summary>
         public void SetMaxThreadsToCoreCount()
         {
-#if !SILVERLIGHT
             MaxThreads = Environment.ProcessorCount;
-#endif
         }
 
         /// <summary>

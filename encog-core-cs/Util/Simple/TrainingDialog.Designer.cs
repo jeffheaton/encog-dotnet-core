@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if !SILVERLIGHT
 namespace Encog.Util.Simple
 {
     partial class TrainingDialog
@@ -152,4 +151,3 @@ namespace Encog.Util.Simple
         private System.Windows.Forms.TextBox trainingTime;
     }
 }
-#endif

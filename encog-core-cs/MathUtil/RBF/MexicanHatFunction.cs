@@ -34,9 +34,7 @@ namespace Encog.MathUtil.RBF
     /// 
     /// http://en.wikipedia.org/wiki/Mexican_Hat_Function
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     public class MexicanHatFunction : BasicRBF
     {
         /// <summary>
