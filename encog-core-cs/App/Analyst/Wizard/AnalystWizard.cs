@@ -1074,7 +1074,7 @@ namespace Encog.App.Analyst.Wizard
             _script.Properties.SetProperty(
                 ScriptProperties.MlTrainType, outputColumns > 1 ? "rprop" : "svd");
 
-            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+            _script.Properties.SetProperty(ScriptProperties.MlTrainTargetError,
                                            MaxError);
         }
 

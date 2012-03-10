@@ -652,14 +652,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
             }
 
-            if (_network.OutputMode == PNNOutputMode.Classification)
-            {
-                IMLData result = new BasicMLData(1);
-                result[0] = ibest;
-                return result;
-            }
-
-            return null;
+            return new BasicMLData(xout);
         }
 
 
