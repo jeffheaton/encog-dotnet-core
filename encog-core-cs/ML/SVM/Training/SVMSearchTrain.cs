@@ -37,7 +37,7 @@ namespace Encog.ML.SVM.Training
         /// The default starting number for C.
         /// </summary>
         ///
-        public const double DefaultConstBegin = -5;
+        public const double DefaultConstBegin = 1;
 
         /// <summary>
         /// The default ending number for C.
@@ -55,7 +55,7 @@ namespace Encog.ML.SVM.Training
         /// The default gamma begin.
         /// </summary>
         ///
-        public const double DefaultGammaBegin = -10;
+        public const double DefaultGammaBegin = 1;
 
         /// <summary>
         /// The default gamma end.
@@ -357,6 +357,26 @@ namespace Encog.ML.SVM.Training
             _currentGamma = _gammaBegin;
             _bestError = Double.PositiveInfinity;
             _isSetup = true;
+
+            if (_currentGamma <= 0 || _currentGamma < EncogFramework.DefaultDoubleEqual)
+            {
+                throw new EncogError("SVM search training cannot use a gamma value less than zero.");
+            }
+
+            if (_currentConst <= 0 || _currentConst < EncogFramework.DefaultDoubleEqual)
+            {
+                throw new EncogError("SVM search training cannot use a const value less than zero.");
+            }
+
+            if (_gammaStep < 0)
+            {
+                throw new EncogError("SVM search gamma step cannot use a const value less than zero.");
+            }
+
+            if (_constStep < 0)
+            {
+                throw new EncogError("SVM search const step cannot use a const value less than zero.");
+            }
         }
     }
 }
