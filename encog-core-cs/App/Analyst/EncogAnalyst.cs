@@ -35,6 +35,8 @@ using Encog.App.Analyst.Script.Task;
 using Encog.App.Analyst.Wizard;
 using Encog.App.Quant;
 using Encog.Bot;
+using Encog.ML;
+using Encog.ML.Bayesian;
 using Encog.ML.Train;
 using Encog.Util;
 using Encog.Util.Logging;
@@ -64,6 +66,11 @@ namespace Encog.App.Analyst
         /// </summary>
         ///
         public const int UpdateTime = 10;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMLMethod Method { get; set; }
 
         /// <summary>
         /// The commands.
@@ -297,6 +304,12 @@ namespace Encog.App.Analyst
                     result++;
                 }
             }
+
+            if( Method is BayesianNetwork ) 
+            {
+			    result++;
+		    }
+		
             return result;
         }
 

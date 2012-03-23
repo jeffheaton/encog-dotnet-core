@@ -85,7 +85,7 @@ namespace Encog.App.Analyst.Commands
 
             var method = (IMLMethod) EncogDirectoryPersistence
                                         .LoadObject(resourceFile);
-
+            Analyst.Method = method;
             bool headers = true;
 
             var eval = new AnalystEvaluateCSV {Script = Script};
