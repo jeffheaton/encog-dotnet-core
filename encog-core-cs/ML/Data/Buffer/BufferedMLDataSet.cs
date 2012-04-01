@@ -312,8 +312,6 @@ namespace Encog.ML.Data.Buffer
 
             egb.Close();
             loading = false;
-
-            Open();
         }
 
         /// <summary>
