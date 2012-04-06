@@ -84,6 +84,10 @@ namespace Encog.MathUtil
         /// <returns>The activations for the specified sets.</returns>
         public double[] Encode(int set)
         {
+            if (set < 0 || set > _matrix.Length)
+            {
+                throw new EncogError("Class out of range for equilateral: " + set);
+            }
             return _matrix[set];
         }
 
