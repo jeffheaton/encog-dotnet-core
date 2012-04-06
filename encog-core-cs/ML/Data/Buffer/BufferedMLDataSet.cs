@@ -51,30 +51,30 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// Error message for ADD.
         /// </summary>
-        public const String ERROR_ADD = "Add can only be used after calling beginLoad.";
+        public const String ErrorAdd = "Add can only be used after calling beginLoad.";
 
         /// <summary>
         /// True, if we are in the process of loading.
         /// </summary>
         [NonSerialized]
-            private bool loading;
+            private bool _loading;
 
         /// <summary>
         /// The file being used.
         /// </summary>
-        private readonly String file;
+        private readonly String _file;
 
         /// <summary>
         /// The EGB file we are working wtih.
         /// </summary>
         [NonSerialized]
-            private EncogEGBFile egb;
+            private EncogEGBFile _egb;
 
         /// <summary>
         /// Additional sets that were opened.
         /// </summary>
         [NonSerialized]
-            private readonly IList<BufferedMLDataSet> additional = new List<BufferedMLDataSet>();
+            private readonly IList<BufferedMLDataSet> _additional = new List<BufferedMLDataSet>();
 
         /// <summary>
         /// The owner.
@@ -89,11 +89,11 @@ namespace Encog.ML.Data.Buffer
         /// <param name="binaryFile">The file to read/write binary data to/from.</param>
         public BufferedMLDataSet(String binaryFile)
         {
-            file = binaryFile;
-            egb = new EncogEGBFile(binaryFile);
-            if (File.Exists(file))
+            _file = binaryFile;
+            _egb = new EncogEGBFile(binaryFile);
+            if (File.Exists(_file))
             {
-                egb.Open();
+                _egb.Open();
             }
         }
 
@@ -104,7 +104,7 @@ namespace Encog.ML.Data.Buffer
         /// <returns>The enumerator</returns>
         public IEnumerator<IMLDataPair> GetEnumerator()
         {
-            if (loading)
+            if (_loading)
             {
                 throw new IMLDataError(
                     "Can't create enumerator while loading, call EndLoad first.");
@@ -119,17 +119,17 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public void Open()
         {
-            egb.Open();
+            _egb.Open();
         }
 
         /// <summary>
         /// The record count.
         /// </summary>
-        public long Count
+        public int Count
         {
             get
             {
-                return egb == null ? 0 : egb.NumberOfRecords;
+                return _egb == null ? 0 : _egb.NumberOfRecords;
             }
         }
 
@@ -139,18 +139,18 @@ namespace Encog.ML.Data.Buffer
         /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
         /// the second, and so on.</param>
         /// <param name="pair">The data to read.</param>
-        public void GetRecord(long index, IMLDataPair pair)
+        public void GetRecord(int index, IMLDataPair pair)
         {
             double[] inputTarget = pair.InputArray;
             double[] idealTarget = pair.IdealArray;
 
-            egb.SetLocation((int) index);
-            egb.Read(inputTarget);
+            _egb.SetLocation(index);
+            _egb.Read(inputTarget);
             if (idealTarget != null)
             {
-                egb.Read(idealTarget);
+                _egb.Read(idealTarget);
             }
-            pair.Significance = egb.Read();
+            pair.Significance = _egb.Read();
         }
 
         /// <summary>
@@ -159,8 +159,8 @@ namespace Encog.ML.Data.Buffer
         /// <returns>An additional training set.</returns>
         public IMLDataSet OpenAdditional()
         {
-            var result = new BufferedMLDataSet(file) {_owner = this};
-            additional.Add(result);
+            var result = new BufferedMLDataSet(_file) {_owner = this};
+            _additional.Add(result);
             return result;
         }
 
@@ -170,13 +170,13 @@ namespace Encog.ML.Data.Buffer
         /// <param name="data1">The data to be added.</param>
         public void Add(IMLData data1)
         {
-            if (!loading)
+            if (!_loading)
             {
-                throw new IMLDataError(ERROR_ADD);
+                throw new IMLDataError(ErrorAdd);
             }
 
-            egb.Write(data1.Data);
-            egb.Write(1.0);
+            _egb.Write(data1.Data);
+            _egb.Write(1.0);
         }
 
 
@@ -187,14 +187,14 @@ namespace Encog.ML.Data.Buffer
         /// <param name="idealData">The ideal data.</param>
         public void Add(IMLData inputData, IMLData idealData)
         {
-            if (!loading)
+            if (!_loading)
             {
-                throw new IMLDataError(ERROR_ADD);
+                throw new IMLDataError(ErrorAdd);
             }
 
-            egb.Write(inputData.Data);
-            egb.Write(idealData.Data);
-            egb.Write(1.0);
+            _egb.Write(inputData.Data);
+            _egb.Write(idealData.Data);
+            _egb.Write(1.0);
         }
 
         /// <summary>
@@ -203,14 +203,14 @@ namespace Encog.ML.Data.Buffer
         /// <param name="pair">The pair to add.</param>
         public void Add(IMLDataPair pair)
         {
-            if (!loading)
+            if (!_loading)
             {
-                throw new IMLDataError(ERROR_ADD);
+                throw new IMLDataError(ErrorAdd);
             }
 
-            egb.Write(pair.Input.Data);
-            egb.Write(pair.Ideal.Data);
-            egb.Write(pair.Significance);
+            _egb.Write(pair.Input.Data);
+            _egb.Write(pair.Ideal.Data);
+            _egb.Write(pair.Significance);
         }
 
         /// <summary>
@@ -218,22 +218,22 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public void Close()
         {
-            Object[] obj = additional.ToArray();
+            Object[] obj = _additional.ToArray();
 
             foreach (var set in obj.Cast<BufferedMLDataSet>())
             {
                 set.Close();
             }
 
-            additional.Clear();
+            _additional.Clear();
 
             if (_owner != null)
             {
                 _owner.RemoveAdditional(this);
             }
 
-            egb.Close();
-            egb = null;
+            _egb.Close();
+            _egb = null;
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                return egb == null ? 0 : egb.IdealCount;
+                return _egb == null ? 0 : _egb.IdealCount;
             }
         }
 
@@ -254,7 +254,7 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                return egb == null ? 0 : egb.InputCount;
+                return _egb == null ? 0 : _egb.InputCount;
             }
         }
 
@@ -265,11 +265,11 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                if (egb == null)
+                if (_egb == null)
                 {
                     return false;
                 }
-                return egb.IdealCount > 0;
+                return _egb.IdealCount > 0;
             }
         }
 
@@ -282,7 +282,7 @@ namespace Encog.ML.Data.Buffer
         {
             lock (this)
             {
-                additional.Remove(child);
+                _additional.Remove(child);
             }
         }
 
@@ -294,8 +294,8 @@ namespace Encog.ML.Data.Buffer
         /// <param name="idealSize">The ideal size.</param>
         public void BeginLoad(int inputSize, int idealSize)
         {
-            egb.Create(inputSize, idealSize);
-            loading = true;
+            _egb.Create(inputSize, idealSize);
+            _loading = true;
         }
 
         /// <summary>
@@ -305,13 +305,13 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public void EndLoad()
         {
-            if (!loading)
+            if (!_loading)
             {
                 throw new BufferedDataError("Must call beginLoad, before endLoad.");
             }
 
-            egb.Close();
-            loading = false;
+            _egb.Close();
+            _loading = false;
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public String BinaryFile
         {
-            get { return file; }
+            get { return _file; }
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public EncogEGBFile EGB
         {
-            get { return egb; }
+            get { return _egb; }
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Encog.ML.Data.Buffer
             get
             {
                 IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                this.GetRecord(x, result);
+                GetRecord(x, result);
                 return result;
             }
         }

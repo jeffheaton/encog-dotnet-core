@@ -341,7 +341,7 @@ namespace Encog.ML.Data.Basic
         /// <summary>
         /// The number of records in this data set.
         /// </summary>
-        public long Count
+        public int Count
         {
             get { return _data.Count; }
         }
@@ -351,9 +351,9 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        public void GetRecord(long index, IMLDataPair pair)
+        public void GetRecord(int index, IMLDataPair pair)
         {
-            IMLDataPair source = _data[(int) index];
+            IMLDataPair source = _data[index];
             pair.InputArray = source.Input.Data;
             if (pair.IdealArray != null)
             {

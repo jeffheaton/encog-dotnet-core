@@ -52,7 +52,7 @@ namespace Encog.ML.Data
         /// <summary>
         /// The number of records in the data set.
         /// </summary>
-        long Count { get; }
+        int Count { get; }
 
         /// <summary>
         /// Return true if supervised.
@@ -103,7 +103,7 @@ namespace Encog.ML.Data
         /// </summary>
         /// <param name="index">The index to read.</param>
         /// <param name="pair">The pair to read into.</param>
-        void GetRecord(long index, IMLDataPair pair);
+        void GetRecord(int index, IMLDataPair pair);
 
         /// <summary>
         /// Open an additional instance of this dataset.
