@@ -194,8 +194,8 @@ namespace ConsoleExamples
 
         public void Pause()
         {
-            Console.Write("\n\nPress ENTER to continue.");
-            Console.ReadLine();
+            Console.Write("\n\nPress any key to continue...");
+            Console.ReadKey();
         }
         [STAThread]
         private static void Main(string[] args)

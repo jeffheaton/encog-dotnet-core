@@ -784,26 +784,18 @@ namespace Encog.Neural.Flat
 
         /// <summary>
         /// Perform a simple randomization of the weights of the neural network
-        /// between -1 and 1.
-        /// </summary>
-        ///
-        public void Randomize()
-        {
-            Randomize(1, -1);
-        }
-
-        /// <summary>
-        /// Perform a simple randomization of the weights of the neural network
         /// between the specified hi and lo.
         /// </summary>
         ///
         /// <param name="hi">The network high.</param>
         /// <param name="lo">The network low.</param>
-        public void Randomize(double hi, double lo)
+		/// <param name="seed">Pass in an integer here to seed the random number generator or leave null for default behavior (seed from system clock).</param>
+        public void Randomize(double hi = 1.0, double lo = -1.0, int? seed = null)
         {
+			var random = seed == null ? new Random() : new Random(seed.Value);
             for (int i = 0; i < _weights.Length; i++)
             {
-                _weights[i] = (ThreadSafeRandom.NextDouble()*(hi - lo)) + lo;
+                _weights[i] = (random.NextDouble()*(hi - lo)) + lo;
             }
         }
 
