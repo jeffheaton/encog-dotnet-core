@@ -92,13 +92,12 @@ namespace Encog.App.Analyst.CSV
             while (csv.Next() && !ShouldStop())
             {
                 UpdateStatus(true);
-
-                var row = new LoadedRow(csv, 1);
-
+     
                 double[] inputArray = AnalystNormalizeCSV.ExtractFields(
                     _analyst, _analystHeaders, csv, outputLength, true);
-                var input = new ClusterRow(inputArray, row);
-                _data.Add(input);
+
+                IMLData input = new BasicMLData(inputArray);
+                _data.Add(new BasicMLDataPair(input)); 
 
                 recordCount++;
             }
@@ -177,9 +176,8 @@ namespace Encog.App.Analyst.CSV
             {
                 foreach (IMLData item  in  cl.Data)
                 {
-                    var row = (ClusterRow) item;
-                    int clsIndex = row.Input.Count - 1;
-                    LoadedRow lr = row.Row;
+                    int clsIndex = item.Count;
+                    LoadedRow lr = new LoadedRow(Format,item.Data,1); 
                     lr.Data[clsIndex] = "" + clusterNum;
                     WriteRow(tw, lr);
                 }

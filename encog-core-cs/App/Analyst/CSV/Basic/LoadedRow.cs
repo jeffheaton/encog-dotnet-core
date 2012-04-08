@@ -63,6 +63,22 @@ namespace Encog.App.Analyst.CSV.Basic
             }
         }
 
+        /// <summary>
+        /// Construct a loaded row from an array.
+        /// </summary>
+        /// <param name="format">The format to store the numbers in.</param>
+        /// <param name="data">The data to use.</param>
+        /// <param name="extra">The extra positions to allocate.</param>
+        public LoadedRow(CSVFormat format, double[] data, int extra)
+        {
+            int count = data.Length;
+            _data = new String[count + extra];
+            for (int i = 0; i < count; i++)
+            {
+                _data[i] = format.Format(data[i], 5);
+            }
+        }
+
 
         /// <value>The row data.</value>
         public String[] Data

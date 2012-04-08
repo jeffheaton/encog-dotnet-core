@@ -93,7 +93,6 @@
     <Compile Include="App\Analyst\CSV\Basic\BasicFile.cs" />
     <Compile Include="App\Analyst\CSV\Basic\FileData.cs" />
     <Compile Include="App\Analyst\CSV\Basic\LoadedRow.cs" />
-    <Compile Include="App\Analyst\CSV\ClusterRow.cs" />
     <Compile Include="App\Analyst\CSV\Filter\ExcludedField.cs" />
     <Compile Include="App\Analyst\CSV\Filter\FilterCSV.cs" />
     <Compile Include="App\Analyst\CSV\Normalize\AnalystNormalizeCSV.cs" />
