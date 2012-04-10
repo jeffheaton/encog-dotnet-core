@@ -463,14 +463,13 @@ namespace Encog.Neural.Flat
             var errorCalculation = new ErrorCalculation();
 
             var actual = new double[_outputCount];
-            IMLDataPair pair = BasicMLDataPair.CreatePair(data.InputSize,
-                                                         data.IdealSize);
+			IMLDataPair pair;
 
             for (int i = 0; i < data.Count; i++)
             {
-                data.GetRecord(i, pair);
-                Compute(pair.InputArray, actual);
-                errorCalculation.UpdateError(actual, pair.IdealArray,pair.Significance);
+                pair = data[i];
+                Compute(pair.Input, actual);
+                errorCalculation.UpdateError(actual, pair.Ideal, pair.Significance);
             }
             return errorCalculation.Calculate();
         }
@@ -563,6 +562,34 @@ namespace Encog.Neural.Flat
             result._endTraining = _endTraining;
         }
 
+		public virtual void Compute(IMLData input, double[] output)
+		{
+			int sourceIndex = _layerOutput.Length
+							  - _layerCounts[_layerCounts.Length - 1];
+
+			input.CopyTo(_layerOutput, sourceIndex, _inputCount);
+
+			InnerCompute(output);
+		}
+
+		private void InnerCompute(double[] output)
+		{
+			for(int i = _layerIndex.Length - 1; i > 0; i--)
+			{
+				ComputeLayer(i);
+			}
+
+			// update context values
+			int offset = _contextTargetOffset[0];
+
+			for(int x = 0; x < _contextTargetSize[0]; x++)
+			{
+				_layerOutput[offset + x] = _layerOutput[x];
+			}
+
+			EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
+		}
+
         /// <summary>
         /// Calculate the output for the given input.
         /// </summary>
@@ -577,20 +604,7 @@ namespace Encog.Neural.Flat
             EngineArray.ArrayCopy(input, 0, _layerOutput, sourceIndex,
                                   _inputCount);
 
-            for (int i = _layerIndex.Length - 1; i > 0; i--)
-            {
-                ComputeLayer(i);
-            }
-
-            // update context values
-            int offset = _contextTargetOffset[0];
-
-            for (int x = 0; x < _contextTargetSize[0]; x++)
-            {
-                _layerOutput[offset + x] = _layerOutput[x];
-            }
-
-            EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
+			InnerCompute(output);
         }
 
         /// <summary>

@@ -85,7 +85,7 @@ namespace Encog.Examples.Benchmark
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false,
                                             output[0].Length));
             network.Structure.FinalizeStructure();
-            network.Reset();
+            network.Reset(23); // constant seed for repeatable testing
 
             IMLDataSet trainingSet = new BasicMLDataSet(input, output);
 

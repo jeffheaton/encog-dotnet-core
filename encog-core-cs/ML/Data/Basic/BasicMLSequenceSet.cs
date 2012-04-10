@@ -98,13 +98,13 @@ namespace Encog.ML.Data.Basic
                 if (inputCount > 0)
                 {
                     input = new BasicMLData(inputCount);
-                    EngineArray.ArrayCopy(pair.InputArray, input.Data);
+					pair.Input.CopyTo(input.Data, 0, input.Data.Length);
                 }
 
                 if (idealCount > 0)
                 {
                     ideal = new BasicMLData(idealCount);
-                    EngineArray.ArrayCopy(pair.IdealArray, ideal.Data);
+					pair.Ideal.CopyTo(ideal.Data, 0, ideal.Data.Length);
                 }
 
                 _currentSequence.Add(new BasicMLDataPair(input, ideal));
@@ -181,7 +181,7 @@ namespace Encog.ML.Data.Basic
                 }
             }
 
-            _sequences[sequenceIndex].GetRecord(recordIndex, pair);
+            pair = _sequences[sequenceIndex][recordIndex];
         }
 
         /// <inheritdoc/>

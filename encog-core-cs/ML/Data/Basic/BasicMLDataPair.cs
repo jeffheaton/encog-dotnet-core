@@ -155,26 +155,6 @@ namespace Encog.ML.Data.Basic
         }
 
         /// <summary>
-        /// The supervised ideal data.
-        /// </summary>
-        public double[] IdealArray
-        {
-            get {
-                return _ideal == null ? null : _ideal.Data;
-            }
-            set { _ideal.Data = value; }
-        }
-
-        /// <summary>
-        /// The input array.
-        /// </summary>
-        public double[] InputArray
-        {
-            get { return _input.Data; }
-            set { _input.Data = value; }
-        }
-
-        /// <summary>
         /// Returns true, if supervised.
         /// </summary>
         public bool Supervised

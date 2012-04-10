@@ -219,5 +219,11 @@ namespace Encog.ML.Data.Basic
         {
             return null;
         }
-    }
+
+		public void CopyTo(double[] target, int targetIndex, int count)
+		{
+			for(int i = 0; i < count; i++)
+				target[i + targetIndex] = _data[i].Real;
+		}
+	}
 }

@@ -132,8 +132,8 @@ namespace Encog.Util
                     IMLData inputData = new BasicMLData(XORInput[j]);
                     IMLData idealData = new BasicMLData(XORIdeal[j]);
                     IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
-                    inputData.Data[0] = inputData.Data[0] + RangeRandomizer.Randomize(-0.1, 0.1);
-                    inputData.Data[1] = inputData.Data[1] + RangeRandomizer.Randomize(-0.1, 0.1);
+                    inputData[0] = inputData[0] + RangeRandomizer.Randomize(-0.1, 0.1);
+                    inputData[1] = inputData[1] + RangeRandomizer.Randomize(-0.1, 0.1);
                     result.Add(pair);
                 }
             }

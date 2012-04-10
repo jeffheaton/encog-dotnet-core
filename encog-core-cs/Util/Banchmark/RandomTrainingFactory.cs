@@ -63,7 +63,7 @@ namespace Encog.Util.Banchmark
 
                 for (int j = 0; j < inputCount; j++)
                 {
-                    inputData.Data[j] = rand.Range(min, max);
+                    inputData[j] = rand.Range(min, max);
                 }
 
                 IMLData idealData = new BasicMLData(idealCount);

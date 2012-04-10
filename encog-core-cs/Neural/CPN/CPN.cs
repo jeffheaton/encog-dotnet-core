@@ -244,11 +244,11 @@ namespace Encog.Neural.CPN
                 if (winners[i]
                     && (Math.Abs(sumWinners) > EncogFramework.DefaultDoubleEqual))
                 {
-                    result.Data[i] /= sumWinners;
+                    result[i] /= sumWinners;
                 }
                 else
                 {
-                    result.Data[i] = 0;
+                    result[i] = 0;
                 }
             }
 

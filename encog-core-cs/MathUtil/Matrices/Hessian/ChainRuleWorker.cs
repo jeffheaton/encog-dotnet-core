@@ -97,11 +97,6 @@ namespace Encog.MathUtil.Matrices.Hessian
         private readonly int _low;
 
         /// <summary>
-        /// The pair to use for training.
-        /// </summary>
-        private readonly IMLDataPair _pair;
-
-        /// <summary>
         /// The total first derivatives.
         /// </summary>
         private readonly double[] _totDeriv;
@@ -160,7 +155,6 @@ namespace Encog.MathUtil.Matrices.Hessian
             _layerFeedCounts = _flat.LayerFeedCounts;
             _low = theLow;
             _high = theHigh;
-            _pair = BasicMLDataPair.CreatePair(_flat.InputCount, _flat.OutputCount);
         }
 
 
@@ -219,10 +213,10 @@ namespace Encog.MathUtil.Matrices.Hessian
             // Loop over every training element
             for (int i = _low; i <= _high; i++)
             {
-                _training.GetRecord(i, _pair);
+                var pair = _training[i];
 
                 EngineArray.Fill(_derivative, 0);
-                Process(_outputNeuron, _pair.InputArray, _pair.IdealArray);
+                Process(_outputNeuron, pair);
             }
         }
 
@@ -232,13 +226,11 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// Process one training set element.
         /// </summary>
         /// <param name="outputNeuron">The output neuron.</param>
-        /// <param name="input">The network input.</param>
-        /// <param name="ideal">The ideal values.</param>
-        private void Process(int outputNeuron, double[] input, double[] ideal)
+        private void Process(int outputNeuron, IMLDataPair pair)
         {
-            _flat.Compute(input, _actual);
+            _flat.Compute(pair.Input, _actual);
 
-            double e = ideal[outputNeuron] - _actual[outputNeuron];
+            double e = pair.Ideal[outputNeuron] - _actual[outputNeuron];
             _error += e*e;
 
             for (int i = 0; i < _actual.Length; i++)

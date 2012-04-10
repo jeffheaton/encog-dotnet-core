@@ -224,7 +224,7 @@ namespace Encog.App.Analyst.CSV
                                 {
                                     // classification
                                     ClassItem cls = field.DetermineClass(
-                                        outputIndex, output.Data);
+                                        outputIndex, output);
                                     outputIndex += field.ColumnsNeeded;
                                     if (cls == null)
                                     {

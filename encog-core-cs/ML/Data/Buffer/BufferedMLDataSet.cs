@@ -141,14 +141,11 @@ namespace Encog.ML.Data.Buffer
         /// <param name="pair">The data to read.</param>
         public void GetRecord(int index, IMLDataPair pair)
         {
-            double[] inputTarget = pair.InputArray;
-            double[] idealTarget = pair.IdealArray;
-
             _egb.SetLocation(index);
-            _egb.Read(inputTarget);
-            if (idealTarget != null)
+            _egb.Read(pair.Input);
+            if (pair.Ideal != null)
             {
-                _egb.Read(idealTarget);
+                _egb.Read(pair.Ideal);
             }
             pair.Significance = _egb.Read();
         }
@@ -175,7 +172,7 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(data1.Data);
+            _egb.Write(data1);
             _egb.Write(1.0);
         }
 
@@ -192,8 +189,8 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(inputData.Data);
-            _egb.Write(idealData.Data);
+            _egb.Write(inputData);
+            _egb.Write(idealData);
             _egb.Write(1.0);
         }
 
@@ -208,8 +205,8 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(pair.Input.Data);
-            _egb.Write(pair.Ideal.Data);
+            _egb.Write(pair.Input);
+            _egb.Write(pair.Ideal);
             _egb.Write(pair.Significance);
         }
 

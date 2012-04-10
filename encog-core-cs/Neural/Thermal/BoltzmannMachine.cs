@@ -168,7 +168,7 @@ namespace Encog.Neural.Thermal
         public override sealed IMLData Compute(IMLData input)
         {
             var result = new BiPolarMLData(input.Count);
-            EngineArray.ArrayCopy(input.Data, CurrentState.Data);
+			input.CopyTo(CurrentState.Data, 0, CurrentState.Count);
             Run();
             EngineArray.ArrayCopy(CurrentState.Data, result.Data);
             return result;

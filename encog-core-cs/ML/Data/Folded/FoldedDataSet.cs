@@ -227,16 +227,6 @@ namespace Encog.ML.Data.Folded
         }
 
         /// <summary>
-        /// Get a record.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <param name="pair">The record.</param>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            _underlying.GetRecord(CurrentFoldOffset + index, pair);
-        }
-
-        /// <summary>
         /// The record count.
         /// </summary>
         public int Count
@@ -293,9 +283,7 @@ namespace Encog.ML.Data.Folded
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                this.GetRecord(x, result);
-                return result;
+				return _underlying[CurrentFoldOffset + x];
             }
         }
     }

@@ -307,9 +307,9 @@ namespace Encog.Neural.Networks
         {
             try
             {
-                IMLData result = new BasicMLData(_structure.Flat.OutputCount);
-                _structure.Flat.Compute(input.Data, result.Data);
-                return result;
+				var output = new double[_structure.Flat.OutputCount];
+                _structure.Flat.Compute(input, output);
+				return new BasicMLData(output, false);
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -445,7 +445,7 @@ namespace Encog.Neural.Networks
         {
             var input2 = new BasicMLData(input);
             IMLData output2 = Compute(input2);
-            EngineArray.ArrayCopy(output2.Data, output);
+			output2.CopyTo(output, 0, output.Length);
         }
 
 
@@ -790,7 +790,7 @@ namespace Encog.Neural.Networks
         public int Winner(IMLData input)
         {
             IMLData output = Compute(input);
-            return EngineArray.MaxIndex(output.Data);
+            return EngineArray.MaxIndex(output);
         }
     }
 }

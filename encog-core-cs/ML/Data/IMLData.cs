@@ -38,11 +38,6 @@ namespace Encog.ML.Data
         double this[int x] { get; set; }
 
         /// <summary>
-        /// Allowes indexed access to the data.
-        /// </summary>
-        double[] Data { get; set; }
-
-        /// <summary>
         /// How many elements in this data structure.
         /// </summary>
         int Count { get; }
@@ -51,6 +46,10 @@ namespace Encog.ML.Data
         /// Clear the data to zero values.
         /// </summary>
         void Clear();
-        
+
+		/// <summary>
+		/// Copy the data to the target array. The starting index is implementation-specific.
+		/// </summary>
+		void CopyTo(double[] target, int targetIndex, int count);
     }
 }

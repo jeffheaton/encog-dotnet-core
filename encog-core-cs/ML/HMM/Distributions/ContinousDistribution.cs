@@ -161,12 +161,11 @@ namespace Encog.ML.HMM.Distributions
             i = 0;
             foreach (IMLDataPair o in co)
             {
-                double[] obs = o.Input.Data;
-                var omm = new double[obs.Length];
+				var omm = new double[o.Input.Count];
 
-                for (int j = 0; j < obs.Length; j++)
+				for(int j = 0; j < omm.Length; j++)
                 {
-                    omm[j] = obs[j] - mean[j];
+                    omm[j] = o.Input[j] - mean[j];
                 }
 
                 for (int r = 0; r < _dimension; r++)
@@ -201,8 +200,7 @@ namespace Encog.ML.HMM.Distributions
         /// <inheritdoc/>
         public double Probability(IMLDataPair o)
         {
-            double[] v = o.InputArray;
-            Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(v,
+            Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(o.Input,
                                                                         _mean));
             Matrix t = MatrixMath.Multiply(_covarianceInv, vmm);
             double expArg = MatrixMath.Multiply(MatrixMath.Transpose(vmm), t)

@@ -425,7 +425,8 @@ namespace Encog.Neural.Networks.Training.NM
                     _z = 0.0;
                     for (int i = 0; i < _nn; i++)
                     {
-                        _z = _z + Math.Pow(_y[i] - x, 2);
+						var inner = _y[i] - x;
+                        _z = _z + inner * inner;
                     }
 
                     if (_z <= _rq)

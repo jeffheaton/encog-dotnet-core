@@ -56,23 +56,23 @@ namespace Encog.ML.KMeans
             foreach (IMLCluster cluster in kmeans.Clusters)
             {
                 IMLDataSet ds = cluster.CreateDataSet();
-                IMLDataPair pair = BasicMLDataPair.CreatePair(ds.InputSize, ds.IdealSize);
-                ds.GetRecord(0, pair);
-                double t = pair.InputArray[0];
+                IMLDataPair pair;
+                pair = ds[0];
+                double t = pair.Input[0];
 
                 for (int j = 0; j < ds.Count; j++)
                 {
-                    ds.GetRecord(j, pair);
+                    pair = ds[j];
 
-                    for (j = 0; j < pair.InputArray.Length; j++)
+                    for (j = 0; j < pair.Input.Count; j++)
                     {
                         if (t > 10)
                         {
-                            Assert.IsTrue(pair.InputArray[j] > 10);
+                            Assert.IsTrue(pair.Input[j] > 10);
                         }
                         else
                         {
-                            Assert.IsTrue(pair.InputArray[j] < 10);
+                            Assert.IsTrue(pair.Input[j] < 10);
                         }
                     }
                 }

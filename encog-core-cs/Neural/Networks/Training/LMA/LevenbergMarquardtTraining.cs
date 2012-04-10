@@ -100,11 +100,6 @@ namespace Encog.Neural.Networks.Training.Lma
         private readonly BasicNetwork _network;
 
         /// <summary>
-        /// The training elements.
-        /// </summary>
-        private readonly IMLDataPair _pair;
-
-        /// <summary>
         /// The training set length.
         /// </summary>
         private readonly int _trainingLength;
@@ -166,7 +161,6 @@ namespace Encog.Neural.Networks.Training.Lma
                 _indexableTraining.InputSize);
             var ideal = new BasicMLData(
                 _indexableTraining.IdealSize);
-            _pair = new BasicMLDataPair(input, ideal);
 
             _hessian = h;
             _hessian.Init(network, training);
@@ -248,11 +242,12 @@ namespace Encog.Neural.Networks.Training.Lma
         {
             var result = new ErrorCalculation();
 
+			IMLDataPair pair;
             for (int i = 0; i < _trainingLength; i++)
             {
-                _indexableTraining.GetRecord(i, _pair);
-                IMLData actual = _network.Compute(_pair.Input);
-                result.UpdateError(actual.Data, _pair.Ideal.Data, _pair.Significance);
+                pair = _indexableTraining[i];
+                IMLData actual = _network.Compute(pair.Input);
+                result.UpdateError(actual, pair.Ideal, pair.Significance);
             }
 
             return result.CalculateSSE();

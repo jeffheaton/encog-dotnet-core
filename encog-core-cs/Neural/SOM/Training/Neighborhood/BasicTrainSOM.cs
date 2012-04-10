@@ -519,7 +519,7 @@ namespace Encog.Neural.SOM.Training.Neighborhood
             for (int i = 0; i < som.OutputCount; i++)
             {
                 Matrix optr = som.Weights.GetRow(i);
-                Matrix inputMatrix = Matrix.CreateRowMatrix(input.Data);
+                Matrix inputMatrix = Matrix.CreateRowMatrix(input);
                 result[i] = MatrixMath.DotProduct(inputMatrix, optr);
             }
 

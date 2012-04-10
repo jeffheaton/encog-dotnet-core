@@ -23,6 +23,7 @@
 using System;
 using Encog.MathUtil.Matrices.Decomposition;
 using Encog.MathUtil.Randomize;
+using Encog.ML.Data;
 #if logging
 
 #endif
@@ -101,7 +102,26 @@ namespace Encog.MathUtil.Matrices
             return new Matrix(d);
         }
 
-        /// <summary>
+		/// <summary>
+		/// Create a matrix that is a single row.
+		/// </summary>
+		/// <param name="input">A 1D array to make the matrix from.</param>
+		/// <returns>A matrix that contans a single row.</returns>
+		public static Matrix CreateRowMatrix(IMLData input)
+		{
+			var d = new double[1][];
+
+			d[0] = new double[input.Count];
+
+			for(int i = 0; i < input.Count; i++)
+			{
+				d[0][i] = input[i];
+			}
+
+			return new Matrix(d);
+		}
+
+		/// <summary>
         /// The matrix data, stored as a 2D array.
         /// </summary>
         private readonly double[][] matrix;

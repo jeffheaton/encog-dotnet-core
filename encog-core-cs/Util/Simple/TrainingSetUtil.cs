@@ -92,8 +92,8 @@ namespace Encog.Util.Simple
 
             foreach (IMLDataPair pair  in  training)
             {
-                EngineArray.ArrayCopy(pair.InputArray, a[index]);
-                EngineArray.ArrayCopy(pair.IdealArray, b[index]);
+				pair.Input.CopyTo(a[index], 0, a[index].Length);
+				pair.Ideal.CopyTo(b[index], 0, b[index].Length);
                 index++;
             }
 

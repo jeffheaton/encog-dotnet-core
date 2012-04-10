@@ -120,10 +120,7 @@ namespace Encog.ML.Data.Folded
         {
             if (HasNext())
             {
-                IMLDataPair pair = BasicMLDataPair.CreatePair(
-                    _owner.InputSize, _owner.IdealSize);
-                _owner.GetRecord(_currentIndex++, pair);
-                _currentPair = pair;
+				_currentPair = _owner[_currentIndex++];
                 return true;
             }
             _currentPair = null;

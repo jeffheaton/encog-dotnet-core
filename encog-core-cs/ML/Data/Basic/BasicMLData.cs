@@ -34,19 +34,20 @@ namespace Encog.ML.Data.Basic
     [Serializable]
     public class BasicMLData : IMLData
     {
-        private double[] _data;
+        protected double[] _data;
 
         /// <summary>
         /// Construct this object with the specified data. 
         /// </summary>
         /// <param name="d">The data to construct this object with.</param>
-        public BasicMLData(double[] d)
-            : this(d.Length)
+        public BasicMLData(double[] d, bool copy = true)
         {
-            for (int i = 0; i < d.Length; i++)
-            {
-                _data[i] = d[i];
-            }
+			if(copy)
+			{
+				_data = new double[d.Length];
+				EngineArray.ArrayCopy(d, _data);
+			}
+			else _data = d;
         }
 
 
@@ -76,7 +77,6 @@ namespace Encog.ML.Data.Basic
         public virtual double[] Data
         {
             get { return _data; }
-            set { _data = value; }
         }
 
         /// <summary>
@@ -178,5 +178,9 @@ namespace Encog.ML.Data.Basic
             return result;
         }
 
-    }
+		public void CopyTo(double[] target, int targetIndex, int count)
+		{
+			EngineArray.ArrayCopy(_data, 0, target, targetIndex, count);
+		}
+	}
 }

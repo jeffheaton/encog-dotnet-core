@@ -275,7 +275,7 @@ namespace Encog.Neural.PNN
         public int Classify(IMLData input)
         {
             IMLData output = Compute(input);
-            return EngineArray.MaxIndex(output.Data);
+            return EngineArray.MaxIndex(output);
         }
     }
 }

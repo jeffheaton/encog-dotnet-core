@@ -232,11 +232,11 @@ namespace Encog.Examples.Image
                 {
                     if (i == idx)
                     {
-                        ideal.Data[i] = 1;
+                        ideal[i] = 1;
                     }
                     else
                     {
-                        ideal.Data[i] = -1;
+                        ideal[i] = -1;
                     }
                 }
 

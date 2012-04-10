@@ -190,19 +190,19 @@ namespace Encog.Examples.Predict
                 IMLData input = new BasicMLData(WindowSize);
                 for (var i = 0; i < input.Count; i++)
                 {
-                    input.Data[i] = _normalizedSunspots[(year - WindowSize) + i];
+                    input[i] = _normalizedSunspots[(year - WindowSize) + i];
                 }
                 IMLData output = network.Compute(input);
-                double prediction = output.Data[0];
+                double prediction = output[0];
                 _closedLoopSunspots[year] = prediction;
 
                 // calculate "closed loop", based on predicted data
                 for (var i = 0; i < input.Count; i++)
                 {
-                    input.Data[i] = _closedLoopSunspots[(year - WindowSize) + i];
+                    input[i] = _closedLoopSunspots[(year - WindowSize) + i];
                 }
                 output = network.Compute(input);
-                double closedLoopPrediction = output.Data[0];
+                double closedLoopPrediction = output[0];
 
                 // display
                 Console.WriteLine((StartingYear + year)

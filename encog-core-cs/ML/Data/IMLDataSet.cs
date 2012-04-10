@@ -99,13 +99,6 @@ namespace Encog.ML.Data
         IEnumerator<IMLDataPair> GetEnumerator();
 
         /// <summary>
-        /// Get one record from the data set.
-        /// </summary>
-        /// <param name="index">The index to read.</param>
-        /// <param name="pair">The pair to read into.</param>
-        void GetRecord(int index, IMLDataPair pair);
-
-        /// <summary>
         /// Open an additional instance of this dataset.
         /// </summary>
         /// <returns>The new instance of this dataset.</returns>
