@@ -130,7 +130,7 @@ namespace Encog.ML.Data.Specific
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             var result = new StringBuilder();
             result.Append('[');

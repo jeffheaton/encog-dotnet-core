@@ -53,6 +53,6 @@ namespace Encog.ML.Data
 		/// Set the specified index.
 		/// </summary>
 		/// <param name="x">The index to access.</param>
-		double this[int x] { get; set; }
+		new double this[int x] { get; set; }
 	}
 }

@@ -445,7 +445,7 @@ namespace Encog.Neural.Networks
         {
             var input2 = new BasicMLData(input);
             IMLData output2 = Compute(input2);
-			output2.CopyTo(output, 0, output.Length);
+			output2.CopyTo(output, 0, output2.Count);
         }
 
 

@@ -194,7 +194,7 @@ namespace Encog.ML.Data.Basic
         #endregion
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             var builder = new StringBuilder("[");
             builder.Append(GetType().Name);

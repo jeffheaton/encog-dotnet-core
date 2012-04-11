@@ -248,7 +248,7 @@ namespace Encog.Neural.PNN
                 }
             }
 
-            return new BasicMLData(xout);
+            return new BasicMLData(xout, false);
         }
 
         /// <inheritdoc/>

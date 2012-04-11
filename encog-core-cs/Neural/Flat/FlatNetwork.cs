@@ -567,27 +567,9 @@ namespace Encog.Neural.Flat
 			int sourceIndex = _layerOutput.Length
 							  - _layerCounts[_layerCounts.Length - 1];
 
-			input.CopyTo(_layerOutput, sourceIndex, _inputCount);
+			input.CopyTo(_layerOutput, sourceIndex, input.Count);
 
 			InnerCompute(output);
-		}
-
-		private void InnerCompute(double[] output)
-		{
-			for(int i = _layerIndex.Length - 1; i > 0; i--)
-			{
-				ComputeLayer(i);
-			}
-
-			// update context values
-			int offset = _contextTargetOffset[0];
-
-			for(int x = 0; x < _contextTargetSize[0]; x++)
-			{
-				_layerOutput[offset + x] = _layerOutput[x];
-			}
-
-			EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
 		}
 
         /// <summary>
@@ -607,7 +589,25 @@ namespace Encog.Neural.Flat
 			InnerCompute(output);
         }
 
-        /// <summary>
+		private void InnerCompute(double[] output)
+		{
+			for(int i = _layerIndex.Length - 1; i > 0; i--)
+			{
+				ComputeLayer(i);
+			}
+
+			// update context values
+			int offset = _contextTargetOffset[0];
+
+			for(int x = 0; x < _contextTargetSize[0]; x++)
+			{
+				_layerOutput[offset + x] = _layerOutput[x];
+			}
+
+			EngineArray.ArrayCopy(_layerOutput, 0, output, 0, _outputCount);
+		}
+
+		/// <summary>
         /// Calculate a layer.
         /// </summary>
         ///

@@ -34,12 +34,12 @@ using Encog.Util;
 using Encog.Util.File;
 using Encog.Util.Simple;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace Encog.App.Analyst
 {
     public class AnalystTestingUtility
     {
-        public const bool ConsoleOutput = false;
         public const int MaxIterations = 100000;
         public const int MaxCycles = 10;
         private readonly FileInfo _analystFile;
@@ -79,16 +79,14 @@ namespace Encog.App.Analyst
             int cycles = 0;
             double e;
 
-            if (ConsoleOutput)
-            {
-                EncogAnalyst.AddAnalystListener(new ConsoleAnalystListener());
-            }
-
+            EncogAnalyst.AddAnalystListener(new ConsoleAnalystListener());
+            
             do
             {
                 EncogAnalyst.ExecuteTask("task-full");
                 e = CalculateError();
                 cycles++;
+				Debug.WriteLine(cycles + ": Error = " + e);
             } while (cycles <= MaxCycles && e > maxError);
 
             Assert.IsTrue(cycles <= MaxCycles, "Too many cycles to perform successful train.");

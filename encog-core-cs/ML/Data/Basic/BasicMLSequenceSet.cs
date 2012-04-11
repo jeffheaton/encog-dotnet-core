@@ -98,13 +98,13 @@ namespace Encog.ML.Data.Basic
                 if (inputCount > 0)
                 {
                     input = new BasicMLData(inputCount);
-					pair.Input.CopyTo(input.Data, 0, input.Data.Length);
+					pair.Input.CopyTo(input.Data, 0, pair.Input.Count);
                 }
 
                 if (idealCount > 0)
                 {
                     ideal = new BasicMLData(idealCount);
-					pair.Ideal.CopyTo(ideal.Data, 0, ideal.Data.Length);
+					pair.Ideal.CopyTo(ideal.Data, 0, pair.Ideal.Count);
                 }
 
                 _currentSequence.Add(new BasicMLDataPair(input, ideal));

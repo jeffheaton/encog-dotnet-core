@@ -79,11 +79,11 @@ namespace Encog.App.Analyst
         {
             if (total == 0)
             {
-                Console.Out.WriteLine(current + " : " + message);
+                Debug.WriteLine(current + " : " + message);
             }
             else
             {
-                Console.Out.WriteLine(current + "/" + total + " : " + message);
+                Debug.WriteLine(current + "/" + total + " : " + message);
             }
         }
 
@@ -94,14 +94,14 @@ namespace Encog.App.Analyst
         public void ReportCommandBegin(int total, int current,
                                        String name)
         {
-            Console.Out.WriteLine();
+            Debug.WriteLine("");
             if (total == 0)
             {
-                Console.Out.WriteLine("Beginning Task#" + current + " : " + name);
+                Debug.WriteLine("Beginning Task#" + current + " : " + name);
             }
             else
             {
-                Console.Out.WriteLine("Beginning Task#" + current + "/" + total
+                Debug.WriteLine("Beginning Task#" + current + "/" + total
                                       + " : " + name);
             }
             _currentTask = name;
@@ -120,12 +120,12 @@ namespace Encog.App.Analyst
 
             cancelStr = cancel ? "canceled" : "completed";
 
-            Console.Out.WriteLine("Task "
+            Debug.WriteLine("Task "
                                   + _currentTask
                                   + " "
                                   + cancelStr
-                                  + ", task elapsed time "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec)));
+                                  + ", task elapsed time: "
+                                  + _stopwatch.Elapsed.TotalSeconds + "s");
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Encog.App.Analyst
         ///
         public void ReportTraining(IMLTrain train)
         {
-            Console.Out.WriteLine("Iteration #"
+            Debug.WriteLine("Iteration #"
                                   + Format.FormatInteger(train.IterationNumber)
                                   + " Error:"
                                   + Format.FormatPercent(train.Error)

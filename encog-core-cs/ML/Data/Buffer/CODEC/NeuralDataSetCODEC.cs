@@ -87,8 +87,8 @@ namespace Encog.ML.Data.Buffer.CODEC
             else
             {
                 IMLDataPair pair = _enumerator.Current;
-				pair.Input.CopyTo(input, 0, input.Length);
-				pair.Ideal.CopyTo(ideal, 0, ideal.Length);
+				pair.Input.CopyTo(input, 0, pair.Input.Count);
+				pair.Ideal.CopyTo(ideal, 0, pair.Ideal.Count);
                 significance = pair.Significance;
                 return true;
             }
