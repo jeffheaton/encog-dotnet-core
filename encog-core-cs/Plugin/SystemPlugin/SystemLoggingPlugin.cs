@@ -191,8 +191,9 @@ namespace Encog.Plugin.SystemPlugin
                     {
                         Console.Out.WriteLine(line.ToString());
                     }
-                }
-            }
+				}
+				System.Diagnostics.Debug.WriteLine(line);
+			}
         }
 
         /// <inheritdoc/>

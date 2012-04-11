@@ -166,25 +166,6 @@ namespace Encog.ML.Data.Basic
         }
 
         /// <inheritdoc/>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            int recordIndex = index;
-            int sequenceIndex = 0;
-
-            while (_sequences[sequenceIndex].Count < recordIndex)
-            {
-                recordIndex -= _sequences[sequenceIndex].Count;
-                sequenceIndex++;
-                if (sequenceIndex > _sequences.Count)
-                {
-                    throw new MLDataError("Record out of range: " + index);
-                }
-            }
-
-            pair = _sequences[sequenceIndex][recordIndex];
-        }
-
-        /// <inheritdoc/>
         public int Count
         {
             get
@@ -262,9 +243,19 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                GetRecord(x, result);
-                return result;
+				int sequenceIndex = 0;
+				int recordIndex = x;
+				while(_sequences[sequenceIndex].Count < recordIndex)
+				{
+					recordIndex -= _sequences[sequenceIndex].Count;
+					sequenceIndex++;
+					if(sequenceIndex > _sequences.Count)
+					{
+						throw new MLDataError("Record out of range: " + x);
+					}
+				}
+
+				return _sequences[sequenceIndex][recordIndex];
             }
         }
 

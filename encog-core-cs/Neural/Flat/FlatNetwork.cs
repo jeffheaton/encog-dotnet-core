@@ -567,7 +567,7 @@ namespace Encog.Neural.Flat
 			int sourceIndex = _layerOutput.Length
 							  - _layerCounts[_layerCounts.Length - 1];
 
-			input.CopyTo(_layerOutput, sourceIndex, input.Count);
+			input.CopyTo(_layerOutput, sourceIndex, _inputCount);
 
 			InnerCompute(output);
 		}

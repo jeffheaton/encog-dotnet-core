@@ -165,10 +165,10 @@ namespace Encog.ML.Data.Basic
                 if (idealCount > 0)
                 {
                     ideal = new BasicMLData(idealCount);
-					ideal.CopyTo(ideal.Data, 0, ideal.Count);
+					pair.Ideal.CopyTo(ideal.Data, 0, pair.Ideal.Count);
                 }
 
-                Add(new BasicMLDataPair(input, ideal));
+                Add(new BasicMLDataPair(input, ideal)); // should we copy Significance here?
             }
         }
 
