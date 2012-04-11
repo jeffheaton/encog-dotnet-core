@@ -15,7 +15,7 @@ namespace Encog.ML.Data.Dynamic
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="handler">A method that takes as input the input/ideal sample and offset into that sample.</param>
+		/// <param name="handler">A method that takes as input the input/ideal sample and offset into that sample and returns the value at that location.</param>
 		/// <param name="count">Total number of elements in this dataset.</param>
 		/// <param name="size">The number of items per sample. eg. size of the input/output layer.</param>
 		public FuncMLDataProvider(Func<int, int, double> handler, int count, int size)

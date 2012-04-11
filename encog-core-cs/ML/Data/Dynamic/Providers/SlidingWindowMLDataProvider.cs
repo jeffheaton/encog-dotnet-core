@@ -33,11 +33,17 @@ namespace Encog.ML.Data.Dynamic
 			StepSize = stepSize;
 		}
 
+		/// <summary>
+		/// Number of chunks/windows/samplesets in this data.
+		/// </summary>
 		public int Count
 		{
 			get { return List.Count / StepSize; }
 		}
 
+		/// <summary>
+		/// Size of any one chunk/window/sampleset.
+		/// </summary>
 		public int Size
 		{
 			get { return WindowSize; }
@@ -53,6 +59,11 @@ namespace Encog.ML.Data.Dynamic
 		/// </summary>
 		public double DefaultPadValue { get; set; }
 
+		/// <summary>
+		/// Return data from the sliding window.
+		/// </summary>
+		/// <param name="chunk">The window we are on</param>
+		/// <param name="index">An index into the window</param>
 		public double this[int chunk, int index]
 		{
 			get 

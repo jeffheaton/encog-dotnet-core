@@ -35,6 +35,31 @@ namespace Encog.ML.Data.Dynamic
     [TestClass]
     public class TestDynamic
     {
+		[TestMethod]
+		public void SimpleSlidingParameters()
+		{
+			var list = new List<double>(20);
+			for(int i = 0; i < 20; i++) list.Add(i);
+
+			var input = new SlidingWindowMLDataProvider(list, 10, -5, 3);
+
+			Assert.AreEqual(6, input.Count);
+			Assert.AreEqual(0.0, input[0, 0]);
+			Assert.AreEqual(0.0, input[0, 5]);
+			Assert.AreEqual(4.0, input[0, 9]);
+			Assert.AreEqual(17.0, input[6, 4]);
+			Assert.AreEqual(0.0, input[6, 9]);
+
+			input.PadWithNearest = true;
+			Assert.AreEqual(19.0, input[6, 9]);
+			Assert.AreEqual(19.0, input[6, 90]); // no range error presently
+
+			input.DefaultPadValue = -1.0;
+			input.PadWithNearest = false;
+			Assert.AreEqual(-1.0, input[0, 0]);
+			Assert.AreEqual(-1.0, input[6, 9]);
+		}
+
         [TestMethod]
         public void BasicSlidingSineSignal()
         {
