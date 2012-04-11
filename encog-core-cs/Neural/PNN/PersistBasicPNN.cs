@@ -107,13 +107,13 @@ namespace Encog.Neural.Pnn
                         IList<String> cols = EncogFileSection
                             .SplitColumns(line);
                         int index = 0;
-                        IMLData inputData = new BasicMLData(inputCount);
+                        var inputData = new BasicMLData(inputCount);
                         for (int i = 0; i < inputCount; i++)
                         {
                             inputData[i] =
                                 CSVFormat.EgFormat.Parse(cols[index++]);
                         }
-                        IMLData idealData = new BasicMLData(inputCount);
+                        var idealData = new BasicMLData(inputCount);
 
                         idealData[0] = CSVFormat.EgFormat.Parse(cols[index++]);
                         

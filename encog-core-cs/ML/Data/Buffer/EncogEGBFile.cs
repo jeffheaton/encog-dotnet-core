@@ -487,25 +487,6 @@ namespace Encog.ML.Data.Buffer
         }
 
 		/// <summary>
-		/// Read into an IMLData 
-		/// </summary>
-		/// <param name="d">The array to read into.</param>
-		public void Read(IMLData d)
-		{
-			try
-			{
-				for(int i = 0; i < d.Count; i++)
-				{
-					d[i] = _binaryReader.ReadDouble();
-				}
-			}
-			catch(IOException ex)
-			{
-				throw new BufferedDataError(ex);
-			}
-		}
-
-		/// <summary>
         /// Read a single double. 
         /// </summary>
         /// <returns>The double read.</returns>

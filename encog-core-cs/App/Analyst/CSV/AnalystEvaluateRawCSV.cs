@@ -177,7 +177,7 @@ namespace Encog.App.Analyst.CSV
                                        + " inputs.");
             }
 
-            IMLData input = new BasicMLData(method.InputCount);
+            var input = new BasicMLData(method.InputCount);
 
             StreamWriter tw = AnalystPrepareOutputFile(outputFile);
 

@@ -32,7 +32,7 @@ namespace Encog.ML.Data.Basic
     /// data in an array.  
     /// </summary>
     [Serializable]
-    public class BasicMLData : IMLData
+	public class BasicMLData: IMLDataModifiable
     {
         protected double[] _data;
 
@@ -153,7 +153,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>The result.</returns>
         public IMLData Times(double d)
         {
-            IMLData result = new BasicMLData(Count);
+            var result = new BasicMLData(Count);
 
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] * d;
@@ -171,7 +171,7 @@ namespace Encog.ML.Data.Basic
             if (Count != o.Count)
                 throw new EncogError("Counts must match.");
 
-            IMLData result = new BasicMLData(Count);
+            var result = new BasicMLData(Count);
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] - o[i];
 

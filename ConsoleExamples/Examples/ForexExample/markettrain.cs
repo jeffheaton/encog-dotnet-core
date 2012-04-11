@@ -171,7 +171,7 @@ namespace Encog.Examples.ForexExample
             for (int year = EvaluateStart; year < EvaluateEnd; year++)
             {
                 // calculate based on actual data
-                IMLData input = new BasicMLData(WindowSize);
+                var input = new BasicMLData(WindowSize);
                 for (var i = 0; i < input.Count; i++)
                 {
                     input[i] = _normalizedSunspots[(year - WindowSize) + i];

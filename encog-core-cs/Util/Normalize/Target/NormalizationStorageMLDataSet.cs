@@ -36,7 +36,7 @@ namespace Encog.Util.Normalize.Target
         /// The data set to add to.
         /// </summary>
         [NonSerialized]
-        private readonly IMLDataSet _dataset;
+        private readonly IMLDataSetAddable _dataset;
 
         /// <summary>
         /// The ideal count.
@@ -65,7 +65,7 @@ namespace Encog.Util.Normalize.Target
         /// Construct a normalized neural storage class to hold data.
         /// </summary>
         /// <param name="dataset">The data set to store to. This uses an existing data set.</param>
-        public NormalizationStorageMLDataSet(IMLDataSet dataset)
+        public NormalizationStorageMLDataSet(IMLDataSetAddable dataset)
         {
             _dataset = dataset;
             _inputCount = _dataset.InputSize;

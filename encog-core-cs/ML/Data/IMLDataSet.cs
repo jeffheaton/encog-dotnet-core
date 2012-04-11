@@ -60,33 +60,6 @@ namespace Encog.ML.Data
         bool Supervised { get; }
 
         /// <summary>
-        /// Add a NeuralData object to the dataset. This is used with unsupervised
-        /// training, as no ideal output is provided. Note: not all implemenations
-        /// support the add methods. 
-        /// </summary>
-        /// <param name="data1">The data to add.</param>
-        void Add(IMLData data1);
-
-        /// <summary>
-        /// Add a set of input and ideal data to the dataset. This is used with
-        /// supervised training, as ideal output is provided. Note: not all
-        /// implementations support the add methods.
-        /// </summary>
-        /// <param name="inputData">Input data.</param>
-        /// <param name="idealData">Ideal data.</param>
-        void Add(IMLData inputData, IMLData idealData);
-
-        /// <summary>
-        /// Add a NeuralData object to the dataset. This is used with unsupervised
-        /// training, as no ideal output is provided. Note: not all implementations
-        /// support the add methods. 
-        /// </summary>
-        /// <param name="inputData">A NeuralDataPair object that contains both input and ideal
-        /// data.</param>
-        void Add(IMLDataPair inputData);
-
-
-        /// <summary>
         /// Close this datasource and release any resources obtained by it, including
         /// any iterators created. 
         /// </summary>
@@ -111,4 +84,34 @@ namespace Encog.ML.Data
         /// <returns></returns>
         IMLDataPair this[int x] { get; }
     }
+
+	public interface IMLDataSetAddable: IMLDataSet
+	{
+		/// <summary>
+		/// Add a NeuralData object to the dataset. This is used with unsupervised
+		/// training, as no ideal output is provided. Note: not all implemenations
+		/// support the add methods. 
+		/// </summary>
+		/// <param name="data1">The data to add.</param>
+		void Add(IMLData data1);
+
+		/// <summary>
+		/// Add a set of input and ideal data to the dataset. This is used with
+		/// supervised training, as ideal output is provided. Note: not all
+		/// implementations support the add methods.
+		/// </summary>
+		/// <param name="inputData">Input data.</param>
+		/// <param name="idealData">Ideal data.</param>
+		void Add(IMLData inputData, IMLData idealData);
+
+		/// <summary>
+		/// Add a NeuralData object to the dataset. This is used with unsupervised
+		/// training, as no ideal output is provided. Note: not all implementations
+		/// support the add methods. 
+		/// </summary>
+		/// <param name="inputData">A NeuralDataPair object that contains both input and ideal
+		/// data.</param>
+		void Add(IMLDataPair inputData);
+
+	}
 }

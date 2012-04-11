@@ -73,7 +73,7 @@ namespace Encog.ML.KMeans
         /// <returns>The dataset.</returns>
         public IMLDataSet CreateDataSet()
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
 
             foreach (IMLData dataItem in _data)
             {

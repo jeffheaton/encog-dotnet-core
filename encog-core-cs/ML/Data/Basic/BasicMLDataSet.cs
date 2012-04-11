@@ -34,7 +34,7 @@ namespace Encog.ML.Data.Basic
     /// types extend this class.
     /// </summary>
     [Serializable]
-    public class BasicMLDataSet : IMLDataSet, IEnumerable<IMLDataPair>
+    public class BasicMLDataSet : IMLDataSetAddable, IEnumerable<IMLDataPair>
     {
         /// <summary>
         /// The enumerator for the basic neural data set.

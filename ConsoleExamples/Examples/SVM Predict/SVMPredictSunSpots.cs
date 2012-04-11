@@ -169,7 +169,7 @@ public class PredictSunspotSVM {
 	    for(int year=EVALUATE_START;year<EVALUATE_END;year++)
 		{
 			// calculate based on actual data
-			IMLData input = new BasicMLData(WINDOW_SIZE);
+			var input = new BasicMLData(WINDOW_SIZE);
 			for(int i=0;i<input.Count;i++)
 			{
 			    input[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
@@ -218,7 +218,7 @@ public class PredictSunspotSVM {
         for (int year = EVALUATE_START; year < EVALUATE_END; year++)
         {
             // calculate based on actual data
-            IMLData input = new BasicMLData(WINDOW_SIZE);
+            var input = new BasicMLData(WINDOW_SIZE);
             for (int i = 0; i < input.Count; i++)
             {
                 input[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];

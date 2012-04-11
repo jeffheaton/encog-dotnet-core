@@ -59,14 +59,14 @@ namespace Encog.Util.Banchmark
             var result = new BasicMLDataSet();
             for (int i = 0; i < count; i++)
             {
-                IMLData inputData = new BasicMLData(inputCount);
+                var inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData[j] = rand.Range(min, max);
                 }
 
-                IMLData idealData = new BasicMLData(idealCount);
+                var idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {
@@ -88,7 +88,7 @@ namespace Encog.Util.Banchmark
         /// <param name="count">How much data to generate.</param>
         /// <param name="min">The low random value.</param>
         /// <param name="max">The high random value.</param>
-        public static void Generate(IMLDataSet training,
+        public static void Generate(IMLDataSetAddable training,
                                     long seed,
                                     int count,
                                     double min, double max)
@@ -101,14 +101,14 @@ namespace Encog.Util.Banchmark
 
             for (int i = 0; i < count; i++)
             {
-                IMLData inputData = new BasicMLData(inputCount);
+                var inputData = new BasicMLData(inputCount);
 
                 for (int j = 0; j < inputCount; j++)
                 {
                     inputData[j] = rand.Range(min, max);
                 }
 
-                IMLData idealData = new BasicMLData(idealCount);
+                var idealData = new BasicMLData(idealCount);
 
                 for (int j = 0; j < idealCount; j++)
                 {

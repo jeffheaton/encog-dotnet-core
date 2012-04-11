@@ -287,6 +287,7 @@
     <Compile Include="ML\Data\Buffer\CODEC\SQLCODEC.cs" />
     <Compile Include="ML\Data\Buffer\EncogEGBFile.cs" />
     <Compile Include="ML\Data\Buffer\MemoryDataLoader.cs" />
+    <Compile Include="ML\Data\Dynamic\Providers\FuncMLDataProvider.cs" />
     <Compile Include="ML\Data\Folded\FoldedDataSet.cs" />
     <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
     <Compile Include="ML\Data\Image\ImageMLData.cs" />
@@ -319,6 +320,9 @@
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
     <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />
+    <Compile Include="ML\Data\Dynamic\IDynamicMLDataProvider.cs" />
+    <Compile Include="ML\Data\Dynamic\Providers\SlidingWindowMLDataProvider.cs" />
+    <Compile Include="ML\Data\Dynamic\DynamicMLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TemporalDataDescription.cs" />
     <Compile Include="ML\Data\Temporal\TemporalError.cs" />
     <Compile Include="ML\Data\Temporal\TemporalMLDataSet.cs" />

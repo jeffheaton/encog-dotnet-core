@@ -365,7 +365,7 @@ namespace Encog.Util.Normalize
 
             InitForOutput();
 
-            IMLData result = new BasicNeuralData(outputCount);
+            var result = new BasicNeuralData(outputCount);
 
             // write the value
             int outputIndex = 0;

@@ -38,11 +38,6 @@ namespace Encog.ML.Data.Folded
     public class FoldedDataSet : IMLDataSet
     {
         /// <summary>
-        /// Error message: adds are not supported.
-        /// </summary>
-        public const String AddNotSupported = "Direct adds to the folded dataset are not supported.";
-
-        /// <summary>
         /// The underlying dataset.
         /// </summary>
         private readonly IMLDataSet _underlying;
@@ -174,41 +169,12 @@ namespace Encog.ML.Data.Folded
         #region MLDataSet Members
 
         /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="data1">Not used.</param>
-        public void Add(IMLData data1)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        /// <param name="idealData">Not used.</param>
-        public void Add(IMLData inputData, IMLData idealData)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        public void Add(IMLDataPair inputData)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
         /// Close the dataset.
         /// </summary>
         public void Close()
         {
             _underlying.Close();
         }
-
 
         /// <summary>
         /// The ideal size.

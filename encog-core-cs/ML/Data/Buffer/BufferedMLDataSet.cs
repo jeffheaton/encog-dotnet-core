@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Buffer
     /// format, and can be used with any Encog platform. Encog binary files are
     /// stored using "little endian" numbers.
     /// </summary>
-    public class BufferedMLDataSet : IMLDataSet
+    public class BufferedMLDataSet : IMLDataSetAddable
     {
         /// <summary>
         /// Error message for ADD.
@@ -131,23 +131,6 @@ namespace Encog.ML.Data.Buffer
             {
                 return _egb == null ? 0 : _egb.NumberOfRecords;
             }
-        }
-
-        /// <summary>
-        /// Read an individual record. 
-        /// </summary>
-        /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
-        /// the second, and so on.</param>
-        /// <param name="pair">The data to read.</param>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            _egb.SetLocation(index);
-            _egb.Read(pair.Input);
-            if (pair.Ideal != null)
-            {
-                _egb.Read(pair.Ideal);
-            }
-            pair.Significance = _egb.Read();
         }
 
         /// <summary>
@@ -371,8 +354,18 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                GetRecord(x, result);
+				var input = new double[InputSize];
+				var ideal = new double[IdealSize];
+
+				_egb.SetLocation(x);
+				_egb.Read(input);
+				_egb.Read(ideal);
+
+				var inputData = new BasicMLData(input, false);
+				var idealData = new BasicMLData(ideal, false);
+
+				var result = new BasicMLDataPair(inputData, idealData);
+				result.Significance = _egb.Read();
                 return result;
             }
         }

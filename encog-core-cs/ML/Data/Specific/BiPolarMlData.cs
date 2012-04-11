@@ -33,7 +33,7 @@ namespace Encog.ML.Data.Specific
     /// is stored as -1.
     /// </summary>
     [Serializable]
-    public class BiPolarMLData : IMLData
+	public class BiPolarMLData: IMLDataModifiable
     {
         /// <summary>
         /// The data held by this object.

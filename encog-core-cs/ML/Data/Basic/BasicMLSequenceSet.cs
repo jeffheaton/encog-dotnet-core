@@ -39,7 +39,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         private readonly IList<IMLDataSet> _sequences = new List<IMLDataSet>();
 
-        private IMLDataSet _currentSequence;
+        private IMLDataSetAddable _currentSequence;
 
         /// <summary>
         /// Default constructor.

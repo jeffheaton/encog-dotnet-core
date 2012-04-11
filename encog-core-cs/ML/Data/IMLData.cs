@@ -31,25 +31,28 @@ namespace Encog.ML.Data
     public interface IMLData : ICloneable, ICentroidFactory<IMLData>
     {
         /// <summary>
-        /// Get or set the specified index.
+        /// Get the specified index.
         /// </summary>
         /// <param name="x">The index to access.</param>
-        /// <returns></returns>
-        double this[int x] { get; set; }
+        double this[int x] { get; }
 
         /// <summary>
         /// How many elements in this data structure.
         /// </summary>
         int Count { get; }
 
-        /// <summary>
-        /// Clear the data to zero values.
-        /// </summary>
-        void Clear();
-
 		/// <summary>
 		/// Copy the data to the target array. The starting index is implementation-specific.
 		/// </summary>
 		void CopyTo(double[] target, int targetIndex, int count);
     }
+
+	public interface IMLDataModifiable: IMLData
+	{
+		/// <summary>
+		/// Set the specified index.
+		/// </summary>
+		/// <param name="x">The index to access.</param>
+		double this[int x] { get; set; }
+	}
 }

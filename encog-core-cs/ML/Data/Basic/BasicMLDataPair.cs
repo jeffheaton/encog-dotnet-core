@@ -137,9 +137,9 @@ namespace Encog.ML.Data.Basic
         /// <param name="inputSize">The size of the input data.</param>
         /// <param name="idealSize">The size of the ideal data.</param>
         /// <returns>A new neural data pair object.</returns>
-        public static IMLDataPair CreatePair(int inputSize, int idealSize)
+		public static BasicMLDataPair CreatePair(int inputSize, int idealSize)
         {
-            IMLDataPair result;
+			BasicMLDataPair result;
 
             if (idealSize > 0)
             {
