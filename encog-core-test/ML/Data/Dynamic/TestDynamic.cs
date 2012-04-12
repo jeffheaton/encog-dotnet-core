@@ -60,7 +60,26 @@ namespace Encog.ML.Data.Dynamic
 			Assert.AreEqual(-1.0, input[6, 9]);
 		}
 
-        [TestMethod]
+		[TestMethod]
+		public void SimpleSlidingGap()
+		{
+			var list = new List<double>(20);
+			for(int i = 0; i < 20; i++) list.Add(i);
+
+			var input = new SlidingWindowMLDataProvider(list, 12, 0, 1, 4);
+
+			Assert.AreEqual(20, input.Count);
+			Assert.AreEqual(3, input.Size);
+			Assert.AreEqual(0.0, input[0, 0]);
+			Assert.AreEqual(4.0, input[0, 1]);
+			Assert.AreEqual(8.0, input[0, 2]);
+			Assert.AreEqual(1.0, input[1, 0]);
+
+			Assert.AreEqual(19.0, input[19, 0]);
+			Assert.AreEqual(0.0, input[19, 1]);
+		}
+
+		[TestMethod]
         public void BasicSlidingSineSignal()
         {
 			var listSize = 30 * 200;
