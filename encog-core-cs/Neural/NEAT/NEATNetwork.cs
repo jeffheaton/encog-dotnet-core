@@ -27,6 +27,7 @@ using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Util.Simple;
+using Encog.Util;
 
 namespace Encog.Neural.NEAT
 {
@@ -247,7 +248,7 @@ namespace Encog.Neural.NEAT
         /// <returns>The output from this synapse.</returns>
         public virtual IMLData Compute(IMLData input)
         {
-            IMLData result = new BasicMLData(_outputCount);
+			var result = new double[_outputCount];
 
             if (_neurons.Count == 0)
             {
@@ -268,7 +269,7 @@ namespace Encog.Neural.NEAT
                 int outputIndex = 0;
                 int index = 0;
 
-                result.Clear();
+				EngineArray.Fill(result, 0);
 
                 // populate the input neurons
                 while (_neurons[index].NeuronType == NEATNeuronType.Input)
@@ -309,10 +310,10 @@ namespace Encog.Neural.NEAT
                 }
             }
 
-            _outputActivationFunction.ActivationFunction(result.Data, 0,
-                                                        result.Count);
+            _outputActivationFunction.ActivationFunction(result, 0,
+                                                        result.Length);
 
-            return result;
+            return new BasicMLData(result, false);
         }
 
         /// <summary>

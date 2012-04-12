@@ -81,7 +81,7 @@ namespace Encog.Neural.Thermal
             }
 
             // Create a row matrix from the input, convert boolean to bipolar
-            Matrix m2 = Matrix.CreateRowMatrix(pattern.Data);
+            Matrix m2 = Matrix.CreateRowMatrix(pattern);
             // Transpose the matrix and multiply by the original input matrix
             Matrix m1 = MatrixMath.Transpose(m2);
             Matrix m3 = MatrixMath.Multiply(m1, m2);
@@ -110,7 +110,7 @@ namespace Encog.Neural.Thermal
         public override sealed IMLData Compute(IMLData input)
         {
             var result = new BiPolarMLData(input.Count);
-            EngineArray.ArrayCopy(input.Data, CurrentState.Data);
+			input.CopyTo(CurrentState.Data, 0, input.Count);
             Run();
 
             for (int i = 0; i < CurrentState.Count; i++)

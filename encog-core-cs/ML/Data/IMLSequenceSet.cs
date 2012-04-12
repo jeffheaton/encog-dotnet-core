@@ -37,7 +37,7 @@ namespace Encog.ML.Data
     /// machine learning methods are unaffected by them. Sequence sets are typically
     /// used with Hidden Markov Models (HMM)'s.
     /// </summary>
-    public interface IMLSequenceSet : IMLDataSet
+    public interface IMLSequenceSet : IMLDataSetAddable
     {
         /// <summary>
         /// Cause a "break" in the data by creating a the beginning of a new sequence.

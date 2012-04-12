@@ -514,12 +514,12 @@ namespace Encog.Neural.SOM.Training.Neighborhood
         /// <returns>The output.</returns>
         private static IMLData Compute(SOMNetwork som, IMLData input)
         {
-            IMLData result = new BasicMLData(som.OutputCount);
+            var result = new BasicMLData(som.OutputCount);
 
             for (int i = 0; i < som.OutputCount; i++)
             {
                 Matrix optr = som.Weights.GetRow(i);
-                Matrix inputMatrix = Matrix.CreateRowMatrix(input.Data);
+                Matrix inputMatrix = Matrix.CreateRowMatrix(input);
                 result[i] = MatrixMath.DotProduct(inputMatrix, optr);
             }
 

@@ -404,7 +404,7 @@ namespace Encog.Util.Simple
             foreach (IMLDataPair pair in data)
             {
                 IMLData actual = method.Compute(pair.Input);
-                errorCalculation.UpdateError(actual.Data, pair.Ideal.Data,pair.Significance);
+                errorCalculation.UpdateError(actual, pair.Ideal,pair.Significance);
             }
             return errorCalculation.Calculate();
         }

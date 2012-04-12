@@ -145,9 +145,9 @@ namespace Encog.Neural.RBF
         /// <inheritdoc/>
         public IMLData Compute(IMLData input)
         {
-            IMLData output = new BasicMLData(OutputCount);
-            _flat.Compute(input.Data, output.Data);
-            return output;
+			var output = new double[OutputCount];
+            _flat.Compute(input, output);
+			return new BasicMLData(output, false);
         }
 
 

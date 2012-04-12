@@ -124,7 +124,7 @@ namespace Encog.MathUtil.Matrices.Hessian
             {
                 var networkOutput = network.Compute(pair.Input);
 
-                double e = pair.Ideal.Data[outputNeuron] - networkOutput[outputNeuron];
+                double e = pair.Ideal[outputNeuron] - networkOutput[outputNeuron];
                 error.UpdateError(networkOutput[outputNeuron], pair.Ideal[outputNeuron]);
 
                 int currentWeight = 0;
@@ -206,7 +206,7 @@ namespace Encog.MathUtil.Matrices.Hessian
                 network.Flat.Weights[weight] = newWeight;
 
                 IMLData output = network.Compute(inputData);
-                points[i] = output.Data[outputNeuron];
+                points[i] = output[outputNeuron];
             }
 
             double result = _dCoeff.Select((t, i) => t*points[i]).Sum();

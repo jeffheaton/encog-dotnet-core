@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Data;
 
 namespace Encog.Neural.Error
 {
@@ -34,7 +35,7 @@ namespace Encog.Neural.Error
     public class LinearErrorFunction : IErrorFunction
     {
         /// <inheritdoc/>
-        public void CalculateError(double[] ideal, double[] actual, double[] error)
+        public void CalculateError(IMLData ideal, double[] actual, double[] error)
         {
             for (int i = 0; i < actual.Length; i++)
             {

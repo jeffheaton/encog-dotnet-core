@@ -23,7 +23,6 @@
 using System;
 using ConsoleExamples.Examples;
 using Encog.Engine.Network.Activation;
-using Encog.Mathutil.Randomize;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Anneal;

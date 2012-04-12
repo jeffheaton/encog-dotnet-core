@@ -22,6 +22,7 @@
 //
 using System;
 using System.Collections.Generic;
+using Encog.ML.Data;
 
 namespace Encog.Util
 {
@@ -306,7 +307,26 @@ namespace Encog.Util
 
             return result;
         }
-        /// <summary>
+
+		/// <summary>
+		/// Get the index of the largest value in the array.
+		/// </summary>
+		/// <param name="data">The array to search.</param>
+		/// <returns>The index.</returns>
+		public static int IndexOfLargest(IMLData data)
+		{
+			int result = -1;
+
+			for(int i = 0; i < data.Count; i++)
+			{
+				if(result == -1 || data[i] > data[result])
+					result = i;
+			}
+
+			return result;
+		}
+		
+		/// <summary>
         /// Get the min value in an array.
         /// </summary>
         /// <param name="weights">The array to search.</param>
@@ -388,7 +408,25 @@ namespace Encog.Util
             return result;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Get the index of the max value in the array.
+		/// </summary>
+		/// <param name="data">The array to search.</param>
+		/// <returns>The result</returns>
+		public static int MaxIndex(IMLData data)
+		{
+			int result = -1;
+			for(int i = 0; i < data.Count; i++)
+			{
+				if(result == -1 || data[i] > data[result])
+				{
+					result = i;
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
         /// Get the index of the max value in the array.
         /// </summary>
         /// <param name="data">The array to search.</param>
@@ -472,7 +510,23 @@ namespace Encog.Util
             return result;
         }
 
-        internal static int[][] AllocateInt2D(int rows, int cols)
+		/// <summary>
+		/// Subtract two vectors.
+		/// </summary>
+		/// <param name="a">First vector.</param>
+		/// <param name="b">Second vector.</param>
+		/// <returns>Result vector.</returns>
+		public static double[] Subtract(IMLData a, double[] b)
+		{
+			double[] result = new double[a.Count];
+			for(int i = 0; i < a.Count; i++)
+			{
+				result[i] = a[i] - b[i];
+			}
+			return result;
+		}
+
+		internal static int[][] AllocateInt2D(int rows, int cols)
         {
             var result = new int[rows][];
             for (int i = 0; i < rows; i++)
@@ -530,5 +584,22 @@ namespace Encog.Util
             }
             return Math.Sqrt(sum);
         }
-    }
+
+		/// <summary>
+		/// Calculate the Euclidean distance between two vectors.
+		/// </summary>
+		/// <param name="p1">The first vector.</param>
+		/// <param name="p2">The second vector.</param>
+		/// <returns>The distance.</returns>
+		public static double EuclideanDistance(IMLData p1, double[] p2)
+		{
+			double sum = 0;
+			for(int i = 0; i < p1.Count; i++)
+			{
+				double d = p1[i] - p2[i];
+				sum += d * d;
+			}
+			return Math.Sqrt(sum);
+		}
+	}
 }

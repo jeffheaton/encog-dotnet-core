@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Buffer
         /// <summary>
         /// The current record.
         /// </summary>
-        private IMLDataPair _currentRecord;
+		private IMLDataPair _currentRecord;
 
         /// <summary>
         /// Construct the buffered enumerator. This is where the file is actually
@@ -100,9 +100,7 @@ namespace Encog.ML.Data.Buffer
                 if (_current >= _data.Count)
                     return false;
 
-                _currentRecord = BasicMLDataPair.CreatePair(_data
-                                                               .InputSize, _data.IdealSize);
-                _data.GetRecord(_current++, _currentRecord);
+				_currentRecord = _data[_current++];
                 return true;
             }
             catch (EndOfStreamException)
@@ -112,12 +110,11 @@ namespace Encog.ML.Data.Buffer
         }
 
         /// <summary>
-        /// Not implemented.
+        /// Resets the enumeration.
         /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         public void Reset()
         {
-            throw new NotImplementedException();
+			_current = 0;
         }
 
         #endregion

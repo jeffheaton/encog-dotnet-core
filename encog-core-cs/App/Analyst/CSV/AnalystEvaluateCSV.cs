@@ -198,9 +198,9 @@ namespace Encog.App.Analyst.CSV
                         && !(method is IMLRegression))
                     {
                         // classification only?
-                        output = new BasicMLData(1);
-                        output[0] =
-                            ((IMLClassification) method).Classify(input);
+						var tmp = new BasicMLData(1);
+                        tmp[0] = ((IMLClassification) method).Classify(input);
+						output = tmp;
                     }
                     else
                     {
@@ -224,7 +224,7 @@ namespace Encog.App.Analyst.CSV
                                 {
                                     // classification
                                     ClassItem cls = field.DetermineClass(
-                                        outputIndex, output.Data);
+                                        outputIndex, output);
                                     outputIndex += field.ColumnsNeeded;
                                     if (cls == null)
                                     {

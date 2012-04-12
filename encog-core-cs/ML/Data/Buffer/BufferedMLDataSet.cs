@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Buffer
     /// format, and can be used with any Encog platform. Encog binary files are
     /// stored using "little endian" numbers.
     /// </summary>
-    public class BufferedMLDataSet : IMLDataSet
+    public class BufferedMLDataSet : IMLDataSetAddable
     {
         /// <summary>
         /// Error message for ADD.
@@ -134,26 +134,6 @@ namespace Encog.ML.Data.Buffer
         }
 
         /// <summary>
-        /// Read an individual record. 
-        /// </summary>
-        /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
-        /// the second, and so on.</param>
-        /// <param name="pair">The data to read.</param>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            double[] inputTarget = pair.InputArray;
-            double[] idealTarget = pair.IdealArray;
-
-            _egb.SetLocation(index);
-            _egb.Read(inputTarget);
-            if (idealTarget != null)
-            {
-                _egb.Read(idealTarget);
-            }
-            pair.Significance = _egb.Read();
-        }
-
-        /// <summary>
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>
@@ -175,7 +155,7 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(data1.Data);
+            _egb.Write(data1);
             _egb.Write(1.0);
         }
 
@@ -192,8 +172,8 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(inputData.Data);
-            _egb.Write(idealData.Data);
+            _egb.Write(inputData);
+            _egb.Write(idealData);
             _egb.Write(1.0);
         }
 
@@ -208,8 +188,8 @@ namespace Encog.ML.Data.Buffer
                 throw new IMLDataError(ErrorAdd);
             }
 
-            _egb.Write(pair.Input.Data);
-            _egb.Write(pair.Ideal.Data);
+            _egb.Write(pair.Input);
+            _egb.Write(pair.Ideal);
             _egb.Write(pair.Significance);
         }
 
@@ -374,8 +354,18 @@ namespace Encog.ML.Data.Buffer
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                GetRecord(x, result);
+				var input = new double[InputSize];
+				var ideal = new double[IdealSize];
+
+				_egb.SetLocation(x);
+				_egb.Read(input);
+				_egb.Read(ideal);
+
+				var inputData = new BasicMLData(input, false);
+				var idealData = new BasicMLData(ideal, false);
+
+				var result = new BasicMLDataPair(inputData, idealData);
+				result.Significance = _egb.Read();
                 return result;
             }
         }

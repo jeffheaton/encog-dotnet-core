@@ -203,7 +203,7 @@ namespace Encog.Examples.Adaline
 
         public static IMLDataSet GenerateTraining()
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             for (int i = 0; i < DIGITS.Length; i++)
             {
                 var ideal = new BasicMLData(DIGITS.Length);
@@ -228,7 +228,7 @@ namespace Encog.Examples.Adaline
 
         public static IMLData Image2data(String[] image)
         {
-            IMLData result = new BasicMLData(CHAR_WIDTH*CHAR_HEIGHT);
+            var result = new BasicMLData(CHAR_WIDTH*CHAR_HEIGHT);
 
             for (int row = 0; row < CHAR_HEIGHT; row++)
             {
