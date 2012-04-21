@@ -208,7 +208,7 @@ namespace Encog.Neural.CPN
         /// <returns>The output.</returns>
         public IMLData ComputeInstar(IMLData input)
         {
-            IMLData result = new BasicMLData(_instarCount);
+            var result = new BasicMLData(_instarCount);
             int w, i;
             int winner = 0;
             var winners = new bool[_instarCount];
@@ -244,11 +244,11 @@ namespace Encog.Neural.CPN
                 if (winners[i]
                     && (Math.Abs(sumWinners) > EncogFramework.DefaultDoubleEqual))
                 {
-                    result.Data[i] /= sumWinners;
+                    result[i] /= sumWinners;
                 }
                 else
                 {
-                    result.Data[i] = 0;
+                    result[i] = 0;
                 }
             }
 
@@ -263,7 +263,7 @@ namespace Encog.Neural.CPN
         /// <returns>The output.</returns>
         public IMLData ComputeOutstar(IMLData input)
         {
-            IMLData result = new BasicMLData(_outstarCount);
+            var result = new BasicMLData(_outstarCount);
 
             for (int i = 0; i < _outstarCount; i++)
             {

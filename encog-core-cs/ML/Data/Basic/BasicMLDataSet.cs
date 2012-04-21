@@ -34,7 +34,7 @@ namespace Encog.ML.Data.Basic
     /// types extend this class.
     /// </summary>
     [Serializable]
-    public class BasicMLDataSet : IMLDataSet, IEnumerable<IMLDataPair>
+    public class BasicMLDataSet : IMLDataSetAddable, IEnumerable<IMLDataPair>
     {
         /// <summary>
         /// The enumerator for the basic neural data set.
@@ -159,16 +159,16 @@ namespace Encog.ML.Data.Basic
                 if (inputCount > 0)
                 {
                     input = new BasicMLData(inputCount);
-                    EngineArray.ArrayCopy(pair.InputArray, input.Data);
+					pair.Input.CopyTo(input.Data, 0, pair.Input.Count);
                 }
 
                 if (idealCount > 0)
                 {
                     ideal = new BasicMLData(idealCount);
-                    EngineArray.ArrayCopy(pair.IdealArray, ideal.Data);
+					pair.Ideal.CopyTo(ideal.Data, 0, pair.Ideal.Count);
                 }
 
-                Add(new BasicMLDataPair(input, ideal));
+                Add(new BasicMLDataPair(input, ideal)); // should we copy Significance here?
             }
         }
 
@@ -222,14 +222,14 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                if (_data == null || _data.Count == 0)
+                if (_data == null || _data.Count <= 0)
                 {
                     return 0;
                 }
 
                 IMLDataPair pair = _data[0];
 
-                if (pair.IdealArray == null)
+                if (pair.Ideal == null)
                 {
                     return 0;
                 }
@@ -344,21 +344,6 @@ namespace Encog.ML.Data.Basic
         public int Count
         {
             get { return _data.Count; }
-        }
-
-        /// <summary>
-        /// Get one record from the data set.
-        /// </summary>
-        /// <param name="index">The index to read.</param>
-        /// <param name="pair">The pair to read into.</param>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            IMLDataPair source = _data[index];
-            pair.InputArray = source.Input.Data;
-            if (pair.IdealArray != null)
-            {
-                pair.IdealArray = source.Ideal.Data;
-            }
         }
 
         /// <summary>

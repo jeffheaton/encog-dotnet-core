@@ -91,7 +91,8 @@ namespace Encog.MathUtil.RBF
 
             for (int i = 0; i < center.Length; i++)
             {
-                value += Math.Pow(x[i] - center[i], 2) + (width*width);
+				var inner = x[i] - center[i];
+                value += inner * inner + (width*width);
             }
             return Peak/BoundMath.Sqrt(value);
         }

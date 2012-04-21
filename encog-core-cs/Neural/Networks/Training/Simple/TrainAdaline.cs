@@ -134,7 +134,7 @@ namespace Encog.Neural.Networks.Training.Simple
                     }
                 }
 
-                errorCalculation.UpdateError(output.Data, pair.Ideal.Data, pair.Significance);
+                errorCalculation.UpdateError(output, pair.Ideal, pair.Significance);
             }
 
             // set the global error

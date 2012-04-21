@@ -49,16 +49,6 @@ namespace Encog.ML.Data
         bool Supervised { get; }
 
         /// <summary>
-        /// The supervised ideal data.
-        /// </summary>
-        double[] IdealArray { get; set; }
-
-        /// <summary>
-        /// The input array.
-        /// </summary>
-        double[] InputArray { get; set; }
-
-        /// <summary>
         /// The significance of this training element.
         /// </summary>
         double Significance { get; set; }

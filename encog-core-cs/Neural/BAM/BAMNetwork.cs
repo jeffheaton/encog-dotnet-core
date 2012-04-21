@@ -223,7 +223,7 @@ namespace Encog.Neural.BAM
         /// <param name="output">The output pattern.</param>
         /// <returns>True if the network has become stable.</returns>
         private static bool PropagateLayer(Matrix matrix, IMLData input,
-                                    IMLData output)
+									IMLDataModifiable output)
         {
             int i;
 

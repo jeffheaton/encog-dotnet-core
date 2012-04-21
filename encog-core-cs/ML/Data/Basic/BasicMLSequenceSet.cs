@@ -39,7 +39,7 @@ namespace Encog.ML.Data.Basic
         /// </summary>
         private readonly IList<IMLDataSet> _sequences = new List<IMLDataSet>();
 
-        private IMLDataSet _currentSequence;
+        private IMLDataSetAddable _currentSequence;
 
         /// <summary>
         /// Default constructor.
@@ -98,13 +98,13 @@ namespace Encog.ML.Data.Basic
                 if (inputCount > 0)
                 {
                     input = new BasicMLData(inputCount);
-                    EngineArray.ArrayCopy(pair.InputArray, input.Data);
+					pair.Input.CopyTo(input.Data, 0, pair.Input.Count);
                 }
 
                 if (idealCount > 0)
                 {
                     ideal = new BasicMLData(idealCount);
-                    EngineArray.ArrayCopy(pair.IdealArray, ideal.Data);
+					pair.Ideal.CopyTo(ideal.Data, 0, pair.Ideal.Count);
                 }
 
                 _currentSequence.Add(new BasicMLDataPair(input, ideal));
@@ -163,25 +163,6 @@ namespace Encog.ML.Data.Basic
                 }
                 return _sequences[0].IdealSize;
             }
-        }
-
-        /// <inheritdoc/>
-        public void GetRecord(int index, IMLDataPair pair)
-        {
-            int recordIndex = index;
-            int sequenceIndex = 0;
-
-            while (_sequences[sequenceIndex].Count < recordIndex)
-            {
-                recordIndex -= _sequences[sequenceIndex].Count;
-                sequenceIndex++;
-                if (sequenceIndex > _sequences.Count)
-                {
-                    throw new MLDataError("Record out of range: " + index);
-                }
-            }
-
-            _sequences[sequenceIndex].GetRecord(recordIndex, pair);
         }
 
         /// <inheritdoc/>
@@ -262,9 +243,19 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                GetRecord(x, result);
-                return result;
+				int sequenceIndex = 0;
+				int recordIndex = x;
+				while(_sequences[sequenceIndex].Count < recordIndex)
+				{
+					recordIndex -= _sequences[sequenceIndex].Count;
+					sequenceIndex++;
+					if(sequenceIndex > _sequences.Count)
+					{
+						throw new MLDataError("Record out of range: " + x);
+					}
+				}
+
+				return _sequences[sequenceIndex][recordIndex];
             }
         }
 

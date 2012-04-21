@@ -169,20 +169,20 @@ public class PredictSunspotSVM {
 	    for(int year=EVALUATE_START;year<EVALUATE_END;year++)
 		{
 			// calculate based on actual data
-			IMLData input = new BasicMLData(WINDOW_SIZE);
+			var input = new BasicMLData(WINDOW_SIZE);
 			for(int i=0;i<input.Count;i++)
 			{
-			    input.Data[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
+			    input[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
 			    //input.setData(i,this.normalizedSunspots[(year-WINDOW_SIZE)+i]);
 			}
             IMLData output = network.Compute(input);
-            double prediction = output.Data[0];
+            double prediction = output[0];
             closedLoopSunspots[year] = prediction;
 
             // calculate "closed loop", based on predicted data
             for (int i = 0; i < input.Count; i++)
             {
-                input.Data[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
+                input[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
                 //input.setData(i,this.closedLoopSunspots[(year-WINDOW_SIZE)+i]);
             }
             output = network.Compute(input);
@@ -218,23 +218,23 @@ public class PredictSunspotSVM {
         for (int year = EVALUATE_START; year < EVALUATE_END; year++)
         {
             // calculate based on actual data
-            IMLData input = new BasicMLData(WINDOW_SIZE);
+            var input = new BasicMLData(WINDOW_SIZE);
             for (int i = 0; i < input.Count; i++)
             {
-                input.Data[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
+                input[i] = normalizedSunspots[(year - WINDOW_SIZE) + i];
                 //input.setData(i,this.normalizedSunspots[(year-WINDOW_SIZE)+i]);
             }
             IMLData output = network.Compute(input);
             IMLData output2 = network2.Compute(input);
 
-            double prediction = output.Data[0];
-            double prediction2 = output2.Data[0];
+            double prediction = output[0];
+            double prediction2 = output2[0];
             closedLoopSunspots[year] = prediction;
 
             // calculate "closed loop", based on predicted data
             for (int i = 0; i < input.Count; i++)
             {
-                input.Data[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
+                input[i] = closedLoopSunspots[(year - WINDOW_SIZE) + i];
                 //input.setData(i,this.closedLoopSunspots[(year-WINDOW_SIZE)+i]);
             }
             output = network.Compute(input);

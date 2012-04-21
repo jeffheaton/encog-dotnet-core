@@ -226,17 +226,17 @@ namespace Encog.Examples.Image
 
             foreach (ImagePair pair in imageList)
             {
-                IMLData ideal = new BasicMLData(outputCount);
+                var ideal = new BasicMLData(outputCount);
                 int idx = pair.Identity;
                 for (int i = 0; i < outputCount; i++)
                 {
                     if (i == idx)
                     {
-                        ideal.Data[i] = 1;
+                        ideal[i] = 1;
                     }
                     else
                     {
-                        ideal.Data[i] = -1;
+                        ideal[i] = -1;
                     }
                 }
 

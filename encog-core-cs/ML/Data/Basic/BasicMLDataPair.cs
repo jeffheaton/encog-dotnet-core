@@ -137,9 +137,9 @@ namespace Encog.ML.Data.Basic
         /// <param name="inputSize">The size of the input data.</param>
         /// <param name="idealSize">The size of the ideal data.</param>
         /// <returns>A new neural data pair object.</returns>
-        public static IMLDataPair CreatePair(int inputSize, int idealSize)
+		public static BasicMLDataPair CreatePair(int inputSize, int idealSize)
         {
-            IMLDataPair result;
+			BasicMLDataPair result;
 
             if (idealSize > 0)
             {
@@ -152,26 +152,6 @@ namespace Encog.ML.Data.Basic
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// The supervised ideal data.
-        /// </summary>
-        public double[] IdealArray
-        {
-            get {
-                return _ideal == null ? null : _ideal.Data;
-            }
-            set { _ideal.Data = value; }
-        }
-
-        /// <summary>
-        /// The input array.
-        /// </summary>
-        public double[] InputArray
-        {
-            get { return _input.Data; }
-            set { _input.Data = value; }
         }
 
         /// <summary>

@@ -47,11 +47,8 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public void Remove(IMLDataPair d)
         {
-            double[] a = d.InputArray;
-
             for (int i = 0; i < _value.Count; i++)
-                _value[i] =
-                    ((_value[i] * _value.Count - a[i]) / (_value.Count - 1));
+                _value[i] = ((_value[i] * _value.Count - d.Input[i]) / (_value.Count - 1));
         }
 
         /// <inheritdoc/>
@@ -69,11 +66,9 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public void Add(IMLDataPair d)
         {
-            double[] a = d.InputArray;
-
             for (int i = 0; i < _value.Count; i++)
                 _value[i] =
-                    ((_value[i] * _value.Count) + a[i]) / (_value.Count + 1);
+                    ((_value[i] * _value.Count) + d.Input[i]) / (_value.Count + 1);
         }
 
     }

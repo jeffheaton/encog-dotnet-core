@@ -77,14 +77,17 @@ namespace Encog.App.Analyst
         public void Report(int total, int current,
                            String message)
         {
+			string msg;
             if (total == 0)
             {
-                Console.Out.WriteLine(current + " : " + message);
+                msg = current + " : " + message;
             }
             else
             {
-                Console.Out.WriteLine(current + "/" + total + " : " + message);
+                msg = current + "/" + total + " : " + message;
             }
+			Console.WriteLine(msg);
+			Debug.WriteLine(msg);
         }
 
         /// <summary>
@@ -94,16 +97,19 @@ namespace Encog.App.Analyst
         public void ReportCommandBegin(int total, int current,
                                        String name)
         {
-            Console.Out.WriteLine();
+			Console.WriteLine();
+			string msg;
             if (total == 0)
             {
-                Console.Out.WriteLine("Beginning Task#" + current + " : " + name);
+                msg = "Beginning Task#" + current + " : " + name;
             }
             else
             {
-                Console.Out.WriteLine("Beginning Task#" + current + "/" + total
-                                      + " : " + name);
+                msg = "Beginning Task#" + current + "/" + total
+                                      + " : " + name;
             }
+			Debug.WriteLine(msg);
+			Console.WriteLine(msg);
             _currentTask = name;
             _stopwatch.Start();
         }
@@ -120,12 +126,14 @@ namespace Encog.App.Analyst
 
             cancelStr = cancel ? "canceled" : "completed";
 
-            Console.Out.WriteLine("Task "
+            var msg = "Task "
                                   + _currentTask
                                   + " "
                                   + cancelStr
-                                  + ", task elapsed time "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec)));
+                                  + ", task elapsed time: "
+                                  + _stopwatch.Elapsed.TotalSeconds + "s";
+			Console.WriteLine(msg);
+			Debug.WriteLine(msg);
         }
 
         /// <summary>
@@ -134,12 +142,14 @@ namespace Encog.App.Analyst
         ///
         public void ReportTraining(IMLTrain train)
         {
-            Console.Out.WriteLine("Iteration #"
+            var msg = "Iteration #"
                                   + Format.FormatInteger(train.IterationNumber)
                                   + " Error:"
                                   + Format.FormatPercent(train.Error)
                                   + " elapsed time = "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec)));
+                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec));
+			Console.WriteLine(msg);
+			Debug.WriteLine(msg);
         }
 
         /// <summary>

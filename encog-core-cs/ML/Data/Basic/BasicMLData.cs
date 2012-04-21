@@ -32,21 +32,22 @@ namespace Encog.ML.Data.Basic
     /// data in an array.  
     /// </summary>
     [Serializable]
-    public class BasicMLData : IMLData
+	public class BasicMLData: IMLDataModifiable
     {
-        private double[] _data;
+        protected double[] _data;
 
         /// <summary>
         /// Construct this object with the specified data. 
         /// </summary>
         /// <param name="d">The data to construct this object with.</param>
-        public BasicMLData(double[] d)
-            : this(d.Length)
+        public BasicMLData(double[] d, bool copy = true)
         {
-            for (int i = 0; i < d.Length; i++)
-            {
-                _data[i] = d[i];
-            }
+			if(copy)
+			{
+				_data = new double[d.Length];
+				EngineArray.ArrayCopy(d, _data);
+			}
+			else _data = d;
         }
 
 
@@ -76,7 +77,6 @@ namespace Encog.ML.Data.Basic
         public virtual double[] Data
         {
             get { return _data; }
-            set { _data = value; }
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>The result.</returns>
         public IMLData Times(double d)
         {
-            IMLData result = new BasicMLData(Count);
+            var result = new BasicMLData(Count);
 
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] * d;
@@ -171,12 +171,16 @@ namespace Encog.ML.Data.Basic
             if (Count != o.Count)
                 throw new EncogError("Counts must match.");
 
-            IMLData result = new BasicMLData(Count);
+            var result = new BasicMLData(Count);
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] - o[i];
 
             return result;
         }
 
-    }
+		public void CopyTo(double[] target, int targetIndex, int count)
+		{
+			EngineArray.ArrayCopy(_data, 0, target, targetIndex, count);
+		}
+	}
 }

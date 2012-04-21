@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.ML.Data;
 
 namespace Encog.MathUtil
 {
@@ -77,7 +78,30 @@ namespace Encog.MathUtil
             return minSet;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Decode a set of activations and see which set it has the lowest Euclidean
+		/// distance from.
+		/// </summary>
+		/// <param name="activations">The output from the neural network.</param>
+		/// <returns>The set that these activations were closest too.</returns>
+		public int Decode(IMLData activations)
+		{
+			double minValue = double.PositiveInfinity;
+			int minSet = -1;
+
+			for(int i = 0; i < _matrix.GetLength(0); i++)
+			{
+				double dist = GetDistance(activations, i);
+				if(dist < minValue)
+				{
+					minValue = dist;
+					minSet = i;
+				}
+			}
+			return minSet;
+		}
+
+		/// <summary>
         /// Get the activations for the specified set.
         /// </summary>
         /// <param name="set">The set to determine the activations for.</param>
@@ -162,12 +186,30 @@ namespace Encog.MathUtil
             double result = 0;
             for (int i = 0; i < data.GetLength(0); i++)
             {
-                result += Math.Pow(data[i] - _matrix[set][i], 2);
+				var val = data[i] - _matrix[set][i];
+                result += val * val;
             }
             return Math.Sqrt(result);
         }
 
-        /// <summary>
+		/// <summary>
+		/// Get the Euclidean distance between the specified data and the set number.
+		/// </summary>
+		/// <param name="data">The data to check.</param>
+		/// <param name="set">The set to check.</param>
+		/// <returns>The distance.</returns>
+		public double GetDistance(IMLData data, int set)
+		{
+			double result = 0;
+			for(int i = 0; i < data.Count; i++)
+			{
+				var val = data[i] - _matrix[set][i];
+				result += val * val;
+			}
+			return Math.Sqrt(result);
+		}
+
+		/// <summary>
         /// Get the smallest distance.
         /// </summary>
         /// <param name="data">The data to check.</param>

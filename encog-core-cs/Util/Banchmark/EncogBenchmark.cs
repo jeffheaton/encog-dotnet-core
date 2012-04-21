@@ -178,20 +178,22 @@ namespace Encog.Util.Banchmark
             const long stop = (10*Evaluate.Milis);
             int record = 0;
 
-            IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
+            IMLDataPair pair;
 
             int iterations = 0;
             var watch = new Stopwatch();
             watch.Start();
-            while (watch.ElapsedMilliseconds < stop)
-            {
-                iterations++;
-                training.GetRecord(record++, pair);
-                if (record >= training.Count)
-                    record = 0;
-            }
+			while(true)
+			{
+				iterations++;
+				pair = training[record++];
+				if(record >= training.Count)
+					record = 0;
 
-            iterations /= 100000;
+				if((iterations & 0xff) == 0 && watch.ElapsedMilliseconds >= stop)
+					break;
+			} 
+			iterations /= 100000;
 
             _report.Report(Steps, Step2,
                           "Memory dataset, result: " + Format.FormatInteger(iterations));
@@ -222,19 +224,22 @@ namespace Encog.Util.Banchmark
             const long stop = (10*Evaluate.Milis);
             int record = 0;
 
-            IMLDataPair pair = BasicMLDataPair.CreatePair(10, 10);
+            IMLDataPair pair;
 
             var watch = new Stopwatch();
             watch.Start();
 
             int iterations = 0;
-            while (watch.ElapsedMilliseconds < stop)
-            {
-                iterations++;
-                training2.GetRecord(record++, pair);
-                if (record >= training2.Count)
-                    record = 0;
-            }
+			while(true)
+			{
+				iterations++;
+				pair = training[record++];
+				if(record >= training.Count)
+					record = 0;
+
+				if((iterations & 0xff) == 0 && watch.ElapsedMilliseconds >= stop)
+					break;
+			}
 
             training2.Close();
 

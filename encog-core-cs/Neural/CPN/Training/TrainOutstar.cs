@@ -138,7 +138,7 @@ namespace Encog.Neural.CPN.Training
             {
                 IMLData xout = _network.ComputeInstar(pair.Input);
 
-                int j = EngineArray.IndexOfLargest(xout.Data);
+                int j = EngineArray.IndexOfLargest(xout);
                 for (int i = 0; i < _network.OutstarCount; i++)
                 {
                     double delta = _learningRate
@@ -147,7 +147,7 @@ namespace Encog.Neural.CPN.Training
                 }
 
                 IMLData out2 = _network.ComputeOutstar(xout);
-                error.UpdateError(out2.Data, pair.Ideal.Data, pair.Significance);
+                error.UpdateError(out2, pair.Ideal, pair.Significance);
             }
 
             Error = error.Calculate();

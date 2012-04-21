@@ -131,11 +131,10 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
+				var val = x[i] - _paras[ParamGaussianCenter];
                 x[i] = _paras[ParamGaussianPeak]
-                       *BoundMath
-                            .Exp(-Math.Pow(x[i]
-                                           - _paras[ParamGaussianCenter], 2)
-                                 /(2.0d*_paras[ParamGaussianWidth]*_paras[ParamGaussianWidth]));
+                       *BoundMath.Exp(-(val * val)
+                                 /(2.0 * _paras[ParamGaussianWidth] * _paras[ParamGaussianWidth]));
             }
         }
 

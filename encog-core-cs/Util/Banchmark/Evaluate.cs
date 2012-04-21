@@ -73,12 +73,15 @@ namespace Encog.Util.Banchmark
             IMLTrain train = new ResilientPropagation(network, training);
 
             int iterations = 0;
+			const int milis10 = Milis * 10;
             var watch = new Stopwatch();
             watch.Start();
-            while (watch.ElapsedMilliseconds < (10*Milis))
+            while (true)
             {
                 iterations++;
                 train.Iteration();
+
+				if((iterations & 0xff) == 0 && watch.ElapsedMilliseconds < milis10) break;
             }
 
             return iterations;

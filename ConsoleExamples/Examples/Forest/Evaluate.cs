@@ -90,7 +90,7 @@ namespace Encog.Examples.Forest
 
             if (eqField != null)
             {
-                result = eqField.Equilateral.Decode(output.Data);
+                result = eqField.Equilateral.Decode(output);
             }
             else
             {

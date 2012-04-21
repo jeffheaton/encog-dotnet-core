@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using Encog.ML.Data.Basic;
 using Encog.Util;
+using System;
 
 namespace Encog.ML.Data.Buffer.CODEC
 {
@@ -86,8 +87,8 @@ namespace Encog.ML.Data.Buffer.CODEC
             else
             {
                 IMLDataPair pair = _enumerator.Current;
-                EngineArray.ArrayCopy(pair.Input.Data, input);
-                EngineArray.ArrayCopy(pair.Ideal.Data, ideal);
+				pair.Input.CopyTo(input, 0, pair.Input.Count);
+				pair.Ideal.CopyTo(ideal, 0, pair.Ideal.Count);
                 significance = pair.Significance;
                 return true;
             }
@@ -96,11 +97,7 @@ namespace Encog.ML.Data.Buffer.CODEC
         /// <inheritdoc/>
         public void Write(double[] input, double[] ideal, double significance)
         {
-            IMLDataPair pair = BasicMLDataPair.CreatePair(_inputSize,
-                                                         _idealSize);
-            EngineArray.ArrayCopy(input, pair.Input.Data);
-            EngineArray.ArrayCopy(ideal, pair.Ideal.Data);
-            pair.Significance = significance;
+			throw new NotSupportedException();
         }
 
         /// <inheritdoc/>

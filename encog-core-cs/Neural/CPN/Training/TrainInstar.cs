@@ -150,7 +150,7 @@ namespace Encog.Neural.CPN.Training
                 IMLData xout = _network.ComputeInstar(pair.Input);
 
                 // determine winner
-                int winner = EngineArray.IndexOfLargest(xout.Data);
+                int winner = EngineArray.IndexOfLargest(xout);
 
                 // calculate the distance
                 double distance = 0;

@@ -25,7 +25,7 @@ using Encog.MathUtil.Matrices;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.Networks;
 
-namespace Encog.Mathutil.Randomize
+namespace Encog.MathUtil.Randomize
 {
     /// <summary>
     /// A randomizer that attempts to create starting weight values that are

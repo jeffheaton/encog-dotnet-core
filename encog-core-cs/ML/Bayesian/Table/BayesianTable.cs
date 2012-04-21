@@ -188,7 +188,7 @@ namespace Encog.ML.Bayesian.Table
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             StringBuilder result = new StringBuilder();
             foreach (TableLine line in _lines)

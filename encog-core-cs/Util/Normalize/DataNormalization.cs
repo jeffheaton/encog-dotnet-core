@@ -365,7 +365,7 @@ namespace Encog.Util.Normalize
 
             InitForOutput();
 
-            IMLData result = new BasicNeuralData(outputCount);
+            var result = new BasicNeuralData(outputCount);
 
             // write the value
             int outputIndex = 0;
@@ -375,7 +375,7 @@ namespace Encog.Util.Normalize
                 {
                     for (int sub = 0; sub < ofield.SubfieldCount; sub++)
                     {
-                        result.Data[outputIndex++] = ofield.Calculate(sub);
+                        result[outputIndex++] = ofield.Calculate(sub);
                     }
                 }
             }
@@ -682,7 +682,7 @@ namespace Encog.Util.Normalize
             // see if any of the data sets want to stop
             foreach (var iterator in _readDataSet)
             {
-                if (!iterator.MoveNext())
+                if (!iterator.MoveNext()) // are we sure that we intended for every other item here? an explanation would be helpful
                 {
                     return false;
                 }

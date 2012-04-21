@@ -177,7 +177,7 @@ namespace Encog.App.Analyst.CSV
                 foreach (IMLData item  in  cl.Data)
                 {
                     int clsIndex = item.Count;
-                    LoadedRow lr = new LoadedRow(Format,item.Data,1); 
+                    LoadedRow lr = new LoadedRow(Format, item, 1); 
                     lr.Data[clsIndex] = "" + clusterNum;
                     WriteRow(tw, lr);
                 }

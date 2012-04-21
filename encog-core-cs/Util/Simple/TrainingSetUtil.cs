@@ -45,14 +45,14 @@ namespace Encog.Util.Simple
         public static IMLDataSet LoadCSVTOMemory(CSVFormat format, String filename,
                                                 bool headers, int inputSize, int idealSize)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             var csv = new ReadCSV(filename, headers, format);
             while (csv.Next())
             {
-                IMLData ideal = null;
+				BasicMLData ideal = null;
                 int index = 0;
 
-                IMLData input = new BasicMLData(inputSize);
+                var input = new BasicMLData(inputSize);
                 for (int i = 0; i < inputSize; i++)
                 {
                     double d = csv.GetDouble(index++);
@@ -92,8 +92,8 @@ namespace Encog.Util.Simple
 
             foreach (IMLDataPair pair  in  training)
             {
-                EngineArray.ArrayCopy(pair.InputArray, a[index]);
-                EngineArray.ArrayCopy(pair.IdealArray, b[index]);
+				pair.Input.CopyTo(a[index], 0, pair.Input.Count);
+				pair.Ideal.CopyTo(b[index], 0, pair.Ideal.Count);
                 index++;
             }
 

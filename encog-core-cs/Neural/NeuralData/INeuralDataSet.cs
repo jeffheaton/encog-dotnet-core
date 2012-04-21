@@ -28,7 +28,7 @@ namespace Encog.Neural.NeuralData
     /// This is an alias class for Encog 2.5 compatibility.  This class aliases 
     /// IMLDataSet.  Newer code should use IMLDataSet in place of this class.
     /// </summary>
-    public interface INeuralDataSet : IMLDataSet
+    public interface INeuralDataSet : IMLDataSetAddable
     {
     }
 }

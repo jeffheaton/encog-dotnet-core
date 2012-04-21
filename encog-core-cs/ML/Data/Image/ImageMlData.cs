@@ -84,7 +84,7 @@ namespace Encog.ML.Data.Image
                             *(hi - lo) + lo;
             }
 
-            Data = sample;
+            _data = sample;
         }
 
         /// <summary>
