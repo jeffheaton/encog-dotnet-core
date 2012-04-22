@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-
 using Encog.MathUtil.Error;
 using Encog.MathUtil.Matrices.Decomposition;
 using Encog.MathUtil.Matrices.Hessian;
@@ -300,21 +299,22 @@ namespace Encog.Neural.Networks.Training.Lma
 
                     UpdateWeights();
                     currentError = CalculateError();
-                }
 
-                if (currentError >= startingError)
-                {
-                    _lambda *= ScaleLambda;
-                    if (_lambda > LambdaMax)
+                    if (currentError < startingError)
                     {
-                        _lambda = LambdaMax;
+                        _lambda /= LevenbergMarquardtTraining.ScaleLambda;
                         done = true;
                     }
                 }
-                else
+
+                if (!done)
                 {
-                    _lambda /= ScaleLambda;
-                    done = true;
+                    _lambda *= LevenbergMarquardtTraining.ScaleLambda;
+                    if (_lambda > LevenbergMarquardtTraining.LambdaMax)
+                    {
+                        _lambda = LevenbergMarquardtTraining.LambdaMax;
+                        done = true;
+                    }
                 }
             }
 

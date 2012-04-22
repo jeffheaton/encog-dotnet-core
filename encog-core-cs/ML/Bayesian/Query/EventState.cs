@@ -1,6 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+//
+// Encog(tm) Core v3.1 - .Net Version
+// http://www.heatonresearch.com/encog/
+//
+// Copyright 2008-2012 Heaton Research, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//   
+// For more information on Heaton Research copyrights, licenses 
+// and trademarks visit:
+// http://www.heatonresearch.com/copyright
+//
+using System;
 using System.Text;
 using Encog.Util;
 
@@ -10,33 +30,19 @@ namespace Encog.ML.Bayesian.Query
     /// Holds the state of an event during a query. This allows the event to actually
     /// hold a value, as well as an anticipated value (compareValue).
     /// </summary>
+    [Serializable]
     public class EventState
     {
-        /// <summary>
-        /// Has this event been calculated yet?
-        /// </summary>
-        public bool IsCalculated { get; set; }
-
-        /// <summary>
-        /// The current value of this event.
-        /// </summary>
-        private int value;
-
         /// <summary>
         /// The event that this state is connected to.
         /// </summary>
         private readonly BayesianEvent _event;
 
         /// <summary>
-        /// The type of event that this is for the query.
+        /// The current value of this event.
         /// </summary>
-        public EventType CurrentEventType { get; set; }
+        private int _value;
 
-        /// <summary>
-        /// The value that we are comparing to, for probability.
-        /// </summary>
-        public int CompareValue { get; set; }
-        
         /// <summary>
         /// Construct an event state for the specified event. 
         /// </summary>
@@ -49,18 +55,30 @@ namespace Encog.ML.Bayesian.Query
         }
 
         /// <summary>
+        /// Has this event been calculated yet?
+        /// </summary>
+        public bool IsCalculated { get; set; }
+
+        /// <summary>
+        /// The type of event that this is for the query.
+        /// </summary>
+        public EventType CurrentEventType { get; set; }
+
+        /// <summary>
+        /// The value that we are comparing to, for probability.
+        /// </summary>
+        public int CompareValue { get; set; }
+
+        /// <summary>
         /// The value.
         /// </summary>
         public int Value
         {
-            get
-            {
-                return value;
-            }
+            get { return _value; }
             set
             {
-                this.IsCalculated = true;
-                this.value = value;
+                IsCalculated = true;
+                _value = value;
             }
         }
 
@@ -70,21 +88,9 @@ namespace Encog.ML.Bayesian.Query
         /// </summary>
         public BayesianEvent Event
         {
-            get
-            {
-                return _event;
-            }
+            get { return _event; }
         }
 
-
-        /// <summary>
-        /// Randomize according to the arguments.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
-        public void Randomize(params int[] args)
-        {
-            Value = _event.Table.GenerateRandom(args);
-        }
 
         /// <summary>
         /// Is this event satisified.
@@ -96,26 +102,35 @@ namespace Encog.ML.Bayesian.Query
                 if (CurrentEventType == EventType.Hidden)
                 {
                     throw new BayesianError(
-                            "Satisfy can't be called on a hidden event.");
+                        "Satisfy can't be called on a hidden event.");
                 }
-                return Math.Abs(this.CompareValue - this.value) < EncogFramework.DefaultDoubleEqual;
+                return Math.Abs(CompareValue - _value) < EncogFramework.DefaultDoubleEqual;
             }
+        }
+
+        /// <summary>
+        /// Randomize according to the arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        public void Randomize(params int[] args)
+        {
+            Value = _event.Table.GenerateRandom(args);
         }
 
         /// <inheritdoc/>
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[EventState:event=");
             result.Append(_event.ToString());
             result.Append(",type=");
-            result.Append(this.CurrentEventType.ToString());
+            result.Append(CurrentEventType.ToString());
             result.Append(",value=");
-            result.Append(Format.FormatDouble(this.value, 2));
+            result.Append(Format.FormatDouble(_value, 2));
             result.Append(",compare=");
-            result.Append(Format.FormatDouble(this.CompareValue, 2));
+            result.Append(Format.FormatDouble(CompareValue, 2));
             result.Append(",calc=");
-            result.Append(this.IsCalculated ? "y" : "n");
+            result.Append(IsCalculated ? "y" : "n");
             result.Append("]");
             return result.ToString();
         }

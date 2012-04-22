@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -203,7 +203,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-                    double d = CSVFormat.EgFormat.Parse(str);
+                    double d = this._script.DetermineFormat().Parse(str);
                     _devTotal += Math.Pow((d - Mean), 2);
                 }
             }
@@ -255,6 +255,17 @@ namespace Encog.App.Analyst.Analyze
                                  Class = Class,
                                  Complete = Complete
                              };
+
+            // if max and min are the same, we are dealing with a zero-sized range,
+            // which will cause other issues.  This is caused by ever number in the
+            // column having exactly (or nearly exactly) the same value.  Provide a
+            // small range around that value so that every value in this column normalizes
+            // to the midpoint of the desired normalization range, typically 0 or 0.5.
+            if (Math.Abs(Max - Min) < EncogFramework.DefaultDoubleEqual)
+            {
+                result.Min = Min - 0.0001;
+                result.Max = Min + 0.0001;
+            }
 
             result.ClassMembers.Clear();
 

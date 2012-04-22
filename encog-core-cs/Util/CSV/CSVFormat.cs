@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -162,6 +162,14 @@ namespace Encog.Util.CSV
         /// <returns>The number that has been parsed.</returns>
         public double Parse(String str)
         {
+            if (string.Compare(str, "?", true)==0)
+            {
+                return double.NaN;
+            }
+            if (string.Compare(str, "NaN", true) == 0)
+            {
+                return double.NaN;
+            }
             return double.Parse(str.Trim(), _numberFormat);
         }
 

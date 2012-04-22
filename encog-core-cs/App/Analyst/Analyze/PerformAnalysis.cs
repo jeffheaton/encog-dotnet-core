@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -143,14 +143,10 @@ namespace Encog.App.Analyst.Analyze
         /// <param name="target">The Encog analyst object to analyze.</param>
         public void Process(EncogAnalyst target)
         {
+            int count = 0;
             CSVFormat csvFormat = ConvertStringConst
                 .ConvertToCSVFormat(_format);
             var csv = new ReadCSV(_filename, _headers, csvFormat);
-
-            if (!csv.Next())
-            {
-                throw new AnalystError("Can't analyze file, it is empty.");
-            }
 
             // pass one, calculate the min/max
             while (csv.Next())
@@ -167,8 +163,13 @@ namespace Encog.App.Analyst.Analyze
                         _fields[i].Analyze1(csv.Get(i));
                     }
                 }
+                count++;
             }
 
+            if (count==0)
+            {
+                throw new AnalystError("Can't analyze file, it is empty.");
+            }
 
             if (_fields != null)
             {
@@ -229,12 +230,6 @@ namespace Encog.App.Analyst.Analyze
                     }
 
                     if (!allowReal && field.Real && !field.Integer)
-                    {
-                        field.Class = false;
-                    }
-
-                    if (field.Integer
-                        && (field.AnalyzedClassMembers.Count <= 2))
                     {
                         field.Class = false;
                     }

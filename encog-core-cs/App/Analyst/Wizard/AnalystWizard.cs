@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Encog.App.Analyst.Missing;
 using Encog.App.Analyst.Script;
 using Encog.App.Analyst.Script.Normalize;
 using Encog.App.Analyst.Script.Prop;
@@ -31,8 +32,8 @@ using Encog.App.Analyst.Script.Segregate;
 using Encog.App.Analyst.Script.Task;
 using Encog.ML.Factory;
 using Encog.Util.Arrayutil;
+using Encog.Util.CSV;
 using Encog.Util.File;
-using Encog.App.Analyst.Missing;
 
 namespace Encog.App.Analyst.Wizard
 {
@@ -223,6 +224,11 @@ namespace Encog.App.Analyst.Wizard
         private String _filenameTrainSet;
 
         /// <summary>
+        /// The format in use.
+        /// </summary>
+        private AnalystFileFormat _format;
+
+        /// <summary>
         /// The analyst goal.
         /// </summary>
         ///
@@ -254,16 +260,21 @@ namespace Encog.App.Analyst.Wizard
         private WizardMethodType _methodType;
 
         /// <summary>
+        /// How to handle missing values.
+        /// </summary>
+        private IHandleMissingValues _missing;
+
+        /// <summary>
         /// The normalization range.
         /// </summary>
         ///
         private NormalizeRange _range;
 
         /// <summary>
-        /// The target field, or "" to detect.
+        /// The target field, or null to detect.
         /// </summary>
         ///
-        private String _targetField;
+        private AnalystField _targetField;
 
         /// <summary>
         /// True if the balance command should be generated.
@@ -302,16 +313,6 @@ namespace Encog.App.Analyst.Wizard
         private bool _timeSeries;
 
         /// <summary>
-        /// How to handle missing values.
-        /// </summary>
-        private IHandleMissingValues _missing;
-
-        /// <summary>
-        /// The format in use.
-        /// </summary>
-        private AnalystFileFormat _format;
-
-        /// <summary>
         /// Construct the analyst wizard.
         /// </summary>
         ///
@@ -328,13 +329,32 @@ namespace Encog.App.Analyst.Wizard
             _analyst = theAnalyst;
             _script = _analyst.Script;
             _methodType = WizardMethodType.FeedForward;
-            _targetField = "";
+            TargetFieldName = "";
             _goal = AnalystGoal.Classification;
             _leadWindowSize = 0;
             _lagWindowSize = 0;
             _includeTargetField = false;
             _missing = new DiscardMissing();
+            MaxError = DefaultTrainError;
+            NaiveBayes = false;
         }
+
+        /// <summary>
+        /// The number of evidence segments to use when mapping continuous values to Bayes.
+        /// </summary>
+        public int EvidenceSegements { get; set; }
+
+        public bool NaiveBayes { get; set; }
+
+        /// <summary>
+        /// The maximum allowed training error.
+        /// </summary>
+        public double MaxError { get; set; }
+
+        /// <summary>
+        /// The String name of the target field.
+        /// </summary>
+        public String TargetFieldName { get; set; }
 
         /// <summary>
         /// Set the goal.
@@ -383,7 +403,7 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         ///
         /// <value>The target field.</value>
-        public String TargetField
+        public AnalystField TargetField
         {
             get { return _targetField; }
             set { _targetField = value; }
@@ -438,6 +458,15 @@ namespace Encog.App.Analyst.Wizard
         }
 
         /// <summary>
+        /// How should missing values be handled.
+        /// </summary>
+        public IHandleMissingValues Missing
+        {
+            get { return _missing; }
+            set { _missing = value; }
+        }
+
+        /// <summary>
         /// Create a "set" command to add to a task.
         /// </summary>
         ///
@@ -464,7 +493,8 @@ namespace Encog.App.Analyst.Wizard
             _directClassification = false;
 
             if ((_methodType == WizardMethodType.SVM)
-                || (_methodType == WizardMethodType.SOM))
+                    || (_methodType == WizardMethodType.SOM)
+                    || (_methodType == WizardMethodType.PNN))
             {
                 _directClassification = true;
             }
@@ -478,19 +508,19 @@ namespace Encog.App.Analyst.Wizard
         {
             IList<AnalystField> fields = _script.Normalize.NormalizedFields;
 
-            if (_targetField.Trim().Length == 0)
+            if (string.IsNullOrEmpty(TargetFieldName))
             {
                 bool success = false;
 
-                if (_goal == AnalystGoal.Classification)
+                if (Goal == AnalystGoal.Classification)
                 {
                     // first try to the last classify field
-                    foreach (AnalystField field  in  fields)
+                    foreach (AnalystField field in fields)
                     {
                         DataField df = _script.FindDataField(field.Name);
                         if (field.Action.IsClassify() && df.Class)
                         {
-                            _targetField = field.Name;
+                            TargetField = field;
                             success = true;
                         }
                     }
@@ -498,12 +528,12 @@ namespace Encog.App.Analyst.Wizard
                 else
                 {
                     // otherwise, just return the last regression field
-                    foreach (AnalystField field  in  fields)
+                    foreach (AnalystField field in fields)
                     {
                         DataField df = _script.FindDataField(field.Name);
                         if (!df.Class && (df.Real || df.Integer))
                         {
-                            _targetField = field.Name;
+                            TargetField = field;
                             success = true;
                         }
                     }
@@ -519,10 +549,11 @@ namespace Encog.App.Analyst.Wizard
             }
             else
             {
-                if (_script.FindDataField(_targetField) == null)
+                TargetField = _script.FindAnalystField(TargetFieldName);
+                if (TargetField == null)
                 {
                     throw new AnalystError("Invalid target field: "
-                                           + _targetField);
+                                           + TargetFieldName);
                 }
             }
 
@@ -533,9 +564,9 @@ namespace Encog.App.Analyst.Wizard
             {
                 _script.Properties.SetProperty(
                     ScriptProperties.BalanceConfigBalanceField,
-                    _targetField);
+                    TargetField.Name);
                 DataField field = _analyst.Script.FindDataField(
-                    _targetField);
+                    _targetField.Name);
                 if ((field != null) && field.Class)
                 {
                     int countPer = field.MinClassCount;
@@ -544,30 +575,34 @@ namespace Encog.App.Analyst.Wizard
                 }
             }
 
-            // now that the target field has been determined, set the analyst fields
-            AnalystField af = null;
-
-            foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
+            // determine output field
+            if (_methodType != WizardMethodType.BayesianNetwork)
             {
-                if ((field.Action != NormalizationAction.Ignore)
-                    && field.Name.Equals(_targetField, StringComparison.InvariantCultureIgnoreCase))
+                // now that the target field has been determined, set the analyst fields
+                AnalystField af = null;
+                foreach (AnalystField field in _analyst.Script.Normalize.NormalizedFields)
                 {
-                    if ((af == null) || (af.TimeSlice < field.TimeSlice))
+                    if ((field.Action != NormalizationAction.Ignore)
+                        && field == _targetField)
                     {
-                        af = field;
+                        if ((af == null)
+                            || (af.TimeSlice < field.TimeSlice))
+                        {
+                            af = field;
+                        }
                     }
                 }
-            }
 
-            if (af != null)
-            {
-                af.Output = true;
+                if (af != null)
+                {
+                    af.Output = (true);
+                }
             }
 
             // set the clusters count
             if (_taskCluster)
             {
-                if ((_targetField.Length == 0)
+                if ((TargetField == null)
                     || (_goal != AnalystGoal.Classification))
                 {
                     _script.Properties.SetProperty(
@@ -575,8 +610,7 @@ namespace Encog.App.Analyst.Wizard
                 }
                 else
                 {
-                    DataField tf = _script
-                        .FindDataField(_targetField);
+                    DataField tf = _script.FindDataField(TargetField.Name);
                     _script.Properties.SetProperty(
                         ScriptProperties.ClusterConfigClusters,
                         tf.ClassMembers.Count);
@@ -675,10 +709,179 @@ namespace Encog.App.Analyst.Wizard
             }
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          "rprop");
+                                           "rprop");
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
+
+        /// <summary>
+        /// Generate a Bayesian network machine learning method.
+        /// </summary>
+        /// <param name="inputColumns">The input column count.</param>
+        /// <param name="outputColumns">The output column count.</param>
+        private void GenerateBayesian(int inputColumns,
+                                      int outputColumns)
+        {
+            int segment = EvidenceSegements;
+
+            if (!_targetField.Classify)
+            {
+                throw new AnalystError("Bayesian networks cannot be used for regression.");
+            }
+
+            var a = new StringBuilder();
+            foreach (DataField field in _analyst.Script.Fields)
+            {
+                a.Append("P(");
+                a.Append(field.Name);
+
+                // handle actual class members
+                if (field.ClassMembers.Count > 0)
+                {
+                    a.Append("[");
+                    bool first = true;
+                    foreach (AnalystClassItem item in field.ClassMembers)
+                    {
+                        if (!first)
+                        {
+                            a.Append(",");
+                        }
+                        a.Append(item.Code);
+                        first = false;
+                    }
+
+                    // append a "fake" member, if there is only one
+                    if (field.ClassMembers.Count == 1)
+                    {
+                        a.Append(",Other0");
+                    }
+
+                    a.Append("]");
+                }
+                else
+                {
+                    a.Append("[");
+                    // handle ranges
+                    double size = Math.Abs(field.Max - field.Min);
+                    double per = size/segment;
+
+                    if (size < EncogFramework.DefaultDoubleEqual)
+                    {
+                        double low = field.Min - 0.0001;
+                        double hi = field.Min + 0.0001;
+                        a.Append("BELOW: " + (low - 100) + " to " + hi + ",");
+                        a.Append("Type0: " + low + " to " + hi + ",");
+                        a.Append("ABOVE: " + hi + " to " + (hi + 100));
+                    }
+                    else
+                    {
+                        bool first = true;
+                        for (int i = 0; i < segment; i++)
+                        {
+                            if (!first)
+                            {
+                                a.Append(",");
+                            }
+                            double low = field.Min + (per*i);
+                            double hi = i == (segment - 1)
+                                            ? (field.Max)
+                                            : (low + per);
+                            a.Append("Type");
+                            a.Append(i);
+                            a.Append(":");
+                            a.Append(CSVFormat.EgFormat.Format(low, 16));
+                            a.Append(" to ");
+                            a.Append(CSVFormat.EgFormat.Format(hi, 16));
+                            first = false;
+                        }
+                    }
+                    a.Append("]");
+                }
+
+                a.Append(") ");
+            }
+
+            var q = new StringBuilder();
+            q.Append("P(");
+            q.Append(_targetField.Name);
+            q.Append("|");
+            bool first2 = true;
+            foreach (DataField field in _analyst.Script.Fields)
+            {
+                if (!field.Name.Equals(_targetField.Name))
+                {
+                    if (!first2)
+                    {
+                        q.Append(",");
+                    }
+                    q.Append(field.Name);
+                    first2 = false;
+                }
+            }
+            q.Append(")");
+
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigType, MLMethodFactory.TypeBayesian);
+
+            _script.Properties.SetProperty(
+                ScriptProperties.MlConfigArchitecture, a.ToString());
+
+            _script.Properties.SetProperty(
+                ScriptProperties.MLConfigQuery, q.ToString());
+
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+                                           "bayesian");
+
+            if (NaiveBayes)
+            {
+                _script.Properties.SetProperty(
+                    ScriptProperties.MlTrainArguments,
+                    "maxParents=1,estimator=simple,search=none,init=naive");
+            }
+            else
+            {
+                _script.Properties.SetProperty(
+                    ScriptProperties.MlTrainArguments,
+                    "maxParents=1,estimator=simple,search=k2,init=naive");
+            }
+
+            _script.Properties.SetProperty(
+                ScriptProperties.MlTrainTargetError, MaxError);
+        }
+
+        /// <summary>
+        /// Generate a PNN machine learning method.
+        /// </summary>
+        /// <param name="inputColumns">The number of input columns.</param>
+        /// <param name="outputColumns">The number of ideal columns.</param>
+        private void GeneratePNN(int inputColumns, int outputColumns)
+        {
+
+            StringBuilder arch = new StringBuilder();
+            arch.Append("?->");
+            if (_goal == AnalystGoal.Classification)
+            {
+                arch.Append("C");
+            }
+            else
+            {
+                arch.Append("R");
+            }
+            arch.Append("(kernel=gaussian)->");
+            arch.Append(_targetField.Classes.Count);
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigType, MLMethodFactory.TypePNN);
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigArchitecture, arch.ToString());
+
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+                    MLTrainFactory.TypePNN);
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlTrainTargetError, MaxError);
+        }
+
+
 
         /// <summary>
         /// Generate filenames.
@@ -694,7 +897,7 @@ namespace Encog.App.Analyst.Wizard
             _filenameEval = FileUtil.AddFilenameBase(rawFile, "_eval").Name;
             _filenameEvalNorm = FileUtil.AddFilenameBase(rawFile, "_eval_norm").Name;
             _filenameTrainSet = FileUtil.ForceExtension(_filenameTrain,
-                                                       "egb");
+                                                        "egb");
             _filenameMl = FileUtil.ForceExtension(_filenameTrain, "eg");
             _filenameOutput = FileUtil.AddFilenameBase(rawFile, "_output").Name;
             _filenameBalance = FileUtil.AddFilenameBase(rawFile, "_balance").Name;
@@ -769,6 +972,12 @@ namespace Encog.App.Analyst.Wizard
                 case WizardMethodType.SOM:
                     GenerateSOM();
                     break;
+                case WizardMethodType.PNN:
+                    GeneratePNN(inputColumns, idealColumns);
+                    break;
+                case WizardMethodType.BayesianNetwork:
+                    GenerateBayesian(inputColumns, idealColumns);
+                    break;
                 default:
                     throw new AnalystError("Unknown method type");
             }
@@ -791,10 +1000,28 @@ namespace Encog.App.Analyst.Wizard
                 NormalizationAction action;
                 bool isLast = i == _script.Fields.Length - 1;
 
-                if ((f.Integer || f.Real) && !f.Class)
+
+                if (_methodType == WizardMethodType.BayesianNetwork)
+                {
+                    AnalystField af;
+                    if (f.Class)
+                    {
+                        af = new AnalystField(f.Name,
+                                NormalizationAction.SingleField, 0, 0);
+                    }
+                    else
+                    {
+                        af = new AnalystField(f.Name,
+                                NormalizationAction.PassThrough, 0, 0);
+                    }
+                    norm.Add(af);
+                } 
+                else if ((f.Integer || f.Real) && !f.Class)
                 {
                     action = NormalizationAction.Normalize;
-                    AnalystField af = _range == NormalizeRange.NegOne2One ? new AnalystField(f.Name, action, 1, -1) : new AnalystField(f.Name, action, 1, 0);
+                    AnalystField af = _range == NormalizeRange.NegOne2One
+                                          ? new AnalystField(f.Name, action, 1, -1)
+                                          : new AnalystField(f.Name, action, 1, 0);
                     norm.Add(af);
                     af.ActualHigh = f.Max;
                     af.ActualLow = f.Min;
@@ -847,8 +1074,8 @@ namespace Encog.App.Analyst.Wizard
             _script.Properties.SetProperty(
                 ScriptProperties.MlTrainType, outputColumns > 1 ? "rprop" : "svd");
 
-            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          DefaultTrainError);
+            _script.Properties.SetProperty(ScriptProperties.MlTrainTargetError,
+                                           MaxError);
         }
 
         /// <summary>
@@ -973,17 +1200,17 @@ namespace Encog.App.Analyst.Wizard
             _script.Properties.SetProperty(
                 ScriptProperties.MlConfigType, MLMethodFactory.TypeSOM);
             _script.Properties.SetProperty(
-                ScriptProperties.MlConfigArchitecture, "?->?");
+                ScriptProperties.MlConfigArchitecture, "?->" + _targetField.Classes.Count);
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          MLTrainFactory.TypeSOMNeighborhood);
+                                           MLTrainFactory.TypeSOMNeighborhood);
             _script.Properties.SetProperty(
                 ScriptProperties.MlTrainArguments,
                 "ITERATIONS=1000,NEIGHBORHOOD=rbf1d,RBF_TYPE=gaussian");
 
             // ScriptProperties.ML_TRAIN_arguments
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
 
         /// <summary>
@@ -1002,9 +1229,9 @@ namespace Encog.App.Analyst.Wizard
                 ScriptProperties.MlConfigArchitecture, arch.ToString());
 
             _script.Properties.SetProperty(ScriptProperties.MlTrainType,
-                                          MLTrainFactory.TypeSVMSearch);
+                                           MLTrainFactory.TypeSVMSearch);
             _script.Properties.SetProperty(
-                ScriptProperties.MlTrainTargetError, DefaultTrainError);
+                ScriptProperties.MlTrainTargetError, MaxError);
         }
 
         /// <summary>
@@ -1117,6 +1344,7 @@ namespace Encog.App.Analyst.Wizard
         public void Wizard(FileInfo analyzeFile, bool b,
                            AnalystFileFormat format)
         {
+            _script.BasePath = analyzeFile.DirectoryName;
             _format = format;
             _script.Properties.SetProperty(
                 ScriptProperties.HeaderDatasourceSourceHeaders, b);
@@ -1170,15 +1398,6 @@ namespace Encog.App.Analyst.Wizard
             _analyst.Download();
 
             Wizard(analyzeFile, b, format);
-        }
-
-        /// <summary>
-        /// How should missing values be handled.
-        /// </summary>
-        public IHandleMissingValues Missing
-        {
-            get { return _missing; }
-            set { _missing = value; }
         }
     }
 }

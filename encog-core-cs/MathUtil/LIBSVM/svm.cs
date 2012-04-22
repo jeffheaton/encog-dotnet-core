@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -2472,7 +2472,6 @@ namespace Encog.MathUtil.LIBSVM
         //UPGRADE_NOTE: Final was removed from the declaration of 'kernel_type_table'. 'ms-help://MS.VSCC.2003/commoner/redir/redirect.htm?keyword="jlca1003_3"'
         internal static readonly String[] kernel_type_table = new[] {"linear", "polynomial", "rbf", "sigmoid"};
 
-#if !SILVERLIGHT
         public static void svm_save_model(StreamWriter fp, svm_model model)
         {
             svm_parameter param = model.param;
@@ -2551,7 +2550,6 @@ namespace Encog.MathUtil.LIBSVM
 
             fp.Close();
         }
-#endif
 
         private static double atof(String s)
         {
@@ -2562,8 +2560,6 @@ namespace Encog.MathUtil.LIBSVM
         {
             return Int32.Parse(s);
         }
-
-#if !SILVERLIGHT
 
         public static svm_model svm_load_model(StringReader fp)
         {
@@ -2708,8 +2704,6 @@ namespace Encog.MathUtil.LIBSVM
 
             return model;
         }
-#endif
-
 
         public static String svm_check_parameter(svm_problem prob, svm_parameter param)
         {

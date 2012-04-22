@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,11 +66,7 @@ namespace Encog.Util.Concurrency
             _workloadSize = workloadSize;
             if (threads == 0)
             {
-#if !SILVERLIGHT
                 var num = (int) (Math.Log(((int) Process.GetCurrentProcess().ProcessorAffinity + 1), 2));
-#else
-                int num = 4;
-#endif
 
                 // if there is more than one processor, use processor count +1
                 if (num != 1)

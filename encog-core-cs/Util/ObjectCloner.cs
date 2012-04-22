@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,13 +23,6 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-#if SILVERLIGHT
-using Encog.Persist;
-using Encog.Parse.Tags.Write;
-using Encog.Parse.Tags.Read;
-#else
-
-#endif
 
 namespace Encog.Util
 {
@@ -52,7 +45,6 @@ namespace Encog.Util
         {
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Perform a deep copy.
         /// </summary>
@@ -80,45 +72,5 @@ namespace Encog.Util
                 }
             }            
         }
-#else
-    /// <summary>
-    /// Perform a deep copy.
-    /// Silverlight version.
-    /// </summary>
-    /// <param name="oldObj">The old object.</param>
-    /// <returns>The new object.</returns>
-        static public IEncogPersistedObject DeepCopy(IEncogPersistedObject oldObj)
-        {
-            bool replacedName = false;
-
-            // encog objects won't save without a name
-            if (oldObj.Name == null)
-            {
-                replacedName = true;
-                oldObj.Name = "temp";
-            }
-
-            // now make the copy
-            MemoryStream mstream = new MemoryStream();
-            WriteXML xmlOut = new WriteXML(mstream);
-            IPersistor persistor = oldObj.CreatePersistor();
-            xmlOut.BeginDocument();
-            persistor.Save(oldObj, xmlOut);
-            xmlOut.EndDocument();
-            // now read it back
-            mstream.Position = 0;
-            ReadXML xmlIn = new ReadXML(mstream);
-            xmlIn.ReadToTag();
-            IEncogPersistedObject result = persistor.Load(xmlIn);
-            mstream.Close();
-
-            // put the name back to null if we changed it
-            if (replacedName)
-            {
-                oldObj.Name = null;
-                result.Name = null;
-            }
-            return result;        }
-#endif
     }
 }

@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ using Encog.Neural.Pnn;
 using Encog.Neural.Rbf;
 using Encog.Neural.SOM;
 using Encog.Neural.Thermal;
+using Encog.ML.Bayesian;
+using Encog.ML.HMM;
 
 namespace Encog.Persist
 {
@@ -82,6 +84,8 @@ namespace Encog.Persist
             Add(new PersistBasicPNN());
             Add(new PersistCPN());
             Add(new PersistTrainingContinuation());
+            Add(new PersistBayes());
+            Add(new PersistHMM());
         }
 
         /// <value>The singleton instance.</value>

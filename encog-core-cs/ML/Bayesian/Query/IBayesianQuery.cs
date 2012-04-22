@@ -1,7 +1,27 @@
-﻿using System;
+//
+// Encog(tm) Core v3.1 - .Net Version
+// http://www.heatonresearch.com/encog/
+//
+// Copyright 2008-2012 Heaton Research, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//   
+// For more information on Heaton Research copyrights, licenses 
+// and trademarks visit:
+// http://www.heatonresearch.com/copyright
+//
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.Bayesian.Query
 {
@@ -38,6 +58,16 @@ namespace Encog.ML.Bayesian.Query
         IList<BayesianEvent> OutcomeEvents { get; }
 
         /// <summary>
+        /// Return a string that represents this query as a probability "problem".
+        /// </summary>
+        String Problem { get; }
+
+        /// <summary>
+        /// Obtains the probability after execute has been called.
+        /// </summary>
+        double Probability { get; }
+
+        /// <summary>
         /// Reset all event types back to hidden.
         /// </summary>
         void Reset();
@@ -57,11 +87,11 @@ namespace Encog.ML.Bayesian.Query
         /// <returns>The event state.</returns>
         EventState GetEventState(BayesianEvent theEvent);
 
-        /**
-         * Get the event type.
-         * @param event The event to check.
-         * @return The current event type for this event.
-         */
+        ///<summary>
+        /// Get the event type.
+        ///</summary>
+        ///<param name="theEvent">The event to check.</param>
+        ///<returns>The current event type for this event.</returns>
         EventType GetEventType(BayesianEvent theEvent);
 
         /// <summary>
@@ -79,19 +109,9 @@ namespace Encog.ML.Bayesian.Query
         void SetEventValue(BayesianEvent theEvent, int d);
 
         /// <summary>
-        /// Return a string that represents this query as a probability "problem".
-        /// </summary>
-        String Problem { get; }
-
-        /// <summary>
         /// Execute the query.
         /// </summary>
         void Execute();
-
-        /// <summary>
-        /// Obtains the probability after execute has been called.
-        /// </summary>
-        double Probability { get; }
 
         /// <summary>
         /// Finalize the structure, once all events and dependencies are in place.

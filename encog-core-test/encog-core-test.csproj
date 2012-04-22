@@ -45,9 +45,10 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Analyst\AnalystTestingUtility.cs" />
     <Compile Include="App\Analyst\TestAnalystClassification.cs" />
     <Compile Include="App\Analyst\TestAnalystRegression.cs" />
-    <Compile Include="App\Analyst\TestAnalystWizard.cs" />
+    <Compile Include="App\Analyst\TestEncogAnalyst.cs" />
     <Compile Include="App\CSV\TestBalanceCSV.cs" />
     <Compile Include="App\CSV\TestFilter.cs" />
     <Compile Include="App\CSV\TestNinjaFileConvert.cs" />
@@ -74,6 +75,10 @@
     <Compile Include="MathUtil\Matrices\TestBiPolarUtil.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrix.cs" />
     <Compile Include="MathUtil\Matrices\TestMatrixMath.cs" />
+    <Compile Include="ML\Bayes\TestBayesNet.cs" />
+    <Compile Include="ML\Bayes\TestEnumerationQuery.cs" />
+    <Compile Include="ML\Bayes\TestK2.cs" />
+    <Compile Include="ML\Bayes\TestSamplingQuery.cs" />
     <Compile Include="ML\Data\Basic\TestBasicMLSequenceSet.cs" />
     <Compile Include="ML\Data\Buffer\TestBinaryData.cs" />
     <Compile Include="ML\Data\Buffer\TestBufferedNeuralDataSet.cs" />
@@ -83,15 +88,22 @@
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
+    <Compile Include="ML\HMM\TestHMM.cs" />
+    <Compile Include="ML\KMeans\TestKMeans.cs" />
     <Compile Include="Neural\Networks\TestConsistency.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\Neighborhood\TestNeighborhood.cs" />
+    <Compile Include="Neural\Networks\Training\Competitive\TestCompetitive.cs" />
+    <Compile Include="Neural\Networks\Training\TestFolded.cs" />
     <Compile Include="Neural\Networks\Training\TestTraining.cs" />
     <Compile Include="Parse\Tags\Read\TestXMLRead.cs" />
     <Compile Include="Parse\Tags\Write\TestXmlWrite.cs" />
     <Compile Include="Persist\TestPersistART.cs" />
     <Compile Include="Persist\TestPersistBAM.cs" />
     <Compile Include="Persist\TestPersistBasicNetwork.cs" />
+    <Compile Include="Persist\TestPersistBayes.cs" />
     <Compile Include="Persist\TestPersistBoltzmann.cs" />
     <Compile Include="Persist\TestPersistCPN.cs" />
+    <Compile Include="Persist\TestPersistHMM.cs" />
     <Compile Include="Persist\TestPersistHopfield.cs" />
     <Compile Include="Persist\TestPersistNEAT.cs" />
     <Compile Include="Persist\TestPersistPNN.cs" />
@@ -123,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\xor-nn.eg" />
+    <EmbeddedResource Include="Resources\iris-euro.csv" />
     <None Include="smallCSV.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

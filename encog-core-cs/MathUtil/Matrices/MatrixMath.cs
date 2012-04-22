@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -390,6 +390,24 @@ namespace Encog.MathUtil.Matrices
                 rtn += Math.Pow(v[i], 2);
             }
             return Math.Sqrt(rtn);
+        }
+
+        /// <summary>
+        /// Multiply the matrix by a vector.
+        /// </summary>
+        /// <param name="a">The matrix.</param>
+        /// <param name="d">The vector.</param>
+        /// <returns>The resulting vector.</returns>
+        public static double[] Multiply(Matrix a, double[] d)
+        {
+            double[] p = new double[a.Rows];
+            double[][] aData = a.Data;
+
+            for (int r = 0; r < a.Rows; r++)
+                for (int i = 0; i < a.Cols; i++)
+                    p[r] += aData[r][i] * d[i];
+
+            return p;
         }
     }
 }

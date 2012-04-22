@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,32 @@ namespace Encog.ML.Factory
     ///
     public class MLTrainFactory
     {
+        /// <summary>
+        /// The maximum number of parents for K2.
+        /// </summary>
+        public const string PropertyMaxParents = "MAXPARENTS";
+
+
+        ///<summary>
+        /// The number of particles.
+        ///</summary>
+        public const String PropertyParticles = "PARTICLES";
+
+        /// <summary>
+        /// Nelder Mead training for Bayesian.
+        /// </summary>
+        public const String TypeNelderMead = "nm";
+
+        /// <summary>
+        /// K2 training for Bayesian.
+        /// </summary>
+        public const String TypeBayesian = "bayesian";
+
+        /// <summary>
+        /// PSO training.
+        /// </summary>
+        public const String TypePSO = "pso";
+
         /// <summary>
         /// String constant for RPROP training.
         /// </summary>

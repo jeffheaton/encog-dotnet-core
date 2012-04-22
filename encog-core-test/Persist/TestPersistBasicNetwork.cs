@@ -1,8 +1,8 @@
 //
-// Encog(tm) Unit Tests v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using Encog.Engine.Network.Activation;
+using Encog.Neural.Networks.Layers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.Util;
 using System.IO;
@@ -70,6 +72,45 @@ namespace Encog.Persist
             BasicNetwork network2 = (BasicNetwork)SerializeObject.Load(SERIAL_FILENAME.ToString());
 
             Validate(network2);
+        }
+
+        [TestMethod]
+        public void TestPersistMediumEG()
+        {
+            BasicNetwork network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(null, true, 10));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 10));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 10));
+            network.Structure.FinalizeStructure();
+            network.Reset();
+
+            EncogDirectoryPersistence.SaveObject(EG_FILENAME, network);
+            BasicNetwork network2 = (BasicNetwork)EncogDirectoryPersistence.LoadObject(EG_FILENAME);
+
+            double d = EngineArray.EuclideanDistance(network.Structure.Flat.Weights,
+                    network2.Structure.Flat.Weights);
+
+            Assert.IsTrue(d < 0.01);
+        }
+
+        [TestMethod]
+        public void testPersistLargeEG()
+        {
+            BasicNetwork network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(null, true, 200));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 200));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 200));
+            network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 200));
+            network.Structure.FinalizeStructure();
+            network.Reset();
+
+            EncogDirectoryPersistence.SaveObject(EG_FILENAME, network);
+            BasicNetwork network2 = (BasicNetwork)EncogDirectoryPersistence.LoadObject(EG_FILENAME);
+
+            double d = EngineArray.EuclideanDistance(network.Structure.Flat.Weights,
+                    network2.Structure.Flat.Weights);
+
+            Assert.IsTrue(d < 0.01);
         }
 
 

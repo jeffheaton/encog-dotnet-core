@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,11 +44,7 @@ namespace Encog
         /// <summary>
         /// The current engog version, this should be read from the properties.
         /// </summary>
-<<<<<<< HEAD
         public static string Version = "3.1.0";
-=======
-        public static string Version = "3.0.1";
->>>>>>> 93c94b99afa08644abb78f1a6c75eb8fec51fd2e
 
         /// <summary>
         /// The platform.

@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -438,6 +438,97 @@ namespace Encog.Util
             {
                 array[i] = v;
             }
+        }
+
+        /// <summary>
+        /// Add two vectors.
+        /// </summary>
+        /// <param name="d">First vector.</param>
+        /// <param name="m">Second vector.</param>
+        /// <returns>Result vector.</returns>
+        public static double[] Add(double[] d, double[] m)
+        {
+            double[] result = new double[d.Length];
+            for (int i = 0; i < d.Length; i++)
+            {
+                result[i] = d[i] + m[i];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Subtract two vectors.
+        /// </summary>
+        /// <param name="a">First vector.</param>
+        /// <param name="b">Second vector.</param>
+        /// <returns>Result vector.</returns>
+        public static double[] Subtract(double[] a, double[] b)
+        {
+            double[] result = new double[a.Length];
+            for (int i = 0; i < a.Length; i++)
+            {
+                result[i] = a[i] - b[i];
+            }
+            return result;
+        }
+
+        internal static int[][] AllocateInt2D(int rows, int cols)
+        {
+            var result = new int[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                result[i] = new int[cols];
+            }
+            return result;
+
+        }
+
+        public static double[][][] AllocDouble3D(int x, int y, int z)
+        {
+            var result = new double[x][][];
+            for (int i = 0; i < x; i++)
+            {
+                result[i] = new double[y][];
+                for (int j = 0; j < y; j++)
+                {
+                    result[i][j] = new double[z];
+                }
+            }
+            return result;
+
+        }
+
+        /// <summary>
+        /// Copy one double 2d array to another.
+        /// </summary>
+        /// <param name="source">The source array.</param>
+        /// <param name="target">The target array.</param>
+        public static void ArrayCopy(double[][] source, double[][] target)
+        {
+            for(var row=0;row<source.Length;row++)
+            {
+                for(var col=0;col<source[row].Length;col++)
+                {
+                    target[row][col] = source[row][col];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calculate the Euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="p1">The first vector.</param>
+        /// <param name="p2">The second vector.</param>
+        /// <returns>The distance.</returns>
+        public static double EuclideanDistance(double[] p1, double[] p2)
+        {
+            double sum = 0;
+            for (int i = 0; i < p1.Length; i++)
+            {
+                double d = p1[i] - p2[i];
+                sum += d * d;
+            }
+            return Math.Sqrt(sum);
         }
     }
 }

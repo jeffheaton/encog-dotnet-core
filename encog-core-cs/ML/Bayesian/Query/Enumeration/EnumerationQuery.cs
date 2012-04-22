@@ -1,9 +1,30 @@
-﻿using System;
+//
+// Encog(tm) Core v3.1 - .Net Version
+// http://www.heatonresearch.com/encog/
+//
+// Copyright 2008-2012 Heaton Research, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//   
+// For more information on Heaton Research copyrights, licenses 
+// and trademarks visit:
+// http://www.heatonresearch.com/copyright
+//
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Encog.Util;
 using Encog.ML.Bayesian.Table;
+using Encog.Util;
 
 namespace Encog.ML.Bayesian.Query.Enumeration
 {
@@ -14,17 +35,18 @@ namespace Encog.ML.Bayesian.Query.Enumeration
     /// However, enumeration can be slow for large Bayesian networks. For a quick
     /// estimate of probability the sampling query can be used.
     /// </summary>
+    [Serializable]
     public class EnumerationQuery : BasicQuery
     {
         /// <summary>
         /// The events that we will enumerate over.
         /// </summary>
-        private IList<EventState> enumerationEvents = new List<EventState>();
+        private readonly IList<EventState> _enumerationEvents = new List<EventState>();
 
         /// <summary>
         /// The calculated probability.
         /// </summary>
-        private double probability;
+        private double _probability;
 
         /// <summary>
         /// Construct the enumeration query.
@@ -40,7 +62,12 @@ namespace Encog.ML.Bayesian.Query.Enumeration
         /// </summary>
         public EnumerationQuery()
         {
+        }
 
+        /// <inheritdoc/>
+        public override double Probability
+        {
+            get { return _probability; }
         }
 
         /// <summary>
@@ -51,25 +78,25 @@ namespace Encog.ML.Bayesian.Query.Enumeration
         /// <param name="includeOutcome">True if the outcome is to be reset.</param>
         public void ResetEnumeration(bool includeEvidence, bool includeOutcome)
         {
-            this.enumerationEvents.Clear();
+            _enumerationEvents.Clear();
 
-            foreach (EventState state in this.Events.Values)
+            foreach (EventState state in Events.Values)
             {
                 if (state.CurrentEventType == EventType.Hidden)
                 {
-                    this.enumerationEvents.Add(state);
+                    _enumerationEvents.Add(state);
                     state.Value = 0;
                 }
                 else if (includeEvidence
-                      && state.CurrentEventType == EventType.Evidence)
+                         && state.CurrentEventType == EventType.Evidence)
                 {
-                    this.enumerationEvents.Add(state);
+                    _enumerationEvents.Add(state);
                     state.Value = 0;
                 }
                 else if (includeOutcome
-                      && state.CurrentEventType == EventType.Outcome)
+                         && state.CurrentEventType == EventType.Outcome)
                 {
-                    this.enumerationEvents.Add(state);
+                    _enumerationEvents.Add(state);
                     state.Value = 0;
                 }
                 else
@@ -90,7 +117,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
             bool done = false;
             bool eof = false;
 
-            if (this.enumerationEvents.Count == 0)
+            if (_enumerationEvents.Count == 0)
             {
                 done = true;
                 eof = true;
@@ -98,9 +125,8 @@ namespace Encog.ML.Bayesian.Query.Enumeration
 
             while (!done)
             {
-
-                EventState state = this.enumerationEvents[currentIndex];
-                int v = (int)state.Value;
+                EventState state = _enumerationEvents[currentIndex];
+                int v = state.Value;
                 v++;
                 if (v >= state.Event.Choices.Count)
                 {
@@ -109,13 +135,12 @@ namespace Encog.ML.Bayesian.Query.Enumeration
                 else
                 {
                     state.Value = v;
-                    done = true;
                     break;
                 }
 
                 currentIndex++;
 
-                if (currentIndex >= this.enumerationEvents.Count)
+                if (currentIndex >= _enumerationEvents.Count)
                 {
                     done = true;
                     eof = true;
@@ -124,7 +149,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
 
             return !eof;
         }
-        
+
         /// <summary>
         /// Obtain the arguments for an event.
         /// </summary>
@@ -132,14 +157,13 @@ namespace Encog.ML.Bayesian.Query.Enumeration
         /// <returns>The arguments.</returns>
         private int[] ObtainArgs(BayesianEvent theEvent)
         {
-            int[] result = new int[theEvent.Parents.Count];
+            var result = new int[theEvent.Parents.Count];
 
             int index = 0;
             foreach (BayesianEvent parentEvent in theEvent.Parents)
             {
-                EventState state = this.GetEventState(parentEvent);
+                EventState state = GetEventState(parentEvent);
                 result[index++] = state.Value;
-
             }
             return result;
         }
@@ -151,7 +175,6 @@ namespace Encog.ML.Bayesian.Query.Enumeration
         /// <returns>The probability.</returns>
         private double CalculateProbability(EventState state)
         {
-
             int[] args = ObtainArgs(state.Event);
 
             foreach (TableLine line in state.Event.Table.Lines)
@@ -166,9 +189,9 @@ namespace Encog.ML.Bayesian.Query.Enumeration
             }
 
             throw new BayesianError("Could not determine the probability for "
-                    + state.ToString());
+                                    + state);
         }
-     
+
         /// <summary>
         /// Perform a single enumeration. 
         /// </summary>
@@ -181,7 +204,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
             {
                 bool first = true;
                 double prob = 0;
-                foreach (EventState state in this.Events.Values)
+                foreach (EventState state in Events.Values)
                 {
                     if (first)
                     {
@@ -206,22 +229,13 @@ namespace Encog.ML.Bayesian.Query.Enumeration
             double numerator = PerformEnumeration();
             ResetEnumeration(false, true);
             double denominator = PerformEnumeration();
-            this.probability = numerator / denominator;
+            _probability = numerator/denominator;
         }
 
         /// <inheritdoc/>
-        public override double Probability
+        public override String ToString()
         {
-            get
-            {
-                return probability;
-            }
-        }
-
-        /// <inheritdoc/>
-        public String ToString()
-        {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[SamplingQuery: ");
             result.Append(Problem);
             result.Append("=");
@@ -252,7 +266,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
             while (!done)
             {
                 BayesianEvent e = enumerationEvents[currentIndex];
-                int v = (int)args[currentIndex];
+                int v = args[currentIndex];
                 v++;
                 if (v >= e.Choices.Count)
                 {
@@ -261,7 +275,6 @@ namespace Encog.ML.Bayesian.Query.Enumeration
                 else
                 {
                     args[currentIndex] = v;
-                    done = true;
                     break;
                 }
 
@@ -283,7 +296,7 @@ namespace Encog.ML.Bayesian.Query.Enumeration
         /// <returns>A clone of this object.</returns>
         public override IBayesianQuery Clone()
         {
-            return new EnumerationQuery(this.Network);
+            return new EnumerationQuery(Network);
         }
     }
 }

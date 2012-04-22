@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.PNN;
+using Encog.Util;
 
 namespace Encog.Neural.Networks.Training.PNN
 {
@@ -336,15 +337,13 @@ namespace Encog.Neural.Networks.Training.PNN
                     if (deriv)
                     {
                         output = ComputeDeriv(input, pair.Ideal);
-                        //output_4.GetData(0); //**FIX**?
                     }
                     else
                     {
                         output = _network.Compute(input);
-                        //output_4.GetData(0); **FIX**?
                     }
 
-                    xout[0] = output[0];
+                    EngineArray.ArrayCopy(output.Data,xout);
 
                     for (int i = 0; i < xout.Length; i++)
                     {
@@ -653,14 +652,7 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
             }
 
-            if (_network.OutputMode == PNNOutputMode.Classification)
-            {
-                IMLData result = new BasicMLData(1);
-                result[0] = ibest;
-                return result;
-            }
-
-            return null;
+            return new BasicMLData(xout);
         }
 
 

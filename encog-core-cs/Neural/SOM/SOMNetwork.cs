@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using System;
 using Encog.MathUtil.Matrices;
 using Encog.ML;
 using Encog.ML.Data;
-using Encog.ML.Data.Basic;
 using Encog.Neural.SOM.Training.Neighborhood;
 using Encog.Util;
-using System;
 
 namespace Encog.Neural.SOM
 {
@@ -38,22 +37,14 @@ namespace Encog.Neural.SOM
                               IMLError
     {
         /// <summary>
-        /// Do not allow patterns to go below this very small number.
-        /// </summary>
-        ///
-        public const double Verysmall = 1.0E-30d;
-
-        /// <summary>
         /// The weights of the output neurons base on the input from the input
-        /// neurons.
+	    /// neurons.
         /// </summary>
-        ///
         private Matrix _weights;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        ///
         public SOMNetwork()
         {
         }
@@ -61,121 +52,122 @@ namespace Encog.Neural.SOM
         /// <summary>
         /// The constructor.
         /// </summary>
-        ///
         /// <param name="inputCount">Number of input neurons</param>
         /// <param name="outputCount">Number of output neurons</param>
         public SOMNetwork(int inputCount, int outputCount)
         {
-            InputCount = inputCount;
-            OutputCount = outputCount;
-            _weights = new Matrix(inputCount, outputCount);
+            _weights = new Matrix(outputCount, inputCount);
         }
 
-
-        /// <value>the weights to set</value>
+        /// <summary>
+        /// The weights.
+        /// </summary>
         public Matrix Weights
         {
             get { return _weights; }
             set { _weights = value; }
         }
 
-        #region MLClassification Members
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Classify the input into one of the output clusters.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>The cluster it was clasified into.</returns>
         public int Classify(IMLData input)
         {
-            IMLData result = Compute(input);
-            return EngineArray.MaxIndex(result.Data);
-        }
-
-        /// <summary>
-        /// Set the input count.
-        /// </summary>
-        public virtual int InputCount { get; set; }
-
-        /// <inheritdoc/>
-        public virtual int OutputCount { get; set; }
-
-        #endregion
-
-        #region MLError Members
-
-        /// <inheritdoc/>
-        public double CalculateError(IMLDataSet data)
-        {
-            var bmu = new BestMatchingUnit(this);
-
-            bmu.Reset();
-
-
-            // Determine the BMU foreach each training element.
-            foreach (IMLDataPair pair  in  data)
+            if (input.Count > InputCount)
             {
-                IMLData input = pair.Input;
-                bmu.CalculateBMU(input);
+                throw new NeuralNetworkError(
+                    "Can't classify SOM with input size of " + InputCount
+                    + " with input data of count " + input.Count);
             }
 
-            // update the error
-            return bmu.WorstDistance/100.0d;
-        }
-
-        #endregion
-
-        #region MLResettable Members
-
-        /// <inheritdoc/>
-        public void Reset()
-        {
-            _weights.Randomize(-1, 1);
-        }
-
-        /// <inheritdoc/>
-        public void Reset(int seed)
-        {
-            Reset();
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Determine the winner for the specified input. This is the number of the
-        /// winning neuron.
-        /// </summary>
-        ///
-        /// <param name="input">The input pattern.</param>
-        /// <returns>The winning neuron.</returns>
-        public IMLData Compute(IMLData input)
-        {
-            IMLData result = new BasicMLData(OutputCount);
+            double[][] m = _weights.Data;
+            double[] inputData = input.Data;
+            double minDist = Double.PositiveInfinity;
+            int result = -1;
 
             for (int i = 0; i < OutputCount; i++)
             {
-                Matrix optr = _weights.GetCol(i);
-                Matrix inputMatrix = Matrix.CreateRowMatrix(input.Data);
-                result[i] = MatrixMath.DotProduct(inputMatrix, optr);
+                double dist = EngineArray.EuclideanDistance(inputData, m[i]);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    result = i;
+                }
             }
 
             return result;
         }
 
         /// <inheritdoc/>
-        public override sealed void UpdateProperties()
+        public int InputCount
+        {
+            get { return _weights.Cols; }
+        }
+
+        /// <inheritdoc/>
+        public int OutputCount
+        {
+            get { return _weights.Rows; }
+        }
+
+        /// <summary>
+        /// Calculate the error for the specified data set. The error is the largest distance.
+        /// </summary>
+        /// <param name="data">The data set to check.</param>
+        /// <returns>The error.</returns>
+        public double CalculateError(IMLDataSet data)
+        {
+            var bmu = new BestMatchingUnit(this);
+
+            bmu.Reset();
+
+            // Determine the BMU for each training element.
+            foreach (IMLDataPair pair in data)
+            {
+                IMLData input = pair.Input;
+                bmu.CalculateBMU(input);
+            }
+
+            // update the error
+            return bmu.WorstDistance/100.0;
+        }
+
+        /// <summary>
+        /// Randomize the network.
+        /// </summary>
+        public void Reset()
+        {
+            _weights.Randomize(-1, 1);
+        }
+
+        /// <summary>
+        /// Randomize the network.
+        /// </summary>
+        /// <param name="seed">Not used.</param>
+        public void Reset(int seed)
+        {
+            Reset();
+        }
+
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        public override void UpdateProperties()
         {
             // unneeded
         }
 
         /// <summary>
-        /// Determine the winner for the specified input. This is the number of the
-        /// winning neuron.
+        /// An alias for the classify method, kept for compatibility 
+	    /// with earlier versions of Encog.
         /// </summary>
-        ///
         /// <param name="input">The input pattern.</param>
         /// <returns>The winning neuron.</returns>
         public int Winner(IMLData input)
         {
-            IMLData output = Compute(input);
-            int win = EngineArray.IndexOfLargest(output.Data);
-            return win;
+            return Classify(input);
         }
     }
 }

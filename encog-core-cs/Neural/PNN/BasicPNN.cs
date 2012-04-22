@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Util;
+using Encog.Util.Simple;
 
 namespace Encog.Neural.PNN
 {
@@ -43,7 +44,7 @@ namespace Encog.Neural.PNN
     /// Inc (Computers); April 3, 1995, ISBN: 0471105880
     /// </summary>
     [Serializable]
-    public class BasicPNN : AbstractPNN, IMLRegression
+    public class BasicPNN : AbstractPNN, IMLRegression, IMLClassification, IMLError
     {      
         /// <summary>
         /// The sigma's specify the widths of each kernel used.
@@ -141,8 +142,6 @@ namespace Encog.Neural.PNN
             get { return _sigma; }
         }
 
-        #region MLRegression Members
-
         /// <summary>
         /// Compute the output from this network.
         /// </summary>
@@ -233,10 +232,6 @@ namespace Encog.Neural.PNN
                 {
                     xout[i] /= psum;
                 }
-
-                IMLData result = new BasicMLData(1);
-                result[0] = EngineArray.MaxIndex(xout);
-                return result;
             }
             else if (OutputMode == PNNOutputMode.Unsupervised)
             {
@@ -256,12 +251,31 @@ namespace Encog.Neural.PNN
             return new BasicMLData(xout);
         }
 
-        #endregion
-
         /// <inheritdoc/>
         public override void UpdateProperties()
         {
             // unneeded
+        }
+
+
+        /// <inheritdoc/>
+        public double CalculateError(IMLDataSet data)
+        {
+            if (OutputMode == PNNOutputMode.Classification)
+            {
+                return EncogUtility.CalculateClassificationError(this, data);
+            }
+            else
+            {
+                return EncogUtility.CalculateRegressionError(this, data);
+            }
+        }
+
+        /// <inheritdoc/>
+        public int Classify(IMLData input)
+        {
+            IMLData output = Compute(input);
+            return EngineArray.MaxIndex(output.Data);
         }
     }
 }

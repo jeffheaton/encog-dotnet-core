@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using System.Threading.Tasks;
 using Encog.Engine.Network.Activation;
 using Encog.MathUtil;
 using Encog.ML;
@@ -304,23 +305,8 @@ namespace Encog.Neural.Networks.Training.Propagation
 
             _totalError = 0;
 
-            if (_workers.Length > 1)
-            {
-                TaskGroup group = EngineConcurrency.Instance
-                    .CreateTaskGroup();
-
-
-                foreach (GradientWorker worker in _workers)
-                {
-                    EngineConcurrency.Instance.ProcessTask(worker, group);
-                }
-
-                group.WaitForComplete();
-            }
-            else
-            {
-                _workers[0].Run();
-            }
+            Parallel.ForEach(_workers, worker => worker.Run());
+            
 
             CurrentError = _totalError / _workers.Length;
         }

@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.0 - .Net Version
+// Encog(tm) Core v3.1 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2011 Heaton Research, Inc.
+// Copyright 2008-2012 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 //
 using Encog.ML;
 using Encog.ML.Data;
+using Encog.Neural.PNN;
 
 namespace Encog.Util.Validate
 {
@@ -66,13 +67,16 @@ namespace Encog.Util.Validate
                     + trainingInputCount + ". They must be the same.");
             }
 
-            if (trainingOutputCount > 0 && methodOutputCount != trainingOutputCount)
+            if( !(method is BasicPNN) )
             {
-                throw new EncogError(
-                    "The machine learning method has an output length of "
-                    + methodOutputCount
-                    + ", but the training data has "
-                    + trainingOutputCount + ". They must be the same.");
+                if (trainingOutputCount > 0 && methodOutputCount != trainingOutputCount)
+                {
+                    throw new EncogError(
+                        "The machine learning method has an output length of "
+                        + methodOutputCount
+                        + ", but the training data has "
+                        + trainingOutputCount + ". They must be the same.");
+                }
             }
         }
     }
