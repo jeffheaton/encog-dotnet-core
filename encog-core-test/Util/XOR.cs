@@ -124,28 +124,16 @@ namespace Encog.Util
 
         public static IMLDataSet CreateNoisyXORDataSet(int count)
         {
-<<<<<<< HEAD
-            IMLDataSet result = new BasicMLDataSet();
-=======
             var result = new BasicMLDataSet();
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             for (int i = 0; i < count; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-<<<<<<< HEAD
-                    IMLData inputData = new BasicMLData(XORInput[j]);
-                    IMLData idealData = new BasicMLData(XORIdeal[j]);
-                    IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
-                    inputData.Data[0] = inputData.Data[0] + RangeRandomizer.Randomize(-0.1, 0.1);
-                    inputData.Data[1] = inputData.Data[1] + RangeRandomizer.Randomize(-0.1, 0.1);
-=======
                     var inputData = new BasicMLData(XORInput[j]);
                     var idealData = new BasicMLData(XORIdeal[j]);
                     var pair = new BasicMLDataPair(inputData, idealData);
                     inputData[0] = inputData[0] + RangeRandomizer.Randomize(-0.1, 0.1);
                     inputData[1] = inputData[1] + RangeRandomizer.Randomize(-0.1, 0.1);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
                     result.Add(pair);
                 }
             }

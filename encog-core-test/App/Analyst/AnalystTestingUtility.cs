@@ -33,21 +33,13 @@ using Encog.Persist;
 using Encog.Util;
 using Encog.Util.File;
 using Encog.Util.Simple;
-<<<<<<< HEAD
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-=======
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
 namespace Encog.App.Analyst
 {
     public class AnalystTestingUtility
     {
-<<<<<<< HEAD
-        public const bool ConsoleOutput = false;
-=======
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         public const int MaxIterations = 100000;
         public const int MaxCycles = 10;
         private readonly FileInfo _analystFile;
@@ -87,26 +79,14 @@ namespace Encog.App.Analyst
             int cycles = 0;
             double e;
 
-<<<<<<< HEAD
-            if (ConsoleOutput)
-            {
-                EncogAnalyst.AddAnalystListener(new ConsoleAnalystListener());
-            }
-
-=======
             EncogAnalyst.AddAnalystListener(new ConsoleAnalystListener());
             
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             do
             {
                 EncogAnalyst.ExecuteTask("task-full");
                 e = CalculateError();
-<<<<<<< HEAD
-                cycles++;
-=======
                 cycles++;
 				Debug.WriteLine(cycles + ": Error = " + e);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             } while (cycles <= MaxCycles && e > maxError);
 
             Assert.IsTrue(cycles <= MaxCycles, "Too many cycles to perform successful train.");

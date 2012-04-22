@@ -341,11 +341,7 @@ namespace Encog.Neural.Networks.Training.PNN
                         output = _network.Compute(input);
                     }
 
-<<<<<<< HEAD
-                    EngineArray.ArrayCopy(output.Data,xout);
-=======
 					output.CopyTo(xout, 0, output.Count);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
                     for (int i = 0; i < xout.Length; i++)
                     {

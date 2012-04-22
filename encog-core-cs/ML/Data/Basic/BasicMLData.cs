@@ -32,11 +32,7 @@ namespace Encog.ML.Data.Basic
     /// data in an array.  
     /// </summary>
     [Serializable]
-<<<<<<< HEAD
-    public class BasicMLData : IMLData
-=======
 	public class BasicMLData: IMLDataModifiable
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
     {
         protected double[] _data;
 
@@ -157,11 +153,7 @@ namespace Encog.ML.Data.Basic
         /// <returns>The result.</returns>
         public IMLData Times(double d)
         {
-<<<<<<< HEAD
-            IMLData result = new BasicMLData(Count);
-=======
             var result = new BasicMLData(Count);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] * d;
@@ -179,24 +171,16 @@ namespace Encog.ML.Data.Basic
             if (Count != o.Count)
                 throw new EncogError("Counts must match.");
 
-<<<<<<< HEAD
-            IMLData result = new BasicMLData(Count);
-=======
             var result = new BasicMLData(Count);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             for (int i = 0; i < Count; i++)
                 result[i] = this[i] - o[i];
 
             return result;
         }
 
-<<<<<<< HEAD
-    }
-=======
 		public void CopyTo(double[] target, int targetIndex, int count)
 		{
 			EngineArray.ArrayCopy(_data, 0, target, targetIndex, count);
 		}
 	}
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 }

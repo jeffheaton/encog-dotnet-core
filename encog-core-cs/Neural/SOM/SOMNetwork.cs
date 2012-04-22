@@ -83,20 +83,12 @@ namespace Encog.Neural.SOM
             }
 
             double[][] m = _weights.Data;
-<<<<<<< HEAD
-            double[] inputData = input.Data;
-=======
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             double minDist = Double.PositiveInfinity;
             int result = -1;
 
             for (int i = 0; i < OutputCount; i++)
             {
-<<<<<<< HEAD
-                double dist = EngineArray.EuclideanDistance(inputData, m[i]);
-=======
                 double dist = EngineArray.EuclideanDistance(input, m[i]);
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
                 if (dist < minDist)
                 {
                     minDist = dist;

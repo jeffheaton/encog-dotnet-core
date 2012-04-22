@@ -46,7 +46,6 @@ namespace Encog.Examples.CSVMarketExample
 
             var desc = new MarketDataDescription(Config.TICKER, MarketDataType.Close, true, true);
             market.AddDescription(desc);
-            string currentDirectory =@"c:\";
             loader.GetFile(fileName);
 
             var end = DateTime.Now; // end today

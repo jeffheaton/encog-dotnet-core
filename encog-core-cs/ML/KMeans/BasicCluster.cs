@@ -73,11 +73,7 @@ namespace Encog.ML.KMeans
         /// <returns>The dataset.</returns>
         public IMLDataSet CreateDataSet()
         {
-<<<<<<< HEAD:encog-core-cs/ML/KMeans/BasicCluster.cs
-            IMLDataSet result = new BasicMLDataSet();
-=======
             var result = new BasicMLDataSet();
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb:encog-core-cs/ML/KMeans/BasicCluster.cs
 
             foreach (IMLData dataItem in _data)
             {

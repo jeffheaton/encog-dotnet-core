@@ -103,8 +103,8 @@
     <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Normalize\NormalizeFile.cs" />
     <Compile Include="Examples\Normalize\SimpleNormalize.cs" />
-    <Compile Include="Examples\Persist\PersistEncog.cs" />
-    <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Persist\PersistEncog.cs" />
+    <Compile Include="Persist\PersistSerial.cs" />
     <Compile Include="Examples\Analyzer\Prunes.cs" />
     <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
     <Compile Include="Examples\Predict\PredictSunspot.cs" />

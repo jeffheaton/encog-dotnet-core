@@ -203,13 +203,8 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-<<<<<<< HEAD
-                    double d = this._script.DetermineFormat().Parse(str);
-                    _devTotal += Math.Pow((d - Mean), 2);
-=======
                     double d = this._script.DetermineFormat().Parse(str) - Mean;
                     _devTotal += d * d;
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
                 }
             }
         }

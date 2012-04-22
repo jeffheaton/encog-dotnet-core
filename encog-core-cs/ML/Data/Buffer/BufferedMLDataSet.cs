@@ -57,11 +57,7 @@ namespace Encog.ML.Data.Buffer
         /// True, if we are in the process of loading.
         /// </summary>
         [NonSerialized]
-<<<<<<< HEAD
-            private bool loading;
-=======
             private bool _loading;
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
         /// <summary>
         /// The file being used.
@@ -72,21 +68,13 @@ namespace Encog.ML.Data.Buffer
         /// The EGB file we are working wtih.
         /// </summary>
         [NonSerialized]
-<<<<<<< HEAD
-            private EncogEGBFile egb;
-=======
             private EncogEGBFile _egb;
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
         /// <summary>
         /// Additional sets that were opened.
         /// </summary>
         [NonSerialized]
-<<<<<<< HEAD
-            private readonly IList<BufferedMLDataSet> additional = new List<BufferedMLDataSet>();
-=======
             private readonly IList<BufferedMLDataSet> _additional = new List<BufferedMLDataSet>();
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
         /// <summary>
         /// The owner.
@@ -146,29 +134,6 @@ namespace Encog.ML.Data.Buffer
         }
 
         /// <summary>
-<<<<<<< HEAD
-        /// Read an individual record. 
-        /// </summary>
-        /// <param name="index">The zero-based index. Specify 0 for the first record, 1 for
-        /// the second, and so on.</param>
-        /// <param name="pair">The data to read.</param>
-        public void GetRecord(long index, IMLDataPair pair)
-        {
-            double[] inputTarget = pair.InputArray;
-            double[] idealTarget = pair.IdealArray;
-
-            egb.SetLocation((int) index);
-            egb.Read(inputTarget);
-            if (idealTarget != null)
-            {
-                egb.Read(idealTarget);
-            }
-            pair.Significance = egb.Read();
-        }
-
-        /// <summary>
-=======
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         /// Open an additional training set.
         /// </summary>
         /// <returns>An additional training set.</returns>

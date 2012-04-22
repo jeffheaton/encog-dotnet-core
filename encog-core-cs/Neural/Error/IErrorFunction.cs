@@ -20,10 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-<<<<<<< HEAD
-=======
 using Encog.ML.Data;
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 namespace Encog.Neural.Error
 {
     /// <summary>

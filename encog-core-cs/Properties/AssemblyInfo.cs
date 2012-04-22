@@ -28,11 +28,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Encog")]
-<<<<<<< HEAD
-[assembly: AssemblyDescription("Encog Artificial Intelligence Framework v3.0.1")]
-=======
 [assembly: AssemblyDescription("Encog Artificial Intelligence Framework v3.1")]
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Heaton Research, Inc.")]
 [assembly: AssemblyProduct("Encog")]
@@ -61,5 +57,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("3.0.1.0")]
-[assembly: AssemblyFileVersion("3.0.1.0")]
+[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyFileVersion("3.1.0.0")]

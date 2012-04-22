@@ -510,9 +510,6 @@ namespace Encog.Util
             return result;
         }
 
-<<<<<<< HEAD
-        internal static int[][] AllocateInt2D(int rows, int cols)
-=======
 		/// <summary>
 		/// Subtract two vectors.
 		/// </summary>
@@ -530,7 +527,6 @@ namespace Encog.Util
 		}
 
 		internal static int[][] AllocateInt2D(int rows, int cols)
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         {
             var result = new int[rows][];
             for (int i = 0; i < rows; i++)
@@ -588,9 +584,6 @@ namespace Encog.Util
             }
             return Math.Sqrt(sum);
         }
-<<<<<<< HEAD
-    }
-=======
 
 		/// <summary>
 		/// Calculate the Euclidean distance between two vectors.
@@ -609,5 +602,4 @@ namespace Encog.Util
 			return Math.Sqrt(sum);
 		}
 	}
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 }

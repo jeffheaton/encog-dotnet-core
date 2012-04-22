@@ -10,6 +10,11 @@ namespace Encog.ML.Data.Dynamic
 	/// </summary>
 	public class DynamicMLDataSet : IMLDataSet
 	{
+        /// <summary>
+        ///  Initializes a new instance of the DynamicMLDataSet class.
+        /// </summary>
+        /// <param name="input"> The input. </param>
+        /// <param name="ideal"> The ideal. </param>
 		public DynamicMLDataSet(IDynamicMLDataProvider input, IDynamicMLDataProvider ideal)
 		{
 			InputArgs = input;
@@ -17,38 +22,69 @@ namespace Encog.ML.Data.Dynamic
 			Count = Math.Min(input.Count, ideal.Count);
 		}
 
+        /// <summary>
+        ///  The ideal arguments.
+        /// </summary>
 		public readonly IDynamicMLDataProvider InputArgs, IdealArgs;
 
-		/// <summary>
-        /// The size of the ideal data, 0 if no ideal data.
+        /// <summary>
+        ///  The size of the ideal data (>0 supervised), 0 if no ideal data (unsupervised)
         /// </summary>
+        /// <value>
+        ///  The size of the ideal.
+        /// </value>
 		public int IdealSize { get { return IdealArgs.Size; } }
 
         /// <summary>
-        /// The size of the input data.
+        ///  The size of the input data.
         /// </summary>
+        /// <value>
+        ///  The size of the input.
+        /// </value>
 		public int InputSize { get { return InputArgs.Size; } }
 
         /// <summary>
-        /// The number of records in the data set.
+        ///  The number of records in the data set.
         /// </summary>
+        /// <value>
+        ///  The count.
+        /// </value>
 		public int Count { get; private set; }
 
+        /// <summary>
+        ///  Return true if supervised.
+        /// </summary>
+        /// <value>
+        ///  true if supervised, false if not.
+        /// </value>
 		public bool Supervised
 		{
 			get { return true; }
 		}
 
+        /// <summary>
+        ///  Close this datasource and release any resources obtained by it, including any iterators
+        ///  created.
+        /// </summary>
 		public void Close()
 		{
 			// nothing to close
 		}
 
+        /// <summary>
+        ///  Get an enumerator to access the data.
+        /// </summary>
+        /// <returns>
+        ///  The enumerator.
+        /// </returns>
 		public IEnumerator<IMLDataPair> GetEnumerator()
 		{
 			return new DynamicMLDataSetEnumerator(this);
 		}
 
+        /// <summary>
+        ///  Dynamic ML data set enumerator.
+        /// </summary>
 		private class DynamicMLDataSetEnumerator: IEnumerator<IMLDataPair>
 		{
 			private int _position = -1;
@@ -80,21 +116,39 @@ namespace Encog.ML.Data.Dynamic
 			}
 		}
 
-		/// <summary>
-		/// eg. Clone
-		/// </summary>
+        /// <summary>
+        ///  eg. Clone.
+        /// </summary>
+        /// <returns>
+        ///  .
+        /// </returns>
 		public IMLDataSet OpenAdditional()
 		{
 			return new DynamicMLDataSet(InputArgs, IdealArgs);
 		}
 
+        /// <summary>
+        ///  Get the specified record.
+        /// </summary>
+        /// <value>
+        ///  The indexed item.
+        /// </value>
+        ///
+        /// ### <param name="x"> The index to access. </param>
+        /// ### <returns>
+        ///  .
+        /// </returns>
 		public IMLDataPair this[int x]
 		{
-			get {
+			get 
+            {
 				return new DynamicMLDataPair(this, x);
 			}
 		}
 
+        /// <summary>
+        ///  Dynamic ML data pair.
+        /// </summary>
 		private class DynamicMLDataPair: IMLDataPair
 		{
 			private readonly DynamicMLDataSet _ds;
@@ -122,6 +176,12 @@ namespace Encog.ML.Data.Dynamic
 				get; set;
 			}
 
+            /// <summary>
+            ///  Makes a deep copy of this object.
+            /// </summary>
+            /// <returns>
+            ///  A copy of this object.
+            /// </returns>
 			public object Clone()
 			{
 				return new DynamicMLDataPair(_ds, _index);
@@ -144,7 +204,8 @@ namespace Encog.ML.Data.Dynamic
 
 				public double this[int x]
 				{
-					get {
+					get 
+                    {
 						return _provider[_index, x];
 					}
 				}

@@ -33,11 +33,7 @@ namespace Encog.ML.Data.Specific
     /// is stored as -1.
     /// </summary>
     [Serializable]
-<<<<<<< HEAD
-    public class BiPolarMLData : IMLData
-=======
 	public class BiPolarMLData: IMLDataModifiable
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
     {
         /// <summary>
         /// The data held by this object.
@@ -159,14 +155,10 @@ namespace Encog.ML.Data.Specific
             return null;
         }
 
-<<<<<<< HEAD
-    }
-=======
 		public void CopyTo(double[] target, int targetIndex, int count)
 		{
 			for(int i = 0; i < count; i++)
 				target[i + targetIndex] = _data[i] ? 1.0 : -1.0;
 		}
 	}
->>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 }
