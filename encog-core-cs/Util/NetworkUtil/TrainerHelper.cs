@@ -118,13 +118,13 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static IMLDataSet ProcessDoubleSerieIntoIMLDataset(double[] data, int _inputWindow, int _predictWindow)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
             for (int i = 0; i < stopPoint; i++)
             {
-                IMLData inputData = new BasicMLData(_inputWindow);
-                IMLData idealData = new BasicMLData(_predictWindow);
+                var inputData = new BasicMLData(_inputWindow);
+                var idealData = new BasicMLData(_predictWindow);
                 int index = i;
                 // handle input window
                 for (int j = 0; j < _inputWindow; j++)
@@ -137,7 +137,7 @@ namespace Encog.Util.NetworkUtil
                 {
                     idealData[j] = data[index++];
                 }
-                IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
+                var pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }
 
@@ -159,7 +159,7 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static IMLDataSet ProcessDoubleSerieIntoIMLDataset(List<double> datainput,List<double>ideals, int _inputWindow, int _predictWindow)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             //int count = 0;
             ////lets check if there is a modulo , if so we move forward in the List of doubles in inputs.This is just a check
             ////as the data of inputs should be able to fill without having .
@@ -167,8 +167,8 @@ namespace Encog.Util.NetworkUtil
             //{
             //    count++;
             //}
-            IMLData inputData = new BasicMLData(_inputWindow);
-            IMLData idealData = new BasicMLData(_predictWindow);
+            var inputData = new BasicMLData(_inputWindow);
+            var idealData = new BasicMLData(_predictWindow);
             foreach (double d in datainput)
             {
                 // handle input window
@@ -185,8 +185,8 @@ namespace Encog.Util.NetworkUtil
                     idealData[j] =ideal;
                 }
             }
-                IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
-                result.Add(pair);
+            var pair = new BasicMLDataPair(inputData, idealData);
+            result.Add(pair);
             return result;
         }
 
@@ -358,11 +358,11 @@ namespace Encog.Util.NetworkUtil
         /// <returns></returns>
         public static IMLDataPair ProcessPairs(double[] data, double[] ideal, int _inputWindow, int _predictWindow)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             for (int i = 0; i < data.Length; i++)
             {
-                IMLData inputData = new BasicMLData(_inputWindow);
-                IMLData idealData = new BasicMLData(_predictWindow);
+                var inputData = new BasicMLData(_inputWindow);
+                var idealData = new BasicMLData(_predictWindow);
                 int index = i;
                 // handle input window
                 for (int j = 0; j < _inputWindow; j++)

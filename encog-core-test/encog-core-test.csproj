@@ -87,6 +87,7 @@
     <Compile Include="ML\Data\Market\TestYahooLoader.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
+    <Compile Include="ML\Data\Dynamic\TestDynamic.cs" />
     <Compile Include="ML\Data\Temporal\TestTemporal.cs" />
     <Compile Include="ML\HMM\TestHMM.cs" />
     <Compile Include="ML\KMeans\TestKMeans.cs" />

@@ -354,7 +354,7 @@ namespace Encog.ML.SVM
                     + "and no model exists.");
             }
 
-            IMLData result = new BasicMLData(1);
+            var result = new BasicMLData(1);
 
             svm_node[] formattedInput = MakeSparse(input);
 

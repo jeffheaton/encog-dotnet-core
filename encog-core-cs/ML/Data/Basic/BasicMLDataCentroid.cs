@@ -47,21 +47,32 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public void Add(IMLData d)
         {
+<<<<<<< HEAD
             double[] a = d.Data;
 
             for (int i = 0; i < value.Count; i++)
                 value.Data[i] =
                     ((value.Data[i] * value.Count + a[i]) / (value.Count + 1));
+=======
+            for (int i = 0; i < value.Count; i++)
+                value.Data[i] = ((value.Data[i] * value.Count + d[i]) / (value.Count + 1));
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         }
 
         /// <inheritdoc/>
         public void Remove(IMLData d)
         {
+<<<<<<< HEAD
             double[] a = d.Data;
 
             for (int i = 0; i < value.Count; i++)
                 value[i] =
                     ((value[i] * value.Count - a[i]) / (value.Count - 1));
+=======
+            for (int i = 0; i < value.Count; i++)
+                value[i] =
+                    ((value[i] * value.Count - d[i]) / (value.Count - 1));
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         }
 
         /// <inheritdoc/>

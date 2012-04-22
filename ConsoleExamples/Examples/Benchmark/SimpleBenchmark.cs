@@ -68,12 +68,8 @@ namespace Encog.Examples.Benchmark
 
             for (int i = 0; i < 10; i++)
             {
-                long time1 = BenchmarkEncog(input, output);
-                var line = new StringBuilder();
-                line.Append(@"Regular: ");
-                line.Append(Format.FormatInteger((int) time1));
-
-                Console.WriteLine(line.ToString());
+                long time = BenchmarkEncog(input, output);
+                Console.WriteLine("Regular: {0}ms", time);
             }
         }
 
@@ -89,7 +85,7 @@ namespace Encog.Examples.Benchmark
             network.AddLayer(new BasicLayer(new ActivationSigmoid(), false,
                                             output[0].Length));
             network.Structure.FinalizeStructure();
-            network.Reset();
+            network.Reset(23); // constant seed for repeatable testing
 
             IMLDataSet trainingSet = new BasicMLDataSet(input, output);
 
@@ -112,12 +108,13 @@ namespace Encog.Examples.Benchmark
         private static double[][] Generate(int rows, int columns)
         {
             double[][] result = EngineArray.AllocateDouble2D(rows, columns);
+			var rand = new Random(42); // same value every time for a benchmark
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    result[i][j] = ThreadSafeRandom.NextDouble();
+                    result[i][j] = rand.NextDouble();
                 }
             }
 

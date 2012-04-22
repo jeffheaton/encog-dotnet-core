@@ -117,12 +117,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         private readonly Propagation _owner;
 
         /// <summary>
-        /// The pair to use for training.
-        /// </summary>
-        ///
-        private readonly IMLDataPair _pair;
-
-        /// <summary>
         /// The training data.
         /// </summary>
         ///
@@ -185,9 +179,6 @@ namespace Encog.Neural.Networks.Training.Propagation
             _layerSums = _network.LayerSums;
             _layerFeedCounts = _network.LayerFeedCounts;
             _ef = ef;
-
-            _pair = BasicMLDataPair.CreatePair(_network.InputCount,
-                                              _network.OutputCount);
         }
 
         #region FlatGradientWorker Members
@@ -216,8 +207,8 @@ namespace Encog.Neural.Networks.Training.Propagation
                 _errorCalculation.Reset();
                 for (int i = _low; i <= _high; i++)
                 {
-                    _training.GetRecord(i, _pair);
-                    Process(_pair.InputArray, _pair.IdealArray, _pair.Significance);
+                    var pair = _training[i];
+                    Process(pair);
                 }
                 double error = _errorCalculation.Calculate();
                 _owner.Report(_gradients, error, null);
@@ -238,18 +229,18 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// <param name="input">The network input.</param>
         /// <param name="ideal">The ideal values.</param>
         /// <param name="s">The significance of this error.</param>
-        private void Process(double[] input, double[] ideal, double s)
+        private void Process(IMLDataPair pair)
         {
-            _network.Compute(input, _actual);
+            _network.Compute(pair.Input, _actual);
 
-            _errorCalculation.UpdateError(_actual, ideal, s);
-            _ef.CalculateError(ideal,_actual,_layerDelta);
+            _errorCalculation.UpdateError(_actual, pair.Ideal, pair.Significance);
+            _ef.CalculateError(pair.Ideal,_actual,_layerDelta);
 
             for (int i = 0; i < _actual.Length; i++)
             {
                 _layerDelta[i] = (_network.ActivationFunctions[0]
-                                    .DerivativeFunction(_layerSums[i],_layerOutput[i])+_flatSpot[0])
-                                *_layerDelta[i] * s;
+                    .DerivativeFunction(_layerSums[i],_layerOutput[i])+_flatSpot[0])
+                    *_layerDelta[i] * pair.Significance;
             }
 
             for (int i = _network.BeginTraining; i < _network.EndTraining; i++)

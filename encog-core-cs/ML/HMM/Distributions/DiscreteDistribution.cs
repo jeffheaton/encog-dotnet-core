@@ -163,7 +163,11 @@ namespace Encog.ML.HMM.Distributions
         /// <returns>The random element.</returns>
         public IMLDataPair Generate()
         {
+<<<<<<< HEAD
             IMLData result = new BasicMLData(_probabilities.Length);
+=======
+            var result = new BasicMLData(_probabilities.Length);
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
             for (int i = 0; i < _probabilities.Length; i++)
             {

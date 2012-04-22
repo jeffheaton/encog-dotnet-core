@@ -248,7 +248,7 @@ namespace Encog.Neural.PNN
                 }
             }
 
-            return new BasicMLData(xout);
+            return new BasicMLData(xout, false);
         }
 
         /// <inheritdoc/>
@@ -275,7 +275,11 @@ namespace Encog.Neural.PNN
         public int Classify(IMLData input)
         {
             IMLData output = Compute(input);
+<<<<<<< HEAD
             return EngineArray.MaxIndex(output.Data);
+=======
+            return EngineArray.MaxIndex(output);
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
         }
     }
 }

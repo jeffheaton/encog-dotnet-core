@@ -33,7 +33,11 @@ namespace Encog.ML.Data.Specific
     /// is stored as -1.
     /// </summary>
     [Serializable]
+<<<<<<< HEAD
     public class BiPolarMLData : IMLData
+=======
+	public class BiPolarMLData: IMLDataModifiable
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
     {
         /// <summary>
         /// The data held by this object.
@@ -44,9 +48,8 @@ namespace Encog.ML.Data.Specific
         /// Construct this object with the specified data. 
         /// </summary>
         /// <param name="d">The data to create this object with.</param>
-        public BiPolarMLData(bool[] d)
+        public BiPolarMLData(bool[] d) : this(d.Length)
         {
-            _data = new bool[d.Length];
             for (int i = 0; i < d.Length; i++)
             {
                 _data[i] = d[i];
@@ -79,7 +82,7 @@ namespace Encog.ML.Data.Specific
         public double[] Data
         {
             get { return BiPolarUtil.Bipolar2double(_data); }
-            set { _data = BiPolarUtil.Double2bipolar(value); }
+			internal set { _data = BiPolarUtil.Double2bipolar(value); }
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace Encog.ML.Data.Specific
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             var result = new StringBuilder();
             result.Append('[');
@@ -156,5 +159,14 @@ namespace Encog.ML.Data.Specific
             return null;
         }
 
+<<<<<<< HEAD
     }
+=======
+		public void CopyTo(double[] target, int targetIndex, int count)
+		{
+			for(int i = 0; i < count; i++)
+				target[i + targetIndex] = _data[i] ? 1.0 : -1.0;
+		}
+	}
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 }

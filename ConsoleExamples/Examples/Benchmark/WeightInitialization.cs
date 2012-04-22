@@ -22,7 +22,6 @@
 //
 using System;
 using ConsoleExamples.Examples;
-using Encog.Mathutil.Randomize;
 using Encog.MathUtil.Randomize;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;

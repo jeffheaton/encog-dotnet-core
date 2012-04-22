@@ -375,7 +375,26 @@ namespace Encog.ML.Data.Buffer
             }
         }
 
-        /// <summary>
+		/// <summary>
+		/// Write the data from an IMLData
+		/// </summary>
+		/// <param name="v">The array to write.</param>
+		public void Write(IMLData v)
+		{
+			try
+			{
+				for(int i = 0; i < v.Count; i++)
+				{
+					_binaryWriter.Write(v[i]);
+				}
+			}
+			catch(IOException ex)
+			{
+				throw new BufferedDataError(ex);
+			}
+		}
+
+		/// <summary>
         /// Write a byte. 
         /// </summary>
         /// <param name="b">The byte to write.</param>
@@ -467,7 +486,7 @@ namespace Encog.ML.Data.Buffer
             }
         }
 
-        /// <summary>
+		/// <summary>
         /// Read a single double. 
         /// </summary>
         /// <returns>The double read.</returns>

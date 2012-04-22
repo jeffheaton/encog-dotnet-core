@@ -100,7 +100,11 @@ namespace Encog.ML.HMM.Alog
 
         public IMLDataSet ObservationSequence(int length)
         {
+<<<<<<< HEAD
             IMLDataSet sequence = new BasicMLDataSet();
+=======
+            var sequence = new BasicMLDataSet();
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             while (length-- > 0)
             {
                 sequence.Add(Observation());

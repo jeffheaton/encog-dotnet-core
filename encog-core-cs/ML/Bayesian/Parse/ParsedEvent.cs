@@ -131,7 +131,7 @@ namespace Encog.ML.Bayesian.Parse
         }
 
         /// <inheritdoc/>
-        public String ToString()
+        public override String ToString()
         {
             StringBuilder result = new StringBuilder();
             result.Append("[ParsedEvent:label=");

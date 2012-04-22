@@ -290,14 +290,12 @@ namespace Encog.Neural.Networks.Training.PNN
 
             _network.Exclude = (int) training.Count;
 
-            IMLDataPair pair = BasicMLDataPair.CreatePair(
-                training.InputSize, training.IdealSize);
-
+			IMLDataPair pair;
             var xout = new double[_network.OutputCount];
 
             for (int r = 0; r < training.Count; r++)
             {
-                training.GetRecord(r, pair);
+                pair = training[r];
                 _network.Exclude = _network.Exclude - 1;
 
                 double err = 0.0d;
@@ -343,7 +341,11 @@ namespace Encog.Neural.Networks.Training.PNN
                         output = _network.Compute(input);
                     }
 
+<<<<<<< HEAD
                     EngineArray.ArrayCopy(output.Data,xout);
+=======
+					output.CopyTo(xout, 0, output.Count);
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
 
                     for (int i = 0; i < xout.Length; i++)
                     {
@@ -461,11 +463,11 @@ namespace Encog.Neural.Networks.Training.PNN
                 }
             }
 
-            IMLDataPair pair = BasicMLDataPair.CreatePair(_network.Samples.InputSize, _network.Samples.IdealSize);
+            IMLDataPair pair;
 
             for (int r = 0; r < _network.Samples.Count; r++)
             {
-                _network.Samples.GetRecord(r, pair);
+                pair = _network.Samples[r];
 
                 if (r == _network.Exclude)
                 {

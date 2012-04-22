@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.ML.Data;
 
 namespace Encog.Neural.Error
 {
@@ -34,7 +35,7 @@ namespace Encog.Neural.Error
         #region IErrorFunction Members
 
         /// <inheritdoc/>
-        public void CalculateError(double[] ideal, double[] actual,
+        public void CalculateError(IMLData ideal, double[] actual,
                                    double[] error)
         {
             for (int i = 0; i < actual.Length; i++)

@@ -144,17 +144,16 @@ namespace Encog.Examples.RateSP500
                     IMLData data = new BasicMLData(present);
 
                     IMLData Output = network.Compute(data);
-                    double[] predict = Output.Data;
 
                     str.Append(",Actual % Change=");
                     str.Append(actualOutput[0].ToString("N2"));
                     str.Append(",Predicted % Change= ");
-                    str.Append(predict[0].ToString("N2"));
+                    str.Append(Output[0].ToString("N2"));
 
                     str.Append(":Difference=");
 
                     ErrorCalculation error = new ErrorCalculation();
-                    error.UpdateError(Output.Data, actualOutput, 1);
+                    error.UpdateError(Output, actualOutput, 1);
                     str.Append(error.CalculateRMS().ToString("N2"));
                     // 
                     Console.WriteLine(str.ToString());

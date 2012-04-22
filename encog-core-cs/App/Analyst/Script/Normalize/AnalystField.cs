@@ -30,6 +30,7 @@ using Encog.MathUtil;
 using Encog.Util;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
+using Encog.ML.Data;
 
 namespace Encog.App.Analyst.Script.Normalize
 {
@@ -453,11 +454,12 @@ namespace Encog.App.Analyst.Script.Normalize
         /// <param name="pos">The position to begin.</param>
         /// <param name="data">The array to check.</param>
         /// <returns>The class item.</returns>
-        public ClassItem DetermineClass(int pos, double[] data)
+        public ClassItem DetermineClass(int pos, IMLData data)
         {
             int resultIndex = 0;
             var d = new double[ColumnsNeeded];
-            EngineArray.ArrayCopy(data, pos, d, 0, d.Length);
+			for(int i = 0; i < d.Length; i++)
+				d[i] = data[pos + i];
 
             switch (_action)
             {

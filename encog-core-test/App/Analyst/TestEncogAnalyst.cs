@@ -123,7 +123,11 @@ namespace Encog.App.Analyst
 
         [TestMethod]
         public void TestIrisClassificationPNN()
+<<<<<<< HEAD
         {
+=======
+        {
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
             test.Wizard(AnalystGoal.Classification, WizardMethodType.PNN, true);
 

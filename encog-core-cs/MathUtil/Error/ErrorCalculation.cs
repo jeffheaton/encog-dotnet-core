@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.ML.Data;
 
 namespace Encog.MathUtil.Error
 {
@@ -142,7 +143,52 @@ namespace Encog.MathUtil.Error
             _setSize += ideal.Length;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Called to update for each number that should be checked.
+		/// </summary>
+		public void UpdateError(IMLData actual, IMLData ideal, double significance)
+		{
+			for(int i = 0; i < actual.Count; i++)
+			{
+				double delta = ideal[i] - actual[i];
+
+				_globalError += delta * delta;
+			}
+
+			_setSize += ideal.Count;
+		}
+
+		/// <summary>
+		/// Called to update for each number that should be checked.
+		/// </summary>
+		public void UpdateError(double[] actual, IMLData ideal, double significance)
+		{
+			for(int i = 0; i < actual.Length; i++)
+			{
+				double delta = ideal[i] - actual[i];
+
+				_globalError += delta * delta;
+			}
+
+			_setSize += ideal.Count;
+		}
+
+		/// <summary>
+		/// Called to update for each number that should be checked.
+		/// </summary>
+		public void UpdateError(IMLData actual, double[] ideal, double significance)
+		{
+			for(int i = 0; i < actual.Count; i++)
+			{
+				double delta = ideal[i] - actual[i];
+
+				_globalError += delta * delta;
+			}
+
+			_setSize += ideal.Length;
+		}
+
+		/// <summary>
         /// Update the error with single values.
         /// </summary>
         /// <param name="actual">The actual value.</param>

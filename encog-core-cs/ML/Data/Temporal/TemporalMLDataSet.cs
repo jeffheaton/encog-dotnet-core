@@ -269,7 +269,7 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="inputData">Not used</param>
         /// <param name="idealData">Not used</param>
-        public override void Add(IMLData inputData, IMLData idealData)
+        public sealed override void Add(IMLData inputData, IMLData idealData)
         {
             throw new TemporalError(AddNotSupported);
         }
@@ -279,7 +279,7 @@ namespace Encog.ML.Data.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="inputData">Not used.</param>
-        public override void Add(IMLDataPair inputData)
+        public sealed override void Add(IMLDataPair inputData)
         {
             throw new TemporalError(AddNotSupported);
         }
@@ -289,7 +289,7 @@ namespace Encog.ML.Data.Temporal
         /// generate the training data.
         /// </summary>
         /// <param name="data">Not used.</param>
-        public override void Add(IMLData data)
+        public sealed override void Add(IMLData data)
         {
             throw new TemporalError(AddNotSupported);
         }

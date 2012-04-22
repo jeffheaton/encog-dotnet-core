@@ -92,7 +92,7 @@ namespace Encog.MathUtil
             _rms = Math.Sqrt(rmsTotal/_samples);
 
             // now get the standard deviation
-            double devTotal = values.Sum(d => Math.Pow(d - _mean, 2));
+            double devTotal = values.Sum(d => (d - _mean) * (d - _mean));
 
             _standardDeviation = Math.Sqrt(devTotal/_samples);
         }

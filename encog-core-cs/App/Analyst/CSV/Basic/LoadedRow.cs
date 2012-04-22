@@ -22,6 +22,7 @@
 //
 using System;
 using Encog.Util.CSV;
+using Encog.ML.Data;
 
 namespace Encog.App.Analyst.CSV.Basic
 {
@@ -62,6 +63,38 @@ namespace Encog.App.Analyst.CSV.Basic
                 _data[i] = csv.Get(i);
             }
         }
+
+        /// <summary>
+        /// Construct a loaded row from an array.
+        /// </summary>
+        /// <param name="format">The format to store the numbers in.</param>
+        /// <param name="data">The data to use.</param>
+        /// <param name="extra">The extra positions to allocate.</param>
+        public LoadedRow(CSVFormat format, double[] data, int extra)
+        {
+            int count = data.Length;
+            _data = new String[count + extra];
+            for (int i = 0; i < count; i++)
+            {
+                _data[i] = format.Format(data[i], 5);
+            }
+        }
+
+		/// <summary>
+		/// Construct a loaded row from an IMLData.
+		/// </summary>
+		/// <param name="format">The format to store the numbers in.</param>
+		/// <param name="data">The data to use.</param>
+		/// <param name="extra">The extra positions to allocate.</param>
+		public LoadedRow(CSVFormat format, IMLData data, int extra)
+		{
+			int count = data.Count;
+			_data = new String[count + extra];
+			for(int i = 0; i < count; i++)
+			{
+				_data[i] = format.Format(data[i], 5);
+			}
+		}
 
 
         /// <value>The row data.</value>

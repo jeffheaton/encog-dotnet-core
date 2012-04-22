@@ -38,11 +38,6 @@ namespace Encog.ML.Data.Folded
     public class FoldedDataSet : IMLDataSet
     {
         /// <summary>
-        /// Error message: adds are not supported.
-        /// </summary>
-        public const String AddNotSupported = "Direct adds to the folded dataset are not supported.";
-
-        /// <summary>
         /// The underlying dataset.
         /// </summary>
         private readonly IMLDataSet _underlying;
@@ -174,41 +169,12 @@ namespace Encog.ML.Data.Folded
         #region MLDataSet Members
 
         /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="data1">Not used.</param>
-        public void Add(IMLData data1)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        /// <param name="idealData">Not used.</param>
-        public void Add(IMLData inputData, IMLData idealData)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        /// <param name="inputData">Not used.</param>
-        public void Add(IMLDataPair inputData)
-        {
-            throw new TrainingError(AddNotSupported);
-        }
-
-        /// <summary>
         /// Close the dataset.
         /// </summary>
         public void Close()
         {
             _underlying.Close();
         }
-
 
         /// <summary>
         /// The ideal size.
@@ -227,19 +193,9 @@ namespace Encog.ML.Data.Folded
         }
 
         /// <summary>
-        /// Get a record.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <param name="pair">The record.</param>
-        public void GetRecord(long index, IMLDataPair pair)
-        {
-            _underlying.GetRecord(CurrentFoldOffset + index, pair);
-        }
-
-        /// <summary>
         /// The record count.
         /// </summary>
-        public long Count
+        public int Count
         {
             get { return CurrentFoldSize; }
         }
@@ -281,10 +237,10 @@ namespace Encog.ML.Data.Folded
         /// <param name="numFolds">The number of folds.</param>
         public void Fold(int numFolds)
         {
-            _numFolds = (int) Math.Min(numFolds, _underlying
-                                                         .Count);
-            _foldSize = (int) (_underlying.Count/_numFolds);
-            _lastFoldSize = (int) (_underlying.Count - (_foldSize*_numFolds));
+            _numFolds = Math.Min(numFolds, _underlying
+                                               .Count);
+            _foldSize = _underlying.Count/_numFolds;
+            _lastFoldSize = _underlying.Count - (_foldSize*_numFolds);
             CurrentFold = 0;
         }
 
@@ -293,9 +249,7 @@ namespace Encog.ML.Data.Folded
         {
             get
             {
-                IMLDataPair result = BasicMLDataPair.CreatePair(InputSize, IdealSize);
-                this.GetRecord(x, result);
-                return result;
+				return _underlying[CurrentFoldOffset + x];
             }
         }
     }

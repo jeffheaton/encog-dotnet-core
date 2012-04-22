@@ -77,6 +77,7 @@ namespace Encog.App.Analyst.CSV.Normalize
 
             foreach (AnalystField stat in analyst.Script.Normalize.NormalizedFields)
             {
+                stat.Init();
                 if (stat.Action == NormalizationAction.Ignore)
                 {
                     continue;

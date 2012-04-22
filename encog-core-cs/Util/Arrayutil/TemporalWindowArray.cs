@@ -140,15 +140,15 @@ namespace Encog.Util.Arrayutil
         /// <returns>A neural data set that contains the time-series.</returns>
         public IMLDataSet Process(double[] data)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
 
             int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
 
             for (int i = 0; i < stopPoint; i++)
             {
-                IMLData inputData = new BasicMLData(_inputWindow);
-                IMLData idealData = new BasicMLData(_predictWindow);
+                var inputData = new BasicMLData(_inputWindow);
+                var idealData = new BasicMLData(_predictWindow);
 
                 int index = i;
 
@@ -164,7 +164,7 @@ namespace Encog.Util.Arrayutil
                     idealData[j] = data[index++];
                 }
 
-                IMLDataPair pair = new BasicMLDataPair(inputData, idealData);
+                var pair = new BasicMLDataPair(inputData, idealData);
                 result.Add(pair);
             }
 
@@ -182,7 +182,7 @@ namespace Encog.Util.Arrayutil
         /// <returns></returns>
         public IMLDataSet Process(double[][] data)
         {
-            IMLDataSet result = new BasicMLDataSet();
+            var result = new BasicMLDataSet();
             foreach (double[] doubles in data)
             {
                 result.Add(ProcessToPair(doubles));
@@ -198,15 +198,15 @@ namespace Encog.Util.Arrayutil
         /// <returns>An IMLDatapair containing data.</returns>
         public IMLDataPair ProcessToPair(double[] data)
         {
-
+			// not sure this method works right: it's only using the last pair?
             IMLDataPair pair = null;
             int totalWindowSize = _inputWindow + _predictWindow;
             int stopPoint = data.Length - totalWindowSize;
 
             for (int i = 0; i < stopPoint; i++)
             {
-                IMLData inputData = new BasicMLData(_inputWindow);
-                IMLData idealData = new BasicMLData(_predictWindow);
+                var inputData = new BasicMLData(_inputWindow);
+                var idealData = new BasicMLData(_predictWindow);
 
                 int index = i;
 

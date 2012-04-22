@@ -205,7 +205,11 @@ namespace Encog.ML.HMM.Train.KMeans
                 }
                 else
                 {
+<<<<<<< HEAD
                     IMLDataSet temp = new BasicMLDataSet();
+=======
+                    var temp = new BasicMLDataSet();
+>>>>>>> 3cecdad988a57547a1c266b95160c212150df7bb
                     foreach (IMLDataPair pair in clusterObservations)
                     {
                         temp.Add(pair);

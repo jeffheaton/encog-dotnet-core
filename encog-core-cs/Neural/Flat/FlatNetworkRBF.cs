@@ -112,5 +112,18 @@ namespace Encog.Neural.Flat
             EngineArray.ArrayCopy(LayerOutput, 0, output, 0,
                                   OutputCount);
         }
+
+		public override void Compute(ML.Data.IMLData input, double[] output)
+		{
+			if(input is ML.Data.Basic.BasicMLData)
+				Compute(((ML.Data.Basic.BasicMLData)input).Data, output);
+			else
+			{
+				// TODO: make this more efficient
+				var tmp = new double[input.Count];
+				input.CopyTo(tmp, 0, input.Count);
+				Compute(tmp, output);
+			}
+		}
     }
 }

@@ -53,7 +53,7 @@ namespace Encog.Examples.Lunar
             var sim = new LanderSimulator();
             while (sim.Flying)
             {
-                IMLData input = new BasicMLData(3);
+                var input = new BasicMLData(3);
                 input[0] = _fuelStats.Normalize(sim.Fuel);
                 input[1] = _altitudeStats.Normalize(sim.Altitude);
                 input[2] = _velocityStats.Normalize(sim.Velocity);

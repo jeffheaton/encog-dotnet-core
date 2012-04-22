@@ -174,7 +174,8 @@ namespace Encog.MathUtil
         /// <returns>The result of the addition.</returns>
         public static ComplexNumber operator /(ComplexNumber c1, ComplexNumber c2)
         {
-            double den = Math.Pow(c2.Mod(), 2);
+			var mod = c2.Mod();
+            double den = mod * mod;
             return new ComplexNumber((c1.Real*c2.Real + c1.Imaginary
                                       *c2.Imaginary)/den, (c1.Imaginary
                                                            *c2.Real - c1.Real*c2.Imaginary)/den);

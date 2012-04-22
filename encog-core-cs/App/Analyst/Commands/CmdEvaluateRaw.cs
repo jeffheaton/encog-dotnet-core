@@ -83,8 +83,13 @@ namespace Encog.App.Analyst.Commands
             FileInfo outputFile = Analyst.Script.ResolveFilename(
                 outputID);
 
-            var method = (IMLRegression) EncogDirectoryPersistence
-                                            .LoadObject(resourceFile);
+            IMLMethod m = (IMLMethod) EncogDirectoryPersistence.LoadObject(resourceFile);
+		
+		    if( !(m is IMLRegression) ) {
+			    throw new AnalystError("The evaluate raw command can only be used with regression.");
+		    }
+
+		    IMLRegression method = (IMLRegression)m;
 
             bool headers = Script.ExpectInputHeaders(evalID);
 
