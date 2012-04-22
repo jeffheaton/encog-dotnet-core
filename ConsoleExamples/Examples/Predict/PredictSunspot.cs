@@ -43,7 +43,8 @@ namespace Encog.Examples.Predict
         public const int EvaluateStart = 260;
 
         public const double MaxError = 0.01;
-
+        #region sunspot array.
+   
         public static double[] Sunspots = {
                                               0.0262, 0.0575, 0.0837, 0.1203, 0.1883, 0.3033,
                                               0.1517, 0.1046, 0.0523, 0.0418, 0.0157, 0.0000,
@@ -93,7 +94,8 @@ namespace Encog.Examples.Predict
                                               0.5465, 0.3483, 0.3603, 0.1987, 0.1804, 0.0811,
                                               0.0659, 0.1428, 0.4838, 0.8127
                                           };
-
+        #endregion
+     
         public static int EvaluateEnd = Sunspots.Length - 1;
 
         private double[] _closedLoopSunspots;

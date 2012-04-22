@@ -1,0 +1,10 @@
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\obj\Debug\EncogOpenCL.csprojResolveAssemblyReference.cache
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\EncogOpenCL.dll
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\EncogOpenCL.pdb
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\Cloo.dll
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\encog-core-cs.dll
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\encog-core-cs.pdb
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\encog-core-cs.xml
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\bin\Debug\Cloo.xml
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\obj\Debug\EncogOpenCL.dll
+C:\Gits\LatestEncog\Encog Direct Git\EncogOpenCL\obj\Debug\EncogOpenCL.pdb

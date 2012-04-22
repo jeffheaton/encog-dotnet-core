@@ -152,7 +152,7 @@ namespace Encog.ML.HMM.Distributions
 
                 foreach (IMLDataPair o in co)
                 {
-                    mean[r] += o.Input[r]*weights[i++];
+                    mean[r] += o.Input[r] * weights[i++];
                 }
             }
 
@@ -161,25 +161,30 @@ namespace Encog.ML.HMM.Distributions
             i = 0;
             foreach (IMLDataPair o in co)
             {
-				var omm = new double[o.Input.Count];
+                //double[] obs = o.Input.CreateCentroid();
+                
+                        var omm = new double[o.Input.Count];
 
-				for(int j = 0; j < omm.Length; j++)
-                {
-                    omm[j] = o.Input[j] - mean[j];
-                }
+                        for (int j = 0; j < omm.Length; j++)
+                        {
+                            omm[j] = o.Input[j] - mean[j];
+                        }
 
-                for (int r = 0; r < _dimension; r++)
-                {
-                    for (int c = 0; c < _dimension; c++)
-                    {
-                        covariance[r][c] += omm[r]*omm[c]*weights[i];
-                    }
-                }
+                        for (int r = 0; r < _dimension; r++)
+                        {
+                            for (int c = 0; c < _dimension; c++)
+                            {
+                                covariance[r][c] += omm[r] * omm[c] * weights[i];
+                            }
+                        }
 
-                i++;
+                        i++;
+                    
+
+                    Update(covariance);
+                
             }
 
-            Update(covariance);
         }
 
         /// <inheritdoc/>
@@ -193,13 +198,15 @@ namespace Encog.ML.HMM.Distributions
             }
 
             double[] d2 = MatrixMath.Multiply(_covarianceL, d);
-            return new BasicMLDataPair(new BasicMLData(EngineArray.Add(d2,
-                                                                       _mean)));
+            return new BasicMLDataPair(new BasicMLData(EngineArray.Add(d2,_mean)));
         }
+
 
         /// <inheritdoc/>
         public double Probability(IMLDataPair o)
         {
+           // double[] v = o.InputArray;
+          //  Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(v,
             Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(o.Input,
                                                                         _mean));
             Matrix t = MatrixMath.Multiply(_covarianceInv, vmm);

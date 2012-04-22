@@ -53,8 +53,8 @@ namespace Encog.Examples.Util
             {
                 input[i] = new double[1];
                 ideal[i] = new double[1];
-                input[i][0] = SEQUENCE[i%SEQUENCE.Length];
-                ideal[i][0] = SEQUENCE[(i + 1)%SEQUENCE.Length];
+                this.input[i][0] = this.SEQUENCE[i % this.SEQUENCE.Length];
+                this.ideal[i][0] = this.SEQUENCE[(i + 1) % this.SEQUENCE.Length];
             }
 
             return new BasicMLDataSet(input, ideal);
