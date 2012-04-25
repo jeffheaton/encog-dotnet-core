@@ -125,8 +125,8 @@ namespace Encog.ML.Data.Dynamic
 		public void TestDynamicXOR()
 		{
 
-			Func<int, int, double> inputFunc = (chunk, index) => XOR.XORInput[chunk][index];
-			Func<int, int, double> idealFunc = (chunk, index) => XOR.XORIdeal[chunk][index];
+			Func<int, int, double> inputFunc = OnInputFunc;
+			Func<int, int, double> idealFunc = delegate(int chunk, int index) { return XOR.XORIdeal[chunk][index]; };
 			var input = new FuncMLDataProvider(inputFunc, XOR.XORInput.Length, XOR.XORInput[0].Length);
 			var ideal = new FuncMLDataProvider(idealFunc, XOR.XORIdeal.Length, XOR.XORIdeal[0].Length);
 
@@ -152,5 +152,10 @@ namespace Encog.ML.Data.Dynamic
 			Assert.IsTrue(iteration < maxIteration);
 
 		}
+
+        private double OnInputFunc(int chunk, int index)
+        {
+            return XOR.XORInput[chunk][index];
+        }
     }
 }

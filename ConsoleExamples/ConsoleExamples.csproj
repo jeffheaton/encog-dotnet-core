@@ -80,6 +80,7 @@
     <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
     <Compile Include="Examples\Image\ImagePair.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
+    <Compile Include="Examples\LiveSimul\LiveSimul.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />
     <Compile Include="Examples\Lunar\LunarLander.cs" />
     <Compile Include="Examples\Lunar\NeuralPilot.cs" />
@@ -103,8 +104,8 @@
     <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Normalize\NormalizeFile.cs" />
     <Compile Include="Examples\Normalize\SimpleNormalize.cs" />
-    <Compile Include="Examples\Persist\PersistEncog.cs" />
-    <Compile Include="Examples\Persist\PersistSerial.cs" />
+    <Compile Include="Persist\PersistEncog.cs" />
+    <Compile Include="Persist\PersistSerial.cs" />
     <Compile Include="Examples\Analyzer\Prunes.cs" />
     <Compile Include="Examples\Analyzer\RandomTrainer.cs" />
     <Compile Include="Examples\Predict\PredictSunspot.cs" />

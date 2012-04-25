@@ -60,7 +60,7 @@ namespace Encog.ML.Data.Basic
 		
 		    int i = 0;
 		    foreach(IMLDataPair pair in seq) {
-                Assert.AreEqual(CHECK[i++], (int)pair.Input[0]);
+                Assert.AreEqual(CHECK[i++], (int)pair.Input[0],"Equal Input with array.");
 		    }
         }
     }

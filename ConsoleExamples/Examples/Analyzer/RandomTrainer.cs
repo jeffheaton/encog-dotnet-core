@@ -70,13 +70,13 @@ namespace Encog.Examples.Analyzer
 
             network.Structure.FinalizeStructure();
             network.Reset();
-           
 
-           // var network = (BasicNetwork)CreateEval.CreateElmanNetwork(SuperSet.InputSize, SuperSet.IdealSize);
-            return  CreateEval.TrainNetworks(network, SuperSet);
+
+            // var network = (BasicNetwork)CreateEval.CreateElmanNetwork(SuperSet.InputSize, SuperSet.IdealSize);
+            return CreateEval.TrainNetworks(network, SuperSet);
             //Lets create an evaluation.
             //Console.WriteLine(@"Last error rate on random trainer:" + error);
-            
+
         }
 
         /// <summary>
@@ -97,6 +97,5 @@ namespace Encog.Examples.Analyzer
             return x;
         }
 
-       
     }
 }
