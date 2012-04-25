@@ -614,6 +614,7 @@
     <Compile Include="Util\KMeans\KMeansUtil.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\DateNormalize.cs" />
+    <Compile Include="Util\NetworkUtil\EasyData.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
     <Compile Include="Util\NetworkUtil\TrainerHelper.cs" />

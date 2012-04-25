@@ -434,7 +434,7 @@ namespace Encog.Util.NetworkUtil
         /// Normalizes arrays.
         /// You can retrieve the array normalizer stats throughout the program's life without having to instantiate a new normalizer.
         /// </summary>
-        public static readonly Encog.Util.Arrayutil.NormalizeArray ArrayNormalizer = new Encog.Util.Arrayutil.NormalizeArray();
+        public static readonly NormalizeArray ArrayNormalizer = new NormalizeArray();
 
         /// <summary>
         /// Normalizes an array , and you can retrieve the normalizedArray by ArrayNormalizer object), this lets you do ArrayNormalizer.Stats.Denormalize(2);
