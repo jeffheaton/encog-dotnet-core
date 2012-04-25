@@ -80,6 +80,7 @@
     <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
     <Compile Include="Examples\Image\ImagePair.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
+    <Compile Include="Examples\LiveSimul\LiveSimul.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />
     <Compile Include="Examples\Lunar\LunarLander.cs" />
     <Compile Include="Examples\Lunar\NeuralPilot.cs" />
