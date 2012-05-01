@@ -55,6 +55,7 @@ using Encog.Examples.XOR;
 using Encog.Examples.CSVMarketExample;
 using Encog.Examples.ForexExample;
 using Encog.Examples.Bayesian;
+using Encog.Examples.Indicator.Ninja;
 namespace ConsoleExamples
 {
     /// <summary>
@@ -111,6 +112,8 @@ namespace ConsoleExamples
             examples.Add(ElliottBenchmark.Info);
             examples.Add(XORPSO.Info);
             examples.Add(BayesianTaxi.Info);
+            examples.Add(SunspotWindow.Info);
+            examples.Add(ImportNinjaData.Info);
         }
 
         public void ListCommands()

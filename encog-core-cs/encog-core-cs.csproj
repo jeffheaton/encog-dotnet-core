@@ -173,6 +173,19 @@
     <Compile Include="Bot\DataUnits\TextDataUnit.cs" />
     <Compile Include="Bot\RSS\RSS.cs" />
     <Compile Include="Bot\RSS\RSSItem.cs" />
+    <Compile Include="Cloud\CloudError.cs" />
+    <Compile Include="Cloud\Indicator\Basic\BasicIndicator.cs" />
+    <Compile Include="Cloud\Indicator\Basic\DownloadIndicator.cs" />
+    <Compile Include="Cloud\Indicator\Basic\DownloadIndicatorFactory.cs" />
+    <Compile Include="Cloud\Indicator\Basic\InstrumentHolder.cs" />
+    <Compile Include="Cloud\Indicator\IIndicatorConnectionListener.cs" />
+    <Compile Include="Cloud\Indicator\IIndicatorFactory.cs" />
+    <Compile Include="Cloud\Indicator\IIndicatorListener.cs" />
+    <Compile Include="Cloud\Indicator\IndicatorError.cs" />
+    <Compile Include="Cloud\Indicator\Server\HandleClient.cs" />
+    <Compile Include="Cloud\Indicator\Server\IndicatorLink.cs" />
+    <Compile Include="Cloud\Indicator\Server\IndicatorPacket.cs" />
+    <Compile Include="Cloud\Indicator\Server\IndicatorServer.cs" />
     <Compile Include="ConsoleStatusReportable.cs" />
     <Compile Include="encog-core-cs.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -600,6 +613,7 @@
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\PoolItem.cs" />
     <Compile Include="Util\Concurrency\TaskGroup.cs" />
+    <Compile Include="Util\CSV\ParseCSVLine.cs" />
     <Compile Include="Util\EncogValidate.cs" />
     <Compile Include="Util\EngineArray.cs" />
     <Compile Include="Util\Error\CalculateRegressionError.cs" />

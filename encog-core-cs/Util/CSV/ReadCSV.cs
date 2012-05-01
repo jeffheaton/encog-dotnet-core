@@ -26,10 +26,6 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-#if logging
-
-#endif
-
 namespace Encog.Util.CSV
 {
     /// <summary>
@@ -62,7 +58,10 @@ namespace Encog.Util.CSV
         /// </summary>
         private char _delim;
 
-        private CSVFormat _format;
+        /// <summary>
+        /// Used to parse the CSV.
+        /// </summary>
+        private ParseCSVLine parseLine;
 
         /// <summary>
         /// Construct a CSV reader from an input stream.
@@ -141,7 +140,7 @@ namespace Encog.Util.CSV
         /// </summary>
         public CSVFormat Format
         {
-            get { return _format; }
+            get { return this.parseLine.Format; }
         }
 
         /// <summary>
@@ -198,12 +197,12 @@ namespace Encog.Util.CSV
             {
                 DateFormat = "yyyy-MM-dd";
                 TimeFormat = "hhmmss";
-                _format = format;
+                this.parseLine = new ParseCSVLine(format);
                 // read the column heads
                 if (headers)
                 {
                     String line = _reader.ReadLine();
-                    IList<String> tok = Parse(line);
+                    IList<String> tok = parseLine.Parse(line);
 
                     int i = 0;
                     foreach (String header in tok)
@@ -344,7 +343,7 @@ namespace Encog.Util.CSV
         public double GetDouble(String column)
         {
             String str = Get(column);
-            return _format.Parse(str);
+            return parseLine.Format.Parse(str);
         }
 
         /// <summary>
@@ -355,7 +354,7 @@ namespace Encog.Util.CSV
         public double GetDouble(int column)
         {
             String str = Get(column);
-            return _format.Parse(str);
+            return parseLine.Format.Parse(str);
         }
 
         /// <summary>
@@ -382,7 +381,7 @@ namespace Encog.Util.CSV
         /// <param name="line">One line from the file</param>
         private void InitData(string line)
         {
-            IList<String> tok = Parse(line);
+            IList<String> tok = parseLine.Parse(line);
             _data = new String[tok.Count];
         }
 
@@ -412,7 +411,7 @@ namespace Encog.Util.CSV
                     InitData(line);
                 }
 
-                IList<String> tok = Parse(line);
+                IList<String> tok = parseLine.Parse(line);
 
                 int i = 0;
                 foreach (String str in tok)
@@ -435,92 +434,6 @@ namespace Encog.Util.CSV
 #endif
                 throw new EncogError(e);
             }
-        }
-
-        private IList<String> Parse(string line)
-        {
-            if (Format.Separator == ' ')
-            {
-                return ParseSpaceSep(line);
-            }
-            else
-            {
-                return ParseCharSep(line);
-            }
-        }
-
-        /// <summary>
-        /// Parse the line into a list of values.
-        /// </summary>
-        /// <param name="line">The line to parse.</param>
-        /// <returns>The elements on this line.</returns>
-        private IList<String> ParseCharSep(string line)
-        {
-            var item = new StringBuilder();
-            var result = new List<String>();
-            bool quoted = false;
-            bool hadQuotes = false;
-
-            for (int i = 0; i < line.Length; i++)
-            {
-                char ch = line[i];
-                if ((ch == Format.Separator) && !quoted)
-                {
-                    String s = item.ToString();
-                    if (!hadQuotes)
-                    {
-                        s = s.Trim();
-                    }
-                    result.Add(s);
-                    item.Length = 0;
-                    quoted = false;
-                    hadQuotes = false;
-                }
-                else if ((ch == '\"') && quoted)
-                {
-                    quoted = false;
-                }
-                else if ((ch == '\"') && (item.Length == 0))
-                {
-                    hadQuotes = true;
-                    quoted = true;
-                }
-                else
-                {
-                    item.Append(ch);
-                }
-            }
-
-            if (item.Length > 0)
-            {
-                String s = item.ToString();
-                if (!hadQuotes)
-                {
-                    s = s.Trim();
-                }
-                result.Add(s);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Parse a line with space separators.
-        /// </summary>
-        /// <param name="line">The line to parse.</param>
-        /// <returns>The list of items from the line.</returns>
-        private static List<String> ParseSpaceSep(String line)
-        {
-            var result = new List<String>();
-            var parse = new SimpleParser(line);
-
-            while (!parse.EOL())
-            {
-                result.Add(parse.Peek() == '\"' ? parse.ReadQuotedString() : parse.ReadToWhiteSpace());
-                parse.EatWhiteSpace();
-            }
-
-            return result;
         }
 
 
