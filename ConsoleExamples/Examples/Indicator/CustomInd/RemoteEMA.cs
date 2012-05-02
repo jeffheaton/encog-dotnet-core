@@ -55,6 +55,8 @@ namespace Encog.Examples.Indicator.CustomInd
             server.AddIndicatorFactory(new MyFactory());
 
             server.Start();
+            server.WaitForShutdown();
+
 
         }
 
@@ -62,11 +64,11 @@ namespace Encog.Examples.Indicator.CustomInd
         {
             if (hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString() + " established.");
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " established.");
             }
             else if (!hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString() + " terminated.");
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " terminated.");
             }
 
         }

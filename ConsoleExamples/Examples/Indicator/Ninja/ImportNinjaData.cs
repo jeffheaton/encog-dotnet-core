@@ -10,7 +10,7 @@ using ConsoleExamples.Examples;
 
 namespace Encog.Examples.Indicator.Ninja
 {
-    public class ImportNinjaData : IIndicatorConnectionListener
+    public class ImportNinjaData : IIndicatorConnectionListener, IExample
     {
         public const int PORT = 5128;
 
@@ -22,7 +22,7 @@ namespace Encog.Examples.Indicator.Ninja
             {
                 var info = new ExampleInfo(
                     typeof(ImportNinjaData),
-                    "ninja-download",
+                    "indicator-download",
                     "Download data from Ninjatrader.",
                     "Uses the Encog Framework indicator to download data from Ninjatrader.");
                 return info;
@@ -54,11 +54,11 @@ namespace Encog.Examples.Indicator.Ninja
         {
             if (hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString() + " established.");
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " established.");
             }
             else if (!hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString() + " terminated.");
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " terminated.");
             }
 
         }

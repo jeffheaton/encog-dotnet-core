@@ -56,6 +56,7 @@ using Encog.Examples.CSVMarketExample;
 using Encog.Examples.ForexExample;
 using Encog.Examples.Bayesian;
 using Encog.Examples.Indicator.Ninja;
+using Encog.Examples.Indicator.CustomInd;
 namespace ConsoleExamples
 {
     /// <summary>
@@ -114,6 +115,7 @@ namespace ConsoleExamples
             examples.Add(BayesianTaxi.Info);
             examples.Add(SunspotWindow.Info);
             examples.Add(ImportNinjaData.Info);
+            examples.Add(RemoteEMA.Info);
         }
 
         public void ListCommands()

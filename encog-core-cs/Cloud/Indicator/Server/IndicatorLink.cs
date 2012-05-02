@@ -152,6 +152,7 @@ namespace Encog.Cloud.Indicator.Server
                 var buffer = new byte[1024];
                 actualSize = this.socket.Receive(buffer);
                 ascii.GetChars(buffer, 0, actualSize, charBuffer, 0);
+                currentPosition = 0;
             }
             catch (SocketException ex)
             {

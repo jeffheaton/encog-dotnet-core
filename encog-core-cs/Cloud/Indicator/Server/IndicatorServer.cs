@@ -78,40 +78,49 @@ namespace Encog.Cloud.Indicator.Server
         /// <summary>
         /// Background thread.
         /// </summary>
-        public void run()
+        public void Run()
         {
-            this.running = true;
-            while (this.running)
+            try
             {
+                this.running = true;
+                listenSocket.Listen(5);
+                while (this.running)
+                {
+                    try
+                    {
+                        EncogLogging.Log(EncogLogging.LevelDebug, "Begin listen");
+                        Socket connectionSocket = listenSocket.Accept();
+                        connectionSocket.NoDelay = true;
+                        EncogLogging.Log(EncogLogging.LevelDebug, "Connection from: " + connectionSocket.RemoteEndPoint.ToString());
+                        IndicatorLink link = new IndicatorLink(this, connectionSocket);
+                        NotifyListenersConnections(link, true);
+                        HandleClient hc = new HandleClient(this, link);
+                        this.connections.Add(hc);
+                        Thread t = new Thread(new ThreadStart(hc.Run));
+                        t.Start();
+                    }
+                    catch (SocketException ex)
+                    {
+                        // ignore
+                    }
+                    catch (IOException ex)
+                    {
+                        throw new IndicatorError(ex);
+                    }
+                }
+
                 try
                 {
-                    EncogLogging.Log(EncogLogging.LevelDebug, "Begin listen");
-                    Socket connectionSocket = listenSocket.Accept();
-                    EncogLogging.Log(EncogLogging.LevelDebug, "Connection from: " + connectionSocket.RemoteEndPoint.ToString());
-                    IndicatorLink link = new IndicatorLink(this, connectionSocket);
-                    NotifyListenersConnections(link, true);
-                    HandleClient hc = new HandleClient(this, link);
-                    this.connections.Add(hc);
-                    Thread t = new Thread(new ThreadStart(hc.run));
-                    t.Start();
-                }
-                catch (SocketException ex)
-                {
-                    // ignore
+                    this.listenSocket.Close();
                 }
                 catch (IOException ex)
                 {
                     throw new IndicatorError(ex);
                 }
             }
-
-            try
+            finally
             {
-                this.listenSocket.Close();
-            }
-            catch (IOException ex)
-            {
-                throw new IndicatorError(ex);
+                this.running = false;
             }
         }
 
@@ -122,11 +131,12 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
+                this.running = true;
                 this.listenSocket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.IP);
                 this.listenSocket.Bind(new IPEndPoint(IPAddress.Loopback,port));
                 this.listenSocket.ReceiveTimeout = 2000;
-                this.thread = new Thread(new ThreadStart(this.run));
+                this.thread = new Thread(new ThreadStart(this.Run));
                 this.thread.Start();
             }
             catch (IOException ex)
@@ -276,6 +286,17 @@ namespace Encog.Cloud.Indicator.Server
                 throw new IndicatorError("Unknown indicator: " + indicatorName);
             }
             return this.factoryMap[indicatorName].Create();
+        }
+
+        /// <summary>
+        /// Wait for the server to shutdown.
+        /// </summary>
+        public void WaitForShutdown()
+        {
+            while (this.running)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }

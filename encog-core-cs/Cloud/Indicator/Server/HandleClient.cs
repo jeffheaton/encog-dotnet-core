@@ -41,7 +41,7 @@ namespace Encog.Cloud.Indicator.Server
         /// <summary>
         /// Background thread.
         /// </summary>
-        public void run()
+        public void Run()
         {
             EncogLogging.Log(EncogLogging.LevelDebug, "Waiting for packets");
 

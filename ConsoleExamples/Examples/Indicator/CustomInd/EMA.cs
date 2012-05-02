@@ -19,7 +19,7 @@ namespace Encog.Examples.Indicator.CustomInd
 
         public override void NotifyPacket(IndicatorPacket packet)
         {
-            if (string.Compare(packet.Command, IndicatorLink.PACKET_BAR) == 0)
+            if (string.Compare(packet.Command, IndicatorLink.PACKET_BAR,true) == 0)
             {
                 String security = packet.Args[1];
                 long when = long.Parse(packet.Args[0]);
