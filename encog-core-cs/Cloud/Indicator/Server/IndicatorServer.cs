@@ -90,7 +90,6 @@ namespace Encog.Cloud.Indicator.Server
                     {
                         EncogLogging.Log(EncogLogging.LevelDebug, "Begin listen");
                         Socket connectionSocket = listenSocket.Accept();
-                        connectionSocket.NoDelay = true;
                         EncogLogging.Log(EncogLogging.LevelDebug, "Connection from: " + connectionSocket.RemoteEndPoint.ToString());
                         IndicatorLink link = new IndicatorLink(this, connectionSocket);
                         NotifyListenersConnections(link, true);
@@ -101,7 +100,8 @@ namespace Encog.Cloud.Indicator.Server
                     }
                     catch (SocketException ex)
                     {
-                        // ignore
+                        // just accept timing out
+                        Thread.Sleep(100);                        
                     }
                     catch (IOException ex)
                     {
@@ -135,7 +135,7 @@ namespace Encog.Cloud.Indicator.Server
                 this.listenSocket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.IP);
                 this.listenSocket.Bind(new IPEndPoint(IPAddress.Loopback,port));
-                this.listenSocket.ReceiveTimeout = 2000;
+                this.listenSocket.Blocking = false;
                 this.thread = new Thread(new ThreadStart(this.Run));
                 this.thread.Start();
             }

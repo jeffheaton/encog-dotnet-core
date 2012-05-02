@@ -102,6 +102,7 @@ namespace Encog.Cloud.Indicator.Server
                 this.currentPosition = 0;
                 this.actualSize = 0;
                 this.parentServer = node;
+                s.Blocking = true;
                 this.socket = s;
                 this.socket.ReceiveTimeout = SOCKET_TIMEOUT;
             }
@@ -146,19 +147,11 @@ namespace Encog.Cloud.Indicator.Server
         /// Read the next block from the socket.
         /// </summary>
         private void ReadNextBlock()
-        {            
-            try
-            {
-                var buffer = new byte[1024];
-                actualSize = this.socket.Receive(buffer);
-                ascii.GetChars(buffer, 0, actualSize, charBuffer, 0);
-                currentPosition = 0;
-            }
-            catch (SocketException ex)
-            {
-                throw new IndicatorError(ex);
-            }
-
+        {
+            var buffer = new byte[1024];
+            currentPosition = actualSize = 0;
+            actualSize = this.socket.Receive(buffer);
+            ascii.GetChars(buffer, 0, actualSize, charBuffer, 0);                
         }
 
         /// <summary>
@@ -181,33 +174,48 @@ namespace Encog.Cloud.Indicator.Server
         /// <returns>The packet we read.</returns>
         public IndicatorPacket ReadPacket()
         {
-            var line = new StringBuilder();
-
-            for (; ; )
+            try
             {
-                char ch = ReadNextChar();
+                var line = new StringBuilder();
 
-                if (ch != '\n' && ch != '\r')
+                for (; ; )
                 {
-                    line.Append(ch);
+                    char ch = ReadNextChar();
+
+                    if (ch != '\n' && ch != '\r')
+                    {
+                        line.Append(ch);
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+
+                IList<String> list = parseLine.Parse(line.ToString());
+                this.packets++;
+
+                if (list.Count > 0)
+                {
+                    list[0] = list[0].ToUpper();
+                }
+
+                EncogLogging.Log(EncogLogging.LevelDebug, "Received Packet: " + line.ToString());
+                return new IndicatorPacket(list);
+            }
+            catch (SocketException ex)
+            {
+                // was it just a timeout?
+                if (ex.ErrorCode == 10060)
+                {
+                    return null;
                 }
                 else
                 {
-                    break;
+                    throw new IndicatorError(ex);
                 }
-
             }
-
-            IList<String> list = parseLine.Parse(line.ToString());
-            this.packets++;
-
-            if (list.Count > 0)
-            {
-                list[0] = list[0].ToUpper();
-            }
-
-            EncogLogging.Log(EncogLogging.LevelDebug, "Received Packet: " + line.ToString());
-            return new IndicatorPacket(list);
 
         }
 
