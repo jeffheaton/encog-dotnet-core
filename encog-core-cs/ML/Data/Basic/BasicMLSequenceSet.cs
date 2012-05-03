@@ -211,13 +211,13 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public IMLDataSet GetSequence(int i)
         {
-            return _sequences[i];
+            return this._sequences[i];
         }
 
         /// <inheritdoc/>
         public ICollection<IMLDataSet> Sequences
         {
-            get { return _sequences; }
+            get { return this._sequences; }
         }
 
         /// <inheritdoc/>
@@ -225,7 +225,7 @@ namespace Encog.ML.Data.Basic
         {
             foreach (IMLDataPair pair in sequence)
             {
-                Add(pair);
+                this.Add(pair);
             }
         }
 

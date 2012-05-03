@@ -310,10 +310,10 @@ namespace Encog.Util.NetworkUtil
 
         /// <summary>
         /// This method takes ARRAYS of arrays (parametrable arrays) and places them in double [][]
-        /// You can use this method if you have already formated arrays and you want to create a double [][] ready for network.
+        /// You can use this method if you have already formatted arrays and you want to create a double [][] ready for network.
         /// Example you could use this method to input the XOR example:
         /// A[0,0]   B[0,1]  C[1, 0]  D[1,1] would format them directly in the double [][] in one method call.
-        /// This could also be used in unsupersivsed learning.
+        /// This could also be used in unsupervised learning.
         /// </summary>
         /// <param name="Inputs">The inputs.</param>
         /// <returns></returns>
@@ -482,14 +482,14 @@ namespace Encog.Util.NetworkUtil
         {
             TemporalWindowArray temp = new TemporalWindowArray(inputsize, outputsize);
             temp.Analyze(array);
-
+           
             return temp.Process(array);
         }
 
         /// <summary>
         /// Generates an array with as many double array inputs as wanted.
         /// This is useful for neural networks when you have already formated your data arrays and need to create a double []
-        /// with all the inputs following each others.
+        /// with all the inputs following each others.(Elman type format)
         /// </summary>
         /// <param name="inputs">The inputs.</param>
         /// <returns>
@@ -592,7 +592,7 @@ namespace Encog.Util.NetworkUtil
             List<double> listused = new List<double>();
             int lenghtofArrays = firstinputt[0].Length;
 
-            //There must be NO modulo...or the arrays would not be divisile by this input size.
+            //There must be NO modulo...or the arrays would not be divisible by this input size.
             if (lenghtofArrays % inputsize != 0)
                 return null;
             //we add each input one , after the other in a list of doubles till we reach the input size
@@ -617,8 +617,7 @@ namespace Encog.Util.NetworkUtil
                 outputsar.Add(listused.ToArray());
                 listused.Clear();
             }
-            set = new BasicMLDataSet((double[][])FirstList.ToArray(typeof(double[])), (double[][])
-             outputsar.ToArray(typeof(double[])));
+            set = new BasicMLDataSet((double[][])FirstList.ToArray(typeof(double[])), (double[][])outputsar.ToArray(typeof(double[])));
             return set;
         }
 

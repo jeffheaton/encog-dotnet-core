@@ -22,11 +22,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\VisualQuant\QuantFRAMEWORK\Version5\bin\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\encog-core-cs.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\..\VisualQuant\QuantFRAMEWORK\Version5\bin\encog-core-cs.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -208,6 +208,7 @@
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
+    <Compile Include="Engine\Network\Activation\IActivationFunctionCL.cs" />
     <Compile Include="IStatusReportable.cs" />
     <Compile Include="MathUtil\BoundMath.cs" />
     <Compile Include="MathUtil\BoundNumbers.cs" />
@@ -627,6 +628,7 @@
     <Compile Include="Util\KMeans\KMeansUtil.cs" />
     <Compile Include="Util\Logging\EncogLogging.cs" />
     <Compile Include="Util\NetworkUtil\DateNormalize.cs" />
+    <Compile Include="Util\NetworkUtil\EasyData.cs" />
     <Compile Include="Util\NetworkUtil\NetworkUtility.cs" />
     <Compile Include="Util\NetworkUtil\QuickCSVUtils.cs" />
     <Compile Include="Util\NetworkUtil\TrainerHelper.cs" />

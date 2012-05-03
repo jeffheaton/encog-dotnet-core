@@ -57,6 +57,8 @@ using Encog.Examples.ForexExample;
 using Encog.Examples.Bayesian;
 using Encog.Examples.Indicator.Ninja;
 using Encog.Examples.Indicator.CustomInd;
+using Encog.Examples.LiveSimul;
+
 namespace ConsoleExamples
 {
     /// <summary>
@@ -116,6 +118,7 @@ namespace ConsoleExamples
             examples.Add(SunspotWindow.Info);
             examples.Add(ImportNinjaData.Info);
             examples.Add(RemoteEMA.Info);
+            examples.Add(LiveSimul.Info);
         }
 
         public void ListCommands()
@@ -165,39 +168,39 @@ namespace ConsoleExamples
                 return;
             }
 
-			do
-			{
-				String command = args[index++];
+            do
+            {
+                String command = args[index++];
 
-				// get any arguments
-				var pargs = new String[args.Length - index];
-				for(int i = 0; i < pargs.Length; i++)
-				{
-					pargs[i] = args[index + i];
-				}
+                // get any arguments
+                var pargs = new String[args.Length - index];
+                for (int i = 0; i < pargs.Length; i++)
+                {
+                    pargs[i] = args[index + i];
+                }
 
-				foreach(ExampleInfo info in examples)
-				{
-					if(String.Compare(command, info.Command, true) == 0)
-					{
-						IExample example = info.CreateInstance();
-						example.Execute(new ConsoleInterface(pargs));
-						success = true;
-						break;
-					}
-				}
+                foreach (ExampleInfo info in examples)
+                {
+                    if (String.Compare(command, info.Command, true) == 0)
+                    {
+                        IExample example = info.CreateInstance();
+                        example.Execute(new ConsoleInterface(pargs));
+                        success = true;
+                        break;
+                    }
+                }
 
-				if(!success)
-				{
-					Console.WriteLine("Unknown command: " + command);
-					ListCommands();
-				}
+                if (!success)
+                {
+                    Console.WriteLine("Unknown command: " + command);
+                    ListCommands();
+                }
 
-				if(pause)
-				{
-					Pause();
-				}
-			} while(index < args.Length);
+                if (pause)
+                {
+                    Pause();
+                }
+            } while (index < args.Length);
 
         }
 
