@@ -46,6 +46,21 @@ namespace Encog.ML.Genetic
             _first = true;
         }
 
+        private void ThreadWorker(int i, int offspringIndex, int matingPopulationSize)
+        {
+            IGenome mother = Population.Genomes[i];
+            var fatherInt = (int)(ThreadSafeRandom.NextDouble() * matingPopulationSize);
+            IGenome father = Population.Genomes[fatherInt];
+            IGenome child1 = Population.Genomes[offspringIndex + i * 2];
+            IGenome child2 = Population.Genomes[offspringIndex + i * 2 + 1];
+
+            var worker = new MateWorker(mother, father, child1,
+                                        child2);
+
+            worker.Run();
+
+        }
+
         /// <summary>
         /// Modify the weight matrix and bias values based on the last call to
         /// calcError.
@@ -65,21 +80,20 @@ namespace Encog.ML.Genetic
             var matingPopulationSize = (int) (Population.PopulationSize*MatingPopulation);
 
             // mate and form the next generation
-            Parallel.For(0, countToMate, i =>
+            if (ThreadCount == 1)
             {
-                IGenome mother = Population.Genomes[i];
-                var fatherInt = (int)(ThreadSafeRandom.NextDouble() * matingPopulationSize);
-                IGenome father = Population.Genomes[fatherInt];
-                IGenome child1 = Population.Genomes[offspringIndex];
-                IGenome child2 = Population.Genomes[offspringIndex + 1];
-
-                var worker = new MateWorker(mother, father, child1,
-                                            child2);
-
-                worker.Run();                
-
-                offspringIndex += 2;
-            });
+                for (int i = 0; i < countToMate; i++)
+                {
+                    ThreadWorker(i, offspringIndex, matingPopulationSize);
+                }
+            }
+            else
+            {
+                Parallel.For(0, countToMate, i =>
+                {
+                    ThreadWorker(i, offspringIndex, matingPopulationSize);
+                });
+            }
 
             // sort the next generation
             Population.Sort();
