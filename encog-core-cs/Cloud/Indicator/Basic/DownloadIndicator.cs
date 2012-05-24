@@ -108,25 +108,26 @@ namespace Encog.Cloud.Indicator.Basic
                     int index = 0;
                     foreach (String str in this.DataRequested)
                     {
+                        String str2;
+                        int ix = str.IndexOf('[');
+                        if (ix != -1)
+                        {
+                            str2 = str.Substring(0, ix).Trim();
+                        }
+                        else
+                        {
+                            str2 = str;
+                        }
+
                         int c = DataCount[index++];
                         if (c <= 1)
                         {
-                            outfile.Write(",\"" + str + "\"");
+                            outfile.Write(",\"" + str2 + "\"");
                         }
                         else
                         {
                             for (int i = 0; i < c; i++)
-                            {
-                                String str2;
-                                int ix = str.IndexOf('[');
-                                if (ix != -1)
-                                {
-                                    str2 = str.Substring(0, ix).Trim();
-                                }
-                                else
-                                {
-                                    str2 = str;
-                                }
+                            {                                
                                 outfile.Write(",\"" + str2 + "-b" + i + "\"");
                             }
                         }

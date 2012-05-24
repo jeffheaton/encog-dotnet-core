@@ -34,7 +34,7 @@ namespace Encog.MathUtil.Matrices.Hessian
     /// output of the neural network. These values are ultimatly used to calculate
     /// the Hessian.
     /// </summary>
-    public class ChainRuleWorker : IEngineTask
+    public class ChainRuleWorker
     {
         /// <summary>
         /// The actual values from the neural network.

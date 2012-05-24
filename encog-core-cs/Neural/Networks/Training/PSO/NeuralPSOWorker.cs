@@ -38,7 +38,7 @@ namespace Encog.Neural.Networks.Training.PSO
     /// https://github.com/goffer-looney 
     /// 
     /// </summary>
-    public class NeuralPSOWorker : IEngineTask
+    public class NeuralPSOWorker
     {
         private NeuralPSO m_neuralPSO;
         private int m_particleIndex;

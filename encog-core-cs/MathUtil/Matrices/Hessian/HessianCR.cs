@@ -24,6 +24,7 @@ using Encog.ML.Data;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
 using Encog.Util.Concurrency;
+using System.Threading.Tasks;
 
 namespace Encog.MathUtil.Matrices.Hessian
 {
@@ -103,15 +104,11 @@ namespace Encog.MathUtil.Matrices.Hessian
 
                 if (_workers.Length > 1)
                 {
-                    TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
-
-                    foreach (ChainRuleWorker worker in _workers)
+                    Parallel.ForEach(_workers, worker => 
                     {
+                        worker.Run();
                         worker.OutputNeuron = outputNeuron;
-                        EngineConcurrency.Instance.ProcessTask(worker, group);
-                    }
-
-                    group.WaitForComplete();
+                    });                   
                 }
                 else
                 {

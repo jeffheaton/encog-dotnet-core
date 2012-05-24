@@ -30,7 +30,7 @@ namespace Encog.ML.Genetic
     /// algorithm to offload all of those calculations to a thread pool.
     /// </summary>
     ///
-    public class MateWorker : IEngineTask
+    public class MateWorker
     {
         /// <summary>
         /// The first child.

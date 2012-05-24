@@ -32,6 +32,7 @@ using Encog.Util.Concurrency;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.ML.Train;
 using Encog.Util;
+using System.Threading.Tasks;
 
 namespace Encog.Neural.Networks.Training.PSO
 {
@@ -49,9 +50,15 @@ namespace Encog.Neural.Networks.Training.PSO
     /// 1995, pp. 1942-1948
     /// 
     /// </summary>
-    public class NeuralPSO : BasicTraining
+    public class NeuralPSO : BasicTraining, IMultiThreadable
     {
-        public bool IsMultiThreaded { get; set; }
+        /// <summary>
+        /// For PSO, this does not set the absolute number of threads.  
+        /// Set to 1 to use single-threaded, set to anything but one to
+        /// use multithreaded.
+        /// </summary>
+        public int ThreadCount { get; set; }
+
         protected VectorAlgebra m_va;
         protected ICalculateScore m_calculateScore;
         protected IRandomizer m_randomizer;
@@ -148,7 +155,7 @@ namespace Encog.Neural.Networks.Training.PSO
             : base(TrainingImplementationType.Iterative)
         {
 
-            IsMultiThreaded = true;
+
 
             // initialisation of the member variables
             m_populationSize = populationSize;
@@ -197,29 +204,38 @@ namespace Encog.Neural.Networks.Training.PSO
         }
 
         /// <summary>
+        /// Handle an individual particle.
+        /// </summary>
+        /// <param name="i">The particle index.</param>
+        /// <param name="init">True if this is the init pass.</param>
+        protected void HandleParticle(int i, bool init)
+        {
+            NeuralPSOWorker worker = new NeuralPSOWorker(this, i, init);
+            worker.Run();
+        }
+
+        /// <summary>
         /// Internal method for the iteration of the swarm. 
         /// </summary>
         /// <param name="init">true if this is an initialisation iteration.</param>
         protected void IterationPSO(bool init)
         {
-            TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
+            if (ThreadCount == 1)
+            {
+                for (int i = 0; i < m_populationSize; i++)
+                {
 
-            for (int i = 0; i < m_populationSize; i++)
-            {
-                NeuralPSOWorker worker = new NeuralPSOWorker(this, i, init);
-                if (!init && IsMultiThreaded)
-                {
-                    EngineConcurrency.Instance.ProcessTask(worker, group);
-                }
-                else
-                {
-                    worker.Run();
+                    HandleParticle(i, init);
                 }
             }
-            if (IsMultiThreaded)
+            else
             {
-                group.WaitForComplete();
+                Parallel.For(0, m_populationSize, i =>
+                {
+                    HandleParticle(i, init);
+                });
             }
+            
             UpdateGlobalBestPosition();
         }
 
@@ -519,6 +535,6 @@ namespace Encog.Neural.Networks.Training.PSO
         public override IMLMethod Method
         {
             get { return m_bestNetwork; }
-        }
+        }        
     }
 }

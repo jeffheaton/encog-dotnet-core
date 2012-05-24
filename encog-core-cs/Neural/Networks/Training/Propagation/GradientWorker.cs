@@ -36,7 +36,7 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// Worker class for the mulithreaded training of flat networks.
     /// </summary>
     ///
-    public class GradientWorker: IEngineTask
+    public class GradientWorker
     {
         /// <summary>
         /// The actual values from the neural network.
