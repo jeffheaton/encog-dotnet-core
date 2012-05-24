@@ -25,7 +25,7 @@ namespace Encog.Util.Concurrency.Job
     /// <summary>
     /// A worker job for Encog concurrency
     /// </summary>
-    public class JobUnitWorker : IEngineTask
+    public class JobUnitWorker 
     {
         /// <summary>
         /// The context for this job unit.

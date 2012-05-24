@@ -606,13 +606,10 @@
     <Compile Include="Util\Arrayutil\TemporalWindowField.cs" />
     <Compile Include="Util\Banchmark\EncoderTrainingFactory.cs" />
     <Compile Include="Util\Concurrency\DetermineWorkload.cs" />
-    <Compile Include="Util\Concurrency\EngineConcurrency.cs" />
-    <Compile Include="Util\Concurrency\IEngineTask.cs" />
     <Compile Include="Util\Concurrency\IMultiThreadable.cs" />
     <Compile Include="Util\Concurrency\Job\ConcurrentJob.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitContext.cs" />
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
-    <Compile Include="Util\Concurrency\PoolItem.cs" />
     <Compile Include="Util\Concurrency\TaskGroup.cs" />
     <Compile Include="Util\CSV\ParseCSVLine.cs" />
     <Compile Include="Util\EncogValidate.cs" />

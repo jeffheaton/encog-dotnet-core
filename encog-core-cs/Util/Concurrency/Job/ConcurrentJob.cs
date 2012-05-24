@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using System.Threading.Tasks;
 
 namespace Encog.Util.Concurrency.Job
 {
@@ -76,26 +77,33 @@ namespace Encog.Util.Concurrency.Job
         /// Start the job, block until its done.
         /// </summary>
         public virtual void Process()
-        {
-            Object task;
-
-            EngineConcurrency.Instance.ThreadCount = ThreadCount;
-
-            TaskGroup group = EngineConcurrency.Instance.CreateTaskGroup();
-
+        {           
             _totalTasks = LoadWorkload();
-            int currentTask = 0;
 
-            while ((task = RequestNextTask()) != null)
+            if (ThreadCount == 1)
             {
-                currentTask++;
-                var context = new JobUnitContext {JobUnit = task, Owner = this, TaskNumber = currentTask};
+                Object task;
+                int currentTask = 0;
 
-                var worker = new JobUnitWorker(context);
-                EngineConcurrency.Instance.ProcessTask(worker, group);
+                while ((task = RequestNextTask()) != null)
+                {
+                    currentTask++;
+                    var context = new JobUnitContext { JobUnit = task, Owner = this, TaskNumber = currentTask };
+                    var worker = new JobUnitWorker(context);
+                    worker.Run();
+                }
             }
+            else
+            {
+                Parallel.For(0, _totalTasks, currentTask =>
+                {
+                    Object task = RequestNextTask();
+                    var context = new JobUnitContext { JobUnit = task, Owner = this, TaskNumber = currentTask };
+                    var worker = new JobUnitWorker(context);
+                    worker.Run();
 
-            group.WaitForComplete();
+                });
+            }
         }
 
         /// <summary>
