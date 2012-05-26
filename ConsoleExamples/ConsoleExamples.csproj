@@ -81,7 +81,11 @@
     <Compile Include="Examples\Image\ImagePair.cs" />
     <Compile Include="Examples\Indicator\CustomInd\EMA.cs" />
     <Compile Include="Examples\Indicator\CustomInd\RemoteEMA.cs" />
-    <Compile Include="Examples\Indicator\Ninja\ImportNinjaData.cs" />
+    <Compile Include="Examples\Indicator\Ninja\Avg\Config.cs" />
+    <Compile Include="Examples\Indicator\Ninja\Avg\GenerateTraining.cs" />
+    <Compile Include="Examples\Indicator\Ninja\Avg\IndicatorExample.cs" />
+    <Compile Include="Examples\Indicator\Ninja\Avg\MyInd.cs" />
+    <Compile Include="Examples\Indicator\Ninja\ImportData\ImportNinjaData.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
     <Compile Include="Examples\LiveSimul\LiveSimul.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />

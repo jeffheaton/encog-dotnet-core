@@ -58,6 +58,8 @@ using Encog.Examples.Bayesian;
 using Encog.Examples.Indicator.Ninja;
 using Encog.Examples.Indicator.CustomInd;
 using Encog.Examples.LiveSimul;
+using Encog.Examples.Indicator.Ninja.ImportNinjaData;
+using Encog.Examples.Indicator.Ninja.Avg;
 
 namespace ConsoleExamples
 {
@@ -119,6 +121,7 @@ namespace ConsoleExamples
             examples.Add(ImportNinjaData.Info);
             examples.Add(RemoteEMA.Info);
             examples.Add(LiveSimul.Info);
+            examples.Add(IndicatorExample.Info);
         }
 
         public void ListCommands()
