@@ -171,39 +171,36 @@ namespace ConsoleExamples
                 return;
             }
 
-            do
+            String command = args[index++];
+
+            // get any arguments
+            var pargs = new String[args.Length - index];
+            for (int i = 0; i < pargs.Length; i++)
             {
-                String command = args[index++];
+                pargs[i] = args[index + i];
+            }
 
-                // get any arguments
-                var pargs = new String[args.Length - index];
-                for (int i = 0; i < pargs.Length; i++)
+            foreach (ExampleInfo info in examples)
+            {
+                if (String.Compare(command, info.Command, true) == 0)
                 {
-                    pargs[i] = args[index + i];
+                    IExample example = info.CreateInstance();
+                    example.Execute(new ConsoleInterface(pargs));
+                    success = true;
+                    break;
                 }
+            }
 
-                foreach (ExampleInfo info in examples)
-                {
-                    if (String.Compare(command, info.Command, true) == 0)
-                    {
-                        IExample example = info.CreateInstance();
-                        example.Execute(new ConsoleInterface(pargs));
-                        success = true;
-                        break;
-                    }
-                }
+            if (!success)
+            {
+                Console.WriteLine("Unknown command: " + command);
+                ListCommands();
+            }
 
-                if (!success)
-                {
-                    Console.WriteLine("Unknown command: " + command);
-                    ListCommands();
-                }
-
-                if (pause)
-                {
-                    Pause();
-                }
-            } while (index < args.Length);
+            if (pause)
+            {
+                Pause();
+            }
 
         }
 

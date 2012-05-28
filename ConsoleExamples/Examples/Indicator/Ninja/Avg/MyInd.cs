@@ -131,11 +131,11 @@ namespace Encog.Examples.Indicator.Ninja.Avg
 
             foreach (string file in list)
             {
-                String fn = FileUtil.GetFileName(new FileInfo(file));
-                if (fn.StartsWith("collected") && fn.EndsWith(".csv"))
-                {
-                    int idx = fn.IndexOf(".csv");
-                    String str = fn.Substring(9, idx);
+                FileInfo fn = new FileInfo(file);
+                if (fn.Name.StartsWith("collected") && fn.Name.EndsWith(".csv"))
+                {                    
+                    int idx = fn.Name.IndexOf(".csv");
+                    String str = fn.Name.Substring(9, idx-9);
                     int n = int.Parse(str);
                     mx = Math.Max(n, mx);
                 }

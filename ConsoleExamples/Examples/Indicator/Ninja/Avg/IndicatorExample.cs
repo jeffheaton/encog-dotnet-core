@@ -23,7 +23,7 @@ namespace Encog.Examples.Indicator.Ninja.Avg
     /// NinjaTrader indicators.  For more information on this example, visit
     /// the following URL.
     /// 
-    /// http://www.heatonresearch.com/wiki/Neural_Network_Indicator_for_NinjaTrader_with_Java
+    /// http://www.heatonresearch.com/wiki/Neural_Network_Indicator_for_NinjaTrader_with_C_Sharp
     /// </summary>
     public class IndicatorExample : IExample, IIndicatorConnectionListener
     {
@@ -71,7 +71,7 @@ namespace Encog.Examples.Indicator.Ninja.Avg
             {
                 var info = new ExampleInfo(
                     typeof(IndicatorExample),
-                    "indicator-ema",
+                    "indicator-sma",
                     "Provide an example indicator.",
                     "Provide a NinjaTrader example indicator built on two SMA's.");
                 return info;
@@ -81,10 +81,8 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         /// <summary>
         /// Construct the indicator example. 
         /// </summary>
-        /// <param name="thePath">The path to store data files at.</param>
-        public IndicatorExample(string thePath)
+        public IndicatorExample()
         {
-            this.path = thePath;
         }
 
         /// <summary>
@@ -188,8 +186,16 @@ namespace Encog.Examples.Indicator.Ninja.Avg
             server.AddListener(this);
 
             server.AddIndicatorFactory(new MyFactory(method, this.path));
-
             server.Start();
+
+            if (collectMode)
+            {
+                server.WaitForIndicatorCompletion();
+            }
+            else
+            {                
+                server.WaitForShutdown();
+            }
 
         }
 
@@ -209,30 +215,30 @@ namespace Encog.Examples.Indicator.Ninja.Avg
             }
             else
             {
-                IndicatorExample program = new IndicatorExample(args[1]);
+                this.path = args[1];
                 if (string.Compare(args[0], "collect", true) == 0)
                 {
-                    program.Run(true);
+                    Run(true);
                 }
                 else if (string.Compare(args[0], "train", true) == 0)
                 {
-                    program.Train();
+                    Train();
                 }
                 else if (string.Compare(args[0], "run", true) == 0)
                 {
-                    program.Run(false);
+                    Run(false);
                 }
                 else if (string.Compare(args[0], "clear", true) == 0)
                 {
-                    program.Clear();
+                    Clear();
                 }
                 else if (string.Compare(args[0], "generate", true) == 0)
                 {
-                    program.Generate();
+                    Generate();
                 }
                 else if (string.Compare(args[0], "calibrate", true) == 0)
                 {
-                    program.Calibrate();
+                    Calibrate();
                 }
             }
         }
@@ -246,12 +252,12 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         {
             if (hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString()
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString()
                         + " established.");
             }
             else if (!hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.ToString()
+                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString()
                         + " terminated.");
             }
         }

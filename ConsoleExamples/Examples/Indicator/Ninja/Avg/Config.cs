@@ -36,7 +36,7 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         /// <summary>
         /// The targeted error.  Once the training error reaches this value, training will stop.
         /// </summary>
-        public const float TARGET_ERROR = 0.03f;
+        public const float TARGET_ERROR = 0.05f;
 
         /// <summary>
         /// The type of method.  This is an Encog factory code.

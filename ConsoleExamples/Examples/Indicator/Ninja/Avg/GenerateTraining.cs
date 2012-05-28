@@ -197,9 +197,9 @@ namespace Encog.Examples.Indicator.Ninja.Avg
             output.BeginLoad(Config.INPUT_WINDOW, 1);
 
             foreach (string file in list)
-            {
-                String fn = FileUtil.GetFileName(new FileInfo(file));
-                if (fn.StartsWith("collected") && fn.EndsWith(".csv"))
+            {                
+                FileInfo fn = new FileInfo(file);
+                if (fn.Name.StartsWith("collected") && fn.Name.EndsWith(".csv"))
                 {
                     ProcessFile(file, output);
                 }
