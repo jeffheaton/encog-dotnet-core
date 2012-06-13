@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Sockets;
-using Encog.Util.CSV;
 using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using Encog.Util.CSV;
 using Encog.Util.Logging;
 
 namespace Encog.Cloud.Indicator.Server
@@ -17,78 +17,87 @@ namespace Encog.Cloud.Indicator.Server
         /// <summary>
         /// The HELLO packet, sent from the client to the server to provide version information.
         /// </summary>
-        public const string PACKET_HELLO = "HELLO";
+        public const string PacketHello = "HELLO";
 
         /// <summary>
         /// The GOODBYE packet, sent from the client to the server to end communication.
         /// </summary>
-        public const string PACKET_GOODBYE = "GOODBYE";
+        public const string PacketGoodbye = "GOODBYE";
 
         /// <summary>
         /// The SIGNALS packet, sent from the client to the server to specify requested data.
         /// </summary>
-        public const string PACKET_SIGNALS = "SIGNALS";
+        public const string PacketSignals = "SIGNALS";
 
         /// <summary>
         /// The INIT packet, sent from the server to the client to provide config information.
         /// </summary>
-        public const string PACKET_INIT = "INIT";
+        public const string PacketInit = "INIT";
 
         /// <summary>
         /// The BAR packet, sent from the client to the server at the end of each BAR.
         /// </summary>
-        public const string PACKET_BAR = "BAR";
+        public const string PacketBar = "BAR";
 
         /// <summary>
         /// The IND packet, sent from the server to the clinet, in response to a BAR. 
         /// </summary>
-        public const string PACKET_IND = "IND";
+        public const string PacketInd = "IND";
 
         /// <summary>
         /// The ERROR packet, used to move to an error state.
         /// </summary>
-        public const string PACKET_ERROR = "ERROR";
+        public const string PacketError = "ERROR";
 
         /// <summary>
         /// The WARNING packet, used to log a warning.
         /// </summary>
-        public const string PACKET_WARNING = "WARNING";
+        public const string PacketWarning = "WARNING";
 
         /// <summary>
         /// Default socket timeout.
         /// </summary>
-        public const int SOCKET_TIMEOUT = 1000;
-
-        /// <summary>
-        /// The socket to use. (client)
-        /// </summary>
-        private Socket socket;
-
-        /// <summary>
-        /// Used to parse a CSV line(packet) read.
-        /// </summary>
-        private ParseCSVLine parseLine = new ParseCSVLine(CSVFormat.EgFormat);
-
-        /// <summary>
-        /// The number of packets received.
-        /// </summary>
-        private int packets;
-
-        /// <summary>
-        /// The parent server.
-        /// </summary>
-        private readonly IndicatorServer parentServer;
+        public const int SocketTimeout = 1000;
 
         /// <summary>
         /// The ASCII decoder.
         /// </summary>
-        private readonly ASCIIEncoding ascii = new ASCIIEncoding();
+        private readonly ASCIIEncoding _ascii = new ASCIIEncoding();
 
-        private int actualSize;
+        /// <summary>
+        /// Used to hold data read from socket.
+        /// </summary>
+        private readonly char[] _charBuffer = new char[1024];
 
-        private char[] charBuffer = new char[1024];
+        /// <summary>
+        /// The parent server.
+        /// </summary>
+        private readonly IndicatorServer _parentServer;
 
-        private int currentPosition;
+        /// <summary>
+        /// Used to parse a CSV line(packet) read.
+        /// </summary>
+        private readonly ParseCSVLine _parseLine = new ParseCSVLine(CSVFormat.EgFormat);
+
+        /// <summary>
+        /// The socket to use. (client)
+        /// </summary>
+        private readonly Socket _socket;
+
+        /// <summary>
+        /// The actual size of data read.
+        /// </summary>
+        private int _actualSize;
+
+        /// <summary>
+        /// Current position as we read.
+        /// </summary>
+        private int _currentPosition;
+
+        /// <summary>
+        /// The number of packets received.
+        /// </summary>
+        private int _packets;
 
         /// <summary>
         /// Construct an indicator link. 
@@ -99,20 +108,43 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
-                this.currentPosition = 0;
-                this.actualSize = 0;
-                this.parentServer = node;
+                _currentPosition = 0;
+                _actualSize = 0;
+                _parentServer = node;
                 s.Blocking = true;
-                this.socket = s;
-                this.socket.ReceiveTimeout = SOCKET_TIMEOUT;
+                _socket = s;
+                _socket.ReceiveTimeout = SocketTimeout;
             }
             catch (IOException ex)
             {
                 throw new IndicatorError(ex);
             }
-
         }
-        
+
+        /// <summary>
+        /// The client socket.
+        /// </summary>
+        public Socket ClientSocket
+        {
+            get { return _socket; }
+        }
+
+        /// <summary>
+        /// The packet count that we've read.
+        /// </summary>
+        public int Packets
+        {
+            get { return _packets; }
+        }
+
+        /// <summary>
+        /// The server that created this link.
+        /// </summary>
+        public IndicatorServer ParentServer
+        {
+            get { return _parentServer; }
+        }
+
         /// <summary>
         /// Write a packet, basically a CSV line. 
         /// </summary>
@@ -122,20 +154,20 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
                 line.Append("\"");
                 line.Append(command.ToUpper());
                 line.Append("\"");
-                for (int i = 0; i < args.Length; i++)
+                foreach (object t in args)
                 {
                     line.Append(",\"");
-                    line.Append(args[i].ToString());
+                    line.Append(t.ToString());
                     line.Append("\"");
                 }
                 line.Append("\n");
 
                 byte[] b = Encoding.ASCII.GetBytes(line.ToString());
-                this.socket.Send(b);
+                _socket.Send(b);
             }
             catch (IOException ex)
             {
@@ -149,9 +181,9 @@ namespace Encog.Cloud.Indicator.Server
         private void ReadNextBlock()
         {
             var buffer = new byte[1024];
-            currentPosition = actualSize = 0;
-            actualSize = this.socket.Receive(buffer);
-            ascii.GetChars(buffer, 0, actualSize, charBuffer, 0);                
+            _currentPosition = _actualSize = 0;
+            _actualSize = _socket.Receive(buffer);
+            _ascii.GetChars(buffer, 0, _actualSize, _charBuffer, 0);
         }
 
         /// <summary>
@@ -160,14 +192,14 @@ namespace Encog.Cloud.Indicator.Server
         /// <returns>The next char.</returns>
         private char ReadNextChar()
         {
-            if( this.actualSize==this.currentPosition )
+            if (_actualSize == _currentPosition)
             {
                 ReadNextBlock();
             }
 
-            return charBuffer[this.currentPosition++];
+            return _charBuffer[_currentPosition++];
         }
-        
+
         /// <summary>
         /// Read a packet. 
         /// </summary>
@@ -178,7 +210,7 @@ namespace Encog.Cloud.Indicator.Server
             {
                 var line = new StringBuilder();
 
-                for (; ; )
+                for (;;)
                 {
                     char ch = ReadNextChar();
 
@@ -190,18 +222,17 @@ namespace Encog.Cloud.Indicator.Server
                     {
                         break;
                     }
-
                 }
 
-                IList<String> list = parseLine.Parse(line.ToString());
-                this.packets++;
+                IList<String> list = _parseLine.Parse(line.ToString());
+                _packets++;
 
                 if (list.Count > 0)
                 {
                     list[0] = list[0].ToUpper();
                 }
 
-                EncogLogging.Log(EncogLogging.LevelDebug, "Received Packet: " + line.ToString());
+                EncogLogging.Log(EncogLogging.LevelDebug, "Received Packet: " + line);
                 return new IndicatorPacket(list);
             }
             catch (SocketException ex)
@@ -211,33 +242,7 @@ namespace Encog.Cloud.Indicator.Server
                 {
                     return null;
                 }
-                else
-                {
-                    throw new IndicatorError(ex);
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// The client socket.
-        /// </summary>
-        public Socket ClientSocket
-        {
-            get
-            {
-                return this.socket;
-            }
-        }
-
-        /// <summary>
-        /// The packet count that we've read.
-        /// </summary>
-        public int Packets
-        {
-            get
-            {
-                return this.packets;
+                throw new IndicatorError(ex);
             }
         }
 
@@ -248,22 +253,11 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
-                this.socket.Close();
+                _socket.Close();
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 // ignore, we were trying to close
-            }
-        }
-
-        /// <summary>
-        /// The server that created this link.
-        /// </summary>
-        public IndicatorServer ParentServer
-        {
-            get
-            {
-                return parentServer;
             }
         }
 
@@ -274,12 +268,11 @@ namespace Encog.Cloud.Indicator.Server
         /// <param name="blocking">True, if blocking is used.</param>
         public void InitConnection(IList<String> dataSource, bool blocking)
         {
-            String[] args = new String[2];
+            var args = new String[2];
             args[0] = blocking ? "1" : "0";
             args[1] = "1";
-            WritePacket(IndicatorLink.PACKET_SIGNALS, dataSource.ToArray());
-            WritePacket(IndicatorLink.PACKET_INIT, args);
+            WritePacket(PacketSignals, dataSource.ToArray());
+            WritePacket(PacketInit, args);
         }
-
     }
 }

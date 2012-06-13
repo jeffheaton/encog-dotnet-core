@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.Cloud.Indicator.Server
 {
@@ -11,35 +9,28 @@ namespace Encog.Cloud.Indicator.Server
     public class IndicatorPacket
     {
         /// <summary>
-        /// The command.
-        /// </summary>
-        private string command;
-
-        /// <summary>
         /// The arguments.
         /// </summary>
-        private string[] args;
-        
+        private readonly string[] _args;
+
+        /// <summary>
+        /// The command.
+        /// </summary>
+        private readonly string _command;
+
         /// <summary>
         /// Construct a packet from he list of arguments.
         /// </summary>
         /// <param name="list">The argument list.</param>
         public IndicatorPacket(IList<string> list)
         {
-            this.command = list[0].ToUpper();
+            _command = list[0].ToUpper();
 
-            if (list.Count == 1)
-            {
-                this.args = new String[0];
-            }
-            else
-            {
-                this.args = new String[list.Count - 1];
-            }
+            _args = list.Count == 1 ? new String[0] : new String[list.Count - 1];
 
             for (int i = 0; i < list.Count - 1; i++)
             {
-                this.args[i] = list[i + 1];
+                _args[i] = list[i + 1];
             }
         }
 
@@ -48,10 +39,7 @@ namespace Encog.Cloud.Indicator.Server
         /// </summary>
         public String Command
         {
-            get
-            {
-                return command;
-            }
+            get { return _command; }
         }
 
         /// <summary>
@@ -59,11 +47,7 @@ namespace Encog.Cloud.Indicator.Server
         /// </summary>
         public String[] Args
         {
-            get
-            {
-                return args;
-            }
+            get { return _args; }
         }
-
     }
 }

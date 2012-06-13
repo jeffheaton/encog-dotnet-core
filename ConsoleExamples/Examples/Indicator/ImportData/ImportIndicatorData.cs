@@ -1,25 +1,27 @@
 ﻿using System;
+using System.IO;
 using ConsoleExamples.Examples;
 using Encog.Cloud.Indicator;
+using Encog.Cloud.Indicator.Basic;
 using Encog.Cloud.Indicator.Server;
 
-namespace Encog.Examples.Indicator.CustomInd
+namespace Encog.Examples.Indicator.ImportData
 {
-    public class RemoteEMA : IExample, IIndicatorConnectionListener
+    public class ImportIndicatorData : IIndicatorConnectionListener, IExample
     {
         public const int Port = 5128;
 
-        private IExampleInterface _app;
+        private IExampleInterface app;
 
         public static ExampleInfo Info
         {
             get
             {
                 var info = new ExampleInfo(
-                    typeof (RemoteEMA),
-                    "indicator-ema",
-                    "Provide a EMA indicator.",
-                    "Provide a EMA indicator to the Encog Framework Indicator.");
+                    typeof (ImportIndicatorData),
+                    "indicator-download",
+                    "Download data from Ninjatrader.",
+                    "Uses the Encog Framework indicator to download data from Ninjatrader.");
                 return info;
             }
         }
@@ -28,16 +30,23 @@ namespace Encog.Examples.Indicator.CustomInd
 
         public void Execute(IExampleInterface app)
         {
-            _app = app;
+            this.app = app;
+
             Console.WriteLine(@"Waiting for connections on port " + Port);
+
+            var ind = new DownloadIndicatorFactory(new FileInfo("d:\\ninja.csv"));
+            ind.RequestData("HIGH[5]");
+            ind.RequestData("LOW[1]");
+            ind.RequestData("OPEN[1]");
+            ind.RequestData("CLOSE[1]");
+            ind.RequestData("VOL[1]");
+            ind.RequestData("MACD(12,26,9).Avg[1]");
 
             var server = new IndicatorServer();
             server.AddListener(this);
-
-            server.AddIndicatorFactory(new MyFactory());
-
+            server.AddIndicatorFactory(ind);
             server.Start();
-            server.WaitForShutdown();
+            server.WaitForIndicatorCompletion();
         }
 
         #endregion
@@ -54,27 +63,6 @@ namespace Encog.Examples.Indicator.CustomInd
             {
                 Console.WriteLine(@"Connection from " + link.ClientSocket.RemoteEndPoint + @" terminated.");
             }
-        }
-
-        #endregion
-
-        #region Nested type: MyFactory
-
-        public class MyFactory : IIndicatorFactory
-        {
-            #region IIndicatorFactory Members
-
-            public String Name
-            {
-                get { return "EMA"; }
-            }
-
-            public IIndicatorListener Create()
-            {
-                return new EMA();
-            }
-
-            #endregion
         }
 
         #endregion

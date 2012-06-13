@@ -30,36 +30,33 @@ using Encog.Examples.Analyzer;
 using Encog.Examples.AnnealTSP;
 using Encog.Examples.ARTExample;
 using Encog.Examples.BAM;
+using Encog.Examples.Bayesian;
 using Encog.Examples.Benchmark;
 using Encog.Examples.Boltzmann;
 using Encog.Examples.CPN;
+using Encog.Examples.CSVMarketExample;
 using Encog.Examples.ElmanNetwork;
 using Encog.Examples.Forest;
+using Encog.Examples.ForexExample;
 using Encog.Examples.GeneticTSP;
 using Encog.Examples.Hopfield.Associate;
 using Encog.Examples.Hopfield.Simple;
 using Encog.Examples.Image;
+using Encog.Examples.Indicator.Avg;
+using Encog.Examples.Indicator.CustomInd;
+using Encog.Examples.Indicator.ImportData;
 using Encog.Examples.JordanNetwork;
+using Encog.Examples.LiveSimul;
 using Encog.Examples.Lunar;
-using Encog.Examples.Market;
 using Encog.Examples.MultiRadial;
 using Encog.Examples.NetWorkPruner;
 using Encog.Examples.Normalize;
 using Encog.Examples.Persist;
 using Encog.Examples.Predict;
-using Encog.Examples.RangeandMarket;
-using Encog.Examples.RateSP500;
 using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
-using Encog.Examples.CSVMarketExample;
-using Encog.Examples.ForexExample;
-using Encog.Examples.Bayesian;
-using Encog.Examples.Indicator.Ninja;
-using Encog.Examples.Indicator.CustomInd;
-using Encog.Examples.LiveSimul;
-using Encog.Examples.Indicator.Ninja.ImportNinjaData;
-using Encog.Examples.Indicator.Ninja.Avg;
+using MarketPredict = Encog.Examples.Market.MarketPredict;
 
 namespace ConsoleExamples
 {
@@ -101,7 +98,7 @@ namespace ConsoleExamples
             examples.Add(AnalystExample.Info);
             examples.Add(XORNEAT.Info);
             examples.Add(ForestCover.Info);
-            examples.Add(Encog.Examples.Market.MarketPredict.Info);
+            examples.Add(MarketPredict.Info);
             examples.Add(CSVMarketExample.Info);
             examples.Add(ForexExample.Info);
             examples.Add(LunarLander.Info);
@@ -118,7 +115,7 @@ namespace ConsoleExamples
             examples.Add(XORPSO.Info);
             examples.Add(BayesianTaxi.Info);
             examples.Add(SunspotWindow.Info);
-            examples.Add(ImportNinjaData.Info);
+            examples.Add(ImportIndicatorData.Info);
             examples.Add(RemoteEMA.Info);
             examples.Add(LiveSimul.Info);
             examples.Add(IndicatorExample.Info);
@@ -201,7 +198,6 @@ namespace ConsoleExamples
             {
                 Pause();
             }
-
         }
 
         public void Pause()
@@ -209,6 +205,7 @@ namespace ConsoleExamples
             Console.Write("\n\nPress any key to continue...");
             Console.ReadKey();
         }
+
         [STAThread]
         private static void Main(string[] args)
         {

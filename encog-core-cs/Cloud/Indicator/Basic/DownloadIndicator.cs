@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using Encog.Cloud.Indicator.Server;
 
@@ -17,22 +15,22 @@ namespace Encog.Cloud.Indicator.Basic
         /// <summary>
         /// The default port.
         /// </summary>
-        public const int PORT = 5128;
-
-        /// <summary>
-        /// The number of rows downloaded.
-        /// </summary>
-        private int rowsDownloaded;
+        public const int Port = 5128;
 
         /// <summary>
         /// The instruments that we are downloading (i.e. ticker symbols, and their data)
         /// </summary>
-        private IDictionary<string, InstrumentHolder> data = new Dictionary<string, InstrumentHolder>();
+        private readonly IDictionary<string, InstrumentHolder> _data = new Dictionary<string, InstrumentHolder>();
 
         /// <summary>
         /// The target CSV file.
         /// </summary>
-        private FileInfo targetFile;
+        private readonly FileInfo _targetFile;
+
+        /// <summary>
+        /// The number of rows downloaded.
+        /// </summary>
+        private int _rowsDownloaded;
 
         /// <summary>
         /// Construct the download indicator.
@@ -41,8 +39,15 @@ namespace Encog.Cloud.Indicator.Basic
         public DownloadIndicator(FileInfo theFile)
             : base(false)
         {
+            _targetFile = theFile;
+        }
 
-            this.targetFile = theFile;
+        /// <summary>
+        /// The number of rows downloaded.
+        /// </summary>
+        public int RowsDownloaded
+        {
+            get { return _rowsDownloaded; }
         }
 
         /// <summary>
@@ -50,33 +55,33 @@ namespace Encog.Cloud.Indicator.Basic
         /// </summary>
         public void Close()
         {
-            this.Link.Close();
-            this.data.Clear();
+            Link.Close();
+            _data.Clear();
         }
 
         /// <inheritdoc/>
         public override void NotifyPacket(IndicatorPacket packet)
         {
-            if (string.Compare(packet.Command, IndicatorLink.PACKET_BAR, true) == 0)
+            if (string.Compare(packet.Command, IndicatorLink.PacketBar, true) == 0)
             {
                 String security = packet.Args[1];
                 long when = long.Parse(packet.Args[0]);
                 String key = security.ToLower();
-                InstrumentHolder holder = null;
+                InstrumentHolder holder;
 
-                if (this.data.ContainsKey(key))
+                if (_data.ContainsKey(key))
                 {
-                    holder = this.data[key];
+                    holder = _data[key];
                 }
                 else
                 {
                     holder = new InstrumentHolder();
-                    this.data[key] = holder;
+                    _data[key] = holder;
                 }
 
                 if (holder.Record(when, 2, packet.Args))
                 {
-                    this.rowsDownloaded++;
+                    _rowsDownloaded++;
                 }
             }
         }
@@ -94,30 +99,23 @@ namespace Encog.Cloud.Indicator.Basic
         {
             try
             {
-                if (this.data.Count == 0)
+                if (_data.Count == 0)
                 {
                     return;
                 }
 
 
-                using (StreamWriter outfile =
-                    new StreamWriter(targetFile.ToString()))
+                using (var outfile =
+                    new StreamWriter(_targetFile.ToString()))
                 {
                     // output header
                     outfile.Write("\"INSTRUMENT\",\"WHEN\"");
                     int index = 0;
-                    foreach (String str in this.DataRequested)
+                    foreach (String str in DataRequested)
                     {
                         String str2;
                         int ix = str.IndexOf('[');
-                        if (ix != -1)
-                        {
-                            str2 = str.Substring(0, ix).Trim();
-                        }
-                        else
-                        {
-                            str2 = str;
-                        }
+                        str2 = ix != -1 ? str.Substring(0, ix).Trim() : str;
 
                         int c = DataCount[index++];
                         if (c <= 1)
@@ -127,7 +125,7 @@ namespace Encog.Cloud.Indicator.Basic
                         else
                         {
                             for (int i = 0; i < c; i++)
-                            {                                
+                            {
                                 outfile.Write(",\"" + str2 + "-b" + i + "\"");
                             }
                         }
@@ -135,9 +133,9 @@ namespace Encog.Cloud.Indicator.Basic
                     outfile.WriteLine();
 
                     // output data
-                    foreach (string ins in this.data.Keys)
+                    foreach (string ins in _data.Keys)
                     {
-                        InstrumentHolder holder = this.data[ins];
+                        InstrumentHolder holder = _data[ins];
                         foreach (long key in holder.Sorted)
                         {
                             String str = holder.Data[key];
@@ -147,24 +145,10 @@ namespace Encog.Cloud.Indicator.Basic
 
                     outfile.Close();
                 }
-
-
-
             }
             catch (IOException ex)
             {
                 throw new EncogError(ex);
-            }
-        }
-
-        /// <summary>
-        /// The number of rows downloaded.
-        /// </summary>
-        public int RowsDownloaded
-        {
-            get
-            {
-                return this.rowsDownloaded;
             }
         }
     }
