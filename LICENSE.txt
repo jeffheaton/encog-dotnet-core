@@ -1,6 +1,6 @@
-Encog(tm) Core - Java Version
+Encog(tm) Core - C#/.Net Version
 http://www.heatonresearch.com/encog/
-http://code.google.com/p/encog-java/
+https://github.com/encog/encog-dotnet-core
 
 For more information on Heaton Research copyrights, licenses and trademarks visit:
 http://www.heatonresearch.com/copyright
