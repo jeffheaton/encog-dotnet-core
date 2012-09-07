@@ -14,7 +14,7 @@ namespace Encog.Examples.SVM
     public class RegressionSVM : IExample
     {
         /// <summary>
-        /// Input for the XOR function.
+        /// Input for function.
         /// </summary>
         public static double[][] RegressionInput = {
             new[] {0.0},
@@ -30,11 +30,11 @@ namespace Encog.Examples.SVM
             };
 
         /// <summary>
-        /// Ideal output for the XOR function.
+        /// Ideal output.
         /// </summary>
         public static double[][] RegressionIdeal = {
             new[] {0.9},
-            new[] {0.8},+
+            new[] {0.8},
             new[] {0.7},
             new[] {0.6},
             new[] {0.5},
@@ -66,7 +66,7 @@ namespace Encog.Examples.SVM
             // create training data
             IMLDataSet trainingSet = new BasicMLDataSet(RegressionInput, RegressionIdeal);
 
-            // train the neural network
+            // train the SVM
             IMLTrain train = new SVMSearchTrain(svm, trainingSet);
 
             int epoch = 1;
@@ -78,7 +78,7 @@ namespace Encog.Examples.SVM
                 epoch++;
             } while (train.Error > 0.01);
 
-            // test the neural network
+            // test the SVM
             Console.WriteLine(@"SVM Results:");
             foreach (IMLDataPair pair in trainingSet)
             {

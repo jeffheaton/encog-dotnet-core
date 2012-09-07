@@ -56,14 +56,6 @@ using Encog.Examples.Predict;
 using Encog.Examples.SVM_Predict;
 using Encog.Examples.SVMPredictCSV;
 using Encog.Examples.XOR;
-using Encog.Examples.CSVMarketExample;
-using Encog.Examples.ForexExample;
-using Encog.Examples.Bayesian;
-using Encog.Examples.Indicator.Ninja;
-using Encog.Examples.Indicator.CustomInd;
-using Encog.Examples.LiveSimul;
-using Encog.Examples.Indicator.Ninja.ImportNinjaData;
-using Encog.Examples.Indicator.Ninja.Avg;
 using Encog.Examples.SVM;
 using MarketPredict = Encog.Examples.Market.MarketPredict;
 
