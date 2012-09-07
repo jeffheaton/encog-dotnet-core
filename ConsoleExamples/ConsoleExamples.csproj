@@ -111,6 +111,7 @@
     <Compile Include="Examples\NetWorkPruner\PrunerLoader.cs" />
     <Compile Include="Examples\Normalize\NormalizeFile.cs" />
     <Compile Include="Examples\Normalize\SimpleNormalize.cs" />
+    <Compile Include="Examples\SVM\RegressionSVM.cs" />
     <Compile Include="Persist\PersistEncog.cs" />
     <Compile Include="Persist\PersistSerial.cs" />
     <Compile Include="Examples\Analyzer\Prunes.cs" />

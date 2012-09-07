@@ -60,6 +60,7 @@ using Encog.Examples.Indicator.CustomInd;
 using Encog.Examples.LiveSimul;
 using Encog.Examples.Indicator.Ninja.ImportNinjaData;
 using Encog.Examples.Indicator.Ninja.Avg;
+using Encog.Examples.SVM;
 
 namespace ConsoleExamples
 {
@@ -122,6 +123,7 @@ namespace ConsoleExamples
             examples.Add(RemoteEMA.Info);
             examples.Add(LiveSimul.Info);
             examples.Add(IndicatorExample.Info);
+            examples.Add(RegressionSVM.Info);            
         }
 
         public void ListCommands()
