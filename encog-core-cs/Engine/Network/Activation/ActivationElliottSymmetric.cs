@@ -34,6 +34,7 @@ namespace Encog.Engine.Network.Activation
     /// Elliott, D.L. "A better activation function for artificial neural networks", 1993
     /// http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.46.7204&rep=rep1&type=pdf
     /// </summary>
+    [Serializable]
     public class ActivationElliottSymmetric : IActivationFunction
     {
         /// <summary>
