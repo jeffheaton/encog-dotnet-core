@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.Cloud
 {
     /// <summary>
     /// An error has occured in one of the Encog Cloud classes.
     /// </summary>
-    public class CloudError: EncogError
+    public class CloudError : EncogError
     {
         /// <summary>
         /// Construct a message exception.

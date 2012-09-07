@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Cloud.Indicator.Server;
+﻿using Encog.Cloud.Indicator.Server;
 
 namespace Encog.Cloud.Indicator
 {
@@ -12,13 +8,13 @@ namespace Encog.Cloud.Indicator
     /// and also connection termination.
     /// </summary>
     public interface IIndicatorListener
-    {        
+    {
         /// <summary>
         /// Notify that a link has been established.  This is called once. 
         /// </summary>
         /// <param name="theLink">The link used.</param>
         void NotifyConnect(IndicatorLink theLink);
-        
+
         /// <summary>
         /// Notify that a packet has been received. 
         /// </summary>

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using ConsoleExamples.Examples;
 using Encog.Cloud.Indicator;
 using Encog.Cloud.Indicator.Basic;
 using Encog.Cloud.Indicator.Server;
-using System.IO;
-using ConsoleExamples.Examples;
 
-namespace Encog.Examples.Indicator.Ninja.ImportNinjaData
+namespace Encog.Examples.Indicator.ImportData
 {
-    public class ImportNinjaData : IIndicatorConnectionListener, IExample
+    public class ImportIndicatorData : IIndicatorConnectionListener, IExample
     {
-        public const int PORT = 5128;
+        public const int Port = 5128;
 
         private IExampleInterface app;
 
@@ -21,7 +18,7 @@ namespace Encog.Examples.Indicator.Ninja.ImportNinjaData
             get
             {
                 var info = new ExampleInfo(
-                    typeof(ImportNinjaData),
+                    typeof (ImportIndicatorData),
                     "indicator-download",
                     "Download data from Ninjatrader.",
                     "Uses the Encog Framework indicator to download data from Ninjatrader.");
@@ -29,13 +26,15 @@ namespace Encog.Examples.Indicator.Ninja.ImportNinjaData
             }
         }
 
+        #region IExample Members
+
         public void Execute(IExampleInterface app)
         {
             this.app = app;
 
-            Console.WriteLine("Waiting for connections on port " + PORT);
+            Console.WriteLine(@"Waiting for connections on port " + Port);
 
-            DownloadIndicatorFactory ind = new DownloadIndicatorFactory(new FileInfo("d:\\ninja.csv"));
+            var ind = new DownloadIndicatorFactory(new FileInfo("d:\\ninja.csv"));
             ind.RequestData("HIGH[5]");
             ind.RequestData("LOW[1]");
             ind.RequestData("OPEN[1]");
@@ -43,24 +42,29 @@ namespace Encog.Examples.Indicator.Ninja.ImportNinjaData
             ind.RequestData("VOL[1]");
             ind.RequestData("MACD(12,26,9).Avg[1]");
 
-            IndicatorServer server = new IndicatorServer();
+            var server = new IndicatorServer();
             server.AddListener(this);
             server.AddIndicatorFactory(ind);
             server.Start();
             server.WaitForIndicatorCompletion();
         }
 
+        #endregion
+
+        #region IIndicatorConnectionListener Members
+
         public void NotifyConnections(IndicatorLink link, bool hasOpened)
         {
             if (hasOpened)
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " established.");
+                Console.WriteLine(@"Connection from " + link.ClientSocket.RemoteEndPoint + @" established.");
             }
-            else if (!hasOpened)
+            else
             {
-                Console.WriteLine("Connection from " + link.ClientSocket.RemoteEndPoint.ToString() + " terminated.");
+                Console.WriteLine(@"Connection from " + link.ClientSocket.RemoteEndPoint + @" terminated.");
             }
-
         }
+
+        #endregion
     }
 }

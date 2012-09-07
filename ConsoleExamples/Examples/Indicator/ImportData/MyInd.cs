@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using Encog.Cloud.Indicator.Basic;
-using Encog.ML;
-using Encog.Util.Arrayutil;
 using Encog.Cloud.Indicator.Server;
+using Encog.Examples.Indicator.Avg;
+using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
 using Encog.Util.File;
-using System.IO;
+using Directory = System.IO.Directory;
 
-namespace Encog.Examples.Indicator.Ninja.Avg
+namespace Encog.Examples.Indicator.ImportData
 {
     /// <summary>
     /// This is the actual indicator that will be called remotely from 
@@ -21,34 +20,34 @@ namespace Encog.Examples.Indicator.Ninja.Avg
     public class MyInd : BasicIndicator
     {
         /// <summary>
-        /// Holds the data as it is downloaded.
-        /// </summary>
-        private InstrumentHolder holder = new InstrumentHolder();
-
-        /// <summary>
-        /// The number of rows downloaded.
-        /// </summary>
-        private int rowsDownloaded;
-
-        /// <summary>
-        /// The path to store the data files.
-        /// </summary>
-        private string path;
-
-        /// <summary>
-        /// The machine learning method used to predict.
-        /// </summary>
-        private IMLRegression method;
-
-        /// <summary>
         /// Used to normalize the difference between the two SMAs.
         /// </summary>
-        private readonly NormalizedField fieldDifference;
+        private readonly NormalizedField _fieldDifference;
 
         /// <summary>
         /// Used to normalize the pip profit/loss outcome.
         /// </summary>
-        private readonly NormalizedField fieldOutcome;
+        private readonly NormalizedField _fieldOutcome;
+
+        /// <summary>
+        /// Holds the data as it is downloaded.
+        /// </summary>
+        private readonly InstrumentHolder _holder = new InstrumentHolder();
+
+        /// <summary>
+        /// The machine learning method used to predict.
+        /// </summary>
+        private readonly IMLRegression _method;
+
+        /// <summary>
+        /// The path to store the data files.
+        /// </summary>
+        private readonly string _path;
+
+        /// <summary>
+        /// The number of rows downloaded.
+        /// </summary>
+        private int _rowsDownloaded;
 
         /// <summary>
         /// Construct the indicator. 
@@ -58,15 +57,25 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         public MyInd(IMLRegression theMethod, string thePath)
             : base(theMethod != null)
         {
-            this.method = theMethod;
-            this.path = thePath;
+            _method = theMethod;
+            _path = thePath;
 
             RequestData("CLOSE[1]");
-            RequestData("SMA(10)[" + Config.INPUT_WINDOW + "]");
-            RequestData("SMA(25)[" + Config.INPUT_WINDOW + "]");
+            RequestData("SMA(10)[" + Config.InputWindow + "]");
+            RequestData("SMA(25)[" + Config.InputWindow + "]");
 
-            this.fieldDifference = new NormalizedField(NormalizationAction.Normalize, "diff", Config.DIFF_RANGE, -Config.DIFF_RANGE, 1, -1);
-            this.fieldOutcome = new NormalizedField(NormalizationAction.Normalize, "out", Config.PIP_RANGE, -Config.PIP_RANGE, 1, -1);
+            _fieldDifference = new NormalizedField(NormalizationAction.Normalize, "diff", Config.DiffRange,
+                                                  -Config.DiffRange, 1, -1);
+            _fieldOutcome = new NormalizedField(NormalizationAction.Normalize, "out", Config.PipRange, -Config.PipRange,
+                                               1, -1);
+        }
+
+        /// <summary>
+        /// The number of rows downloaded.
+        /// </summary>
+        public int RowsDownloaded
+        {
+            get { return _rowsDownloaded; }
         }
 
         /// <summary>
@@ -75,48 +84,42 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         /// <param name="packet">The packet received.</param>
         public override void NotifyPacket(IndicatorPacket packet)
         {
-            String security = packet.Args[1];
-            long when = long.Parse(packet.Args[0]);
-            String key = security.ToLower();
+            long when = long.Parse(packet.Args[0]);         
 
-            if (this.method == null)
+            if (_method == null)
             {
-                if (holder.Record(when, 2, packet.Args))
+                if (_holder.Record(when, 2, packet.Args))
                 {
-                    this.rowsDownloaded++;
+                    _rowsDownloaded++;
                 }
             }
             else
             {
-                BasicMLData input = new BasicMLData(Config.PREDICT_WINDOW);
+                var input = new BasicMLData(Config.PredictWindow);
 
-                int fastIndex = 2;
-                int slowIndex = fastIndex + Config.INPUT_WINDOW;
+                const int fastIndex = 2;
+                const int slowIndex = fastIndex + Config.InputWindow;
 
                 for (int i = 0; i < 3; i++)
                 {
                     double fast = CSVFormat.EgFormat.Parse(packet.Args[fastIndex + i]);
                     double slow = CSVFormat.EgFormat.Parse(packet.Args[slowIndex + i]);
-                    double diff = this.fieldDifference.Normalize((fast - slow) / Config.PIP_SIZE);
-                    input[i] = this.fieldDifference.Normalize(diff);
+                    double diff = _fieldDifference.Normalize((fast - slow)/Config.PipSize);
+                    input[i] = _fieldDifference.Normalize(diff);
                 }
 
-                IMLData result = this.method.Compute(input);
+                IMLData result = _method.Compute(input);
 
                 double d = result[0];
-                d = this.fieldOutcome.DeNormalize(d);
+                d = _fieldOutcome.DeNormalize(d);
 
-                String[] args = { 
-					"?",	// line 1
-					"?",	// line 2
-					"?",	// line 3
-					CSVFormat.EgFormat.Format(d,EncogFramework.DefaultPrecision), // bar 1
-					"?", // bar 2
-					"?", // bar 3
-					"?", // arrow 1
-					"?"}; // arrow 2
+                String[] args = {
+                                    "?", // line 1
+                                    "?", // line 2
+                                    CSVFormat.EgFormat.Format(d, EncogFramework.DefaultPrecision), // bar 1
+                                }; // arrow 2
 
-                this.Link.WritePacket(IndicatorLink.PACKET_IND, args);
+                Link.WritePacket(IndicatorLink.PacketInd, args);
             }
         }
 
@@ -127,21 +130,21 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         public string NextFile()
         {
             int mx = -1;
-            string[] list = System.IO.Directory.GetFiles(path);
+            string[] list = Directory.GetFiles(_path);
 
             foreach (string file in list)
             {
-                String fn = FileUtil.GetFileName(new FileInfo(file));
-                if (fn.StartsWith("collected") && fn.EndsWith(".csv"))
+                var fn = new FileInfo(file);
+                if (fn.Name.StartsWith("collected") && fn.Name.EndsWith(".csv"))
                 {
-                    int idx = fn.IndexOf(".csv");
-                    String str = fn.Substring(9, idx);
+                    int idx = fn.Name.IndexOf(".csv");
+                    String str = fn.Name.Substring(9, idx - 9);
                     int n = int.Parse(str);
                     mx = Math.Max(n, mx);
                 }
             }
 
-            return FileUtil.CombinePath(new FileInfo(path), "collected" + (mx + 1) + ".csv").ToString();
+            return FileUtil.CombinePath(new FileInfo(_path), "collected" + (mx + 1) + ".csv").ToString();
         }
 
         /// <summary>
@@ -151,12 +154,12 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         {
             string targetFile = NextFile();
 
-            using (StreamWriter outfile = new StreamWriter(targetFile))
+            using (var outfile = new StreamWriter(targetFile))
             {
                 // output header
                 outfile.Write("\"WHEN\"");
                 int index = 0;
-                foreach (String str in this.DataRequested)
+                foreach (String str in DataRequested)
                 {
                     String str2;
 
@@ -188,9 +191,9 @@ namespace Encog.Examples.Indicator.Ninja.Avg
 
                 // output data
 
-                foreach (long key in holder.Sorted)
+                foreach (long key in _holder.Sorted)
                 {
-                    String str = holder.Data[key];
+                    String str = _holder.Data[key];
                     outfile.WriteLine(key + "," + str);
                 }
             }
@@ -201,20 +204,9 @@ namespace Encog.Examples.Indicator.Ninja.Avg
         /// </summary>
         public override void NotifyTermination()
         {
-            if (this.method == null)
+            if (_method == null)
             {
                 WriteCollectedFile();
-            }
-        }
-
-        /// <summary>
-        /// The number of rows downloaded.
-        /// </summary>
-        public int RowsDownloaded
-        {
-            get
-            {
-                return rowsDownloaded;
             }
         }
     }

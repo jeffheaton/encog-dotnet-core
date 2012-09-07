@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.Cloud.Indicator.Basic
@@ -14,12 +13,28 @@ namespace Encog.Cloud.Indicator.Basic
         /// <summary>
         /// The downloaded financial data.
         /// </summary>
-        private IDictionary<long, string> data = new Dictionary<long, string>();
+        private readonly IDictionary<long, string> _data = new Dictionary<long, string>();
 
         /// <summary>
         /// The sorted data.
         /// </summary>
-        private ICollection<long> sorted = new SortedSet<long>();
+        private readonly ICollection<long> _sorted = new SortedSet<long>();
+
+        /// <summary>
+        /// The data.
+        /// </summary>
+        public IDictionary<long, string> Data
+        {
+            get { return _data; }
+        }
+
+        /// <summary>
+        /// Sorted keys.
+        /// </summary>
+        public ICollection<long> Sorted
+        {
+            get { return _sorted; }
+        }
 
         /// <summary>
         /// Record one piece of data. Data with the same time stamp.
@@ -32,8 +47,7 @@ namespace Encog.Cloud.Indicator.Basic
         /// <returns>True, if the data did not exist already.</returns>
         public bool Record(long when, int starting, String[] data)
         {
-            bool result;
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
 
             for (int i = starting; i < data.Length; i++)
             {
@@ -44,32 +58,10 @@ namespace Encog.Cloud.Indicator.Basic
                 str.Append(data[i]);
             }
 
-            result = !this.data.ContainsKey(when);
-            this.sorted.Add(when);
-            this.data[when] = str.ToString();
+            bool result = !_data.ContainsKey(when);
+            _sorted.Add(when);
+            this._data[when] = str.ToString();
             return result;
-        }
-
-        /// <summary>
-        /// The data.
-        /// </summary>
-        public IDictionary<long, string> Data
-        {
-            get
-            {
-                return data;
-            }
-        }
-
-        /// <summary>
-        /// Sorted keys.
-        /// </summary>
-        public ICollection<long> Sorted
-        {
-            get
-            {
-                return sorted;
-            }
         }
     }
 }

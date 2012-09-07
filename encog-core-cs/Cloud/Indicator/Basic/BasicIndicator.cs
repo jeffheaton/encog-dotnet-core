@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.Cloud.Indicator.Server;
 
 namespace Encog.Cloud.Indicator.Basic
@@ -15,38 +13,38 @@ namespace Encog.Cloud.Indicator.Basic
         /// <summary>
         /// Is this indicator blocking, should it wait for a result after each bar.
         /// </summary>
-        private readonly bool blocking;
+        private readonly bool _blocking;
+
+        /// <summary>
+        /// The number of bars requested per data item.
+        /// </summary>
+        private readonly IList<int> _dataCount = new List<int>();
 
         /// <summary>
         /// The data that has been requested from the remote side.  This is
         /// typically HLOC(High, Low, Open, Close) data that is needed by the
         /// Encog indicator to compute.
         /// </summary>
-        private readonly IList<String> dataRequested = new List<string>();
-
-        /// <summary>
-        /// The number of bars requested per data item.
-        /// </summary>
-        private readonly IList<int> dataCount = new List<int>();
+        private readonly IList<String> _dataRequested = new List<string>();
 
         /// <summary>
         /// The communication link between the indicator and remote.
         /// </summary>
-        private IndicatorLink link;
-
-        /// <summary>
-        /// The current error message;
-        /// </summary>
-        public String ErrorMessage { get; set; }
+        private IndicatorLink _link;
 
         /// <summary>
         /// Construc the basic indicator.
         /// </summary>
         /// <param name="theBlocking">Are we blocking?</param>
-        public BasicIndicator(bool theBlocking)
+        protected BasicIndicator(bool theBlocking)
         {
-            this.blocking = theBlocking;
+            _blocking = theBlocking;
         }
+
+        /// <summary>
+        /// The current error message;
+        /// </summary>
+        public String ErrorMessage { get; set; }
 
         /// <summary>
         /// The data that has been requested from the remote side.  This is
@@ -55,39 +53,34 @@ namespace Encog.Cloud.Indicator.Basic
         /// </summary>
         public IList<String> DataRequested
         {
-            get
-            {
-                return dataRequested;
-            }
+            get { return _dataRequested; }
         }
 
         /// <summary>
-        /// Request the specified data. i.e. HIGH, LOW, etc. 
+        /// Are we blocking?
         /// </summary>
-        /// <param name="str">The data being requested.</param>
-        public void RequestData(String str)
+        public bool Blocking
         {
-            dataRequested.Add(str);
-
-            int idx = str.IndexOf('[');
-
-            if (idx == -1)
-            {
-                this.dataCount.Add(1);
-                return;
-            }
-
-            int idx2 = str.IndexOf(']', idx);
-
-            if (idx2 == -1)
-            {
-                this.dataCount.Add(1);
-                return;
-            }
-
-            String s = str.Substring(idx + 1, idx2 - (idx + 1));
-            this.dataCount.Add(int.Parse(s));
+            get { return _blocking; }
         }
+
+        /// <summary>
+        /// The link.
+        /// </summary>
+        public IndicatorLink Link
+        {
+            get { return _link; }
+        }
+
+        /// <summary>
+        /// The count.
+        /// </summary>
+        public IList<int> DataCount
+        {
+            get { return _dataCount; }
+        }
+
+        #region IIndicatorListener Members
 
         /// <summary>
         /// Notify that this indicator is now connected.  This is called
@@ -97,48 +90,15 @@ namespace Encog.Cloud.Indicator.Basic
         /// <param name="theLink">The link.</param>
         public void NotifyConnect(IndicatorLink theLink)
         {
-            this.link = theLink;
-            if (this.ErrorMessage != null)
+            _link = theLink;
+            if (ErrorMessage != null)
             {
-                String[] args = { this.ErrorMessage };
-                this.Link.WritePacket(IndicatorLink.PACKET_ERROR, args);
+                String[] args = {ErrorMessage};
+                Link.WritePacket(IndicatorLink.PacketError, args);
             }
             else
             {
-                this.link.InitConnection(this.dataRequested, this.blocking);
-            }
-        }
-
-        /// <summary>
-        /// Are we blocking?
-        /// </summary>
-        public bool Blocking
-        {
-            get
-            {
-                return blocking;
-            }
-        }
-
-        /// <summary>
-        /// The link.
-        /// </summary>
-        public IndicatorLink Link
-        {
-            get
-            {
-                return link;
-            }
-        }
-
-        /// <summary>
-        /// The count.
-        /// </summary>
-        public IList<int> DataCount
-        {
-            get
-            {
-                return dataCount;
+                _link.InitConnection(_dataRequested, _blocking);
             }
         }
 
@@ -146,6 +106,35 @@ namespace Encog.Cloud.Indicator.Basic
         public abstract void NotifyPacket(IndicatorPacket packet);
 
         public abstract void NotifyTermination();
-        
+
+        #endregion
+
+        /// <summary>
+        /// Request the specified data. i.e. HIGH, LOW, etc. 
+        /// </summary>
+        /// <param name="str">The data being requested.</param>
+        public void RequestData(String str)
+        {
+            _dataRequested.Add(str);
+
+            int idx = str.IndexOf('[');
+
+            if (idx == -1)
+            {
+                _dataCount.Add(1);
+                return;
+            }
+
+            int idx2 = str.IndexOf(']', idx);
+
+            if (idx2 == -1)
+            {
+                _dataCount.Add(1);
+                return;
+            }
+
+            String s = str.Substring(idx + 1, idx2 - (idx + 1));
+            _dataCount.Add(int.Parse(s));
+        }
     }
 }

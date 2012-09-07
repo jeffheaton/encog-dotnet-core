@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Encog.Util.Logging;
-using System.IO;
-using System.Net;
 
 namespace Encog.Cloud.Indicator.Server
 {
@@ -21,58 +20,82 @@ namespace Encog.Cloud.Indicator.Server
         /// <summary>
         /// The default port.
         /// </summary>
-        public const int STANDARD_ENCOG_PORT = 5128;
-
-        /// <summary>
-        /// The port actually being used.
-        /// </summary>
-        private int port;
-
-        /// <summary>
-        /// The socket that we are listening on.
-        /// </summary>
-        private Socket listenSocket;
-
-        /// <summary>
-        /// The background thread used to listen.
-        /// </summary>
-        private Thread thread;
-
-        /// <summary>
-        /// True, if the server is running.
-        /// </summary>
-        private bool running;
+        public const int StandardEncogPort = 5128;
 
         /// <summary>
         /// The connections that have been made to the server.
         /// </summary>
-        private readonly List<HandleClient> connections = new List<HandleClient>();
-
-        /// <summary>
-        /// All registered listeners.
-        /// </summary>
-        private readonly IList<IIndicatorConnectionListener> listeners = new List<IIndicatorConnectionListener>();
+        private readonly IList<HandleClient> _connections = new List<HandleClient>();
 
         /// <summary>
         /// The indicator factories by name.
         /// </summary>
-        private readonly IDictionary<string, IIndicatorFactory> factoryMap = new Dictionary<String, IIndicatorFactory>();
-        
+        private readonly IDictionary<string, IIndicatorFactory> _factoryMap = new Dictionary<String, IIndicatorFactory>();
+
+        /// <summary>
+        /// All registered listeners.
+        /// </summary>
+        private readonly IList<IIndicatorConnectionListener> _listeners = new List<IIndicatorConnectionListener>();
+
+        /// <summary>
+        /// The port actually being used.
+        /// </summary>
+        private readonly int _port;
+
+        /// <summary>
+        /// The socket that we are listening on.
+        /// </summary>
+        private Socket _listenSocket;
+
+        /// <summary>
+        /// True, if the server is running.
+        /// </summary>
+        private bool _running;
+
+        /// <summary>
+        /// The background thread used to listen.
+        /// </summary>
+        private Thread _thread;
+
         /// <summary>
         /// Construct a server. 
         /// </summary>
         /// <param name="p">The port.</param>
         public IndicatorServer(int p)
         {
-            this.port = p;
+            _port = p;
         }
 
         /// <summary>
         /// Construct a server, and use the standard port (5128).
         /// </summary>
         public IndicatorServer()
-            : this(STANDARD_ENCOG_PORT)
+            : this(StandardEncogPort)
         {
+        }
+
+        /// <summary>
+        /// The port the server is listening on.
+        /// </summary>
+        public int Port
+        {
+            get { return _port; }
+        }
+
+        /// <summary>
+        /// The connections.
+        /// </summary>
+        public IList<HandleClient> Connections
+        {
+            get { return _connections; }
+        }
+
+        /// <summary>
+        /// The connection listeners.
+        /// </summary>
+        public IList<IIndicatorConnectionListener> Listeners
+        {
+            get { return _listeners; }
         }
 
         /// <summary>
@@ -82,26 +105,26 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
-                this.running = true;
-                listenSocket.Listen(5);
-                while (this.running)
+                _running = true;
+                _listenSocket.Listen(5);
+                while (_running)
                 {
                     try
                     {
                         EncogLogging.Log(EncogLogging.LevelDebug, "Begin listen");
-                        Socket connectionSocket = listenSocket.Accept();
-                        EncogLogging.Log(EncogLogging.LevelDebug, "Connection from: " + connectionSocket.RemoteEndPoint.ToString());
-                        IndicatorLink link = new IndicatorLink(this, connectionSocket);
+                        Socket connectionSocket = _listenSocket.Accept();
+                        EncogLogging.Log(EncogLogging.LevelDebug, "Connection from: " + connectionSocket.RemoteEndPoint);
+                        var link = new IndicatorLink(this, connectionSocket);
                         NotifyListenersConnections(link, true);
-                        HandleClient hc = new HandleClient(this, link);
-                        this.connections.Add(hc);
-                        Thread t = new Thread(new ThreadStart(hc.Run));
+                        var hc = new HandleClient(this, link);
+                        _connections.Add(hc);
+                        var t = new Thread(hc.Run);
                         t.Start();
                     }
-                    catch (SocketException ex)
+                    catch (SocketException)
                     {
                         // just accept timing out
-                        Thread.Sleep(100);                        
+                        Thread.Sleep(100);
                     }
                     catch (IOException ex)
                     {
@@ -111,7 +134,7 @@ namespace Encog.Cloud.Indicator.Server
 
                 try
                 {
-                    this.listenSocket.Close();
+                    _listenSocket.Close();
                 }
                 catch (IOException ex)
                 {
@@ -120,7 +143,7 @@ namespace Encog.Cloud.Indicator.Server
             }
             finally
             {
-                this.running = false;
+                _running = false;
             }
         }
 
@@ -131,13 +154,13 @@ namespace Encog.Cloud.Indicator.Server
         {
             try
             {
-                this.running = true;
-                this.listenSocket = new Socket(AddressFamily.InterNetwork,
-                    SocketType.Stream, ProtocolType.IP);
-                this.listenSocket.Bind(new IPEndPoint(IPAddress.Loopback,port));
-                this.listenSocket.Blocking = false;
-                this.thread = new Thread(new ThreadStart(this.Run));
-                this.thread.Start();
+                _running = true;
+                _listenSocket = new Socket(AddressFamily.InterNetwork,
+                                          SocketType.Stream, ProtocolType.IP);
+                _listenSocket.Bind(new IPEndPoint(IPAddress.Loopback, _port));
+                _listenSocket.Blocking = false;
+                _thread = new Thread(Run);
+                _thread.Start();
             }
             catch (IOException ex)
             {
@@ -150,40 +173,7 @@ namespace Encog.Cloud.Indicator.Server
         /// </summary>
         public void Shutdown()
         {
-            this.running = false;
-        }
-
-        /// <summary>
-        /// The port the server is listening on.
-        /// </summary>
-        public int Port
-        {
-            get
-            {
-                return this.port;
-            }
-        }
-
-        /// <summary>
-        /// The connections.
-        /// </summary>
-        public IList<HandleClient> Connections
-        {
-            get
-            {
-                return this.connections;
-            }
-        }
-
-        /// <summary>
-        /// The connection listeners.
-        /// </summary>
-        public IList<IIndicatorConnectionListener> Listeners
-        {
-            get
-            {
-                return listeners;
-            }
+            _running = false;
         }
 
         /// <summary>
@@ -192,7 +182,7 @@ namespace Encog.Cloud.Indicator.Server
         /// <param name="listener">The listener to add.</param>
         public void AddListener(IIndicatorConnectionListener listener)
         {
-            this.listeners.Add(listener);
+            _listeners.Add(listener);
         }
 
         /// <summary>
@@ -201,7 +191,7 @@ namespace Encog.Cloud.Indicator.Server
         /// <param name="listener">The listener to remove.</param>
         public void RemoveListener(IIndicatorConnectionListener listener)
         {
-            this.listeners.Remove(listener);
+            _listeners.Remove(listener);
         }
 
         /// <summary>
@@ -209,7 +199,7 @@ namespace Encog.Cloud.Indicator.Server
         /// </summary>
         public void ClearListeners()
         {
-            this.listeners.Clear();
+            _listeners.Clear();
         }
 
         /// <summary>
@@ -219,11 +209,11 @@ namespace Encog.Cloud.Indicator.Server
         /// <param name="hasOpened">Is a connection open?</param>
         public void NotifyListenersConnections(IndicatorLink link, bool hasOpened)
         {
-            Object[] list = this.listeners.ToArray();
+            Object[] list = _listeners.ToArray();
 
-            for (int i = 0; i < list.Length; i++)
+            foreach (object t in list)
             {
-                IIndicatorConnectionListener listener = (IIndicatorConnectionListener)list[i];
+                var listener = (IIndicatorConnectionListener) t;
                 listener.NotifyConnections(link, hasOpened);
             }
         }
@@ -234,7 +224,7 @@ namespace Encog.Cloud.Indicator.Server
         /// <param name="ind">The factory to add.</param>
         public void AddIndicatorFactory(IIndicatorFactory ind)
         {
-            this.factoryMap[ind.Name] = ind;
+            _factoryMap[ind.Name] = ind;
         }
 
         /// <summary>
@@ -244,13 +234,13 @@ namespace Encog.Cloud.Indicator.Server
         public void WaitForIndicatorCompletion()
         {
             // first wait for at least one indicator to start up
-            while (this.connections.Count == 0)
+            while (_connections.Count == 0)
             {
                 Thread.Sleep(1000);
             }
 
             // now wait for indicators to go to zero
-            while (this.connections.Count != 0)
+            while (_connections.Count != 0)
             {
                 Thread.Sleep(1000);
             }
@@ -267,25 +257,25 @@ namespace Encog.Cloud.Indicator.Server
         /// <returns>The indicator.</returns>
         public IIndicatorListener ResolveIndicator(String indicatorName)
         {
-            if (this.factoryMap.Count == 0)
+            if (_factoryMap.Count == 0)
             {
                 throw new IndicatorError("No indicators defined.");
             }
             if (string.Compare(indicatorName, "default") == 0)
             {
-                if (this.factoryMap.Count > 1)
+                if (_factoryMap.Count > 1)
                 {
                     throw new IndicatorError("Default indicator requested, but more than one indicator defined.");
                 }
 
-                return factoryMap.Values.First().Create();
+                return _factoryMap.Values.First().Create();
             }
 
-            if (!this.factoryMap.ContainsKey(indicatorName))
+            if (!_factoryMap.ContainsKey(indicatorName))
             {
                 throw new IndicatorError("Unknown indicator: " + indicatorName);
             }
-            return this.factoryMap[indicatorName].Create();
+            return _factoryMap[indicatorName].Create();
         }
 
         /// <summary>
@@ -293,7 +283,7 @@ namespace Encog.Cloud.Indicator.Server
         /// </summary>
         public void WaitForShutdown()
         {
-            while (this.running)
+            while (_running)
             {
                 Thread.Sleep(1000);
             }
