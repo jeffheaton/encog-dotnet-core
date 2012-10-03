@@ -43,15 +43,15 @@ namespace ConsoleExamples
 
         public ConsoleExamples()
         {
-            var examplesHandle = Assembly
+            const string method = "get_Info";
+            var exampleTypes = Assembly
                     .GetExecutingAssembly()
                     .GetTypes().ToList()
                     .Where(t => t.Namespace != null && t.Namespace.StartsWith("Encog.Examples")).ToList();
 
-            examplesHandle
+            exampleTypes
                 .ForEach(e =>
                 {
-                    const string method = "get_Info";
                     if (e.GetMembers().Any(m => m.Name == method))
                     {
                         var info = e.InvokeMember(method, BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
