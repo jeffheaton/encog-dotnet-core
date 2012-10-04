@@ -69,7 +69,7 @@ namespace Encog.Examples.ForexExample
                     typeof(ForexMarketTrain),
                     "Forex",
                     "Predict Forex rates via CSV.",
-                    "Use a feedforward neural network to predict forex pair prices.");
+                    "Use a Simple Recurrent Neural Network (Elman) to predict forex pair prices.");
                 return info;
             }
         }
