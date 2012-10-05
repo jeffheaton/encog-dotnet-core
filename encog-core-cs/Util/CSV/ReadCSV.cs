@@ -196,7 +196,7 @@ namespace Encog.Util.CSV
             try
             {
                 DateFormat = "yyyy-MM-dd";
-                TimeFormat = "hhmmss";
+                TimeFormat = "HHmmss";
                 this.parseLine = new ParseCSVLine(format);
                 // read the column heads
                 if (headers)
