@@ -22,7 +22,6 @@
 //
 using System;
 using ConsoleExamples.Examples;
-using Encog.Engine.Network.Activation;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
@@ -30,19 +29,16 @@ using Encog.ML.Data.Temporal;
 using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks;
-using Encog.Neural.Networks.Layers;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
 using Encog.Neural.Networks.Training.Lma;
-using Encog.Neural.Networks.Training.Propagation.Back;
-using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util;
 using Encog.Util.Arrayutil;
 
 namespace Encog.Examples.ForexExample
 {
-    public class ForexExample : IExample
+    public class ForexMarketTrain : IExample
     {
         public const int StartingYear = 1700;
         public const int WindowSize = 30;
@@ -52,29 +48,28 @@ namespace Encog.Examples.ForexExample
 
         public const double MaxError = 0.01;
 
-        public static double[] Sunspots = {0};
-        public static void GetSunSpots()
+        public static double[] ForexPair = {0};
+        public static void GetForexPairData()
         {
-
-          Sunspots=  Encog.Util.NetworkUtil.QuickCSVUtils.QuickParseCSV("DB!EURUSD.Bar.Time.600.csv", "Close", 2500).ToArray();
-            Console.WriteLine("Retrieved :" + Sunspots.Length + " Closing values");
+          ForexPair=  Encog.Util.NetworkUtil.QuickCSVUtils.QuickParseCSV("DB!EURUSD.Bar.Time.600.csv", "Close", 2500).ToArray();
+            Console.WriteLine("Retrieved :{0} Closing values", ForexPair.Length);
             Console.WriteLine("Press a key to continue");
             Console.Read();
         }
-        public static int EvaluateEnd = Sunspots.Length - 1;
+        public static int EvaluateEnd = ForexPair.Length - 1;
 
-        private double[] _closedLoopSunspots;
-        private double[] _normalizedSunspots;
+        private double[] _closedLoopForexPair;
+        private double[] _normalizedForexPair;
 
         public static ExampleInfo Info
         {
             get
             {
                 var info = new ExampleInfo(
-                    typeof(ForexExample),
+                    typeof(ForexMarketTrain),
                     "Forex",
                     "Predict Forex rates via CSV.",
-                    "Use a feedforward neural network to predict sunspots.");
+                    "Use a Simple Recurrent Neural Network (Elman) to predict forex pair prices.");
                 return info;
             }
         }
@@ -83,10 +78,10 @@ namespace Encog.Examples.ForexExample
 
         public void Execute(IExampleInterface app)
         {
-            GetSunSpots();
+            GetForexPairData();
             EvaluateEnd = EvaluateStart + 100;
-            NormalizeSunspots(-1, 1);
-            BasicNetwork network = (BasicNetwork)CreateElmanNetwork(WindowSize);
+            NormalizeForexPair(-1, 1);
+            var network = (BasicNetwork)CreateElmanNetwork(WindowSize);
             IMLDataSet training = GenerateTraining();
             Train(network, training);
             Predict(network);
@@ -96,32 +91,29 @@ namespace Encog.Examples.ForexExample
 
         private NormalizeArray array;
 
-        public void NormalizeSunspots(double lo, double hi)
+        public void NormalizeForexPair(double lo, double hi)
         {
             array= new NormalizeArray { NormalizedHigh = hi, NormalizedLow = lo };
-
-            // create arrays to hold the normalized sunspots
-            _normalizedSunspots = array.Process(Sunspots);
-            _closedLoopSunspots = EngineArray.ArrayCopy(_normalizedSunspots);
+            // create arrays to hold the normalized forex pair data
+            _normalizedForexPair = array.Process(ForexPair);
+            _closedLoopForexPair = EngineArray.ArrayCopy(_normalizedForexPair);
         }
 
 
         public IMLDataSet GenerateTraining()
         {
             var result = new TemporalMLDataSet(WindowSize, 1);
-
             var desc = new TemporalDataDescription(TemporalDataDescription.Type.Raw, true, true);
             result.AddDescription(desc);
 
-            for (int year = TrainStart; year < TrainEnd; year++)
+            for (var year = TrainStart; year < TrainEnd; year++)
             {
                 var point = new TemporalPoint(1) { Sequence = year };
-                point.Data[0] = _normalizedSunspots[year];
+                point.Data[0] = _normalizedForexPair[year];
                 result.Points.Add(point);
             }
 
             result.Generate();
-
             return result;
         }
 
@@ -138,24 +130,17 @@ namespace Encog.Examples.ForexExample
             return pattern.Generate();
         }
 
-
         public void Train(BasicNetwork network, IMLDataSet training)
         {
-          
-
-          
             IMLTrain trainMain = new LevenbergMarquardtTraining(network, training);
             // train the neural network
-          
-
             var stop = new StopTrainingStrategy();
-
-            ICalculateScore score = new TrainingSetScore(trainMain.Training);
-            IMLTrain trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
+            var score = new TrainingSetScore(trainMain.Training);
+            var trainAlt = new NeuralSimulatedAnnealing(network, score, 10, 2, 100);
             trainMain.AddStrategy(new HybridStrategy(trainAlt));
             trainMain.AddStrategy(stop);
 
-            int epoch = 0;
+            var epoch = 0;
             while (!stop.ShouldStop() && trainMain.IterationNumber < 1500)
             {
                 trainMain.Iteration();
@@ -168,38 +153,35 @@ namespace Encog.Examples.ForexExample
         {
             Console.WriteLine(@"Year    Actual    Predict     Closed Loop     Predict    Denormalized Value   Real Value");
 
-            for (int year = EvaluateStart; year < EvaluateEnd; year++)
+            for (var year = EvaluateStart; year < EvaluateEnd; year++)
             {
                 // calculate based on actual data
                 var input = new BasicMLData(WindowSize);
                 for (var i = 0; i < input.Count; i++)
                 {
-                    input[i] = _normalizedSunspots[(year - WindowSize) + i];
+                    input[i] = _normalizedForexPair[(year - WindowSize) + i];
                 }
                 IMLData output = network.Compute(input);
-                double prediction = output[0];
-                _closedLoopSunspots[year] = prediction;
+                var prediction = output[0];
+                _closedLoopForexPair[year] = prediction;
 
                 // calculate "closed loop", based on predicted data
                 for (var i = 0; i < input.Count; i++)
                 {
-                    input[i] = _closedLoopSunspots[(year - WindowSize) + i];
+                    input[i] = _closedLoopForexPair[(year - WindowSize) + i];
                 }
                 output = network.Compute(input);
-                double closedLoopPrediction = output[0];
-               
+                var closedLoopPrediction = output[0];
+
                 // display
-                Console.WriteLine((StartingYear + year)
-                                  + @"  " + Format.FormatDouble(_normalizedSunspots[year], 5)
-                                  + @"  " + Format.FormatDouble(prediction, 5)
-                                  + @"  " + Format.FormatDouble(closedLoopPrediction, 5)
-                                  + @" Accuracy:" +
-                                  Format.FormatDouble(_normalizedSunspots[year] - prediction, 5)
-                                  + " Denormalized:" + array.Stats.DeNormalize(prediction)
-                                  + " Real value:" + Sunspots[year]);
-
-
-
+                Console.WriteLine("{0}  {1}  {2}  {3} Accuracy:{4} Denormalized:{5} Real value:{6}",
+                    (StartingYear + year),
+                    Format.FormatDouble(_normalizedForexPair[year], 5),
+                    Format.FormatDouble(prediction, 5),
+                    Format.FormatDouble(closedLoopPrediction, 5),
+                    Format.FormatDouble(_normalizedForexPair[year] - prediction, 5),
+                    array.Stats.DeNormalize(prediction),
+                    ForexPair[year]);
             }
         }
     }
