@@ -86,7 +86,7 @@ namespace Encog.ML.Train.Strategy.End
         {
             lock (this)
             {
-                return _started && _minutesLeft >= 0;
+                return _started && _minutesLeft <= 0;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Encog.ML.Train.Strategy.End
         public virtual void Init(IMLTrain train)
         {
             _started = true;
-            _startedTime = DateTime.Now.Millisecond;
+            _startedTime = DateTime.Now.Ticks;
         }
 
         /// <inheritdoc/>
@@ -102,8 +102,10 @@ namespace Encog.ML.Train.Strategy.End
         {
             lock (this)
             {
-                long now = DateTime.Now.Millisecond;
-                _minutesLeft = ((int) ((now - _startedTime)/60000));
+                long now = DateTime.Now.Ticks;
+                long elapsedTicks = now - _startedTime;
+                int elapsedMinutes = (int)(elapsedTicks / TimeSpan.TicksPerMinute);
+                _minutesLeft = _minutes - elapsedMinutes;
             }
         }
 
