@@ -102,6 +102,8 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         {
             ValidateNetwork.ValidateMethodToData(network, training);
             LearningRate = learnRate;
+            LastDelta = new double[Network.Flat.Weights.Length];
+            OutputEpsilon = 1.0;
         }
 
         /// <inheritdoc />

@@ -297,6 +297,15 @@ namespace Encog.Examples.XOR
                 "", 1);
         }
 
+        public void xorQProp()
+        {
+            Process(
+                    MLMethodFactory.TypeFeedforward,
+                    XORFactory.METHOD_FEEDFORWARD_A,
+                    MLTrainFactory.TypeQPROP,
+                    "", 1);
+        }
+
         public void Process(String methodName, String methodArchitecture, String trainerName, String trainerArgs,
                             int outputNeurons)
         {
@@ -354,7 +363,8 @@ scg - Feedforward biased with Scaled Conjugate Gradient
 rbf - RBF Network with Resilient propagation
 svd - RBF Network with SVD
 pnn-c PNN for Classification
-pnn-r PNN for Regression");
+pnn-r PNN for Regression
+qprop Feedforward QuickProp");
         }
 
         /// <summary>
@@ -422,6 +432,10 @@ pnn-r PNN for Regression");
             else if (string.Compare(mode, "pnn-r", true) == 0)
             {
                 xorPNNr();
+            }
+            else if (string.Compare(mode, "qprop", true) == 0)
+            {
+                xorQProp();
             }
             else
             {
