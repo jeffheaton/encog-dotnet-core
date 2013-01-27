@@ -53,20 +53,20 @@ namespace Encog.Examples.CSVMarketExample
             }
             else
             {
-                FileInfo dataDir = new FileInfo(Environment.CurrentDirectory);
-                if (String.Compare(app.Args[0], "generate", true) == 0)
+                var dataDir = new FileInfo(app.Args[0]);
+                if (String.Compare(app.Args[1], "generate", true) == 0)
                 {
-                    MarketBuildTraining.Generate(app.Args[1]);
+                    MarketBuildTraining.Generate(app.Args[2]);
                 }
-                else if (String.Compare(app.Args[0], "train", true) == 0)
+                else if (String.Compare(app.Args[1], "train", true) == 0)
                 {
                     MarketTrain.Train(dataDir);
                 }
-                else if (String.Compare(app.Args[0], "evaluate", true) == 0)
+                else if (String.Compare(app.Args[1], "evaluate", true) == 0)
                 {
-                    MarketEvaluate.Evaluate(dataDir,app.Args[1]);
+                    MarketEvaluate.Evaluate(dataDir,app.Args[2]);
                 }
-                else if (String.Compare(app.Args[0], "prune", true) == 0)
+                else if (String.Compare(app.Args[1], "prune", true) == 0)
                 {
                     {
                         MarketPrune.Incremental(dataDir);

@@ -92,7 +92,7 @@ namespace Encog.Util.Normalize
         [TestMethod]
         public void TestGenerateAndLoad()
         {
-            double[][] outputArray = EngineArray.AllocateDouble2D(2, 5);
+            var outputArray = EngineArray.AllocateDouble2D(2, 5);
             Generate();
             DataNormalization norm = Create(outputArray);
             norm.Process();

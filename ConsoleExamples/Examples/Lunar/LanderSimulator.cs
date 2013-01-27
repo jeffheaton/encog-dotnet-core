@@ -71,17 +71,12 @@ namespace Encog.Examples.Lunar
 
         public String Telemetry()
         {
-            var result = new StringBuilder();
-            result.Append("Elapsed: ");
-            result.Append(Seconds);
-            result.Append(" s, Fuel: ");
-            result.Append(Fuel);
-            result.Append(" l, Velocity: ");
-            result.Append(Format.FormatDouble(Velocity, 4));
-            result.Append(" m/s, ");
-            result.Append((int) Altitude);
-            result.Append(" m");
-            return result.ToString();
+            return string
+                .Format("Elapsed: {0} s, Fuel: {1} l, Velocity: {2} m/s, {3} m", 
+                Seconds, 
+                Fuel, 
+                Format.FormatDouble(Velocity, 4), 
+                (int) Altitude);
         }
 
         public bool Flying

@@ -35,8 +35,6 @@ namespace Encog.Examples.CSVMarketExample
     {
         public static void Generate(string fileName)
         {
-
-          
             FileInfo dataDir = new FileInfo(@Environment.CurrentDirectory);
             //Lets use the CSVFinal..(and not the CSV Form loader).
             IMarketLoader loader = new CSVFinal();

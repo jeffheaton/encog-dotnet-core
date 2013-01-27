@@ -22,42 +22,10 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ConsoleExamples.Examples;
 using Encog.Examples;
-using Encog.Examples.Adaline;
-using Encog.Examples.Analyst;
-using Encog.Examples.Analyzer;
-using Encog.Examples.AnnealTSP;
-using Encog.Examples.ARTExample;
-using Encog.Examples.BAM;
-using Encog.Examples.Bayesian;
-using Encog.Examples.Benchmark;
-using Encog.Examples.Boltzmann;
-using Encog.Examples.CPN;
-using Encog.Examples.CSVMarketExample;
-using Encog.Examples.ElmanNetwork;
-using Encog.Examples.Forest;
-using Encog.Examples.ForexExample;
-using Encog.Examples.GeneticTSP;
-using Encog.Examples.Hopfield.Associate;
-using Encog.Examples.Hopfield.Simple;
-using Encog.Examples.Image;
-using Encog.Examples.Indicator.Avg;
-using Encog.Examples.Indicator.CustomInd;
-using Encog.Examples.Indicator.ImportData;
-using Encog.Examples.JordanNetwork;
-using Encog.Examples.LiveSimul;
-using Encog.Examples.Lunar;
-using Encog.Examples.MultiRadial;
-using Encog.Examples.NetWorkPruner;
-using Encog.Examples.Normalize;
-using Encog.Examples.Persist;
-using Encog.Examples.Predict;
-using Encog.Examples.SVM_Predict;
-using Encog.Examples.SVMPredictCSV;
-using Encog.Examples.XOR;
-using Encog.Examples.SVM;
-using MarketPredict = Encog.Examples.Market.MarketPredict;
+using System.Reflection;
 
 namespace ConsoleExamples
 {
@@ -75,52 +43,21 @@ namespace ConsoleExamples
 
         public ConsoleExamples()
         {
-            examples.Add(AdalineDigits.Info);
-            examples.Add(SolveTSP.Info);
-            examples.Add(ClassifyART1.Info);
-            examples.Add(BidirectionalAssociativeMemory.Info);
-            examples.Add(EncogBenchmarkExample.Info);
-            examples.Add(BoltzTSP.Info);
-            examples.Add(RocketCPN.Info);
-            examples.Add(ElmanExample.Info);
-            examples.Add(GeneticSolveTSP.Info);
-            examples.Add(HopfieldSimple.Info);
-            examples.Add(HopfieldAssociate.Info);
-            examples.Add(JordanExample.Info);
-            examples.Add(MultiThreadBenchmark.Info);
-            examples.Add(ImageNeuralNetwork.Info);
-            examples.Add(PersistEncog.Info);
-            examples.Add(PersistSerial.Info);
-            examples.Add(WeightInitialization.Info);
-            examples.Add(ThreadCount.Info);
-            examples.Add(SimpleBenchmark.Info);
-            examples.Add(XORFactory.Info);
-            examples.Add(XORHelloWorld.Info);
-            examples.Add(AnalystExample.Info);
-            examples.Add(XORNEAT.Info);
-            examples.Add(ForestCover.Info);
-            examples.Add(MarketPredict.Info);
-            examples.Add(CSVMarketExample.Info);
-            examples.Add(ForexExample.Info);
-            examples.Add(LunarLander.Info);
-            examples.Add(MarketAnalyzer.Info);
-            examples.Add(PrunerLoader.Info);
-            examples.Add(MultiRadial.Info);
-            examples.Add(SVMExample.Info);
-            examples.Add(SVMPredictCSV.Info);
-            examples.Add(FahlmanEncoder.Info);
-            examples.Add(PredictSunspot.Info);
-            examples.Add(SimpleNormalize.Info);
-            examples.Add(NormalizeFile.Info);
-            examples.Add(ElliottBenchmark.Info);
-            examples.Add(XORPSO.Info);
-            examples.Add(BayesianTaxi.Info);
-            examples.Add(SunspotWindow.Info);
-            examples.Add(ImportIndicatorData.Info);
-            examples.Add(RemoteEMA.Info);
-            examples.Add(LiveSimul.Info);
-            examples.Add(IndicatorExample.Info);
-            examples.Add(RegressionSVM.Info);            
+            const string method = "get_Info";
+            var exampleTypes = Assembly
+                    .GetExecutingAssembly()
+                    .GetTypes().ToList()
+                    .Where(t => t.Namespace != null && t.Namespace.StartsWith("Encog.Examples")).ToList();
+
+            exampleTypes
+                .ForEach(e =>
+                {
+                    if (e.GetMembers().Any(m => m.Name == method))
+                    {
+                        var info = e.InvokeMember(method, BindingFlags.Default | BindingFlags.InvokeMethod, null, null, new object[] { });
+                        examples.Add((ExampleInfo)info);
+                    }
+                });
         }
 
         public void ListCommands()
