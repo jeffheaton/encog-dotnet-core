@@ -82,22 +82,10 @@ namespace Encog.ML.SVM.Training
         private readonly SupportVectorMachine _network;
 
         /// <summary>
-        /// The best values found for C.
-        /// </summary>
-        ///
-        private double _bestConst;
-
-        /// <summary>
         /// The best error.
         /// </summary>
         ///
         private double _bestError;
-
-        /// <summary>
-        /// The best values found for gamma.
-        /// </summary>
-        ///
-        private double _bestGamma;
 
         /// <summary>
         /// The beginning value for C.
@@ -164,6 +152,18 @@ namespace Encog.ML.SVM.Training
         /// </summary>
         ///
         private bool _trainingDone;
+
+        /// <summary>
+        /// The best values found for C.
+        /// </summary>
+        ///
+        public double BestConst { get; set; }
+
+        /// <summary>
+        /// The best values found for gamma.
+        /// </summary>
+        ///
+        private double BestGamma { get; set; }
 
         /// <summary>
         /// Construct a trainer for an SVM network.
@@ -268,8 +268,8 @@ namespace Encog.ML.SVM.Training
         /// <inheritdoc/>
         public override sealed void FinishTraining()
         {
-            _internalTrain.Gamma = _bestGamma;
-            _internalTrain.C = _bestConst;
+            _internalTrain.Gamma = BestGamma;
+            _internalTrain.C = BestConst;
             _internalTrain.Iteration();
         }
 
@@ -305,8 +305,8 @@ namespace Encog.ML.SVM.Training
                     {
                         if (e < _bestError)
                         {
-                            _bestConst = _currentConst;
-                            _bestGamma = _currentGamma;
+                            BestConst = _currentConst;
+                            BestGamma = _currentGamma;
                             _bestError = e;
                         }
                     }
