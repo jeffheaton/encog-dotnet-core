@@ -129,7 +129,7 @@ namespace Encog.ML.HMM.Distributions
         public void Fit(IMLDataSet co)
         {
             var weights = new double[co.Count];
-            EngineArray.Fill(weights, 1.0/co.Count);
+            EngineArray.Fill(weights, 1.0 / co.Count);
 
             Fit(co, weights);
         }
@@ -162,29 +162,26 @@ namespace Encog.ML.HMM.Distributions
             foreach (IMLDataPair o in co)
             {
                 //double[] obs = o.Input.CreateCentroid();
-                
-                        var omm = new double[o.Input.Count];
 
-                        for (int j = 0; j < omm.Length; j++)
-                        {
-                            omm[j] = o.Input[j] - mean[j];
-                        }
+                var omm = new double[o.Input.Count];
 
-                        for (int r = 0; r < _dimension; r++)
-                        {
-                            for (int c = 0; c < _dimension; c++)
-                            {
-                                covariance[r][c] += omm[r] * omm[c] * weights[i];
-                            }
-                        }
+                for (int j = 0; j < omm.Length; j++)
+                {
+                    omm[j] = o.Input[j] - mean[j];
+                }
 
-                        i++;
-                    
+                for (int r = 0; r < _dimension; r++)
+                {
+                    for (int c = 0; c < _dimension; c++)
+                    {
+                        covariance[r][c] += omm[r] * omm[c] * weights[i];
+                    }
+                }
 
-                    Update(covariance);
-                
+                i++;
             }
 
+            Update(covariance);
         }
 
         /// <inheritdoc/>
@@ -198,29 +195,29 @@ namespace Encog.ML.HMM.Distributions
             }
 
             double[] d2 = MatrixMath.Multiply(_covarianceL, d);
-            return new BasicMLDataPair(new BasicMLData(EngineArray.Add(d2,_mean)));
+            return new BasicMLDataPair(new BasicMLData(EngineArray.Add(d2, _mean)));
         }
 
 
         /// <inheritdoc/>
         public double Probability(IMLDataPair o)
         {
-           // double[] v = o.InputArray;
-          //  Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(v,
+            // double[] v = o.InputArray;
+            //  Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(v,
             Matrix vmm = Matrix.CreateColumnMatrix(EngineArray.Subtract(o.Input,
                                                                         _mean));
             Matrix t = MatrixMath.Multiply(_covarianceInv, vmm);
             double expArg = MatrixMath.Multiply(MatrixMath.Transpose(vmm), t)
-                                [0, 0]*-0.5;
+                                [0, 0] * -0.5;
             return Math.Exp(expArg)
-                   /(Math.Pow(2.0*Math.PI, _dimension/2.0)*Math.Pow(
+                   / (Math.Pow(2.0 * Math.PI, _dimension / 2.0) * Math.Pow(
                        _covarianceDet, 0.5));
         }
 
         /// <inheritdoc/>
         IStateDistribution IStateDistribution.Clone()
         {
-            return new ContinousDistribution((double[]) _mean.Clone(), (double[][]) _covariance.Data.Clone());
+            return new ContinousDistribution((double[])_mean.Clone(), (double[][])_covariance.Data.Clone());
         }
 
         #endregion
