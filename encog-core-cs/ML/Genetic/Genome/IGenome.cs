@@ -31,7 +31,7 @@ namespace Encog.ML.Genetic.Genome
     /// is made up of one or more chromosomes, which are in turn made up of genes.
     /// </summary>
     ///
-    public interface IGenome : IComparable<IGenome>
+    public interface IGenome : IComparable<IGenome>, IMLMethod
     {
         /// <summary>
         /// Set the adjusted score.

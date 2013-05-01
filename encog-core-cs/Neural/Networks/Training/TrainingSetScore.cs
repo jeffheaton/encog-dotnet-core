@@ -58,9 +58,10 @@ namespace Encog.Neural.Networks.Training
         ///
         /// <param name="method">The network to calculate for.</param>
         /// <returns>The score.</returns>
-        public double CalculateScore(IMLRegression method)
+        public double CalculateScore(IMLMethod method)
         {
-            return CalculateRegressionError.CalculateError(method, _training);
+            IMLRegression reg = (IMLRegression)method;
+            return CalculateRegressionError.CalculateError(reg, _training);
         }
 
         /// <summary>

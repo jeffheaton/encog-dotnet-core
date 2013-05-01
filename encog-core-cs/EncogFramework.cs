@@ -20,18 +20,14 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-#if logging
 using System;
 using System.Collections.Generic;
 using Encog.Plugin;
 using Encog.Plugin.SystemPlugin;
-
-#endif
-
-
 using Encog.Plugin;
 using System.Collections.Generic;
 using Encog.Plugin.SystemPlugin;
+using Encog.MathUtil.Randomize.Factory;
 namespace Encog
 {
     /// <summary>
@@ -44,7 +40,7 @@ namespace Encog
         /// <summary>
         /// The current engog version, this should be read from the properties.
         /// </summary>
-        public static string Version = "3.1.0";
+        public static string Version = "3.2.0";
 
         /// <summary>
         /// The platform.
@@ -109,6 +105,11 @@ namespace Encog
         }
 
         /// <summary>
+        /// Random number factory for use by Encog.
+        /// </summary>
+        public IRandomFactory RandomFactory { get; set; }
+
+        /// <summary>
         /// Get the properties as a Map.
         /// </summary>
         private readonly IDictionary<string, string> _properties =
@@ -119,6 +120,7 @@ namespace Encog
         /// </summary>
         private EncogFramework()
         {
+            RandomFactory = new BasicRandomFactory();
             _properties[EncogVersion] = Version;
             _properties[EncogFileVersion] = FileVersion;
 

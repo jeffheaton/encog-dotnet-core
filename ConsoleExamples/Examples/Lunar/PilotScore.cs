@@ -32,7 +32,7 @@ namespace Encog.Examples.Lunar
 {
     public class PilotScore : ICalculateScore
     {
-        public double CalculateScore(IMLRegression network)
+        public double CalculateScore(IMLMethod network)
         {
             NeuralPilot pilot = new NeuralPilot((BasicNetwork)network, false);
             return pilot.ScorePilot();
