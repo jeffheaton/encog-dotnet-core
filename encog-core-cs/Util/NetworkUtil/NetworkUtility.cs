@@ -33,8 +33,6 @@ using Encog.ML.Data.Basic;
 using Encog.ML.Data.Temporal;
 using Encog.ML.SVM;
 using Encog.Neural.Data.Basic;
-using Encog.Neural.NEAT;
-using Encog.Neural.NEAT.Training;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Pattern;
@@ -405,29 +403,6 @@ namespace Encog.Util.NetworkUtil
                 result += 360;
 
             return result;
-        }
-
-        /// <summary>
-        /// Builds and trains a neat network.
-        /// </summary>
-        /// <param name="aset">The IMLDataset.</param>
-        /// <param name="inputcounts">The inputcounts.</param>
-        /// <param name="outputcounts">The outputcounts.</param>
-        /// <param name="populationsize">The populationsize.</param>
-        /// <param name="ToErrorTraining">To error rate you want to train too.</param>
-        /// <returns>a trained netnetwork.</returns>
-        public static NEATNetwork BuildTrainNeatNetwork(IMLDataSet aset, int inputcounts, int outputcounts, int populationsize, double ToErrorTraining)
-        {
-            NEATPopulation pop = new NEATPopulation(inputcounts, outputcounts, populationsize);
-            ICalculateScore score = new TrainingSetScore(aset);
-            // train the neural network
-            ActivationStep step = new ActivationStep();
-            step.Center = 0.5;
-            pop.OutputActivationFunction = step;
-            NEATTraining train = new NEATTraining(score, pop);
-            EncogUtility.TrainToError(train, ToErrorTraining);
-            NEATNetwork network = (NEATNetwork)train.Method;
-            return network;
         }
 
         /// <summary>

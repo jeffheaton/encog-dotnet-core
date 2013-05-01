@@ -494,21 +494,6 @@
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
-    <Compile Include="Neural\NEAT\NEATLink.cs" />
-    <Compile Include="Neural\NEAT\NEATNetwork.cs" />
-    <Compile Include="Neural\NEAT\NEATNeuron.cs" />
-    <Compile Include="Neural\NEAT\NEATNeuronType.cs" />
-    <Compile Include="Neural\NEAT\NEATPopulation.cs" />
-    <Compile Include="Neural\NEAT\PersistNEATNetwork.cs" />
-    <Compile Include="Neural\NEAT\PersistNEATPopulation.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATGenome.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATInnovation.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATInnovationList.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATInnovationType.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATLinkGene.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATNeuronGene.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATParent.cs" />
-    <Compile Include="Neural\NEAT\Training\NEATTraining.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\IContainsFlat.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
@@ -794,7 +779,9 @@
   <ItemGroup>
     <None Include="Encog.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Neural\NEAT\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

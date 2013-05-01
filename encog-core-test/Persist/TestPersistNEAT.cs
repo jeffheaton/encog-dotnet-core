@@ -27,7 +27,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.Util;
 using System.IO;
-using Encog.Neural.NEAT;
 using Encog.Engine.Network.Activation;
 
 namespace Encog.Persist
@@ -39,7 +38,7 @@ namespace Encog.Persist
         public readonly FileInfo EG_FILENAME = TEMP_DIR.CreateFile("encogtest.eg");
         public readonly FileInfo SERIAL_FILENAME = TEMP_DIR.CreateFile("encogtest.ser");
 
-        private NEATNetwork Create()
+        /*private NEATNetwork Create()
         {
             IList<NEATNeuron> neurons = new List<NEATNeuron>();
             IActivationFunction afSigmoid = new ActivationSigmoid();
@@ -162,6 +161,6 @@ namespace Encog.Persist
             Assert.AreEqual(0, input.InboundLinks.Count);
             Assert.AreEqual(0, output.OutputboundLinks.Count);
             Assert.AreEqual(1, output.InboundLinks.Count);
-        }
+        }*/
     }
 }

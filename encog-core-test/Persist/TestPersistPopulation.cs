@@ -27,12 +27,10 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Encog.Util;
 using System.IO;
-using Encog.Neural.NEAT;
 using Encog.ML.Data;
 using Encog.Neural.Networks.Training;
 using Encog.ML.Data.Basic;
 using Encog.Engine.Network.Activation;
-using Encog.Neural.NEAT.Training;
 using Encog.ML.Genetic.Population;
 
 namespace Encog.Persist
@@ -44,7 +42,7 @@ namespace Encog.Persist
         public readonly FileInfo EG_FILENAME = TEMP_DIR.CreateFile("encogtest.eg");
         public readonly FileInfo SERIAL_FILENAME = TEMP_DIR.CreateFile("encogtest.ser");
 
-        private NEATPopulation Generate()
+        /*private NEATPopulation Generate()
         {
             IMLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
@@ -95,6 +93,6 @@ namespace Encog.Persist
             NEATTraining train = new NEATTraining(score, pop);
             train.Iteration();
 
-        }
+        }*/
     }
 }

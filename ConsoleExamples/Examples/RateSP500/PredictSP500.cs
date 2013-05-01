@@ -33,8 +33,6 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
-using Encog.Neural.NEAT;
-using Encog.Neural.NEAT.Training;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Anneal;
@@ -237,7 +235,7 @@ namespace Encog.Examples.RateSP500
         private void trainNetworkBackprop()
         {
             // IMLTrain train = new Backpropagation(this.network, this.input,this.ideal, 0.000001, 0.1);
-
+/*
             IMLDataSet aset = new BasicMLDataSet(input, ideal);
             int epoch = 1;
             // train the neural network
@@ -265,7 +263,7 @@ namespace Encog.Examples.RateSP500
                 train.Iteration();
                 Console.WriteLine(@"Training " + @"Epoch #" + epoch + @" Error:" + trainMain.Error+ @" Genetic iteration:"+trainAlt.IterationNumber+ @"neat iteration:"+train.IterationNumber );
                 epoch++;
-            }
+            }*/
         }
 
 

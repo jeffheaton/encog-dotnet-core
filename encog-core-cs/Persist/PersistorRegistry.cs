@@ -26,8 +26,6 @@ using Encog.ML.SVM;
 using Encog.Neural.ART;
 using Encog.Neural.BAM;
 using Encog.Neural.CPN;
-using Encog.Neural.Neat;
-using Encog.Neural.NEAT;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Propagation;
 using Encog.Neural.Pnn;
@@ -79,8 +77,6 @@ namespace Encog.Persist
             Add(new PersistBasicNetwork());
             Add(new PersistRBFNetwork());
             Add(new PersistSOM());
-            Add(new PersistNEATPopulation());
-            Add(new PersistNEATNetwork());
             Add(new PersistBasicPNN());
             Add(new PersistCPN());
             Add(new PersistTrainingContinuation());
