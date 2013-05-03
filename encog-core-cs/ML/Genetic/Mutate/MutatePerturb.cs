@@ -1,74 +1,73 @@
-//
-// Encog(tm) Core v3.1 - .Net Version
-// http://www.heatonresearch.com/encog/
-//
-// Copyright 2008-2012 Heaton Research, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//   
-// For more information on Heaton Research copyrights, licenses 
-// and trademarks visit:
-// http://www.heatonresearch.com/copyright
-//
-using Encog.ML.Genetic.Genes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Encog.ML.EA.Opp.Selection;
+using Encog.ML.EA.Train;
 using Encog.ML.Genetic.Genome;
-using Encog.MathUtil;
+using Encog.ML.EA.Genome;
 
 namespace Encog.ML.Genetic.Mutate
 {
     /// <summary>
     /// A simple mutation based on random numbers.
     /// </summary>
-    ///
-    public class MutatePerturb : IMutate
+    public class MutatePerturb : IEvolutionaryOperator
     {
         /// <summary>
         /// The amount to perturb by.
         /// </summary>
-        ///
-        private readonly double _perturbAmount;
+        private double perturbAmount;
 
         /// <summary>
         /// Construct a perturb mutation.
         /// </summary>
-        ///
         /// <param name="thePerturbAmount">The amount to mutate by(percent).</param>
         public MutatePerturb(double thePerturbAmount)
         {
-            _perturbAmount = thePerturbAmount;
+            this.perturbAmount = thePerturbAmount;
         }
 
-        #region IMutate Members
-
-        /// <summary>
-        /// Perform a perturb mutation on the specified chromosome.
-        /// </summary>
-        ///
-        /// <param name="chromosome">The chromosome to mutate.</param>
-        public void PerformMutation(Chromosome chromosome)
+        /// <inheritdoc/>
+        public void PerformOperation(Random rnd, IGenome[] parents, int parentIndex,
+                IGenome[] offspring, int offspringIndex)
         {
-            foreach (IGene gene  in  chromosome.Genes)
+            DoubleArrayGenome parent = (DoubleArrayGenome)parents[parentIndex];
+            offspring[offspringIndex] = parent.Population.GenomeFactory.Factor();
+            DoubleArrayGenome child = (DoubleArrayGenome)offspring[offspringIndex];
+
+            for (int i = 0; i < parent.Size; i++)
             {
-                if (gene is DoubleGene)
-                {
-                    var doubleGene = (DoubleGene) gene;
-                    double v = doubleGene.Value;
-                    v += (_perturbAmount - (ThreadSafeRandom.NextDouble()*_perturbAmount*2));
-                    doubleGene.Value = v;
-                }
+                double value = parent.Data[i];
+                value += (perturbAmount - (rnd.NextDouble() * perturbAmount * 2));
+                child.Data[i] = value;
             }
         }
 
-        #endregion
+        /// <summary>
+        /// The number of offspring produced, which is 1 for this mutation.
+        /// </summary>
+        public int OffspringProduced
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        /// <inheritdoc/>
+        public int ParentsNeeded
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Init(IEvolutionaryAlgorithm theOwner)
+        {
+            // not needed
+        }
     }
 }

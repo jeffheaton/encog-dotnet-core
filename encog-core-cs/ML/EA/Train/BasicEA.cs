@@ -15,6 +15,7 @@ using Encog.ML.EA.Species;
 using Encog.ML.EA.Rules;
 using System.Threading.Tasks;
 using Encog.MathUtil.Randomize.Factory;
+using Encog.ML.EA.Score.Multi;
 
 namespace Encog.ML.EA.Train
 {
@@ -52,17 +53,17 @@ namespace Encog.ML.EA.Train
         /// <summary>
         /// The genome comparator.
         /// </summary>
-        public IGenomeComparer BestComparator { get; set; }
+        public IGenomeComparer BestComparer { get; set; }
 
         /// <summary>
         /// The genome comparator.
         /// </summary>
-        public IGenomeComparer SelectionComparator { get; set; }
+        public IGenomeComparer SelectionComparer { get; set; }
 
         /// <summary>
         /// The population.
         /// </summary>
-        public IPopulation population { get; set; }
+        public IPopulation Population { get; set; }
 
         /// <summary>
         /// The score calculation function.
@@ -92,7 +93,7 @@ namespace Encog.ML.EA.Train
         /// <summary>
         /// The current iteration.
         /// </summary>
-        public int CurrentIteration { get; set; }
+        public int IterationNumber { get; set; }
 
         /// <summary>
         /// Random number factory.
@@ -184,7 +185,7 @@ namespace Encog.ML.EA.Train
             CODEC = new GenomeAsPhenomeCODEC();
 
 
-            this.population = thePopulation;
+            this.Population = thePopulation;
             ScoreFunction = theScoreFunction;
             Selection = new TournamentSelection(this, 4);
             Rules = new BasicRuleHolder();
@@ -192,13 +193,13 @@ namespace Encog.ML.EA.Train
             // set the score compare method
             if (theScoreFunction.ShouldMinimize)
             {
-                SelectionComparator = new MinimizeAdjustedScoreComp();
-                BestComparator = new MinimizeScoreComp();
+                this.SelectionComparer = new MinimizeAdjustedScoreComp();
+                BestComparer = new MinimizeScoreComp();
             }
             else
             {
-                SelectionComparator = new MaximizeAdjustedScoreComp();
-                BestComparator = new MaximizeScoreComp();
+                SelectionComparer = new MaximizeAdjustedScoreComp();
+                BestComparer = new MaximizeScoreComp();
             }
 
             // set the iteration
@@ -206,9 +207,17 @@ namespace Encog.ML.EA.Train
             {
                 foreach (IGenome genome in species.Members)
                 {
-                    CurrentIteration = Math.Max(CurrentIteration,
+                    IterationNumber = Math.Max(IterationNumber,
                             genome.BirthGeneration);
                 }
+            }
+
+
+            // Set a best genome, just so it is not null.
+            // We won't know the true best genome until the first iteration.
+            if (Population.Species.Count > 0 && Population.Species[0].Members.Count > 0)
+            {
+                BestGenome = Population.Species[0].Members[0];
             }
         }
 
@@ -221,7 +230,7 @@ namespace Encog.ML.EA.Train
         {
             lock (this.newPopulation)
             {
-                if (this.newPopulation.Count < this.population.PopulationSize)
+                if (this.newPopulation.Count < Population.PopulationSize)
                 {
                     // don't readd the old best genome, it was already added
                     if (genome != this.oldBestGenome)
@@ -242,11 +251,11 @@ namespace Encog.ML.EA.Train
 
                     if (!Double.IsInfinity(genome.Score)
                             && !Double.IsNaN(genome.Score)
-                            && BestComparator.IsBetterThan(genome,
+                            && BestComparer.IsBetterThan(genome,
                                     BestGenome))
                     {
                         BestGenome = genome;
-                        this.population.BestGenome = BestGenome;
+                        Population.BestGenome = BestGenome;
                     }
                     return true;
                 }
@@ -289,7 +298,7 @@ namespace Encog.ML.EA.Train
             // deal with invalid decode
             if (phenotype == null)
             {
-                if (BestComparator.ShouldMinimize)
+                if (BestComparer.ShouldMinimize)
                 {
                     score = Double.PositiveInfinity;
                 }
@@ -313,7 +322,7 @@ namespace Encog.ML.EA.Train
         }
 
         /// <inheritdoc/>
-        public void FinishTraining()
+        public virtual void FinishTraining()
         {
 
         }
@@ -366,7 +375,7 @@ namespace Encog.ML.EA.Train
                 throw new EncogError("Population is empty, there are no species.");
             }
 
-            CurrentIteration++;
+            IterationNumber++;
 
             // Clear new population to just best genome.
             this.newPopulation.Clear();
@@ -433,7 +442,7 @@ namespace Encog.ML.EA.Train
 
                 if (BestGenome != null
                         && this.oldBestGenome != null
-                        && BestComparator.IsBetterThan(this.oldBestGenome,
+                        && BestComparer.IsBetterThan(this.oldBestGenome,
                                 BestGenome))
                 {
                     throw new EncogError(
@@ -454,6 +463,11 @@ namespace Encog.ML.EA.Train
         {
             this.initialized = true;
             this.speciation.Init(this);
+
+            // score the population
+            ParallelScore pscore = new ParallelScore(Population,
+				CODEC, this.adjusters, ScoreFunction, ThreadCount);
+		    pscore.Process();
 
             // just pick the first genome with a valid score as best, it will be
             // updated later.
@@ -479,17 +493,6 @@ namespace Encog.ML.EA.Train
         }
 
         /// <summary>
-        /// The population.
-        /// </summary>
-        public IPopulation Population
-        {
-            get
-            {
-                return this.population;
-            }
-        }
-
-        /// <summary>
         /// The operators.
         /// </summary>
         public OperationList Operators
@@ -501,33 +504,13 @@ namespace Encog.ML.EA.Train
         }
 
 
-
-        public IGenomeComparer BestComparer { get; set; }
-
-
-        public int MaxIndividualSize
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IPopulation IEvolutionaryAlgorithm.Population
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public int MaxIndividualSize { get; set; }
+        
 
         public IList<IAdjustScore> ScoreAdjusters
         {
             get { return this.adjusters; }
         }
-
-        public IGenomeComparer SelectionComparer { get; set; }
 
         public bool ShouldIgnoreExceptions { get; set; }
 

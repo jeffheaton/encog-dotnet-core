@@ -13,27 +13,25 @@ namespace Encog.ML.EA.Sort
     public class MaximizeAdjustedScoreComp : AbstractGenomeComparer
     {
         /// <inheritdoc/>
-        public int CompareTo(IGenome p1, IGenome p2)
+        public override int Compare(IGenome p1, IGenome p2)
         {
             return p2.AdjustedScore.CompareTo(p1.AdjustedScore);
         }
 
         /// <inheritdoc/>
-        public bool IsBetterThan(IGenome prg, IGenome betterThan)
+        public override bool IsBetterThan(IGenome prg, IGenome betterThan)
         {
             return IsBetterThan(prg.AdjustedScore,
                     betterThan.AdjustedScore);
         }
 
         /// <inheritdoc/>
-        public bool shouldMinimize()
+        public override bool ShouldMinimize
         {
-            return false;
-        }
-
-        public override int Compare(IGenome x, IGenome y)
-        {
-            throw new NotImplementedException();
+            get
+            {
+                return false;
+            }
         }
     }
 }

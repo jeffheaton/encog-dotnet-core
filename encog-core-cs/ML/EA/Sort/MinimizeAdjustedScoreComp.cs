@@ -19,16 +19,19 @@ namespace Encog.ML.EA.Sort
         }
 
         /// <inheritdoc/>
-        public bool IsBetterThan(IGenome prg, IGenome betterThan)
+        public override bool IsBetterThan(IGenome prg, IGenome betterThan)
         {
             return IsBetterThan(prg.AdjustedScore,
                     betterThan.AdjustedScore);
         }
 
         /// <inheritdoc/>
-        public bool shouldMinimize()
+        public override bool ShouldMinimize
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
     }
 }

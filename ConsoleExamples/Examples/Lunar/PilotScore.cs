@@ -43,5 +43,12 @@ namespace Encog.Examples.Lunar
         {
             get { return false; }
         }
+
+
+        /// <inheritdoc/>
+        public bool RequireSingleThreaded
+        {
+            get { return false; }
+        }
     }
 }

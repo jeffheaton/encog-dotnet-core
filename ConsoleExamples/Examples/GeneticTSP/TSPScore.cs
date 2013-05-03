@@ -22,10 +22,12 @@
 //
 using Encog.Examples.Util;
 using Encog.ML.Genetic.Genome;
+using Encog.Neural.Networks.Training;
+using Encog.ML;
 
 namespace Encog.Examples.GeneticTSP
 {
-    public class TSPScore : ICalculateGenomeScore
+    public class TSPScore : ICalculateScore
     {
         private readonly City[] cities;
 
@@ -36,11 +38,11 @@ namespace Encog.Examples.GeneticTSP
 
         #region ICalculateGenomeScore Members
 
-        public double CalculateScore(IGenome genome)
+        public double CalculateScore(IMLMethod phenotype)
         {
             double result = 0.0;
-
-            var path = (int[]) genome.Organism;
+            IntegerArrayGenome genome = (IntegerArrayGenome)phenotype;
+            int[] path = ((IntegerArrayGenome)genome).Data;
 
             for (int i = 0; i < cities.Length - 1; i++)
             {
@@ -60,5 +62,11 @@ namespace Encog.Examples.GeneticTSP
         }
 
         #endregion
+
+        /// <inheritdoc/>
+        public bool RequireSingleThreaded
+        {
+            get { return false; }
+        }
     }
 }

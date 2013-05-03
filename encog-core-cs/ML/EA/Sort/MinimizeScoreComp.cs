@@ -16,22 +16,22 @@ namespace Encog.ML.EA.Sort
         /// <inheritdoc/>
         public override int Compare(IGenome p1, IGenome p2)
         {
-            return p2.Score.CompareTo(p1.Score);
+            return p1.Score.CompareTo(p2.Score);
         }
 
         /// <inheritdoc/>
-        public bool IsBetterThan(IGenome prg, IGenome betterThan)
+        public override bool IsBetterThan(IGenome prg, IGenome betterThan)
         {
             return IsBetterThan(prg.AdjustedScore,
                     betterThan.AdjustedScore);
         }
 
         /// <inheritdoc/>
-        public bool ShouldMinimize
+        public override bool ShouldMinimize
         {
             get
             {
-                return false;
+                return true;
             }
         }
     }

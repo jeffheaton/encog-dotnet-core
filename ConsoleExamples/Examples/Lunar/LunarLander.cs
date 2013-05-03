@@ -26,9 +26,10 @@ using Encog.Engine.Network.Activation;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Anneal;
-using Encog.Neural.Networks.Training.Genetic;
 using Encog.Neural.Pattern;
 using Encog.MathUtil.Randomize;
+using Encog.ML.Genetic;
+using Encog.ML;
 
 namespace Encog.Examples.Lunar
 {
@@ -75,9 +76,11 @@ namespace Encog.Examples.Lunar
             }
             else
             {
-                train = new NeuralGeneticAlgorithm(
-                    network, new NguyenWidrowRandomizer(),
-                    new PilotScore(), 500, 0.1, 0.25);
+                train = new MLMethodGeneticAlgorithm( ()=>{
+					BasicNetwork result = CreateNetwork();
+					((IMLResettable)result).Reset();
+					return result;
+				},new PilotScore(),500);
             }
 
             int epoch = 1;

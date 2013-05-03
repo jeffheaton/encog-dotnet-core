@@ -72,8 +72,6 @@
     <Compile Include="Examples\Forest\TrainNetwork.cs" />
     <Compile Include="Examples\ForexExample\ForexMarketTrain.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
-    <Compile Include="Examples\GeneticTSP\ICalculateGenomeScore.cs" />
-    <Compile Include="Examples\GeneticTSP\TSPGenome.cs" />
     <Compile Include="Examples\GeneticTSP\TSPScore.cs" />
     <Compile Include="Examples\Hopfield\Associate\HopfieldAssociate.cs" />
     <Compile Include="Examples\Hopfield\Simple\HopfieldSimple.cs" />
@@ -90,6 +88,7 @@
     <Compile Include="Examples\LiveSimul\LiveSimul.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />
     <Compile Include="Examples\Lunar\LunarLander.cs" />
+    <Compile Include="Examples\Lunar\MLResettable.cs" />
     <Compile Include="Examples\Lunar\NeuralPilot.cs" />
     <Compile Include="Examples\Lunar\PilotScore.cs" />
     <Compile Include="Examples\Analyzer\MarketAnalyzer.cs" />

@@ -43,5 +43,10 @@ namespace Encog.Neural.Networks.Training
         /// <param name="network">The network.</param>
         /// <returns>The score.</returns>
         double CalculateScore(IMLMethod network);
+
+        /// <summary>
+        /// Does this score function require single threaded?
+        /// </summary>
+        bool RequireSingleThreaded { get; }
     }
 }

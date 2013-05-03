@@ -76,5 +76,11 @@ namespace Encog.Neural.Networks.Training
         }
 
         #endregion
+
+        /// <inheritdoc/>
+        public bool RequireSingleThreaded
+        {
+            get { return false; }
+        }
     }
 }

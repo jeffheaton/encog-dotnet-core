@@ -367,6 +367,8 @@
     <Compile Include="ML\EA\Rules\IRuleHolder.cs" />
     <Compile Include="ML\EA\Rules\RuleHolder.cs" />
     <Compile Include="ML\EA\Score\IAdjustScore.cs" />
+    <Compile Include="ML\EA\Score\Multi\ParallelScore.cs" />
+    <Compile Include="ML\EA\Score\Multi\ParallelScoreTask.cs" />
     <Compile Include="ML\EA\Sort\AbstractGenomeComparer.cs" />
     <Compile Include="ML\EA\Sort\IGenomeComparer.cs" />
     <Compile Include="ML\EA\Sort\MaximizeAdjustedScoreComp.cs" />
@@ -381,6 +383,7 @@
     <Compile Include="ML\EA\Train\BasicEA.cs" />
     <Compile Include="ML\EA\Train\EAWorker.cs" />
     <Compile Include="ML\EA\Train\IEvolutionaryAlgorithm.cs" />
+    <Compile Include="ML\EA\Train\TrainEA.cs" />
     <Compile Include="ML\Factory\Method\BayesianFactory.cs" />
     <Compile Include="ML\Factory\Method\FeedforwardFactory.cs" />
     <Compile Include="ML\Factory\Method\PNNFactory.cs" />
@@ -411,6 +414,20 @@
     <Compile Include="ML\Factory\Train\SVMFactory.cs" />
     <Compile Include="ML\Factory\Train\SVMSearchFactory.cs" />
     <Compile Include="ML\Factory\Train\TrainBayesianFactory.cs" />
+    <Compile Include="ML\Genetic\Crossover\Splice.cs" />
+    <Compile Include="ML\Genetic\Crossover\SpliceNoRepeat.cs" />
+    <Compile Include="ML\Genetic\GeneticError.cs" />
+    <Compile Include="ML\Genetic\Genome\DoubleArrayGenome.cs" />
+    <Compile Include="ML\Genetic\Genome\DoubleArrayGenomeFactory.cs" />
+    <Compile Include="ML\Genetic\Genome\IArrayGenome.cs" />
+    <Compile Include="ML\Genetic\Genome\IntegerArrayGenome.cs" />
+    <Compile Include="ML\Genetic\Genome\IntegerArrayGenomeFactory.cs" />
+    <Compile Include="ML\Genetic\MLEncodableCODEC.cs" />
+    <Compile Include="ML\Genetic\MLMethodGeneticAlgorithm.cs" />
+    <Compile Include="ML\Genetic\MLMethodGenome.cs" />
+    <Compile Include="ML\Genetic\MLMethodGenomeFactory.cs" />
+    <Compile Include="ML\Genetic\Mutate\MutatePerturb.cs" />
+    <Compile Include="ML\Genetic\Mutate\MutateShuffle.cs" />
     <Compile Include="ML\HMM\Alog\ForwardBackwardCalculator.cs" />
     <Compile Include="ML\HMM\Alog\ForwardBackwardScaledCalculator.cs" />
     <Compile Include="ML\HMM\Alog\KullbackLeiblerDistanceCalculator.cs" />
@@ -478,9 +495,6 @@
     <Compile Include="Neural\Networks\Training\Cross\CrossTraining.cs" />
     <Compile Include="Neural\Networks\Training\Cross\CrossValidationKFold.cs" />
     <Compile Include="Neural\Networks\Training\Cross\NetworkFold.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\GeneticScoreAdapter.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\NeuralGeneticAlgorithm.cs" />
-    <Compile Include="Neural\Networks\Training\Genetic\NeuralGenome.cs" />
     <Compile Include="Neural\Networks\Training\ILearningRate.cs" />
     <Compile Include="Neural\Networks\Training\LMA\LevenbergMarquardtTraining.cs" />
     <Compile Include="Neural\Networks\Training\IMomentum.cs" />
@@ -749,7 +763,6 @@
     <None Include="Encog.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ML\Genetic\" />
     <Folder Include="Neural\NEAT\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

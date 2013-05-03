@@ -27,10 +27,12 @@ using Encog.Examples.Util;
 using Encog.MathUtil;
 using Encog.ML.Genetic;
 using Encog.ML.Genetic.Crossover;
-using Encog.ML.Genetic.Genes;
 using Encog.ML.Genetic.Genome;
 using Encog.ML.Genetic.Mutate;
-using Encog.ML.Genetic.Population;
+using Encog.ML.EA.Train;
+using Encog.ML.EA.Population;
+using Encog.ML.EA.Species;
+using Encog.Neural.Networks.Training;
 
 namespace Encog.Examples.GeneticTSP
 {
@@ -47,7 +49,7 @@ namespace Encog.Examples.GeneticTSP
         private IExampleInterface app;
 
         private City[] cities;
-        private GeneticAlgorithm genetic;
+        private TrainEA genetic;
 
         public static ExampleInfo Info
         {
@@ -75,47 +77,44 @@ namespace Encog.Examples.GeneticTSP
 
             initCities();
 
-            genetic = new BasicGeneticAlgorithm();
+            IPopulation pop = initPopulation();
+		
+		ICalculateScore score =  new TSPScore(cities);
 
-            initPopulation(genetic);
-            genetic.MutationPercent = MUTATION_PERCENT;
-            genetic.PercentToMate = PERCENT_TO_MATE;
-            genetic.MatingPopulation = MATING_POPULATION_PERCENT;
-            genetic.Crossover = new SpliceNoRepeat(CITIES/3);
-            genetic.Mutate = new MutateShuffle();
+		genetic = new TrainEA(pop,score);
+		
+		genetic.AddOperation(0.9,new SpliceNoRepeat(CITIES/3));
+		genetic.AddOperation(0.1,new MutateShuffle());
 
-            int sameSolutionCount = 0;
-            int iteration = 1;
-            double lastSolution = Double.MaxValue;
+		int sameSolutionCount = 0;
+		int iteration = 1;
+		double lastSolution = Double.MaxValue;
 
-            while (sameSolutionCount < MAX_SAME_SOLUTION)
-            {
-                genetic.Iteration();
+		while (sameSolutionCount < MAX_SAME_SOLUTION) {
+			genetic.Iteration();
 
-                double thisSolution = genetic.Population.Best.Score;
+			double thisSolution = genetic.Error;
 
-                builder.Length = 0;
-                builder.Append("Iteration: ");
-                builder.Append(iteration++);
-                builder.Append(", Best Path Length = ");
-                builder.Append(thisSolution);
+			builder.Length = 0;
+			builder.Append("Iteration: ");
+			builder.Append(iteration++);
+			builder.Append(", Best Path Length = ");
+			builder.Append(thisSolution);
 
-                Console.WriteLine(builder.ToString());
+			Console.WriteLine(builder.ToString());
 
-                if (Math.Abs(lastSolution - thisSolution) < 1.0)
-                {
-                    sameSolutionCount++;
-                }
-                else
-                {
-                    sameSolutionCount = 0;
-                }
+			if (Math.Abs(lastSolution - thisSolution) < 1.0) {
+				sameSolutionCount++;
+			} else {
+				sameSolutionCount = 0;
+			}
 
-                lastSolution = thisSolution;
-            }
+			lastSolution = thisSolution;
+		}
 
-            Console.WriteLine(@"Good solution found:");
-            displaySolution();
+		Console.WriteLine("Good solution found:");
+		displaySolution();
+		genetic.FinishTraining();
         }
 
         #endregion
@@ -136,20 +135,45 @@ namespace Encog.Examples.GeneticTSP
             }
         }
 
-        private void initPopulation(GeneticAlgorithm ga)
-        {
-            ICalculateGenomeScore score = new TSPScore(cities);
-            ga.CalculateScore = score;
-            IPopulation population = new BasicPopulation(POPULATION_SIZE);
-            ga.Population = population;
 
-            for (int i = 0; i < POPULATION_SIZE; i++)
-            {
-                var genome = new TSPGenome(ga, cities);
-                ga.Population.Genomes.Add(genome);
-                ga.PerformCalculateScore(genome);
-            }
-            population.Sort();
+        private IntegerArrayGenome RandomGenome() {
+            Random rnd = new Random();
+		IntegerArrayGenome result = new IntegerArrayGenome(cities.Length);
+		int[] organism = result.Data;
+		bool[] taken = new bool[cities.Length];
+
+		for (int i = 0; i < organism.Length - 1; i++) {
+			int icandidate;
+			do {
+				icandidate = (int) (rnd.NextDouble() * organism.Length);
+			} while (taken[icandidate]);
+			organism[i] = icandidate;
+			taken[icandidate] = true;
+			if (i == organism.Length - 2) {
+				icandidate = 0;
+				while (taken[icandidate]) {
+					icandidate++;
+				}
+				organism[i + 1] = icandidate;
+			}
+		}
+		return result;
+	}
+
+        private IPopulation initPopulation()
+        {
+            		IPopulation result = new BasicPopulation(POPULATION_SIZE, null);
+
+		BasicSpecies defaultSpecies = new BasicSpecies();
+		defaultSpecies.Population = result;
+		for (int i = 0; i < POPULATION_SIZE; i++) {
+			IntegerArrayGenome genome = RandomGenome();
+			defaultSpecies.Members.Add(genome);
+		}
+		result.GenomeFactory = new IntegerArrayGenomeFactory(cities.Length);
+		result.Species.Add(defaultSpecies);
+		
+		return result;
         }
 
 
@@ -161,11 +185,11 @@ namespace Encog.Examples.GeneticTSP
         {
             bool first = true;
 
-            foreach (IGene gene in genetic.Population.Best.Chromosomes[0].Genes)
+            foreach (int gene in ((IntegerArrayGenome)genetic.Population.BestGenome).Data)
             {
                 if (!first)
                     Console.Write(">");
-                Console.Write("" + ((IntegerGene) gene).Value);
+                Console.Write("" + gene);
                 first = false;
             }
 

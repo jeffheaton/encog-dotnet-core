@@ -10,7 +10,7 @@ namespace Encog.ML.EA.Population
     /// <summary>
     /// Defines a population of genomes.
     /// </summary>
-    public interface IPopulation
+    public interface IPopulation: IMLMethod
     {
         /// <summary>
         /// Clear all genomes from this population.

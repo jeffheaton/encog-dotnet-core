@@ -35,10 +35,11 @@ using Encog.Neural.Networks.Training.Propagation.Back;
 using Encog.Neural.Networks.Training.Propagation.Manhattan;
 using Encog.Neural.Networks.Training.Propagation.SCG;
 using Encog.Neural.Networks.Training.Anneal;
-using Encog.Neural.Networks.Training.Genetic;
 using Encog.MathUtil.Randomize;
 using Encog.Neural.PNN;
 using Encog.Neural.Networks.Training.PNN;
+using Encog.ML.Genetic;
+using Encog.ML;
 
 namespace Encog.Neural.Networks.Training
 {
@@ -110,9 +111,14 @@ namespace Encog.Neural.Networks.Training
         public void TestGenetic()
         {
             IMLDataSet trainingData = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
-            BasicNetwork network = NetworkUtil.CreateXORNetworkUntrained();
             ICalculateScore score = new TrainingSetScore(trainingData);
-            NeuralGeneticAlgorithm genetic = new NeuralGeneticAlgorithm(network, new RangeRandomizer(-1, 1), score, 500, 0.1, 0.25);
+
+
+            MLMethodGeneticAlgorithm genetic = new MLMethodGeneticAlgorithm(() =>
+            {
+                return NetworkUtil.CreateXORNetworkUntrained();
+            }, score, 500);
+
             NetworkUtil.TestTraining(genetic, 0.00001);
         }
 

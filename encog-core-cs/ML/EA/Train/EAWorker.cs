@@ -130,7 +130,7 @@ namespace Encog.ML.EA.Train
                             child.Population = this.parents[0].Population;
                             if (this.train.Rules.IsValid(child))
                             {
-                                child.BirthGeneration = this.train.CurrentIteration;
+                                child.BirthGeneration = this.train.IterationNumber;
 
                                 this.train.CalculateScore(child);
                                 if (!this.train.AddChild(child))

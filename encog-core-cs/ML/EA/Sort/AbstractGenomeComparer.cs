@@ -59,14 +59,11 @@ namespace Encog.ML.EA.Sort
 
 
 
-        public bool IsBetterThan(Genome.IGenome genome1, Genome.IGenome genome2)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool IsBetterThan(Genome.IGenome genome1, Genome.IGenome genome2);
 
-        public bool ShouldMinimize
+        public abstract bool ShouldMinimize
         {
-            get { throw new NotImplementedException(); }
+            get;
         }
 
         /// <summary>

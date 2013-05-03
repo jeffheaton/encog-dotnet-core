@@ -28,8 +28,8 @@ using Encog.ML.Factory.Parse;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training;
-using Encog.Neural.Networks.Training.Genetic;
 using Encog.Util;
+using Encog.ML.Genetic;
 
 namespace Encog.ML.Factory.Train
 {
@@ -42,7 +42,6 @@ namespace Encog.ML.Factory.Train
         /// <summary>
         /// Create an annealing trainer.
         /// </summary>
-        ///
         /// <param name="method">The method to use.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="argsStr">The arguments to use.</param>
@@ -61,17 +60,18 @@ namespace Encog.ML.Factory.Train
             IDictionary<String, String> args = ArchitectureParse.ParseParams(argsStr);
             var holder = new ParamsHolder(args);
             int populationSize = holder.GetInt(
-                MLTrainFactory.PropertyPopulationSize, false, 5000);
-            double mutation = holder.GetDouble(
-                MLTrainFactory.PropertyMutation, false, 0.1d);
-            double mate = holder.GetDouble(MLTrainFactory.PropertyMate,
-                                           false, 0.25d);
+				MLTrainFactory.PropertyPopulationSize, false, 5000);
+		
+		IMLTrain train = new MLMethodGeneticAlgorithm( () => {
+			
+				IMLMethod result = (IMLMethod) ObjectCloner.DeepCopy(method);
+				((IMLResettable)result).Reset();
+				return result;
+			}, score, populationSize);
 
-            IMLTrain train = new NeuralGeneticAlgorithm((BasicNetwork) method,
-                                                       new RangeRandomizer(-1, 1), score, populationSize, mutation,
-                                                       mate);
+		return train;
 
-            return train;
+       
         }
     }
 }

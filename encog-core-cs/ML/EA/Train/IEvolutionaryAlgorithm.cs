@@ -77,7 +77,7 @@ namespace Encog.ML.EA.Train
         /// The current iteration number. Also sometimes referred to as
         /// generation or epoch.
         /// </summary>
-        int CurrentIteration { get; }
+        int IterationNumber { get; }
 
         /// <summary>
         /// The maximum size an individual genome can be. This is an

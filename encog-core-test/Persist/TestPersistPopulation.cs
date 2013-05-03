@@ -31,7 +31,6 @@ using Encog.ML.Data;
 using Encog.Neural.Networks.Training;
 using Encog.ML.Data.Basic;
 using Encog.Engine.Network.Activation;
-using Encog.ML.Genetic.Population;
 
 namespace Encog.Persist
 {
