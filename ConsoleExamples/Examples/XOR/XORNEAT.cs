@@ -27,6 +27,8 @@ using Encog.ML.Data;
 using Encog.ML.Data.Basic;
 using Encog.Neural.Networks.Training;
 using Encog.Util.Simple;
+using Encog.ML.EA.Train;
+using Encog.Neural.NEAT;
 
 namespace Encog.Examples.XOR
 {
@@ -73,25 +75,21 @@ namespace Encog.Examples.XOR
         /// <param name="app">Holds arguments and other info.</param>
         public void Execute(IExampleInterface app)
         {
-            /*
             IMLDataSet trainingSet = new BasicMLDataSet(XORInput, XORIdeal);
-            var pop = new NEATPopulation(2, 1, 1000);
+            NEATPopulation pop = new NEATPopulation(2, 1, 1000);
+            pop.Reset();
+            pop.InitialConnectionDensity = 1.0; // not required, but speeds processing.
             ICalculateScore score = new TrainingSetScore(trainingSet);
             // train the neural network
-            var step = new ActivationStep();
-            step.Center = 0.5;
-            pop.OutputActivationFunction = step;
-
-            var train = new NEATTraining(score, pop);
-
+            TrainEA train = NEATUtil.ConstructNEATTrainer(pop,score);
+           
             EncogUtility.TrainToError(train, 0.01);
 
-            var network = (NEATNetwork) train.Method;
+            NEATNetwork network = (NEATNetwork)train.CODEC.Decode(train.BestGenome);
 
-            network.ClearContext();
             // test the neural network
             Console.WriteLine(@"Neural Network Results:");
-            EncogUtility.Evaluate(network, trainingSet);*/
+            EncogUtility.Evaluate(network, trainingSet);
         }
 
         #endregion

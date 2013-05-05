@@ -202,6 +202,10 @@ namespace Encog.Neural.NEAT
         {
 
             SurvivalRate = NEATPopulation.DEFAULT_SURVIVAL_RATE;
+            WeightRange = 5;
+            InitialConnectionDensity = 0.1;
+            RandomNumberFactory = EncogFramework.Instance
+                .RandomFactory.FactorFactory();
 
             InputCount = inputCount;
             OutputCount = outputCount;
@@ -226,6 +230,11 @@ namespace Encog.Neural.NEAT
             : base(populationSize, new FactorHyperNEATGenome())
         {
             SurvivalRate = NEATPopulation.DEFAULT_SURVIVAL_RATE;
+            WeightRange = 5;
+            InitialConnectionDensity = 0.1;
+            RandomNumberFactory = EncogFramework.Instance
+                .RandomFactory.FactorFactory();
+
             CurrentSubstrate = theSubstrate;
             InputCount = 6;
             OutputCount = 2;
