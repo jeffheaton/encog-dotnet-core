@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestLinear()
         {
             var activation = new ActivationLinear();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationLinear) activation.Clone();
             Assert.IsNotNull(clone);

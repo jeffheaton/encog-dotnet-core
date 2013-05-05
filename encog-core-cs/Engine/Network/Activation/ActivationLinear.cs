@@ -60,9 +60,12 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <returns>Return true, linear has a 1 derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />

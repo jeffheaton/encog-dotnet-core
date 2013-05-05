@@ -154,9 +154,12 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <returns>False, indication that no derivative is available for thisfunction.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return false;
+            get
+            {
+                return false;
+            }
         }
     }
 }

@@ -127,9 +127,12 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <returns>Returns true, this activation function has a derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />

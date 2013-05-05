@@ -54,9 +54,12 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <returns>Return true, bipolar has a 1 for derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />

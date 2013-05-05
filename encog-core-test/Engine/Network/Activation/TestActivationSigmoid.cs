@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestSigmoid()
         {
             var activation = new ActivationSigmoid();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationSigmoid) activation.Clone();
             Assert.IsNotNull(clone);

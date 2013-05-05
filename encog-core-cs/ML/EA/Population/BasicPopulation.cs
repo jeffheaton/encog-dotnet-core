@@ -31,7 +31,7 @@ namespace Encog.ML.EA.Population
         /// <summary>
         /// The species that make up the population.
         /// </summary>
-        private IList<ISpecies> species = new List<ISpecies>();
+        private List<ISpecies> species = new List<ISpecies>();
 
         /// <summary>
         /// The best genome.
@@ -134,7 +134,7 @@ namespace Encog.ML.EA.Population
         }
 
         /// <inheritdoc/>
-        public IList<ISpecies> Species
+        public List<ISpecies> Species
         {
             get { return this.species; }
         }

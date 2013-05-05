@@ -92,6 +92,19 @@ namespace Encog.MathUtil.Randomize
         }
 
         /// <summary>
+        /// Generate a random number in the specified range.
+        /// </summary>
+        /// <param name="rnd">Random number generator.</param>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <returns>A random number.</returns>
+        public static double Randomize(EncogRandom rnd, double min, double max)
+        {
+            double range = max - min;
+            return (range * rnd.NextDouble()) + min;
+        }
+
+        /// <summary>
         /// Generate a random number based on the range specified in the constructor.
         /// </summary>
         ///

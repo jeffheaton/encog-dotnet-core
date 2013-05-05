@@ -100,9 +100,12 @@ namespace Encog.Engine.Network.Activation
         /// Return true, Elliott activation has a derivative.
         /// </summary>
         /// <returns>Return true, Elliott activation has a derivative.</returns>
-        public bool HasDerivative()
+        public bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Encog.ML.EA.Genome;
 using Encog.ML.EA.Train;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.EA.Opp.Selection
 {
@@ -44,7 +45,7 @@ namespace Encog.ML.EA.Opp.Selection
         /// <param name="parentIndex">The index into the parents array.</param>
         /// <param name="offspring">The offspring.</param>
         /// <param name="offspringIndex">An index into the offspring array.</param>
-        void PerformOperation(Random rnd, IGenome[] parents, int parentIndex,
+        void PerformOperation(EncogRandom rnd, IGenome[] parents, int parentIndex,
                 IGenome[] offspring, int offspringIndex);
     }
 }

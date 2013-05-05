@@ -30,8 +30,8 @@ namespace Encog.Engine.Network.Activation
         [TestMethod]
         public void TestGaussian()
         {
-            var activation = new ActivationGaussian(0.0, 0.5, 1.0);
-            Assert.IsTrue(activation.HasDerivative());
+            var activation = new ActivationGaussian();
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationGaussian) activation.Clone();
             Assert.IsNotNull(clone);

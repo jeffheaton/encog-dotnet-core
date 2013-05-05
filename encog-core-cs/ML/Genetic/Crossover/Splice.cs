@@ -6,6 +6,7 @@ using Encog.ML.EA.Opp.Selection;
 using Encog.ML.EA.Train;
 using Encog.ML.EA.Genome;
 using Encog.ML.Genetic.Genome;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.Genetic.Crossover
 {
@@ -35,7 +36,7 @@ namespace Encog.ML.Genetic.Crossover
         }
 
         /// <inheritdoc/>
-        public void PerformOperation(Random rnd, IGenome[] parents, int parentIndex,
+        public void PerformOperation(EncogRandom rnd, IGenome[] parents, int parentIndex,
                 IGenome[] offspring, int offspringIndex)
         {
 

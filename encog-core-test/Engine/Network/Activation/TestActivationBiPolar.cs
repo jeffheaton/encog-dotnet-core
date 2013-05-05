@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestActivation()
         {
             var activation = new ActivationBiPolar();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationBiPolar)activation.Clone();
             Assert.IsNotNull(clone);

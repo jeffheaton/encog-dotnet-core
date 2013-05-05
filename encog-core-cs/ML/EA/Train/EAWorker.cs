@@ -6,6 +6,7 @@ using Encog.ML.EA.Species;
 using Encog.ML.EA.Genome;
 using Encog.ML.EA.Opp.Selection;
 using Encog.ML.EA.Exceptions;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.EA.Train
 {
@@ -32,7 +33,7 @@ namespace Encog.ML.EA.Train
         /// <summary>
         /// Random number generator.
         /// </summary>
-        private Random rnd;
+        private EncogRandom rnd;
 
         /// <summary>
         /// The parent object.

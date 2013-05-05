@@ -58,9 +58,12 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <returns>True, sigmoid has a derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />

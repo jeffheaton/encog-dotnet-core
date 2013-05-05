@@ -7,7 +7,7 @@ namespace Encog.MathUtil.Randomize.Factory
 {
     public interface IRandomFactory
     {
-        Random Factor();
+        EncogRandom Factor();
         IRandomFactory FactorFactory();
     }
 }

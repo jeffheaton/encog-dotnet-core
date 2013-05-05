@@ -1,222 +1,227 @@
-//
-// Encog(tm) Core v3.1 - .Net Version
-// http://www.heatonresearch.com/encog/
-//
-// Copyright 2008-2012 Heaton Research, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//   
-// For more information on Heaton Research copyrights, licenses 
-// and trademarks visit:
-// http://www.heatonresearch.com/copyright
-//
-using System;
-using Encog.ML.Genetic.Genes;
-using Encog.ML.Genetic.Genome;
-using Encog.ML.Genetic.Innovation;
-using Encog.ML.Genetic.Population;
-using Encog.Neural.Neat.Training;
-using Encog.Neural.Networks.Training;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Encog.Neural.NEAT.Training
 {
     /// <summary>
     /// Implements a NEAT innovation list.
+    /// 
     /// NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm for the
     /// generation of evolving artificial neural networks. It was developed by Ken
     /// Stanley while at The University of Texas at Austin.
+    /// 
+    /// -----------------------------------------------------------------------------
     /// http://www.cs.ucf.edu/~kstanley/
-    /// </summary>
-    ///
+    /// Encog's NEAT implementation was drawn from the following three Journal
+    /// Articles. For more complete BibTeX sources, see NEATNetwork.java.
+    /// 
+    /// Evolving Neural Networks Through Augmenting Topologies
+    /// 
+    /// Generating Large-Scale Neural Networks Through Discovering Geometric
+    /// Regularities
+    /// 
+    /// Automatic feature selection in neuroevolution
     [Serializable]
-    public class NEATInnovationList : BasicInnovationList
+    public class NEATInnovationList
     {
-        /// <summary>
-        /// The next neuron id.
-        /// </summary>
-        ///
-        private long nextNeuronID;
-
         /// <summary>
         /// The population.
         /// </summary>
-        ///
-        private IPopulation population;
+        public NEATPopulation Population { get; set; }
+
+        /// <summary>
+        /// The list of innovations.
+        /// </summary>
+        private IDictionary<string, NEATInnovation> list = new Dictionary<String, NEATInnovation>();
 
         /// <summary>
         /// The default constructor, used mainly for persistance.
         /// </summary>
-        ///
         public NEATInnovationList()
         {
-            nextNeuronID = 0;
+
         }
 
         /// <summary>
-        /// Construct an innovation list.
+        /// Produce an innovation key for a neuron.
         /// </summary>
-        ///
-        /// <param name="population_0">The population.</param>
-        /// <param name="links">The links.</param>
-        /// <param name="neurons">THe neurons.</param>
-        public NEATInnovationList(IPopulation population_0,
-                                  Chromosome links, Chromosome neurons)
+        /// <param name="id">The neuron id.</param>
+        /// <returns>The newly created key.</returns>
+        public static String ProduceKeyNeuron(long id)
         {
-            nextNeuronID = 0;
-            population = population_0;
+            StringBuilder result = new StringBuilder();
+            result.Append("n:");
+            result.Append(id);
+            return result.ToString();
+        }
 
-            foreach (IGene gene  in  neurons.Genes)
+        /// <summary>
+        /// Produce a key for a split neuron.
+        /// </summary>
+        /// <param name="fromID"></param>
+        /// <param name="toID"></param>
+        /// <returns></returns>
+        public static String ProduceKeyNeuronSplit(long fromID, long toID)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append("ns:");
+            result.Append(fromID);
+            result.Append(":");
+            result.Append(toID);
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Produce a key for a link.
+        /// </summary>
+        /// <param name="fromID">The from id.</param>
+        /// <param name="toID">The to id.</param>
+        /// <returns>The key for the link.</returns>
+        public static String ProduceKeyLink(long fromID, long toID)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append("l:");
+            result.Append(fromID);
+            result.Append(":");
+            result.Append(toID);
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Construct an innovation list, that includes the initial innovations.
+        /// </summary>
+        /// <param name="population">The population to base this innovation list on.</param>
+        public NEATInnovationList(NEATPopulation population)
+        {
+
+            this.Population = population;
+
+            this.FindInnovation(Population.AssignGeneID()); // bias
+
+            // input neurons
+            for (int i = 0; i < Population.InputCount; i++)
             {
-                var neuronGene = (NEATNeuronGene) gene;
-
-                var innovation = new NEATInnovation(neuronGene,
-                                                    population_0.AssignInnovationID(), AssignNeuronID());
-                Add(innovation);
+                this.FindInnovation(Population.AssignGeneID());
             }
 
-
-            foreach (IGene gene_1  in  links.Genes)
+            // output neurons
+            for (int i = 0; i < Population.OutputCount; i++)
             {
-                var linkGene = (NEATLinkGene) gene_1;
-                var innovation_2 = new NEATInnovation(
-                    linkGene.FromNeuronID, linkGene.ToNeuronID,
-                    NEATInnovationType.NewLink,
-                    population.AssignInnovationID());
-                Add(innovation_2);
+                this.FindInnovation(Population.AssignGeneID());
             }
-        }
 
-        /// <summary>
-        /// The population.
-        /// </summary>
-        public NEATPopulation Population
-        {
-            set { population = value; }
-        }
-
-        /// <summary>
-        /// Assign a neuron ID.
-        /// </summary>
-        ///
-        /// <returns>The neuron id.</returns>
-        private long AssignNeuronID()
-        {
-            return nextNeuronID++;
-        }
-
-        /// <summary>
-        /// Check to see if we already have an innovation.
-        /// </summary>
-        ///
-        /// <param name="ins0">The input neuron.</param>
-        /// <param name="xout">THe output neuron.</param>
-        /// <param name="type">The type.</param>
-        /// <returns>The innovation, either new or existing if found.</returns>
-        public NEATInnovation CheckInnovation(long ins0, long xout,
-                                              NEATInnovationType type)
-        {
-            foreach (IInnovation i  in  Innovations)
+            // connections
+            for (long fromID = 0; fromID < Population.InputCount + 1; fromID++)
             {
-                var innovation = (NEATInnovation) i;
-                if ((innovation.FromNeuronID == ins0)
-                    && (innovation.ToNeuronID == xout)
-                    && (innovation.InnovationType == type))
+                for (long toID = 0; toID < Population.OutputCount; toID++)
                 {
+                    FindInnovation(fromID, toID);
+                }
+            }
+
+
+
+        }
+
+        /// <summary>
+        /// Find an innovation for a hidden neuron that split a existing link. This
+        /// is the means by which hidden neurons are introduced in NEAT.
+        /// </summary>
+        /// <param name="fromID">The source neuron ID in the link.</param>
+        /// <param name="toID">The target neuron ID in the link.</param>
+        /// <returns>The newly created innovation, or the one that matched the search.</returns>
+        public NEATInnovation FindInnovationSplit(long fromID, long toID)
+        {
+            String key = NEATInnovationList.ProduceKeyNeuronSplit(fromID, toID);
+
+            lock (this.list)
+            {
+                if (this.list.ContainsKey(key))
+                {
+                    return this.list[key];
+                }
+                else
+                {
+                    long neuronID = Population.AssignGeneID();
+                    NEATInnovation innovation = new NEATInnovation();
+                    innovation.InnovationID = Population.AssignInnovationID();
+                    innovation.NeuronID = neuronID;
+                    list[key] = innovation;
+
+                    // create other sides of split, if needed
+                    FindInnovation(fromID, neuronID);
+                    FindInnovation(neuronID, toID);
                     return innovation;
                 }
             }
-
-            return null;
         }
 
         /// <summary>
-        /// Create a new neuron gene from an id.
+        /// Find an innovation for a single neuron. Single neurons were created
+        /// without producing a split. This means, the only single neurons are the
+        /// input, bias and output neurons.
         /// </summary>
-        ///
-        /// <param name="neuronID">The neuron id.</param>
-        /// <returns>The neuron gene.</returns>
-        public NEATNeuronGene CreateNeuronFromID(long neuronID)
+        /// <param name="neuronID">The neuron ID to find.</param>
+        /// <returns>The newly created innovation, or the one that matched the search.</returns>
+        public NEATInnovation FindInnovation(long neuronID)
         {
-            var result = new NEATNeuronGene(NEATNeuronType.Hidden,
-                                            0, 0, 0);
+            String key = NEATInnovationList.ProduceKeyNeuron(neuronID);
 
-
-            foreach (IInnovation i  in  Innovations)
+            lock (this.list)
             {
-                var innovation = (NEATInnovation) i;
-                if (innovation.NeuronID == neuronID)
+                if (this.list.ContainsKey(key))
                 {
-                    result.NeuronType = innovation.NeuronType;
-                    result.Id = innovation.NeuronID;
-                    result.SplitY = innovation.SplitY;
-                    result.SplitX = innovation.SplitX;
-
-                    return result;
+                    return this.list[key];
+                }
+                else
+                {
+                    NEATInnovation innovation = new NEATInnovation();
+                    innovation.InnovationID = Population.AssignInnovationID();
+                    innovation.NeuronID = neuronID;
+                    list[key] = innovation;
+                    return innovation;
                 }
             }
-
-            throw new TrainingError("Failed to find innovation for neuron: "
-                                    + neuronID);
         }
 
         /// <summary>
-        /// Create a new innovation.
+        /// Find an innovation for a new link added between two existing neurons.
         /// </summary>
-        ///
-        /// <param name="ins0">The input neuron.</param>
-        /// <param name="xout">The output neuron.</param>
-        /// <param name="type">The type.</param>
-        public void CreateNewInnovation(long ins0, long xout,
-                                        NEATInnovationType type)
+        /// <param name="fromID">The source neuron ID in the link.</param>
+        /// <param name="toID">The target neuron ID in the link.</param>
+        /// <returns>The newly created innovation, or the one that matched the search.</returns>
+        public NEATInnovation FindInnovation(long fromID, long toID)
         {
-            var newInnovation = new NEATInnovation(ins0, xout, type,
-                                                   population.AssignInnovationID());
+            String key = NEATInnovationList.ProduceKeyLink(fromID, toID);
 
-            if (type == NEATInnovationType.NewNeuron)
+            lock (this.list)
             {
-                newInnovation.NeuronID = AssignNeuronID();
+                if (this.list.ContainsKey(key))
+                {
+                    return this.list[key];
+                }
+                else
+                {
+                    NEATInnovation innovation = new NEATInnovation();
+                    innovation.InnovationID = Population.AssignInnovationID();
+                    innovation.NeuronID = -1;
+                    list[key] = innovation;
+                    return innovation;
+                }
             }
-
-            Add(newInnovation);
         }
 
         /// <summary>
-        /// Create a new innovation.
+        /// A list of innovations.
         /// </summary>
-        ///
-        /// <param name="from">The from neuron.</param>
-        /// <param name="to">The to neuron.</param>
-        /// <param name="innovationType">THe innovation type.</param>
-        /// <param name="neuronType">The neuron type.</param>
-        /// <param name="x">The x-coordinate.</param>
-        /// <param name="y">The y-coordinate.</param>
-        /// <returns>The new innovation.</returns>
-        public long CreateNewInnovation(long from, long to,
-                                        NEATInnovationType innovationType,
-                                        NEATNeuronType neuronType, double x, double y)
+        public IDictionary<String, NEATInnovation> Innovations
         {
-            var newInnovation = new NEATInnovation(from, to,
-                                                   innovationType, population.AssignInnovationID(),
-                                                   neuronType, x, y);
-
-            if (innovationType == NEATInnovationType.NewNeuron)
+            get
             {
-                newInnovation.NeuronID = AssignNeuronID();
+                return list;
             }
-
-            Add(newInnovation);
-
-            return (nextNeuronID - 1); // ??????? should it be innov?
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestTANH()
         {
             var activation = new ActivationTANH();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationTANH) activation.Clone();
             Assert.IsNotNull(clone);

@@ -63,6 +63,6 @@ namespace Encog.ML.EA.Population
         /// <summary>
         /// The list of species.  
         /// </summary>
-        IList<ISpecies> Species { get; }
+        List<ISpecies> Species { get; }
     }
 }

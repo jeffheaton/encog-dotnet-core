@@ -26,7 +26,13 @@ using Encog.MathUtil;
 namespace Encog.Engine.Network.Activation
 {
     /// <summary>
-    /// An activation function based on the sin function.
+    /// An activation function based on the sin function, with a double period.
+    /// 
+    /// This activation is typically part of a CPPN neural network, such as 
+    /// HyperNEAT.
+    /// 
+    /// It was developed by  Ken Stanley while at The University of Texas at Austin.
+    /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
     [Serializable]
     public class ActivationSIN : IActivationFunction
@@ -57,9 +63,12 @@ namespace Encog.Engine.Network.Activation
 
 
         /// <returns>Return true, sin has a derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />
@@ -68,14 +77,14 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
-                x[i] = BoundMath.Sin(x[i]);
+                x[i] = BoundMath.Sin(2.0 * x[i]);
             }
         }
 
         /// <inheritdoc />
         public virtual double DerivativeFunction(double b, double a)
         {
-            return BoundMath.Cos(b);
+            return BoundMath.Cos(2.0 * b);
         }
 
         /// <inheritdoc />

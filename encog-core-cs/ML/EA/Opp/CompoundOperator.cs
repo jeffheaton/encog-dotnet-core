@@ -6,6 +6,7 @@ using Encog.ML.EA.Opp.Selection;
 using Encog.ML.EA.Train;
 using Encog.Util.Obj;
 using Encog.ML.EA.Genome;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.EA.Opp
 {
@@ -15,71 +16,74 @@ namespace Encog.ML.EA.Opp
     /// </summary>
     public class CompoundOperator : IEvolutionaryOperator
     {
-        /**
-	 * The owner of this operator.
-	 */
-	private IEvolutionaryAlgorithm owner;
+        /// <summary>
+        /// The owner of this operator.
+        /// </summary>
+        private IEvolutionaryAlgorithm owner;
 
-	/**
-	 * The sub-operators that make up this compound operator.
-	 */
-	private OperationList components = new OperationList();
+        /// <summary>
+        /// The sub-operators that make up this compound operator.
+        /// </summary>
+        private OperationList components = new OperationList();
 
-	/**
-	 * @return the components
-	 */
-	public OperationList getComponents() {
-		return this.components;
-	}
-
-	/**
-	 * @return the owner
-	 */
-	public IEvolutionaryAlgorithm getOwner() {
-		return this.owner;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void Init(IEvolutionaryAlgorithm theOwner) {
-		this.owner = theOwner;
-		foreach (ObjectHolder<IEvolutionaryOperator> obj in this.components.Contents) {
-			obj.obj.Init(theOwner);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-    public int OffspringProduced
-    {
-        get
+        /// <summary>
+        /// The components.
+        /// </summary>
+        public OperationList Components
         {
-            return this.components.MaxOffspring();
+            get
+            {
+                return this.components;
+            }
         }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-    public int ParentsNeeded
-    {
-        get
+        /// <summary>
+        /// The owner.
+        /// </summary>
+        public IEvolutionaryAlgorithm Owner
         {
-            return this.components.MaxOffspring();
+            get
+            {
+                return this.owner;
+            }
         }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void PerformOperation(Random rnd, IGenome[] parents,
-			int parentIndex, IGenome[] offspring,
-			int offspringIndex) {
-		IEvolutionaryOperator opp = this.components.Pick(rnd);
-		opp.PerformOperation(rnd, parents, parentIndex, offspring,
-				offspringIndex);
-	}
+        /// <inheritdoc/>
+        public void Init(IEvolutionaryAlgorithm theOwner)
+        {
+            this.owner = theOwner;
+            foreach (ObjectHolder<IEvolutionaryOperator> obj in this.components.Contents)
+            {
+                obj.obj.Init(theOwner);
+            }
+        }
+
+        /// <inheritdoc/>
+        public int OffspringProduced
+        {
+            get
+            {
+                return this.components.MaxOffspring();
+            }
+        }
+
+        /// <inheritdoc/>
+        public int ParentsNeeded
+        {
+            get
+            {
+                return this.components.MaxOffspring();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void PerformOperation(EncogRandom rnd, IGenome[] parents,
+                int parentIndex, IGenome[] offspring,
+                int offspringIndex)
+        {
+            IEvolutionaryOperator opp = this.components.Pick(rnd);
+            opp.PerformOperation(rnd, parents, parentIndex, offspring,
+                    offspringIndex);
+        }
     }
 }

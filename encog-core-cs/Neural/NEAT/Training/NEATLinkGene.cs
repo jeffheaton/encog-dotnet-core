@@ -1,163 +1,115 @@
-//
-// Encog(tm) Core v3.1 - .Net Version
-// http://www.heatonresearch.com/encog/
-//
-// Copyright 2008-2012 Heaton Research, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//   
-// For more information on Heaton Research copyrights, licenses 
-// and trademarks visit:
-// http://www.heatonresearch.com/copyright
-//
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using Encog.ML.Genetic.Genes;
 
 namespace Encog.Neural.NEAT.Training
 {
     /// <summary>
     /// Implements a NEAT link gene. This describes a way in which two neurons are
     /// linked.
+    ///
     /// NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm for the
     /// generation of evolving artificial neural networks. It was developed by Ken
     /// Stanley while at The University of Texas at Austin.
-    /// http://www.cs.ucf.edu/~kstanley/
-    /// </summary>
     ///
+    /// -----------------------------------------------------------------------------
+    /// http://www.cs.ucf.edu/~kstanley/ Encog's NEAT implementation was drawn from
+    /// the following three Journal Articles. For more complete BibTeX sources, see
+    /// NEATNetwork.java.
+    /// 
+    /// Evolving Neural Networks Through Augmenting Topologies
+    /// 
+    /// Generating Large-Scale Neural Networks Through Discovering Geometric
+    /// Regularities
+    /// 
+    /// Automatic feature selection in neuroevolution
+    /// </summary>
     [Serializable]
-    public class NEATLinkGene : BasicGene
+    public class NEATLinkGene : NEATBaseGene
     {
         /// <summary>
         /// The from neuron id.
         /// </summary>
-        ///
-        private long fromNeuronID;
-
-        /// <summary>
-        /// Is this a recurrent connection.
-        /// </summary>
-        ///
-        private bool recurrent;
+        public long FromNeuronID { get; set; }
 
         /// <summary>
         /// The to neuron id.
         /// </summary>
-        ///
-        private long toNeuronID;
+        public long ToNeuronID { get; set; }
 
         /// <summary>
         /// The weight of this link.
         /// </summary>
-        ///
-        private double weight;
+        public double Weight { get; set; }
+
+        /// <summary>
+        /// Is this gene enabled?
+        /// </summary>
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Default constructor, used mainly for persistence.
         /// </summary>
-        ///
         public NEATLinkGene()
         {
+
         }
 
         /// <summary>
         /// Construct a NEAT link gene.
         /// </summary>
-        ///
-        /// <param name="fromNeuronID_0">The source neuron.</param>
-        /// <param name="toNeuronID_1">The target neuron.</param>
+        /// <param name="fromNeuronID">The source neuron.</param>
+        /// <param name="toNeuronID">The target neuron.</param>
         /// <param name="enabled">Is this link enabled.</param>
         /// <param name="innovationID">The innovation id.</param>
-        /// <param name="weight_2">The weight.</param>
-        /// <param name="recurrent_3">Is this a recurrent link?</param>
-        public NEATLinkGene(long fromNeuronID_0, long toNeuronID_1,
-                            bool enabled, long innovationID,
-                            double weight_2, bool recurrent_3)
+        /// <param name="weight">The weight.</param>
+        public NEATLinkGene(long fromNeuronID, long toNeuronID,
+                bool enabled, long innovationID,
+                double weight)
+            : this()
         {
-            fromNeuronID = fromNeuronID_0;
-            toNeuronID = toNeuronID_1;
+            FromNeuronID = fromNeuronID;
+            ToNeuronID = toNeuronID;
             Enabled = enabled;
             InnovationId = innovationID;
-            weight = weight_2;
-            recurrent = recurrent_3;
+            Weight = weight;
         }
 
-        /// <summary>
-        /// Set the weight of this connection.
-        /// </summary>
-        public double Weight
+        public NEATLinkGene(NEATLinkGene other)
         {
-            get { return weight; }
-            set { weight = value; }
-        }
-
-        /// <summary>
-        /// True if this is a recurrent link.
-        /// </summary>
-        public bool Recurrent
-        {
-            get { return recurrent; }
-            set { recurrent = value; }
-        }
-
-        /// <summary>
-        /// The from neuron id.
-        /// </summary>
-        public int FromNeuronID
-        {
-            get { return (int) fromNeuronID; }
-            set { fromNeuronID = value; }
-        }
-
-        /// <summary>
-        /// The to neuron id.
-        /// </summary>
-        public int ToNeuronID
-        {
-            get { return (int) toNeuronID; }
-            set { toNeuronID = value; }
+            Copy(other);
         }
 
         /// <summary>
         /// Copy from another gene.
         /// </summary>
         /// <param name="gene">The other gene.</param>
-        public override void Copy(IGene gene)
+        public void Copy(NEATLinkGene gene)
         {
-            var other = (NEATLinkGene) gene;
+            NEATLinkGene other = gene;
             Enabled = other.Enabled;
-            fromNeuronID = other.fromNeuronID;
-            toNeuronID = other.toNeuronID;
+            FromNeuronID = other.FromNeuronID;
+            ToNeuronID = other.ToNeuronID;
             InnovationId = other.InnovationId;
-            recurrent = other.recurrent;
-            weight = other.weight;
+            this.Weight = other.Weight;
         }
 
-
         /// <inheritdoc/>
-        public override String ToString()
+        public override string ToString()
         {
-            var result = new StringBuilder();
+            StringBuilder result = new StringBuilder();
             result.Append("[NEATLinkGene:innov=");
             result.Append(InnovationId);
             result.Append(",enabled=");
             result.Append(Enabled);
             result.Append(",from=");
-            result.Append(fromNeuronID);
+            result.Append(this.FromNeuronID);
             result.Append(",to=");
-            result.Append(toNeuronID);
+            result.Append(this.ToNeuronID);
             result.Append("]");
             return result.ToString();
         }
+
     }
 }

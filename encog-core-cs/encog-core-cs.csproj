@@ -195,6 +195,8 @@
     <Compile Include="EncogFramework.cs" />
     <Compile Include="EncogError.cs" />
     <Compile Include="Engine\Network\Activation\ActivationBiPolar.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationBipolarSteepenedSigmoid.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationClippedLinear.cs" />
     <Compile Include="Engine\Network\Activation\ActivationCompetitive.cs" />
     <Compile Include="Engine\Network\Activation\ActivationElliott.cs" />
     <Compile Include="Engine\Network\Activation\ActivationElliottSymmetric.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Engine\Network\Activation\ActivationSigmoid.cs" />
     <Compile Include="Engine\Network\Activation\ActivationSIN.cs" />
     <Compile Include="Engine\Network\Activation\ActivationSoftMax.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationSteepenedSigmoid.cs" />
     <Compile Include="Engine\Network\Activation\ActivationStep.cs" />
     <Compile Include="Engine\Network\Activation\ActivationTANH.cs" />
     <Compile Include="Engine\Network\Activation\IActivationFunction.cs" />
@@ -242,6 +245,7 @@
     <Compile Include="MathUtil\Randomize\ConsistentRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\ConstRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\Distort.cs" />
+    <Compile Include="MathUtil\Randomize\EncogRandom.cs" />
     <Compile Include="MathUtil\Randomize\Factory\BasicRandomFactory.cs" />
     <Compile Include="MathUtil\Randomize\Factory\IRandomFactory.cs" />
     <Compile Include="MathUtil\Randomize\FanInRandomizer.cs" />
@@ -376,10 +380,12 @@
     <Compile Include="ML\EA\Sort\MinimizeAdjustedScoreComp.cs" />
     <Compile Include="ML\EA\Sort\MinimizeScoreComp.cs" />
     <Compile Include="ML\EA\Sort\SortGenomesForSpecies.cs" />
+    <Compile Include="ML\EA\Sort\SpeciesComparer.cs" />
     <Compile Include="ML\EA\Species\BasicSpecies.cs" />
     <Compile Include="ML\EA\Species\ISpeciation.cs" />
     <Compile Include="ML\EA\Species\ISpecies.cs" />
     <Compile Include="ML\EA\Species\SingleSpeciation.cs" />
+    <Compile Include="ML\EA\Species\ThresholdSpeciation.cs" />
     <Compile Include="ML\EA\Train\BasicEA.cs" />
     <Compile Include="ML\EA\Train\EAWorker.cs" />
     <Compile Include="ML\EA\Train\IEvolutionaryAlgorithm.cs" />
@@ -480,6 +486,40 @@
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
+    <Compile Include="Neural\HyperNEAT\FactorHyperNEATGenome.cs" />
+    <Compile Include="Neural\HyperNEAT\HyperNEATCODEC.cs" />
+    <Compile Include="Neural\HyperNEAT\Substrate\Substrate.cs" />
+    <Compile Include="Neural\HyperNEAT\Substrate\SubstrateFactory.cs" />
+    <Compile Include="Neural\HyperNEAT\Substrate\SubstrateLink.cs" />
+    <Compile Include="Neural\HyperNEAT\Substrate\SubstrateNode.cs" />
+    <Compile Include="Neural\HyperNEAT\HyperNEATGenome.cs" />
+    <Compile Include="Neural\NEAT\FactorNEATGenome.cs" />
+    <Compile Include="Neural\NEAT\INEATGenomeFactory.cs" />
+    <Compile Include="Neural\NEAT\NEATCODEC.cs" />
+    <Compile Include="Neural\NEAT\NEATUtil.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATBaseGene.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATGenome.cs" />
+    <Compile Include="Neural\NEAT\NEATLink.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATLinkGene.cs" />
+    <Compile Include="Neural\NEAT\NEATNetwork.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATNeuronGene.cs" />
+    <Compile Include="Neural\NEAT\NEATNeuronType.cs" />
+    <Compile Include="Neural\NEAT\NEATPopulation.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATInnovation.cs" />
+    <Compile Include="Neural\NEAT\Training\NEATInnovationList.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\IMutateLinkWeight.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\ISelectLinks.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\MutatePerturbLinkWeight.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\MutateResetLinkWeight.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\SelectFixed.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\Links\SelectProportion.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATCrossover.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATMutateAddLink.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATMutateAddNode.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATMutateRemoveLink.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATMutateWeights.cs" />
+    <Compile Include="Neural\NEAT\Training\Opp\NEATMutation.cs" />
+    <Compile Include="Neural\NEAT\Training\Species\OriginalNEATSpeciation.cs" />
     <Compile Include="Neural\Networks\BasicNetwork.cs" />
     <Compile Include="Neural\Networks\IContainsFlat.cs" />
     <Compile Include="Neural\Networks\Layers\BasicLayer.cs" />
@@ -762,9 +802,7 @@
   <ItemGroup>
     <None Include="Encog.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural\NEAT\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

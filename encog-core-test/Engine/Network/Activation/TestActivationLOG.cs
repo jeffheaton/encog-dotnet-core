@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestLog()
         {
             var activation = new ActivationLOG();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationLOG) activation.Clone();
             Assert.IsNotNull(clone);

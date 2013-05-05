@@ -81,7 +81,9 @@ namespace Encog.Engine.Network.Activation
         double DerivativeFunction(double b, double a);
 
 
-        /// <returns>Return true if this function has a derivative.</returns>
-        bool HasDerivative();      
+        /// <summary>
+        /// Does this activation function have a derivative.
+        /// </summary>
+        bool HasDerivative { get; }   
     }
 }

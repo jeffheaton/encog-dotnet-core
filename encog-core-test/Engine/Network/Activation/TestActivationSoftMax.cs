@@ -31,7 +31,7 @@ namespace Encog.Engine.Network.Activation
         public void TestSIN()
         {
             var activation = new ActivationSIN();
-            Assert.IsTrue(activation.HasDerivative());
+            Assert.IsTrue(activation.HasDerivative);
 
             var clone = (ActivationSIN) activation.Clone();
             Assert.IsNotNull(clone);

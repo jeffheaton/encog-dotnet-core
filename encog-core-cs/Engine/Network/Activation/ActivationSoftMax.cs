@@ -56,9 +56,12 @@ namespace Encog.Engine.Network.Activation
         }
 
         /// <returns>Return false, softmax has no derivative.</returns>
-        public virtual bool HasDerivative()
+        public virtual bool HasDerivative
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <inheritdoc />

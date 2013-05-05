@@ -1,346 +1,241 @@
-//
-// Encog(tm) Core v3.1 - .Net Version
-// http://www.heatonresearch.com/encog/
-//
-// Copyright 2008-2012 Heaton Research, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//   
-// For more information on Heaton Research copyrights, licenses 
-// and trademarks visit:
-// http://www.heatonresearch.com/copyright
-//
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Encog.Engine.Network.Activation;
+using System.Linq;
+using System.Text;
 using Encog.ML;
+using Encog.Engine.Network.Activation;
 using Encog.ML.Data;
-using Encog.ML.Data.Basic;
 using Encog.Util.Simple;
+using Encog.ML.Data.Basic;
 using Encog.Util;
 
 namespace Encog.Neural.NEAT
 {
-    /// <summary>
-    /// Implements a NEAT network as a synapse between two layers. In Encog, a NEAT
-    /// network is created by using a NEATSynapse between an input and output layer.
-    /// NEAT networks only have an input and an output layer. There are no actual
-    /// hidden layers. Rather this synapse will evolve many hidden neurons that have
-    /// connections that are not easily defined by layers. Connections can be
-    /// feedforward, recurrent, or self-connected.
-    /// NEAT networks relieve the programmer of the need to define the hidden layer
-    /// structure of the neural network.
-    /// The output from the neural network can be calculated normally or using a
-    /// snapshot. The snapshot mode is slower, but it can be more accurate. The
-    /// snapshot handles recurrent layers better, as it takes the time to loop
-    /// through the network multiple times to "flush out" the recurrent links.
-    /// NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm for the
-    /// generation of evolving artificial neural networks. It was developed by Ken
-    /// Stanley while at The University of Texas at Austin.
-    /// http://www.cs.ucf.edu/~kstanley/
-    /// </summary>
     [Serializable]
-    public class NEATNetwork : BasicML, IMLContext, IMLRegression,
-                               IMLError
+    public class NEATNetwork : IMLRegression, IMLError
     {
         /// <summary>
-        /// The depth property.
+        /// The neuron links.
         /// </summary>
-        public const String PropertyNetworkDepth = "depth";
+        private NEATLink[] links;
 
         /// <summary>
-        /// The links property.
+        /// The activation functions.
         /// </summary>
-        public const String PropertyLinks = "links";
+        private IActivationFunction[] activationFunctions;
 
         /// <summary>
-        /// The snapshot property.
+        /// The pre-activation values, used to feed the neurons.
         /// </summary>
-        public const String PropertySnapshot = "snapshot";
+        private double[] preActivation;
 
         /// <summary>
-        /// The neurons that make up this network.
+        /// The post-activation values, used as the output from the neurons.
         /// </summary>
-        ///
-        private readonly IList<NEATNeuron> _neurons;
+        private double[] postActivation;
 
         /// <summary>
-        /// The activation function.
+        /// The index to the starting location of the output neurons.
         /// </summary>
-        ///
-        private IActivationFunction _activationFunction;
+        private int outputIndex;
 
         /// <summary>
         /// The input count.
         /// </summary>
-        private int _inputCount;
-
-        /// <summary>
-        /// The depth of the network.
-        /// </summary>
-        ///
-        private int _networkDepth;
-
-        /// <summary>
-        /// The output activation function.
-        /// </summary>
-        private IActivationFunction _outputActivationFunction;
+        private int inputCount;
 
         /// <summary>
         /// The output count.
         /// </summary>
-        private int _outputCount;
+        private int outputCount;
 
         /// <summary>
-        /// Should snapshot be used to calculate the output of the neural network.
+        /// The number of activation cycles to use.
         /// </summary>
-        ///
-        private bool _snapshot;
+        public int ActivationCycles { get; set; }
 
         /// <summary>
-        /// Default constructor.
+        /// True, if the network has relaxed and values no longer changing. Used when
+        /// activationCycles is set to zero for auto.
         /// </summary>
-        ///
-        public NEATNetwork()
+        public bool HasRelaxed { get; set; }
+
+        /// <summary>
+        /// The amount of change allowed before the network is considered to have
+        /// relaxed.
+        /// </summary>
+        private double RelaxationThreshold { get; set; }
+
+        /// <summary>
+        /// Construct a NEAT network. The links that are passed in also define the
+        /// neurons. 
+        /// </summary>
+        /// <param name="inputNeuronCount">The input neuron count.</param>
+        /// <param name="outputNeuronCount">The output neuron count.</param>
+        /// <param name="connectionArray">The links.</param>
+        /// <param name="theActivationFunctions">The activation functions.</param>
+        public NEATNetwork(int inputNeuronCount, int outputNeuronCount,
+                IList<NEATLink> connectionArray,
+                IActivationFunction[] theActivationFunctions)
         {
-            _neurons = new List<NEATNeuron>();
-            _snapshot = false;
-        }
 
-        /// <summary>
-        /// Construct a NEAT synapse.
-        /// </summary>
-        ///
-        /// <param name="inputCount">The number of input neurons.</param>
-        /// <param name="outputCount">The number of output neurons.</param>
-        /// <param name="neurons">The neurons in this synapse.</param>
-        /// <param name="activationFunction">The activation function to use.</param>
-        /// <param name="outputActivationFunction">The output activation function.</param>
-        /// <param name="networkDepth">The depth of the network.</param>
-        public NEATNetwork(int inputCount, int outputCount,
-                           IEnumerable<NEATNeuron> neurons,
-                           IActivationFunction activationFunction,
-                           IActivationFunction outputActivationFunction,
-                           int networkDepth)
-        {
-            _neurons = new List<NEATNeuron>();
-            _snapshot = false;
-            _inputCount = inputCount;
-            _outputCount = outputCount;
-            _outputActivationFunction = outputActivationFunction;
+            ActivationCycles = NEATPopulation.DEFAULT_CYCLES;
+            HasRelaxed = false;
 
-            foreach (NEATNeuron neuron in neurons)
+            this.links = new NEATLink[connectionArray.Count];
+            for (int i = 0; i < connectionArray.Count; i++)
             {
-                _neurons.Add(neuron);
+                this.links[i] = connectionArray[i];
             }
 
-            _networkDepth = networkDepth;
-            _activationFunction = activationFunction;
+            this.activationFunctions = theActivationFunctions;
+            int neuronCount = this.activationFunctions.Length;
+
+            this.preActivation = new double[neuronCount];
+            this.postActivation = new double[neuronCount];
+
+            this.inputCount = inputNeuronCount;
+            this.outputIndex = inputNeuronCount + 1;
+            this.outputCount = outputNeuronCount;
+
+            // bias
+            this.postActivation[0] = 1.0;
         }
-
-        /// <summary>
-        /// Construct a NEAT network.
-        /// </summary>
-        ///
-        /// <param name="inputCount">The input count.</param>
-        /// <param name="outputCount">The output count.</param>
-        public NEATNetwork(int inputCount, int outputCount)
-        {
-            _neurons = new List<NEATNeuron>();
-            _snapshot = false;
-            _inputCount = inputCount;
-            _outputCount = outputCount;
-            _networkDepth = 0;
-            _activationFunction = new ActivationSigmoid();
-        }
-
-        /// <summary>
-        /// Set the activation function.
-        /// </summary>
-        public IActivationFunction ActivationFunction
-        {
-            get { return _activationFunction; }
-            set { _activationFunction = value; }
-        }
-
-        /// <summary>
-        /// The network depth.
-        /// </summary>
-        public int NetworkDepth
-        {
-            get { return _networkDepth; }
-            set { _networkDepth = value; }
-        }
-
-
-        /// <value>The NEAT neurons.</value>
-        public IList<NEATNeuron> Neurons
-        {
-            get { return _neurons; }
-        }
-
-
-        /// <summary>
-        /// Sets if snapshot is used.
-        /// </summary>
-        public bool Snapshot
-        {
-            get { return _snapshot; }
-            set { _snapshot = value; }
-        }
-
-        /// <value>the outputActivationFunction to set</value>
-        public IActivationFunction OutputActivationFunction
-        {
-            get { return _outputActivationFunction; }
-            set { _outputActivationFunction = value; }
-        }
-
-        #region MLContext Members
-
-        /// <summary>
-        /// Clear any context from previous runs. This sets the activation of all
-        /// neurons to zero.
-        /// </summary>
-        ///
-        public virtual void ClearContext()
-        {
-            foreach (NEATNeuron neuron  in  _neurons)
-            {
-                neuron.Output = 0;
-            }
-        }
-
-        #endregion
-
-        #region MLError Members
 
         /// <summary>
         /// Calculate the error for this neural network. 
         /// </summary>
-        ///
         /// <param name="data">The training set.</param>
         /// <returns>The error percentage.</returns>
-        public virtual double CalculateError(IMLDataSet data)
+        public double CalculateError(IMLDataSet data)
         {
             return EncogUtility.CalculateRegressionError(this, data);
         }
 
-        #endregion
-
-        #region MLRegression Members
-
         /// <summary>
         /// Compute the output from this synapse.
         /// </summary>
-        ///
         /// <param name="input">The input to this synapse.</param>
         /// <returns>The output from this synapse.</returns>
-        public virtual IMLData Compute(IMLData input)
+        public IMLData Compute(IMLData input)
         {
-			var result = new double[_outputCount];
+            double[] result = new double[this.outputCount];
 
-            if (_neurons.Count == 0)
+            // clear from previous
+            EngineArray.Fill(this.preActivation, 0.0);
+            EngineArray.Fill(this.postActivation, 0.0);
+            this.postActivation[0] = 1.0;
+
+            // copy input
+            for (int i = 0; i < this.inputCount; i++)
             {
-                throw new NeuralNetworkError(
-                    "This network has not been evolved yet, it has no neurons in the NEAT synapse.");
+                this.postActivation[i+1] = input[i];
+            }
+            
+            // iterate through the network activationCycles times
+            for (int i = 0; i < this.ActivationCycles; ++i)
+            {
+                InternalCompute();
             }
 
-            int flushCount = 1;
-
-            if (_snapshot)
+            // copy output
+            for (int i = 0; i < this.outputCount; i++)
             {
-                flushCount = _networkDepth;
+                result[i] = this.postActivation[this.outputIndex+i];
             }
 
-            // iterate through the network FlushCount times
-            for (int i = 0; i < flushCount; ++i)
-            {
-                int outputIndex = 0;
-                int index = 0;
-
-				EngineArray.Fill(result, 0);
-
-                // populate the input neurons
-                while (_neurons[index].NeuronType == NEATNeuronType.Input)
-                {
-                    _neurons[index].Output = input[index];
-
-                    index++;
-                }
-
-                // set the bias neuron
-                _neurons[index++].Output = 1;
-
-                while (index < _neurons.Count)
-                {
-                    NEATNeuron currentNeuron = _neurons[index];
-
-                    double sum = 0;
-
-
-                    foreach (NEATLink link  in  currentNeuron.InboundLinks)
-                    {
-                        double weight = link.Weight;
-                        double neuronOutput = link.FromNeuron.Output;
-                        sum += weight*neuronOutput;
-                    }
-
-                    var d = new double[1];
-                    d[0] = sum/currentNeuron.ActivationResponse;
-                    _activationFunction.ActivationFunction(d, 0, d.Length);
-
-                    _neurons[index].Output = d[0];
-
-                    if (currentNeuron.NeuronType == NEATNeuronType.Output)
-                    {
-                        result[outputIndex++] = currentNeuron.Output;
-                    }
-                    index++;
-                }
-            }
-
-            _outputActivationFunction.ActivationFunction(result, 0,
-                                                        result.Length);
-
-            return new BasicMLData(result, false);
+            return new BasicMLData(result);
         }
 
         /// <summary>
-        /// The input count.
+        /// The activation functions.
         /// </summary>
-        public virtual int InputCount
+        public IActivationFunction[] ActivationFunctions
         {
-            get { return _inputCount; }
-            set { _inputCount = value; }
+            get
+            {
+                return this.activationFunctions;
+            }
+        }
+
+        /// <inheritdoc/>
+        public int InputCount
+        {
+            get
+            {
+                return this.inputCount;
+            }
+        }
+
+        /// <inheritdoc/>
+        public NEATLink[] Links
+        {
+            get
+            {
+                return this.links;
+            }
+        }
+
+        /// <inheritdoc/>
+        public int OutputCount
+        {
+            get
+            {
+                return this.outputCount;
+            }
         }
 
         /// <summary>
-        /// The output count.
+        /// The starting location of the output neurons.
         /// </summary>
-        public virtual int OutputCount
+        public int OutputIndex
         {
-            get { return _outputCount; }
-            set { _outputCount = value; }
+            get
+            {
+                return this.outputIndex;
+            }
         }
 
-        #endregion
+        /// <summary>
+        /// The post-activation values, used as the output from the neurons.
+        /// </summary>
+        public double[] PostActivation
+        {
+            get
+            {
+                return this.postActivation;
+            }
+        }
 
         /// <summary>
-        /// Not needed.
+        /// The pre-activation values, used to feed the neurons.
         /// </summary>
-        public override void UpdateProperties()
+        public double[] PreActivation
         {
+            get
+            {
+                return this.preActivation;
+            }
+        }
+  
+        /// <summary>
+        /// Perform one activation cycle.
+        /// </summary>
+        private void InternalCompute()
+        {
+            for (int j = 0; j < this.links.Length; j++)
+            {
+                this.preActivation[this.links[j].ToNeuron] += this.postActivation[this.links[j]
+                        .FromNeuron] * this.links[j].Weight;
+            }
+
+            for (int j = this.outputIndex; j < this.preActivation.Length; j++)
+            {
+                this.postActivation[j] = this.preActivation[j];
+                this.activationFunctions[j].ActivationFunction(this.postActivation,
+                        j, 1);
+                this.preActivation[j] = 0.0F;
+            }
         }
     }
 }

@@ -13,14 +13,14 @@ namespace Encog.MathUtil.Randomize.Factory
         /// <summary>
         /// A random generator to generate random seeds.
         /// </summary>
-        private Random seedProducer;
+        private EncogRandom seedProducer;
 
         /// <summary>
         /// Construct a random generator factory. No assigned seed.
         /// </summary>
         public BasicRandomFactory()
         {
-            this.seedProducer = new Random();
+            this.seedProducer = new EncogRandom();
         }
 
         /// <summary>
@@ -29,19 +29,19 @@ namespace Encog.MathUtil.Randomize.Factory
         /// <param name="theSeed">The seed.</param>
         public BasicRandomFactory(int theSeed)
         {
-            this.seedProducer = new Random(theSeed);
+            this.seedProducer = new EncogRandom(theSeed);
         }
 
         /// <summary>
         /// Factor a new random generator.
         /// </summary>
         /// <returns>The random number generator.</returns>
-        public Random Factor()
+        public EncogRandom Factor()
         {
             lock (this)
             {
                 int seed = this.seedProducer.Next();
-                return new Random(seed);
+                return new EncogRandom(seed);
             }
         }
 
