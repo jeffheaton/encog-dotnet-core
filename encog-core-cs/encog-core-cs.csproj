@@ -468,6 +468,11 @@
     <Compile Include="ML\IMLResettable.cs" />
     <Compile Include="ML\TrainingImplementationType.cs" />
     <Compile Include="ML\Train\Strategy\EarlyStoppingStrategy.cs" />
+    <Compile Include="ML\Tree\Basic\BasicTreeNode.cs" />
+    <Compile Include="ML\Tree\ITreeNode.cs" />
+    <Compile Include="ML\Tree\Traverse\DepthFirstTraversal.cs" />
+    <Compile Include="ML\Tree\Traverse\ITreeTraversal.cs" />
+    <Compile Include="ML\Tree\Traverse\Tasks\TaskCountNodes.cs" />
     <Compile Include="Neural\ART\BasicART.cs" />
     <Compile Include="Neural\ART\ART1.cs" />
     <Compile Include="Neural\ART\PersistART1.cs" />
