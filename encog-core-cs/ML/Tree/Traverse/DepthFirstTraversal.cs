@@ -11,9 +11,15 @@ namespace Encog.ML.Tree.Traverse
     public class DepthFirstTraversal : ITreeTraversal
     {
         /// <inheritdoc/>
-        public void Traverse(ITreeNode treeNode)
+        public void Traverse(ITreeNode treeNode, MLDelegates.TreeTraversalTask task)
         {
+            if (!task(treeNode))
+                return;
 
+            foreach (ITreeNode childNode in treeNode.ChildNodes)
+            {
+                Traverse(childNode, task);
+            }
         }
     }
 }

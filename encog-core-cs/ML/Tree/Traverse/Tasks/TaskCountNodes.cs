@@ -17,8 +17,16 @@ namespace Encog.ML.Tree.Traverse.Tasks
         /// <returns>The node count.</returns>
         public static int Process(ITreeNode node)
         {
+            int result = 0;
+
             DepthFirstTraversal trav = new DepthFirstTraversal();
-            return 0;
+            trav.Traverse( node, (n) =>
+            {
+                result++;
+                return true;
+            });
+
+            return result;
 
         }
     }
