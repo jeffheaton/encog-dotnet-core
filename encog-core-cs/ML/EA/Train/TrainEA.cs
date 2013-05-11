@@ -158,16 +158,5 @@ namespace Encog.ML.EA.Train
             }
         }
 
-        public int IterationNumber
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }
