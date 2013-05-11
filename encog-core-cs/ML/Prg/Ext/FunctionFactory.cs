@@ -1,0 +1,272 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Encog.ML.EA.Exceptions;
+using Encog.ML.Prg.ExpValue;
+
+namespace Encog.ML.Prg.Ext
+{
+    /// <summary>
+    /// A function factory maps the opcodes contained in the EncogOpcodeRegistry into
+    /// an EncogProgram. You rarely want to train with every available opcode. For
+    /// example, if you are only looking to produce an equation, you should not make
+    /// use of the if-statement and logical operators.
+    /// </summary>
+    [Serializable]
+    public class FunctionFactory
+    {
+        /// <summary>
+        /// A map for quick lookup.
+        /// </summary>
+        private IDictionary<String, IProgramExtensionTemplate> templateMap = new Dictionary<String, IProgramExtensionTemplate>();
+
+        /// <summary>
+        /// The opcodes.
+        /// </summary>
+        private IList<IProgramExtensionTemplate> opcodes = new List<IProgramExtensionTemplate>();
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public FunctionFactory()
+        {
+        }
+
+        /// <summary>
+        /// Add an opcode to the function factory. The opcode must exist in the
+        /// opcode registry.
+        /// </summary>
+        /// <param name="ext">The opcode to add.</param>
+        public void AddExtension(IProgramExtensionTemplate ext)
+        {
+            AddExtension(ext.Name, ext.ChildNodeCount);
+        }
+        
+        /// <summary>
+        /// Add an opcode to the function factory from the opcode registry.
+        /// </summary>
+        /// <param name="name">The name of the opcode.</param>
+        /// <param name="args">The number of arguments.</param>
+        public void AddExtension(String name, int args)
+        {
+            String key = EncogOpcodeRegistry.CreateKey(name, args);
+            if (!this.templateMap.ContainsKey(key))
+            {
+                IProgramExtensionTemplate temp = EncogOpcodeRegistry.Instance
+                        .FindOpcode(name, args);
+                if (temp == null)
+                {
+                    throw new EACompileError("Unknown extension " + name + " with "
+                            + args + " arguments.");
+                }
+                this.opcodes.Add(temp);
+                this.templateMap[key] = temp;
+            }
+
+        }
+
+        /// <summary>
+        /// Factor a new program node, based in a template object.
+        /// </summary>
+        /// <param name="temp">The opcode.</param>
+        /// <param name="program">The program.</param>
+        /// <param name="args">The arguments for this node.</param>
+        /// <returns>The newly created ProgramNode.</returns>
+        public ProgramNode FactorProgramNode(IProgramExtensionTemplate temp,
+                EncogProgram program, ProgramNode[] args)
+        {
+            return new ProgramNode(program, temp, args);
+        }
+
+        /// <summary>
+        /// Factor a new program node, based on an opcode name and arguments.
+        /// </summary>
+        /// <param name="name">The name of the opcode.</param>
+        /// <param name="program">The program to factor for.</param>
+        /// <param name="args">The arguements.</param>
+        /// <returns>The newly created ProgramNode.</returns>
+        public ProgramNode FactorProgramNode(String name,
+                EncogProgram program, ProgramNode[] args)
+        {
+
+            String key = EncogOpcodeRegistry.CreateKey(name, args.Length);
+
+            if (!this.templateMap.ContainsKey(key))
+            {
+                throw new EACompileError("Undefined function/operator: " + name
+                        + " with " + args.Length + " args.");
+            }
+
+            IProgramExtensionTemplate temp = this.templateMap[key];
+            return new ProgramNode(program, temp, args);
+        }
+
+        /// <summary>
+        /// Find a function with the specified name. 
+        /// </summary>
+        /// <param name="name">The name of the function.</param>
+        /// <returns>The function opcode.</returns>
+        public IProgramExtensionTemplate FindFunction(String name)
+        {
+            foreach (IProgramExtensionTemplate opcode in this.opcodes)
+            {
+                // only consider functions
+                if (opcode.NodeType == NodeType.Function)
+                {
+                    if (opcode.Name.Equals(name))
+                    {
+                        return opcode;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Find all opcodes that match the search criteria.
+        /// </summary>
+        /// <param name="types">The return types to consider.</param>
+        /// <param name="context">The program context.</param>
+        /// <param name="includeTerminal">True, to include the terminals.</param>
+        /// <param name="includeFunction">True, to include the functions.</param>
+        /// <returns>The opcodes found.</returns>
+        public IList<IProgramExtensionTemplate> FindOpcodes(
+                IList<EPLValueType> types, EncogProgramContext context,
+                bool includeTerminal, bool includeFunction)
+        {
+            IList<IProgramExtensionTemplate> result = new List<IProgramExtensionTemplate>();
+
+            foreach (IProgramExtensionTemplate temp in this.opcodes)
+            {
+                foreach (EPLValueType rtn in types)
+                {
+                    // it is a possible return type, but given our variables, is it
+                    // possible
+                    if (temp.IsPossibleReturnType(context, rtn))
+                    {
+                        if (temp.ChildNodeCount == 0 && includeTerminal)
+                        {
+                            result.Add(temp);
+                        }
+                        else if (includeFunction)
+                        {
+                            result.Add(temp);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// This method is used when parsing an expression. Consider x>=2. The parser
+        /// first sees the > symbol. But it must also consider the =. So we first
+        /// look for a 2-char operator, in this case there is one.
+        /// </summary>
+        /// <param name="ch1">The first character of the potential operator.</param>
+        /// <param name="ch2">The second character of the potential operator. Zero if none.</param>
+        /// <returns>The expression template for the operator found.</returns>
+        public IProgramExtensionTemplate FindOperator(char ch1, char ch2)
+        {
+            IProgramExtensionTemplate result = null;
+
+            // if ch2==0 then we are only looking for a single char operator.
+            // this is rare, but supported.
+            if (ch2 == 0)
+            {
+                return FindOperatorExact("" + ch1);
+            }
+
+            // first, see if we can match an operator with both ch1 and ch2
+            result = FindOperatorExact("" + ch1 + ch2);
+
+            if (result == null)
+            {
+                // okay no 2-char operators matched, so see if we can find a single
+                // char
+                result = FindOperatorExact("" + ch1);
+            }
+
+            // return the operator if we have one.
+            return result;
+        }
+
+        /// <summary>
+        /// Find an exact match on opcode.
+        /// </summary>
+        /// <param name="str">The string to match.</param>
+        /// <returns>The opcode found.</returns>
+        private IProgramExtensionTemplate FindOperatorExact(String str)
+        {
+            foreach (IProgramExtensionTemplate opcode in this.opcodes)
+            {
+                // only consider non-unary operators
+                if (opcode.NodeType == NodeType.OperatorLeft || opcode.NodeType == NodeType.OperatorRight)
+                {
+                    if (opcode.Name.Equals(str))
+                    {
+                        return opcode;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get the specified opcode.
+        /// </summary>
+        /// <param name="theOpCode">The opcode index.</param>
+        /// <returns>The opcode.</returns>
+        public IProgramExtensionTemplate GetOpCode(int theOpCode)
+        {
+            return this.opcodes[theOpCode];
+        }
+
+        /// <summary>
+        /// The opcode list.
+        /// </summary>
+        public IList<IProgramExtensionTemplate> OpCodes
+        {
+            get
+            {
+                return this.opcodes;
+            }
+        }
+
+        /// <summary>
+        /// The template map.
+        /// </summary>
+        public IDictionary<String, IProgramExtensionTemplate> TemplateMap
+        {
+            get
+            {
+                return this.templateMap;
+            }
+        }
+
+        /// <summary>
+        /// Determine if an opcode is in the function factory.
+        /// </summary>
+        /// <param name="name">The name of the opcode.</param>
+        /// <param name="l">The argument count for the opcode.</param>
+        /// <returns>True if the opcode exists.</returns>
+        public bool IsDefined(String name, int l)
+        {
+            String key = EncogOpcodeRegistry.CreateKey(name, l);
+            return this.templateMap.ContainsKey(key);
+        }
+
+        /// <summary>
+        /// The number of opcodes.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.opcodes.Count;
+            }
+        }
+    }
+}
