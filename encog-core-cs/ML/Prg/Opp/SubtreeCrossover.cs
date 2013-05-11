@@ -6,6 +6,7 @@ using Encog.MathUtil.Randomize;
 using Encog.ML.Prg.ExpValue;
 using Encog.ML.EA.Train;
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Opp.Selection;
 
 namespace Encog.ML.Prg.Opp
 {
@@ -15,7 +16,7 @@ namespace Encog.ML.Prg.Opp
     /// the child. The tree formed from the crossover point of the second child will
     /// be copied and grafted into the parent's clone and its crossover point.
     /// </summary>
-    public class SubtreeCrossover
+    public class SubtreeCrossover: IEvolutionaryOperator
     {
         /// <summary>
         /// This method is called reflexivly as we iterate downward. Once we reach

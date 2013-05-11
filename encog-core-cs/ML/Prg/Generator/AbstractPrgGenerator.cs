@@ -290,13 +290,13 @@ namespace Encog.ML.Prg.Generator
             this.contents.Clear();
             pop.Species.Clear();
             ISpecies defaultSpecies = pop.CreateSpecies();
-
+            
             if (this.Score.RequireSingleThreaded || ThreadCount == 1)
             {
                 for (int i = 0; i < pop.PopulationSize; i++)
                 {
                     EncogProgram prg = AttemptCreateGenome(rnd, pop);
-                    AddPopulationMember(pop, prg);
+                    AddPopulationMember(pop, prg);                    
                 }
             }
             else

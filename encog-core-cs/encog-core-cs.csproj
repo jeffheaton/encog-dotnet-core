@@ -370,6 +370,7 @@
     <Compile Include="ML\EA\Rules\IRewriteRule.cs" />
     <Compile Include="ML\EA\Rules\IRuleHolder.cs" />
     <Compile Include="ML\EA\Rules\RuleHolder.cs" />
+    <Compile Include="ML\EA\Score\Adjust\ComplexityAdjustedScore.cs" />
     <Compile Include="ML\EA\Score\IAdjustScore.cs" />
     <Compile Include="ML\EA\Score\Multi\ParallelScore.cs" />
     <Compile Include="ML\EA\Score\Multi\ParallelScoreTask.cs" />
@@ -420,6 +421,8 @@
     <Compile Include="ML\Factory\Train\SVMFactory.cs" />
     <Compile Include="ML\Factory\Train\SVMSearchFactory.cs" />
     <Compile Include="ML\Factory\Train\TrainBayesianFactory.cs" />
+    <Compile Include="ML\Fitness\FitnessObjective.cs" />
+    <Compile Include="ML\Fitness\MultiObjectiveFitness.cs" />
     <Compile Include="ML\Genetic\Crossover\Splice.cs" />
     <Compile Include="ML\Genetic\Crossover\SpliceNoRepeat.cs" />
     <Compile Include="ML\Genetic\GeneticError.cs" />
@@ -711,6 +714,7 @@
     <Compile Include="Util\Concurrency\Job\JobUnitWorker.cs" />
     <Compile Include="Util\Concurrency\TaskGroup.cs" />
     <Compile Include="Util\CSV\ParseCSVLine.cs" />
+    <Compile Include="Util\Data\GenerationUtil.cs" />
     <Compile Include="Util\EncogValidate.cs" />
     <Compile Include="Util\EngineArray.cs" />
     <Compile Include="Util\Error\CalculateRegressionError.cs" />
