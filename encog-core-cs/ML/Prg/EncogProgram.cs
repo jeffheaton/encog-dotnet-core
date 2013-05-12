@@ -310,7 +310,7 @@ namespace Encog.ML.Prg
         public String GenerateEPL()
         {
             RenderEPL render = new RenderEPL();
-            return render.render(this);
+            return render.Render(this);
         }
 
         /// <summary>

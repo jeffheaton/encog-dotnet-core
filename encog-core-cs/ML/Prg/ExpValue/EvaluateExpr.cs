@@ -22,7 +22,7 @@ namespace Encog.ML.Prg.ExpValue
         public static ExpressionValue Add(ExpressionValue a,
                 ExpressionValue b)
         {
-            if (a.IsString() || b.IsString())
+            if (a.IsString || b.IsString)
             {
                 return new ExpressionValue(a.ToStringValue() + b.ToStringValue());
             }

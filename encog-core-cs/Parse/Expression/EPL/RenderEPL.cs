@@ -19,20 +19,20 @@ namespace Encog.Parse.Expression.EPL
         {
         }
 
-        public String render(EncogProgram theProgram)
+        public String Render(EncogProgram theProgram)
         {
             this.program = theProgram;
-            return renderNode(this.program.RootNode);
+            return RenderNode(this.program.RootNode);
         }
 
-        private String renderNode(ProgramNode node)
+        private String RenderNode(ProgramNode node)
         {
             StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < node.ChildNodes.Count; i++)
             {
                 ProgramNode childNode = node.GetChildNode(i);
-                result.Append(renderNode(childNode));
+                result.Append(RenderNode(childNode));
             }
 
             result.Append('[');

@@ -332,20 +332,24 @@ namespace Encog.ML.EA.Train
         {
             get
             {
+                // do we have a best genome, and does it have an error?
                 if (BestGenome != null)
                 {
-                    return BestGenome.Score;
+                    double err = BestGenome.Score;
+                    if (!Double.IsNaN(err))
+                    {
+                        return err;
+                    }
+                }
+
+                // otherwise, assume the worst!
+                if (ScoreFunction.ShouldMinimize)
+                {
+                    return Double.PositiveInfinity;
                 }
                 else
                 {
-                    if (ScoreFunction.ShouldMinimize)
-                    {
-                        return double.PositiveInfinity;
-                    }
-                    else
-                    {
-                        return double.NegativeInfinity;
-                    }
+                    return Double.NegativeInfinity;
                 }
             }
         }

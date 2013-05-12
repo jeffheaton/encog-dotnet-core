@@ -257,10 +257,12 @@ namespace Encog.ML.Prg.ExpValue
         /// <summary>
         /// True, if this is a string.
         /// </summary>
-        /// <returns>True, if this is a string.</returns>
-        public bool IsString()
+        public bool IsString
         {
-            return this.expressionType == EPLValueType.stringType;
+            get
+            {
+                return this.expressionType == EPLValueType.stringType;
+            }
         }
 
         /// <summary>

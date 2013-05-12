@@ -211,7 +211,7 @@ namespace Encog.ML.Prg.Ext
                 9, "=({*}{*}):{b}", NodeType.OperatorRight, false, 0,
     (actual) =>
     {
-        return EvaluateExpr.Mul(actual.GetChildNode(0).Evaluate(), actual
+        return EvaluateExpr.Equ(actual.GetChildNode(0).Evaluate(), actual
         .GetChildNode(1).Evaluate());
     }, null, null);
 
@@ -622,7 +622,7 @@ namespace Encog.ML.Prg.Ext
                 "cfloat({i}):{f}",
                 (actual) =>
                 {
-                    return new ExpressionValue(actual.GetChildNode(0).Evaluate().ToIntValue());
+                    return new ExpressionValue(actual.GetChildNode(0).Evaluate().ToFloatValue());
                 });
 
         /// <summary>
