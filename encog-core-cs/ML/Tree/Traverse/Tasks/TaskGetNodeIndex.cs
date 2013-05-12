@@ -28,7 +28,7 @@ namespace Encog.ML.Tree.Traverse.Tasks
                 {
                     if (result == null)
                     {
-                        result = node;
+                        result = n;
                     }
                     return false;
                 }

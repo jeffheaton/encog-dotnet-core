@@ -94,7 +94,11 @@
     <Compile Include="ML\EA\Sort\TestMinimizeAdjustedScoreComp.cs" />
     <Compile Include="ML\EA\Sort\TestMinimizeScoreComp.cs" />
     <Compile Include="ML\HMM\TestHMM.cs" />
+    <Compile Include="ML\Prg\Train\Rewrite\TestRewriteAlgebraic.cs" />
     <Compile Include="ML\KMeans\TestKMeans.cs" />
+    <Compile Include="ML\Prg\Train\Crossover\TestSubtreeCrossover.cs" />
+    <Compile Include="ML\Prg\Train\TestGenerate.cs" />
+    <Compile Include="ML\Prg\Species\TestCompareEncogProgram.cs" />
     <Compile Include="ML\Prg\TestEncogProgram.cs" />
     <Compile Include="ML\Prg\TestProgramClone.cs" />
     <Compile Include="Neural\Networks\TestConsistency.cs" />

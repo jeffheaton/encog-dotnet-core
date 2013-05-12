@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.Tree.Traverse.Tasks;
 
 namespace Encog.ML.Tree.Basic
 {
@@ -64,7 +65,7 @@ namespace Encog.ML.Tree.Basic
         {
             get
             {
-                return 0; // TaskCountNodes.Process(this);
+                return TaskCountNodes.Process(this);
             }
         }
 
