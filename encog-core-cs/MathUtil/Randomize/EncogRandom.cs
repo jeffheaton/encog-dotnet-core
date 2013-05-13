@@ -17,6 +17,7 @@ namespace Encog.MathUtil.Randomize
     /// section 3.4.1, subsection C, algorithm P. Note that it generates two independent values at the 
     /// cost of only one call to Math.log and one call to Math.sqrt.
     /// </summary>
+    [Serializable]
     public class EncogRandom : Random
     {
         /// <summary>

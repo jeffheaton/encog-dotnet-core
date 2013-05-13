@@ -134,7 +134,7 @@ namespace Encog.ML.Data.Dynamic
 
 			var network = new BasicNetwork();
 			network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, ds.InputSize));
-			network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, ds.InputSize + 1));
+			network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, ds.InputSize + 5));
 			network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, ds.IdealSize));
 			network.Structure.FinalizeStructure();
 			network.Reset(42);
