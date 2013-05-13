@@ -51,6 +51,11 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// Output neurons provide output, they are never altered during evolution.
         /// </summary>
-        Output
+        Output,
+
+        /// <summary>
+        /// Unknown
+        /// </summary>
+        Unknown
     }
 }

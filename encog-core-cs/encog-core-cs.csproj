@@ -542,6 +542,7 @@
     <Compile Include="Neural\NEAT\INEATGenomeFactory.cs" />
     <Compile Include="Neural\NEAT\NEATCODEC.cs" />
     <Compile Include="Neural\NEAT\NEATUtil.cs" />
+    <Compile Include="Neural\NEAT\PersistNEATPopulation.cs" />
     <Compile Include="Neural\NEAT\Training\NEATBaseGene.cs" />
     <Compile Include="Neural\NEAT\Training\NEATGenome.cs" />
     <Compile Include="Neural\NEAT\NEATLink.cs" />

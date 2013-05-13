@@ -303,10 +303,12 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// Generate a gene id.
         /// </summary>
-        /// <returns>The gene id.</returns>
-        public IGenerateID GeneIDGenerate()
+        public IGenerateID GeneIDGenerate
         {
-            return this.geneIDGenerate;
+            get
+            {
+                return this.geneIDGenerate;
+            }
         }
 
         /// <inheritdoc/>
@@ -366,7 +368,7 @@ namespace Encog.Neural.NEAT
             Species.Clear();
 
             // reset counters
-            GeneIDGenerate().CurrentID = 1;
+            GeneIDGenerate.CurrentID = 1;
             InnovationIDGenerate.CurrentID = 1;
 
             EncogRandom rnd = RandomNumberFactory.Factor();

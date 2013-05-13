@@ -8,6 +8,7 @@ namespace Encog.MathUtil.Randomize.Factory
     /// <summary>
     /// Basic random number generator factory.  Simply returns the Random class.
     /// </summary>
+    [Serializable]
     public class BasicRandomFactory : IRandomFactory
     {
         /// <summary>

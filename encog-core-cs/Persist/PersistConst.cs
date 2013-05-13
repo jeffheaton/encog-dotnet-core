@@ -323,5 +323,6 @@ namespace Encog.Persist
         /// </summary>
         ///
         public const String Instar = "instar";
+        public const String ActivationCycles = "cycles";
     }
 }

@@ -74,6 +74,34 @@ namespace Encog.Persist
             _subSectionName = theSubSectionName;
         }
 
+        /// <summary>
+        /// Parse an activation function from a value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The activation function.</returns>
+        public static IActivationFunction ParseActivationFunction(string value) {
+            IActivationFunction af;
+            String[] cols = value.Split('|');
+
+            String afName = ReflectionUtil.AfPath
+                            + cols[0];
+            try
+            {
+                af = (IActivationFunction)ReflectionUtil.LoadObject(afName);
+            }
+            catch (Exception e)
+            {
+                throw new PersistError(e);
+            }
+
+            for (int i = 0; i < af.ParamNames.Length; i++)
+            {
+                af.Params[i] = CSVFormat.EgFormat.Parse(cols[i + 1]);
+            }
+
+            return af;
+	    }
+
 
         /// <value>The lines.</value>
         public IList<String> Lines
@@ -111,6 +139,8 @@ namespace Encog.Persist
         {
             get { return _subSectionName; }
         }
+
+
 
         /// <summary>
         /// Parse an activation function from a string.

@@ -31,6 +31,9 @@ using Encog.ML.Data;
 using Encog.Neural.Networks.Training;
 using Encog.ML.Data.Basic;
 using Encog.Engine.Network.Activation;
+using Encog.Neural.NEAT;
+using Encog.ML.EA.Train;
+using Encog.ML.EA.Population;
 
 namespace Encog.Persist
 {
@@ -41,7 +44,7 @@ namespace Encog.Persist
         public readonly FileInfo EG_FILENAME = TEMP_DIR.CreateFile("encogtest.eg");
         public readonly FileInfo SERIAL_FILENAME = TEMP_DIR.CreateFile("encogtest.ser");
 
-        /*private NEATPopulation Generate()
+        private NEATPopulation Generate()
         {
             IMLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
 
@@ -50,11 +53,12 @@ namespace Encog.Persist
             ActivationStep step = new ActivationStep();
             step.Center = 0.5;
 
-            NEATTraining train = new NEATTraining(
+            IEvolutionaryAlgorithm train = NEATUtil.ConstructNEATTrainer(
                     score, 2, 1, 10);
 
             return (NEATPopulation)train.Population;
         }
+
         [TestMethod]
         public void TestPersistEG()
         {
@@ -70,6 +74,7 @@ namespace Encog.Persist
         public void TestPersistSerial()
         {
             NEATPopulation pop = Generate();
+            Validate(pop);
 
             SerializeObject.Save(SERIAL_FILENAME.ToString(), pop);
             NEATPopulation pop2 = (NEATPopulation)SerializeObject.Load(SERIAL_FILENAME.ToString());
@@ -79,19 +84,17 @@ namespace Encog.Persist
 
         private void Validate(NEATPopulation pop)
         {
-            Assert.AreEqual(0.3, pop.OldAgePenalty);
-            Assert.AreEqual(50, pop.OldAgeThreshold);
             Assert.AreEqual(10, pop.PopulationSize);
             Assert.AreEqual(0.2, pop.SurvivalRate);
-            Assert.AreEqual(10, pop.YoungBonusAgeThreshold);
-            Assert.AreEqual(0.3, pop.YoungScoreBonus);
 
             // see if the population can actually be used to train
             IMLDataSet trainingSet = new BasicMLDataSet(XOR.XORInput, XOR.XORIdeal);
             ICalculateScore score = new TrainingSetScore(trainingSet);
-            NEATTraining train = new NEATTraining(score, pop);
+            IEvolutionaryAlgorithm train = NEATUtil.ConstructNEATTrainer(pop, score);
             train.Iteration();
 
-        }*/
+        }
+
+
     }
 }

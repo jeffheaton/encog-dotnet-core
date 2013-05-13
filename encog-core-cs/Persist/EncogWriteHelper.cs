@@ -173,7 +173,7 @@ namespace Encog.Persist
         /// <param name="cols">The columns to add.</param>
         public void AddColumns(IList<String> cols)
         {
-            foreach (String str  in  cols)
+            foreach (String str in cols)
             {
                 AddColumn(str);
             }
@@ -200,7 +200,7 @@ namespace Encog.Persist
         /// <param name="properties">The properties.</param>
         public void AddProperties(IDictionary<String, String> properties)
         {
-            foreach (String key  in  properties.Keys)
+            foreach (String key in properties.Keys)
             {
                 String value_ren = properties[key];
                 WriteProperty(key, value_ren);
@@ -448,6 +448,25 @@ namespace Encog.Persist
         public void WriteProperty(String name, String value_ren)
         {
             xout.WriteLine(name + "=" + value_ren);
+        }
+
+        private String MakeActivationFunctionString(IActivationFunction act)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append(act.GetType().Name);
+
+            for (int i = 0; i < act.Params.Length; i++)
+            {
+                result.Append('|');
+                result.Append(CSVFormat.EgFormat.Format(act.Params[i],
+                        EncogFramework.DefaultPrecision));
+            }
+            return result.ToString();
+        }
+
+        public void AddColumn(IActivationFunction act)
+        {
+            AddColumn(MakeActivationFunctionString(act));
         }
     }
 }
