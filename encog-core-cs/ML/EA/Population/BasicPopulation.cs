@@ -138,5 +138,53 @@ namespace Encog.ML.EA.Population
         {
             get { return this.species; }
         }
+
+        /// <summary>
+        /// Purge invalid genomes.
+        /// </summary>
+        public void PurgeInvalidGenomes()
+        {
+            // remove any invalid genomes
+            int speciesNum = 0;
+            while (speciesNum < Species.Count)
+            {
+                ISpecies species = Species[speciesNum];
+
+                int genomeNum = 0;
+                while (genomeNum < species.Members.Count)
+                {
+                    IGenome genome = species.Members[genomeNum];
+                    if (double.IsInfinity(genome.Score)
+                            || double.IsInfinity(genome.AdjustedScore)
+                            || double.IsNaN(genome.Score)
+                            || double.IsNaN(genome.AdjustedScore))
+                    {
+                        species.Members.Remove(genome);
+                    }
+                    else
+                    {
+                        genomeNum++;
+                    }
+                }
+
+                // is the species now empty?
+                if (species.Members.Count == 0)
+                {
+                    Species.Remove(species);
+                }
+                else
+                {
+                    // new leader needed?
+                    if (!species.Members.Contains(species.Leader))
+                    {
+                        species.Leader = species.Members[0];
+                        species.BestScore = species.Leader.AdjustedScore;
+                    }
+
+                    // onto the next one!
+                    speciesNum++;
+                }
+            }
+        }
     }
 }
