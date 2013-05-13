@@ -64,5 +64,10 @@ namespace Encog.ML.EA.Population
         /// The list of species.  
         /// </summary>
         List<ISpecies> Species { get; }
+
+        /// <summary>
+        /// Purge invalid genomes.
+        /// </summary>
+        void PurgeInvalidGenomes();
     }
 }

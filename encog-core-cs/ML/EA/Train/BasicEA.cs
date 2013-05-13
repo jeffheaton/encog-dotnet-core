@@ -457,6 +457,9 @@ namespace Encog.ML.EA.Train
             }
 
             this.speciation.PerformSpeciation(this.newPopulation);
+
+            // purge invalid genomes
+            Population.PurgeInvalidGenomes();
         }
 
         /// <summary>
@@ -493,6 +496,9 @@ namespace Encog.ML.EA.Train
             // speciate
             IList<IGenome> genomes = Population.Flatten();
             this.speciation.PerformSpeciation(genomes);
+
+            // purge invalid genomes
+            Population.PurgeInvalidGenomes();
 
         }
 

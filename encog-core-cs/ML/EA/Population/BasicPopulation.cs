@@ -139,9 +139,7 @@ namespace Encog.ML.EA.Population
             get { return this.species; }
         }
 
-        /// <summary>
-        /// Purge invalid genomes.
-        /// </summary>
+        /// <inheritdoc/>
         public void PurgeInvalidGenomes()
         {
             // remove any invalid genomes

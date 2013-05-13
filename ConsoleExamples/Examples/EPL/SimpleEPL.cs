@@ -101,6 +101,7 @@ namespace Encog.Examples.EPL
             genetic.ShouldIgnoreExceptions = false;
 
             EncogProgram best = null;
+            genetic.ThreadCount = 1;
 
             try
             {
