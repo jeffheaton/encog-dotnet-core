@@ -86,7 +86,7 @@ namespace Encog.Examples.EPL
             score.AddObjective(1.0, new TrainingSetScore(trainingData));
 
             TrainEA genetic = new TrainEA(pop, score);
-            //genetic.ValidationMode = true;
+            genetic.ValidationMode = true;
             genetic.CODEC = new PrgCODEC();
             genetic.AddOperation(0.5, new SubtreeCrossover());
             genetic.AddOperation(0.25, new ConstMutation(context, 0.5, 1.0));

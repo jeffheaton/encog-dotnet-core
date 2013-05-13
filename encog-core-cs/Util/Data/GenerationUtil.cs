@@ -27,6 +27,7 @@ namespace Encog.Util.Data
             while (current <= stop)
             {
                 BasicMLData input = new BasicMLData(1);
+                input[0] = current;
                 BasicMLData ideal = new BasicMLData(1);
                 ideal[0] = task(current);
                 result.Add(input, ideal);

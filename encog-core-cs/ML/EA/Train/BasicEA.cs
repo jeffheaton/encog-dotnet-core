@@ -261,10 +261,6 @@ namespace Encog.ML.EA.Train
                 }
                 else
                 {
-                    if (ValidationMode)
-                    {
-                        throw new EncogError("Population overflow");
-                    }
                     return false;
                 }
             }
@@ -429,14 +425,6 @@ namespace Encog.ML.EA.Train
             // validate, if requested
             if (ValidationMode)
             {
-                int currentPopSize = this.newPopulation.Count;
-                int targetPopSize = Population.PopulationSize;
-                if (currentPopSize != targetPopSize)
-                {
-                    throw new EncogError("Population size of " + currentPopSize
-                            + " is outside of the target size of " + targetPopSize);
-                }
-
                 if (this.oldBestGenome != null
                         && !this.newPopulation.Contains(this.oldBestGenome))
                 {
