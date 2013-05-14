@@ -43,8 +43,7 @@ namespace Encog.Plugin.SystemPlugin
         /// <summary>
         /// A factory used to create feedforward neural networks.
         /// </summary>
-        private readonly FeedforwardFactory _feedforwardFactory
-            = new FeedforwardFactory();
+        private readonly FeedforwardFactory _feedforwardFactory = new FeedforwardFactory();
 
         /// <summary>
         /// The factory for PNN's.
@@ -65,6 +64,16 @@ namespace Encog.Plugin.SystemPlugin
         /// A factory used to create support vector machines.
         /// </summary>
         private readonly SVMFactory _svmFactory = new SVMFactory();
+
+        /// <summary>
+        /// A factory used to create NEAT populations.
+        /// </summary>
+        private readonly NEATFactory _neatFactory = new NEATFactory();
+
+        /// <summary>
+        /// A factory used to create EPL populations.
+        /// </summary>
+        private readonly EPLFactory _eplFactory = new EPLFactory();
 
         #region IEncogPluginService1 Members
 
@@ -126,6 +135,14 @@ namespace Encog.Plugin.SystemPlugin
             if (MLMethodFactory.TypeBayesian.Equals(methodType))
             {
                 return _bayesianFactory.Create(architecture, input, output);
+            }
+            if (MLMethodFactory.TypeNEAT.Equals(methodType))
+            {
+                return _neatFactory.Create(architecture, input, output);
+            }
+            if (MLMethodFactory.TypeEPL.Equals(methodType))
+            {
+                return _eplFactory.Create(architecture, input, output);
             }
 
             throw new EncogError("Unknown method type: " + methodType);

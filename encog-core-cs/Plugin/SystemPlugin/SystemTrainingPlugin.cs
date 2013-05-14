@@ -121,6 +121,10 @@ namespace Encog.Plugin.SystemPlugin
         /// </summary>
         private readonly SVMSearchFactory svmSearchFactory = new SVMSearchFactory();
 
+        private readonly NEATGAFactory neatGAFactory = new NEATGAFactory();
+
+        private readonly EPLGAFactory eplTrainFctory = new EPLGAFactory();
+
         #region IEncogPluginService1 Members
 
         /// <inheritdoc/>
@@ -244,7 +248,14 @@ namespace Encog.Plugin.SystemPlugin
             {
                 return psoFactory.Create(method, training, args2);
             }
-
+            else if (MLTrainFactory.TypeNEATGA.Equals(type))
+            {
+                return this.neatGAFactory.Create(method, training, args2);
+            }
+            else if (MLTrainFactory.TypeEPLGA.Equals(type))
+            {
+                return this.eplTrainFctory.Create(method, training, args2);
+            }
             else
             {
                 throw new EncogError("Unknown training type: " + type);

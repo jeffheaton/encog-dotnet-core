@@ -115,6 +115,16 @@ namespace Encog.ML.Factory
         public const String TypeSOMCluster = "som-cluster";
 
         /// <summary>
+        /// String constant for LMA training.
+        /// </summary>
+        public const String TypeNEATGA = "neat-ga";
+
+        /// <summary>
+        /// String constant for LMA training.
+        /// </summary>
+        public const String TypeEPLGA = "epl-ga";
+
+        /// <summary>
         /// Property for learning rate.
         /// </summary>
         ///

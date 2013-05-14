@@ -38,10 +38,12 @@ namespace Encog.ML.Factory
         public const String AF_LOG = "log";
         public const String AF_RAMP = "ramp";
         public const String AF_SIGMOID = "sigmoid";
+        public const String AF_SSIGMOID = "ssigmoid";
         public const String AF_SIN = "sin";
         public const String AF_SOFTMAX = "softmax";
         public const String AF_STEP = "step";
         public const String AF_TANH = "tanh";
+
 
         public IActivationFunction Create(String fn)
         {

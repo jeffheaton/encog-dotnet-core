@@ -392,7 +392,9 @@
     <Compile Include="ML\EA\Train\IEvolutionaryAlgorithm.cs" />
     <Compile Include="ML\EA\Train\TrainEA.cs" />
     <Compile Include="ML\Factory\Method\BayesianFactory.cs" />
+    <Compile Include="ML\Factory\Method\EPLFactory.cs" />
     <Compile Include="ML\Factory\Method\FeedforwardFactory.cs" />
+    <Compile Include="ML\Factory\Method\NEATFactory.cs" />
     <Compile Include="ML\Factory\Method\PNNFactory.cs" />
     <Compile Include="ML\Factory\Method\RBFNetworkFactory.cs" />
     <Compile Include="ML\Factory\Method\SOMFactory.cs" />
@@ -407,9 +409,11 @@
     <Compile Include="ML\Factory\Train\BackPropFactory.cs" />
     <Compile Include="ML\Factory\Train\BayesSearch.cs" />
     <Compile Include="ML\Factory\Train\ClusterSOMFactory.cs" />
+    <Compile Include="ML\Factory\Train\EPLGAFactory.cs" />
     <Compile Include="ML\Factory\Train\GeneticFactory.cs" />
     <Compile Include="ML\Factory\Train\LMAFactory.cs" />
     <Compile Include="ML\Factory\Train\ManhattanFactory.cs" />
+    <Compile Include="ML\Factory\Train\NEATGAFactory.cs" />
     <Compile Include="ML\Factory\Train\NeighborhoodSOMFactory.cs" />
     <Compile Include="ML\Factory\Train\NelderMeadFactory.cs" />
     <Compile Include="ML\Factory\Train\PNNTrainFactory.cs" />

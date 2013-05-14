@@ -35,7 +35,7 @@ namespace Encog.ML.Factory
         /// <summary>
         /// String constant for a bayesian neural network.
         /// </summary>
-	    public const String TypeBayesian = "bayesian";
+        public const String TypeBayesian = "bayesian";
 
         /// <summary>
         /// String constant for feedforward neural networks.
@@ -66,6 +66,26 @@ namespace Encog.ML.Factory
         /// </summary>
         ///
         public const String TypePNN = "pnn";
+
+        /// <summary>
+        /// A NEAT neural network.
+        /// </summary>
+        public const String TypeNEAT = "neat";
+
+        /// <summary>
+        /// A Encog program.
+        /// </summary>
+        public const String TypeEPL = "epl";
+
+
+        public const String PropertyAF = "AF";
+
+        /// <summary>
+        /// Population size.
+        /// </summary>
+        public const String PropertyPopulationSize = "population";
+
+        public const String PropertyCycles = "cycles";
 
         /// <summary>
         /// Create a new machine learning method.

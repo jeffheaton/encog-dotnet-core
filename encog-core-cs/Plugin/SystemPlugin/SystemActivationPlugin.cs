@@ -127,6 +127,11 @@ namespace Encog.Plugin.SystemPlugin
                 return new ActivationTANH();
             }
 
+            if (  String.Compare(name, MLActivationFactory.AF_SSIGMOID) ==0 )
+            {
+                return new ActivationSteepenedSigmoid();
+            }
+
             return null;
         }
 
