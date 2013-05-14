@@ -9,6 +9,7 @@ namespace Encog.ML.EA.Sort
     /// Provides base functionality for comparing genomes. Specifically the ability
     /// to add bonuses and penalties.
     /// </summary>
+    [Serializable]
     public abstract class AbstractGenomeComparer : IGenomeComparer
     {
         /// <inheritdoc/>

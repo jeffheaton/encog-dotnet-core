@@ -12,6 +12,7 @@ namespace Encog.ML.Prg.Ext
     /// <summary>
     /// A basic template.
     /// </summary>
+    [Serializable]
     public class BasicTemplate : IProgramExtensionTemplate
     {
         /// <summary>

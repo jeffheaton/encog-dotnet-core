@@ -29,6 +29,10 @@ namespace Encog.ML.Prg.ExpValue
         /// <summary>
         /// Enumeration
         /// </summary>
-        enumType
+        enumType,
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        unknown
     }
 }

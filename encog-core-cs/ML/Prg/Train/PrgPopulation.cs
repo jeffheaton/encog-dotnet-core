@@ -17,6 +17,7 @@ namespace Encog.ML.Prg.Train
     /// method. This population type also holds the common context that all of the
     /// EncogProgram genomes make use of.
     /// </summary>
+    [Serializable]
     public class PrgPopulation : BasicPopulation, IMLRegression
     {
         /// <summary>

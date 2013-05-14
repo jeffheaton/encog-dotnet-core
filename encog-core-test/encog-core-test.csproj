@@ -122,6 +122,7 @@
     <Compile Include="Persist\TestPersistBayes.cs" />
     <Compile Include="Persist\TestPersistBoltzmann.cs" />
     <Compile Include="Persist\TestPersistCPN.cs" />
+    <Compile Include="Persist\TestPersistEPLPopulation.cs" />
     <Compile Include="Persist\TestPersistHMM.cs" />
     <Compile Include="Persist\TestPersistHopfield.cs" />
     <Compile Include="Persist\TestPersistNEAT.cs" />

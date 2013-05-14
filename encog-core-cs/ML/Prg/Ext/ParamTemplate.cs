@@ -11,6 +11,7 @@ namespace Encog.ML.Prg.Ext
     /// Provides a template for parameters to the opcodes. This defines the accepted
     /// types and if type of a given parameter passes through to the return type.
     /// </summary>
+    [Serializable]
     public class ParamTemplate
     {
         /// <summary>

@@ -9,6 +9,7 @@ namespace Encog.ML.Tree.Basic
     /// <summary>
     /// A basic tree.
     /// </summary>
+    [Serializable]
     public class BasicTreeNode : ITreeNode
     {
         /// <summary>

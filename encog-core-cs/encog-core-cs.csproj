@@ -493,6 +493,7 @@
     <Compile Include="ML\Prg\Opp\LevelHolder.cs" />
     <Compile Include="ML\Prg\Opp\SubtreeCrossover.cs" />
     <Compile Include="ML\Prg\Opp\SubtreeMutation.cs" />
+    <Compile Include="ML\Prg\PersistPrgPopulation.cs" />
     <Compile Include="ML\Prg\PrgCODEC.cs" />
     <Compile Include="ML\Prg\ProgramNode.cs" />
     <Compile Include="ML\Prg\Species\CompareEncogProgram.cs" />
