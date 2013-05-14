@@ -131,6 +131,15 @@
     <Compile Include="App\Analyst\Wizard\NormalizeRange.cs" />
     <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
     <Compile Include="App\Finance\Indicators\Finance.cs" />
+    <Compile Include="App\Generate\AnalystCodeGenerationError.cs" />
+    <Compile Include="App\Generate\Generators\ILanguageSpecificGenerator.cs" />
+    <Compile Include="App\Generate\Program\EncogArgType.cs" />
+    <Compile Include="App\Generate\Program\EncogGenProgram.cs" />
+    <Compile Include="App\Generate\Program\EncogProgramArg.cs" />
+    <Compile Include="App\Generate\Program\EncogProgramNode.cs" />
+    <Compile Include="App\Generate\Program\EncogTreeNode.cs" />
+    <Compile Include="App\Generate\Program\NodeType.cs" />
+    <Compile Include="App\Generate\TargetLanguage.cs" />
     <Compile Include="App\Quant\Indicators\Indicator.cs" />
     <Compile Include="App\Quant\Indicators\MovingAverage.cs" />
     <Compile Include="App\Quant\Indicators\Predictive\BestClose.cs" />

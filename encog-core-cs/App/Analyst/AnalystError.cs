@@ -31,7 +31,6 @@ namespace Encog.App.Analyst
     [Serializable]
     public class AnalystError : EncogError
     {
-
         /// <summary>
         /// Construct a message exception.
         /// </summary>
