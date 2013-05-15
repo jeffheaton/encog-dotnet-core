@@ -139,7 +139,14 @@
     <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
     <Compile Include="App\Finance\Indicators\Finance.cs" />
     <Compile Include="App\Generate\AnalystCodeGenerationError.cs" />
+    <Compile Include="App\Generate\EncogCodeGeneration.cs" />
+    <Compile Include="App\Generate\Generators\AbstractGenerator.cs" />
+    <Compile Include="App\Generate\Generators\AbstractTemplateGenerator.cs" />
+    <Compile Include="App\Generate\Generators\CS\GenerateCS.cs" />
     <Compile Include="App\Generate\Generators\ILanguageSpecificGenerator.cs" />
+    <Compile Include="App\Generate\Generators\IProgramGenerator.cs" />
+    <Compile Include="App\Generate\Generators\ITemplateGenerator.cs" />
+    <Compile Include="App\Generate\Generators\Java\GenerateEncogJava.cs" />
     <Compile Include="App\Generate\Program\EncogArgType.cs" />
     <Compile Include="App\Generate\Program\EncogGenProgram.cs" />
     <Compile Include="App\Generate\Program\EncogProgramArg.cs" />
@@ -472,6 +479,7 @@
     <Compile Include="ML\HMM\Train\BW\TrainBaumWelchScaled.cs" />
     <Compile Include="ML\HMM\Train\KMeans\Clusters.cs" />
     <Compile Include="ML\HMM\Train\KMeans\TrainKMeans.cs" />
+    <Compile Include="ML\IMLFactory.cs" />
     <Compile Include="ML\IMLStateSequence.cs" />
     <Compile Include="ML\KMeans\BasicCluster.cs" />
     <Compile Include="ML\KMeans\KMeansClustering.cs" />
