@@ -1,8 +1,8 @@
 //
-// Encog(tm) Core v3.1 - .Net Version
+// Encog(tm) Core v3.2 - .Net Version (Unit Test)
 // http://www.heatonresearch.com/encog/
 //
-// Copyright 2008-2012 Heaton Research, Inc.
+// Copyright 2008-2013 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 // For more information on Heaton Research copyrights, licenses 
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
-//
 using Encog.Util.Normalize.Input;
 using Encog.Util.Normalize.Output.ZAxis;
 using Encog.Util.Normalize.Target;
