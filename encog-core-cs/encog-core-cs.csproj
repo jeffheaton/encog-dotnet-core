@@ -66,7 +66,11 @@
     <Compile Include="App\Analyst\AnalystError.cs" />
     <Compile Include="App\Analyst\AnalystFileFormat.cs" />
     <Compile Include="App\Analyst\AnalystGoal.cs" />
+    <Compile Include="App\Analyst\Commands\CmdCode.cs" />
+    <Compile Include="App\Analyst\Commands\CmdProcess.cs" />
     <Compile Include="App\Analyst\CSV\EvaluateRawCSV.cs" />
+    <Compile Include="App\Analyst\CSV\Process\AnalystProcess.cs" />
+    <Compile Include="App\Analyst\CSV\Process\ProcessExtension.cs" />
     <Compile Include="App\Analyst\IAnalystListener.cs" />
     <Compile Include="App\Analyst\Analyze\AnalyzedField.cs" />
     <Compile Include="App\Analyst\Analyze\PerformAnalysis.cs" />
@@ -113,8 +117,11 @@
     <Compile Include="App\Analyst\Script\AnalystClassItem.cs" />
     <Compile Include="App\Analyst\Script\AnalystScript.cs" />
     <Compile Include="App\Analyst\Script\DataField.cs" />
+    <Compile Include="App\Analyst\Script\ML\ScriptOpcode.cs" />
     <Compile Include="App\Analyst\Script\Normalize\AnalystField.cs" />
     <Compile Include="App\Analyst\Script\Normalize\AnalystNormalize.cs" />
+    <Compile Include="App\Analyst\Script\Process\AnalystProcess.cs" />
+    <Compile Include="App\Analyst\Script\Process\ProcessField.cs" />
     <Compile Include="App\Analyst\Script\Prop\PropertyConstraints.cs" />
     <Compile Include="App\Analyst\Script\Prop\PropertyEntry.cs" />
     <Compile Include="App\Analyst\Script\Prop\PropertyType.cs" />

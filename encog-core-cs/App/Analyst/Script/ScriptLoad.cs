@@ -30,6 +30,8 @@ using Encog.App.Analyst.Script.Task;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
+using Encog.App.Analyst.Script.Process;
+using Encog.App.Analyst.Script.ML;
 
 namespace Encog.App.Analyst.Script
 {
@@ -96,7 +98,7 @@ namespace Encog.App.Analyst.Script
 
             bool first = true;
 
-            foreach (String line  in  section.Lines)
+            foreach (String line in section.Lines)
             {
                 if (!first)
                 {
@@ -141,7 +143,7 @@ namespace Encog.App.Analyst.Script
             }
 
 
-            foreach (DataField field  in  _script.Fields)
+            foreach (DataField field in _script.Fields)
             {
                 if (field.Class)
                 {
@@ -169,7 +171,7 @@ namespace Encog.App.Analyst.Script
             IList<DataField> dfs = new List<DataField>();
             bool first = true;
 
-            foreach (String line  in  section.Lines)
+            foreach (String line in section.Lines)
             {
                 if (!first)
                 {
@@ -184,16 +186,16 @@ namespace Encog.App.Analyst.Script
                     double mean = CSVFormat.EgFormat.Parse(cols[7]);
                     double sdev = CSVFormat.EgFormat.Parse(cols[8]);
                     var df = new DataField(name)
-                                 {
-                                     Class = isclass,
-                                     Complete = iscomplete,
-                                     Integer = isint,
-                                     Real = isreal,
-                                     Max = amax,
-                                     Min = amin,
-                                     Mean = mean,
-                                     StandardDeviation = sdev
-                                 };
+                    {
+                        Class = isclass,
+                        Complete = iscomplete,
+                        Integer = isint,
+                        Real = isreal,
+                        Max = amax,
+                        Min = amin,
+                        Mean = mean,
+                        StandardDeviation = sdev
+                    };
                     dfs.Add(df);
                 }
                 else
@@ -222,7 +224,7 @@ namespace Encog.App.Analyst.Script
             _script.Properties.ClearFilenames();
 
 
-            foreach (var  e  in  prop)
+            foreach (var e in prop)
             {
                 _script.Properties.SetFilename(e.Key, e.Value);
             }
@@ -238,7 +240,7 @@ namespace Encog.App.Analyst.Script
             _script.Normalize.NormalizedFields.Clear();
             bool first = true;
 
-            foreach (String line  in  section.Lines)
+            foreach (String line in section.Lines)
             {
                 if (!first)
                 {
@@ -281,7 +283,7 @@ namespace Encog.App.Analyst.Script
                         throw new AnalystError("Unknown field type:" + action);
                     }
 
-                    var nf = new AnalystField(name, des, high, low) {TimeSlice = timeSlice, Output = isOutput};
+                    var nf = new AnalystField(name, des, high, low) { TimeSlice = timeSlice, Output = isOutput };
                     _script.Normalize.NormalizedFields.Add(nf);
                 }
                 else
@@ -301,7 +303,7 @@ namespace Encog.App.Analyst.Script
             IList<AnalystSegregateTarget> nfs = new List<AnalystSegregateTarget>();
             bool first = true;
 
-            foreach (String line  in  section.Lines)
+            foreach (String line in section.Lines)
             {
                 if (!first)
                 {
@@ -337,7 +339,7 @@ namespace Encog.App.Analyst.Script
         {
             var task = new AnalystTask(section.SubSectionName);
 
-            foreach (String line  in  section.Lines)
+            foreach (String line in section.Lines)
             {
                 task.Lines.Add(line);
             }
@@ -385,7 +387,7 @@ namespace Encog.App.Analyst.Script
             IDictionary<String, String> prop = section.ParseParams();
 
 
-            foreach (String name  in  prop.Keys)
+            foreach (String name in prop.Keys)
             {
                 String key = section.SectionName.ToUpper() + ":"
                              + section.SubSectionName.ToUpper() + "_" + name;
@@ -501,6 +503,21 @@ namespace Encog.App.Analyst.Script
             {
                 LoadSubSection(section);
             }
+            else if (currentSection.Equals("CODE")
+             && currentSubsection.Equals("CONFIG"))
+            {
+                LoadSubSection(section);
+            }
+            else if (currentSection.Equals("PROCESS")
+                  && currentSubsection.Equals("CONFIG"))
+            {
+                LoadSubSection(section);
+            }
+            else if (currentSection.Equals("PROCESS")
+                  && currentSubsection.Equals("FIELDS"))
+            {
+                HandleProcessFields(section);
+            }
         }
 
         /// <summary>
@@ -522,6 +539,50 @@ namespace Encog.App.Analyst.Script
                                        + PropertyEntry.DotForm(section, subSection, name));
             }
             entry.Validate(section, subSection, name, value_ren);
+        }
+
+        private void HandleProcessFields(EncogFileSection section)
+        {
+            IList<ProcessField> fields = _script.Process.Fields;
+            bool first = true;
+
+            fields.Clear();
+
+            foreach (string line in section.Lines)
+            {
+                if (!first)
+                {
+                    IList<string> cols = EncogFileSection.SplitColumns(line);
+                    String name = cols[0];
+                    String command = cols[1];
+                    ProcessField pf = new ProcessField(name, command);
+                    fields.Add(pf);
+                }
+                else
+                {
+                    first = false;
+                }
+            }
+        }
+
+        private void LoadOpcodes(EncogFileSection section)
+        {
+            bool first = true;
+            foreach (string line in section.Lines)
+            {
+                if (!first)
+                {
+                    IList<string> cols = EncogFileSection.SplitColumns(line);
+                    string name = cols[0];
+                    int childCount = int.Parse(cols[1]);
+                    ScriptOpcode opcode = new ScriptOpcode(name, childCount);
+                    _script.Opcodes.Add(opcode);
+                }
+                else
+                {
+                    first = false;
+                }
+            }
         }
     }
 }

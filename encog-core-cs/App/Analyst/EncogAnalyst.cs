@@ -125,6 +125,8 @@ namespace Encog.App.Analyst
             AddCommand(new CmdSet(this));
             AddCommand(new CmdReset(this));
             AddCommand(new CmdCluster(this));
+            AddCommand(new CmdCode(this));
+            AddCommand(new CmdProcess(this));
         }
 
         /// <value>The lag depth.</value>

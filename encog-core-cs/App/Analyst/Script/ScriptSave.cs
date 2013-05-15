@@ -75,6 +75,7 @@ namespace Encog.App.Analyst.Script
             SaveSubSection(xout, "RANDOMIZE", "CONFIG");
             SaveSubSection(xout, "CLUSTER", "CONFIG");
             SaveSubSection(xout, "BALANCE", "CONFIG");
+            SaveSubSection(xout, "CODE", "CONFIG");
 
             if (_script.Segregate.SegregateTargets != null)
             {

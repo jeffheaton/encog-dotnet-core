@@ -110,10 +110,10 @@ namespace Encog.App.Analyst.Script.Prop
         ///
         public const String BalanceConfigTargetFile = "BALANCE:CONFIG_targetFile";
 
- 		/// <summary>
- 		/// Property for: "NORMALIZE:CONFIG_missingValues."
- 		/// </summary>
- 		public const String NormalizeMissingValues = "NORMALIZE:CONFIG_missingValues";
+        /// <summary>
+        /// Property for: "NORMALIZE:CONFIG_missingValues."
+        /// </summary>
+        public const String NormalizeMissingValues = "NORMALIZE:CONFIG_missingValues";
 
         /// <summary>
         /// Property for: "BALANCE:CONFIG_balanceField". 
@@ -196,7 +196,7 @@ namespace Encog.App.Analyst.Script.Prop
         /// <summary>
         /// Property for "ML:CONFIG_query"
         /// </summary>
-	    public const String MLConfigQuery = "ML:CONFIG_query";
+        public const String MLConfigQuery = "ML:CONFIG_query";
 
 
         /// <summary>
@@ -246,6 +246,48 @@ namespace Encog.App.Analyst.Script.Prop
         /// </summary>
         ///
         public const String ClusterConfigClusters = "CLUSTER:CONFIG_clusters";
+
+        /// <summary>
+        /// Property for: "GENERATE:CONFIG_targetLanguage".
+        /// </summary>
+        public const String CODE_CONFIG_TARGET_LANGUAGE
+            = "CODE:CONFIG_targetLanguage";
+
+        /// <summary>
+        /// Property for: "GENERATE:CONFIG_targetFile". 
+        /// </summary>
+        public const String CODE_CONFIG_TARGET_FILE
+            = "CODE:CONFIG_targetFile";
+
+        /// <summary>
+        /// Property for: "GENERATE:CONFIG_embedData". 
+        /// </summary>
+        public const String CODE_CONFIG_EMBED_DATA
+            = "CODE:CONFIG_embedData";
+
+        /// <summary>
+        /// Property for: "PROCESS:CONFIG,sourceFile".
+        /// </summary>
+        public const String PROCESS_CONFIG_SOURCE_FILE =
+                "PROCESS:CONFIG_sourceFile";
+
+        /// <summary>
+        /// Property for: "PROCESS:CONFIG,targetFile".
+        /// </summary>
+        public const String PROCESS_CONFIG_TARGET_FILE =
+                "PROCESS:CONFIG_targetFile";
+
+        /// <summary>
+        /// Property for: "PROCESS:CONFIG,backwardSize".
+        /// </summary>
+        public const String PROCESS_CONFIG_BACKWARD_SIZE =
+                "PROCESS:CONFIG_backwardSize";
+
+        /// <summary>
+        /// Property for: "PROCESS:CONFIG,forwardSize".
+        /// </summary>
+        public const String PROCESS_CONFIG_FORWARD_SIZE =
+                "PROCESS:CONFIG_forwardSize";
 
         /// <summary>
         /// Properties are stored in this map.
@@ -314,7 +356,7 @@ namespace Encog.App.Analyst.Script.Prop
                 array[idx++] = item;
             }
 
-            foreach (string element  in  array)
+            foreach (string element in array)
             {
                 var key = element;
                 if (key.StartsWith("SETUP:FILENAMES"))
@@ -628,6 +670,6 @@ namespace Encog.App.Analyst.Script.Prop
             result.Append(_data.ToString());
             result.Append("]");
             return result.ToString();
-        }        
+        }
     }
 }

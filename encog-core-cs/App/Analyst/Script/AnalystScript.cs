@@ -30,6 +30,8 @@ using Encog.App.Analyst.Script.Segregate;
 using Encog.App.Analyst.Script.Task;
 using Encog.Util.CSV;
 using Encog.Util.File;
+using Encog.App.Analyst.Script.Process;
+using Encog.App.Analyst.Script.ML;
 
 namespace Encog.App.Analyst.Script
 {
@@ -86,6 +88,17 @@ namespace Encog.App.Analyst.Script
         /// </summary>
         ///
         private DataField[] _fields;
+
+        /// <summary>
+        /// Information about the process command.
+        /// </summary>
+        private readonly AnalystProcess _process = new AnalystProcess();
+
+
+        /// <summary>
+        /// The opcodes.
+        /// </summary>
+        private readonly IList<ScriptOpcode> _opcodes = new List<ScriptOpcode>();
 
         /// <summary>
         /// Construct an analyst script.
@@ -176,7 +189,7 @@ namespace Encog.App.Analyst.Script
         {
             _tasks.Clear();
         }
-        
+
         /// <summary>
         /// Determine the output format.
         /// </summary>
@@ -315,9 +328,9 @@ namespace Encog.App.Analyst.Script
         {
             String name = Properties.GetFilename(sourceID);
 
-            if ( name.IndexOf(Path.PathSeparator) == -1 && _basePath != null)
+            if (name.IndexOf(Path.PathSeparator) == -1 && _basePath != null)
             {
-                return FileUtil.CombinePath(new FileInfo(_basePath) , name);
+                return FileUtil.CombinePath(new FileInfo(_basePath), name);
             }
             return new FileInfo(name);
         }
@@ -341,6 +354,29 @@ namespace Encog.App.Analyst.Script
         public AnalystField FindAnalystField(string name)
         {
             return _normalize.NormalizedFields.FirstOrDefault(f => string.Compare(name, f.Name, true) == 0);
+        }
+
+
+        /// <summary>
+        /// Preprocess information.
+        /// </summary>
+        public AnalystProcess Process
+        {
+            get
+            {
+                return _process;
+            }
+        }
+
+        /// <summary>
+        /// Opcode information.
+        /// </summary>
+        public IList<ScriptOpcode> Opcodes
+        {
+            get
+            {
+                return _opcodes;
+            }
         }
     }
 }
