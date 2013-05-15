@@ -10,6 +10,11 @@ using Encog.App.Analyst;
 using Encog.App.Analyst.Script.Prop;
 using System.IO;
 using Encog.Persist;
+using Encog.App.Generate.Generators.Java;
+using Encog.App.Generate.Generators.CS;
+using Encog.App.Generate.Generators.MQL4;
+using Encog.App.Generate.Generators.NinjaScript;
+using Encog.App.Generate.Generators.JS;
 
 namespace Encog.App.Generate
 {
@@ -187,7 +192,7 @@ namespace Encog.App.Generate
             mainFunction
                     .AddComment("Network and/or data is now loaded, you can add code to train, evaluate, etc.");
 
-            ((IProgramGenerator)this.generator).Generate(this.program, this.embedData);
+            ((IProgramGenerator)this.generator).Generate(this.program, EmbedData);
         }
 
         /**

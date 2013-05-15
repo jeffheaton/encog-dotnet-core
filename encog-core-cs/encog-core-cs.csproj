@@ -147,6 +147,9 @@
     <Compile Include="App\Generate\Generators\IProgramGenerator.cs" />
     <Compile Include="App\Generate\Generators\ITemplateGenerator.cs" />
     <Compile Include="App\Generate\Generators\Java\GenerateEncogJava.cs" />
+    <Compile Include="App\Generate\Generators\JS\GenerateEncogJavaScript.cs" />
+    <Compile Include="App\Generate\Generators\MQL4\GenerateMQL4.cs" />
+    <Compile Include="App\Generate\Generators\NinjaScript\GenerateNinjaScript.cs" />
     <Compile Include="App\Generate\Program\EncogArgType.cs" />
     <Compile Include="App\Generate\Program\EncogGenProgram.cs" />
     <Compile Include="App\Generate\Program\EncogProgramArg.cs" />

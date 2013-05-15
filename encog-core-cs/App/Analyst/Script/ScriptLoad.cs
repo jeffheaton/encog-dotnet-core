@@ -185,6 +185,14 @@ namespace Encog.App.Analyst.Script
                     double amin = CSVFormat.EgFormat.Parse(cols[6]);
                     double mean = CSVFormat.EgFormat.Parse(cols[7]);
                     double sdev = CSVFormat.EgFormat.Parse(cols[8]);
+                    String source = "";
+
+                    // source was added in Encog 3.2, so it might not be there
+                    if (cols.Count > 9)
+                    {
+                        source = cols[9];
+                    }
+
                     var df = new DataField(name)
                     {
                         Class = isclass,
@@ -194,7 +202,8 @@ namespace Encog.App.Analyst.Script
                         Max = amax,
                         Min = amin,
                         Mean = mean,
-                        StandardDeviation = sdev
+                        StandardDeviation = sdev,
+                        Source = source
                     };
                     dfs.Add(df);
                 }

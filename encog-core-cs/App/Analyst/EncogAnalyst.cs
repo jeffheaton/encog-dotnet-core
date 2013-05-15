@@ -307,11 +307,11 @@ namespace Encog.App.Analyst
                 }
             }
 
-            if( Method is BayesianNetwork ) 
+            if (Method is BayesianNetwork)
             {
-			    result++;
-		    }
-		
+                result++;
+            }
+
             return result;
         }
 
@@ -494,7 +494,7 @@ namespace Encog.App.Analyst
                                         lastUpdate = 0;
                                     }
                                     lastUpdate++;
-                                } while (length > 0);                                
+                                } while (length > 0);
                             }
                         }
                         tempFile.Delete();
@@ -842,19 +842,19 @@ namespace Encog.App.Analyst
         /// Determine the total number of columns.  
         /// </summary>
         /// <returns>The number of tes</returns>
-        public int DetermineTotalColumns() 
+        public int DetermineTotalColumns()
         {
-		    int result = 0;
+            int result = 0;
 
-		    foreach (AnalystField field in _script.Normalize.NormalizedFields ) 
+            foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
-			    if (!field.Ignored ) 
+                if (!field.Ignored)
                 {
-				    result += field.ColumnsNeeded;
-			    }
-		    }
-		    return result;
-	    }
+                    result += field.ColumnsNeeded;
+                }
+            }
+            return result;
+        }
 
         /// <summary>
         /// Determine the total input field count, minus ignored fields.
@@ -874,5 +874,26 @@ namespace Encog.App.Analyst
 
             return result;
         }
+
+        public int DetermineMaxTimeSlice()
+        {
+            int result = int.MinValue;
+            foreach (AnalystField field in this.Script.Normalize.NormalizedFields)
+            {
+                result = Math.Max(result, field.TimeSlice);
+            }
+            return result;
+        }
+
+        public int DetermineMinTimeSlice()
+        {
+            int result = int.MaxValue;
+            foreach (AnalystField field in this.Script.Normalize.NormalizedFields)
+            {
+                result = Math.Min(result, field.TimeSlice);
+            }
+            return result;
+        }
+
     }
 }

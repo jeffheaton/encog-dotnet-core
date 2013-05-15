@@ -23,6 +23,7 @@
 using System;
 using System.Text;
 using Encog.Persist;
+using Encog.ML.Data;
 
 namespace Encog.Util.CSV
 {
@@ -141,6 +142,26 @@ namespace Encog.Util.CSV
                     result.Append(format.Separator);
                 }
                 result.Append(format.Format(data[i], precision));
+            }
+        }
+
+        /// <summary>
+        /// Convert an IMLData to a comma separated list.
+        /// </summary>
+        /// <param name="format">The way to format this list.</param>
+        /// <param name="result">This string will have the values appended to it.</param>
+        /// <param name="data">The array of doubles to use.</param>
+        public static void ToList(CSVFormat format, StringBuilder result,
+                                  IMLData data)
+        {
+            result.Length = 0;
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (i != 0)
+                {
+                    result.Append(format.Separator);
+                }
+                result.Append(format.Format(data[i], EncogFramework.DefaultPrecision));
             }
         }
 

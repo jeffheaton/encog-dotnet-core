@@ -77,6 +77,8 @@ namespace Encog.App.Analyst.Script
         /// <value>the theMin to set</value>
         public double Min { get; set; }
 
+        public string Source { get; set; }
+
 
         /// <summary>
         /// Determine the minimum class count. This is the count of the

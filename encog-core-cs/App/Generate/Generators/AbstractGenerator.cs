@@ -123,5 +123,7 @@ namespace Encog.App.Generate.Generators
             System.IO.File.WriteAllText(targetFile.ToString(), contents.ToString());
         }
 
+        /// <inheritdoc/>
+        public abstract void Generate(Program.EncogGenProgram program, bool embed);
     }
 }

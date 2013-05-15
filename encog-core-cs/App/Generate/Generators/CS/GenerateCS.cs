@@ -31,7 +31,7 @@ namespace Encog.App.Generate.Generators.CS
             if (!(method is IMLFactory))
             {
                 throw new EncogError("Code generation not yet supported for: "
-                        + typeof(method).Name);
+                        + method.GetType().Name);
             }
 
             IMLFactory factoryMethod = (IMLFactory)method;
@@ -48,7 +48,7 @@ namespace Encog.App.Generate.Generators.CS
             line.Append(node.Name);
             line.Append("()");
             AddLine(line.ToString());
-            indentLine("{");
+            IndentLine("{");
 
             // create factory
             line.Length = 0;
@@ -79,7 +79,7 @@ namespace Encog.App.Generate.Generators.CS
             // return
             AddLine("return result;");
 
-            unIndentLine("}");
+            UnIndentLine("}");
         }
 
         private void EmbedTraining(EncogProgramNode node)
@@ -90,19 +90,19 @@ namespace Encog.App.Generate.Generators.CS
 
             // generate the input data
 
-            indentLine("public static readonly double[][] INPUT_DATA = {");
+            IndentLine("public static readonly double[][] INPUT_DATA = {");
             foreach (IMLDataPair pair in data)
             {
                 IMLData item = pair.Input;
 
                 StringBuilder line = new StringBuilder();
 
-                NumberList.ToList(CSVFormat.EgFormat, line, item.Data);
+                NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "new double[] { ");
                 line.Append(" },");
                 AddLine(line.ToString());
             }
-            unIndentLine("};");
+            UnIndentLine("};");
 
             AddBreak();
 
@@ -115,15 +115,15 @@ namespace Encog.App.Generate.Generators.CS
 
                 StringBuilder line = new StringBuilder();
 
-                NumberList.ToList(CSVFormat.EgFormat, line, item.Data);
+                NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "new double[] { ");
                 line.Append(" },");
-                addLine(line.ToString());
+                AddLine(line.ToString());
             }
-            unIndentLine("};");
+            UnIndentLine("};");
         }
 
-        public void Generate(EncogGenProgram program, bool shouldEmbed)
+        public override void Generate(EncogGenProgram program, bool shouldEmbed)
         {
             this.embed = shouldEmbed;
             AddLine("namespace EncogGenerated");
@@ -139,7 +139,7 @@ namespace Encog.App.Generate.Generators.CS
             line.Append("public static readonly double[] ");
             line.Append(node.Name);
             line.Append(" = {");
-            indentLine(line.ToString());
+            IndentLine(line.ToString());
 
             double[] a = (double[])node.Args[0].Value;
 
@@ -158,7 +158,7 @@ namespace Encog.App.Generate.Generators.CS
                 lineCount++;
                 if (lineCount >= 10)
                 {
-                    addLine(line.ToString());
+                    AddLine(line.ToString());
                     line.Length = 0;
                     lineCount = 0;
                 }
@@ -166,7 +166,7 @@ namespace Encog.App.Generate.Generators.CS
 
             if (line.Length > 0)
             {
-                addLine(line.ToString());
+                AddLine(line.ToString());
                 line.Length = 0;
             }
 

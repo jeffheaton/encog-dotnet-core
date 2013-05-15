@@ -156,7 +156,7 @@ namespace Encog.Util.File
         {
             try
             {
-				target.Delete();
+                target.Delete();
                 FileStream fos = target.OpenWrite();
                 Stream mask0 = source.OpenRead();
 
@@ -208,7 +208,7 @@ namespace Encog.Util.File
             try
             {
                 Stream mask0 = ResourceLoader.CreateStream(resource);
-				targetFile.Delete();
+                targetFile.Delete();
                 Stream os = targetFile.OpenWrite();
                 Copy(mask0, os);
                 mask0.Close();
@@ -262,18 +262,38 @@ namespace Encog.Util.File
         /// <param name="toPath">To path.</param>
         /// <returns>true if we were able to move the file or directory.</returns>
         public static bool MoveFileOrDirectory(string fromPath, string toPath)
+        {
+            if (System.IO.File.Exists(fromPath))
             {
-                if (System.IO.File.Exists(fromPath))
-                {
-                    System.IO.File.Move(fromPath, toPath);
-                    return true;
-                }
-                if (System.IO.Directory.Exists(fromPath))
-                {
-                    System.IO.Directory.Move(fromPath, toPath);
-                    return true;
-                }
-                return false;
+                System.IO.File.Move(fromPath, toPath);
+                return true;
             }
+            if (System.IO.Directory.Exists(fromPath))
+            {
+                System.IO.Directory.Move(fromPath, toPath);
+                return true;
+            }
+            return false;
+        }
+
+        public static String ToStringLiteral(FileInfo processFile)
+        {
+            String str = processFile.ToString();
+            StringBuilder result = new StringBuilder();
+
+            foreach (char ch in str)
+            {
+                if (ch == '\\')
+                {
+                    result.Append("\\\\");
+                }
+                else
+                {
+                    result.Append(ch);
+                }
+            }
+
+            return result.ToString();
+        }
     }
 }

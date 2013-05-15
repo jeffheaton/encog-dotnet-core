@@ -11,7 +11,7 @@ namespace Encog.App.Generate.Generators
     /// file that allows parts if it to be replaced by tokens. Encog uses this sort
     /// of generator for NinjaScript and MQL4.
     /// </summary>
-    public interface ITemplateGenerator
+    public interface ITemplateGenerator: ILanguageSpecificGenerator
     {
         /// <summary>
         /// Generate the template based on Encog Analyst script.

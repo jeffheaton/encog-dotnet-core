@@ -129,6 +129,7 @@ namespace Encog.App.Analyst.Script
             xout.AddColumn("amin");
             xout.AddColumn("mean");
             xout.AddColumn("sdev");
+            xout.AddColumn("source");
             xout.WriteLine();
 
 
@@ -143,6 +144,7 @@ namespace Encog.App.Analyst.Script
                 xout.AddColumn(field.Min);
                 xout.AddColumn(field.Mean);
                 xout.AddColumn(field.StandardDeviation);
+                xout.AddColumn(field.Source);
                 xout.WriteLine();
             }
             xout.Flush();
