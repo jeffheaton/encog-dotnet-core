@@ -136,6 +136,8 @@
     <Compile Include="App\Analyst\Util\CSVHeaders.cs" />
     <Compile Include="App\Analyst\Wizard\AnalystWizard.cs" />
     <Compile Include="App\Analyst\Wizard\NormalizeRange.cs" />
+    <Compile Include="App\Analyst\Wizard\PredictionType.cs" />
+    <Compile Include="App\Analyst\Wizard\SourceElement.cs" />
     <Compile Include="App\Analyst\Wizard\WizardMethodType.cs" />
     <Compile Include="App\Finance\Indicators\Finance.cs" />
     <Compile Include="App\Generate\AnalystCodeGenerationError.cs" />

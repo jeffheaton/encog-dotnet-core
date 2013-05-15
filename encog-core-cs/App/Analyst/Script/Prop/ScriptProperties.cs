@@ -603,6 +603,8 @@ namespace Encog.App.Analyst.Script.Prop
             }
         }
 
+
+
         /// <summary>
         /// Set a property as a double.
         /// </summary>

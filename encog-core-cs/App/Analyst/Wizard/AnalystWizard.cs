@@ -34,6 +34,8 @@ using Encog.ML.Factory;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
 using Encog.Util.File;
+using Encog.App.Generate;
+using Encog.App.Analyst.Script.Process;
 
 namespace Encog.App.Analyst.Wizard
 {
@@ -138,6 +140,12 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         ///
         public const String FileCluster = "FILE_CLUSTER";
+
+        /// <summary>
+        /// The code file.
+        /// </summary>
+        ///
+        public const String FileCode = "FILE_CODE";
 
         /// <summary>
         /// The analyst.
@@ -311,6 +319,21 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         ///
         private bool _timeSeries;
+
+        /// <summary>
+        /// The target language for code generation.
+        /// </summary>
+        private TargetLanguage _codeTargetLanguage = TargetLanguage.NoGeneration;
+
+        /// <summary>
+        /// Should code data be embedded.
+        /// </summary>
+        private bool _codeEmbedData;
+
+        /// <summary>
+        /// Should we preprocess.
+        /// </summary>
+        private bool _preprocess = false;
 
         /// <summary>
         /// Construct the analyst wizard.
@@ -1398,6 +1421,222 @@ namespace Encog.App.Analyst.Wizard
             _analyst.Download();
 
             Wizard(analyzeFile, b, format);
+        }
+
+        public void WizardRealTime(IList<SourceElement> sourceData, FileInfo csvFile,
+            int backwardWindow, int forwardWindow, PredictionType prediction,
+            String predictField)
+        {
+            Preprocess = true;
+            _script.BasePath = csvFile.DirectoryName;
+            Script.getProperties().setProperty(
+                    ScriptProperties.HEADER_DATASOURCE_SOURCE_HEADERS, true);
+            Script.getProperties().setProperty(
+                    ScriptProperties.HEADER_DATASOURCE_RAW_FILE, csvFile);
+            Script.getProperties().setProperty(
+                    ScriptProperties.SETUP_CONFIG_INPUT_HEADERS, true);
+
+            LagWindowSize = backwardWindow;
+            LeadWindowSize = 1;
+            _timeSeries = true;
+            _format = AnalystFileFormat.DecpntComma;
+            MethodType = WizardMethodType.FeedForward;
+            _includeTargetField = false;
+            TargetFieldName = "prediction";
+            Missing = new DiscardMissing();
+
+            Goal = AnalystGoal.Regression;
+            Range = NormalizeRange.NegOne2One;
+            TaskNormalize = true;
+            TaskRandomize = false;
+            TaskSegregate = true;
+            TaskBalance = false;
+            TaskCluster = false;
+            MaxError = 0.05;
+            CodeEmbedData = true;
+
+            DetermineClassification();
+            GenerateFilenames(csvFile);
+            GenerateSettings();
+            GenerateSourceData(sourceData);
+            GenerateNormalizedFields();
+
+            // if there is a time field, then ignore it
+            AnalystField timeField = _script.FindAnalystField("time");
+            if (timeField != null)
+            {
+                timeField.Action = NormalizationAction.Ignore;
+            }
+
+            GenerateSegregate();
+            GenerateGenerate();
+            GenerateProcess(backwardWindow, forwardWindow, prediction, predictField);
+            GenerateCode();
+
+            // override raw_file to be the processed file
+            _script.Properties.SetProperty(
+                    ScriptProperties.HEADER_DATASOURCE_RAW_FILE,
+                    AnalystWizard.FILE_PRE);
+
+            GenerateTasks();
+            if (_timeSeries && (_lagWindowSize > 0)
+                    && (_leadWindowSize > 0))
+            {
+                ExpandTimeSlices();
+            }
+        }
+
+        /// <summary>
+        /// The target language for code generation.
+        /// </summary>
+        public TargetLanguage CodeTargetLanguage
+        {
+            get
+            {
+                return _codeTargetLanguage;
+            }
+            set
+            {
+                _codeTargetLanguage = value;
+            }
+        }
+
+        /// <summary>
+        /// Should code data be embedded.
+        /// </summary>
+        public bool CodeEmbedData
+        {
+            get
+            {
+                return _codeEmbedData;
+            }
+            set
+            {
+                _codeEmbedData = value;
+            }
+        }
+
+        /// <summary>
+        /// Should we preprocess.
+        /// </summary>
+        public bool Preprocess
+        {
+            get
+            {
+                return _preprocess;
+            }
+            set
+            {
+                _preprocess = value;
+            }
+        }
+
+        private void GenerateSourceData(IList<SourceElement> sourceData)
+        {
+            DataField[] fields = new DataField[sourceData.Count + 1];
+            int index = 0;
+
+            foreach (SourceElement element in sourceData)
+            {
+                DataField df = new DataField(element.Name);
+                df.Source = element.Source;
+                df.Integer = false;
+                df.Class = false;
+                df.Max = 100000;
+                df.Mean = 0;
+                df.Min = -100000;
+                df.StandardDeviation = 0;
+                fields[index++] = df;
+            }
+
+            // now add the prediction
+            DataField df2 = new DataField("prediction");
+            df2.Source = "prediction";
+            df2.Integer = false;
+            df2.Class = false;
+            df2.Max = 100000;
+            df2.Min = -100000;
+            df2.Mean = 0;
+            df2.StandardDeviation = 0;
+            fields[index++] = df2;
+
+            _script.Fields = fields;
+        }
+
+        private void GenerateProcess(int backwardWindow, int forwardWindow, PredictionType prediction, String predictField)
+        {
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.PROCESS_CONFIG_BACKWARD_SIZE, backwardWindow);
+            _script.Properties.SetProperty(
+                    ScriptProperties.PROCESS_CONFIG_FORWARD_SIZE, forwardWindow);
+
+            IList<ProcessField> fields = _script.Process.Fields;
+            fields.Clear();
+            foreach (DataField df in _script.Fields)
+            {
+                if (string.Compare(df.Name, "prediction", true) == 0)
+                {
+                    continue;
+                }
+
+                StringBuilder command = new StringBuilder();
+
+                if (string.Compare(df.Name, "time", true) == 0)
+                {
+                    command.Append("cint(field(\"");
+                    command.Append(df.Name);
+                    command.Append("\",0");
+                    command.Append("))");
+                    fields.Add(new ProcessField(df.Name, command.ToString()));
+                }
+                else
+                {
+                    command.Append("cfloat(field(\"");
+                    command.Append(df.Name);
+                    command.Append("\",0");
+                    command.Append("))");
+                    fields.Add(new ProcessField(df.Name, command.ToString()));
+                }
+            }
+
+            StringBuilder c = new StringBuilder();
+
+            switch (prediction)
+            {
+                case PredictionType.fieldmax:
+                    c.Append("fieldmax(\"");
+                    c.Append(predictField);
+                    c.Append("\",");
+                    c.Append(-forwardWindow);
+                    c.Append(",");
+                    c.Append(-1);
+                    c.Append(")");
+                    break;
+                case PredictionType.fieldmaxpip:
+                    c.Append("fieldmaxpip(\"");
+                    c.Append(predictField);
+                    c.Append("\",");
+                    c.Append(-forwardWindow);
+                    c.Append(",");
+                    c.Append(-1);
+                    c.Append(")");
+                    break;
+            }
+
+            fields.Add(new ProcessField("prediction", c.ToString()));
+        }
+
+        private void GenerateCode()
+        {
+            _script.Properties.SetProperty(
+                    ScriptProperties.CODE_CONFIG_EMBED_DATA, _codeEmbedData);
+            _script.Properties.SetProperty(
+                    ScriptProperties.CODE_CONFIG_TARGET_LANGUAGE,
+                    _codeTargetLanguage);
+            _script.Properties.SetProperty(
+                    ScriptProperties.CODE_CONFIG_TARGET_FILE,
+                    AnalystWizard.FileCode);
         }
     }
 }

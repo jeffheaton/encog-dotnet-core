@@ -61,6 +61,10 @@ namespace Encog.App.Analyst.Wizard
         /// <summary>
         /// Bayesian network.
         /// </summary>
-        BayesianNetwork
+        BayesianNetwork,
+        /// <summary>
+        /// Encog Program.
+        /// </summary>
+        EPL
     }
 }
