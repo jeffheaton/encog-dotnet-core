@@ -36,6 +36,10 @@ using Encog.Util.CSV;
 using Encog.Util.File;
 using Encog.App.Generate;
 using Encog.App.Analyst.Script.Process;
+using Encog.Neural.NEAT;
+using Encog.ML.Prg;
+using Encog.ML.Prg.Ext;
+using Encog.App.Analyst.Script.ML;
 
 namespace Encog.App.Analyst.Wizard
 {
@@ -148,6 +152,12 @@ namespace Encog.App.Analyst.Wizard
         public const String FileCode = "FILE_CODE";
 
         /// <summary>
+        /// The preprocess file.
+        /// </summary>
+        ///
+        public const String FilePre = "FILE_PROCESSED";
+
+        /// <summary>
         /// The analyst.
         /// </summary>
         ///
@@ -230,6 +240,16 @@ namespace Encog.App.Analyst.Wizard
         /// </summary>
         ///
         private String _filenameTrainSet;
+
+        /// <summary>
+        /// The code filename.
+        /// </summary>
+        private string _filenameCode;
+
+        /// <summary>
+        /// The process filename.
+        /// </summary>
+        private string _filenameProcess;
 
         /// <summary>
         /// The format in use.
@@ -873,6 +893,101 @@ namespace Encog.App.Analyst.Wizard
         }
 
         /// <summary>
+        /// Generate a NEAT population method.
+        /// </summary>
+        /// <param name="inputColumns">The input column count.</param>
+        /// <param name="outputColumns">The output column count.</param>
+        private void GenerateNEAT(int inputColumns,
+                int outputColumns)
+        {
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigType,
+                    MLMethodFactory.TypeNEAT);
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigArchitecture,
+                    "cycles=" + NEATPopulation.DEFAULT_CYCLES);
+
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+                    MLTrainFactory.TypeNEATGA);
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlTrainTargetError, MaxError);
+        }
+
+        /// <summary>
+        /// Generate a EPL population method.
+        /// </summary>
+        /// <param name="inputColumns">The input column count.</param>
+        /// <param name="outputColumns">The output column count.</param>
+        private void generateEPL(int inputColumns,
+                int outputColumns)
+        {
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigType,
+                    MLMethodFactory.TypeEPL);
+            String vars = "";
+
+            if (inputColumns > 26)
+            {
+                throw new EncogError("More than 26 input variables is not supported for EPL.");
+            }
+            else if (inputColumns <= 3)
+            {
+                StringBuilder temp = new StringBuilder();
+                for (int i = 0; i < inputColumns; i++)
+                {
+                    if (temp.Length > 0)
+                    {
+                        temp.Append(',');
+                    }
+                    temp.Append((char)('x' + i));
+                }
+                vars = temp.ToString();
+            }
+            else
+            {
+                StringBuilder temp = new StringBuilder();
+                for (int i = 0; i < inputColumns; i++)
+                {
+                    if (temp.Length > 0)
+                    {
+                        temp.Append(',');
+                    }
+                    temp.Append((char)('a' + i));
+                }
+                vars = temp.ToString();
+            }
+
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlConfigArchitecture,
+                    "cycles=" + NEATPopulation.DEFAULT_CYCLES + ",vars=\"" + vars + "\"");
+
+            _script.Properties.SetProperty(ScriptProperties.MlTrainType,
+                    MLTrainFactory.TypeEPLGA);
+            _script.Properties.SetProperty(
+                    ScriptProperties.MlTrainTargetError, MaxError);
+
+            // add in the opcodes
+            EncogProgramContext context = new EncogProgramContext();
+
+            if (this.Goal == AnalystGoal.Regression)
+            {
+                StandardExtensions.CreateNumericOperators(context);
+            }
+            else
+            {
+                StandardExtensions.CreateNumericOperators(context);
+                StandardExtensions.CreateBooleanOperators(context);
+            }
+            foreach (IProgramExtensionTemplate temp in context.Functions.OpCodes)
+            {
+                _script.Opcodes.Add(new ScriptOpcode(temp));
+            }
+        }
+
+        /// <summary>
         /// Generate a PNN machine learning method.
         /// </summary>
         /// <param name="inputColumns">The number of input columns.</param>
@@ -913,6 +1028,11 @@ namespace Encog.App.Analyst.Wizard
         /// <param name="rawFile">The raw filename.</param>
         private void GenerateFilenames(FileInfo rawFile)
         {
+            if (_preprocess)
+            {
+                _filenameProcess = FileUtil.AddFilenameBase(rawFile, "_process").Name;
+            }
+
             _filenameRaw = rawFile.Name;
             _filenameNorm = FileUtil.AddFilenameBase(rawFile, "_norm").Name;
             _filenameRandom = FileUtil.AddFilenameBase(rawFile, "_random").Name;
@@ -925,6 +1045,10 @@ namespace Encog.App.Analyst.Wizard
             _filenameOutput = FileUtil.AddFilenameBase(rawFile, "_output").Name;
             _filenameBalance = FileUtil.AddFilenameBase(rawFile, "_balance").Name;
             _filenameCluster = FileUtil.AddFilenameBase(rawFile, "_cluster").Name;
+
+            _filenameCode = FileUtil.ForceExtension(
+                FileUtil.AddFilenameBase(rawFile, "_code").Name,
+                EncogCodeGeneration.GetExtension(_codeTargetLanguage));
 
             ScriptProperties p = _script.Properties;
 
@@ -956,6 +1080,11 @@ namespace Encog.App.Analyst.Wizard
                 p.SetFilename(FileBalance, _filenameBalance);
             }
 
+            if (_codeTargetLanguage != TargetLanguage.NoGeneration)
+            {
+                p.SetFilename(AnalystWizard.FileCode, _filenameCode);
+            }
+
             p.SetFilename(FileTrainset, _filenameTrainSet);
             p.SetFilename(FileMl, _filenameMl);
             p.SetFilename(FileOutput, _filenameOutput);
@@ -964,7 +1093,6 @@ namespace Encog.App.Analyst.Wizard
         /// <summary>
         /// Generate the generate task.
         /// </summary>
-        ///
         private void GenerateGenerate()
         {
             DetermineTargetField();
@@ -1000,6 +1128,12 @@ namespace Encog.App.Analyst.Wizard
                     break;
                 case WizardMethodType.BayesianNetwork:
                     GenerateBayesian(inputColumns, idealColumns);
+                    break;
+                case WizardMethodType.NEAT:
+                    GenerateNEAT(inputColumns, idealColumns);
+                    break;
+                case WizardMethodType.EPL:
+                    generateEPL(inputColumns, idealColumns);
                     break;
                 default:
                     throw new AnalystError("Unknown method type");
@@ -1288,6 +1422,12 @@ namespace Encog.App.Analyst.Wizard
             task1.Lines.Add("create");
             task1.Lines.Add("train");
             task1.Lines.Add("evaluate");
+            
+            if (_codeTargetLanguage != TargetLanguage.NoGeneration)
+            {
+                task1.Lines.Add("code");
+            }
+
 
             var task2 = new AnalystTask("task-generate");
             if (!_timeSeries && _taskRandomize)
@@ -1327,6 +1467,15 @@ namespace Encog.App.Analyst.Wizard
             var task7 = new AnalystTask("task-cluster");
             task7.Lines.Add("cluster");
 
+            AnalystTask task8 = new AnalystTask("task-code");
+		    task8.Lines.Add("code");
+
+		    AnalystTask task9 = null;
+		    if (_preprocess) {
+			    task9 = new AnalystTask("task-preprocess");
+			    task9.Lines.Add("process");
+		    }
+
             _script.AddTask(task1);
             _script.AddTask(task2);
             _script.AddTask(task3);
@@ -1334,6 +1483,8 @@ namespace Encog.App.Analyst.Wizard
             _script.AddTask(task5);
             _script.AddTask(task6);
             _script.AddTask(task7);
+            _script.AddTask(task8);
+            _script.AddTask(task9);
         }
 
 
@@ -1429,12 +1580,12 @@ namespace Encog.App.Analyst.Wizard
         {
             Preprocess = true;
             _script.BasePath = csvFile.DirectoryName;
-            Script.getProperties().setProperty(
-                    ScriptProperties.HEADER_DATASOURCE_SOURCE_HEADERS, true);
-            Script.getProperties().setProperty(
-                    ScriptProperties.HEADER_DATASOURCE_RAW_FILE, csvFile);
-            Script.getProperties().setProperty(
-                    ScriptProperties.SETUP_CONFIG_INPUT_HEADERS, true);
+            _script.Properties.SetProperty(
+                    ScriptProperties.HeaderDatasourceSourceHeaders, true);
+            _script.Properties.SetProperty(
+                    ScriptProperties.HeaderDatasourceRawFile, csvFile);
+            _script.Properties.SetProperty(
+                    ScriptProperties.SetupConfigInputHeaders, true);
 
             LagWindowSize = backwardWindow;
             LeadWindowSize = 1;
@@ -1475,8 +1626,8 @@ namespace Encog.App.Analyst.Wizard
 
             // override raw_file to be the processed file
             _script.Properties.SetProperty(
-                    ScriptProperties.HEADER_DATASOURCE_RAW_FILE,
-                    AnalystWizard.FILE_PRE);
+                    ScriptProperties.HeaderDatasourceRawFile,
+                    AnalystWizard.FilePre);
 
             GenerateTasks();
             if (_timeSeries && (_lagWindowSize > 0)

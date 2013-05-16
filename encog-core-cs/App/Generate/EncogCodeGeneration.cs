@@ -47,13 +47,11 @@ namespace Encog.App.Generate
     /// </summary>
     public class EncogCodeGeneration
     {
-        /**
-	 * Is the specified method supported for code generation?
-	 * 
-	 * @param method
-	 *            The specified method.
-	 * @return True, if the specified method is supported.
-	 */
+        /// <summary>
+        /// Is the specified method supported for code generation?
+        /// </summary>
+        /// <param name="method">The specified method.</param>
+        /// <returns>True, if the specified method is supported.</returns>
         public static bool IsSupported(IMLMethod method)
         {
             if (method is BasicNetwork)
@@ -66,9 +64,42 @@ namespace Encog.App.Generate
             }
         }
 
-        /**
-         * The target language for the code generation.
-         */
+        /// <summary>
+        /// Get the extension fot the specified language.
+        /// </summary>
+        /// <param name="lang">The specified language.</param>
+        /// <returns></returns>
+        public static string GetExtension(TargetLanguage lang)
+        {
+            if (lang == TargetLanguage.Java)
+            {
+                return "java";
+            }
+            else if (lang == TargetLanguage.JavaScript)
+            {
+                return "html";
+            }
+            else if (lang == TargetLanguage.CSharp)
+            {
+                return "cs";
+            }
+            else if (lang == TargetLanguage.MQL4)
+            {
+                return "mql4";
+            }
+            else if (lang == TargetLanguage.NinjaScript)
+            {
+                return "cs";
+            }
+            else
+            {
+                return "txt";
+            }
+        }
+
+        /// <summary>
+        /// The target language for the code generation.
+        /// </summary>
         private TargetLanguage targetLanguage;
 
         /**

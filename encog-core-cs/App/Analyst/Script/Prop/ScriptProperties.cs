@@ -28,6 +28,7 @@ using System.Text;
 using Encog.App.Analyst.Util;
 using Encog.Util;
 using Encog.Util.CSV;
+using Encog.App.Generate;
 
 namespace Encog.App.Analyst.Script.Prop
 {
@@ -549,6 +550,16 @@ namespace Encog.App.Analyst.Script.Prop
         {
             String key2 = "SETUP:FILENAMES_" + key;
             _data[key2] = v;
+        }
+
+        /// <summary>
+        /// Set a property as a target language.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="targetLanguage">The target language.</param>
+        public void SetProperty(String name, TargetLanguage targetLanguage)
+        {
+            _data[name] = targetLanguage.ToString().ToUpper();
         }
 
         /// <summary>
