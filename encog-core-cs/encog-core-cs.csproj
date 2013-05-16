@@ -730,6 +730,7 @@
     <Compile Include="Plugin\SystemPlugin\SystemLoggingPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemMethodsPlugin.cs" />
     <Compile Include="Plugin\SystemPlugin\SystemTrainingPlugin.cs" />
+    <EmbeddedResource Include="Resources\ninja.cs" />
     <Compile Include="Util\Arrayutil\ClassItem.cs" />
     <Compile Include="Util\Arrayutil\CompareArray.cs" />
     <Compile Include="Util\Arrayutil\NormalizationAction.cs" />
@@ -889,6 +890,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Encog.snk" />
+    <EmbeddedResource Include="Resources\mt4.mql4" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

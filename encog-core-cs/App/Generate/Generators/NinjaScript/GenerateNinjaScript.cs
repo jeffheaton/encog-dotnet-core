@@ -45,7 +45,7 @@ namespace Encog.App.Generate.Generators.NinjaScript
     {
         public override String TemplatePath
         {
-            get { return "org/encog/data/ninja.cs"; }
+            get { return "Encog.Resources.ninja.cs"; }
         }
 
         public override String NullArray

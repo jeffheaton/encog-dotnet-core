@@ -49,7 +49,7 @@ namespace Encog.App.Generate.Generators.MQL4
 
         public override String TemplatePath
         {
-            get { return "org/encog/data/mt4.mql4"; }
+            get { return "Encog.Resources.mt4.mql4"; }
         }
 
         private void ProcessCalc()
