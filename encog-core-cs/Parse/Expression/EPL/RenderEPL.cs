@@ -66,25 +66,25 @@ namespace Encog.Parse.Expression.EPL
             {
                 result.Append(':');
                 EPLValueType t = node.Data[i].ExprType;
-                if (t == EPLValueType.booleanType)
+                if (t == EPLValueType.BooleanType)
                 {
                     result.Append(node.Data[i].ToBooleanValue() ? 't' : 'f');
                 }
-                else if (t == EPLValueType.floatingType)
+                else if (t == EPLValueType.FloatingType)
                 {
                     result.Append(CSVFormat.EgFormat.Format(node.Data[i].ToFloatValue(), EncogFramework.DefaultPrecision));
                 }
-                else if (t == EPLValueType.intType)
+                else if (t == EPLValueType.IntType)
                 {
                     result.Append(node.Data[i].ToIntValue());
                 }
-                else if (t == EPLValueType.enumType)
+                else if (t == EPLValueType.EnumType)
                 {
                     result.Append(node.Data[i].EnumType);
                     result.Append("#");
                     result.Append(node.Data[i].ToIntValue());
                 }
-                else if (t == EPLValueType.stringType)
+                else if (t == EPLValueType.StringType)
                 {
                     result.Append("\"");
                     result.Append(node.Data[i].ToStringValue());

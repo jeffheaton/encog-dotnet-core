@@ -20,41 +20,24 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.Train;
-using Encog.ML.EA.Population;
-using Encog.Neural.Networks.Training;
 using Encog.ML.Data;
+using Encog.ML.EA.Population;
+using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
+using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation;
 
 namespace Encog.ML.EA.Train
 {
     /// <summary>
-    /// Provides a MLTrain compatible class that can be used to train genomes.
+    ///     Provides a MLTrain compatible class that can be used to train genomes.
     /// </summary>
     public class TrainEA : BasicEA, IMLTrain
     {
         /// <summary>
-        /// Not used, the error.
-        /// </summary>
-        public new double Error 
-        {
-            get
-            {
-                return base.Error;
-            }
-            set
-            {
-                // not needed
-            }
-        }
-
-        /// <summary>
-        /// Create a trainer for a score function.
+        ///     Create a trainer for a score function.
         /// </summary>
         /// <param name="thePopulation">The population.</param>
         /// <param name="theScoreFunction">The score function.</param>
@@ -64,7 +47,7 @@ namespace Encog.ML.EA.Train
         }
 
         /// <summary>
-        /// Create a trainer for training data.
+        ///     Create a trainer for training data.
         /// </summary>
         /// <param name="thePopulation">The population.</param>
         /// <param name="trainingData">The training data.</param>
@@ -73,32 +56,38 @@ namespace Encog.ML.EA.Train
         {
         }
 
+        /// <summary>
+        ///     Not used, the error.
+        /// </summary>
+        public new double Error
+        {
+            get { return base.Error; }
+            set
+            {
+                // not needed
+            }
+        }
+
 
         /// <summary>
-        /// True if training can progress no further.
+        ///     True if training can progress no further.
         /// </summary>
         public bool TrainingDone
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public TrainingImplementationType ImplementationType
         {
-            get
-            {
-                return TrainingImplementationType.Iterative;
-            }
+            get { return TrainingImplementationType.Iterative; }
         }
 
         /// <summary>
-        /// Perform the specified number of training iterations. This is a basic
-        /// implementation that just calls iteration the specified number of times.
-        /// However, some training methods, particularly with the GPU, benefit
-        /// greatly by calling with higher numbers than 1.
+        ///     Perform the specified number of training iterations. This is a basic
+        ///     implementation that just calls iteration the specified number of times.
+        ///     However, some training methods, particularly with the GPU, benefit
+        ///     greatly by calling with higher numbers than 1.
         /// </summary>
         /// <param name="count">The number of training iterations.</param>
         public void Iteration(int count)
@@ -109,76 +98,62 @@ namespace Encog.ML.EA.Train
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public TrainingContinuation Pause()
         {
             return null;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Resume(TrainingContinuation state)
         {
-
         }
 
         /// <summary>
-        /// Not supported, will throw an error.
+        ///     Not supported, will throw an error.
         /// </summary>
         /// <param name="strategy">Not used.</param>
         public void AddStrategy(IStrategy strategy)
         {
             throw new TrainingError(
-                    "Strategies are not supported by this training method.");
+                "Strategies are not supported by this training method.");
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool CanContinue
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override void FinishTraining()
         {
             base.FinishTraining();
-            this.Population.BestGenome = BestGenome;
+            Population.BestGenome = BestGenome;
         }
 
         /// <summary>
-        /// A network created for the best genome.
+        ///     A network created for the best genome.
         /// </summary>
         public IMLMethod Method
         {
-            get
-            {
-                return Population;
-            }
+            get { return Population; }
         }
 
         /// <summary>
-        /// Returns null, does not use a training set, rather uses a score function.
+        ///     Returns null, does not use a training set, rather uses a score function.
         /// </summary>
         public IMLDataSet Training
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         /// <summary>
-        /// Returns an empty list, strategies are not supported.
+        ///     Returns an empty list, strategies are not supported.
         /// </summary>
         public IList<IStrategy> Strategies
         {
-            get
-            {
-                return new List<IStrategy>();
-            }
+            get { return new List<IStrategy>(); }
         }
-
     }
 }

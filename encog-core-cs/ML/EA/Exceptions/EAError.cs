@@ -20,16 +20,18 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
+
 namespace Encog.ML.EA.Exceptions
 {
     /// <summary>
-    /// A general evolutionary algorithm error.
+    ///     A general evolutionary algorithm error.
     /// </summary>
     public class EAError : EncogError
     {
         /// <summary>
-        /// Construct the exception.  Errors can be further divided into runtime or compile.
+        ///     Construct the exception.  Errors can be further divided into runtime or compile.
         /// </summary>
         /// <param name="msg">The message.</param>
         public EAError(string msg)
@@ -38,7 +40,7 @@ namespace Encog.ML.EA.Exceptions
         }
 
         /// <summary>
-        /// Construct the exception.
+        ///     Construct the exception.
         /// </summary>
         /// <param name="msg">The message.</param>
         /// <param name="t">A throwable error.</param>
@@ -48,7 +50,7 @@ namespace Encog.ML.EA.Exceptions
         }
 
         /// <summary>
-        /// Construct the exception.
+        ///     Construct the exception.
         /// </summary>
         /// <param name="t">A throwable error.</param>
         public EAError(Exception t)

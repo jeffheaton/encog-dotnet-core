@@ -20,11 +20,10 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Opp.Selection;
+using Encog.ML.EA.Opp;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
 using Encog.ML.EA.Genome;
@@ -85,29 +84,28 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// <summary>
         /// The owning object.
         /// </summary>
-        private IEvolutionaryAlgorithm owner;
+        private IEvolutionaryAlgorithm _owner;
 
         /// <summary>
         /// Add a neuron.
         /// </summary>
-        /// <param name="nodeID">The neuron id.</param>
+        /// <param name="nodeId">The neuron id.</param>
         /// <param name="vec">The id's used.</param>
         /// <param name="best">The best genome.</param>
         /// <param name="notBest">The non-best genome.</param>
-        public void AddNeuronID(long nodeID, IList<NEATNeuronGene> vec,
+        public void AddNeuronId(long nodeId, IList<NEATNeuronGene> vec,
                 NEATGenome best, NEATGenome notBest)
         {
             for (int i = 0; i < vec.Count; i++)
             {
-                if (vec[i].Id == nodeID)
+                if (vec[i].Id == nodeId)
                 {
                     return;
                 }
             }
 
-            vec.Add(FindBestNeuron(nodeID, best, notBest));
+            vec.Add(FindBestNeuron(nodeId, best, notBest));
 
-            return;
         }
 
         /// <summary>
@@ -122,7 +120,7 @@ namespace Encog.Neural.NEAT.Training.Opp
 
             // first determine who is more fit, the mother or the father?
             // see if mom and dad are the same fitness
-            if (mom.Score == dad.Score)
+            if (Math.Abs(mom.Score - dad.Score) < EncogFramework.DefaultDoubleEqual)
             {
                 // are mom and dad the same fitness
                 if (mom.NumGenes == dad.NumGenes)
@@ -134,59 +132,39 @@ namespace Encog.Neural.NEAT.Training.Opp
                     {
                         return mom;
                     }
-                    else
-                    {
-                        return dad;
-                    }
+                    return dad;
                 }
-                // mom and dad are the same fitness, but different number of genes
+                    // mom and dad are the same fitness, but different number of genes
                 // favor the parent with fewer genes
-                else
-                {
-                    if (mom.NumGenes < dad.NumGenes)
-                    {
-                        return mom;
-                    }
-                    else
-                    {
-                        return dad;
-                    }
-                }
-            }
-            else
-            {
-                // mom and dad have different scores, so choose the better score.
-                // important to note, better score COULD BE the larger or smaller
-                // score.
-                if (this.owner.SelectionComparer.Compare(mom, dad) < 0)
+                if (mom.NumGenes < dad.NumGenes)
                 {
                     return mom;
                 }
-
-                else
-                {
-                    return dad;
-                }
+                return dad;
+            }
+            // mom and dad have different scores, so choose the better score.
+            // important to note, better score COULD BE the larger or smaller
+            // score.
+            if (_owner.SelectionComparer.Compare(mom, dad) < 0)
+            {
+                return mom;
             }
 
+            return dad;
         }
 
         /// <summary>
         /// Find the best neuron, between two parents by the specified neuron id.
         /// </summary>
-        /// <param name="nodeID">The neuron id.</param>
+        /// <param name="nodeId">The neuron id.</param>
         /// <param name="best">The best genome.</param>
         /// <param name="notBest">The non-best (second best) genome. Also the worst, since this
         /// is the 2nd best of 2.</param>
         /// <returns>The best neuron genome by id.</returns>
-        private NEATNeuronGene FindBestNeuron(long nodeID,
+        private NEATNeuronGene FindBestNeuron(long nodeId,
                 NEATGenome best, NEATGenome notBest)
         {
-            NEATNeuronGene result = best.FindNeuron(nodeID);
-            if (result == null)
-            {
-                result = notBest.FindNeuron(nodeID);
-            }
+            NEATNeuronGene result = best.FindNeuron(nodeId) ?? notBest.FindNeuron(nodeId);
             return result;
         }
 
@@ -196,7 +174,7 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// <param name="theOwner">The owner.</param>
         public void Init(IEvolutionaryAlgorithm theOwner)
         {
-            this.owner = theOwner;
+            _owner = theOwner;
         }
 
         /// <inheritdoc/>
@@ -223,14 +201,14 @@ namespace Encog.Neural.NEAT.Training.Opp
             int offspringIndex)
         {
 
-            NEATGenome mom = (NEATGenome)parents[parentIndex + 0];
-            NEATGenome dad = (NEATGenome)parents[parentIndex + 1];
+            var mom = (NEATGenome)parents[parentIndex + 0];
+            var dad = (NEATGenome)parents[parentIndex + 1];
 
-            NEATGenome best = FavorParent(rnd, mom, dad);
-            NEATGenome notBest = (best == mom) ? mom : dad;
+            var best = FavorParent(rnd, mom, dad);
+            var notBest = (best == mom) ? mom : dad;
 
-            List<NEATLinkGene> selectedLinks = new List<NEATLinkGene>();
-            List<NEATNeuronGene> selectedNeurons = new List<NEATNeuronGene>();
+            var selectedLinks = new List<NEATLinkGene>();
+            var selectedNeurons = new List<NEATNeuronGene>();
 
             int curMom = 0; // current gene index from mom
             int curDad = 0; // current gene index from dad
@@ -241,7 +219,7 @@ namespace Encog.Neural.NEAT.Training.Opp
                     + ((NEATGenome)parents[0]).OutputCount + 1;
             for (int i = 0; i < alwaysCount; i++)
             {
-                AddNeuronID(i, selectedNeurons, best, notBest);
+                AddNeuronId(i, selectedNeurons, best, notBest);
             }
 
             while ((curMom < mom.NumGenes) || (curDad < dad.NumGenes))
@@ -301,15 +279,7 @@ namespace Encog.Neural.NEAT.Training.Opp
                 }
                 else if (dadInnovation == momInnovation)
                 {
-                    if (rnd.NextDouble() < 0.5f)
-                    {
-                        selectedGene = momGene;
-                    }
-
-                    else
-                    {
-                        selectedGene = dadGene;
-                    }
+                    selectedGene = rnd.NextDouble() < 0.5f ? momGene : dadGene;
                     curMom++;
                     curDad++;
                 }
@@ -333,9 +303,9 @@ namespace Encog.Neural.NEAT.Training.Opp
                     // Check if we already have the nodes referred to in
                     // SelectedGene.
                     // If not, they need to be added.
-                    AddNeuronID(selectedGene.FromNeuronID, selectedNeurons,
+                    AddNeuronId(selectedGene.FromNeuronId, selectedNeurons,
                             best, notBest);
-                    AddNeuronID(selectedGene.ToNeuronID, selectedNeurons,
+                    AddNeuronId(selectedGene.ToNeuronId, selectedNeurons,
                             best, notBest);
                 }
 
@@ -345,12 +315,12 @@ namespace Encog.Neural.NEAT.Training.Opp
             selectedNeurons.Sort();
 
             // finally, create the genome
-            INEATGenomeFactory factory = (INEATGenomeFactory)this.owner
+            var factory = (INEATGenomeFactory)_owner
                     .Population.GenomeFactory;
-            NEATGenome babyGenome = factory.Factor(selectedNeurons,
+            var babyGenome = factory.Factor(selectedNeurons,
                     selectedLinks, mom.InputCount, mom.OutputCount);
-            babyGenome.BirthGeneration = this.owner.IterationNumber;
-            babyGenome.Population = this.owner.Population;
+            babyGenome.BirthGeneration = _owner.IterationNumber;
+            babyGenome.Population = _owner.Population;
             babyGenome.SortGenes();
 
             offspring[offspringIndex] = babyGenome;

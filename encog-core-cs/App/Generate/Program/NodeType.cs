@@ -20,68 +20,76 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.App.Generate.Program
 {
     /// <summary>
-    /// The type of node.
+    ///     The type of node.
     /// </summary>
     public enum NodeType
     {
         /// <summary>
-        /// A comment.
+        ///     A comment.
         /// </summary>
         Comment,
+
         /// <summary>
-        /// The main function.
+        ///     The main function.
         /// </summary>
         MainFunction,
+
         /// <summary>
-        /// A function declaration.
+        ///     A function declaration.
         /// </summary>
         Function,
+
         /// <summary>
-        /// A class declaration.
+        ///     A class declaration.
         /// </summary>
         Class,
+
         /// <summary>
-        /// A for loop.
+        ///     A for loop.
         /// </summary>
         ForLoop,
+
         /// <summary>
-        /// A while loop.
+        ///     A while loop.
         /// </summary>
         WhileLoop,
+
         /// <summary>
-        /// A const value.
+        ///     A const value.
         /// </summary>
         Const,
+
         /// <summary>
-        /// A static function.
+        ///     A static function.
         /// </summary>
         StaticFunction,
+
         /// <summary>
-        /// A function call.
+        ///     A function call.
         /// </summary>
         FunctionCall,
+
         /// <summary>
-        /// A network creation.
+        ///     A network creation.
         /// </summary>
         CreateNetwork,
+
         /// <summary>
-        /// Init an array.
+        ///     Init an array.
         /// </summary>
         InitArray,
+
         /// <summary>
-        /// Embedded training.
+        ///     Embedded training.
         /// </summary>
         EmbedTraining,
+
         /// <summary>
-        /// Load training.
+        ///     Load training.
         /// </summary>
         LoadTraining
     }

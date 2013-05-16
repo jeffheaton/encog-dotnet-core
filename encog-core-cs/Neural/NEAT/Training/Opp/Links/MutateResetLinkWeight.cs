@@ -20,9 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
@@ -50,21 +48,21 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <summary>
         /// The trainer being used.
         /// </summary>
-        private IEvolutionaryAlgorithm trainer;
+        private IEvolutionaryAlgorithm _trainer;
 
         /// <inheritdoc/>
         public IEvolutionaryAlgorithm Trainer
         {
             get
             {
-                return this.trainer;
+                return _trainer;
             }
         }
 
         /// <inheritdoc/>
         public void Init(IEvolutionaryAlgorithm theTrainer)
         {
-            this.trainer = theTrainer;
+            _trainer = theTrainer;
         }
 
         /// <inheritdoc/>
@@ -77,9 +75,9 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append("]");
             return result.ToString();
         }

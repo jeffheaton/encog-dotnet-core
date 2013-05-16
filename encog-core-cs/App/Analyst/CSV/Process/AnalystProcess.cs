@@ -20,52 +20,51 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using Encog.App.Analyst.CSV.Basic;
-using Encog.ML.Prg;
-using Encog.ML.Prg.Ext;
-using System.IO;
-using Encog.Util.CSV;
 using Encog.App.Analyst.Script.Process;
 using Encog.App.Quant;
+using Encog.ML.Prg;
 using Encog.ML.Prg.ExpValue;
+using Encog.ML.Prg.Ext;
+using Encog.Util.CSV;
 
 namespace Encog.App.Analyst.CSV.Process
 {
     /// <summary>
-    /// Perform many different types of transformations on a CSV.
+    ///     Perform many different types of transformations on a CSV.
     /// </summary>
     public class AnalystProcess : BasicFile
     {
-        private EncogProgramContext programContext = new EncogProgramContext();
-        private EncogProgramVariables programVariables = new EncogProgramVariables();
-        private IList<EncogProgram> expressionFields = new List<EncogProgram>();
+        private readonly EncogAnalyst analyst;
+        private readonly int backwardWindowSize;
+        private readonly IList<EncogProgram> expressionFields = new List<EncogProgram>();
+        private readonly int forwardWindowSize;
+        private readonly EncogProgramContext programContext = new EncogProgramContext();
+        private readonly EncogProgramVariables programVariables = new EncogProgramVariables();
         private ProcessExtension extension;
-        private EncogAnalyst analyst;
-        private int forwardWindowSize;
-        private int backwardWindowSize;
 
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         /// <param name="theAnalyst">The analyst.</param>
         /// <param name="theBackwardWindowSize">The backward window size.</param>
         /// <param name="theForwardWindowSize">The forward window size.</param>
         public AnalystProcess(EncogAnalyst theAnalyst, int theBackwardWindowSize, int theForwardWindowSize)
         {
-            this.analyst = theAnalyst;
+            analyst = theAnalyst;
 
-            this.backwardWindowSize = theBackwardWindowSize;
-            this.forwardWindowSize = theForwardWindowSize;
-            StandardExtensions.CreateAll(this.programContext);
+            backwardWindowSize = theBackwardWindowSize;
+            forwardWindowSize = theForwardWindowSize;
+            StandardExtensions.CreateAll(programContext);
         }
 
         /// <summary>
-        /// Analyze the neural network.
+        ///     Analyze the neural network.
         /// </summary>
         /// <param name="inputFile">The input file.</param>
         /// <param name="headers">True, if there are headers.</param>
@@ -80,21 +79,21 @@ namespace Encog.App.Analyst.CSV.Process
 
             PerformBasicCounts();
 
-            this.expressionFields.Clear();
-            this.extension = new ProcessExtension(this.Format);
-            this.extension.register(this.programContext.Functions);
+            expressionFields.Clear();
+            extension = new ProcessExtension(Format);
+            extension.register(programContext.Functions);
 
-            foreach (ProcessField field in this.analyst.Script.Process.Fields)
+            foreach (ProcessField field in analyst.Script.Process.Fields)
             {
-                EncogProgram prg = new EncogProgram(this.programContext, this.programVariables);
-                prg.SetExtraData(ProcessExtension.EXTENSION_DATA_NAME, this.extension);
+                var prg = new EncogProgram(programContext, programVariables);
+                prg.SetExtraData(ProcessExtension.EXTENSION_DATA_NAME, extension);
                 prg.CompileExpression(field.Command);
-                this.expressionFields.Add(prg);
+                expressionFields.Add(prg);
             }
         }
 
         /// <summary>
-        /// Get the next row from the underlying CSV file.
+        ///     Get the next row from the underlying CSV file.
         /// </summary>
         /// <param name="csv">The underlying CSV file.</param>
         /// <returns>The loaded row.</returns>
@@ -111,7 +110,7 @@ namespace Encog.App.Analyst.CSV.Process
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
         /// <param name="outputFile">The name of the output file.</param>
         /// <returns>The output stream for the text file.</returns>
@@ -123,16 +122,16 @@ namespace Encog.App.Analyst.CSV.Process
                 var tw = new StreamWriter(outputFile.OpenWrite());
 
                 // write headers, if needed
-                if (this.ProduceOutputHeaders)
+                if (ProduceOutputHeaders)
                 {
                     int index = 0;
-                    StringBuilder line = new StringBuilder();
+                    var line = new StringBuilder();
 
-                    foreach (ProcessField field in this.analyst.Script.Process.Fields)
+                    foreach (ProcessField field in analyst.Script.Process.Fields)
                     {
                         if (line.Length > 0)
                         {
-                            line.Append(this.Format.Separator);
+                            line.Append(Format.Separator);
                         }
                         line.Append("\"");
                         line.Append(field.Name);
@@ -144,7 +143,6 @@ namespace Encog.App.Analyst.CSV.Process
                 }
 
                 return tw;
-
             }
             catch (IOException e)
             {
@@ -154,13 +152,13 @@ namespace Encog.App.Analyst.CSV.Process
 
         private void ProcessRow(StreamWriter tw)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
 
-            foreach (EncogProgram prg in this.expressionFields)
+            foreach (EncogProgram prg in expressionFields)
             {
                 ExpressionValue result = prg.Evaluate();
 
-                BasicFile.AppendSeparator(line, this.Format);
+                AppendSeparator(line, Format);
 
                 if (result.IsString)
                 {
@@ -178,27 +176,27 @@ namespace Encog.App.Analyst.CSV.Process
         }
 
         /// <summary>
-        /// Process, and generate the output file.
+        ///     Process, and generate the output file.
         /// </summary>
         /// <param name="outputFile">The output file.</param>
         public void Process(FileInfo outputFile)
         {
             ValidateAnalyzed();
 
-            ReadCSV csv = new ReadCSV(InputFilename.ToString(), ExpectInputHeaders, Format);
+            var csv = new ReadCSV(InputFilename.ToString(), ExpectInputHeaders, Format);
             LoadedRow row;
 
             StreamWriter tw = PrepareOutputFile(outputFile);
-            this.extension.Init(csv,
-                    this.forwardWindowSize,
-                    this.backwardWindowSize);
+            extension.Init(csv,
+                           forwardWindowSize,
+                           backwardWindowSize);
 
             ResetStatus();
             while ((row = GetNextRow(csv)) != null)
             {
-                this.extension.LoadRow(row);
+                extension.LoadRow(row);
 
-                if (this.extension.IsDataReady())
+                if (extension.IsDataReady())
                 {
                     ProcessRow(tw);
                 }

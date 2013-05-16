@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,46 +32,39 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.Analyze
 {
     /// <summary>
-    /// This class is used to perform an analysis of a CSV file. This will help Encog
-    /// to determine how the fields should be normalized.
+    ///     This class is used to perform an analysis of a CSV file. This will help Encog
+    ///     to determine how the fields should be normalized.
     /// </summary>
-    ///
     public class PerformAnalysis
     {
         /// <summary>
-        /// The file name to analyze.
+        ///     The file name to analyze.
         /// </summary>
-        ///
         private readonly String _filename;
 
         /// <summary>
-        /// The format of this file.
+        ///     The format of this file.
         /// </summary>
-        ///
         private readonly AnalystFileFormat _format;
 
         /// <summary>
-        /// True, if headers are present.
+        ///     True, if headers are present.
         /// </summary>
-        ///
         private readonly bool _headers;
 
         /// <summary>
-        /// The script to use.
+        ///     The script to use.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// The fields to analyze.
+        ///     The fields to analyze.
         /// </summary>
-        ///
         private AnalyzedField[] _fields;
 
         /// <summary>
-        /// Construct the analysis object.
+        ///     Construct the analysis object.
         /// </summary>
-        ///
         /// <param name="theScript">The script to use.</param>
         /// <param name="theFilename">The name of the file to analyze.</param>
         /// <param name="theHeaders">True if headers are present.</param>
@@ -86,9 +80,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Generate the header fields.
+        ///     Generate the header fields.
         /// </summary>
-        ///
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFields(ReadCSV csv)
         {
@@ -103,9 +96,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Generate the fields using counts, no headers provided.
+        ///     Generate the fields using counts, no headers provided.
         /// </summary>
-        ///
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFieldsFromCount(ReadCSV csv)
         {
@@ -117,9 +109,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Generate the fields using header values.
+        ///     Generate the fields using header values.
         /// </summary>
-        ///
         /// <param name="csv">The CSV file to use.</param>
         private void GenerateFieldsFromHeaders(ReadCSV csv)
         {
@@ -137,9 +128,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Perform the analysis.
+        ///     Perform the analysis.
         /// </summary>
-        ///
         /// <param name="target">The Encog analyst object to analyze.</param>
         public void Process(EncogAnalyst target)
         {
@@ -166,7 +156,7 @@ namespace Encog.App.Analyst.Analyze
                 count++;
             }
 
-            if (count==0)
+            if (count == 0)
             {
                 throw new AnalystError("Can't analyze file, it is empty.");
             }
@@ -276,9 +266,7 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

@@ -67,7 +67,7 @@ namespace Encog.ML.Factory.Method
                     MLMethodFactory.PropertyPopulationSize, false, 1000);
 
             int cycles = holder.GetInt(
-                    MLMethodFactory.PropertyCycles, false, NEATPopulation.DEFAULT_CYCLES);
+                    MLMethodFactory.PropertyCycles, false, NEATPopulation.DefaultCycles);
 
             IActivationFunction af = this.factory.Create(
                     holder.GetString(MLMethodFactory.PropertyAF, false, MLActivationFactory.AF_SSIGMOID));

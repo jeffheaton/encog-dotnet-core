@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV;
@@ -32,35 +33,32 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This class is used to evaluate a machine learning method. Evaluation data is
-    /// provided and the ideal and actual responses from the machine learning method
-    /// are written to a file.
+    ///     This class is used to evaluate a machine learning method. Evaluation data is
+    ///     provided and the ideal and actual responses from the machine learning method
+    ///     are written to a file.
     /// </summary>
-    ///
     public class CmdEvaluate : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "EVALUATE";
 
         /// <summary>
-        /// Construct the evaluate command.
+        ///     Construct the evaluate command.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         public CmdEvaluate(EncogAnalyst theAnalyst) : base(theAnalyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames
@@ -75,7 +73,7 @@ namespace Encog.App.Analyst.Commands
             EncogLogging.Log(EncogLogging.LevelDebug, "Beginning evaluate");
             EncogLogging.Log(EncogLogging.LevelDebug, "evaluate file:" + evalID);
             EncogLogging.Log(EncogLogging.LevelDebug, "resource file:"
-                                                       + resourceID);
+                                                      + resourceID);
 
             FileInfo evalFile = Script.ResolveFilename(evalID);
             FileInfo resourceFile = Script.ResolveFilename(resourceID);
@@ -84,7 +82,7 @@ namespace Encog.App.Analyst.Commands
                 outputID);
 
             var method = (IMLMethod) EncogDirectoryPersistence
-                                        .LoadObject(resourceFile);
+                                         .LoadObject(resourceFile);
             Analyst.Method = method;
             bool headers = true;
 

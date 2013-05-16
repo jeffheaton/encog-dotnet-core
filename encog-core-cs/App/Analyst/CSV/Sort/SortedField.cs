@@ -20,33 +20,30 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Text;
 
 namespace Encog.App.Analyst.CSV.Sort
 {
     /// <summary>
-    /// Specifies how a field is to be sorted by SortCSV.
+    ///     Specifies how a field is to be sorted by SortCSV.
     /// </summary>
-    ///
     public class SortedField
     {
         /// <summary>
-        /// The index of the field.
+        ///     The index of the field.
         /// </summary>
-        ///
         private int _index;
 
         /// <summary>
-        /// The type of sort.
+        ///     The type of sort.
         /// </summary>
-        ///
         private SortType _sortType;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="theIndexindex">The index of the sorted field.</param>
         /// <param name="t">The type of sort, the type of object.</param>
         /// <param name="theAscending">True, if this is an ascending sort.</param>
@@ -79,7 +76,7 @@ namespace Encog.App.Analyst.CSV.Sort
         public bool Ascending { get; set; }
 
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

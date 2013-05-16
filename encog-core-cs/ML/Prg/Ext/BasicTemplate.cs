@@ -20,120 +20,153 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Encog.Util;
 using Encog.ML.EA.Exceptions;
 using Encog.ML.Prg.ExpValue;
 using Encog.MathUtil.Randomize;
+using Encog.Util;
 
 namespace Encog.ML.Prg.Ext
 {
     /// <summary>
-    /// A basic template.
+    ///     A basic template.
     /// </summary>
     [Serializable]
     public class BasicTemplate : IProgramExtensionTemplate
     {
         /// <summary>
-        /// Defines a very low precidence.
+        /// Delegate to evaluate the node.
         /// </summary>
-        public const int NO_PREC = 100;
-
+        /// <param name="actual">Actual node.</param>
+        /// <returns>Evaluated value.</returns>
         public delegate ExpressionValue DelEvaluate(ProgramNode actual);
+
+        /// <summary>
+        /// Delegate to determine return types.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="rtn">The return type to check.</param>
+        /// <returns>True, if this is a return type.</returns>
         public delegate bool DelIsPossibleReturnType(EncogProgramContext context, EPLValueType rtn);
-        public delegate void DelRandomize(EncogRandom rnd, IList<EPLValueType> desiredType, ProgramNode actual, double minValue, double maxValue);
-
-
 
         /// <summary>
-        /// The name of this opcode.
+        /// Delegate to randomize.
         /// </summary>
-        private String name;
+        /// <param name="rnd">Random number generator.</param>
+        /// <param name="desiredType">The desired type.</param>
+        /// <param name="actual">The actual node.</param>
+        /// <param name="minValue">The min value.</param>
+        /// <param name="maxValue">The max value.</param>
+        public delegate void DelRandomize(
+            EncogRandom rnd, IList<EPLValueType> desiredType, ProgramNode actual, double minValue, double maxValue);
 
         /// <summary>
-        /// True if this opcode has a variable value, other than variance of its
-        /// child nodes.
+        ///     Defines a very low precidence.
         /// </summary>
-        private bool varValue;
+        public const int NoPrec = 100;
+
 
         /// <summary>
-        /// The amount of data that is stored with this node.
+        ///     The amount of data that is stored with this node.
         /// </summary>
-        private int dataSize;
+        private readonly int _dataSize;
 
         /// <summary>
-        /// The node type.
+        /// The delegate to evaluate.
         /// </summary>
-        private NodeType nodeType;
+        private readonly DelEvaluate _delEvaluate;
 
         /// <summary>
-        /// The precedence.
+        /// The delegate for return types.
         /// </summary>
-        private int precedence;
+        private readonly DelIsPossibleReturnType _delIsPossibleReturnType;
 
         /// <summary>
-        /// The opcode signature.
+        /// The delegate for randomize.
         /// </summary>
-        private String signature;
+        private readonly DelRandomize _delRandomize;
 
         /// <summary>
-        /// The parameters.
+        ///     The name of this opcode.
         /// </summary>
-        private IList<ParamTemplate> param = new List<ParamTemplate>();
+        private readonly String _name;
 
         /// <summary>
-        /// The return value.
+        ///     The node type.
         /// </summary>
-        private ParamTemplate returnValue;
-
-        private DelEvaluate delEvaluate;
-
-        private DelIsPossibleReturnType delIsPossibleReturnType;
-
-        private DelRandomize delRandomize;
+        private readonly NodeType _nodeType;
 
         /// <summary>
-        /// Construct a basic template object.
+        ///     The parameters.
+        /// </summary>
+        private readonly IList<ParamTemplate> _param = new List<ParamTemplate>();
+
+        /// <summary>
+        ///     The precedence.
+        /// </summary>
+        private readonly int _precedence;
+
+        /// <summary>
+        ///     The return value.
+        /// </summary>
+        private readonly ParamTemplate _returnValue;
+
+        /// <summary>
+        ///     The opcode signature.
+        /// </summary>
+        private readonly String _signature;
+
+        /// <summary>
+        ///     True if this opcode has a variable value, other than variance of its
+        ///     child nodes.
+        /// </summary>
+        private readonly bool _varValue;
+
+        /// <summary>
+        ///     Construct a basic template object.
         /// </summary>
         /// <param name="thePrecedence">The precedence.</param>
         /// <param name="theSignature">The opcode signature.</param>
         /// <param name="theType">The opcode type.</param>
         /// <param name="isVariable">True, if this opcode is a variable.</param>
         /// <param name="theDataSize">The data size kept for this opcode.</param>
+        /// <param name="theEvaluate">The evaluator delegate.</param>
+        /// <param name="theIsPossibleReturnType">The return type delegate.</param>
+        /// <param name="theRandomize">The randomizer delegate.</param>
         public BasicTemplate(int thePrecedence, String theSignature,
-                NodeType theType, bool isVariable,
-                int theDataSize,
-                DelEvaluate theEvaluate,
-                DelIsPossibleReturnType theIsPossibleReturnType,
-                DelRandomize theRandomize)
+                             NodeType theType, bool isVariable,
+                             int theDataSize,
+                             DelEvaluate theEvaluate,
+                             DelIsPossibleReturnType theIsPossibleReturnType,
+                             DelRandomize theRandomize)
         {
-            this.precedence = thePrecedence;
-            this.signature = theSignature;
-            this.varValue = isVariable;
-            this.dataSize = theDataSize;
-            this.nodeType = theType;
+            _precedence = thePrecedence;
+            _signature = theSignature;
+            _varValue = isVariable;
+            _dataSize = theDataSize;
+            _nodeType = theType;
 
-            this.delEvaluate = theEvaluate;
-            this.delIsPossibleReturnType = theIsPossibleReturnType;
-            this.delRandomize = theRandomize;
+            _delEvaluate = theEvaluate;
+            _delIsPossibleReturnType = theIsPossibleReturnType;
+            _delRandomize = theRandomize;
 
             if (theSignature.Trim().Equals("("))
             {
                 // special case, we add a left-paren for the shunting yard alg.
-                this.name = theSignature;
-                this.returnValue = null;
+                _name = theSignature;
+                _returnValue = null;
             }
             else
             {
                 // non-special case, find the name of the function/operator
-                SimpleParser parser = new SimpleParser(theSignature);
+                var parser = new SimpleParser(theSignature);
                 bool pass = false;
 
                 parser.EatWhiteSpace();
-                this.name = parser.ReadToChars("(").Trim();
+                _name = parser.ReadToChars("(").Trim();
                 parser.Advance();
 
                 bool done = false;
@@ -154,7 +187,7 @@ namespace Encog.ML.Prg.Ext
                         ParamTemplate temp = ReadParam(parser);
                         temp.PassThrough = pass;
                         pass = false;
-                        this.param.Add(temp);
+                        _param.Add(temp);
                     }
                     else
                     {
@@ -168,126 +201,131 @@ namespace Encog.ML.Prg.Ext
 
                 // get the return type
                 parser.EatWhiteSpace();
-                if (!parser.LookAhead(":",true))
+                if (!parser.LookAhead(":", true))
                 {
                     throw new EACompileError("Return type not specified.");
                 }
                 parser.Advance();
                 parser.EatWhiteSpace();
-                this.returnValue = ReadParam(parser);
+                _returnValue = ReadParam(parser);
             }
         }
 
         /// <summary>
-        /// Construct a function based on the provided signature.
+        ///     Construct a function based on the provided signature.
         /// </summary>
         /// <param name="theSignature">The signature.</param>
+        /// <param name="theEvaluate">The evaluate delegate.</param>
         public BasicTemplate(String theSignature, DelEvaluate theEvaluate)
             : this(0, theSignature, NodeType.Function, false, 0, theEvaluate, null, null)
         {
-
-        }
-
-        /// <inheritdoc/>
-        public int ChildNodeCount
-        {
-            get
-            {
-                return this.param.Count;
-            }
-        }
-
-        /// <inheritdoc/>
-        public int DataSize
-        {
-            get
-            {
-                return this.dataSize;
-            }
-        }
-
-        /// <inheritdoc/>
-        public String Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
-
-        /// <inheritdoc/>
-        public NodeType NodeType
-        {
-            get
-            {
-                return this.nodeType;
-            }
-        }
-
-        /// <inheritdoc/>
-        public IList<ParamTemplate> Params
-        {
-            get
-            {
-                return this.param;
-            }
-        }
-
-        /// <inheritdoc/>
-        public int Precedence
-        {
-            get
-            {
-                return this.precedence;
-            }
-        }
-
-        /// <inheritdoc/>
-        public ParamTemplate ReturnValue
-        {
-            get
-            {
-                return this.returnValue;
-            }
         }
 
         /// <summary>
-        /// The signature.
+        ///     The signature.
         /// </summary>
         public String Signature
         {
-            get
-            {
-                return this.signature;
-            }
+            get { return _signature; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
+        public int ChildNodeCount
+        {
+            get { return _param.Count; }
+        }
+
+        /// <inheritdoc />
+        public int DataSize
+        {
+            get { return _dataSize; }
+        }
+
+        /// <inheritdoc />
+        public String Name
+        {
+            get { return _name; }
+        }
+
+        /// <inheritdoc />
+        public NodeType NodeType
+        {
+            get { return _nodeType; }
+        }
+
+        /// <inheritdoc />
+        public IList<ParamTemplate> Params
+        {
+            get { return _param; }
+        }
+
+        /// <inheritdoc />
+        public int Precedence
+        {
+            get { return _precedence; }
+        }
+
+        /// <inheritdoc />
+        public ParamTemplate ReturnValue
+        {
+            get { return _returnValue; }
+        }
+
+        /// <inheritdoc />
         public bool IsVariable
         {
-            get
+            get { return _varValue; }
+        }
+
+
+        public ExpressionValue Evaluate(ProgramNode actual)
+        {
+            return _delEvaluate(actual);
+        }
+
+        /// <inheritdoc />
+        public bool IsPossibleReturnType(EncogProgramContext context, EPLValueType rtn)
+        {
+            if (_delIsPossibleReturnType == null)
             {
-                return this.varValue;
+                return _returnValue.PossibleTypes.Contains(rtn);
+            }
+            if (!_returnValue.PossibleTypes.Contains(rtn))
+            {
+                return false;
+            }
+
+            return _delIsPossibleReturnType(context, rtn);
+        }
+
+
+        /// <inheritdoc />
+        public void Randomize(EncogRandom rnd, IList<EPLValueType> desiredType, ProgramNode actual, double minValue,
+                              double maxValue)
+        {
+            if (_delRandomize != null)
+            {
+                _delRandomize(rnd, desiredType, actual, minValue, maxValue);
             }
         }
 
         /// <summary>
-        /// Read the specified parameter.
+        ///     Read the specified parameter.
         /// </summary>
         /// <param name="parser">The parser to use.</param>
         /// <returns>The parsed parameter.</returns>
         private ParamTemplate ReadParam(SimpleParser parser)
         {
-            ParamTemplate result = new ParamTemplate();
+            var result = new ParamTemplate();
 
-            if (!parser.LookAhead("{",true))
+            if (!parser.LookAhead("{", true))
             {
                 throw new EACompileError("Expected {");
             }
             parser.Advance();
 
             bool done = false;
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
 
             while (!done)
             {
@@ -326,49 +364,18 @@ namespace Encog.ML.Prg.Ext
             return result;
         }
 
-        /// <inheritdoc/>
-        public String ToString()
+        /// <inheritdoc />
+        public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[BasicTemplate:");
-            result.Append(this.signature);
+            result.Append(_signature);
             result.Append(",type=");
-            result.Append(this.nodeType.ToString());
+            result.Append(_nodeType.ToString());
             result.Append(",argCount=");
             result.Append(ChildNodeCount);
             result.Append("]");
             return result.ToString();
-        }
-
-
-        public ExpressionValue Evaluate(ProgramNode actual)
-        {
-            return delEvaluate(actual);
-        }
-
-        /// <inheritdoc/>
-        public bool IsPossibleReturnType(EncogProgramContext context, EPLValueType rtn)
-        {
-            if (delIsPossibleReturnType == null)
-            {
-                return this.returnValue.PossibleTypes.Contains(rtn);
-            }
-            else if (!this.returnValue.PossibleTypes.Contains(rtn))
-            {
-                return false;
-            }
-            
-            return delIsPossibleReturnType(context, rtn);
-        }
-
-
-        /// <inheritdoc/>
-        public void Randomize(EncogRandom rnd, IList<EPLValueType> desiredType, ProgramNode actual, double minValue, double maxValue)
-        {
-            if (delRandomize != null)
-            {
-                delRandomize(rnd, desiredType, actual, minValue, maxValue);
-            }
         }
     }
 }

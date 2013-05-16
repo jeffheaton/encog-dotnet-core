@@ -20,29 +20,27 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using Encog.Util.CSV;
 
 namespace Encog.App.Analyst.Util
 {
     /// <summary>
-    /// Convert several Analyst String to the correct object.
+    ///     Convert several Analyst String to the correct object.
     /// </summary>
-    ///
     public sealed class ConvertStringConst
     {
         /// <summary>
-        /// Private constructor.
+        ///     Private constructor.
         /// </summary>
-        ///
         private ConvertStringConst()
         {
         }
 
         /// <summary>
-        /// Convert a file format to a string.
+        ///     Convert a file format to a string.
         /// </summary>
-        ///
         /// <param name="af">The file format.</param>
         /// <returns>A string.</returns>
         public static String AnalystFileFormat2String(AnalystFileFormat af)
@@ -67,14 +65,13 @@ namespace Encog.App.Analyst.Util
             {
                 return "deccomma|semi";
             }
-            
+
             return null;
         }
 
         /// <summary>
-        /// Convert an analyst format to a csv format.
+        ///     Convert an analyst format to a csv format.
         /// </summary>
-        ///
         /// <param name="af">The analyst format.</param>
         /// <returns>The CSV format.</returns>
         public static CSVFormat ConvertToCSVFormat(AnalystFileFormat af)
@@ -106,9 +103,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Convert a string to an analyst file format.
+        ///     Convert a string to an analyst file format.
         /// </summary>
-        ///
         /// <param name="str">The string.</param>
         /// <returns>The analyst file format.</returns>
         public static AnalystFileFormat String2AnalystFileFormat(String str)
@@ -140,7 +136,7 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Convert a string to an analyst goal.
+        ///     Convert a string to an analyst goal.
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>

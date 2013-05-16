@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,30 +31,26 @@ using Encog.Util.File;
 namespace Encog.App.Analyst.Script.Prop
 {
     /// <summary>
-    /// Holds constant type information for each of the properties that the script
-    /// might have. This constant information allows values to be validated.  
-    /// This class is a singleton.
+    ///     Holds constant type information for each of the properties that the script
+    ///     might have. This constant information allows values to be validated.
+    ///     This class is a singleton.
     /// </summary>
-    ///
     public sealed class PropertyConstraints
     {
         /// <summary>
-        /// The instance.
+        ///     The instance.
         /// </summary>
-        ///
         private static PropertyConstraints _instance;
 
 
         /// <summary>
-        /// The property data.
+        ///     The property data.
         /// </summary>
-        ///
         private readonly IDictionary<String, List<PropertyEntry>> _data;
 
         /// <summary>
-        /// Private constructor.
+        ///     Private constructor.
         /// </summary>
-        ///
         private PropertyConstraints()
         {
             _data = new Dictionary<String, List<PropertyEntry>>();
@@ -133,9 +130,8 @@ namespace Encog.App.Analyst.Script.Prop
         }
 
         /// <summary>
-        /// Find an entry based on a string.
+        ///     Find an entry based on a string.
         /// </summary>
-        ///
         /// <param name="v">The property to find.</param>
         /// <returns>The property entry data.</returns>
         public PropertyEntry FindEntry(String v)
@@ -148,9 +144,8 @@ namespace Encog.App.Analyst.Script.Prop
         }
 
         /// <summary>
-        /// Get all entries for a section/subsection.
+        ///     Get all entries for a section/subsection.
         /// </summary>
-        ///
         /// <param name="section">The section to find.</param>
         /// <param name="subSection">The subsection to find.</param>
         /// <returns>A list of property entries.</returns>
@@ -162,10 +157,9 @@ namespace Encog.App.Analyst.Script.Prop
         }
 
         /// <summary>
-        /// Get a single property entry.  If the section and subsection do 
-        /// not exist, an error is thrown.
+        ///     Get a single property entry.  If the section and subsection do
+        ///     not exist, an error is thrown.
         /// </summary>
-        ///
         /// <param name="section">The section.</param>
         /// <param name="subSection">The subsection.</param>
         /// <param name="name">The name of the property.</param>

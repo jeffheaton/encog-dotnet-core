@@ -20,10 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Encog.ML.EA.Genome;
 using Encog.MathUtil.Randomize;
 
@@ -50,7 +47,7 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// <summary>
         /// Do not remove from genomes that have fewer than this number of links.
         /// </summary>
-        public const int MIN_LINK = 5;
+        public const int MinLink = 5;
 
         /// <inheritdoc/>
         public override void PerformOperation(EncogRandom rnd, IGenome[] parents,
@@ -58,30 +55,30 @@ namespace Encog.Neural.NEAT.Training.Opp
                 int offspringIndex)
         {
 
-            NEATGenome target = ObtainGenome(parents, parentIndex, offspring,
+            var target = ObtainGenome(parents, parentIndex, offspring,
                     offspringIndex);
 
-            if (target.LinksChromosome.Count < NEATMutateRemoveLink.MIN_LINK)
+            if (target.LinksChromosome.Count < MinLink)
             {
                 // don't remove from small genomes
                 return;
             }
 
             // determine the target and remove
-            int index = RangeRandomizer.RandomInt(0, target
+            var index = RangeRandomizer.RandomInt(0, target
                     .LinksChromosome.Count - 1);
             NEATLinkGene targetGene = target.LinksChromosome[index];
             target.LinksChromosome.Remove(targetGene);
 
             // if this orphaned any nodes, then kill them too!
-            if (!IsNeuronNeeded(target, targetGene.FromNeuronID))
+            if (!IsNeuronNeeded(target, targetGene.FromNeuronId))
             {
-                RemoveNeuron(target, targetGene.FromNeuronID);
+                RemoveNeuron(target, targetGene.FromNeuronId);
             }
 
-            if (!IsNeuronNeeded(target, targetGene.ToNeuronID))
+            if (!IsNeuronNeeded(target, targetGene.ToNeuronId))
             {
-                RemoveNeuron(target, targetGene.ToNeuronID);
+                RemoveNeuron(target, targetGene.ToNeuronId);
             }
         }
     }

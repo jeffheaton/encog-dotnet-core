@@ -22,8 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Codec;
 using Encog.ML;
 using Encog.ML.EA.Genome;
@@ -59,8 +57,8 @@ namespace Encog.Neural.NEAT
         /// <inheritdoc/>
         public IMLMethod Decode(IGenome genome)
         {
-            NEATGenome neatGenome = (NEATGenome)genome;
-            NEATPopulation pop = (NEATPopulation)neatGenome.Population;
+            var neatGenome = (NEATGenome)genome;
+            var pop = (NEATPopulation)neatGenome.Population;
             IList<NEATNeuronGene> neuronsChromosome = neatGenome.NeuronsChromosome;
             IList<NEATLinkGene> linksChromosome = neatGenome.LinksChromosome;
 
@@ -70,8 +68,8 @@ namespace Encog.Neural.NEAT
                         "The first neuron must be the bias neuron, this genome is invalid.");
             }
 
-            List<NEATLink> links = new List<NEATLink>();
-            IActivationFunction[] afs = new IActivationFunction[neuronsChromosome.Count];
+            var links = new List<NEATLink>();
+            var afs = new IActivationFunction[neuronsChromosome.Count];
 
             for (int i = 0; i < afs.Length; i++)
             {
@@ -91,8 +89,8 @@ namespace Encog.Neural.NEAT
                 NEATLinkGene linkGene = linksChromosome[i];
                 if (linkGene.Enabled)
                 {
-                    links.Add(new NEATLink(lookup[linkGene.FromNeuronID],
-                            lookup[linkGene.ToNeuronID], linkGene.Weight));
+                    links.Add(new NEATLink(lookup[linkGene.FromNeuronId],
+                            lookup[linkGene.ToNeuronId], linkGene.Weight));
                 }
 
             }

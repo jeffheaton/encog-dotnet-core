@@ -20,9 +20,11 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -39,73 +41,58 @@ using Encog.ML;
 using Encog.ML.Bayesian;
 using Encog.ML.Train;
 using Encog.Util;
-using Encog.Util.Logging;
 using Encog.Util.File;
-using System.IO.Compression;
+using Encog.Util.Logging;
 
 namespace Encog.App.Analyst
 {
     /// <summary>
-    /// The Encog Analyst runs Encog Analyst Script files (EGA) to perform many
-    /// common machine learning tasks. It is very much like Maven or ANT for Encog.
-    /// Encog analyst files are made up of configuration information and tasks. Tasks
-    /// are series of commands that make use of the configuration information to
-    /// process CSV files.
+    ///     The Encog Analyst runs Encog Analyst Script files (EGA) to perform many
+    ///     common machine learning tasks. It is very much like Maven or ANT for Encog.
+    ///     Encog analyst files are made up of configuration information and tasks. Tasks
+    ///     are series of commands that make use of the configuration information to
+    ///     process CSV files.
     /// </summary>
-    ///
     public class EncogAnalyst
     {
         /// <summary>
-        /// The name of the task that SHOULD everything.
+        ///     The name of the task that SHOULD everything.
         /// </summary>
-        ///
         public const String TaskFull = "task-full";
 
         /// <summary>
-        /// The update time for a download.
+        ///     The update time for a download.
         /// </summary>
-        ///
         public const int UpdateTime = 10;
 
         /// <summary>
-        /// 
+        ///     The commands.
         /// </summary>
-        public IMLMethod Method { get; set; }
-
-        /// <summary>
-        /// The commands.
-        /// </summary>
-        ///
         private readonly IDictionary<String, Cmd> _commands;
 
         /// <summary>
-        /// The listeners.
+        ///     The listeners.
         /// </summary>
-        ///
         private readonly IList<IAnalystListener> _listeners;
 
         /// <summary>
-        /// The analyst script.
+        ///     The analyst script.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// The current task.
+        ///     The current task.
         /// </summary>
-        ///
         private QuantTask _currentQuantTask;
 
         /// <summary>
-        /// Holds a copy of the original property data, used to revert.
+        ///     Holds a copy of the original property data, used to revert.
         /// </summary>
-        ///
         private IDictionary<String, String> _revertData;
 
         /// <summary>
-        /// Construct the Encog analyst.
+        ///     Construct the Encog analyst.
         /// </summary>
-        ///
         public EncogAnalyst()
         {
             _script = new AnalystScript();
@@ -129,12 +116,17 @@ namespace Encog.App.Analyst
             AddCommand(new CmdProcess(this));
         }
 
+        /// <summary>
+        /// </summary>
+        public IMLMethod Method { get; set; }
+
         /// <value>The lag depth.</value>
         public int LagDepth
         {
             get
             {
-                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice < 0).Aggregate(0, (current, field) => Math.Max(current, Math.Abs(field.TimeSlice)));
+                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice < 0)
+                              .Aggregate(0, (current, field) => Math.Max(current, Math.Abs(field.TimeSlice)));
             }
         }
 
@@ -144,7 +136,8 @@ namespace Encog.App.Analyst
         {
             get
             {
-                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice > 0).Aggregate(0, (current, field) => Math.Max(current, field.TimeSlice));
+                return _script.Normalize.NormalizedFields.Where(field => field.TimeSlice > 0)
+                              .Aggregate(0, (current, field) => Math.Max(current, field.TimeSlice));
             }
         }
 
@@ -157,7 +150,7 @@ namespace Encog.App.Analyst
 
 
         /// <summary>
-        /// Set the max iterations.
+        ///     Set the max iterations.
         /// </summary>
         public int MaxIteration { get; set; }
 
@@ -176,7 +169,7 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Set the current task.
+        ///     Set the current task.
         /// </summary>
         public QuantTask CurrentQuantTask
         {
@@ -190,9 +183,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Add a listener.
+        ///     Add a listener.
         /// </summary>
-        ///
         /// <param name="listener">The listener to add.</param>
         public void AddAnalystListener(IAnalystListener listener)
         {
@@ -200,9 +192,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Add a command.
+        ///     Add a command.
         /// </summary>
-        ///
         /// <param name="cmd">The command to add.</param>
         public void AddCommand(Cmd cmd)
         {
@@ -210,9 +201,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Analyze the specified file. Used by the wizard.
+        ///     Analyze the specified file. Used by the wizard.
         /// </summary>
-        ///
         /// <param name="file">The file to analyze.</param>
         /// <param name="headers">True if headers are present.</param>
         /// <param name="format">The format of the file.</param>
@@ -220,7 +210,7 @@ namespace Encog.App.Analyst
                             AnalystFileFormat format)
         {
             _script.Properties.SetFilename(AnalystWizard.FileRaw,
-                                          file.ToString());
+                                           file.ToString());
 
             _script.Properties.SetProperty(
                 ScriptProperties.SetupConfigInputHeaders, headers);
@@ -231,9 +221,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the input count.  This is the actual number of columns.
+        ///     Determine the input count.  This is the actual number of columns.
         /// </summary>
-        ///
         /// <returns>The input count.</returns>
         public int DetermineInputCount()
         {
@@ -250,10 +239,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the input field count, the fields are higher-level 
-        /// than columns.
+        ///     Determine the input field count, the fields are higher-level
+        ///     than columns.
         /// </summary>
-        ///
         /// <returns>The input field count.</returns>
         public int DetermineInputFieldCount()
         {
@@ -270,10 +258,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the output count, this is the number of output 
-        /// columns needed.
+        ///     Determine the output count, this is the number of output
+        ///     columns needed.
         /// </summary>
-        ///
         /// <returns>The output count.</returns>
         public int DetermineOutputCount()
         {
@@ -290,10 +277,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the number of output fields.  Fields are higher 
-        /// level than columns.
+        ///     Determine the number of output fields.  Fields are higher
+        ///     level than columns.
         /// </summary>
-        ///
         /// <returns>The output field count.</returns>
         public int DetermineOutputFieldCount()
         {
@@ -316,10 +302,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine how many unique columns there are.  Timeslices are not 
-        /// counted multiple times.
+        ///     Determine how many unique columns there are.  Timeslices are not
+        ///     counted multiple times.
         /// </summary>
-        ///
         /// <returns>The number of columns.</returns>
         public int DetermineUniqueColumns()
         {
@@ -343,10 +328,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the unique input field count.  Timeslices are not 
-        /// counted multiple times.
+        ///     Determine the unique input field count.  Timeslices are not
+        ///     counted multiple times.
         /// </summary>
-        ///
         /// <returns>The number of unique input fields.</returns>
         public int DetermineUniqueInputFieldCount()
         {
@@ -369,10 +353,9 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the unique output field count.  Do not count timeslices 
-        /// multiple times.
+        ///     Determine the unique output field count.  Do not count timeslices
+        ///     multiple times.
         /// </summary>
-        ///
         /// <returns>The unique output field count.</returns>
         public int DetermineUniqueOutputFieldCount()
         {
@@ -394,9 +377,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Download a raw file from the Internet.
+        ///     Download a raw file from the Internet.
         /// </summary>
-        ///
         public void Download()
         {
             Uri sourceURL = _script.Properties.GetPropertyURL(
@@ -414,9 +396,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Down load a file from the specified URL, uncompress if needed.
+        ///     Down load a file from the specified URL, uncompress if needed.
         /// </summary>
-        ///
         /// <param name="url">THe URL.</param>
         /// <param name="file">The file to down load into.</param>
         private void DownloadPage(Uri url, FileInfo file)
@@ -435,7 +416,7 @@ namespace Encog.App.Analyst
                 int size = 0;
                 var buffer = new byte[BotUtil.BufferSize];
                 WebRequest http = WebRequest.Create(url);
-                var response = (HttpWebResponse)http.GetResponse();
+                var response = (HttpWebResponse) http.GetResponse();
                 Stream istream = response.GetResponseStream();
 
 
@@ -452,7 +433,7 @@ namespace Encog.App.Analyst
 
                         if (lastUpdate > UpdateTime)
                         {
-                            Report(0, (int)(size / Format.MemoryMeg),
+                            Report(0, (int) (size/Format.MemoryMeg),
                                    "Downloading... " + Format.FormatMemory(size));
                             lastUpdate = 0;
                         }
@@ -465,15 +446,14 @@ namespace Encog.App.Analyst
 
                 if (url.ToString().ToLower().EndsWith(".gz"))
                 {
-
                     // Get the stream of the source file.
                     using (FileStream inFile = tempFile.OpenRead())
                     {
                         //Create the decompressed file.
                         using (FileStream outFile = file.Create())
                         {
-                            using (GZipStream Decompress = new GZipStream(inFile,
-                                    CompressionMode.Decompress))
+                            using (var Decompress = new GZipStream(inFile,
+                                                                   CompressionMode.Decompress))
                             {
                                 size = 0;
                                 lastUpdate = 0;
@@ -490,7 +470,8 @@ namespace Encog.App.Analyst
 
                                     if (lastUpdate > UpdateTime)
                                     {
-                                        Report(0, (int)(size / Format.MemoryMeg), "Uncompressing... " + Format.FormatMemory(size));
+                                        Report(0, (int) (size/Format.MemoryMeg),
+                                               "Uncompressing... " + Format.FormatMemory(size));
                                         lastUpdate = 0;
                                     }
                                     lastUpdate++;
@@ -506,7 +487,6 @@ namespace Encog.App.Analyst
                     file.Delete();
                     tempFile.MoveTo(file.ToString());
                 }
-
             }
             catch (IOException e)
             {
@@ -515,9 +495,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Execute a task.
+        ///     Execute a task.
         /// </summary>
-        ///
         /// <param name="task">The task to execute.</param>
         public void ExecuteTask(AnalystTask task)
         {
@@ -527,7 +506,7 @@ namespace Encog.App.Analyst
             foreach (String line in task.Lines)
             {
                 EncogLogging.Log(EncogLogging.LevelDebug, "Execute analyst line: "
-                                                           + line);
+                                                          + line);
                 ReportCommandBegin(total, current, line);
 
                 bool canceled = false;
@@ -570,14 +549,13 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Execute a task.
+        ///     Execute a task.
         /// </summary>
-        ///
         /// <param name="name">The name of the task to execute.</param>
         public void ExecuteTask(String name)
         {
             EncogLogging.Log(EncogLogging.LevelInfo, "Analyst execute task:"
-                                                      + name);
+                                                     + name);
             AnalystTask task = _script.GetTask(name);
             if (task == null)
             {
@@ -589,9 +567,8 @@ namespace Encog.App.Analyst
 
 
         /// <summary>
-        /// Load the specified script file.
+        ///     Load the specified script file.
         /// </summary>
-        ///
         /// <param name="file">The file to load.</param>
         public void Load(FileInfo file)
         {
@@ -624,9 +601,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Load from an input stream.
+        ///     Load from an input stream.
         /// </summary>
-        ///
         /// <param name="stream">The stream to load from.</param>
         public void Load(Stream stream)
         {
@@ -635,9 +611,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Load from the specified filename.
+        ///     Load from the specified filename.
         /// </summary>
-        ///
         /// <param name="filename">The filename to load from.</param>
         public void Load(String filename)
         {
@@ -645,9 +620,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Remove a listener.
+        ///     Remove a listener.
         /// </summary>
-        ///
         /// <param name="listener">The listener to remove.</param>
         public void RemoveAnalystListener(IAnalystListener listener)
         {
@@ -655,9 +629,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report progress.
+        ///     Report progress.
         /// </summary>
-        ///
         /// <param name="total">The total units.</param>
         /// <param name="current">The current unit.</param>
         /// <param name="message">The message.</param>
@@ -670,9 +643,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report a command has begin.
+        ///     Report a command has begin.
         /// </summary>
-        ///
         /// <param name="total">The total units.</param>
         /// <param name="current">The current unit.</param>
         /// <param name="name">The command name.</param>
@@ -686,9 +658,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report a command has ended.
+        ///     Report a command has ended.
         /// </summary>
-        ///
         /// <param name="canceled">Was the command canceled.</param>
         private void ReportCommandEnd(bool canceled)
         {
@@ -699,9 +670,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report training.
+        ///     Report training.
         /// </summary>
-        ///
         /// <param name="train">The trainer.</param>
         public void ReportTraining(IMLTrain train)
         {
@@ -712,9 +682,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report that training has begun.
+        ///     Report that training has begun.
         /// </summary>
-        ///
         public void ReportTrainingBegin()
         {
             foreach (IAnalystListener listener in _listeners)
@@ -724,9 +693,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Report that training has ended.
+        ///     Report that training has ended.
         /// </summary>
-        ///
         public void ReportTrainingEnd()
         {
             foreach (IAnalystListener listener in _listeners)
@@ -736,9 +704,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Save the script to a file.
+        ///     Save the script to a file.
         /// </summary>
-        ///
         /// <param name="file">The file to save to.</param>
         public void Save(FileInfo file)
         {
@@ -771,9 +738,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Save the script to a stream.
+        ///     Save the script to a stream.
         /// </summary>
-        ///
         /// <param name="stream">The stream to save to.</param>
         public void Save(Stream stream)
         {
@@ -781,9 +747,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Save the script to a filename.
+        ///     Save the script to a filename.
         /// </summary>
-        ///
         /// <param name="filename">The filename to save to.</param>
         public void Save(String filename)
         {
@@ -792,9 +757,8 @@ namespace Encog.App.Analyst
 
 
         /// <summary>
-        /// Should all commands be stopped.
+        ///     Should all commands be stopped.
         /// </summary>
-        ///
         /// <returns>True, if all commands should be stopped.</returns>
         private bool ShouldStopAll()
         {
@@ -809,9 +773,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Should the current command be stopped.
+        ///     Should the current command be stopped.
         /// </summary>
-        ///
         /// <returns>True if the current command should be stopped.</returns>
         public bool ShouldStopCommand()
         {
@@ -826,9 +789,8 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Stop the current task.
+        ///     Stop the current task.
         /// </summary>
-        ///
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void StopCurrentTask()
         {
@@ -839,7 +801,7 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the total number of columns.  
+        ///     Determine the total number of columns.
         /// </summary>
         /// <returns>The number of tes</returns>
         public int DetermineTotalColumns()
@@ -857,12 +819,11 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// Determine the total input field count, minus ignored fields.
+        ///     Determine the total input field count, minus ignored fields.
         /// </summary>
         /// <returns>The number of unique input fields.</returns>
         public int DetermineTotalInputFieldCount()
         {
-
             int result = 0;
             foreach (AnalystField field in _script.Normalize.NormalizedFields)
             {
@@ -878,7 +839,7 @@ namespace Encog.App.Analyst
         public int DetermineMaxTimeSlice()
         {
             int result = int.MinValue;
-            foreach (AnalystField field in this.Script.Normalize.NormalizedFields)
+            foreach (AnalystField field in Script.Normalize.NormalizedFields)
             {
                 result = Math.Max(result, field.TimeSlice);
             }
@@ -888,12 +849,11 @@ namespace Encog.App.Analyst
         public int DetermineMinTimeSlice()
         {
             int result = int.MaxValue;
-            foreach (AnalystField field in this.Script.Normalize.NormalizedFields)
+            foreach (AnalystField field in Script.Normalize.NormalizedFields)
             {
                 result = Math.Min(result, field.TimeSlice);
             }
             return result;
         }
-
     }
 }

@@ -20,12 +20,12 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 namespace Encog.App.Analyst.Script.Segregate
 {
     /// <summary>
-    /// Holds all of the segregation targets for a script.
+    ///     Holds all of the segregation targets for a script.
     /// </summary>
-    ///
     public class AnalystSegregate
     {
         /// <value>the segregateTargets to set.</value>

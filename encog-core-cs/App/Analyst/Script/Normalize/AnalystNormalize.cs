@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,26 +32,24 @@ using Encog.Util.Arrayutil;
 namespace Encog.App.Analyst.Script.Normalize
 {
     /// <summary>
-    /// This class holds information about the fields that the Encog Analyst will
-    /// normalize.
+    ///     This class holds information about the fields that the Encog Analyst will
+    ///     normalize.
     /// </summary>
-    ///
     public class AnalystNormalize
     {
         /// <summary>
-        /// The normalized fields.  These fields define the order and format 
-        /// that data will be presented to the ML method.
+        ///     The normalized fields.  These fields define the order and format
+        ///     that data will be presented to the ML method.
         /// </summary>
-        ///
         private readonly IList<AnalystField> _normalizedFields;
 
         /// <summary>
-        /// The parent script.
+        ///     The parent script.
         /// </summary>
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public AnalystNormalize(AnalystScript script)
         {
@@ -65,7 +64,7 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// The missing values handler.
+        ///     The missing values handler.
         /// </summary>
         public IHandleMissingValues MissingValues
         {
@@ -106,9 +105,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Calculate the output columns.
+        ///     Calculate the output columns.
         /// </summary>
-        ///
         /// <returns>The output columns.</returns>
         public int CalculateOutputColumns()
         {
@@ -133,9 +131,8 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Init the normalized fields.
+        ///     Init the normalized fields.
         /// </summary>
-        ///
         /// <param name="script">The script.</param>
         public void Init(AnalystScript script)
         {
@@ -176,9 +173,7 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");
@@ -186,7 +181,7 @@ namespace Encog.App.Analyst.Script.Normalize
             result.Append(": ");
             if (_normalizedFields != null)
             {
-                result.Append(_normalizedFields.ToString());
+                result.Append(_normalizedFields);
             }
             result.Append("]");
             return result.ToString();

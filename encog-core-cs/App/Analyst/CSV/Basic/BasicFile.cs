@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
@@ -30,104 +31,88 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV.Basic
 {
     /// <summary>
-    /// Many of the Encog quant CSV processors are based upon this class. This class
-    /// is not useful on its own. However, it does form the foundation for most Encog
-    /// CSV file processing.
+    ///     Many of the Encog quant CSV processors are based upon this class. This class
+    ///     is not useful on its own. However, it does form the foundation for most Encog
+    ///     CSV file processing.
     /// </summary>
-    ///
     public class BasicFile : QuantTask
     {
         /// <summary>
-        /// The default report interval.
+        ///     The default report interval.
         /// </summary>
-        ///
         private const int REPORT_INTERVAL = 10000;
 
         /// <summary>
-        /// Most Encog CSV classes must analyze a CSV file before actually processing
-        /// it. This property specifies if the file has been analyzed yet.
+        ///     Most Encog CSV classes must analyze a CSV file before actually processing
+        ///     it. This property specifies if the file has been analyzed yet.
         /// </summary>
-        ///
         private bool _analyzed;
 
         /// <summary>
-        /// True, if the process should stop.
+        ///     True, if the process should stop.
         /// </summary>
-        ///
         private bool _cancel;
 
         /// <summary>
-        /// The number of columns in the input file.
+        ///     The number of columns in the input file.
         /// </summary>
-        ///
         private int _columnCount;
 
         /// <summary>
-        /// The current record.
+        ///     The current record.
         /// </summary>
-        ///
         private int _currentRecord;
 
         /// <summary>
-        /// True, if input headers should be expected.
+        ///     True, if input headers should be expected.
         /// </summary>
-        ///
         private bool _expectInputHeaders;
 
         /// <summary>
-        /// The input filename. This is the file being analyzed/processed.
+        ///     The format of the input file.
         /// </summary>
-        ///
-        private FileInfo _inputFilename;
-
-        /// <summary>
-        /// The format of the input file.
-        /// </summary>
-        ///
         private CSVFormat _format;
 
         /// <summary>
-        /// The column headings from the input file.
+        ///     The input filename. This is the file being analyzed/processed.
         /// </summary>
-        ///
+        private FileInfo _inputFilename;
+
+        /// <summary>
+        ///     The column headings from the input file.
+        /// </summary>
         private String[] _inputHeadings;
 
         /// <summary>
-        /// The last time status was updated.
+        ///     The last time status was updated.
         /// </summary>
-        ///
         private int _lastUpdate;
 
         /// <summary>
-        /// Should output headers be produced?
+        ///     Should output headers be produced?
         /// </summary>
-        ///
         private bool _produceOutputHeaders;
 
         /// <summary>
-        /// The number of records to process. This is determined when the file is
-        /// analyzed.
+        ///     The number of records to process. This is determined when the file is
+        ///     analyzed.
         /// </summary>
-        ///
         private int _recordCount;
 
         /// <summary>
-        /// Allows status to be reported. Defaults to no status reported.
+        ///     Allows status to be reported. Defaults to no status reported.
         /// </summary>
-        ///
         private IStatusReportable _report;
 
         /// <summary>
-        /// The number of records to process before status is updated. Defaults to
-        /// 10k.
+        ///     The number of records to process before status is updated. Defaults to
+        ///     10k.
         /// </summary>
-        ///
         private int _reportInterval;
 
         /// <summary>
-        /// Construct the object, and set the defaults.
+        ///     Construct the object, and set the defaults.
         /// </summary>
-        ///
         public BasicFile()
         {
             Precision = EncogFramework.DefaultPrecision;
@@ -138,7 +123,7 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Set the column count.
+        ///     Set the column count.
         /// </summary>
         public int Count
         {
@@ -148,7 +133,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the input filename.
+        ///     Set the input filename.
         /// </summary>
         public FileInfo InputFilename
         {
@@ -158,7 +143,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the format.
+        ///     Set the format.
         /// </summary>
         public CSVFormat Format
         {
@@ -168,7 +153,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the input headings.
+        ///     Set the input headings.
         /// </summary>
         public String[] InputHeadings
         {
@@ -177,13 +162,13 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Set the precision to use.
+        ///     Set the precision to use.
         /// </summary>
         public int Precision { get; set; }
 
 
         /// <summary>
-        /// Set the record count.
+        ///     Set the record count.
         /// </summary>
         public int RecordCount
         {
@@ -200,7 +185,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the status reporting object.
+        ///     Set the status reporting object.
         /// </summary>
         public IStatusReportable Report
         {
@@ -210,7 +195,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the reporting interval.
+        ///     Set the reporting interval.
         /// </summary>
         public int ReportInterval
         {
@@ -220,7 +205,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set to true, if the file has been analyzed.
+        ///     Set to true, if the file has been analyzed.
         /// </summary>
         public bool Analyzed
         {
@@ -230,7 +215,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the flag to determine if we are expecting input headers.
+        ///     Set the flag to determine if we are expecting input headers.
         /// </summary>
         public bool ExpectInputHeaders
         {
@@ -252,9 +237,8 @@ namespace Encog.App.Analyst.CSV.Basic
         #region QuantTask Members
 
         /// <summary>
-        /// Request a stop.
+        ///     Request a stop.
         /// </summary>
-        ///
         public void RequestStop()
         {
             _cancel = true;
@@ -269,10 +253,9 @@ namespace Encog.App.Analyst.CSV.Basic
         #endregion
 
         /// <summary>
-        /// Append a separator. The separator will only be appended if the line is
-        /// not empty.  This is used to build comma(or other) separated lists.
+        ///     Append a separator. The separator will only be appended if the line is
+        ///     not empty.  This is used to build comma(or other) separated lists.
         /// </summary>
-        ///
         /// <param name="line">The line to append to.</param>
         /// <param name="format">The format to use.</param>
         public static void AppendSeparator(StringBuilder line,
@@ -287,10 +270,9 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Perform a basic analyze of the file. This method is used mostly
-        /// internally.
+        ///     Perform a basic analyze of the file. This method is used mostly
+        ///     internally.
         /// </summary>
-        ///
         public void PerformBasicCounts()
         {
             ResetStatus();
@@ -311,9 +293,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
-        ///
         /// <param name="outputFile">The name of the output file.</param>
         /// <returns>The output stream for the text file.</returns>
         public StreamWriter PrepareOutputFile(FileInfo outputFile)
@@ -338,7 +319,7 @@ namespace Encog.App.Analyst.CSV.Basic
                             }
                             line.Append("\"");
                             line.Append(str);
-                            line.Append("\"");                            
+                            line.Append("\"");
                         }
                     }
                     else
@@ -362,9 +343,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Read the headers from a CSV file. Used mostly internally.
+        ///     Read the headers from a CSV file. Used mostly internally.
         /// </summary>
-        ///
         /// <param name="csv">The CSV file to read from.</param>
         public void ReadHeaders(ReadCSV csv)
         {
@@ -398,9 +378,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Report that we are done. Used internally.
+        ///     Report that we are done. Used internally.
         /// </summary>
-        ///
         /// <param name="isAnalyzing">True if we are analyzing.</param>
         public void ReportDone(bool isAnalyzing)
         {
@@ -409,9 +388,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Report that we are done. Used internally.
+        ///     Report that we are done. Used internally.
         /// </summary>
-        ///
         /// <param name="task">The message.</param>
         public void ReportDone(String task)
         {
@@ -419,9 +397,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Reset the reporting stats. Used internally.
+        ///     Reset the reporting stats. Used internally.
         /// </summary>
-        ///
         public void ResetStatus()
         {
             _lastUpdate = 0;
@@ -429,7 +406,7 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");
@@ -443,9 +420,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Update the status. Used internally.
+        ///     Update the status. Used internally.
         /// </summary>
-        ///
         /// <param name="isAnalyzing">True if we are in the process of analyzing.</param>
         public void UpdateStatus(bool isAnalyzing)
         {
@@ -453,9 +429,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Report the current status.
+        ///     Report the current status.
         /// </summary>
-        ///
         /// <param name="task">The string to report.</param>
         public void UpdateStatus(String task)
         {
@@ -482,9 +457,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Validate that the file has been analyzed. Throw an error, if it has not.
+        ///     Validate that the file has been analyzed. Throw an error, if it has not.
         /// </summary>
-        ///
         public void ValidateAnalyzed()
         {
             if (!_analyzed)
@@ -494,9 +468,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Write a row to the output file.
+        ///     Write a row to the output file.
         /// </summary>
-        ///
         /// <param name="tw">The output stream.</param>
         /// <param name="row">The row to write out.</param>
         public void WriteRow(StreamWriter tw, LoadedRow row)

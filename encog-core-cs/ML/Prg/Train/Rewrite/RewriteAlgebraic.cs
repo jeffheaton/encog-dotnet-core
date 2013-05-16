@@ -20,31 +20,43 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Encog.ML.EA.Genome;
 using Encog.ML.EA.Rules;
 using Encog.ML.Prg.ExpValue;
 using Encog.ML.Prg.Ext;
-using Encog.ML.EA.Genome;
 
 namespace Encog.ML.Prg.Train.Rewrite
 {
     /// <summary>
-    /// This class is used to rewrite algebraic expressions into more simple forms.
-    /// This is by no means a complete set of rewrite rules, and will likely be
-    /// extended in the future.
+    ///     This class is used to rewrite algebraic expressions into more simple forms.
+    ///     This is by no means a complete set of rewrite rules, and will likely be
+    ///     extended in the future.
     /// </summary>
     public class RewriteAlgebraic : IRewriteRule
     {
         /// <summary>
-        /// Has the expression been rewritten.
+        ///     Has the expression been rewritten.
         /// </summary>
-        private bool rewritten;
+        private bool _rewritten;
+
+        /// <inheritdoc />
+        public bool Rewrite(IGenome g)
+        {
+            _rewritten = false;
+            var program = (EncogProgram) g;
+            ProgramNode node = program.RootNode;
+            ProgramNode rewrittenRoot = InternalRewrite(node);
+            if (rewrittenRoot != null)
+            {
+                program.RootNode = rewrittenRoot;
+            }
+            return _rewritten;
+        }
 
         /// <summary>
-        /// Create an floating point numeric constant. 
+        ///     Create an floating point numeric constant.
         /// </summary>
         /// <param name="prg">The program to create the constant for.</param>
         /// <param name="v">The value that the constant represents.</param>
@@ -52,13 +64,13 @@ namespace Encog.ML.Prg.Train.Rewrite
         private ProgramNode CreateNumericConst(EncogProgram prg, double v)
         {
             ProgramNode result = prg.Functions.FactorProgramNode("#const",
-                    prg, new ProgramNode[] { });
+                                                                 prg, new ProgramNode[] {});
             result.Data[0] = new ExpressionValue(v);
             return result;
         }
 
         /// <summary>
-        /// Create an integer numeric constant. 
+        ///     Create an integer numeric constant.
         /// </summary>
         /// <param name="prg">The program to create the constant for.</param>
         /// <param name="v">The value that the constant represents.</param>
@@ -66,13 +78,13 @@ namespace Encog.ML.Prg.Train.Rewrite
         private ProgramNode CreateNumericConst(EncogProgram prg, int v)
         {
             ProgramNode result = prg.Functions.FactorProgramNode("#const",
-                    prg, new ProgramNode[] { });
+                                                                 prg, new ProgramNode[] {});
             result.Data[0] = new ExpressionValue(v);
             return result;
         }
 
         /// <summary>
-        /// Attempt to rewrite the specified node. 
+        ///     Attempt to rewrite the specified node.
         /// </summary>
         /// <param name="parent">The parent node to start from.</param>
         /// <returns>The rewritten node, or the same node if no rewrite occurs.</returns>
@@ -94,13 +106,13 @@ namespace Encog.ML.Prg.Train.Rewrite
             // try children
             for (int i = 0; i < rewrittenParent.ChildNodes.Count; i++)
             {
-                ProgramNode childNode = (ProgramNode)rewrittenParent.ChildNodes[i];
+                var childNode = (ProgramNode) rewrittenParent.ChildNodes[i];
                 ProgramNode rewriteChild = InternalRewrite(childNode);
                 if (childNode != rewriteChild)
                 {
                     rewrittenParent.ChildNodes.RemoveAt(i);
                     rewrittenParent.ChildNodes.Insert(i, rewriteChild);
-                    this.rewritten = true;
+                    _rewritten = true;
                 }
             }
 
@@ -108,7 +120,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Determine if the specified node is constant. 
+        ///     Determine if the specified node is constant.
         /// </summary>
         /// <param name="node">The node to check.</param>
         /// <param name="v">The constant to compare against.</param>
@@ -125,22 +137,8 @@ namespace Encog.ML.Prg.Train.Rewrite
             return false;
         }
 
-        /// <inheritdoc/>
-        public bool Rewrite(IGenome g)
-        {
-            this.rewritten = false;
-            EncogProgram program = (EncogProgram)g;
-            ProgramNode node = program.RootNode;
-            ProgramNode rewrittenRoot = InternalRewrite(node);
-            if (rewrittenRoot != null)
-            {
-                program.RootNode = rewrittenRoot;
-            }
-            return this.rewritten;
-        }
-
         /// <summary>
-        /// Try to rewrite --x. 
+        ///     Try to rewrite --x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -152,7 +150,7 @@ namespace Encog.ML.Prg.Train.Rewrite
                 if (child.Name.Equals("-"))
                 {
                     ProgramNode grandChild = child.GetChildNode(0);
-                    this.rewritten = true;
+                    _rewritten = true;
                     return grandChild;
                 }
             }
@@ -160,7 +158,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite --x.
+        ///     Try to rewrite --x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -181,7 +179,7 @@ namespace Encog.ML.Prg.Train.Rewrite
                         {
                             child2.Data[0] = new ExpressionValue(-v2);
                             parent = parent.Owner.Context.Functions.FactorProgramNode(
-                                "+", parent.Owner, new ProgramNode[] { child1, child2 });
+                                "+", parent.Owner, new[] {child1, child2});
                         }
                     }
                     else if (v.IsInt)
@@ -191,8 +189,8 @@ namespace Encog.ML.Prg.Train.Rewrite
                         {
                             child2.Data[0] = new ExpressionValue(-v2);
                             parent = parent.Owner.Context.Functions
-                                    .FactorProgramNode("+", parent.Owner,
-                                            new ProgramNode[] { child1, child2 });
+                                           .FactorProgramNode("+", parent.Owner,
+                                                              new[] {child1, child2});
                         }
                     }
                 }
@@ -201,7 +199,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite x-0. 
+        ///     Try to rewrite x-0.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -220,21 +218,21 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite x^1.
+        ///     Try to rewrite x^1.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
         private ProgramNode TryOnePower(ProgramNode parent)
         {
             if (parent.Template == StandardExtensions.EXTENSION_POWER
-                    || parent.Template == StandardExtensions.EXTENSION_POWFN)
+                || parent.Template == StandardExtensions.EXTENSION_POWFN)
             {
                 ProgramNode child = parent.GetChildNode(0);
                 if (child.Template == StandardExtensions.EXTENSION_CONST_SUPPORT)
                 {
                     if (Math.Abs(child.Data[0].ToFloatValue() - 1) < EncogFramework.DefaultDoubleEqual)
                     {
-                        this.rewritten = true;
+                        _rewritten = true;
                         return CreateNumericConst(parent.Owner, 1);
                     }
                 }
@@ -244,7 +242,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite x+-c.
+        ///     Try to rewrite x+-c.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -256,11 +254,14 @@ namespace Encog.ML.Prg.Train.Rewrite
                 ProgramNode child2 = parent.GetChildNode(1);
 
                 if (child2.Name.Equals("-")
-                        && child2.ChildNodes.Count == 1)
+                    && child2.ChildNodes.Count == 1)
                 {
                     parent = parent.Owner.Context.Functions.FactorProgramNode(
-                        "-", parent.Owner, new ProgramNode[] { child1,
-										child2.GetChildNode(0) });
+                        "-", parent.Owner, new[]
+                            {
+                                child1,
+                                child2.GetChildNode(0)
+                            });
                 }
                 else if (child2.Name.Equals("#const"))
                 {
@@ -272,7 +273,8 @@ namespace Encog.ML.Prg.Train.Rewrite
                         {
                             child2.Data[0] = new ExpressionValue(-v2);
                             parent = parent.Owner.Context.Functions.FactorProgramNode("-",
-                                parent.Owner, new ProgramNode[] { child1, child2 });
+                                                                                      parent.Owner,
+                                                                                      new[] {child1, child2});
                         }
                     }
                     else if (v.IsInt)
@@ -282,8 +284,8 @@ namespace Encog.ML.Prg.Train.Rewrite
                         {
                             child2.Data[0] = new ExpressionValue(-v2);
                             parent = parent.Owner.Context.Functions
-                                    .FactorProgramNode("-", parent.Owner,
-                                            new ProgramNode[] { child1, child2 });
+                                           .FactorProgramNode("-", parent.Owner,
+                                                              new[] {child1, child2});
                         }
                     }
                 }
@@ -292,14 +294,14 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        ///  Try to rewrite x^0. 
+        ///     Try to rewrite x^0.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
         private ProgramNode TryPowerZero(ProgramNode parent)
         {
             if (parent.Template == StandardExtensions.EXTENSION_POWER
-                    || parent.Template == StandardExtensions.EXTENSION_POWFN)
+                || parent.Template == StandardExtensions.EXTENSION_POWFN)
             {
                 ProgramNode child0 = parent.GetChildNode(0);
                 ProgramNode child1 = parent.GetChildNode(1);
@@ -317,24 +319,24 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite x+x, x-x, x*x, x/x. 
+        ///     Try to rewrite x+x, x-x, x*x, x/x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
         private ProgramNode TryVarOpVar(ProgramNode parent)
         {
             if (parent.ChildNodes.Count == 2
-                    && parent.Name.Length == 1
-                    && "+-*/".IndexOf(parent.Name[0]) != -1)
+                && parent.Name.Length == 1
+                && "+-*/".IndexOf(parent.Name[0]) != -1)
             {
                 ProgramNode child1 = parent.GetChildNode(0);
                 ProgramNode child2 = parent.GetChildNode(1);
 
                 if (child1.Name.Equals("#var")
-                        && child2.Name.Equals("#var"))
+                    && child2.Name.Equals("#var"))
                 {
                     if (child1.Data[0].ToIntValue() == child2.Data[0]
-                            .ToIntValue())
+                                                           .ToIntValue())
                     {
                         switch (parent.Name[0])
                         {
@@ -342,23 +344,27 @@ namespace Encog.ML.Prg.Train.Rewrite
                                 parent = CreateNumericConst(parent.Owner, 0);
                                 break;
                             case '+':
-                                parent = parent.Owner.Functions.FactorProgramNode("*",parent.Owner,
-                                       new ProgramNode[] {
-												CreateNumericConst(
-														parent.Owner, 2),
-												child1 });
+                                parent = parent.Owner.Functions.FactorProgramNode("*", parent.Owner,
+                                                                                  new[]
+                                                                                      {
+                                                                                          CreateNumericConst(
+                                                                                              parent.Owner, 2),
+                                                                                          child1
+                                                                                      });
                                 break;
                             case '*':
                                 parent = parent
-                                        .Owner
-                                        .Functions
-                                        .FactorProgramNode(
-                                                "^",
-                                                parent.Owner,
-                                                new ProgramNode[] {
-												child1,
-												CreateNumericConst(
-														parent.Owner, 2) });
+                                    .Owner
+                                    .Functions
+                                    .FactorProgramNode(
+                                        "^",
+                                        parent.Owner,
+                                        new[]
+                                            {
+                                                child1,
+                                                CreateNumericConst(
+                                                    parent.Owner, 2)
+                                            });
                                 break;
                             case '/':
                                 parent = CreateNumericConst(parent.Owner, 1);
@@ -371,7 +377,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite 0/x. 
+        ///     Try to rewrite 0/x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -386,8 +392,8 @@ namespace Encog.ML.Prg.Train.Rewrite
                 {
                     if (IsConstValue(child1, 0))
                     {
-                        this.rewritten = true;
-                        return this.CreateNumericConst(parent.Owner, 0);
+                        _rewritten = true;
+                        return CreateNumericConst(parent.Owner, 0);
                     }
                 }
             }
@@ -396,7 +402,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite 0*x.
+        ///     Try to rewrite 0*x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -409,8 +415,8 @@ namespace Encog.ML.Prg.Train.Rewrite
 
                 if (IsConstValue(child1, 0) || IsConstValue(child2, 0))
                 {
-                    this.rewritten = true;
-                    return this.CreateNumericConst(parent.Owner, 0);
+                    _rewritten = true;
+                    return CreateNumericConst(parent.Owner, 0);
                 }
             }
 
@@ -418,7 +424,7 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Try to rewrite 0+x. 
+        ///     Try to rewrite 0+x.
         /// </summary>
         /// <param name="parent">The parent node to attempt to rewrite.</param>
         /// <returns>The rewritten node, if it was rewritten.</returns>
@@ -431,16 +437,15 @@ namespace Encog.ML.Prg.Train.Rewrite
 
                 if (IsConstValue(child1, 0))
                 {
-                    this.rewritten = true;
+                    _rewritten = true;
                     return child2;
                 }
 
                 if (IsConstValue(child2, 0))
                 {
-                    this.rewritten = true;
+                    _rewritten = true;
                     return child1;
                 }
-
             }
 
             return parent;

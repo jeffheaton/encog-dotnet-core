@@ -20,51 +20,49 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.App.Analyst.Script;
-using Encog.App.Analyst;
-using Encog.App.Analyst.Script.Prop;
 using System.IO;
+using System.Text;
+using Encog.App.Analyst;
+using Encog.App.Analyst.Script;
+using Encog.App.Analyst.Script.Normalize;
+using Encog.App.Analyst.Script.Prop;
 using Encog.ML;
-using Encog.Util;
-using Encog.Persist;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
-using Encog.Util.File;
-using Encog.App.Analyst.Script.Normalize;
+using Encog.Persist;
+using Encog.Util;
 using Encog.Util.Arrayutil;
+using Encog.Util.File;
 
 namespace Encog.App.Generate.Generators.NinjaScript
 {
     /// <summary>
-    /// Generate NinjaScript.
+    ///     Generate NinjaScript.
     /// </summary>
     public class GenerateNinjaScript : AbstractTemplateGenerator
     {
-
         public override String TemplatePath
         {
-            get
-            {
-                return "org/encog/data/ninja.cs";
-            }
+            get { return "org/encog/data/ninja.cs"; }
         }
 
+        public override String NullArray
+        {
+            get { return "null"; }
+        }
 
 
         private void AddCols()
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public readonly string[] ENCOG_COLS = {");
 
             bool first = true;
 
-            foreach (DataField df in this.Analyst.Script.Fields)
+            foreach (DataField df in Analyst.Script.Fields)
             {
-
                 if (string.Compare(df.Name, "time", true) != 0 && string.Compare(df.Name, "prediction", true) != 0)
                 {
                     if (!first)
@@ -90,9 +88,9 @@ namespace Encog.App.Generate.Generators.NinjaScript
             String processID = analyst.Script.Properties.GetPropertyString(ScriptProperties.PROCESS_CONFIG_SOURCE_FILE);
 
             String methodID = analyst
-                    .Script
-                    .Properties
-                    .GetPropertyString(ScriptProperties.MlConfigMachineLearningFile);
+                .Script
+                .Properties
+                .GetPropertyString(ScriptProperties.MlConfigMachineLearningFile);
 
             FileInfo methodFile = analyst.Script.ResolveFilename(methodID);
 
@@ -116,11 +114,11 @@ namespace Encog.App.Generate.Generators.NinjaScript
             int[] activation = null;
             double[] p = null;
 
-            if (methodFile.Exists )
+            if (methodFile.Exists)
             {
-                method = (IMLMethod)EncogDirectoryPersistence
-                        .LoadObject(methodFile);
-                FlatNetwork flat = ((BasicNetwork)method).Flat;
+                method = (IMLMethod) EncogDirectoryPersistence
+                                         .LoadObject(methodFile);
+                FlatNetwork flat = ((BasicNetwork) method).Flat;
 
                 contextTargetOffset = flat.ContextTargetOffset;
                 contextTargetSize = flat.ContextTargetSize;
@@ -143,21 +141,22 @@ namespace Encog.App.Generate.Generators.NinjaScript
             AddLine("#region Encog Data");
             IndentIn();
             AddNameValue("public const string EXPORT_FILENAME", "\""
-                    + FileUtil.ToStringLiteral(processFile) + "\"");
+                                                                + FileUtil.ToStringLiteral(processFile) + "\"");
             AddCols();
 
             AddNameValue("private readonly int[] _contextTargetOffset",
-                    contextTargetOffset);
+                         contextTargetOffset);
             AddNameValue("private readonly int[] _contextTargetSize",
-                    contextTargetSize);
-            AddNameValue("private const bool _hasContext", hasContext ? "true"
-                    : "false");
+                         contextTargetSize);
+            AddNameValue("private const bool _hasContext", hasContext
+                                                               ? "true"
+                                                               : "false");
             AddNameValue("private const int _inputCount", inputCount);
             AddNameValue("private readonly int[] _layerContextCount",
-                    layerContextCount);
+                         layerContextCount);
             AddNameValue("private readonly int[] _layerCounts", layerCounts);
             AddNameValue("private readonly int[] _layerFeedCounts",
-                    layerFeedCounts);
+                         layerFeedCounts);
             AddNameValue("private readonly int[] _layerIndex", layerIndex);
             AddNameValue("private readonly double[] _layerOutput", layerOutput);
             AddNameValue("private readonly double[] _layerSums", layerSums);
@@ -171,68 +170,75 @@ namespace Encog.App.Generate.Generators.NinjaScript
             IndentLevel = 0;
         }
 
-        private void ProcessCalc() {
-		AnalystField firstOutputField = null;
-		int barsNeeded = Math.Abs(Analyst.DetermineMinTimeSlice());
+        private void ProcessCalc()
+        {
+            AnalystField firstOutputField = null;
+            int barsNeeded = Math.Abs(Analyst.DetermineMinTimeSlice());
 
-		IndentLevel = 2;
-		AddLine("if( _inputCount>0 && CurrentBar>=" + barsNeeded + " )");
-		AddLine("{");
-		IndentIn();
-		AddLine("double[] input = new double[_inputCount];");
-		AddLine("double[] output = new double[_outputCount];");
+            IndentLevel = 2;
+            AddLine("if( _inputCount>0 && CurrentBar>=" + barsNeeded + " )");
+            AddLine("{");
+            IndentIn();
+            AddLine("double[] input = new double[_inputCount];");
+            AddLine("double[] output = new double[_outputCount];");
 
-		int idx = 0;
-		foreach (AnalystField field in Analyst.Script.Normalize
-				.NormalizedFields) {
-			if (field.Input ) {
-				String str;
-				DataField df = this.Analyst.Script
-						.FindDataField(field.Name);
+            int idx = 0;
+            foreach (AnalystField field in Analyst.Script.Normalize
+                                                  .NormalizedFields)
+            {
+                if (field.Input)
+                {
+                    String str;
+                    DataField df = Analyst.Script
+                                          .FindDataField(field.Name);
 
-				switch (field.Action ) {
-				case NormalizationAction.PassThrough:
-					str = EngineArray.Replace(df.Source,"##", ""+ (-field.TimeSlice));
-					AddLine("input[" + idx + "]=" + str + ";");
-					idx++;
-					break;
-                case NormalizationAction.Normalize:
-					str = EngineArray.Replace(df.Source,"##",""+ (-field.TimeSlice));
-					AddLine("input[" + idx + "]=Norm(" + str + ","
-							+ field.NormalizedHigh + ","
-							+ field.NormalizedLow + ","
-							+ field.ActualHigh + ","
-							+ field.ActualLow + ");");
-					idx++;
-					break;
-                case NormalizationAction.Ignore:
-					break;
-				default:
-					throw new AnalystCodeGenerationError(
-							"Can't generate Ninjascript code, unsupported normalizatoin action: "
-									+ field.Action.ToString());
-				}
-			}
-			if (field.Output) {
-				if (firstOutputField == null) {
-					firstOutputField = field;
-				}
-			}
-		}
+                    switch (field.Action)
+                    {
+                        case NormalizationAction.PassThrough:
+                            str = EngineArray.Replace(df.Source, "##", "" + (-field.TimeSlice));
+                            AddLine("input[" + idx + "]=" + str + ";");
+                            idx++;
+                            break;
+                        case NormalizationAction.Normalize:
+                            str = EngineArray.Replace(df.Source, "##", "" + (-field.TimeSlice));
+                            AddLine("input[" + idx + "]=Norm(" + str + ","
+                                    + field.NormalizedHigh + ","
+                                    + field.NormalizedLow + ","
+                                    + field.ActualHigh + ","
+                                    + field.ActualLow + ");");
+                            idx++;
+                            break;
+                        case NormalizationAction.Ignore:
+                            break;
+                        default:
+                            throw new AnalystCodeGenerationError(
+                                "Can't generate Ninjascript code, unsupported normalizatoin action: "
+                                + field.Action.ToString());
+                    }
+                }
+                if (field.Output)
+                {
+                    if (firstOutputField == null)
+                    {
+                        firstOutputField = field;
+                    }
+                }
+            }
 
-		if (firstOutputField != null) {
-			AddLine("Compute(input,output);");
-			AddLine("Output.Set(DeNorm(output[0]" + ","
-					+ firstOutputField.NormalizedHigh + ","
-					+ firstOutputField.NormalizedLow + ","
-					+ firstOutputField.ActualHigh + ","
-					+ firstOutputField.ActualLow + "));");
-			IndentOut();
-		}
+            if (firstOutputField != null)
+            {
+                AddLine("Compute(input,output);");
+                AddLine("Output.Set(DeNorm(output[0]" + ","
+                        + firstOutputField.NormalizedHigh + ","
+                        + firstOutputField.NormalizedLow + ","
+                        + firstOutputField.ActualHigh + ","
+                        + firstOutputField.ActualLow + "));");
+                IndentOut();
+            }
 
-		AddLine("}");
-		IndentLevel = 2;
-	}
+            AddLine("}");
+            IndentLevel = 2;
+        }
 
         private void ProcessObtain()
         {
@@ -268,18 +274,6 @@ namespace Encog.App.Generate.Generators.NinjaScript
                 ProcessObtain();
             }
             IndentLevel = 0;
-
         }
-
-
-
-        public override String NullArray
-        {
-            get
-            {
-                return "null";
-            }
-        }
-
     }
 }

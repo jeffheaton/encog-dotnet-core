@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV.Normalize;
@@ -31,34 +32,31 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// The normalize command is used to normalize data. Data normalization generally
-    /// maps values from one number range to another, typically to -1 to 1.
+    ///     The normalize command is used to normalize data. Data normalization generally
+    ///     maps values from one number range to another, typically to -1 to 1.
     /// </summary>
-    ///
     public class CmdNormalize : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "NORMALIZE";
 
         /// <summary>
-        /// Construct the normalize command.
+        ///     Construct the normalize command.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         public CmdNormalize(EncogAnalyst theAnalyst) : base(theAnalyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames

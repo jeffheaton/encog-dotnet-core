@@ -20,48 +20,44 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
 using Encog.App.Analyst.CSV.Basic;
+using Encog.App.Analyst.Missing;
 using Encog.App.Analyst.Script.Normalize;
 using Encog.App.Analyst.Util;
 using Encog.App.Quant;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
 using Encog.Util.Logging;
-using Encog.App.Analyst.Missing;
 
 namespace Encog.App.Analyst.CSV.Normalize
 {
     /// <summary>
-    /// Normalize, or denormalize, a CSV file.
+    ///     Normalize, or denormalize, a CSV file.
     /// </summary>
-    ///
     public class AnalystNormalizeCSV : BasicFile
     {
         /// <summary>
-        /// The analyst to use.
+        ///     The analyst to use.
         /// </summary>
-        ///
         private EncogAnalyst _analyst;
 
         /// <summary>
-        /// THe headers.
+        ///     THe headers.
         /// </summary>
-        ///
         private CSVHeaders _analystHeaders;
 
         /// <summary>
-        /// Used to process time series.
+        ///     Used to process time series.
         /// </summary>
-        ///
         private TimeSeriesUtil _series;
 
         /// <summary>
-        /// Extract fields from a file into a numeric array for machine learning.
+        ///     Extract fields from a file into a numeric array for machine learning.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         /// <param name="headers">The headers for the input data.</param>
         /// <param name="csv">The CSV that holds the input data.</param>
@@ -123,7 +119,7 @@ namespace Encog.App.Analyst.CSV.Normalize
                     {
                         double d = csv.Format.Parse(str);
                         output[outputIndex++] = d;
-                    } 
+                    }
                     else
                     {
                         double[] d = stat.Encode(str.Trim());
@@ -140,9 +136,8 @@ namespace Encog.App.Analyst.CSV.Normalize
         }
 
         /// <summary>
-        /// Analyze the file.
+        ///     Analyze the file.
         /// </summary>
-        ///
         /// <param name="inputFilename">The input file.</param>
         /// <param name="expectInputHeaders">True, if input headers are present.</param>
         /// <param name="inputFormat">The format.</param>
@@ -158,7 +153,7 @@ namespace Encog.App.Analyst.CSV.Normalize
             Analyzed = true;
 
             _analystHeaders = new CSVHeaders(inputFilename, expectInputHeaders,
-                                            inputFormat);
+                                             inputFormat);
 
 
             foreach (AnalystField field  in  _analyst.Script.Normalize.NormalizedFields)
@@ -167,13 +162,12 @@ namespace Encog.App.Analyst.CSV.Normalize
             }
 
             _series = new TimeSeriesUtil(_analyst, true,
-                                        _analystHeaders.Headers);
+                                         _analystHeaders.Headers);
         }
 
         /// <summary>
-        /// Normalize the input file. Write to the specified file.
+        ///     Normalize the input file. Write to the specified file.
         /// </summary>
-        ///
         /// <param name="file">The file to write to.</param>
         public void Normalize(FileInfo file)
         {
@@ -191,7 +185,7 @@ namespace Encog.App.Analyst.CSV.Normalize
                 csv = new ReadCSV(InputFilename.ToString(),
                                   ExpectInputHeaders, Format);
 
-				file.Delete();
+                file.Delete();
                 tw = new StreamWriter(file.OpenWrite());
 
                 // write headers, if needed
@@ -259,10 +253,9 @@ namespace Encog.App.Analyst.CSV.Normalize
         }
 
         /// <summary>
-        /// Set the source file. This is useful if you want to use pre-existing stats
-        /// to normalize something and skip the analyze step.
+        ///     Set the source file. This is useful if you want to use pre-existing stats
+        ///     to normalize something and skip the analyze step.
         /// </summary>
-        ///
         /// <param name="file">The file to use.</param>
         /// <param name="headers">True, if headers are to be expected.</param>
         /// <param name="format">The format of the CSV file.</param>
@@ -275,9 +268,8 @@ namespace Encog.App.Analyst.CSV.Normalize
         }
 
         /// <summary>
-        /// Write the headers.
+        ///     Write the headers.
         /// </summary>
-        ///
         /// <param name="tw">The output stream.</param>
         private void WriteHeaders(StreamWriter tw)
         {

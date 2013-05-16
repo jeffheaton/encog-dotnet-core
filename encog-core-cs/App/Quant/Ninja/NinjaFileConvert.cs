@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System.IO;
 using System.Text;
 using Encog.App.Analyst.CSV.Basic;
@@ -28,13 +29,13 @@ using Encog.Util.CSV;
 namespace Encog.App.Quant.Ninja
 {
     /// <summary>
-    /// A simple class to convert financial data files into the format used by NinjaTrader for
-    /// input.
+    ///     A simple class to convert financial data files into the format used by NinjaTrader for
+    ///     input.
     /// </summary>
     public class NinjaFileConvert : BasicCachedFile
     {
         /// <summary>
-        /// Process the file and output to the target file.
+        ///     Process the file and output to the target file.
         /// </summary>
         /// <param name="target">The target file to write to.</param>
         public void Process(string target)
@@ -69,7 +70,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// Analyze the input file.
+        ///     Analyze the input file.
         /// </summary>
         /// <param name="input">The name of the input file.</param>
         /// <param name="headers">True, if headers are present.</param>

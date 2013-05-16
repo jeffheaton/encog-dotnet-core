@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,26 +31,23 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV.Filter
 {
     /// <summary>
-    /// This class can be used to remove certain rows from a CSV. You can remove rows
-    /// where a specific field has a specific value
+    ///     This class can be used to remove certain rows from a CSV. You can remove rows
+    ///     where a specific field has a specific value
     /// </summary>
-    ///
     public class FilterCSV : BasicFile
     {
         /// <summary>
-        /// The excluded fields.
+        ///     The excluded fields.
         /// </summary>
-        ///
         private readonly IList<ExcludedField> _excludedFields;
 
         /// <summary>
-        /// A count of the filtered rows.
+        ///     A count of the filtered rows.
         /// </summary>
-        ///
         private int _filteredCount;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public FilterCSV()
         {
@@ -64,17 +62,18 @@ namespace Encog.App.Analyst.CSV.Filter
         }
 
 
-        /// <value>A count of the filtered rows. This is the resulting line count
-        /// for the output CSV.</value>
+        /// <value>
+        ///     A count of the filtered rows. This is the resulting line count
+        ///     for the output CSV.
+        /// </value>
         public int FilteredRowCount
         {
             get { return _filteredCount; }
         }
 
         /// <summary>
-        /// Analyze the file.
+        ///     Analyze the file.
         /// </summary>
-        ///
         /// <param name="inputFile">The name of the input file.</param>
         /// <param name="headers">True, if headers are expected.</param>
         /// <param name="format">The format.</param>
@@ -91,9 +90,8 @@ namespace Encog.App.Analyst.CSV.Filter
         }
 
         /// <summary>
-        /// Exclude rows where the specified field has the specified value.
+        ///     Exclude rows where the specified field has the specified value.
         /// </summary>
-        ///
         /// <param name="fieldNumber">The field number.</param>
         /// <param name="fieldValue">The field value.</param>
         public void Exclude(int fieldNumber, String fieldValue)
@@ -103,9 +101,8 @@ namespace Encog.App.Analyst.CSV.Filter
 
 
         /// <summary>
-        /// Process the input file.
+        ///     Process the input file.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file to write to.</param>
         public void Process(FileInfo outputFile)
         {
@@ -132,9 +129,8 @@ namespace Encog.App.Analyst.CSV.Filter
         }
 
         /// <summary>
-        /// Determine if the specified row should be processed, or not.
+        ///     Determine if the specified row should be processed, or not.
         /// </summary>
-        ///
         /// <param name="row">The row.</param>
         /// <returns>True, if the row should be processed.</returns>
         private bool ShouldProcess(LoadedRow row)

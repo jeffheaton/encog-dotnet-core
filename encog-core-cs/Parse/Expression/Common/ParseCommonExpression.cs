@@ -52,7 +52,7 @@ namespace Encog.Parse.Expression.Common
         private ProgramNode rootNode;
         private bool unary;
         private IProgramExtensionTemplate LEFT_PAREN = new BasicTemplate(
-                BasicTemplate.NO_PREC, "(", NodeType.None, false, 0, null, null, null);
+                BasicTemplate.NoPrec, "(", NodeType.None, false, 0, null, null, null);
 
         private Stack<IProgramExtensionTemplate> functionStack = new Stack<IProgramExtensionTemplate>(
                 100);

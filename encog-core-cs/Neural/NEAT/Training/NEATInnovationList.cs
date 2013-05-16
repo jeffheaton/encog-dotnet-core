@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.Neural.NEAT.Training
@@ -45,6 +44,7 @@ namespace Encog.Neural.NEAT.Training
     /// Regularities
     /// 
     /// Automatic feature selection in neuroevolution
+    /// </summary>
     [Serializable]
     public class NEATInnovationList
     {
@@ -56,7 +56,7 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// The list of innovations.
         /// </summary>
-        private IDictionary<string, NEATInnovation> list = new Dictionary<String, NEATInnovation>();
+        private readonly IDictionary<string, NEATInnovation> _list = new Dictionary<String, NEATInnovation>();
 
         /// <summary>
         /// The default constructor, used mainly for persistance.
@@ -73,7 +73,7 @@ namespace Encog.Neural.NEAT.Training
         /// <returns>The newly created key.</returns>
         public static String ProduceKeyNeuron(long id)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("n:");
             result.Append(id);
             return result.ToString();
@@ -82,32 +82,32 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Produce a key for a split neuron.
         /// </summary>
-        /// <param name="fromID"></param>
-        /// <param name="toID"></param>
+        /// <param name="fromId"></param>
+        /// <param name="toId"></param>
         /// <returns></returns>
-        public static String ProduceKeyNeuronSplit(long fromID, long toID)
+        public static String ProduceKeyNeuronSplit(long fromId, long toId)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("ns:");
-            result.Append(fromID);
+            result.Append(fromId);
             result.Append(":");
-            result.Append(toID);
+            result.Append(toId);
             return result.ToString();
         }
 
         /// <summary>
         /// Produce a key for a link.
         /// </summary>
-        /// <param name="fromID">The from id.</param>
-        /// <param name="toID">The to id.</param>
+        /// <param name="fromId">The from id.</param>
+        /// <param name="toId">The to id.</param>
         /// <returns>The key for the link.</returns>
-        public static String ProduceKeyLink(long fromID, long toID)
+        public static String ProduceKeyLink(long fromId, long toId)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("l:");
-            result.Append(fromID);
+            result.Append(fromId);
             result.Append(":");
-            result.Append(toID);
+            result.Append(toId);
             return result.ToString();
         }
 
@@ -118,28 +118,28 @@ namespace Encog.Neural.NEAT.Training
         public NEATInnovationList(NEATPopulation population)
         {
 
-            this.Population = population;
+            Population = population;
 
-            this.FindInnovation(Population.AssignGeneID()); // bias
+            FindInnovation(Population.AssignGeneId()); // bias
 
             // input neurons
             for (int i = 0; i < Population.InputCount; i++)
             {
-                this.FindInnovation(Population.AssignGeneID());
+                FindInnovation(Population.AssignGeneId());
             }
 
             // output neurons
             for (int i = 0; i < Population.OutputCount; i++)
             {
-                this.FindInnovation(Population.AssignGeneID());
+                FindInnovation(Population.AssignGeneId());
             }
 
             // connections
-            for (long fromID = 0; fromID < Population.InputCount + 1; fromID++)
+            for (var fromId = 0; fromId < Population.InputCount + 1; fromId++)
             {
-                for (long toID = 0; toID < Population.OutputCount; toID++)
+                for (var toId = 0; toId < Population.OutputCount; toId++)
                 {
-                    FindInnovation(fromID, toID);
+                    FindInnovation(fromId, toId);
                 }
             }
 
@@ -151,32 +151,31 @@ namespace Encog.Neural.NEAT.Training
         /// Find an innovation for a hidden neuron that split a existing link. This
         /// is the means by which hidden neurons are introduced in NEAT.
         /// </summary>
-        /// <param name="fromID">The source neuron ID in the link.</param>
-        /// <param name="toID">The target neuron ID in the link.</param>
+        /// <param name="fromId">The source neuron ID in the link.</param>
+        /// <param name="toId">The target neuron ID in the link.</param>
         /// <returns>The newly created innovation, or the one that matched the search.</returns>
-        public NEATInnovation FindInnovationSplit(long fromID, long toID)
+        public NEATInnovation FindInnovationSplit(long fromId, long toId)
         {
-            String key = NEATInnovationList.ProduceKeyNeuronSplit(fromID, toID);
+            String key = ProduceKeyNeuronSplit(fromId, toId);
 
-            lock (this.list)
+            lock (_list)
             {
-                if (this.list.ContainsKey(key))
+                if (_list.ContainsKey(key))
                 {
-                    return this.list[key];
+                    return _list[key];
                 }
-                else
-                {
-                    long neuronID = Population.AssignGeneID();
-                    NEATInnovation innovation = new NEATInnovation();
-                    innovation.InnovationID = Population.AssignInnovationID();
-                    innovation.NeuronID = neuronID;
-                    list[key] = innovation;
+                long neuronId = Population.AssignGeneId();
+                var innovation = new NEATInnovation
+                    {
+                        InnovationId = Population.AssignInnovationId(),
+                        NeuronId = neuronId
+                    };
+                _list[key] = innovation;
 
-                    // create other sides of split, if needed
-                    FindInnovation(fromID, neuronID);
-                    FindInnovation(neuronID, toID);
-                    return innovation;
-                }
+                // create other sides of split, if needed
+                FindInnovation(fromId, neuronId);
+                FindInnovation(neuronId, toId);
+                return innovation;
             }
         }
 
@@ -185,51 +184,50 @@ namespace Encog.Neural.NEAT.Training
         /// without producing a split. This means, the only single neurons are the
         /// input, bias and output neurons.
         /// </summary>
-        /// <param name="neuronID">The neuron ID to find.</param>
+        /// <param name="neuronId">The neuron ID to find.</param>
         /// <returns>The newly created innovation, or the one that matched the search.</returns>
-        public NEATInnovation FindInnovation(long neuronID)
+        public NEATInnovation FindInnovation(long neuronId)
         {
-            String key = NEATInnovationList.ProduceKeyNeuron(neuronID);
+            String key = ProduceKeyNeuron(neuronId);
 
-            lock (this.list)
+            lock (_list)
             {
-                if (this.list.ContainsKey(key))
+                if (_list.ContainsKey(key))
                 {
-                    return this.list[key];
+                    return _list[key];
                 }
-                else
-                {
-                    NEATInnovation innovation = new NEATInnovation();
-                    innovation.InnovationID = Population.AssignInnovationID();
-                    innovation.NeuronID = neuronID;
-                    list[key] = innovation;
-                    return innovation;
-                }
+                var innovation = new NEATInnovation
+                    {
+                        InnovationId = Population.AssignInnovationId(),
+                        NeuronId = neuronId
+                    };
+                _list[key] = innovation;
+                return innovation;
             }
         }
 
         /// <summary>
         /// Find an innovation for a new link added between two existing neurons.
         /// </summary>
-        /// <param name="fromID">The source neuron ID in the link.</param>
-        /// <param name="toID">The target neuron ID in the link.</param>
+        /// <param name="fromId">The source neuron ID in the link.</param>
+        /// <param name="toId">The target neuron ID in the link.</param>
         /// <returns>The newly created innovation, or the one that matched the search.</returns>
-        public NEATInnovation FindInnovation(long fromID, long toID)
+        public NEATInnovation FindInnovation(long fromId, long toId)
         {
-            String key = NEATInnovationList.ProduceKeyLink(fromID, toID);
+            String key = ProduceKeyLink(fromId, toId);
 
-            lock (this.list)
+            lock (_list)
             {
-                if (this.list.ContainsKey(key))
+                if (_list.ContainsKey(key))
                 {
-                    return this.list[key];
+                    return _list[key];
                 }
                 else
                 {
                     NEATInnovation innovation = new NEATInnovation();
-                    innovation.InnovationID = Population.AssignInnovationID();
-                    innovation.NeuronID = -1;
-                    list[key] = innovation;
+                    innovation.InnovationId = Population.AssignInnovationId();
+                    innovation.NeuronId = -1;
+                    _list[key] = innovation;
                     return innovation;
                 }
             }
@@ -242,7 +240,7 @@ namespace Encog.Neural.NEAT.Training
         {
             get
             {
-                return list;
+                return _list;
             }
         }
     }

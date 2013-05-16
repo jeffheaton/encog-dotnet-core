@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,21 +35,18 @@ using Encog.Util.Arrayutil;
 namespace Encog.App.Analyst.Script
 {
     /// <summary>
-    /// Used to save an Encog Analyst script.
+    ///     Used to save an Encog Analyst script.
     /// </summary>
-    ///
     public class ScriptSave
     {
         /// <summary>
-        /// The script to save.
+        ///     The script to save.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// Construct the script.
+        ///     Construct the script.
         /// </summary>
-        ///
         /// <param name="theScript">The script to save.</param>
         public ScriptSave(AnalystScript theScript)
         {
@@ -56,9 +54,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the script to a stream.
+        ///     Save the script to a stream.
         /// </summary>
-        ///
         /// <param name="stream">The output stream.</param>
         public void Save(Stream stream)
         {
@@ -88,9 +85,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the config info.
+        ///     Save the config info.
         /// </summary>
-        ///
         /// <param name="xout">THe output file.</param>
         private void SaveConfig(EncogWriteHelper xout)
         {
@@ -100,7 +96,7 @@ namespace Encog.App.Analyst.Script
             IList<String> list = _script.Properties.Filenames;
 
 
-            foreach (var key  in  list)
+            foreach (string key  in  list)
             {
                 String v = _script.Properties.GetFilename(key);
                 var f = new FileInfo(v);
@@ -112,9 +108,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the data fields.
+        ///     Save the data fields.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         private void SaveData(EncogWriteHelper xout)
         {
@@ -173,9 +168,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the ML sections.
+        ///     Save the ML sections.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         private void SaveMachineLearning(EncogWriteHelper xout)
         {
@@ -184,9 +178,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the normalization data.
+        ///     Save the normalization data.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         private void SaveNormalize(EncogWriteHelper xout)
         {
@@ -237,9 +230,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save segregate info.
+        ///     Save segregate info.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         private void SaveSegregate(EncogWriteHelper xout)
         {
@@ -259,9 +251,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save a subsection.
+        ///     Save a subsection.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         /// <param name="section">The section.</param>
         /// <param name="subSection">The subsection.</param>
@@ -274,7 +265,7 @@ namespace Encog.App.Analyst.Script
             }
             xout.AddSubSection(subSection);
             List<PropertyEntry> list = PropertyConstraints.Instance
-                .GetEntries(section, subSection);
+                                                          .GetEntries(section, subSection);
             list.Sort();
 
             foreach (PropertyEntry entry  in  list)
@@ -288,14 +279,13 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save the tasks.
+        ///     Save the tasks.
         /// </summary>
-        ///
         /// <param name="xout">The output file.</param>
         private void SaveTasks(EncogWriteHelper xout)
         {
             xout.AddSection("TASKS");
-            var list = _script.Tasks.Keys.ToList();
+            List<string> list = _script.Tasks.Keys.ToList();
 
             list.Sort();
 

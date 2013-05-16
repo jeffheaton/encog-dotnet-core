@@ -20,11 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Opp.Selection;
+
+using Encog.ML.EA.Opp;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
 using Encog.ML.EA.Genome;
@@ -53,7 +50,7 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// <summary>
         /// The trainer that owns this class.
         /// </summary>
-        private IEvolutionaryAlgorithm owner;
+        private IEvolutionaryAlgorithm _owner;
 
         /// <summary>
         /// Choose a random neuron.
@@ -108,19 +105,19 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// innovation records.
         /// </summary>
         /// <param name="target">The target genome.</param>
-        /// <param name="neuron1ID">The id of the source neuron.</param>
-        /// <param name="neuron2ID">The id of the target neuron.</param>
+        /// <param name="neuron1Id">The id of the source neuron.</param>
+        /// <param name="neuron2Id">The id of the target neuron.</param>
         /// <param name="weight">The weight of this new link.</param>
-        public void CreateLink(NEATGenome target, long neuron1ID,
-                long neuron2ID, double weight)
+        public void CreateLink(NEATGenome target, long neuron1Id,
+                long neuron2Id, double weight)
         {
 
             // first, does this link exist? (and if so, hopefully disabled,
             // otherwise we have a problem)
             foreach (NEATLinkGene linkGene in target.LinksChromosome)
             {
-                if ((linkGene.FromNeuronID == neuron1ID)
-                        && (linkGene.ToNeuronID == neuron2ID))
+                if ((linkGene.FromNeuronId == neuron1Id)
+                        && (linkGene.ToNeuronId == neuron2Id))
                 {
                     // bring the link back, at the new weight
                     linkGene.Enabled = true;
@@ -131,12 +128,12 @@ namespace Encog.Neural.NEAT.Training.Opp
 
             // check to see if this innovation has already been tried
             NEATInnovation innovation = ((NEATPopulation)target
-                    .Population).Innovations.FindInnovation(neuron1ID,
-                    neuron2ID);
+                    .Population).Innovations.FindInnovation(neuron1Id,
+                    neuron2Id);
 
             // now create this link
-            NEATLinkGene lg = new NEATLinkGene(neuron1ID, neuron2ID,
-                    true, innovation.InnovationID, weight);
+            var lg = new NEATLinkGene(neuron1Id, neuron2Id,
+                    true, innovation.InnovationId, weight);
             target.LinksChromosome.Add(lg);
         }
 
@@ -144,15 +141,15 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// Get the specified neuron's index.
         /// </summary>
         /// <param name="target">The neuron id to check for.</param>
-        /// <param name="neuronID">The neuron id.</param>
+        /// <param name="neuronId">The neuron id.</param>
         /// <returns>The index.</returns>
-        public int GetElementPos(NEATGenome target, long neuronID)
+        public int GetElementPos(NEATGenome target, long neuronId)
         {
 
             for (int i = 0; i < target.NeuronsChromosome.Count; i++)
             {
                 NEATNeuronGene neuronGene = target.NeuronsChromosome[i];
-                if (neuronGene.Id == neuronID)
+                if (neuronGene.Id == neuronId)
                 {
                     return i;
                 }
@@ -168,31 +165,31 @@ namespace Encog.Neural.NEAT.Training.Opp
         {
             get
             {
-                return this.owner;
+                return _owner;
             }
         }
 
         /// <inheritdoc/>
         public void Init(IEvolutionaryAlgorithm theOwner)
         {
-            this.owner = theOwner;
+            _owner = theOwner;
         }
 
         /// <summary>
         /// Determine if this is a duplicate link. 
         /// </summary>
         /// <param name="target">The target genome.</param>
-        /// <param name="fromNeuronID">The from neuron id.</param>
-        /// <param name="toNeuronID">The to neuron id.</param>
+        /// <param name="fromNeuronId">The from neuron id.</param>
+        /// <param name="toNeuronId">The to neuron id.</param>
         /// <returns>True if this is a duplicate link.</returns>
         public bool IsDuplicateLink(NEATGenome target,
-                long fromNeuronID, long toNeuronID)
+                long fromNeuronId, long toNeuronId)
         {
             foreach (NEATLinkGene linkGene in target.LinksChromosome)
             {
                 if ((linkGene.Enabled)
-                        && (linkGene.FromNeuronID == fromNeuronID)
-                        && (linkGene.ToNeuronID == toNeuronID))
+                        && (linkGene.FromNeuronId == fromNeuronId)
+                        && (linkGene.ToNeuronId == toNeuronId))
                 {
                     return true;
                 }
@@ -230,11 +227,11 @@ namespace Encog.Neural.NEAT.Training.Opp
             foreach (NEATLinkGene gene in target.LinksChromosome)
             {
                 NEATLinkGene linkGene = gene;
-                if (linkGene.FromNeuronID == neuronID)
+                if (linkGene.FromNeuronId == neuronID)
                 {
                     return true;
                 }
-                if (linkGene.ToNeuronID == neuronID)
+                if (linkGene.ToNeuronId == neuronID)
                 {
                     return true;
                 }
@@ -257,7 +254,7 @@ namespace Encog.Neural.NEAT.Training.Opp
                 int parentIndex, IGenome[] offspring,
                 int offspringIndex)
         {
-            offspring[offspringIndex] = this.Owner.Population
+            offspring[offspringIndex] = Owner.Population
                     .GenomeFactory.Factor(parents[0]);
             return (NEATGenome)offspring[offspringIndex];
         }
@@ -289,12 +286,12 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// Remove the specified neuron.
         /// </summary>
         /// <param name="target">The target genome.</param>
-        /// <param name="neuronID">The neuron to remove.</param>
-        public void RemoveNeuron(NEATGenome target, long neuronID)
+        /// <param name="neuronId">The neuron to remove.</param>
+        public void RemoveNeuron(NEATGenome target, long neuronId)
         {
             foreach (NEATNeuronGene gene in target.NeuronsChromosome)
             {
-                if (gene.Id == neuronID)
+                if (gene.Id == neuronId)
                 {
                     target.NeuronsChromosome.Remove(gene);
                     return;

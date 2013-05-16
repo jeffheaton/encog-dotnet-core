@@ -20,67 +20,60 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Encog.App.Analyst.Script.ML;
 using Encog.App.Analyst.Script.Normalize;
+using Encog.App.Analyst.Script.Process;
 using Encog.App.Analyst.Script.Prop;
 using Encog.App.Analyst.Script.Segregate;
 using Encog.App.Analyst.Script.Task;
 using Encog.Persist;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
-using Encog.App.Analyst.Script.Process;
-using Encog.App.Analyst.Script.ML;
 
 namespace Encog.App.Analyst.Script
 {
     /// <summary>
-    /// Used to load an Encog Analyst script.
+    ///     Used to load an Encog Analyst script.
     /// </summary>
-    ///
     public class ScriptLoad
     {
         /// <summary>
-        /// Column 1.
+        ///     Column 1.
         /// </summary>
-        ///
         public const int ColumnOne = 1;
 
         /// <summary>
-        /// Column 2.
+        ///     Column 2.
         /// </summary>
-        ///
         public const int ColumnTwo = 2;
 
         /// <summary>
-        /// Column 3.
+        ///     Column 3.
         /// </summary>
-        ///
         public const int ColumnThree = 3;
 
         /// <summary>
-        /// Column 4.
+        ///     Column 4.
         /// </summary>
-        ///
         public const int ColumnFour = 4;
 
         /// <summary>
-        /// Column 5.
+        ///     Column 5.
         /// </summary>
-        ///
         public const int ColumnFive = 5;
 
         /// <summary>
-        /// The script being loaded.
+        ///     The script being loaded.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// Construct a script loader.
+        ///     Construct a script loader.
         /// </summary>
-        ///
         /// <param name="theScript">The script to load into.</param>
         public ScriptLoad(AnalystScript theScript)
         {
@@ -88,9 +81,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle loading the data classes.
+        ///     Handle loading the data classes.
         /// </summary>
-        ///
         /// <param name="section">The section being loaded.</param>
         private void HandleDataClasses(EncogFileSection section)
         {
@@ -162,9 +154,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle loading data stats.
+        ///     Handle loading data stats.
         /// </summary>
-        ///
         /// <param name="section">The section being loaded.</param>
         private void HandleDataStats(EncogFileSection section)
         {
@@ -194,17 +185,17 @@ namespace Encog.App.Analyst.Script
                     }
 
                     var df = new DataField(name)
-                    {
-                        Class = isclass,
-                        Complete = iscomplete,
-                        Integer = isint,
-                        Real = isreal,
-                        Max = amax,
-                        Min = amin,
-                        Mean = mean,
-                        StandardDeviation = sdev,
-                        Source = source
-                    };
+                        {
+                            Class = isclass,
+                            Complete = iscomplete,
+                            Integer = isint,
+                            Real = isreal,
+                            Max = amax,
+                            Min = amin,
+                            Mean = mean,
+                            StandardDeviation = sdev,
+                            Source = source
+                        };
                     dfs.Add(df);
                 }
                 else
@@ -223,9 +214,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle loading the filenames.
+        ///     Handle loading the filenames.
         /// </summary>
-        ///
         /// <param name="section">The section being loaded.</param>
         private void HandleFilenames(EncogFileSection section)
         {
@@ -240,9 +230,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle normalization ranges.
+        ///     Handle normalization ranges.
         /// </summary>
-        ///
         /// <param name="section">The section being loaded.</param>
         private void HandleNormalizeRange(EncogFileSection section)
         {
@@ -256,7 +245,7 @@ namespace Encog.App.Analyst.Script
                     IList<String> cols = EncogFileSection.SplitColumns(line);
                     String name = cols[0];
                     bool isOutput = cols[1].ToLower()
-                        .Equals("output");
+                                           .Equals("output");
                     int timeSlice = Int32.Parse(cols[2]);
                     String action = cols[3];
                     double high = CSVFormat.EgFormat.Parse(cols[4]);
@@ -292,7 +281,7 @@ namespace Encog.App.Analyst.Script
                         throw new AnalystError("Unknown field type:" + action);
                     }
 
-                    var nf = new AnalystField(name, des, high, low) { TimeSlice = timeSlice, Output = isOutput };
+                    var nf = new AnalystField(name, des, high, low) {TimeSlice = timeSlice, Output = isOutput};
                     _script.Normalize.NormalizedFields.Add(nf);
                 }
                 else
@@ -303,9 +292,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle loading segregation info.
+        ///     Handle loading segregation info.
         /// </summary>
-        ///
         /// <param name="section">The section being loaded.</param>
         private void HandleSegregateFiles(EncogFileSection section)
         {
@@ -340,9 +328,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Handle loading a task.
+        ///     Handle loading a task.
         /// </summary>
-        ///
         /// <param name="section">The section.</param>
         private void HandleTask(EncogFileSection section)
         {
@@ -356,9 +343,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Load an Encog script.
+        ///     Load an Encog script.
         /// </summary>
-        ///
         /// <param name="stream">The stream to load from.</param>
         public void Load(Stream stream)
         {
@@ -387,9 +373,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Load a generic subsection.
+        ///     Load a generic subsection.
         /// </summary>
-        ///
         /// <param name="section">The section to load from.</param>
         private void LoadSubSection(EncogFileSection section)
         {
@@ -408,9 +393,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Process one of the subsections.
+        ///     Process one of the subsections.
         /// </summary>
-        ///
         /// <param name="section">The section.</param>
         private void ProcessSubSection(EncogFileSection section)
         {
@@ -513,26 +497,25 @@ namespace Encog.App.Analyst.Script
                 LoadSubSection(section);
             }
             else if (currentSection.Equals("CODE")
-             && currentSubsection.Equals("CONFIG"))
+                     && currentSubsection.Equals("CONFIG"))
             {
                 LoadSubSection(section);
             }
             else if (currentSection.Equals("PROCESS")
-                  && currentSubsection.Equals("CONFIG"))
+                     && currentSubsection.Equals("CONFIG"))
             {
                 LoadSubSection(section);
             }
             else if (currentSection.Equals("PROCESS")
-                  && currentSubsection.Equals("FIELDS"))
+                     && currentSubsection.Equals("FIELDS"))
             {
                 HandleProcessFields(section);
             }
         }
 
         /// <summary>
-        /// Validate a property.
+        ///     Validate a property.
         /// </summary>
-        ///
         /// <param name="section">The section.</param>
         /// <param name="subSection">The sub section.</param>
         /// <param name="name">The name of the property.</param>
@@ -564,7 +547,7 @@ namespace Encog.App.Analyst.Script
                     IList<string> cols = EncogFileSection.SplitColumns(line);
                     String name = cols[0];
                     String command = cols[1];
-                    ProcessField pf = new ProcessField(name, command);
+                    var pf = new ProcessField(name, command);
                     fields.Add(pf);
                 }
                 else
@@ -584,7 +567,7 @@ namespace Encog.App.Analyst.Script
                     IList<string> cols = EncogFileSection.SplitColumns(line);
                     string name = cols[0];
                     int childCount = int.Parse(cols[1]);
-                    ScriptOpcode opcode = new ScriptOpcode(name, childCount);
+                    var opcode = new ScriptOpcode(name, childCount);
                     _script.Opcodes.Add(opcode);
                 }
                 else

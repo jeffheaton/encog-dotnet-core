@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.App.Analyst.CSV.Basic;
@@ -27,27 +28,23 @@ using Encog.App.Analyst.CSV.Basic;
 namespace Encog.App.Quant.Indicators.Predictive
 {
     /// <summary>
-    /// Get the best close.
+    ///     Get the best close.
     /// </summary>
-    ///
     public class BestClose : Indicator
     {
         /// <summary>
-        /// The name of this indicator.
+        ///     The name of this indicator.
         /// </summary>
-        ///
         public const String NAME = "PredictBestClose";
 
         /// <summary>
-        /// The number of periods this indicator is for.
+        ///     The number of periods this indicator is for.
         /// </summary>
-        ///
         private readonly int periods;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="thePeriods">The number of periods.</param>
         /// <param name="output">True, if this indicator is to be predicted.</param>
         public BestClose(int thePeriods, bool output) : base(NAME, false, output)
@@ -64,9 +61,8 @@ namespace Encog.App.Quant.Indicators.Predictive
         }
 
         /// <summary>
-        /// Calculate the indicator.
+        ///     Calculate the indicator.
         /// </summary>
-        ///
         /// <param name="data">The data available to the indicator.</param>
         /// <param name="length">The length available to the indicator.</param>
         public override sealed void Calculate(IDictionary<String, BaseCachedColumn> data,

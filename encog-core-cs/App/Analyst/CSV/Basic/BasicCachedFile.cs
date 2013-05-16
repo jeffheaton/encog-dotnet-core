@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,25 +31,22 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.CSV.Basic
 {
     /// <summary>
-    /// Forms the foundation of all of the cached files in Encog Quant.
+    ///     Forms the foundation of all of the cached files in Encog Quant.
     /// </summary>
-    ///
     public class BasicCachedFile : BasicFile
     {
         /// <summary>
-        /// The column mapping.
+        ///     The column mapping.
         /// </summary>
-        ///
         private readonly IDictionary<String, BaseCachedColumn> _columnMapping;
 
         /// <summary>
-        /// The columns.
+        ///     The columns.
         /// </summary>
-        ///
         private readonly IList<BaseCachedColumn> _columns;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public BasicCachedFile()
         {
@@ -70,9 +68,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Add a new column.
+        ///     Add a new column.
         /// </summary>
-        ///
         /// <param name="column">The column to add.</param>
         public void AddColumn(BaseCachedColumn column)
         {
@@ -81,9 +78,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Analyze the input file.
+        ///     Analyze the input file.
         /// </summary>
-        ///
         /// <param name="input">The input file.</param>
         /// <param name="headers">True, if there are headers.</param>
         /// <param name="format">The format of the CSV data.</param>
@@ -188,9 +184,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Attempt to resolve a column name.
+        ///     Attempt to resolve a column name.
         /// </summary>
-        ///
         /// <param name="name">The unknown column name.</param>
         /// <returns>The known column name.</returns>
         private static String AttemptResolveName(String name)
@@ -218,7 +213,7 @@ namespace Encog.App.Analyst.CSV.Basic
                 return FileData.Volume;
             }
             if ((name2.IndexOf("date") != -1)
-                     || (name.IndexOf("yyyy") != -1))
+                || (name.IndexOf("yyyy") != -1))
             {
                 return FileData.Date;
             }
@@ -231,9 +226,8 @@ namespace Encog.App.Analyst.CSV.Basic
         }
 
         /// <summary>
-        /// Get the data for a specific column.
+        ///     Get the data for a specific column.
         /// </summary>
-        ///
         /// <param name="name">The column to read.</param>
         /// <param name="csv">The CSV file to read from.</param>
         /// <returns>The column data.</returns>

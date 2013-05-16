@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
@@ -50,12 +49,12 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <summary>
         /// The number of links to choose.
         /// </summary>
-        private int linkCount;
+        private readonly int _linkCount;
 
         /// <summary>
         /// The trainer.
         /// </summary>
-        private IEvolutionaryAlgorithm trainer;
+        private IEvolutionaryAlgorithm _trainer;
 
         /// <summary>
         /// Construct a fixed count link selector.
@@ -63,7 +62,7 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <param name="theLinkCount">The number of links to select.</param>
         public SelectFixed(int theLinkCount)
         {
-            this.linkCount = theLinkCount;
+            _linkCount = theLinkCount;
         }
 
         /// <summary>
@@ -73,14 +72,14 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         {
             get
             {
-                return this.trainer;
+                return _trainer;
             }
         }
 
         /// <inheritdoc/>
         public void Init(IEvolutionaryAlgorithm theTrainer)
         {
-            this.trainer = theTrainer;
+            _trainer = theTrainer;
         }
 
         /// <inheritdoc/>
@@ -88,7 +87,7 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
                 NEATGenome genome)
         {
             IList<NEATLinkGene> result = new List<NEATLinkGene>();
-            int cnt = Math.Min(this.linkCount, genome.LinksChromosome.Count);
+            int cnt = Math.Min(_linkCount, genome.LinksChromosome.Count);
 
             while (result.Count < cnt)
             {
@@ -105,11 +104,11 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append(":linkCount=");
-            result.Append(this.linkCount);
+            result.Append(_linkCount);
             result.Append("]");
             return result.ToString();
         }

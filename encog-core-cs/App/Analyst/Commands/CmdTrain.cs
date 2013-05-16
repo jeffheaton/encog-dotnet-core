@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.Script.Prop;
@@ -37,48 +38,43 @@ using Encog.Util.Validate;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This command is used to perform training on a machine learning method and
-    /// dataset.
+    ///     This command is used to perform training on a machine learning method and
+    ///     dataset.
     /// </summary>
-    ///
     public class CmdTrain : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "TRAIN";
 
         /// <summary>
-        /// The number of folds, if kfold is used.
+        ///     The number of folds, if kfold is used.
         /// </summary>
-        ///
         private int _kfold;
 
         /// <summary>
-        /// Construct the train command.
+        ///     Construct the train command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         public CmdTrain(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
         /// <summary>
-        /// Create a trainer, use cross validation if enabled.
+        ///     Create a trainer, use cross validation if enabled.
         /// </summary>
-        ///
         /// <param name="method">The method to use.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <returns>The trainer.</returns>
         private IMLTrain CreateTrainer(IMLMethod method,
-                                      IMLDataSet trainingSet)
+                                       IMLDataSet trainingSet)
         {
             var factory = new MLTrainFactory();
 
@@ -101,9 +97,7 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed bool ExecuteCommand(String args)
         {
             _kfold = ObtainCross();
@@ -128,9 +122,8 @@ namespace Encog.App.Analyst.Commands
 
 
         /// <summary>
-        /// Obtain the number of folds for cross validation.
+        ///     Obtain the number of folds for cross validation.
         /// </summary>
-        ///
         /// <returns>The number of folds.</returns>
         private int ObtainCross()
         {
@@ -156,9 +149,8 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// Obtain the ML method.
+        ///     Obtain the ML method.
         /// </summary>
-        ///
         /// <returns>The method.</returns>
         private IMLMethod ObtainMethod()
         {
@@ -166,8 +158,8 @@ namespace Encog.App.Analyst.Commands
                 ScriptProperties.MlConfigMachineLearningFile);
             FileInfo resourceFile = Script.ResolveFilename(resourceID);
 
-            var method = EncogDirectoryPersistence
-                                        .LoadObject(resourceFile);
+            object method = EncogDirectoryPersistence
+                .LoadObject(resourceFile);
 
             if (!(method is IMLMethod))
             {
@@ -176,13 +168,12 @@ namespace Encog.App.Analyst.Commands
                     + method.GetType().Name);
             }
 
-            return (IMLMethod)method;
+            return (IMLMethod) method;
         }
 
         /// <summary>
-        /// Obtain the training set.
+        ///     Obtain the training set.
         /// </summary>
-        ///
         /// <returns>The training set.</returns>
         private IMLDataSet ObtainTrainingSet()
         {
@@ -202,9 +193,8 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// Perform the training.
+        ///     Perform the training.
         /// </summary>
-        ///
         /// <param name="train">The training method.</param>
         /// <param name="method">The ML method.</param>
         /// <param name="trainingSet">The training set.</param>

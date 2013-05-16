@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV;
@@ -31,39 +32,35 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This command is used to randomize the lines in a CSV file.
+    ///     This command is used to randomize the lines in a CSV file.
     /// </summary>
-    ///
     public class CmdCluster : Cmd
     {
         /// <summary>
-        /// The default number of iterations.
+        ///     The default number of iterations.
         /// </summary>
-        ///
         public const int DefaultIterations = 100;
 
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "CLUSTER";
 
         /// <summary>
-        /// Construct the cluster command.
+        ///     Construct the cluster command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst object to use.</param>
         public CmdCluster(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames

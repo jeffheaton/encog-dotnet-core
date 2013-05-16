@@ -20,36 +20,35 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Encog.ML.EA.Genome;
 
 namespace Encog.ML.EA.Rules
 {
     /// <summary>
-    /// Basic implementation of a rule holder.
+    ///     Basic implementation of a rule holder.
     /// </summary>
     public class BasicRuleHolder : IRuleHolder
     {
         /// <summary>
-        /// Rewrite rules that can simplify genomes.
+        ///     Rewrite rules that can simplify genomes.
         /// </summary>
-        private IList<IRewriteRule> rewriteRules = new List<IRewriteRule>();
+        private readonly IList<IConstraintRule> _constraintRules = new List<IConstraintRule>();
 
         /// <summary>
-        /// Rewrite rules that can simplify genomes.
+        ///     Rewrite rules that can simplify genomes.
         /// </summary>
-        private IList<IConstraintRule> constraintRules = new List<IConstraintRule>();
+        private readonly IList<IRewriteRule> _rewriteRules = new List<IRewriteRule>();
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void AddRewriteRule(IRewriteRule rule)
         {
-            this.rewriteRules.Add(rule);
+            _rewriteRules.Add(rule);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Rewrite(IGenome prg)
         {
             bool done = false;
@@ -58,7 +57,7 @@ namespace Encog.ML.EA.Rules
             {
                 done = true;
 
-                foreach (IRewriteRule rule in this.rewriteRules)
+                foreach (IRewriteRule rule in _rewriteRules)
                 {
                     if (rule.Rewrite(prg))
                     {
@@ -68,42 +67,28 @@ namespace Encog.ML.EA.Rules
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void AddConstraintRule(IConstraintRule rule)
         {
-            this.constraintRules.Add(rule);
-
+            _constraintRules.Add(rule);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool IsValid(IGenome genome)
         {
-            foreach (IConstraintRule rule in this.constraintRules)
-            {
-                if (!rule.IsValid(genome))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return _constraintRules.All(rule => rule.IsValid(genome));
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IList<IConstraintRule> ConstraintRules
         {
-            get
-            {
-                return this.constraintRules;
-            }
+            get { return _constraintRules; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IList<IRewriteRule> RewriteRules
         {
-            get
-            {
-                return this.rewriteRules;
-            }
+            get { return _rewriteRules; }
         }
     }
 }

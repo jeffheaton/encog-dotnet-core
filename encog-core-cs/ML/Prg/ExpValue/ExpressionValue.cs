@@ -20,372 +20,346 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.ML.EA.Exceptions;
 
 namespace Encog.ML.Prg.ExpValue
 {
     /// <summary>
-    /// An EncogProgram expression value. These is how Encog stores variables and
-    /// calculates values.
+    ///     An EncogProgram expression value. These is how Encog stores variables and
+    ///     calculates values.
     /// </summary>
     [Serializable]
     public class ExpressionValue
     {
         /// <summary>
-        /// If the value is a string, this contains the value.
+        ///     If the value is a boolean, this contains the value.
         /// </summary>
-        private readonly String stringValue;
+        private readonly bool _boolValue;
 
         /// <summary>
-        /// If the value is a float, this contains the value.
+        ///     If the value is an enum, this contains the value.
         /// </summary>
-        private readonly double floatValue;
+        private readonly int _enumType;
 
         /// <summary>
-        /// If the value is a boolean, this contains the value.
+        ///     The type of this expression.
         /// </summary>
-        private readonly bool boolValue;
+        private readonly EPLValueType _expressionType;
 
         /// <summary>
-        /// The type of this expression.
+        ///     If the value is a float, this contains the value.
         /// </summary>
-        private readonly EPLValueType expressionType;
+        private readonly double _floatValue;
 
         /// <summary>
-        /// If the value is an int, this contains the value.
+        ///     If the value is an int, this contains the value.
         /// </summary>
-        private readonly long intValue;
+        private readonly long _intValue;
 
         /// <summary>
-        /// If the value is an enum, this contains the value.
+        ///     If the value is a string, this contains the value.
         /// </summary>
-        private readonly int enumType;
+        private readonly String _stringValue;
 
         /// <summary>
-        /// Construct a boolean expression.
+        ///     Construct a boolean expression.
         /// </summary>
         /// <param name="theValue">The value to construct.</param>
         public ExpressionValue(bool theValue)
         {
-            this.boolValue = theValue;
-            this.expressionType = EPLValueType.booleanType;
-            this.floatValue = 0;
-            this.stringValue = null;
-            this.intValue = 0;
-            this.enumType = -1;
+            _boolValue = theValue;
+            _expressionType = EPLValueType.BooleanType;
+            _floatValue = 0;
+            _stringValue = null;
+            _intValue = 0;
+            _enumType = -1;
         }
 
         /// <summary>
-        /// Construct a boolean expression. 
+        ///     Construct a boolean expression.
         /// </summary>
         /// <param name="theValue">The value to construct.</param>
         public ExpressionValue(double theValue)
         {
-            this.floatValue = theValue;
-            this.expressionType = EPLValueType.floatingType;
-            this.boolValue = false;
-            this.stringValue = null;
-            this.intValue = 0;
-            this.enumType = -1;
+            _floatValue = theValue;
+            _expressionType = EPLValueType.FloatingType;
+            _boolValue = false;
+            _stringValue = null;
+            _intValue = 0;
+            _enumType = -1;
         }
 
         /// <summary>
-        /// Construct a expression based on an expression.
+        ///     Construct a expression based on an expression.
         /// </summary>
         /// <param name="other">The value to construct.</param>
         public ExpressionValue(ExpressionValue other)
         {
-            switch (this.expressionType = other.expressionType)
+            switch (_expressionType = other._expressionType)
             {
-                case EPLValueType.booleanType:
-                    this.boolValue = other.boolValue;
-                    this.floatValue = 0;
-                    this.stringValue = null;
-                    this.intValue = 0;
-                    this.enumType = -1;
+                case EPLValueType.BooleanType:
+                    _boolValue = other._boolValue;
+                    _floatValue = 0;
+                    _stringValue = null;
+                    _intValue = 0;
+                    _enumType = -1;
                     break;
-                case EPLValueType.floatingType:
-                    this.floatValue = other.floatValue;
-                    this.boolValue = false;
-                    this.stringValue = null;
-                    this.intValue = 0;
-                    this.enumType = -1;
+                case EPLValueType.FloatingType:
+                    _floatValue = other._floatValue;
+                    _boolValue = false;
+                    _stringValue = null;
+                    _intValue = 0;
+                    _enumType = -1;
                     break;
-                case EPLValueType.intType:
-                    this.intValue = other.intValue;
-                    this.boolValue = false;
-                    this.floatValue = 0;
-                    this.stringValue = null;
-                    this.enumType = -1;
+                case EPLValueType.IntType:
+                    _intValue = other._intValue;
+                    _boolValue = false;
+                    _floatValue = 0;
+                    _stringValue = null;
+                    _enumType = -1;
                     break;
-                case EPLValueType.stringType:
-                    this.stringValue = other.stringValue;
-                    this.boolValue = false;
-                    this.floatValue = 0;
-                    this.intValue = 0;
-                    this.enumType = -1;
+                case EPLValueType.StringType:
+                    _stringValue = other._stringValue;
+                    _boolValue = false;
+                    _floatValue = 0;
+                    _intValue = 0;
+                    _enumType = -1;
                     break;
-                case EPLValueType.enumType:
-                    this.intValue = other.intValue;
-                    this.boolValue = false;
-                    this.floatValue = 0;
-                    this.stringValue = null;
-                    this.enumType = other.enumType;
+                case EPLValueType.EnumType:
+                    _intValue = other._intValue;
+                    _boolValue = false;
+                    _floatValue = 0;
+                    _stringValue = null;
+                    _enumType = other._enumType;
                     break;
                 default:
                     throw new EARuntimeError("Unsupported type.");
-
             }
         }
 
         /// <summary>
-        /// Construct an enum expression.
+        ///     Construct an enum expression.
         /// </summary>
         /// <param name="enumType">The enum type.</param>
         /// <param name="theValue">The value to construct.</param>
         public ExpressionValue(int enumType, long theValue)
         {
-            this.intValue = theValue;
-            this.expressionType = EPLValueType.enumType;
-            this.boolValue = false;
-            this.floatValue = 0;
-            this.stringValue = null;
-            this.enumType = enumType;
+            _intValue = theValue;
+            _expressionType = EPLValueType.EnumType;
+            _boolValue = false;
+            _floatValue = 0;
+            _stringValue = null;
+            _enumType = enumType;
         }
 
         /// <summary>
-        /// Construct an integer expression.
+        ///     Construct an integer expression.
         /// </summary>
         /// <param name="theValue">The value to construct.</param>
         public ExpressionValue(long theValue)
         {
-            this.intValue = theValue;
-            this.expressionType = EPLValueType.intType;
-            this.boolValue = false;
-            this.floatValue = 0;
-            this.stringValue = null;
-            this.enumType = -1;
+            _intValue = theValue;
+            _expressionType = EPLValueType.IntType;
+            _boolValue = false;
+            _floatValue = 0;
+            _stringValue = null;
+            _enumType = -1;
         }
 
         /// <summary>
-        /// Construct a string expression.
+        ///     Construct a string expression.
         /// </summary>
         /// <param name="theValue">The value to construct.</param>
         public ExpressionValue(String theValue)
         {
-            this.stringValue = theValue;
-            this.expressionType = EPLValueType.stringType;
-            this.boolValue = false;
-            this.floatValue = 0;
-            this.intValue = 0;
-            this.enumType = -1;
+            _stringValue = theValue;
+            _expressionType = EPLValueType.StringType;
+            _boolValue = false;
+            _floatValue = 0;
+            _intValue = 0;
+            _enumType = -1;
         }
 
         /// <summary>
-        /// Construct a value of the specified type.
+        ///     Construct a value of the specified type.
         /// </summary>
         /// <param name="theType">The value to construct.</param>
         public ExpressionValue(EPLValueType theType)
         {
-            this.expressionType = theType;
-            this.intValue = 0;
-            this.boolValue = false;
-            this.floatValue = 0;
-            this.stringValue = null;
-            this.enumType = -1;
+            _expressionType = theType;
+            _intValue = 0;
+            _boolValue = false;
+            _floatValue = 0;
+            _stringValue = null;
+            _enumType = -1;
         }
 
         /// <summary>
-        /// The enum type.
+        ///     The enum type.
         /// </summary>
         public int EnumType
         {
-            get
-            {
-                return this.enumType;
-            }
+            get { return _enumType; }
         }
 
         /// <summary>
-        /// The expression type.
+        ///     The expression type.
         /// </summary>
         public EPLValueType ExprType
         {
-            get
-            {
-                return this.expressionType;
-            }
+            get { return _expressionType; }
         }
 
         /// <summary>
-        /// True, if this is a boolean.
+        ///     True, if this is a boolean.
         /// </summary>
         public bool IsBoolean
         {
-            get
-            {
-                return this.expressionType == EPLValueType.booleanType;
-            }
+            get { return _expressionType == EPLValueType.BooleanType; }
         }
 
         /// <summary>
-        /// True, if this is an enum.
+        ///     True, if this is an enum.
         /// </summary>
         public bool IsEnum
         {
-            get
-            {
-                return this.expressionType == EPLValueType.enumType;
-            }
+            get { return _expressionType == EPLValueType.EnumType; }
         }
 
         /// <summary>
-        /// True, if this is a float.
+        ///     True, if this is a float.
         /// </summary>
         public bool IsFloat
         {
-            get
-            {
-                return this.expressionType == EPLValueType.floatingType;
-            }
+            get { return _expressionType == EPLValueType.FloatingType; }
         }
 
         /// <summary>
-        /// True, if this is an int.
+        ///     True, if this is an int.
         /// </summary>
         public bool IsInt
         {
-            get
-            {
-                return this.expressionType == EPLValueType.intType;
-            }
+            get { return _expressionType == EPLValueType.IntType; }
         }
 
         /// <summary>
-        /// True, if the value is either int or float.
+        ///     True, if the value is either int or float.
         /// </summary>
         public bool IsNumeric
         {
-            get
-            {
-                return IsFloat || IsInt;
-            }
+            get { return IsFloat || IsInt; }
         }
 
         /// <summary>
-        /// True, if this is a string.
+        ///     True, if this is a string.
         /// </summary>
         public bool IsString
         {
-            get
-            {
-                return this.expressionType == EPLValueType.stringType;
-            }
+            get { return _expressionType == EPLValueType.StringType; }
         }
 
         /// <summary>
-        /// The value as a boolean, or type mismatch if conversion is not
-        /// possible.
+        ///     The value as a boolean, or type mismatch if conversion is not
+        ///     possible.
         /// </summary>
         /// <returns>The value.</returns>
         public bool ToBooleanValue()
         {
-            switch (this.expressionType)
+            switch (_expressionType)
             {
-                case EPLValueType.intType:
+                case EPLValueType.IntType:
                     throw new EARuntimeError("Type Mismatch: can't convert "
-                            + this.intValue + " to boolean.");
-                case EPLValueType.floatingType:
+                                             + _intValue + " to boolean.");
+                case EPLValueType.FloatingType:
                     throw new EARuntimeError("Type Mismatch: can't convert "
-                            + this.floatValue + " to boolean.");
-                case EPLValueType.booleanType:
-                    return this.boolValue;
-                case EPLValueType.stringType:
+                                             + _floatValue + " to boolean.");
+                case EPLValueType.BooleanType:
+                    return _boolValue;
+                case EPLValueType.StringType:
                     throw new EARuntimeError("Type Mismatch: can't convert "
-                            + this.stringValue + " to boolean.");
-                case EPLValueType.enumType:
+                                             + _stringValue + " to boolean.");
+                case EPLValueType.EnumType:
                     throw new EARuntimeError(
-                            "Type Mismatch: can't convert enum to boolean.");
+                        "Type Mismatch: can't convert enum to boolean.");
                 default:
-                    throw new EARuntimeError("Unknown type: " + this.expressionType);
+                    throw new EARuntimeError("Unknown type: " + _expressionType);
             }
         }
 
         /// <summary>
-        /// The value as a float, or type mismatch if conversion is not
-        /// possible.
+        ///     The value as a float, or type mismatch if conversion is not
+        ///     possible.
         /// </summary>
         /// <returns>The value.</returns>
         public double ToFloatValue()
         {
-            switch (this.expressionType)
+            switch (_expressionType)
             {
-                case EPLValueType.intType:
-                    return this.intValue;
-                case EPLValueType.floatingType:
-                    return this.floatValue;
-                case EPLValueType.booleanType:
+                case EPLValueType.IntType:
+                    return _intValue;
+                case EPLValueType.FloatingType:
+                    return _floatValue;
+                case EPLValueType.BooleanType:
                     throw new EARuntimeError(
-                            "Type Mismatch: can't convert float to boolean.");
-                case EPLValueType.stringType:
+                        "Type Mismatch: can't convert float to boolean.");
+                case EPLValueType.StringType:
                     try
                     {
-                        return Double.Parse(this.stringValue);
+                        return Double.Parse(_stringValue);
                     }
-                    catch (FormatException ex)
+                    catch (FormatException)
                     {
                         throw new EARuntimeError("Type Mismatch: can't convert "
-                                + this.stringValue + " to floating point.");
+                                                 + _stringValue + " to floating point.");
                     }
-                case EPLValueType.enumType:
+                case EPLValueType.EnumType:
                     throw new EARuntimeError(
-                            "Type Mismatch: can't convert enum to float.");
+                        "Type Mismatch: can't convert enum to float.");
                 default:
-                    throw new EARuntimeError("Unknown type: " + this.expressionType);
+                    throw new EARuntimeError("Unknown type: " + _expressionType);
             }
         }
 
         /// <summary>
-        /// The value as a int, or type mismatch if conversion is not
-        /// possible.
+        ///     The value as a int, or type mismatch if conversion is not
+        ///     possible.
         /// </summary>
         /// <returns>The value.</returns>
         public long ToIntValue()
         {
-            switch (this.expressionType)
+            switch (_expressionType)
             {
-                case EPLValueType.intType:
-                    return this.intValue;
-                case EPLValueType.floatingType:
-                    return (int)this.floatValue;
-                case EPLValueType.booleanType:
+                case EPLValueType.IntType:
+                    return _intValue;
+                case EPLValueType.FloatingType:
+                    return (int) _floatValue;
+                case EPLValueType.BooleanType:
                     throw new EARuntimeError(
-                            "Type Mismatch: can't convert int to boolean.");
-                case EPLValueType.stringType:
+                        "Type Mismatch: can't convert int to boolean.");
+                case EPLValueType.StringType:
                     try
                     {
-                        return long.Parse(this.stringValue);
+                        return long.Parse(_stringValue);
                     }
-                    catch (FormatException ex)
+                    catch (FormatException)
                     {
                         throw new EARuntimeError("Type Mismatch: can't convert "
-                                + this.stringValue + " to int.");
+                                                 + _stringValue + " to int.");
                     }
-                case EPLValueType.enumType:
-                    return this.intValue;
+                case EPLValueType.EnumType:
+                    return _intValue;
                 default:
-                    throw new EARuntimeError("Unknown type: " + this.expressionType);
+                    throw new EARuntimeError("Unknown type: " + _expressionType);
             }
         }
 
-        /// <inheritdoc/>
-        public string ToString()
+        /// <inheritdoc />
+        public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[ExpressionValue: ");
             result.Append("type: ");
             result.Append(ExprType.ToString());
@@ -396,26 +370,26 @@ namespace Encog.ML.Prg.ExpValue
         }
 
         /// <summary>
-        /// The value as a string, or type mismatch if conversion is not
-        /// possible.
+        ///     The value as a string, or type mismatch if conversion is not
+        ///     possible.
         /// </summary>
         /// <returns>The value.</returns>
         public String ToStringValue()
         {
-            switch (this.expressionType)
+            switch (_expressionType)
             {
-                case EPLValueType.intType:
-                    return "" + this.intValue;
-                case EPLValueType.floatingType:
-                    return "" + this.floatValue;
-                case EPLValueType.booleanType:
-                    return "" + this.boolValue;
-                case EPLValueType.stringType:
-                    return this.stringValue;
-                case EPLValueType.enumType:
-                    return "[" + this.enumType + ":" + this.intValue + "]";
+                case EPLValueType.IntType:
+                    return "" + _intValue;
+                case EPLValueType.FloatingType:
+                    return "" + _floatValue;
+                case EPLValueType.BooleanType:
+                    return "" + _boolValue;
+                case EPLValueType.StringType:
+                    return _stringValue;
+                case EPLValueType.EnumType:
+                    return "[" + _enumType + ":" + _intValue + "]";
                 default:
-                    throw new EARuntimeError("Unknown type: " + this.expressionType);
+                    throw new EARuntimeError("Unknown type: " + _expressionType);
             }
         }
     }

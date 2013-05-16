@@ -20,31 +20,29 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Prg.Ext;
 
 namespace Encog.App.Analyst.Script.ML
 {
     /// <summary>
-    /// An opcode, stored in the script.
+    ///     An opcode, stored in the script.
     /// </summary>
     public class ScriptOpcode
     {
         /// <summary>
-        /// The name of the opcode.
+        ///     The argument count of the opcode.
         /// </summary>
-        private String name;
+        private readonly int argCount;
 
         /// <summary>
-        /// The argument count of the opcode.
+        ///     The name of the opcode.
         /// </summary>
-        private int argCount;
+        private readonly String name;
 
         /// <summary>
-        /// Construct the opcode.
+        ///     Construct the opcode.
         /// </summary>
         /// <param name="name">The name of the opcode.</param>
         /// <param name="argCount">The argument count.</param>
@@ -55,35 +53,28 @@ namespace Encog.App.Analyst.Script.ML
         }
 
         /// <summary>
-        /// Construct using an extension template.
+        ///     Construct using an extension template.
         /// </summary>
         /// <param name="temp">The template.</param>
         public ScriptOpcode(IProgramExtensionTemplate temp)
             : this(temp.Name, temp.ChildNodeCount)
         {
-            
         }
 
         /// <summary>
-        /// The name.
+        ///     The name.
         /// </summary>
         public String Name
         {
-            get
-            {
-                return name;
-            }
+            get { return name; }
         }
 
         /// <summary>
-        /// The argument count.
+        ///     The argument count.
         /// </summary>
         public int ArgCount
         {
-            get
-            {
-                return argCount;
-            }
+            get { return argCount; }
         }
     }
 }

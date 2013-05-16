@@ -20,39 +20,37 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using Encog.App.Analyst.Script.Prop;
 
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// The set command allows a script to override a property value.
+    ///     The set command allows a script to override a property value.
     /// </summary>
-    ///
     public class CmdSet : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "SET";
 
         /// <summary>
-        /// Construct the set command with the analyst.
+        ///     Construct the set command with the analyst.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         public CmdSet(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             int index = args.IndexOf('=');
@@ -60,7 +58,7 @@ namespace Encog.App.Analyst.Commands
             String v = args.Substring(index + 1).Trim();
 
             PropertyEntry entry = PropertyConstraints.Instance
-                .FindEntry(dots);
+                                                     .FindEntry(dots);
 
             if (entry == null)
             {

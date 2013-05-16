@@ -20,9 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
@@ -52,12 +50,12 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <summary>
         /// The trainer being used.
         /// </summary>
-        private IEvolutionaryAlgorithm trainer;
+        private IEvolutionaryAlgorithm _trainer;
 
         /// <summary>
         /// The sigma (standard deviation) of the Gaussian random numbers.
         /// </summary>
-        private double sigma;
+        private readonly double _sigma;
 
         /// <summary>
         /// Construct the perturbing mutator.
@@ -65,7 +63,7 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <param name="theSigma">The sigma (standard deviation) for all random numbers.</param>
         public MutatePerturbLinkWeight(double theSigma)
         {
-            this.sigma = theSigma;
+            _sigma = theSigma;
         }
 
         /// <inheritdoc/>
@@ -73,34 +71,34 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         {
             get
             {
-                return this.trainer;
+                return _trainer;
             }
         }
 
         /// <inheritdoc/>
         public void Init(IEvolutionaryAlgorithm theTrainer)
         {
-            this.trainer = theTrainer;
+            _trainer = theTrainer;
         }
 
         /// <inheritdoc/>
         public void MutateWeight(EncogRandom rnd, NEATLinkGene linkGene,
                 double weightRange)
         {
-            double delta = rnd.NextGaussian() * this.sigma;
+            double delta = rnd.NextGaussian() * _sigma;
             double w = linkGene.Weight + delta;
             w = NEATPopulation.ClampWeight(w, weightRange);
             linkGene.Weight = w;
         }
 
         /// <inheritdoc/>
-        public string ToString()
+        public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append(":sigma=");
-            result.Append(this.sigma);
+            result.Append(_sigma);
             result.Append("]");
             return result.ToString();
         }

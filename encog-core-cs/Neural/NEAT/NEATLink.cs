@@ -21,8 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.Neural.NEAT
@@ -105,18 +103,18 @@ namespace Encog.Neural.NEAT
             {
                 return false;
             }
-            NEATLink otherMyClass = (NEATLink)other;
+            var otherMyClass = (NEATLink)other;
             return CompareTo(otherMyClass) == 0;
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[NEATLink: fromNeuron=");
-            result.Append(this.FromNeuron);
+            result.Append(FromNeuron);
             result.Append(", toNeuron=");
-            result.Append(this.ToNeuron);
+            result.Append(ToNeuron);
             result.Append("]");
             return result.ToString();
         }

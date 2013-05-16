@@ -58,7 +58,7 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// The list that holds the links.
         /// </summary>
-        private List<NEATLinkGene> linksList = new List<NEATLinkGene>();
+        private readonly List<NEATLinkGene> _linksList = new List<NEATLinkGene>();
 
         /// <summary>
         /// The network depth.
@@ -68,7 +68,7 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// The list that holds the neurons.
         /// </summary>
-        private IList<NEATNeuronGene> neuronsList = new List<NEATNeuronGene>();
+        private readonly IList<NEATNeuronGene> _neuronsList = new List<NEATNeuronGene>();
 
         /// <summary>
         /// The number of outputs.
@@ -87,23 +87,23 @@ namespace Encog.Neural.NEAT.Training
             AdjustedScore = other.AdjustedScore;
             InputCount = other.InputCount;
             OutputCount = other.OutputCount;
-            this.Species = other.Species;
+            Species = other.Species;
 
             // copy neurons
             foreach (NEATNeuronGene oldGene in other.NeuronsChromosome)
             {
-                NEATNeuronGene newGene = new NEATNeuronGene(oldGene);
-                this.neuronsList.Add(newGene);
+                var newGene = new NEATNeuronGene(oldGene);
+                _neuronsList.Add(newGene);
             }
 
             // copy links
-            foreach (NEATLinkGene oldGene in other.LinksChromosome)
+            foreach (var oldGene in other.LinksChromosome)
             {
-                NEATLinkGene newGene = new NEATLinkGene(
-                        oldGene.FromNeuronID, oldGene.ToNeuronID,
+                var newGene = new NEATLinkGene(
+                        oldGene.FromNeuronId, oldGene.ToNeuronId,
                         oldGene.Enabled, oldGene.InnovationId,
                         oldGene.Weight);
-                this.linksList.Add(newGene);
+                _linksList.Add(newGene);
             }
 
         }
@@ -116,8 +116,8 @@ namespace Encog.Neural.NEAT.Training
         /// <param name="links">The links to create.</param>
         /// <param name="inputCount">The input count.</param>
         /// <param name="outputCount">The output count.</param>
-        public NEATGenome(IList<NEATNeuronGene> neurons,
-                IList<NEATLinkGene> links, int inputCount,
+        public NEATGenome(IEnumerable<NEATNeuronGene> neurons,
+                IEnumerable<NEATLinkGene> links, int inputCount,
                 int outputCount)
         {
             AdjustedScore = 0;
@@ -126,10 +126,10 @@ namespace Encog.Neural.NEAT.Training
 
             foreach (NEATLinkGene gene in links)
             {
-                this.linksList.Add(new NEATLinkGene(gene));
+                _linksList.Add(new NEATLinkGene(gene));
             }
 
-            this.neuronsList = this.neuronsList.Union(neurons).ToList();
+            _neuronsList = _neuronsList.Union(neurons).ToList();
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Encog.Neural.NEAT.Training
         /// <param name="rnd">Random number generator.</param>
         /// <param name="pop">The population.</param>
         /// <param name="inputCount">The input count.</param>
-        /// <param name="outputCount"><The output count./param>
+        /// <param name="outputCount">The output count.</param>
         /// <param name="connectionDensity">The connection density.</param>
         public NEATGenome(EncogRandom rnd, NEATPopulation pop,
                 int inputCount, int outputCount,
@@ -153,44 +153,44 @@ namespace Encog.Neural.NEAT.Training
             IActivationFunction af = pop.ActivationFunctions.PickFirst();
 
             // first bias
-            int innovationID = 0;
-            NEATNeuronGene biasGene = new NEATNeuronGene(NEATNeuronType.Bias, af,
-                    inputCount, innovationID++);
-            this.neuronsList.Add(biasGene);
+            int innovationId = 0;
+            var biasGene = new NEATNeuronGene(NEATNeuronType.Bias, af,
+                    inputCount, innovationId++);
+            _neuronsList.Add(biasGene);
 
             // then inputs
 
-            for (int i = 0; i < inputCount; i++)
+            for (var i = 0; i < inputCount; i++)
             {
-                NEATNeuronGene gene = new NEATNeuronGene(NEATNeuronType.Input, af,
-                        i, innovationID++);
-                this.neuronsList.Add(gene);
+                var gene = new NEATNeuronGene(NEATNeuronType.Input, af,
+                        i, innovationId++);
+                _neuronsList.Add(gene);
             }
 
             // then outputs
 
             for (int i = 0; i < outputCount; i++)
             {
-                NEATNeuronGene gene = new NEATNeuronGene(NEATNeuronType.Output, af,
-                        i + inputCount + 1, innovationID++);
-                this.neuronsList.Add(gene);
+                var gene = new NEATNeuronGene(NEATNeuronType.Output, af,
+                        i + inputCount + 1, innovationId++);
+                _neuronsList.Add(gene);
             }
 
             // and now links
-            for (int i = 0; i < inputCount + 1; i++)
+            for (var i = 0; i < inputCount + 1; i++)
             {
-                for (int j = 0; j < outputCount; j++)
+                for (var j = 0; j < outputCount; j++)
                 {
                     // make sure we have at least one connection
-                    if (this.linksList.Count < 1
+                    if (_linksList.Count < 1
                             || rnd.NextDouble() < connectionDensity)
                     {
-                        long fromID = this.neuronsList[i].Id;
-                        long toID = this.neuronsList[inputCount + j + 1].Id;
+                        long fromId = this._neuronsList[i].Id;
+                        long toId = this._neuronsList[inputCount + j + 1].Id;
                         double w = RangeRandomizer.Randomize(rnd, -pop.WeightRange, pop.WeightRange);
-                        NEATLinkGene gene = new NEATLinkGene(fromID, toID, true,
-                                innovationID++, w);
-                        this.linksList.Add(gene);
+                        var gene = new NEATLinkGene(fromId, toId, true,
+                                innovationId++, w);
+                        _linksList.Add(gene);
                     }
                 }
             }
@@ -212,7 +212,7 @@ namespace Encog.Neural.NEAT.Training
         {
             get
             {
-                return this.linksList.Count;
+                return _linksList.Count;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Encog.Neural.NEAT.Training
         /// </summary>
         public void SortGenes()
         {
-            this.linksList.Sort();
+            _linksList.Sort();
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Encog.Neural.NEAT.Training
         {
             get
             {
-                return this.linksList;
+                return _linksList;
             }
         }
 
@@ -242,7 +242,7 @@ namespace Encog.Neural.NEAT.Training
         {
             get
             {
-                return this.neuronsList;
+                return _neuronsList;
             }
         }
 
@@ -253,7 +253,7 @@ namespace Encog.Neural.NEAT.Training
         {
 
             // make sure that the bias neuron is where it should be
-            NEATNeuronGene g = this.neuronsList[0];
+            NEATNeuronGene g = _neuronsList[0];
             if (g.NeuronType != NEATNeuronType.Bias)
             {
                 throw new EncogError("NEAT Neuron Gene 0 should be a bias gene.");
@@ -262,7 +262,7 @@ namespace Encog.Neural.NEAT.Training
             // make sure all input neurons are at the beginning
             for (int i = 1; i <= InputCount; i++)
             {
-                NEATNeuronGene gene = this.neuronsList[i];
+                NEATNeuronGene gene = _neuronsList[i];
                 if (gene.NeuronType != NEATNeuronType.Input)
                 {
                     throw new EncogError("NEAT Neuron Gene " + i
@@ -272,9 +272,9 @@ namespace Encog.Neural.NEAT.Training
 
             // make sure that there are no double links
             IDictionary<String, NEATLinkGene> map = new Dictionary<String, NEATLinkGene>();
-            foreach (NEATLinkGene nlg in this.linksList)
+            foreach (NEATLinkGene nlg in _linksList)
             {
-                String key = nlg.FromNeuronID + "->" + nlg.ToNeuronID;
+                String key = nlg.FromNeuronId + "->" + nlg.ToNeuronId;
                 if (map.ContainsKey(key))
                 {
                     throw new EncogError("Double link found: " + key);
@@ -301,13 +301,13 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Find the neuron with the specified nodeID.
         /// </summary>
-        /// <param name="nodeID">The nodeID to look for.</param>
+        /// <param name="nodeId">The nodeID to look for.</param>
         /// <returns>The neuron, if found, otherwise null.</returns>
-        public NEATNeuronGene FindNeuron(long nodeID)
+        public NEATNeuronGene FindNeuron(long nodeId)
         {
-            foreach (NEATNeuronGene gene in this.neuronsList)
+            foreach (NEATNeuronGene gene in this._neuronsList)
             {
-                if (gene.Id == nodeID)
+                if (gene.Id == nodeId)
                     return gene;
             }
             return null;
@@ -316,19 +316,19 @@ namespace Encog.Neural.NEAT.Training
         /// <inheritdoc/>
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append(",score=");
             result.Append(Format.FormatDouble(Score, 2));
             result.Append(",adjusted score=");
             result.Append(Format.FormatDouble(AdjustedScore, 2));
             result.Append(",birth generation=");
-            result.Append(this.BirthGeneration);
+            result.Append(BirthGeneration);
             result.Append(",neurons=");
-            result.Append(this.neuronsList.Count);
+            result.Append(_neuronsList.Count);
             result.Append(",links=");
-            result.Append(this.linksList.Count);
+            result.Append(_linksList.Count);
             result.Append("]");
             return result.ToString();
         }
@@ -336,7 +336,7 @@ namespace Encog.Neural.NEAT.Training
         /// <inheritdoc/>
         public object Clone()
         {
-            NEATGenome result = new NEATGenome();
+            var result = new NEATGenome();
             result.Copy(this);
             return result;
         }

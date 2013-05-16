@@ -20,9 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Neural.NEAT.Training.Opp.Links;
 using Encog.MathUtil.Randomize;
@@ -51,12 +50,12 @@ namespace Encog.Neural.NEAT.Training.Opp
         /// <summary>
         /// The method used to select the links to mutate.
         /// </summary>
-        private ISelectLinks linkSelection;
+        private readonly ISelectLinks _linkSelection;
 
         /// <summary>
         /// The method used to mutate the selected links.
         /// </summary>
-        private IMutateLinkWeight weightMutation;
+        private readonly IMutateLinkWeight _weightMutation;
 
         /// <summary>
         /// Construct a weight mutation operator.
@@ -66,8 +65,8 @@ namespace Encog.Neural.NEAT.Training.Opp
         public NEATMutateWeights(ISelectLinks theLinkSelection,
                 IMutateLinkWeight theWeightMutation)
         {
-            this.linkSelection = theLinkSelection;
-            this.weightMutation = theWeightMutation;
+            _linkSelection = theLinkSelection;
+            _weightMutation = theWeightMutation;
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace Encog.Neural.NEAT.Training.Opp
         {
             get
             {
-                return this.linkSelection;
+                return _linkSelection;
             }
         }
 
@@ -88,7 +87,7 @@ namespace Encog.Neural.NEAT.Training.Opp
         {
             get
             {
-                return this.weightMutation;
+                return _weightMutation;
             }
         }
 
@@ -100,24 +99,24 @@ namespace Encog.Neural.NEAT.Training.Opp
             NEATGenome target = ObtainGenome(parents, parentIndex, offspring,
                     offspringIndex);
             double weightRange = ((NEATPopulation)Owner.Population).WeightRange;
-            IList<NEATLinkGene> list = this.linkSelection.SelectLinks(rnd,
+            IList<NEATLinkGene> list = _linkSelection.SelectLinks(rnd,
                     target);
             foreach (NEATLinkGene gene in list)
             {
-                this.weightMutation.MutateWeight(rnd, gene, weightRange);
+                _weightMutation.MutateWeight(rnd, gene, weightRange);
             }
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append(":sel=");
-            result.Append(this.linkSelection.ToString());
+            result.Append(_linkSelection);
             result.Append(",mutate=");
-            result.Append(this.weightMutation.ToString());
+            result.Append(_weightMutation);
             result.Append("]");
             return result.ToString();
         }

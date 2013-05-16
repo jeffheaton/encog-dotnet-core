@@ -20,40 +20,37 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.App.Generate.Program
 {
     /// <summary>
-    /// A function argument for Encog created code.
+    ///     A function argument for Encog created code.
     /// </summary>
     public class EncogProgramArg
     {
         /// <summary>
-        /// The type of this argument.
+        ///     The type of this argument.
         /// </summary>
-        EncogArgType type;
+        private readonly EncogArgType type;
 
         /// <summary>
-        /// The value of this argument.
+        ///     The value of this argument.
         /// </summary>
-        Object value;
+        private readonly Object value;
 
         /// <summary>
-        /// Construct the argument. Default to float type. 
+        ///     Construct the argument. Default to float type.
         /// </summary>
         /// <param name="value">The argument value.</param>
         public EncogProgramArg(double value)
             : this(EncogArgType.Float, "" + value)
         {
-
         }
 
         /// <summary>
-        /// Construct the argument. 
+        ///     Construct the argument.
         /// </summary>
         /// <param name="type">The type of argument.</param>
         /// <param name="value">The value of the argument.</param>
@@ -64,17 +61,16 @@ namespace Encog.App.Generate.Program
         }
 
         /// <summary>
-        /// Construct a floating point arguement from an integer. 
+        ///     Construct a floating point arguement from an integer.
         /// </summary>
         /// <param name="value">The value.</param>
         public EncogProgramArg(int value)
             : this(EncogArgType.Float, "" + value)
         {
-
         }
 
         /// <summary>
-        /// Construct using an object. 
+        ///     Construct using an object.
         /// </summary>
         /// <param name="argValue">The argument value.</param>
         public EncogProgramArg(Object argValue)
@@ -83,35 +79,28 @@ namespace Encog.App.Generate.Program
         }
 
         /// <summary>
-        /// Construct a string argument. 
+        ///     Construct a string argument.
         /// </summary>
         /// <param name="value">The string value.</param>
         public EncogProgramArg(String value)
             : this(EncogArgType.String, value)
         {
-
         }
 
         /// <summary>
-        /// The type of argument.
+        ///     The type of argument.
         /// </summary>
         public EncogArgType Type
         {
-            get
-            {
-                return this.type;
-            }
+            get { return type; }
         }
 
         /// <summary>
-        /// The value.
+        ///     The value.
         /// </summary>
         public Object Value
         {
-            get
-            {
-                return this.value;
-            }
+            get { return value; }
         }
     }
 }

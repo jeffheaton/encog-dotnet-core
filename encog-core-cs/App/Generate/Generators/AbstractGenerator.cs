@@ -20,132 +20,127 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
+using Encog.App.Generate.Program;
 
 namespace Encog.App.Generate.Generators
 {
     /// <summary>
-    /// Abstract class that forms the foundation of most code generators. This class
-    /// allows for includes and code indentation.
+    ///     Abstract class that forms the foundation of most code generators. This class
+    ///     allows for includes and code indentation.
     /// </summary>
     public abstract class AbstractGenerator : IProgramGenerator
     {
         /// <summary>
-        /// Default number of indent spaces.
+        ///     Default number of indent spaces.
         /// </summary>
         public const int INDENT_SPACES = 4;
 
         /// <summary>
-        /// The contents of this file.
+        ///     The contents of this file.
         /// </summary>
         private readonly StringBuilder contents = new StringBuilder();
 
         /// <summary>
-        /// The current indent level.
+        ///     The includes.
         /// </summary>
-        private int currentIndent = 0;
+        private readonly HashSet<String> includes = new HashSet<String>();
 
         /// <summary>
-        /// The includes.
+        ///     The current indent level.
         /// </summary>
-        private HashSet<String> includes = new HashSet<String>();
+        private int currentIndent;
 
         /// <summary>
-        /// Add a line break;
+        ///     The includes.
         /// </summary>
-        public void AddBreak()
+        public HashSet<string> Includes
         {
-            this.contents.Append("\n");
+            get { return includes; }
         }
 
         /// <summary>
-        /// Add an include. 
+        ///     Get the contents.
+        /// </summary>
+        public String Contents
+        {
+            get { return contents.ToString(); }
+        }
+
+        /// <summary>
+        ///     Write the contents to the specified file.
+        /// </summary>
+        /// <param name="targetFile">The file to write to.</param>
+        public void WriteContents(FileInfo targetFile)
+        {
+            File.WriteAllText(targetFile.ToString(), contents.ToString());
+        }
+
+        /// <inheritdoc />
+        public abstract void Generate(EncogGenProgram program, bool embed);
+
+        /// <summary>
+        ///     Add a line break;
+        /// </summary>
+        public void AddBreak()
+        {
+            contents.Append("\n");
+        }
+
+        /// <summary>
+        ///     Add an include.
         /// </summary>
         /// <param name="str">The include to add.</param>
         public void AddInclude(String str)
         {
-            this.includes.Add(str);
+            includes.Add(str);
         }
-        
+
         /// <summary>
-        /// Add a line of code, indent proper.
+        ///     Add a line of code, indent proper.
         /// </summary>
         /// <param name="line">The line of code to add.</param>
         public void AddLine(String line)
         {
-            for (int i = 0; i < this.currentIndent; i++)
+            for (int i = 0; i < currentIndent; i++)
             {
-                this.contents.Append(' ');
+                contents.Append(' ');
             }
-            this.contents.Append(line);
-            this.contents.Append("\n");
+            contents.Append(line);
+            contents.Append("\n");
         }
 
         /// <summary>
-        /// Add to the beginning of the file. This is good for includes.
+        ///     Add to the beginning of the file. This is good for includes.
         /// </summary>
         /// <param name="str"></param>
         public void AddToBeginning(String str)
         {
-            this.contents.Insert(0, str);
+            contents.Insert(0, str);
         }
 
         /// <summary>
-        /// Get the contents.
-        /// </summary>
-        public String Contents
-        {
-            get
-            {
-                return this.contents.ToString();
-            }
-        }
-
-        /// <summary>
-        /// The includes.
-        /// </summary>
-        public HashSet<string> Includes
-        {
-            get
-            {
-                return this.includes;
-            }
-        }
-
-        /// <summary>
-        /// Indent a line. The line after dis one will be indented. 
+        ///     Indent a line. The line after dis one will be indented.
         /// </summary>
         /// <param name="line">The line to indent.</param>
         public void IndentLine(String line)
         {
             AddLine(line);
-            this.currentIndent += AbstractGenerator.INDENT_SPACES;
+            currentIndent += INDENT_SPACES;
         }
 
         /// <summary>
-        /// Unindent and then add this line.
+        ///     Unindent and then add this line.
         /// </summary>
         /// <param name="line">The line to add.</param>
         public void UnIndentLine(string line)
         {
-            this.currentIndent -= AbstractGenerator.INDENT_SPACES;
+            currentIndent -= INDENT_SPACES;
             AddLine(line);
         }
-
-        /// <summary>
-        /// Write the contents to the specified file.
-        /// </summary>
-        /// <param name="targetFile">The file to write to.</param>
-        public void WriteContents(FileInfo targetFile)
-        {
-            System.IO.File.WriteAllText(targetFile.ToString(), contents.ToString());
-        }
-
-        /// <inheritdoc/>
-        public abstract void Generate(Program.EncogGenProgram program, bool embed);
     }
 }

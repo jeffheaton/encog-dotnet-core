@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,27 +28,23 @@ using System.Text;
 namespace Encog.App.Analyst.Script.Task
 {
     /// <summary>
-    /// Holds a task in the script. A task is a named set of commands.
+    ///     Holds a task in the script. A task is a named set of commands.
     /// </summary>
-    ///
     public class AnalystTask
     {
         /// <summary>
-        /// The "source code" for this task.
+        ///     The "source code" for this task.
         /// </summary>
-        ///
         private readonly IList<String> _lines;
 
         /// <summary>
-        /// The name of the task.
+        ///     The name of the task.
         /// </summary>
-        ///
         private String _name;
 
         /// <summary>
-        /// Construct an analyst task.
+        ///     Construct an analyst task.
         /// </summary>
-        ///
         /// <param name="theName">The name of this task.</param>
         public AnalystTask(String theName)
         {
@@ -58,7 +55,7 @@ namespace Encog.App.Analyst.Script.Task
 
         /// <value>the lines</value>
         public IList<String> Lines
-        {            
+        {
             get { return _lines; }
         }
 
@@ -72,9 +69,7 @@ namespace Encog.App.Analyst.Script.Task
 
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

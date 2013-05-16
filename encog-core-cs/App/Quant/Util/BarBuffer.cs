@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.Util;
@@ -27,27 +28,23 @@ using Encog.Util;
 namespace Encog.App.Quant.Util
 {
     /// <summary>
-    /// A buffer of bar segments.
+    ///     A buffer of bar segments.
     /// </summary>
-    ///
     public class BarBuffer
     {
         /// <summary>
-        /// The bar data loaded.
+        ///     The bar data loaded.
         /// </summary>
-        ///
         private readonly IList<double[]> data;
 
         /// <summary>
-        /// The number of periods.
+        ///     The number of periods.
         /// </summary>
-        ///
         private readonly int periods;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="thePeriods">The number of periods.</param>
         public BarBuffer(int thePeriods)
         {
@@ -63,9 +60,8 @@ namespace Encog.App.Quant.Util
 
 
         /// <summary>
-        /// Determine if the buffer is full.
+        ///     Determine if the buffer is full.
         /// </summary>
-        ///
         /// <value>True if the buffer is full.</value>
         public bool Full
         {
@@ -73,9 +69,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Add a bar.
+        ///     Add a bar.
         /// </summary>
-        ///
         /// <param name="d">The bar data.</param>
         public void Add(double d)
         {
@@ -85,9 +80,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Add a bar.
+        ///     Add a bar.
         /// </summary>
-        ///
         /// <param name="d">The bar data.</param>
         public void Add(double[] d)
         {
@@ -99,9 +93,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Average all of the bars.
+        ///     Average all of the bars.
         /// </summary>
-        ///
         /// <param name="idx">The bar index to average.</param>
         /// <returns>The average.</returns>
         public double Average(int idx)
@@ -117,9 +110,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Get the average gain.
+        ///     Get the average gain.
         /// </summary>
-        ///
         /// <param name="idx">The field to get the average gain for.</param>
         /// <returns>The average gain.</returns>
         public double AverageGain(int idx)
@@ -149,9 +141,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Get the average loss.
+        ///     Get the average loss.
         /// </summary>
-        ///
         /// <param name="idx">The index to check for.</param>
         /// <returns>The average loss.</returns>
         public double AverageLoss(int idx)
@@ -182,9 +173,8 @@ namespace Encog.App.Quant.Util
 
 
         /// <summary>
-        /// Get the max for the specified index.
+        ///     Get the max for the specified index.
         /// </summary>
-        ///
         /// <param name="idx">The index to check.</param>
         /// <returns>The max.</returns>
         public double Max(int idx)
@@ -200,9 +190,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Get the min for the specified index.
+        ///     Get the min for the specified index.
         /// </summary>
-        ///
         /// <param name="idx">The index to check.</param>
         /// <returns>The min.</returns>
         public double Min(int idx)
@@ -218,9 +207,8 @@ namespace Encog.App.Quant.Util
         }
 
         /// <summary>
-        /// Pop (and remove) the oldest bar in the buffer.
+        ///     Pop (and remove) the oldest bar in the buffer.
         /// </summary>
-        ///
         /// <returns>The oldest bar in the buffer.</returns>
         public double[] Pop()
         {

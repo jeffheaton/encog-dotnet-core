@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.App.Analyst.Script.Normalize;
@@ -28,63 +29,53 @@ using Encog.Util;
 namespace Encog.App.Analyst.CSV
 {
     /// <summary>
-    /// A utility used to breat data into time-series lead and lag.
+    ///     A utility used to breat data into time-series lead and lag.
     /// </summary>
-    ///
     public class TimeSeriesUtil
     {
         /// <summary>
-        /// The analyst to use.
+        ///     The analyst to use.
         /// </summary>
-        ///
         private readonly EncogAnalyst _analyst;
 
         /// <summary>
-        /// The buffer to hold the time-series data.
+        ///     The buffer to hold the time-series data.
         /// </summary>
-        ///
         private readonly IList<double[]> _buffer;
 
         /// <summary>
-        /// The heading map.
+        ///     The heading map.
         /// </summary>
-        ///
         private readonly IDictionary<String, Int32> _headingMap;
 
         /// <summary>
-        /// The input size.
+        ///     The input size.
         /// </summary>
-        ///
         private readonly int _inputSize;
 
         /// <summary>
-        /// The lag depth.
+        ///     The lag depth.
         /// </summary>
-        ///
         private readonly int _lagDepth;
 
         /// <summary>
-        /// The lead depth.
+        ///     The lead depth.
         /// </summary>
-        ///
         private readonly int _leadDepth;
 
         /// <summary>
-        /// The output size.
+        ///     The output size.
         /// </summary>
-        ///
         private readonly int _outputSize;
 
         /// <summary>
-        /// The total depth.
+        ///     The total depth.
         /// </summary>
-        ///
         private readonly int _totalDepth;
 
         /// <summary>
-        /// Construct the time-series utility.
+        ///     Construct the time-series utility.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         /// <param name="includeOutput">Should output fields be included.</param>
         /// <param name="headings">The column headings.</param>
@@ -99,7 +90,7 @@ namespace Encog.App.Analyst.CSV
             _totalDepth = _lagDepth + _leadDepth + 1;
             _inputSize = includeOutput ? _analyst.DetermineTotalColumns() : _analyst.DetermineTotalInputFieldCount();
             _outputSize = _analyst.DetermineInputCount()
-                         + _analyst.DetermineOutputCount();
+                          + _analyst.DetermineOutputCount();
 
             int headingIndex = 0;
 
@@ -167,9 +158,8 @@ namespace Encog.App.Analyst.CSV
 
 
         /// <summary>
-        /// Process a row.
+        ///     Process a row.
         /// </summary>
-        ///
         /// <param name="input">The input.</param>
         /// <returns>The output.</returns>
         public double[] Process(double[] input)
@@ -220,10 +210,9 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Translate a timeslice from a pos/neg number to a displacement 
-        /// into the buffer.
+        ///     Translate a timeslice from a pos/neg number to a displacement
+        ///     into the buffer.
         /// </summary>
-        ///
         /// <param name="index">The index.</param>
         /// <returns>The translated displacement.</returns>
         private int TranslateTimeSlice(int index)

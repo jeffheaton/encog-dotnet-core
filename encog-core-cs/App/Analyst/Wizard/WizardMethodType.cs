@@ -20,50 +20,51 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 namespace Encog.App.Analyst.Wizard
 {
     /// <summary>
-    /// The machine learning method that the Encog Analyst Wizard should use.
+    ///     The machine learning method that the Encog Analyst Wizard should use.
     /// </summary>
-    ///
     public enum WizardMethodType
     {
         /// <summary>
-        /// Feed forward network.
+        ///     Feed forward network.
         /// </summary>
-        ///
         FeedForward,
+
         /// <summary>
-        /// RBF network.
+        ///     RBF network.
         /// </summary>
-        ///
         RBF,
+
         /// <summary>
-        /// SVM network.
+        ///     SVM network.
         /// </summary>
-        ///
         SVM,
+
         /// <summary>
-        /// NEAT network.
+        ///     NEAT network.
         /// </summary>
-        ///
         NEAT,
+
         /// <summary>
-        /// PNN neural network.
+        ///     PNN neural network.
         /// </summary>
-        ///
         PNN,
+
         /// <summary>
-        /// SOM neural network.
+        ///     SOM neural network.
         /// </summary>
-        ///
         SOM,
+
         /// <summary>
-        /// Bayesian network.
+        ///     Bayesian network.
         /// </summary>
         BayesianNetwork,
+
         /// <summary>
-        /// Encog Program.
+        ///     Encog Program.
         /// </summary>
         EPL
     }

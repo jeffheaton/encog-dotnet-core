@@ -20,42 +20,42 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.App.Generate
 {
     /// <summary>
-    /// Specifies the target language for Encog code generation.
+    ///     Specifies the target language for Encog code generation.
     /// </summary>
     public enum TargetLanguage
     {
         /// <summary>
-        /// No code generation.
+        ///     No code generation.
         /// </summary>
         NoGeneration,
+
         /// <summary>
-        /// Generate using Java.
+        ///     Generate using Java.
         /// </summary>
         Java,
+
         /// <summary>
-        /// Generate using Javascript.
+        ///     Generate using Javascript.
         /// </summary>
         JavaScript,
+
         /// <summary>
-        /// Generate using C#.
+        ///     Generate using C#.
         /// </summary>
         CSharp,
+
         /// <summary>
-        /// Generate for MetaTrader 4 using MQL4.
+        ///     Generate for MetaTrader 4 using MQL4.
         /// </summary>
         MQL4,
+
         /// <summary>
-        /// Generate for NinjaTrader 7 using NinjaScript.
+        ///     Generate for NinjaTrader 7 using NinjaScript.
         /// </summary>
         NinjaScript
-
     }
 }

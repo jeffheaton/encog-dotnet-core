@@ -20,186 +20,72 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Encog.Util.Concurrency;
-using Encog.ML.EA.Genome;
-using Encog.ML.EA.Score;
-using Encog.ML.EA.Sort;
-using Encog.ML.EA.Population;
-using Encog.Neural.Networks.Training;
-using Encog.ML.EA.Opp.Selection;
-using Encog.ML.EA.Opp;
-using Encog.ML.EA.Codec;
-using Encog.ML.EA.Species;
-using Encog.ML.EA.Rules;
 using System.Threading.Tasks;
-using Encog.MathUtil.Randomize.Factory;
+using Encog.ML.EA.Codec;
+using Encog.ML.EA.Genome;
+using Encog.ML.EA.Opp;
+using Encog.ML.EA.Opp.Selection;
+using Encog.ML.EA.Population;
+using Encog.ML.EA.Rules;
+using Encog.ML.EA.Score;
 using Encog.ML.EA.Score.Multi;
+using Encog.ML.EA.Sort;
+using Encog.ML.EA.Species;
+using Encog.MathUtil.Randomize.Factory;
+using Encog.Neural.Networks.Training;
+using Encog.Util.Concurrency;
 
 namespace Encog.ML.EA.Train
 {
     /// <summary>
-    /// Provides a basic implementation of a multi-threaded Evolutionary Algorithm.
-    /// The EA works from a score function.
+    ///     Provides a basic implementation of a multi-threaded Evolutionary Algorithm.
+    ///     The EA works from a score function.
     /// </summary>
     [Serializable]
     public class BasicEA : IEvolutionaryAlgorithm, IMultiThreadable
     {
         /// <summary>
-        /// Calculate the score adjustment, based on adjusters.
+        ///     The score adjusters.
         /// </summary>
-        /// <param name="genome">The genome to adjust.</param>
-        /// <param name="adjusters">The score adjusters.</param>
-        public static void CalculateScoreAdjustment(IGenome genome,
-                IList<IAdjustScore> adjusters)
-        {
-            double score = genome.Score;
-            double delta = 0;
-
-            foreach (IAdjustScore a in adjusters)
-            {
-                delta += a.CalculateAdjustment(genome);
-            }
-
-            genome.AdjustedScore = (score + delta);
-        }
+        private readonly IList<IAdjustScore> _adjusters = new List<IAdjustScore>();
 
         /// <summary>
-        /// Should exceptions be ignored.
+        ///     The population for the next iteration.
         /// </summary>
-        public bool IgnoreExceptions { get; set; }
+        private readonly IList<IGenome> _newPopulation = new List<IGenome>();
 
         /// <summary>
-        /// The genome comparator.
+        ///     The operators to use.
         /// </summary>
-        public IGenomeComparer BestComparer { get; set; }
+        private readonly OperationList _operators = new OperationList();
 
         /// <summary>
-        /// The genome comparator.
+        ///     Has the first iteration occured.
         /// </summary>
-        public IGenomeComparer SelectionComparer { get; set; }
+        private bool _initialized;
 
         /// <summary>
-        /// The population.
+        ///     The best genome from the last iteration.
         /// </summary>
-        public IPopulation Population { get; set; }
+        private IGenome _oldBestGenome;
 
         /// <summary>
-        /// The score calculation function.
+        ///     The speciation method.
         /// </summary>
-        public ICalculateScore ScoreFunction { get; set; }
+        private ISpeciation _speciation = new SingleSpeciation();
 
         /// <summary>
-        /// The selection operator.
-        /// </summary>
-        public ISelectionOperator Selection { get; set; }
-
-        /// <summary>
-        /// The score adjusters.
-        /// </summary>
-        private IList<IAdjustScore> adjusters = new List<IAdjustScore>();
-
-        /// <summary>
-        /// The operators to use.
-        /// </summary>
-        private OperationList operators = new OperationList();
-
-        /// <summary>
-        /// The CODEC to use to convert between genome and phenome.
-        /// </summary>
-        public IGeneticCODEC CODEC { get; set; }
-
-        /// <summary>
-        /// The current iteration.
-        /// </summary>
-        public int IterationNumber { get; set; }
-
-        /// <summary>
-        /// Random number factory.
-        /// </summary>
-        public IRandomFactory RandomNumberFactory { get; set; }
-
-        /// <summary>
-        /// The validation mode.
-        /// </summary>
-        public bool ValidationMode { get; set; }
-
-        /// <summary>
-        /// The iteration number.
-        /// </summary>
-        private int iteration;
-
-        /// <summary>
-        /// The desired thread count.
-        /// </summary>
-        public int ThreadCount { get; set; }
-
-        /// <summary>
-        /// The speciation method.
-        /// </summary>
-        private ISpeciation speciation = new SingleSpeciation();
-
-        /// <summary>
-        /// The best genome from the last iteration.
-        /// </summary>
-        private IGenome oldBestGenome;
-
-        /// <summary>
-        /// The population for the next iteration.
-        /// </summary>
-        private IList<IGenome> newPopulation = new List<IGenome>();
-
-        /// <summary>
-        /// The mutation to be used on the top genome. We want to only modify its
-        /// weights.
-        /// </summary>
-        public IEvolutionaryOperator ChampMutation { get; set; }
-
-        /// <summary>
-        /// The percentage of a species that is "elite" and is passed on directly.
-        /// </summary>
-        public double EliteRate { get; set; }
-
-        /// <summary>
-        /// The number of times to try certian operations, so an endless loop does
-        /// not occur.
-        /// </summary>
-        public int MaxTries { get; set; }
-
-        /// <summary>
-        /// The best ever genome.
-        /// </summary>
-        public IGenome BestGenome { get; set; }
-
-        /// <summary>
-        /// Holds rewrite and constraint rules.
-        /// </summary>
-        public IRuleHolder Rules { get; set; }
-
-        /// <summary>
-        /// The maximum number of errors to tolerate for the operators before stopping.
-        /// Because this is a stocastic process some operators will generated errors sometimes.
-        /// </summary>
-        public int MaxOperationErrors { get; set; }
-
-        /// <summary>
-        /// Has the first iteration occured.
-        /// </summary>
-        private bool initialized;
-
-
-        /// <summary>
-        /// Construct an EA.
+        ///     Construct an EA.
         /// </summary>
         /// <param name="thePopulation">The population.</param>
         /// <param name="theScoreFunction">The score function.</param>
         public BasicEA(IPopulation thePopulation,
-                ICalculateScore theScoreFunction)
+                       ICalculateScore theScoreFunction)
         {
-
             RandomNumberFactory = EncogFramework.Instance.RandomFactory.FactorFactory();
             EliteRate = 0.3;
             MaxTries = 5;
@@ -207,7 +93,7 @@ namespace Encog.ML.EA.Train
             CODEC = new GenomeAsPhenomeCODEC();
 
 
-            this.Population = thePopulation;
+            Population = thePopulation;
             ScoreFunction = theScoreFunction;
             Selection = new TournamentSelection(this, 4);
             Rules = new BasicRuleHolder();
@@ -215,7 +101,7 @@ namespace Encog.ML.EA.Train
             // set the score compare method
             if (theScoreFunction.ShouldMinimize)
             {
-                this.SelectionComparer = new MinimizeAdjustedScoreComp();
+                SelectionComparer = new MinimizeAdjustedScoreComp();
                 BestComparer = new MinimizeScoreComp();
             }
             else
@@ -230,7 +116,7 @@ namespace Encog.ML.EA.Train
                 foreach (IGenome genome in species.Members)
                 {
                     IterationNumber = Math.Max(IterationNumber,
-                            genome.BirthGeneration);
+                                               genome.BirthGeneration);
                 }
             }
 
@@ -244,68 +130,113 @@ namespace Encog.ML.EA.Train
         }
 
         /// <summary>
-        /// Add a child to the next iteration.
+        ///     Should exceptions be ignored.
         /// </summary>
-        /// <param name="genome">The child.</param>
-        /// <returns>True, if the child was added successfully.</returns>
-        public bool AddChild(IGenome genome)
+        public bool IgnoreExceptions { get; set; }
+
+        /// <summary>
+        ///     Random number factory.
+        /// </summary>
+        public IRandomFactory RandomNumberFactory { get; set; }
+
+        /// <summary>
+        ///     The mutation to be used on the top genome. We want to only modify its
+        ///     weights.
+        /// </summary>
+        public IEvolutionaryOperator ChampMutation { get; set; }
+
+        /// <summary>
+        ///     The percentage of a species that is "elite" and is passed on directly.
+        /// </summary>
+        public double EliteRate { get; set; }
+
+        /// <summary>
+        ///     The maximum number of errors to tolerate for the operators before stopping.
+        ///     Because this is a stocastic process some operators will generated errors sometimes.
+        /// </summary>
+        public int MaxOperationErrors { get; set; }
+
+        /// <summary>
+        ///     The old best genome.
+        /// </summary>
+        public IGenome OldBestGenome
         {
-            lock (this.newPopulation)
-            {
-                if (this.newPopulation.Count < Population.PopulationSize)
-                {
-                    // don't readd the old best genome, it was already added
-                    if (genome != this.oldBestGenome)
-                    {
-
-                        if (ValidationMode)
-                        {
-                            if (this.newPopulation.Contains(genome))
-                            {
-                                throw new EncogError(
-                                        "Genome already added to population: "
-                                                + genome.ToString());
-                            }
-                        }
-
-                        this.newPopulation.Add(genome);
-                    }
-
-                    if (!Double.IsInfinity(genome.Score)
-                            && !Double.IsNaN(genome.Score)
-                            && BestComparer.IsBetterThan(genome,
-                                    BestGenome))
-                    {
-                        BestGenome = genome;
-                        Population.BestGenome = BestGenome;
-                    }
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            get { return _oldBestGenome; }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        ///     The genome comparator.
+        /// </summary>
+        public IGenomeComparer BestComparer { get; set; }
+
+        /// <summary>
+        ///     The genome comparator.
+        /// </summary>
+        public IGenomeComparer SelectionComparer { get; set; }
+
+        /// <summary>
+        ///     The population.
+        /// </summary>
+        public IPopulation Population { get; set; }
+
+        /// <summary>
+        ///     The score calculation function.
+        /// </summary>
+        public ICalculateScore ScoreFunction { get; set; }
+
+        /// <summary>
+        ///     The selection operator.
+        /// </summary>
+        public ISelectionOperator Selection { get; set; }
+
+        /// <summary>
+        ///     The CODEC to use to convert between genome and phenome.
+        /// </summary>
+        public IGeneticCODEC CODEC { get; set; }
+
+        /// <summary>
+        ///     The current iteration.
+        /// </summary>
+        public int IterationNumber { get; set; }
+
+        /// <summary>
+        ///     The validation mode.
+        /// </summary>
+        public bool ValidationMode { get; set; }
+
+        /// <summary>
+        ///     The number of times to try certian operations, so an endless loop does
+        ///     not occur.
+        /// </summary>
+        public int MaxTries { get; set; }
+
+        /// <summary>
+        ///     The best ever genome.
+        /// </summary>
+        public IGenome BestGenome { get; set; }
+
+        /// <summary>
+        ///     Holds rewrite and constraint rules.
+        /// </summary>
+        public IRuleHolder Rules { get; set; }
+
+        /// <inheritdoc />
         public void AddOperation(double probability,
-                IEvolutionaryOperator opp)
+                                 IEvolutionaryOperator opp)
         {
             Operators.Add(probability, opp);
             opp.Init(this);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void AddScoreAdjuster(IAdjustScore scoreAdjust)
         {
-            this.adjusters.Add(scoreAdjust);
+            _adjusters.Add(scoreAdjust);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void CalculateScore(IGenome g)
         {
-
             // try rewrite
             Rules.Rewrite(g);
 
@@ -316,20 +247,14 @@ namespace Encog.ML.EA.Train
             // deal with invalid decode
             if (phenotype == null)
             {
-                if (BestComparer.ShouldMinimize)
-                {
-                    score = Double.PositiveInfinity;
-                }
-                else
-                {
-                    score = Double.NegativeInfinity;
-                }
+                score = BestComparer.ShouldMinimize ? Double.PositiveInfinity : Double.NegativeInfinity;
             }
             else
             {
-                if (phenotype is IMLContext)
+                var context = phenotype as IMLContext;
+                if (context != null)
                 {
-                    ((IMLContext)phenotype).ClearContext();
+                    context.ClearContext();
                 }
                 score = ScoreFunction.CalculateScore(phenotype);
             }
@@ -339,13 +264,12 @@ namespace Encog.ML.EA.Train
             g.AdjustedScore = score;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public virtual void FinishTraining()
         {
-
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public double Error
         {
             get
@@ -365,29 +289,15 @@ namespace Encog.ML.EA.Train
                 {
                     return Double.PositiveInfinity;
                 }
-                else
-                {
-                    return Double.NegativeInfinity;
-                }
+                return Double.NegativeInfinity;
             }
         }
 
 
-        /// <summary>
-        /// The old best genome.
-        /// </summary>
-        public IGenome OldBestGenome
-        {
-            get
-            {
-                return this.oldBestGenome;
-            }
-        }
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Iteration()
         {
-            if (!this.initialized)
+            if (!_initialized)
             {
                 PreIteration();
             }
@@ -400,9 +310,9 @@ namespace Encog.ML.EA.Train
             IterationNumber++;
 
             // Clear new population to just best genome.
-            this.newPopulation.Clear();
-            this.newPopulation.Add(BestGenome);
-            this.oldBestGenome = BestGenome;
+            _newPopulation.Clear();
+            _newPopulation.Add(BestGenome);
+            _oldBestGenome = BestGenome;
 
 
             // execute species in parallel
@@ -414,12 +324,12 @@ namespace Encog.ML.EA.Train
                 // Add elite genomes directly
                 if (species.Members.Count > 5)
                 {
-                    int idealEliteCount = (int)(species.Members.Count * EliteRate);
+                    var idealEliteCount = (int) (species.Members.Count*EliteRate);
                     int eliteCount = Math.Min(numToSpawn, idealEliteCount);
                     for (int i = 0; i < eliteCount; i++)
                     {
                         IGenome eliteGenome = species.Members[i];
-                        if (this.oldBestGenome != eliteGenome)
+                        if (_oldBestGenome != eliteGenome)
                         {
                             numToSpawn--;
                             if (!AddChild(eliteGenome))
@@ -433,58 +343,140 @@ namespace Encog.ML.EA.Train
                 // now add one task for each offspring that each species is allowed
                 while (numToSpawn-- > 0)
                 {
-                    EAWorker worker = new EAWorker(this, species);
+                    var worker = new EAWorker(this, species);
                     threadList.Add(worker);
                 }
             }
 
             // run all threads and wait for them to finish
-            Parallel.ForEach(threadList, currentTask =>
-            {
-                currentTask.PerformTask();
-            });
+            Parallel.ForEach(threadList, currentTask => currentTask.PerformTask());
 
             // validate, if requested
             if (ValidationMode)
             {
-                if (this.oldBestGenome != null
-                        && !this.newPopulation.Contains(this.oldBestGenome))
+                if (_oldBestGenome != null
+                    && !_newPopulation.Contains(_oldBestGenome))
                 {
                     throw new EncogError(
-                            "The top genome died, this should never happen!!");
+                        "The top genome died, this should never happen!!");
                 }
 
                 if (BestGenome != null
-                        && this.oldBestGenome != null
-                        && BestComparer.IsBetterThan(this.oldBestGenome,
-                                BestGenome))
+                    && _oldBestGenome != null
+                    && BestComparer.IsBetterThan(_oldBestGenome,
+                                                 BestGenome))
                 {
                     throw new EncogError(
-                            "The best genome's score got worse, this should never happen!! Went from "
-                                    + this.oldBestGenome.Score + " to "
-                                    + this.BestGenome.Score);
+                        "The best genome's score got worse, this should never happen!! Went from "
+                        + _oldBestGenome.Score + " to "
+                        + BestGenome.Score);
                 }
             }
 
-            this.speciation.PerformSpeciation(this.newPopulation);
+            _speciation.PerformSpeciation(_newPopulation);
 
             // purge invalid genomes
             Population.PurgeInvalidGenomes();
         }
 
         /// <summary>
-        /// Called before the first iteration. Determine the number of threads to
-        /// use.
+        ///     The operators.
+        /// </summary>
+        public OperationList Operators
+        {
+            get { return _operators; }
+        }
+
+
+        public int MaxIndividualSize { get; set; }
+
+
+        public IList<IAdjustScore> ScoreAdjusters
+        {
+            get { return _adjusters; }
+        }
+
+        public bool ShouldIgnoreExceptions { get; set; }
+
+        public ISpeciation Speciation
+        {
+            get { return _speciation; }
+            set { _speciation = value; }
+        }
+
+        /// <summary>
+        ///     The desired thread count.
+        /// </summary>
+        public int ThreadCount { get; set; }
+
+        /// <summary>
+        ///     Calculate the score adjustment, based on adjusters.
+        /// </summary>
+        /// <param name="genome">The genome to adjust.</param>
+        /// <param name="adjusters">The score adjusters.</param>
+        public static void CalculateScoreAdjustment(IGenome genome,
+                                                    IList<IAdjustScore> adjusters)
+        {
+            double score = genome.Score;
+            double delta = adjusters.Sum(a => a.CalculateAdjustment(genome));
+
+            genome.AdjustedScore = (score + delta);
+        }
+
+        /// <summary>
+        ///     Add a child to the next iteration.
+        /// </summary>
+        /// <param name="genome">The child.</param>
+        /// <returns>True, if the child was added successfully.</returns>
+        public bool AddChild(IGenome genome)
+        {
+            lock (_newPopulation)
+            {
+                if (_newPopulation.Count < Population.PopulationSize)
+                {
+                    // don't readd the old best genome, it was already added
+                    if (genome != _oldBestGenome)
+                    {
+                        if (ValidationMode)
+                        {
+                            if (_newPopulation.Contains(genome))
+                            {
+                                throw new EncogError(
+                                    "Genome already added to population: "
+                                    + genome);
+                            }
+                        }
+
+                        _newPopulation.Add(genome);
+                    }
+
+                    if (!Double.IsInfinity(genome.Score)
+                        && !Double.IsNaN(genome.Score)
+                        && BestComparer.IsBetterThan(genome,
+                                                     BestGenome))
+                    {
+                        BestGenome = genome;
+                        Population.BestGenome = BestGenome;
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Called before the first iteration. Determine the number of threads to
+        ///     use.
         /// </summary>
         private void PreIteration()
         {
-            this.initialized = true;
-            this.speciation.Init(this);
+            _initialized = true;
+            _speciation.Init(this);
 
             // score the population
-            ParallelScore pscore = new ParallelScore(Population,
-				CODEC, this.adjusters, ScoreFunction, ThreadCount);
-		    pscore.Process();
+            var pscore = new ParallelScore(Population,
+                                           CODEC, _adjusters, ScoreFunction, ThreadCount);
+            pscore.Process();
 
             // just pick the first genome with a valid score as best, it will be
             // updated later.
@@ -498,52 +490,17 @@ namespace Encog.ML.EA.Train
             {
                 BestGenome = list[idx++];
             } while (idx < list.Count
-                    && (Double.IsInfinity(BestGenome.Score) || Double
-                            .IsNaN(this.BestGenome.Score)));
+                     && (Double.IsInfinity(BestGenome.Score) || Double
+                                                                    .IsNaN(BestGenome.Score)));
 
             Population.BestGenome = BestGenome;
 
             // speciate
             IList<IGenome> genomes = Population.Flatten();
-            this.speciation.PerformSpeciation(genomes);
+            _speciation.PerformSpeciation(genomes);
 
             // purge invalid genomes
             Population.PurgeInvalidGenomes();
-
-        }
-
-        /// <summary>
-        /// The operators.
-        /// </summary>
-        public OperationList Operators
-        {
-            get
-            {
-                return this.operators;
-            }
-        }
-
-
-        public int MaxIndividualSize { get; set; }
-        
-
-        public IList<IAdjustScore> ScoreAdjusters
-        {
-            get { return this.adjusters; }
-        }
-
-        public bool ShouldIgnoreExceptions { get; set; }
-
-        public ISpeciation Speciation
-        {
-            get
-            {
-                return this.speciation;
-            }
-            set
-            {
-                this.speciation = value;
-            }
         }
     }
 }

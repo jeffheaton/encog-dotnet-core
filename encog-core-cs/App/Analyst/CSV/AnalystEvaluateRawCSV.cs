@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
@@ -34,40 +35,34 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV
 {
     /// <summary>
-    /// Used by the analyst to evaluate a CSV file.
+    ///     Used by the analyst to evaluate a CSV file.
     /// </summary>
-    ///
     public class AnalystEvaluateRawCSV : BasicFile
     {
         /// <summary>
-        /// The analyst file to use.
+        ///     The analyst file to use.
         /// </summary>
-        ///
         private EncogAnalyst _analyst;
 
         /// <summary>
-        /// The ideal count.
+        ///     The ideal count.
         /// </summary>
-        ///
         private int _idealCount;
 
         /// <summary>
-        /// The input count.
+        ///     The input count.
         /// </summary>
-        ///
         private int _inputCount;
 
         /// <summary>
-        /// The output count.
+        ///     The output count.
         /// </summary>
-        ///
         private int _outputCount;
 
         /// <summary>
-        /// Analyze the data. This counts the records and prepares the data to be
-        /// processed.
+        ///     Analyze the data. This counts the records and prepares the data to be
+        ///     processed.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         /// <param name="inputFile">The input file.</param>
         /// <param name="headers">True if headers are present.</param>
@@ -99,9 +94,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
-        ///
         /// <param name="outputFile">The name of the output file.</param>
         /// <returns>The output stream for the text file.</returns>
         private StreamWriter AnalystPrepareOutputFile(FileInfo outputFile)
@@ -132,7 +126,7 @@ namespace Encog.App.Analyst.CSV
                             if (field.Output)
                             {
                                 field.AddRawHeadings(line, "ideal:",
-                                                       Format);
+                                                     Format);
                             }
                         }
                     }
@@ -159,9 +153,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Process the file.
+        ///     Process the file.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="method">The method to use.</param>
         public void Process(FileInfo outputFile, IMLRegression method)

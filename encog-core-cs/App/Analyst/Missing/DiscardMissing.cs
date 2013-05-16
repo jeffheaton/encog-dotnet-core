@@ -20,12 +20,13 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using Encog.App.Analyst.Script.Normalize;
 
 namespace Encog.App.Analyst.Missing
 {
     /// <summary>
-    /// Handle missing values by discarding any rows that have missing values.
+    ///     Handle missing values by discarding any rows that have missing values.
     /// </summary>
     public class DiscardMissing : IHandleMissingValues
     {

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV.Shuffle;
@@ -31,33 +32,30 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This command is used to randomize the lines in a CSV file.
+    ///     This command is used to randomize the lines in a CSV file.
     /// </summary>
-    ///
     public class CmdRandomize : Cmd
     {
         /// <summary>
-        /// The name of the command.
+        ///     The name of the command.
         /// </summary>
-        ///
         public const String CommandName = "RANDOMIZE";
 
         /// <summary>
-        /// Construct the randomize command.
+        ///     Construct the randomize command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         public CmdRandomize(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames

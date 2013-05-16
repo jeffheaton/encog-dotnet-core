@@ -21,8 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.Engine.Network.Activation;
 
@@ -74,11 +72,11 @@ namespace Encog.Neural.NEAT.Training
         /// <param name="type">The neuron type.</param>
         /// <param name="theActivationFunction">The activation function.</param>
         /// <param name="id">The neuron id.</param>
-        /// <param name="innovationID">The innovation id.</param>
-        public NEATNeuronGene(NEATNeuronType type, IActivationFunction theActivationFunction, long id, long innovationID)
+        /// <param name="innovationId">The innovation id.</param>
+        public NEATNeuronGene(NEATNeuronType type, IActivationFunction theActivationFunction, long id, long innovationId)
         {
             NeuronType = type;
-            this.InnovationId = innovationID;
+            InnovationId = innovationId;
             Id = id;
             ActivationFunction = theActivationFunction;
         }
@@ -110,11 +108,11 @@ namespace Encog.Neural.NEAT.Training
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[NEATNeuronGene: id=");
-            result.Append(this.Id);
+            result.Append(Id);
             result.Append(", type=");
-            result.Append(this.NeuronType);
+            result.Append(NeuronType);
             result.Append("]");
             return result.ToString();
         }

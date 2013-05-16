@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV.Balance;
@@ -32,34 +33,31 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// Performs the balance command. This allows large classes to have members
-    /// discarded.
+    ///     Performs the balance command. This allows large classes to have members
+    ///     discarded.
     /// </summary>
-    ///
     public class CmdBalance : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "BALANCE";
 
         /// <summary>
-        /// Construct the balance command.
+        ///     Construct the balance command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use with this command.</param>
         public CmdBalance(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames
@@ -94,7 +92,7 @@ namespace Encog.App.Analyst.Commands
             }
 
             int targetFieldIndex = Analyst.Script
-                .FindDataFieldIndex(targetFieldDf);
+                                          .FindDataFieldIndex(targetFieldDf);
 
             // mark generated
             Script.MarkGenerated(targetID);

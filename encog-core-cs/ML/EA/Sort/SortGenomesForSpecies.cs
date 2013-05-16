@@ -20,39 +20,37 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Genome;
 using Encog.ML.EA.Train;
 
 namespace Encog.ML.EA.Sort
 {
     /// <summary>
-    /// Sort the gnomes for species.  Sort first by score, second by birth generation.
-    /// This favors younger genomes if scores are equal.
+    ///     Sort the gnomes for species.  Sort first by score, second by birth generation.
+    ///     This favors younger genomes if scores are equal.
     /// </summary>
     public class SortGenomesForSpecies : IComparer<IGenome>
     {
         /// <summary>
-        /// The trainer.
+        ///     The trainer.
         /// </summary>
-        private IEvolutionaryAlgorithm train;
+        private readonly IEvolutionaryAlgorithm _train;
 
         /// <summary>
-        /// Construct the comparator.
+        ///     Construct the comparator.
         /// </summary>
         /// <param name="theTrain">The trainer.</param>
         public SortGenomesForSpecies(IEvolutionaryAlgorithm theTrain)
         {
-            this.train = theTrain;
+            _train = theTrain;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Compare(IGenome g1, IGenome g2)
         {
-            int result = this.train.SelectionComparer.Compare(g1, g2);
+            int result = _train.SelectionComparer.Compare(g1, g2);
 
             if (result != 0)
             {

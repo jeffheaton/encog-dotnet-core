@@ -20,40 +20,36 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Text;
 
 namespace Encog.App.Analyst.Script
 {
     /// <summary>
-    /// Holds a class item for the script. Some columns in a CSV are classes. This
-    /// object holds the possible class types.
+    ///     Holds a class item for the script. Some columns in a CSV are classes. This
+    ///     object holds the possible class types.
     /// </summary>
-    ///
     public class AnalystClassItem : IComparable<AnalystClassItem>
     {
         /// <summary>
-        /// THe code for the class item.
+        ///     THe code for the class item.
         /// </summary>
-        ///
         private String _code;
 
         /// <summary>
-        /// THe count.
+        ///     THe count.
         /// </summary>
-        ///
         private int _count;
 
         /// <summary>
-        /// The name for the class item.
+        ///     The name for the class item.
         /// </summary>
-        ///
         private String _name;
 
         /// <summary>
-        /// Construct a class item.
+        ///     Construct a class item.
         /// </summary>
-        ///
         /// <param name="theCode">The code, this is how it is in the CSV.</param>
         /// <param name="theName"></param>
         /// <param name="theCount">The count.</param>
@@ -91,9 +87,7 @@ namespace Encog.App.Analyst.Script
         #region IComparable<AnalystClassItem> Members
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public int CompareTo(AnalystClassItem o)
         {
             return String.CompareOrdinal(_code, o.Code);
@@ -102,15 +96,14 @@ namespace Encog.App.Analyst.Script
         #endregion
 
         /// <summary>
-        /// Increase the count.
+        ///     Increase the count.
         /// </summary>
-        ///
         public void IncreaseCount()
         {
             _count++;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

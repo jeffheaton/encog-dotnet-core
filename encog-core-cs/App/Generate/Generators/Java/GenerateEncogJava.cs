@@ -20,22 +20,21 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using Encog.App.Generate.Program;
-using System.IO;
 using Encog.ML;
-using Encog.Persist;
 using Encog.ML.Data;
-using Encog.Util.Simple;
+using Encog.Persist;
 using Encog.Util.CSV;
+using Encog.Util.Simple;
 
 namespace Encog.App.Generate.Generators.Java
 {
     /// <summary>
-    /// Generate Java.
+    ///     Generate Java.
     /// </summary>
     public class GenerateEncogJava : AbstractGenerator
     {
@@ -45,18 +44,18 @@ namespace Encog.App.Generate.Generators.Java
         {
             AddBreak();
 
-            FileInfo methodFile = (FileInfo)node.Args[0].Value;
+            var methodFile = (FileInfo) node.Args[0].Value;
 
-            IMLMethod method = (IMLMethod)EncogDirectoryPersistence
-                    .LoadObject(methodFile);
+            var method = (IMLMethod) EncogDirectoryPersistence
+                                         .LoadObject(methodFile);
 
             if (!(method is IMLFactory))
             {
                 throw new EncogError("Code generation not yet supported for: "
-                        + method.GetType().Name);
+                                     + method.GetType().Name);
             }
 
-            IMLFactory factoryMethod = (IMLFactory)method;
+            var factoryMethod = (IMLFactory) method;
 
             String methodName = factoryMethod.FactoryType;
             String methodArchitecture = factoryMethod.FactoryArchitecture;
@@ -65,7 +64,7 @@ namespace Encog.App.Generate.Generators.Java
             AddInclude("org.encog.ml.MLMethod");
             AddInclude("org.encog.persist.EncogDirectoryPersistence");
 
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static MLMethod ");
             line.Append(node.Name);
             line.Append("() {");
@@ -105,8 +104,7 @@ namespace Encog.App.Generate.Generators.Java
 
         private void EmbedTraining(EncogProgramNode node)
         {
-
-            FileInfo dataFile = (FileInfo)node.Args[0].Value;
+            var dataFile = (FileInfo) node.Args[0].Value;
             IMLDataSet data = EncogUtility.LoadEGB2Memory(dataFile);
 
             // generate the input data
@@ -116,7 +114,7 @@ namespace Encog.App.Generate.Generators.Java
             {
                 IMLData item = pair.Input;
 
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
 
                 NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "{ ");
@@ -134,7 +132,7 @@ namespace Encog.App.Generate.Generators.Java
             {
                 IMLData item = pair.Ideal;
 
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
 
                 NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "{ ");
@@ -146,20 +144,20 @@ namespace Encog.App.Generate.Generators.Java
 
         public override void Generate(EncogGenProgram program, bool shouldEmbed)
         {
-            this.embed = shouldEmbed;
+            embed = shouldEmbed;
             GenerateForChildren(program);
             GenerateImports(program);
         }
 
         private void GenerateArrayInit(EncogProgramNode node)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static final double[] ");
             line.Append(node.Name);
             line.Append(" = {");
             IndentLine(line.ToString());
 
-            double[] a = (double[])node.Args[0].Value;
+            var a = (double[]) node.Args[0].Value;
 
             line.Length = 0;
 
@@ -167,7 +165,7 @@ namespace Encog.App.Generate.Generators.Java
             for (int i = 0; i < a.Length; i++)
             {
                 line.Append(CSVFormat.EgFormat.Format(a[i],
-                        EncogFramework.DefaultPrecision));
+                                                      EncogFramework.DefaultPrecision));
                 if (i < (a.Length - 1))
                 {
                     line.Append(",");
@@ -206,7 +204,7 @@ namespace Encog.App.Generate.Generators.Java
 
         private void GenerateConst(EncogProgramNode node)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static final ");
             line.Append(node.Args[1].Value);
             line.Append(" ");
@@ -220,7 +218,7 @@ namespace Encog.App.Generate.Generators.Java
 
         private void GenerateCreateNetwork(EncogProgramNode node)
         {
-            if (this.embed)
+            if (embed)
             {
                 EmbedNetwork(node);
             }
@@ -232,7 +230,7 @@ namespace Encog.App.Generate.Generators.Java
 
         private void GenerateEmbedTraining(EncogProgramNode node)
         {
-            if (this.embed)
+            if (embed)
             {
                 EmbedTraining(node);
             }
@@ -250,7 +248,7 @@ namespace Encog.App.Generate.Generators.Java
         {
             AddBreak();
 
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static void ");
             line.Append(node.Name);
             line.Append("() {");
@@ -263,12 +261,12 @@ namespace Encog.App.Generate.Generators.Java
         private void GenerateFunctionCall(EncogProgramNode node)
         {
             AddBreak();
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             if (node.Args[0].Value.ToString().Length > 0)
             {
-                line.Append(node.Args[0].Value.ToString());
+                line.Append(node.Args[0].Value);
                 line.Append(" ");
-                line.Append(node.Args[1].Value.ToString());
+                line.Append(node.Args[1].Value);
                 line.Append(" = ");
             }
 
@@ -279,7 +277,7 @@ namespace Encog.App.Generate.Generators.Java
 
         private void GenerateImports(EncogGenProgram program)
         {
-            StringBuilder imports = new StringBuilder();
+            var imports = new StringBuilder();
             foreach (String str in Includes)
             {
                 imports.Append("import ");
@@ -290,23 +288,22 @@ namespace Encog.App.Generate.Generators.Java
             imports.Append("\n");
 
             AddToBeginning(imports.ToString());
-
         }
 
         private void GenerateLoadTraining(EncogProgramNode node)
         {
             AddBreak();
 
-            FileInfo methodFile = (FileInfo)node.Args[0].Value;
+            var methodFile = (FileInfo) node.Args[0].Value;
 
             AddInclude("org.encog.ml.data.MLDataSet");
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static MLDataSet createTraining() {");
             IndentLine(line.ToString());
 
             line.Length = 0;
 
-            if (this.embed)
+            if (embed)
             {
                 AddInclude("org.encog.ml.data.basic.BasicMLDataSet");
                 line.Append("MLDataSet result = new BasicMLDataSet(INPUT_DATA,IDEAL_DATA);");
@@ -315,7 +312,7 @@ namespace Encog.App.Generate.Generators.Java
             {
                 AddInclude("org.encog.util.simple.EncogUtility");
                 line.Append("MLDataSet result = EncogUtility.loadEGB2Memory(new File(\"");
-                line.Append(methodFile.ToString());
+                line.Append(methodFile);
                 line.Append("\"));");
             }
 
@@ -376,10 +373,10 @@ namespace Encog.App.Generate.Generators.Java
         {
             AddBreak();
 
-            FileInfo methodFile = (FileInfo)node.Args[0].Value;
+            var methodFile = (FileInfo) node.Args[0].Value;
 
             AddInclude("org.encog.ml.MLMethod");
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static MLMethod ");
             line.Append(node.Name);
             line.Append("() {");
@@ -387,7 +384,7 @@ namespace Encog.App.Generate.Generators.Java
 
             line.Length = 0;
             line.Append("MLMethod result = (MLMethod)EncogDirectoryPersistence.loadObject(new File(\"");
-            line.Append(methodFile.ToString());
+            line.Append(methodFile);
             line.Append("\"));");
             AddLine(line.ToString());
 

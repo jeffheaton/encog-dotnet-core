@@ -20,27 +20,25 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 
 namespace Encog.App.Analyst.CSV.Basic
 {
     /// <summary>
-    /// A basic cached column. Used internally by some of the Encog CSV quant
-    /// classes. All of the file contents for this column are loaded into memory.
+    ///     A basic cached column. Used internally by some of the Encog CSV quant
+    ///     classes. All of the file contents for this column are loaded into memory.
     /// </summary>
-    ///
     public class BaseCachedColumn
     {
         /// <summary>
-        /// The data for this column.
+        ///     The data for this column.
         /// </summary>
-        ///
         private double[] _data;
 
         /// <summary>
-        /// Construct the cached column.
+        ///     Construct the cached column.
         /// </summary>
-        ///
         /// <param name="theName">The name of the column.</param>
         /// <param name="theInput">Is this column used for input?</param>
         /// <param name="theOutput">Is this column used for output?</param>
@@ -62,30 +60,30 @@ namespace Encog.App.Analyst.CSV.Basic
 
 
         /// <summary>
-        /// Set the name of this column.
+        ///     Set the name of this column.
         /// </summary>
         public String Name { get; set; }
 
 
         /// <summary>
-        /// Set if this column is to be ignored?
+        ///     Set if this column is to be ignored?
         /// </summary>
         public bool Ignore { get; set; }
 
 
         /// <summary>
-        /// Set if this column is used for input.
+        ///     Set if this column is used for input.
         /// </summary>
         public bool Input { get; set; }
 
 
         /// <summary>
-        /// Set if this column is used for output.
+        ///     Set if this column is used for output.
         /// </summary>
         public bool Output { get; set; }
 
         /// <summary>
-        /// Allocate enough space for this column.
+        ///     Allocate enough space for this column.
         /// </summary>
         public void Allocate(int length)
         {

@@ -20,64 +20,63 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Genome;
-using Encog.Neural.Networks.Training;
 using Encog.ML.EA.Exceptions;
+using Encog.ML.EA.Genome;
 using Encog.ML.EA.Train;
+using Encog.Neural.Networks.Training;
 
 namespace Encog.ML.EA.Score.Multi
 {
     public class ParallelScoreTask
     {
         /// <summary>
-        /// The genome to calculate the score for.
+        ///     The score adjusters.
         /// </summary>
-        private IGenome genome;
+        private readonly IList<IAdjustScore> adjusters;
 
         /// <summary>
-        /// The score function.
+        ///     The genome to calculate the score for.
         /// </summary>
-        private ICalculateScore scoreFunction;
+        private readonly IGenome genome;
 
         /// <summary>
-        /// The score adjusters.
+        ///     The owners.
         /// </summary>
-        private IList<IAdjustScore> adjusters;
+        private readonly ParallelScore owner;
 
         /// <summary>
-        /// The owners.
+        ///     The score function.
         /// </summary>
-        private ParallelScore owner;
+        private readonly ICalculateScore scoreFunction;
 
         /// <summary>
-        /// Construct the parallel task. 
+        ///     Construct the parallel task.
         /// </summary>
         /// <param name="genome">The genome.</param>
         /// <param name="theOwner">The owner.</param>
         public ParallelScoreTask(IGenome genome, ParallelScore theOwner)
         {
-            this.owner = theOwner;
+            owner = theOwner;
             this.genome = genome;
-            this.scoreFunction = theOwner.ScoreFunction;
-            this.adjusters = theOwner.Adjusters;
+            scoreFunction = theOwner.ScoreFunction;
+            adjusters = theOwner.Adjusters;
         }
 
         /// <summary>
-        /// Perform the task.
+        ///     Perform the task.
         /// </summary>
         public void PerformTask()
         {
-            IMLMethod phenotype = this.owner.CODEC.Decode(this.genome);
+            IMLMethod phenotype = owner.CODEC.Decode(genome);
             if (phenotype != null)
             {
                 double score;
                 try
                 {
-                    score = this.scoreFunction.CalculateScore(phenotype);
+                    score = scoreFunction.CalculateScore(phenotype);
                 }
                 catch (EARuntimeError e)
                 {

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.Script.Prop;
@@ -33,34 +34,31 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// The Encog Analyst create command. This command is used to create a Machine
-    /// Learning method.
+    ///     The Encog Analyst create command. This command is used to create a Machine
+    ///     Learning method.
     /// </summary>
-    ///
     public class CmdCreate : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "CREATE";
 
         /// <summary>
-        /// Construct the create command.
+        ///     Construct the create command.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         public CmdCreate(EncogAnalyst theAnalyst) : base(theAnalyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames
@@ -79,9 +77,9 @@ namespace Encog.App.Analyst.Commands
 
             EncogLogging.Log(EncogLogging.LevelDebug, "Beginning create");
             EncogLogging.Log(EncogLogging.LevelDebug, "training file:"
-                                                       + trainingID);
+                                                      + trainingID);
             EncogLogging.Log(EncogLogging.LevelDebug, "resource file:"
-                                                       + resourceID);
+                                                      + resourceID);
             EncogLogging.Log(EncogLogging.LevelDebug, "type:" + type);
             EncogLogging.Log(EncogLogging.LevelDebug, "arch:" + arch);
 
@@ -92,13 +90,13 @@ namespace Encog.App.Analyst.Commands
             egb.Close();
 
             var factory = new MLMethodFactory();
-            var obj = factory.Create(type, arch, input, ideal);
+            IMLMethod obj = factory.Create(type, arch, input, ideal);
 
-            if( obj is BayesianNetwork ) 
+            if (obj is BayesianNetwork)
             {
-                var query = Prop.GetPropertyString(ScriptProperties.MLConfigQuery);
-			    ((BayesianNetwork)obj).DefineClassificationStructure(query);			
-		    }
+                string query = Prop.GetPropertyString(ScriptProperties.MLConfigQuery);
+                ((BayesianNetwork) obj).DefineClassificationStructure(query);
+            }
 
             EncogDirectoryPersistence.SaveObject(resourceFile, obj);
 

@@ -22,9 +22,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.App.Analyst.Wizard
 {
@@ -41,19 +38,12 @@ namespace Encog.App.Analyst.Wizard
 
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
         }
 
         public string Source
         {
-            get
-            {
-                return _source;
-            }
+            get { return _source; }
         }
-
     }
 }

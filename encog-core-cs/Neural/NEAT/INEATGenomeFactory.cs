@@ -20,10 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Genome;
 using Encog.Neural.NEAT.Training;
 using Encog.MathUtil.Randomize;
@@ -54,7 +52,7 @@ namespace Encog.Neural.NEAT
         /// </summary>
         /// <param name="neurons">A list of neuron genes.</param>
         /// <param name="links">A list of link genes.</param>
-        /// <param name="inputCount"><The input count./param>
+        /// <param name="inputCount">The input count.</param>
         /// <param name="outputCount">The output count.</param>
         /// <returns>The newly factored NEATGenome.</returns>
         NEATGenome Factor(List<NEATNeuronGene> neurons, List<NEATLinkGene> links,
@@ -68,7 +66,7 @@ namespace Encog.Neural.NEAT
         /// <param name="pop">The NEAT population.</param>
         /// <param name="inputCount">The input count.</param>
         /// <param name="outputCount">The output count.</param>
-        /// <param name="connectionDensity"><The connection density. Specify 1.0 for fully connected./param>
+        /// <param name="connectionDensity">The connection density. Specify 1.0 for fully connected.</param>
         /// <returns>The newly created NEAT genome.</returns>
         NEATGenome Factor(EncogRandom rnd, NEATPopulation pop, int inputCount,
                 int outputCount, double connectionDensity);

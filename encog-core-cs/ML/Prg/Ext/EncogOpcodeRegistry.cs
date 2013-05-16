@@ -20,63 +20,35 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Exceptions;
 
 namespace Encog.ML.Prg.Ext
 {
     /// <summary>
-    /// Holds all known EPL opcodes. Extension programs should add new opcodes here.
-    /// The FunctionFactory selects a subset of opcodes from here that will be run.
-    /// 
-    /// An opcode is identified by its name, and the number of parameters it accepts.
-    /// It is okay to add an opcode multiple times, the new opcode replaces the
-    /// previous.
+    ///     Holds all known EPL opcodes. Extension programs should add new opcodes here.
+    ///     The FunctionFactory selects a subset of opcodes from here that will be run.
+    ///     An opcode is identified by its name, and the number of parameters it accepts.
+    ///     It is okay to add an opcode multiple times, the new opcode replaces the
+    ///     previous.
     /// </summary>
     public class EncogOpcodeRegistry
     {
         /// <summary>
-        /// The instance.
+        ///     The instance.
         /// </summary>
         private static EncogOpcodeRegistry _instance;
 
         /// <summary>
-        /// Get the instance.
+        ///     A lookup for all of the opcodes.
         /// </summary>
-        public static EncogOpcodeRegistry Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new EncogOpcodeRegistry();
-                }
-                return _instance;
-            }
-        }
+        private readonly IDictionary<String, IProgramExtensionTemplate> _registry =
+            new Dictionary<String, IProgramExtensionTemplate>();
 
         /// <summary>
-        /// Construct a lookup key for the hash map.
-        /// </summary>
-        /// <param name="functionName">The name of the opcode.</param>
-        /// <param name="argCount">The number of parameters this opcode accepts.</param>
-        /// <returns>Return the string key.</returns>
-        public static String CreateKey(String functionName, int argCount)
-        {
-            return functionName + '`' + argCount;
-        }
-
-        /// <summary>
-        /// A lookup for all of the opcodes.
-        /// </summary>
-        private IDictionary<String, IProgramExtensionTemplate> registry = new Dictionary<String, IProgramExtensionTemplate>();
-
-        /// <summary>
-        /// Construct the opcode registry with all known opcodes. User programs can
-        /// always add additional opcodes later.
+        ///     Construct the opcode registry with all known opcodes. User programs can
+        ///     always add additional opcodes later.
         /// </summary>
         private EncogOpcodeRegistry()
         {
@@ -134,47 +106,63 @@ namespace Encog.ML.Prg.Ext
         }
 
         /// <summary>
-        /// Add an opcode. User programs should add opcodes here.
+        ///     Get the instance.
+        /// </summary>
+        public static EncogOpcodeRegistry Instance
+        {
+            get { return _instance ?? (_instance = new EncogOpcodeRegistry()); }
+        }
+
+        /// <summary>
+        ///     Construct a lookup key for the hash map.
+        /// </summary>
+        /// <param name="functionName">The name of the opcode.</param>
+        /// <param name="argCount">The number of parameters this opcode accepts.</param>
+        /// <returns>Return the string key.</returns>
+        public static String CreateKey(String functionName, int argCount)
+        {
+            return functionName + '`' + argCount;
+        }
+
+        /// <summary>
+        ///     Add an opcode. User programs should add opcodes here.
         /// </summary>
         /// <param name="ext">The opcode to add.</param>
         public void Add(IProgramExtensionTemplate ext)
         {
-            this.registry[
-                    EncogOpcodeRegistry.CreateKey(ext.Name,
-                            ext.ChildNodeCount)] = ext;
+            _registry[
+                CreateKey(ext.Name,
+                          ext.ChildNodeCount)] = ext;
         }
 
         /// <summary>
-        /// Find all opcodes.
+        ///     Find all opcodes.
         /// </summary>
         /// <returns>The opcodes.</returns>
         public ICollection<IProgramExtensionTemplate> FindAllOpcodes()
         {
-            return this.registry.Values;
+            return _registry.Values;
         }
 
         /// <summary>
-        /// Find the specified opcode.
+        ///     Find the specified opcode.
         /// </summary>
         /// <param name="name">The name of the opcode.</param>
         /// <param name="args">The number of arguments.</param>
         /// <returns>The opcode if found, null otherwise.</returns>
         public IProgramExtensionTemplate FindOpcode(String name, int args)
         {
-            String key = EncogOpcodeRegistry.CreateKey(name, args);
-            if (this.registry.ContainsKey(key))
+            String key = CreateKey(name, args);
+            if (_registry.ContainsKey(key))
             {
-                return this.registry[key];
+                return _registry[key];
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
 
         /// <summary>
-        /// True, if this is an operator.
+        ///     True, if this is an operator.
         /// </summary>
         /// <param name="t">Node type to check.</param>
         /// <returns>True, if this is an operator.</returns>

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.App.Analyst.CSV.Basic;
@@ -28,21 +29,18 @@ using Encog.App.Quant;
 namespace Encog.App.Analyst.CSV.Sort
 {
     /// <summary>
-    /// Used to compare two LoadedRow objects.
+    ///     Used to compare two LoadedRow objects.
     /// </summary>
-    ///
     public class RowComparator : IComparer<LoadedRow>
     {
         /// <summary>
-        /// The owner object.
+        ///     The owner object.
         /// </summary>
-        ///
         private readonly SortCSV _sort;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="owner">The owner.</param>
         public RowComparator(SortCSV owner)
         {
@@ -52,9 +50,8 @@ namespace Encog.App.Analyst.CSV.Sort
         #region IComparer<LoadedRow> Members
 
         /// <summary>
-        /// Compare two LoadedRow objects.
+        ///     Compare two LoadedRow objects.
         /// </summary>
-        ///
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
         /// <returns>0 if the same, &lt;0 x is less, &gt;0 y is less.</returns>

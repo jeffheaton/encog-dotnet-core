@@ -20,30 +20,28 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 
 namespace Encog.App.Quant
 {
     /// <summary>
-    /// Used to represent any error that occurs in the quant part of Encog.
+    ///     Used to represent any error that occurs in the quant part of Encog.
     /// </summary>
-    ///
     [Serializable]
     public class QuantError : EncogError
     {
         /// <summary>
-        /// Construct a message exception.
+        ///     Construct a message exception.
         /// </summary>
-        ///
         /// <param name="msg">The exception message.</param>
         public QuantError(String msg) : base(msg)
         {
         }
 
         /// <summary>
-        /// Construct an exception that holds another exception.
+        ///     Construct an exception that holds another exception.
         /// </summary>
-        ///
         /// <param name="t">The other exception.</param>
         public QuantError(Exception t) : base(t)
         {

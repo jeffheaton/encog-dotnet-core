@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System.IO;
 using Encog.App.Analyst.CSV.Basic;
 using Encog.MathUtil.Randomize;
@@ -28,47 +29,41 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV.Shuffle
 {
     /// <summary>
-    /// Randomly shuffle the lines of a CSV file.
+    ///     Randomly shuffle the lines of a CSV file.
     /// </summary>
-    ///
     public class ShuffleCSV : BasicFile
     {
         /// <summary>
-        /// The default buffer size.
+        ///     The default buffer size.
         /// </summary>
-        ///
         public const int DefaultBufferSize = 5000;
 
         /// <summary>
-        /// The buffer.
+        ///     The buffer.
         /// </summary>
-        ///
         private LoadedRow[] _buffer;
 
         /// <summary>
-        /// The buffer size.
+        ///     The buffer size.
         /// </summary>
-        ///
         private int _bufferSize;
 
         /// <summary>
-        /// Remaining in the buffer.
+        ///     Remaining in the buffer.
         /// </summary>
-        ///
         private int _remaining;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         public ShuffleCSV()
         {
             BufferSize = DefaultBufferSize;
         }
 
         /// <summary>
-        /// The buffer size. This is how many rows of data are loaded(and
-        /// randomized), at a time. The default is 5,000.
+        ///     The buffer size. This is how many rows of data are loaded(and
+        ///     randomized), at a time. The default is 5,000.
         /// </summary>
         public int BufferSize
         {
@@ -81,9 +76,8 @@ namespace Encog.App.Analyst.CSV.Shuffle
         }
 
         /// <summary>
-        /// Analyze the neural network.
+        ///     Analyze the neural network.
         /// </summary>
-        ///
         /// <param name="inputFile">The input file.</param>
         /// <param name="headers">True, if there are headers.</param>
         /// <param name="format">The format of the CSV file.</param>
@@ -101,9 +95,8 @@ namespace Encog.App.Analyst.CSV.Shuffle
 
 
         /// <summary>
-        /// Get the next row from the underlying CSV file.
+        ///     Get the next row from the underlying CSV file.
         /// </summary>
-        ///
         /// <param name="csv">The underlying CSV file.</param>
         /// <returns>The loaded row.</returns>
         private LoadedRow GetNextRow(ReadCSV csv)
@@ -128,9 +121,8 @@ namespace Encog.App.Analyst.CSV.Shuffle
         }
 
         /// <summary>
-        /// Load the buffer from the underlying file.
+        ///     Load the buffer from the underlying file.
         /// </summary>
-        ///
         /// <param name="csv">The CSV file to load from.</param>
         private void LoadBuffer(ReadCSV csv)
         {
@@ -150,9 +142,8 @@ namespace Encog.App.Analyst.CSV.Shuffle
         }
 
         /// <summary>
-        /// Process, and generate the output file.
+        ///     Process, and generate the output file.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
         public void Process(FileInfo outputFile)
         {

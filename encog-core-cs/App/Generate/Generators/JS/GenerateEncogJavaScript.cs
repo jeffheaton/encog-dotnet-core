@@ -20,25 +20,24 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using Encog.App.Generate.Program;
-using System.IO;
+using Encog.Engine.Network.Activation;
 using Encog.ML;
-using Encog.Persist;
+using Encog.ML.Data;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
-using Encog.Engine.Network.Activation;
-using Encog.ML.Data;
-using Encog.Util.Simple;
+using Encog.Persist;
 using Encog.Util.CSV;
+using Encog.Util.Simple;
 
 namespace Encog.App.Generate.Generators.JS
 {
     /// <summary>
-    /// Generate JavaScript.
+    ///     Generate JavaScript.
     /// </summary>
     public class GenerateEncogJavaScript : AbstractGenerator
     {
@@ -46,21 +45,21 @@ namespace Encog.App.Generate.Generators.JS
         {
             AddBreak();
 
-            FileInfo methodFile = (FileInfo)node.Args[0].Value;
+            var methodFile = (FileInfo) node.Args[0].Value;
 
-            IMLMethod method = (IMLMethod)EncogDirectoryPersistence
-                    .LoadObject(methodFile);
+            var method = (IMLMethod) EncogDirectoryPersistence
+                                         .LoadObject(methodFile);
 
             if (!(method is IMLFactory))
             {
                 throw new EncogError("Code generation not yet supported for: "
-                        + method.GetType().Name );
+                                     + method.GetType().Name);
             }
 
-            FlatNetwork flat = ((IContainsFlat)method).Flat;
+            FlatNetwork flat = ((IContainsFlat) method).Flat;
 
             // header
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("public static MLMethod ");
             line.Append(node.Name);
             line.Append("() {");
@@ -106,8 +105,7 @@ namespace Encog.App.Generate.Generators.JS
 
         private void EmbedTraining(EncogProgramNode node)
         {
-
-            FileInfo dataFile = (FileInfo)node.Args[0].Value;
+            var dataFile = (FileInfo) node.Args[0].Value;
             IMLDataSet data = EncogUtility.LoadEGB2Memory(dataFile);
 
             // generate the input data
@@ -117,7 +115,7 @@ namespace Encog.App.Generate.Generators.JS
             {
                 IMLData item = pair.Input;
 
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
 
                 NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "[ ");
@@ -135,7 +133,7 @@ namespace Encog.App.Generate.Generators.JS
             {
                 IMLData item = pair.Ideal;
 
-                StringBuilder line = new StringBuilder();
+                var line = new StringBuilder();
 
                 NumberList.ToList(CSVFormat.EgFormat, line, item);
                 line.Insert(0, "[ ");
@@ -150,20 +148,20 @@ namespace Encog.App.Generate.Generators.JS
             if (!shouldEmbed)
             {
                 throw new AnalystCodeGenerationError(
-                        "Must embed when generating Javascript");
+                    "Must embed when generating Javascript");
             }
             GenerateForChildren(program);
         }
 
         private void GenerateArrayInit(EncogProgramNode node)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("var ");
             line.Append(node.Name);
             line.Append(" = [");
             IndentLine(line.ToString());
 
-            double[] a = (double[])node.Args[0].Value;
+            var a = (double[]) node.Args[0].Value;
 
             line.Length = 0;
 
@@ -171,7 +169,7 @@ namespace Encog.App.Generate.Generators.JS
             for (int i = 0; i < a.Length; i++)
             {
                 line.Append(CSVFormat.EgFormat.Format(a[i],
-                        EncogFramework.DefaultPrecision));
+                                                      EncogFramework.DefaultPrecision));
                 if (i < (a.Length - 1))
                 {
                     line.Append(",");
@@ -213,7 +211,8 @@ namespace Encog.App.Generate.Generators.JS
             GenerateForChildren(node);
 
             AddLine("</script>");
-            AddLine("<noscript>Your browser does not support JavaScript! Note: if you are trying to view this in Encog Workbench, right-click file and choose \"Open as Text\".</noscript>");
+            AddLine(
+                "<noscript>Your browser does not support JavaScript! Note: if you are trying to view this in Encog Workbench, right-click file and choose \"Open as Text\".</noscript>");
             AddLine("</pre>");
             AddLine("</body>");
             AddLine("</html>");
@@ -226,7 +225,7 @@ namespace Encog.App.Generate.Generators.JS
 
         private void GenerateConst(EncogProgramNode node)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("var ");
             line.Append(node.Name);
             line.Append(" = \"");
@@ -248,7 +247,7 @@ namespace Encog.App.Generate.Generators.JS
         {
             AddBreak();
 
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("function ");
             line.Append(node.Name);
             line.Append("() {");
@@ -261,11 +260,11 @@ namespace Encog.App.Generate.Generators.JS
         private void GenerateFunctionCall(EncogProgramNode node)
         {
             AddBreak();
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             if (node.Args[0].Value.ToString().Length > 0)
             {
                 line.Append("var ");
-                line.Append(node.Args[1].Value.ToString());
+                line.Append(node.Args[1].Value);
                 line.Append(" = ");
             }
 
@@ -315,9 +314,9 @@ namespace Encog.App.Generate.Generators.JS
         }
 
         private String ToSingleLineArray(
-                IActivationFunction[] activationFunctions)
+            IActivationFunction[] activationFunctions)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append('[');
             for (int i = 0; i < activationFunctions.Length; i++)
             {
@@ -350,10 +349,9 @@ namespace Encog.App.Generate.Generators.JS
                 else
                 {
                     throw new AnalystCodeGenerationError(
-                            "Unsupported activatoin function for code generation: "
-                                    + af.GetType().Name);
+                        "Unsupported activatoin function for code generation: "
+                        + af.GetType().Name);
                 }
-
             }
             result.Append(']');
             return result.ToString();
@@ -361,12 +359,12 @@ namespace Encog.App.Generate.Generators.JS
 
         private String ToSingleLineArray(double[] d)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("[");
             for (int i = 0; i < d.Length; i++)
             {
                 line.Append(CSVFormat.EgFormat.Format(d[i],
-                        EncogFramework.DefaultPrecision));
+                                                      EncogFramework.DefaultPrecision));
                 if (i < (d.Length - 1))
                 {
                     line.Append(",");
@@ -378,7 +376,7 @@ namespace Encog.App.Generate.Generators.JS
 
         private String ToSingleLineArray(int[] d)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("[");
             for (int i = 0; i < d.Length; i++)
             {

@@ -20,51 +20,90 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Opp.Selection;
-using Encog.ML.Prg.Generator;
-using Encog.ML.Prg.ExpValue;
-using Encog.MathUtil.Randomize;
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Opp;
 using Encog.ML.EA.Train;
+using Encog.ML.Prg.ExpValue;
+using Encog.ML.Prg.Generator;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.Prg.Opp
 {
     /// <summary>
-    /// Perform a type-safe subtree mutation. The mutation point is chosen randomly,
-    /// but the new tree will be generated with compatible types to the parent.
+    ///     Perform a type-safe subtree mutation. The mutation point is chosen randomly,
+    ///     but the new tree will be generated with compatible types to the parent.
     /// </summary>
     public class SubtreeMutation : IEvolutionaryOperator
     {
         /// <summary>
-        /// A random generator.
+        ///     The maximum depth.
         /// </summary>
-        public IPrgGenerator Generator { get; set; }
+        private readonly int _maxDepth;
 
         /// <summary>
-        /// The maximum depth.
-        /// </summary>
-        private int maxDepth;
-
-        /// <summary>
-        /// Construct the subtree mutation object. 
+        ///     Construct the subtree mutation object.
         /// </summary>
         /// <param name="theContext">The program context.</param>
         /// <param name="theMaxDepth">The maximum depth.</param>
         public SubtreeMutation(EncogProgramContext theContext,
-                int theMaxDepth)
+                               int theMaxDepth)
         {
             Generator = new PrgGrowGenerator(theContext, theMaxDepth);
-            this.maxDepth = theMaxDepth;
+            _maxDepth = theMaxDepth;
         }
 
         /// <summary>
-        /// This method is called reflexivly as we iterate downward. Once we reach
-        /// the desired point (when current level drops to zero), the operation is
-        /// performed.
+        ///     A random generator.
+        /// </summary>
+        public IPrgGenerator Generator { get; set; }
+
+
+        /// <inheritdoc />
+        public void Init(IEvolutionaryAlgorithm theOwner)
+        {
+            // TODO Auto-generated method stub
+        }
+
+        /// <summary>
+        ///     Returns the number of offspring produced. In this case, one.
+        /// </summary>
+        public int OffspringProduced
+        {
+            get { return 1; }
+        }
+
+        /// <summary>
+        ///     Returns the number of parents needed. In this case, one.
+        /// </summary>
+        public int ParentsNeeded
+        {
+            get { return 1; }
+        }
+
+        /// <inheritdoc />
+        public void PerformOperation(EncogRandom rnd, IGenome[] parents,
+                                     int parentIndex, IGenome[] offspring,
+                                     int offspringIndex)
+        {
+            var program = (EncogProgram) parents[0];
+            EncogProgramContext context = program.Context;
+            EncogProgram result = context.CloneProgram(program);
+
+            IList<EPLValueType> types = new List<EPLValueType>();
+            types.Add(context.Result.VariableType);
+            var globalIndex = new int[1];
+            globalIndex[0] = rnd.Next(result.RootNode.Count);
+            FindNode(rnd, result, result.RootNode, types, globalIndex);
+
+            offspring[0] = result;
+        }
+
+        /// <summary>
+        ///     This method is called reflexivly as we iterate downward. Once we reach
+        ///     the desired point (when current level drops to zero), the operation is
+        ///     performed.
         /// </summary>
         /// <param name="rnd">A random number generator.</param>
         /// <param name="result">The parent node.</param>
@@ -72,15 +111,15 @@ namespace Encog.ML.Prg.Opp
         /// <param name="types">The desired node</param>
         /// <param name="globalIndex">The level holder.</param>
         private void FindNode(EncogRandom rnd, EncogProgram result,
-                ProgramNode parentNode, IList<EPLValueType> types,
-                int[] globalIndex)
+                              ProgramNode parentNode, IList<EPLValueType> types,
+                              int[] globalIndex)
         {
             if (globalIndex[0] == 0)
             {
                 globalIndex[0]--;
 
                 ProgramNode newInsert = Generator.CreateNode(rnd,
-                        result, this.maxDepth, types);
+                                                             result, _maxDepth, types);
                 result.ReplaceNode(parentNode, newInsert);
             }
             else
@@ -93,55 +132,6 @@ namespace Encog.ML.Prg.Opp
                     FindNode(rnd, result, childNode, childTypes, globalIndex);
                 }
             }
-        }
-
-
-
-        /// <inheritdoc/>
-        public void Init(IEvolutionaryAlgorithm theOwner)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /// <summary>
-        /// Returns the number of offspring produced. In this case, one.
-        /// </summary>
-        public int OffspringProduced
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        /// <summary>
-        /// Returns the number of parents needed. In this case, one.
-        /// </summary>
-        public int ParentsNeeded
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        /// <inheritdoc/>
-        public void PerformOperation(EncogRandom rnd, IGenome[] parents,
-                int parentIndex, IGenome[] offspring,
-                int offspringIndex)
-        {
-            EncogProgram program = (EncogProgram)parents[0];
-            EncogProgramContext context = program.Context;
-            EncogProgram result = context.CloneProgram(program);
-
-            IList<EPLValueType> types = new List<EPLValueType>();
-            types.Add(context.Result.VariableType);
-            int[] globalIndex = new int[1];
-            globalIndex[0] = rnd.Next(result.RootNode.Count);
-            FindNode(rnd, result, result.RootNode, types, globalIndex);
-
-            offspring[0] = result;
         }
     }
 }

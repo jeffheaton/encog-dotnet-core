@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.App.Analyst.CSV.Basic;
@@ -27,27 +28,23 @@ using Encog.App.Analyst.CSV.Basic;
 namespace Encog.App.Quant.Indicators
 {
     /// <summary>
-    /// A simple moving average.
+    ///     A simple moving average.
     /// </summary>
-    ///
     public class MovingAverage : Indicator
     {
         /// <summary>
-        /// The name of this indicator.
+        ///     The name of this indicator.
         /// </summary>
-        ///
         public const String NAME = "MovAvg";
 
         /// <summary>
-        /// The number of periods in this indicator.
+        ///     The number of periods in this indicator.
         /// </summary>
-        ///
         private readonly int periods;
 
         /// <summary>
-        /// Construct this object.
+        ///     Construct this object.
         /// </summary>
-        ///
         /// <param name="thePeriods">The number of periods in this indicator.</param>
         /// <param name="output">True, if this indicator is predicted.</param>
         public MovingAverage(int thePeriods, bool output) : base(NAME, false, output)
@@ -64,9 +61,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Calculate this indicator.
+        ///     Calculate this indicator.
         /// </summary>
-        ///
         /// <param name="data">The data to use.</param>
         /// <param name="length">The length to calculate over.</param>
         public override sealed void Calculate(IDictionary<String, BaseCachedColumn> data,

@@ -20,33 +20,30 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Text;
 
 namespace Encog.App.Analyst.CSV.Filter
 {
     /// <summary>
-    /// Used internally to track excluded fields from the FilterCSV.
+    ///     Used internally to track excluded fields from the FilterCSV.
     /// </summary>
-    ///
     public class ExcludedField
     {
         /// <summary>
-        /// The field number.
+        ///     The field number.
         /// </summary>
-        ///
         private int _fieldNumber;
 
         /// <summary>
-        /// The field value to filter on.
+        ///     The field value to filter on.
         /// </summary>
-        ///
         private String _fieldValue;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="theFieldNumber">The field number.</param>
         /// <param name="theFieldValue">The field value to filter on.</param>
         public ExcludedField(int theFieldNumber, String theFieldValue)
@@ -73,9 +70,7 @@ namespace Encog.App.Analyst.CSV.Filter
 
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

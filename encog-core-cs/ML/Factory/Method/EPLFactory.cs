@@ -22,8 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.Factory.Parse;
 using Encog.Util;
 using Encog.ML.Prg;
@@ -62,26 +60,26 @@ namespace Encog.ML.Factory.Method
 
 
             IDictionary<String, String> args = ArchitectureParse.ParseParams(architecture);
-            ParamsHolder holder = new ParamsHolder(args);
+            var holder = new ParamsHolder(args);
 
             int populationSize = holder.GetInt(
                     MLMethodFactory.PropertyPopulationSize, false, 1000);
             String variables = holder.GetString("vars", false, "x");
             String funct = holder.GetString("funct", false, null);
 
-            EncogProgramContext context = new EncogProgramContext();
+            var context = new EncogProgramContext();
             string[] tok = variables.Split(',');
             foreach (string v in tok)
             {
                 context.DefineVariable(v);
             }
 
-            if (string.Compare("numeric", funct, true) == 0)
+            if (String.Compare("numeric", funct, StringComparison.OrdinalIgnoreCase) == 0)
             {
                 StandardExtensions.CreateNumericOperators(context);
             }
 
-            PrgPopulation pop = new PrgPopulation(context, populationSize);
+            var pop = new PrgPopulation(context, populationSize);
 
             if (context.Functions.Count > 0)
             {

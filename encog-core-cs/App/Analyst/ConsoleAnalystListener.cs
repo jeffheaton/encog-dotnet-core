@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -29,38 +30,33 @@ using Encog.Util;
 namespace Encog.App.Analyst
 {
     /// <summary>
-    /// A console implementation of the Encog Analyst listener. Will report all
-    /// progress to the console.
+    ///     A console implementation of the Encog Analyst listener. Will report all
+    ///     progress to the console.
     /// </summary>
-    ///
     public class ConsoleAnalystListener : IAnalystListener
     {
         /// <summary>
-        /// Stopwatch to time process.
+        ///     Stopwatch to time process.
         /// </summary>
-        ///
         private readonly Stopwatch _stopwatch;
 
         /// <summary>
-        /// True if the current command should be canceled.
+        ///     True if the current command should be canceled.
         /// </summary>
-        ///
         private bool _cancelCommand;
 
         /// <summary>
-        /// The current task.
+        ///     The current task.
         /// </summary>
-        ///
         private String _currentTask;
 
         /// <summary>
-        /// True if shutdown has been requested.
+        ///     True if shutdown has been requested.
         /// </summary>
-        ///
         private bool _shutdownRequested;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public ConsoleAnalystListener()
         {
@@ -71,13 +67,11 @@ namespace Encog.App.Analyst
         #region AnalystListener Members
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public void Report(int total, int current,
                            String message)
         {
-			string msg;
+            string msg;
             if (total == 0)
             {
                 msg = current + " : " + message;
@@ -86,19 +80,17 @@ namespace Encog.App.Analyst
             {
                 msg = current + "/" + total + " : " + message;
             }
-			Console.WriteLine(msg);
-			Debug.WriteLine(msg);
+            Console.WriteLine(msg);
+            Debug.WriteLine(msg);
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public void ReportCommandBegin(int total, int current,
                                        String name)
         {
-			Console.WriteLine();
-			string msg;
+            Console.WriteLine();
+            string msg;
             if (total == 0)
             {
                 msg = "Beginning Task#" + current + " : " + name;
@@ -106,18 +98,16 @@ namespace Encog.App.Analyst
             else
             {
                 msg = "Beginning Task#" + current + "/" + total
-                                      + " : " + name;
+                      + " : " + name;
             }
-			Debug.WriteLine(msg);
-			Console.WriteLine(msg);
+            Debug.WriteLine(msg);
+            Console.WriteLine(msg);
             _currentTask = name;
             _stopwatch.Start();
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public void ReportCommandEnd(bool cancel)
         {
             String cancelStr = "";
@@ -126,52 +116,44 @@ namespace Encog.App.Analyst
 
             cancelStr = cancel ? "canceled" : "completed";
 
-            var msg = "Task "
-                                  + _currentTask
-                                  + " "
-                                  + cancelStr
-                                  + ", task elapsed time: "
-                                  + _stopwatch.Elapsed.TotalSeconds + "s";
-			Console.WriteLine(msg);
-			Debug.WriteLine(msg);
+            string msg = "Task "
+                         + _currentTask
+                         + " "
+                         + cancelStr
+                         + ", task elapsed time: "
+                         + _stopwatch.Elapsed.TotalSeconds + "s";
+            Console.WriteLine(msg);
+            Debug.WriteLine(msg);
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public void ReportTraining(IMLTrain train)
         {
-            var msg = "Iteration #"
-                                  + Format.FormatInteger(train.IterationNumber)
-                                  + " Error:"
-                                  + Format.FormatPercent(train.Error)
-                                  + " elapsed time = "
-                                  + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec));
-			Console.WriteLine(msg);
-			Debug.WriteLine(msg);
+            string msg = "Iteration #"
+                         + Format.FormatInteger(train.IterationNumber)
+                         + " Error:"
+                         + Format.FormatPercent(train.Error)
+                         + " elapsed time = "
+                         + Format.FormatTimeSpan((int) (_stopwatch.ElapsedMilliseconds/Format.MiliInSec));
+            Console.WriteLine(msg);
+            Debug.WriteLine(msg);
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public virtual void ReportTrainingBegin()
         {
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public virtual void ReportTrainingEnd()
         {
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void RequestCancelCommand()
         {
@@ -179,9 +161,7 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void RequestShutdown()
         {
@@ -189,9 +169,7 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool ShouldShutDown()
         {
@@ -199,9 +177,7 @@ namespace Encog.App.Analyst
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool ShouldStopCommand()
         {

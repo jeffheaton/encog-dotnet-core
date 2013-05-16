@@ -20,72 +20,36 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Encog.ML.EA.Population;
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Population;
 using Encog.Util;
 
 namespace Encog.ML.EA.Species
 {
     /// <summary>
-    /// Provides basic functionality for a species.
+    ///     Provides basic functionality for a species.
     /// </summary>
     [Serializable]
     public class BasicSpecies : ISpecies
     {
         /// <summary>
-        /// The age of this species.
+        ///     The list of genomes.
         /// </summary>
-        public int Age { get; set; }
+        private List<IGenome> _members = new List<IGenome>();
 
         /// <summary>
-        /// The best score.
-        /// </summary>
-        public double BestScore { get; set; }
-
-        /// <summary>
-        /// The number of generations with no improvement.
-        /// </summary>
-        public int GensNoImprovement { get; set; }
-
-        /// <summary>
-        /// The leader.
-        /// </summary>
-        public IGenome Leader { get; set; }
-
-        /// <summary>
-        /// The list of genomes.
-        /// </summary>
-        private List<IGenome> members = new List<IGenome>();
-
-        /// <summary>
-        /// The owner class.
-        /// </summary>
-        public IPopulation Population { get; set; }
-
-        /// <summary>
-        ///  The offspring count.
-        /// </summary>
-        public int OffspringCount { get; set; }
-
-        /// <summary>
-        /// The offpsring share (percent).
-        /// </summary>
-        public double OffspringShare { get; set; }
-
-        /// <summary>
-        /// Default constructor, used mainly for persistence.
+        ///     Default constructor, used mainly for persistence.
         /// </summary>
         public BasicSpecies()
         {
-
         }
 
         /// <summary>
-        /// Construct a species.
+        ///     Construct a species.
         /// </summary>
         /// <param name="thePopulation">The population the species belongs to.</param>
         /// <param name="theFirst">The first genome in the species.</param>
@@ -96,27 +60,62 @@ namespace Encog.ML.EA.Species
             GensNoImprovement = 0;
             Age = 0;
             Leader = theFirst;
-            this.members.Add(theFirst);
+            _members.Add(theFirst);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        ///     The age of this species.
+        /// </summary>
+        public int Age { get; set; }
+
+        /// <summary>
+        ///     The best score.
+        /// </summary>
+        public double BestScore { get; set; }
+
+        /// <summary>
+        ///     The number of generations with no improvement.
+        /// </summary>
+        public int GensNoImprovement { get; set; }
+
+        /// <summary>
+        ///     The leader.
+        /// </summary>
+        public IGenome Leader { get; set; }
+
+        /// <summary>
+        ///     The owner class.
+        /// </summary>
+        public IPopulation Population { get; set; }
+
+        /// <summary>
+        ///     The offspring count.
+        /// </summary>
+        public int OffspringCount { get; set; }
+
+        /// <summary>
+        ///     The offpsring share (percent).
+        /// </summary>
+        public double OffspringShare { get; set; }
+
+        /// <inheritdoc />
         public void Add(IGenome genome)
         {
-            genome.Population = this.Population;
-            this.members.Add(genome);
+            genome.Population = Population;
+            _members.Add(genome);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public double CalculateShare(bool shouldMinimize,
-                double maxScore)
+                                     double maxScore)
         {
             double total = 0;
 
             int count = 0;
-            foreach (IGenome genome in this.members)
+            foreach (IGenome genome in _members)
             {
                 if (!double.IsNaN(genome.AdjustedScore)
-                        && !double.IsInfinity(genome.AdjustedScore))
+                    && !double.IsInfinity(genome.AdjustedScore))
                 {
                     double s;
                     if (shouldMinimize)
@@ -134,39 +133,33 @@ namespace Encog.ML.EA.Species
 
             if (count == 0)
             {
-                this.OffspringShare = 0;
+                OffspringShare = 0;
             }
             else
             {
-                this.OffspringShare = total / count;
+                OffspringShare = total/count;
             }
 
-            return this.OffspringShare;
+            return OffspringShare;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public List<IGenome> Members
         {
-            get
-            {
-                return this.members;
-            }
-            set
-            {
-                this.members = value;
-            }
+            get { return _members; }
+            set { _members = value; }
         }
 
         /// <summary>
-        /// Purge all members, increase age by one and count the number of
-        /// generations with no improvement.
+        ///     Purge all members, increase age by one and count the number of
+        ///     generations with no improvement.
         /// </summary>
         public void Purge()
         {
-            this.members.Clear();
-            if (this.Leader != null)
+            _members.Clear();
+            if (Leader != null)
             {
-                this.members.Add(this.Leader);
+                _members.Add(Leader);
             }
             Age++;
             GensNoImprovement++;
@@ -175,14 +168,14 @@ namespace Encog.ML.EA.Species
         }
 
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[BasicSpecies: score=");
             result.Append(Format.FormatDouble(BestScore, 2));
             result.Append(", members=");
-            result.Append(this.members.Count);
+            result.Append(_members.Count);
             result.Append(", age=");
             result.Append(Age);
             result.Append(", no_improv=");

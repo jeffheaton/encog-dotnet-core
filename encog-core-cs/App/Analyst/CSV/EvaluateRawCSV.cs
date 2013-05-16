@@ -20,49 +20,43 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using Encog.App.Analyst.CSV.Basic;
-using System.IO;
-using Encog.Util.CSV;
+using Encog.App.Quant;
 using Encog.ML;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
-using Encog.App.Quant;
+using Encog.Util.CSV;
 
 namespace Encog.App.Analyst.CSV
 {
     /// <summary>
-    /// Used by non-analyst programs to evaluate a CSV file.
+    ///     Used by non-analyst programs to evaluate a CSV file.
     /// </summary>
-    ///
     public class EvaluateRawCSV : BasicFile
     {
         /// <summary>
-        /// The ideal count.
+        ///     The ideal count.
         /// </summary>
-        ///
         private int _idealCount;
 
         /// <summary>
-        /// The input count.
+        ///     The input count.
         /// </summary>
-        ///
         private int _inputCount;
 
         /// <summary>
-        /// The output count.
+        ///     The output count.
         /// </summary>
-        ///
         private int _outputCount;
 
         /// <summary>
-        /// Analyze the data. This counts the records and prepares the data to be
-        /// processed.
+        ///     Analyze the data. This counts the records and prepares the data to be
+        ///     processed.
         /// </summary>
-        ///
         /// <param name="inputFile">The input file.</param>
         /// <param name="headers">True if headers are present.</param>
         /// <param name="format">The format the file is in.</param>
@@ -78,7 +72,7 @@ namespace Encog.App.Analyst.CSV
 
             _inputCount = method.InputCount;
             _outputCount = method.OutputCount;
-            _idealCount = Math.Max( InputHeadings.Length - _inputCount, 0);
+            _idealCount = Math.Max(InputHeadings.Length - _inputCount, 0);
 
             if ((InputHeadings.Length != _inputCount)
                 && (InputHeadings.Length != (_inputCount + _outputCount)))
@@ -91,9 +85,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
-        ///
         /// <param name="outputFile">The name of the output file.</param>
         /// <returns>The output stream for the text file.</returns>
         private StreamWriter AnalystPrepareOutputFile(FileInfo outputFile)
@@ -111,20 +104,19 @@ namespace Encog.App.Analyst.CSV
                     {
                         for (int i = 0; i < _inputCount; i++)
                         {
-                            BasicFile.AppendSeparator(line, Format);
+                            AppendSeparator(line, Format);
                             line.Append("\"");
                             line.Append("input:" + i);
                             line.Append("\"");
                         }
                     }
-                   
+
                     // now, handle the ideal fields
                     if (_idealCount > 0)
                     {
-
                         for (int i = 0; i < _idealCount; i++)
                         {
-                            BasicFile.AppendSeparator(line, Format);
+                            AppendSeparator(line, Format);
                             line.Append("\"");
                             line.Append("ideal:" + i);
                             line.Append("\"");
@@ -134,10 +126,9 @@ namespace Encog.App.Analyst.CSV
                     // now, handle the output fields
                     if (_outputCount > 0)
                     {
-
                         for (int i = 0; i < _outputCount; i++)
                         {
-                            BasicFile.AppendSeparator(line, Format);
+                            AppendSeparator(line, Format);
                             line.Append("\"");
                             line.Append("output:" + i);
                             line.Append("\"");
@@ -156,9 +147,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Process the file.
+        ///     Process the file.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="method">The method to use.</param>
         public void Process(FileInfo outputFile, IMLRegression method)

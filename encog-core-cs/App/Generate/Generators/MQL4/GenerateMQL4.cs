@@ -20,43 +20,36 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.App.Analyst.Script.Normalize;
-using Encog.App.Analyst.Script;
-using Encog.Util.Arrayutil;
-using Encog.Util;
-using Encog.App.Analyst;
-using Encog.App.Analyst.Script.Prop;
 using System.IO;
+using System.Text;
+using Encog.App.Analyst;
+using Encog.App.Analyst.Script;
+using Encog.App.Analyst.Script.Normalize;
+using Encog.App.Analyst.Script.Prop;
 using Encog.ML;
-using Encog.Persist;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
+using Encog.Persist;
+using Encog.Util;
+using Encog.Util.Arrayutil;
 
 namespace Encog.App.Generate.Generators.MQL4
 {
     /// <summary>
-    /// Generate MQL4.
+    ///     Generate MQL4.
     /// </summary>
     public class GenerateMQL4 : AbstractTemplateGenerator
     {
         public override String NullArray
         {
-            get
-            {
-                return "{-1}";
-            }
+            get { return "{-1}"; }
         }
 
         public override String TemplatePath
         {
-            get
-            {
-                return "org/encog/data/mt4.mql4";
-            }
+            get { return "org/encog/data/mt4.mql4"; }
         }
 
         private void ProcessCalc()
@@ -76,11 +69,10 @@ namespace Encog.App.Generate.Generators.MQL4
 
             int idx = 0;
             foreach (AnalystField field in Analyst.Script.Normalize
-                    .NormalizedFields)
+                                                  .NormalizedFields)
             {
                 if (field.Input)
                 {
-
                     DataField df = Analyst.Script.FindDataField(field.Name);
                     String str;
 
@@ -88,13 +80,13 @@ namespace Encog.App.Generate.Generators.MQL4
                     {
                         case NormalizationAction.PassThrough:
                             str = EngineArray.Replace(df.Source, "##", "pos+"
-                                    + (-field.TimeSlice));
+                                                                       + (-field.TimeSlice));
                             AddLine("input[" + idx + "]=" + str + ";");
                             idx++;
                             break;
                         case NormalizationAction.Normalize:
                             str = EngineArray.Replace(df.Source, "##", "pos+"
-                                    + (-field.TimeSlice));
+                                                                       + (-field.TimeSlice));
                             AddLine("input[" + idx + "]=Norm(" + str + ","
                                     + field.NormalizedHigh + ","
                                     + field.NormalizedLow + ","
@@ -106,8 +98,8 @@ namespace Encog.App.Generate.Generators.MQL4
                             break;
                         default:
                             throw new AnalystCodeGenerationError(
-                                    "Can't generate Ninjascript code, unsupported normalizatoin action: "
-                                            + field.Action.ToString());
+                                "Can't generate Ninjascript code, unsupported normalizatoin action: "
+                                + field.Action.ToString());
                     }
                 }
                 if (field.Output)
@@ -122,7 +114,7 @@ namespace Encog.App.Generate.Generators.MQL4
             if (firstOutputField == null)
             {
                 throw new AnalystCodeGenerationError(
-                        "Could not find an output field.");
+                    "Could not find an output field.");
             }
 
             AddLine("Compute(input,output);");
@@ -135,14 +127,13 @@ namespace Encog.App.Generate.Generators.MQL4
             IndentOut();
             AddLine("}");
             IndentLevel = 2;
-
         }
 
         private void ProcessHeaders()
         {
             DataField[] fields = Analyst.Script.Fields;
 
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append("FileWrite(iHandle");
 
             foreach (DataField df in fields)
@@ -162,13 +153,13 @@ namespace Encog.App.Generate.Generators.MQL4
             EncogAnalyst analyst = Analyst;
 
             String processID = analyst.Script.Properties
-                    .GetPropertyString(ScriptProperties.PROCESS_CONFIG_SOURCE_FILE);
+                                      .GetPropertyString(ScriptProperties.PROCESS_CONFIG_SOURCE_FILE);
 
             String methodID = analyst
-                    .Script
-                    .Properties
-                    .GetPropertyString(
-                            ScriptProperties.MlConfigMachineLearningFile);
+                .Script
+                .Properties
+                .GetPropertyString(
+                    ScriptProperties.MlConfigMachineLearningFile);
 
             FileInfo methodFile = analyst.Script.ResolveFilename(methodID);
 
@@ -195,9 +186,9 @@ namespace Encog.App.Generate.Generators.MQL4
 
             if (methodFile.Exists)
             {
-                method = (IMLMethod)EncogDirectoryPersistence
-                        .LoadObject(methodFile);
-                FlatNetwork flat = ((BasicNetwork)method).Flat;
+                method = (IMLMethod) EncogDirectoryPersistence
+                                         .LoadObject(methodFile);
+                FlatNetwork flat = ((BasicNetwork) method).Flat;
 
                 contextTargetOffset = flat.ContextTargetOffset;
                 contextTargetSize = flat.ContextTargetSize;
@@ -220,8 +211,8 @@ namespace Encog.App.Generate.Generators.MQL4
 
             IndentLevel = 2;
             IndentIn();
-            AddNameValue("string EXPORT_FILENAME", "\"" + processFile.ToString()
-                    + "\"");
+            AddNameValue("string EXPORT_FILENAME", "\"" + processFile
+                                                   + "\"");
 
             AddNameValue("int _neuronCount", neuronCount);
             AddNameValue("int _layerCount", layerCount);
@@ -257,10 +248,10 @@ namespace Encog.App.Generate.Generators.MQL4
             {
                 DataField df = field;
                 if (string.Compare(df.Name, "time", true) != 0
-                        && string.Compare(df.Name, "prediction", true) != 0)
+                    && string.Compare(df.Name, "prediction", true) != 0)
                 {
                     String str = EngineArray.Replace(df.Source, "##",
-                            "pos");
+                                                     "pos");
                     if (lastLine != null)
                     {
                         AddLine(lastLine + ",");

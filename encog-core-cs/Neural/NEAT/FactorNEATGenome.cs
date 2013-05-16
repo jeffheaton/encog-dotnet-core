@@ -22,8 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Genome;
 using Encog.Neural.NEAT.Training;
 using Encog.MathUtil.Randomize;

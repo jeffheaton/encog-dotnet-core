@@ -21,8 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.Neural.NEAT.Training
@@ -46,37 +44,30 @@ namespace Encog.Neural.NEAT.Training
     /// Regularities
     /// 
     /// Automatic feature selection in neuroevolution
+    /// </summary>
     [Serializable]
     public class NEATInnovation
     {
         /// <summary>
         /// The neuron id.
         /// </summary>
-        public long NeuronID { get; set; }
+        public long NeuronId { get; set; }
 
         /// <summary>
         /// The innovation id.
         /// </summary>
-        public long InnovationID { get; set; }
+        public long InnovationId { get; set; }
 
-
-        /// <summary>
-        /// Default constructor, used mainly for persistence.
-        /// </summary>
-        public NEATInnovation()
-        {
-
-        }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[NeatInnovation:");
             result.Append("id=");
-            result.Append(this.InnovationID);
+            result.Append(InnovationId);
             result.Append(",neuron=");
-            result.Append(this.NeuronID);
+            result.Append(NeuronId);
             result.Append("]");
             return result.ToString();
         }

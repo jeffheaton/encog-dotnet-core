@@ -20,110 +20,96 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Encog.App.Analyst.CSV.Basic;
 using Encog.App.Analyst.Util;
 using Encog.App.Quant;
+using Encog.ML.Data;
 using Encog.MathUtil;
 using Encog.Util;
 using Encog.Util.Arrayutil;
 using Encog.Util.CSV;
-using Encog.ML.Data;
 
 namespace Encog.App.Analyst.Script.Normalize
 {
     /// <summary>
-    /// Holds a field to be analyzed.
+    ///     Holds a field to be analyzed.
     /// </summary>
-    ///
     public class AnalystField
     {
         /// <summary>
-        /// Minimum classes for encode using equilateral.
+        ///     Minimum classes for encode using equilateral.
         /// </summary>
-        ///
         public const int MinEqClasses = 3;
 
         /// <summary>
-        /// The list of classes.
+        ///     The list of classes.
         /// </summary>
-        ///
         private readonly IList<ClassItem> _classes;
 
         /// <summary>
-        /// Allows the index of a field to be looked up.
+        ///     Allows the index of a field to be looked up.
         /// </summary>
-        ///
         private readonly IDictionary<String, Int32> _lookup;
 
         /// <summary>
-        /// The action that should be taken on this column.
+        ///     The action that should be taken on this column.
         /// </summary>
-        ///
         private NormalizationAction _action;
 
         /// <summary>
-        /// The actual high from the sample data.
+        ///     The actual high from the sample data.
         /// </summary>
-        ///
         private double _actualHigh;
 
         /// <summary>
-        /// The actual low from the sample data.
+        ///     The actual low from the sample data.
         /// </summary>
-        ///
         private double _actualLow;
 
         /// <summary>
-        /// If equilateral classification is used, this is the Equilateral object.
+        ///     If equilateral classification is used, this is the Equilateral object.
         /// </summary>
-        ///
         private Equilateral _eq;
 
         /// <summary>
-        /// The name of this column.
+        ///     The name of this column.
         /// </summary>
-        ///
         private String _name;
 
         /// <summary>
-        /// The desired normalized high.
+        ///     The desired normalized high.
         /// </summary>
-        ///
         private double _normalizedHigh;
 
         /// <summary>
-        /// The desired normalized low from the sample data.
+        ///     The desired normalized low from the sample data.
         /// </summary>
-        ///
         private double _normalizedLow;
 
         /// <summary>
-        /// True, if this is an output field.
+        ///     True, if this is an output field.
         /// </summary>
-        ///
         private bool _output;
 
         /// <summary>
-        /// The time slice number.
+        ///     The time slice number.
         /// </summary>
-        ///
         private int _timeSlice;
 
         /// <summary>
-        /// Construct the object with a range of 1 and -1.
+        ///     Construct the object with a range of 1 and -1.
         /// </summary>
-        ///
         public AnalystField() : this(1, -1)
         {
         }
 
         /// <summary>
-        /// Construct an analyst field.  Works like a C++ copy constructor.  
+        ///     Construct an analyst field.  Works like a C++ copy constructor.
         /// </summary>
-        ///
         /// <param name="field">The field to clone.</param>
         public AnalystField(AnalystField field)
         {
@@ -141,9 +127,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="theNormalizedHigh">The normalized high.</param>
         /// <param name="theNormalizedLow">The normalized low.</param>
         public AnalystField(double theNormalizedHigh,
@@ -160,9 +145,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Construct an object.
+        ///     Construct an object.
         /// </summary>
-        ///
         /// <param name="theAction">The desired action.</param>
         /// <param name="theName">The name of this column.</param>
         public AnalystField(NormalizationAction theAction,
@@ -171,9 +155,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Construct the field, with no defaults.
+        ///     Construct the field, with no defaults.
         /// </summary>
-        ///
         /// <param name="theAction">The normalization action to take.</param>
         /// <param name="theName">The name of this field.</param>
         /// <param name="ahigh">The actual high.</param>
@@ -196,9 +179,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Construct an analyst field to use.
+        ///     Construct an analyst field to use.
         /// </summary>
-        ///
         /// <param name="theName">The name of the field.</param>
         /// <param name="theAction">The action to use.</param>
         /// <param name="high">The high value.</param>
@@ -217,7 +199,7 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Set the theAction for the field.
+        ///     Set the theAction for the field.
         /// </summary>
         public NormalizationAction Action
         {
@@ -227,7 +209,7 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set the actual high for the field.
+        ///     Set the actual high for the field.
         /// </summary>
         public double ActualHigh
         {
@@ -237,7 +219,7 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set the actual low for the field.
+        ///     Set the actual low for the field.
         /// </summary>
         public double ActualLow
         {
@@ -253,9 +235,11 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
 
-        /// <value>Returns the number of columns needed for this classification. The
-        /// number of columns needed will vary, depending on the
-        /// classification method used.</value>
+        /// <value>
+        ///     Returns the number of columns needed for this classification. The
+        ///     number of columns needed will vary, depending on the
+        ///     classification method used.
+        /// </value>
         public int ColumnsNeeded
         {
             get
@@ -283,7 +267,7 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set the name of the field.
+        ///     Set the name of the field.
         /// </summary>
         public String Name
         {
@@ -293,7 +277,7 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set the normalized high for the field.
+        ///     Set the normalized high for the field.
         /// </summary>
         public double NormalizedHigh
         {
@@ -303,9 +287,8 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set the normalized low for the field.
+        ///     Set the normalized low for the field.
         /// </summary>
-        ///
         /// <value>The normalized low for the field.</value>
         public double NormalizedLow
         {
@@ -349,7 +332,7 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Set if this is an output field.
+        ///     Set if this is an output field.
         /// </summary>
         public bool Output
         {
@@ -358,9 +341,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Add headings for a raw file.
+        ///     Add headings for a raw file.
         /// </summary>
-        ///
         /// <param name="line">The line to write the raw headings to.</param>
         /// <param name="prefix">The prefix to place.</param>
         /// <param name="format">The format to use.</param>
@@ -385,10 +367,9 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Analyze the specified value. Adjust min/max as needed. Usually used only
-        /// internally.
+        ///     Analyze the specified value. Adjust min/max as needed. Usually used only
+        ///     internally.
         /// </summary>
-        ///
         /// <param name="d">The value to analyze.</param>
         public void Analyze(double d)
         {
@@ -397,9 +378,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Denormalize the specified value.
+        ///     Denormalize the specified value.
         /// </summary>
-        ///
         /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double DeNormalize(double v)
@@ -413,16 +393,15 @@ namespace Encog.App.Analyst.Script.Normalize
             // (i.e. normalization or actual range is infinitely small.
             if (Double.IsNaN(result))
             {
-                return ((NormalizedHigh - NormalizedLow) / 2) + NormalizedLow;
-            } 
+                return ((NormalizedHigh - NormalizedLow)/2) + NormalizedLow;
+            }
 
             return result;
         }
 
         /// <summary>
-        /// Determine what class the specified data belongs to.
+        ///     Determine what class the specified data belongs to.
         /// </summary>
-        ///
         /// <param name="data">The data to analyze.</param>
         /// <returns>The class the data belongs to.</returns>
         public ClassItem DetermineClass(double[] data)
@@ -448,9 +427,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Determine the class using part of an array.
+        ///     Determine the class using part of an array.
         /// </summary>
-        ///
         /// <param name="pos">The position to begin.</param>
         /// <param name="data">The array to check.</param>
         /// <returns>The class item.</returns>
@@ -458,8 +436,8 @@ namespace Encog.App.Analyst.Script.Normalize
         {
             int resultIndex = 0;
             var d = new double[ColumnsNeeded];
-			for(int i = 0; i < d.Length; i++)
-				d[i] = data[pos + i];
+            for (int i = 0; i < d.Length; i++)
+                d[i] = data[pos + i];
 
             switch (_action)
             {
@@ -485,9 +463,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Encode the class.
+        ///     Encode the class.
         /// </summary>
-        ///
         /// <param name="classNumber">The class number.</param>
         /// <returns>The encoded class.</returns>
         public double[] Encode(int classNumber)
@@ -506,9 +483,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Encode the string to numeric form.
+        ///     Encode the string to numeric form.
         /// </summary>
-        ///
         /// <param name="str">The string to encode.</param>
         /// <returns>The numeric form.</returns>
         public double[] Encode(String str)
@@ -529,9 +505,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Perform an equilateral encode.
+        ///     Perform an equilateral encode.
         /// </summary>
-        ///
         /// <param name="classNumber">The class number.</param>
         /// <returns>The class to encode.</returns>
         public double[] EncodeEquilateral(int classNumber)
@@ -540,9 +515,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Perform the encoding for "one of".
+        ///     Perform the encoding for "one of".
         /// </summary>
-        ///
         /// <param name="classNumber">The class number.</param>
         /// <returns>The encoded columns.</returns>
         private double[] EncodeOneOf(int classNumber)
@@ -564,9 +538,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Encode a single field.
+        ///     Encode a single field.
         /// </summary>
-        ///
         /// <param name="classNumber">The class number to encode.</param>
         /// <returns>The encoded columns.</returns>
         private double[] EncodeSingleField(int classNumber)
@@ -577,10 +550,9 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Fix normalized fields that have a single value for the min/max. Separate
-        /// them by 2 units.
+        ///     Fix normalized fields that have a single value for the min/max. Separate
+        ///     them by 2 units.
         /// </summary>
-        ///
         public void FixSingleValue()
         {
             if (_action == NormalizationAction.Normalize)
@@ -594,9 +566,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Init any internal structures.
+        ///     Init any internal structures.
         /// </summary>
-        ///
         public void Init()
         {
             if (_action == NormalizationAction.Equilateral)
@@ -621,9 +592,8 @@ namespace Encog.App.Analyst.Script.Normalize
 
 
         /// <summary>
-        /// Lookup the specified field.
+        ///     Lookup the specified field.
         /// </summary>
-        ///
         /// <param name="str">The name of the field to lookup.</param>
         /// <returns>The index of the field, or -1 if not found.</returns>
         public int Lookup(String str)
@@ -636,9 +606,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Make the classes based on numbers.
+        ///     Make the classes based on numbers.
         /// </summary>
-        ///
         /// <param name="theAction">The action.</param>
         /// <param name="classFrom">The starting class.</param>
         /// <param name="classTo">The ending class.</param>
@@ -670,9 +639,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Make the classes using names.
+        ///     Make the classes using names.
         /// </summary>
-        ///
         /// <param name="theAction">The action to use.</param>
         /// <param name="cls">The class names.</param>
         /// <param name="high">The high value.</param>
@@ -701,9 +669,8 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Make this a pass-through field.
+        ///     Make this a pass-through field.
         /// </summary>
-        ///
         public void MakePassThrough()
         {
             _normalizedHigh = 0;
@@ -714,16 +681,16 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Normalize the specified value.
+        ///     Normalize the specified value.
         /// </summary>
         /// <param name="v">The value to normalize.</param>
         /// <returns>The normalized value.</returns>
         public double Normalize(double v)
         {
-            double result = ((v - _actualLow) / (_actualHigh - _actualLow))
-                * (_normalizedHigh - _normalizedLow)
-                + _normalizedLow;
-    
+            double result = ((v - _actualLow)/(_actualHigh - _actualLow))
+                            *(_normalizedHigh - _normalizedLow)
+                            + _normalizedLow;
+
             // typically caused by a number that should not have been normalized
             // (i.e. normalization or actual range is infinitely small.
 
@@ -731,13 +698,13 @@ namespace Encog.App.Analyst.Script.Normalize
             // (i.e. normalization or actual range is infinitely small.
             if (Double.IsNaN(result))
             {
-                return ((NormalizedHigh - NormalizedLow) / 2) + NormalizedLow;
-            } 
+                return ((NormalizedHigh - NormalizedLow)/2) + NormalizedLow;
+            }
 
-            return result;             
+            return result;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");
@@ -754,7 +721,7 @@ namespace Encog.App.Analyst.Script.Normalize
         }
 
         /// <summary>
-        /// Determine the mode, this is the class item that has the most instances.
+        ///     Determine the mode, this is the class item that has the most instances.
         /// </summary>
         /// <param name="analyst">The analyst to use.</param>
         /// <returns>The mode.</returns>

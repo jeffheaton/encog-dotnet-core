@@ -20,77 +20,46 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.Persist;
-using Encog.ML.Prg.ExpValue;
-using Encog.ML.Prg.Train;
 using System.IO;
+using Encog.ML.EA.Genome;
 using Encog.ML.EA.Species;
+using Encog.ML.Prg.ExpValue;
+using Encog.ML.Prg.Ext;
+using Encog.ML.Prg.Train;
+using Encog.Persist;
 using Encog.Util;
 using Encog.Util.CSV;
-using Encog.ML.Prg.Ext;
-using Encog.ML.EA.Genome;
 
 namespace Encog.ML.Prg
 {
     /// <summary>
-    /// Persist a population of Encog programs.
+    ///     Persist a population of Encog programs.
     /// </summary>
     public class PersistPrgPopulation : IEncogPersistor
     {
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int FileVersion
         {
-            get
-            {
-                return 1;
-            }
+            get { return 1; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public String PersistClassString
         {
-            get
-            {
-                return "PrgPopulation";
-            }
+            get { return "PrgPopulation"; }
         }
 
-        /// <summary>
-        /// Get the type string for the specified variable mapping.
-        /// </summary>
-        /// <param name="mapping">The mapping.</param>
-        /// <returns>The value.</returns>
-        private string GetType(VariableMapping mapping)
-        {
-            switch (mapping.VariableType)
-            {
-                case EPLValueType.floatingType:
-                    return "f";
-                case EPLValueType.stringType:
-                    return "s";
-                case EPLValueType.booleanType:
-                    return "b";
-                case EPLValueType.intType:
-                    return "i";
-                case EPLValueType.enumType:
-                    return "e";
-            }
-            throw new EncogError("Unknown type: "
-                    + mapping.VariableType.ToString());
-        }
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public Object Read(Stream istream)
         {
-            EncogProgramContext context = new EncogProgramContext();
+            var context = new EncogProgramContext();
 
-            PrgPopulation result = new PrgPopulation(context, 0);
+            var result = new PrgPopulation(context, 0);
 
-            EncogReadHelper reader = new EncogReadHelper(istream);
+            var reader = new EncogReadHelper(istream);
             EncogFileSection section;
 
             int count = 0;
@@ -98,34 +67,36 @@ namespace Encog.ML.Prg
             while ((section = reader.ReadNextSection()) != null)
             {
                 if (section.SectionName.Equals("BASIC")
-                        && section.SubSectionName.Equals("PARAMS"))
+                    && section.SubSectionName.Equals("PARAMS"))
                 {
                     IDictionary<string, string> prms = section.ParseParams();
                     EngineArray.PutAll(prms, result.Properties);
                 }
                 else if (section.SectionName.Equals("BASIC")
-                      && section.SubSectionName.Equals("EPL-POPULATION"))
+                         && section.SubSectionName.Equals("EPL-POPULATION"))
                 {
                     foreach (string line in section.Lines)
                     {
                         IList<String> cols = EncogFileSection.SplitColumns(line);
 
-                        if (string.Compare(cols[0], "s", true) == 0)
+                        if (String.Compare(cols[0], "s", StringComparison.OrdinalIgnoreCase) == 0)
                         {
-                            lastSpecies = new BasicSpecies();
-                            lastSpecies.Age = int.Parse(cols[1]);
-                            lastSpecies.BestScore = CSVFormat.EgFormat.Parse(cols[2]);
-                            lastSpecies.Population = result;
-                            lastSpecies.GensNoImprovement = int.Parse(cols[3]);
+                            lastSpecies = new BasicSpecies
+                                {
+                                    Age = int.Parse(cols[1]),
+                                    BestScore = CSVFormat.EgFormat.Parse(cols[2]),
+                                    Population = result,
+                                    GensNoImprovement = int.Parse(cols[3])
+                                };
                             result.Species.Add(lastSpecies);
                         }
                         else if (cols[0].Equals("p"))
                         {
-                            double score = 0;
-                            double adjustedScore = 0;
+                            double score;
+                            double adjustedScore;
 
-                            if (string.Compare(cols[1], "nan", true) == 0
-                                    || string.Compare(cols[2], "nan", true) == 0)
+                            if (String.Compare(cols[1], "nan", StringComparison.OrdinalIgnoreCase) == 0
+                                || String.Compare(cols[2], "nan", StringComparison.OrdinalIgnoreCase) == 0)
                             {
                                 score = Double.NaN;
                                 adjustedScore = Double.NaN;
@@ -137,7 +108,7 @@ namespace Encog.ML.Prg
                             }
 
                             String code = cols[3];
-                            EncogProgram prg = new EncogProgram(context);
+                            var prg = new EncogProgram(context);
                             prg.CompileEPL(code);
                             prg.Score = score;
                             prg.Species = lastSpecies;
@@ -145,18 +116,15 @@ namespace Encog.ML.Prg
                             if (lastSpecies == null)
                             {
                                 throw new EncogError(
-                                        "Have not defined a species yet");
+                                    "Have not defined a species yet");
                             }
-                            else
-                            {
-                                lastSpecies.Add(prg);
-                            }
+                            lastSpecies.Add(prg);
                             count++;
                         }
                     }
                 }
                 else if (section.SectionName.Equals("BASIC")
-                      && section.SubSectionName.Equals("EPL-OPCODES"))
+                         && section.SubSectionName.Equals("EPL-OPCODES"))
                 {
                     foreach (String line in section.Lines)
                     {
@@ -167,7 +135,7 @@ namespace Encog.ML.Prg
                     }
                 }
                 else if (section.SectionName.Equals("BASIC")
-                      && section.SubSectionName.Equals("EPL-SYMBOLIC"))
+                         && section.SubSectionName.Equals("EPL-SYMBOLIC"))
                 {
                     bool first = true;
                     foreach (string line in section.Lines)
@@ -177,33 +145,33 @@ namespace Encog.ML.Prg
                             IList<String> cols = EncogFileSection.SplitColumns(line);
                             String name = cols[0];
                             String t = cols[1];
-                            EPLValueType vt = EPLValueType.unknown;
+                            var vt = EPLValueType.Unknown;
 
                             if (string.Compare(t, "f", true) == 0)
                             {
-                                vt = EPLValueType.floatingType;
+                                vt = EPLValueType.FloatingType;
                             }
                             else if (string.Compare(t, "b", true) == 0)
                             {
-                                vt = EPLValueType.booleanType;
+                                vt = EPLValueType.BooleanType;
                             }
                             else if (string.Compare(t, "i", true) == 0)
                             {
-                                vt = EPLValueType.intType;
+                                vt = EPLValueType.IntType;
                             }
                             else if (string.Compare(t, "s", true) == 0)
                             {
-                                vt = EPLValueType.stringType;
+                                vt = EPLValueType.StringType;
                             }
                             else if (string.Compare(t, "e", true) == 0)
                             {
-                                vt = EPLValueType.enumType;
+                                vt = EPLValueType.EnumType;
                             }
 
                             int enumType = int.Parse(cols[2]);
                             int enumCount = int.Parse(cols[3]);
-                            VariableMapping mapping = new VariableMapping(
-                                    name, vt, enumType, enumCount);
+                            var mapping = new VariableMapping(
+                                name, vt, enumType, enumCount);
                             if (mapping.Name.Length > 0)
                             {
                                 result.Context.DefineVariable(mapping);
@@ -243,18 +211,18 @@ namespace Encog.ML.Prg
             return result;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Save(Stream ostream, Object obj)
         {
-            EncogWriteHelper writer = new EncogWriteHelper(ostream);
-            PrgPopulation pop = (PrgPopulation)obj;
+            var writer = new EncogWriteHelper(ostream);
+            var pop = (PrgPopulation) obj;
 
             writer.AddSection("BASIC");
             writer.AddSubSection("PARAMS");
             writer.AddProperties(pop.Properties);
             writer.AddSubSection("EPL-OPCODES");
             foreach (IProgramExtensionTemplate temp in pop.Context
-                    .Functions.OpCodes)
+                                                          .Functions.OpCodes)
             {
                 writer.AddColumn(temp.Name);
                 writer.AddColumn(temp.ChildNodeCount);
@@ -296,17 +264,16 @@ namespace Encog.ML.Prg
                     writer.WriteLine();
                     foreach (IGenome genome in species.Members)
                     {
-                        EncogProgram prg = (EncogProgram)genome;
+                        var prg = (EncogProgram) genome;
                         writer.AddColumn("p");
                         if (Double.IsInfinity(prg.Score)
-                                || Double.IsNaN(prg.Score))
+                            || Double.IsNaN(prg.Score))
                         {
                             writer.AddColumn("NaN");
                             writer.AddColumn("NaN");
                         }
                         else
                         {
-
                             writer.AddColumn(prg.Score);
                             writer.AddColumn(prg.AdjustedScore);
                         }
@@ -320,10 +287,34 @@ namespace Encog.ML.Prg
             writer.Flush();
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public Type NativeType
         {
-            get { return typeof(PrgPopulation); }
+            get { return typeof (PrgPopulation); }
+        }
+
+        /// <summary>
+        ///     Get the type string for the specified variable mapping.
+        /// </summary>
+        /// <param name="mapping">The mapping.</param>
+        /// <returns>The value.</returns>
+        private string GetType(VariableMapping mapping)
+        {
+            switch (mapping.VariableType)
+            {
+                case EPLValueType.FloatingType:
+                    return "f";
+                case EPLValueType.StringType:
+                    return "s";
+                case EPLValueType.BooleanType:
+                    return "b";
+                case EPLValueType.IntType:
+                    return "i";
+                case EPLValueType.EnumType:
+                    return "e";
+            }
+            throw new EncogError("Unknown type: "
+                                 + mapping.VariableType.ToString());
         }
     }
 }

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Encog.ML.EA.Opp;
 using Encog.ML.EA.Opp.Selection;
 using Encog.ML.EA.Train;
 using Encog.ML.EA.Genome;

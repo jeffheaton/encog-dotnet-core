@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
@@ -36,34 +37,29 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV
 {
     /// <summary>
-    /// Used by the analyst to cluster a CSV file.
+    ///     Used by the analyst to cluster a CSV file.
     /// </summary>
-    ///
     public class AnalystClusterCSV : BasicFile
     {
         /// <summary>
-        /// The analyst to use.
+        ///     The analyst to use.
         /// </summary>
-        ///
         private EncogAnalyst _analyst;
 
         /// <summary>
-        /// The headers.
+        ///     The headers.
         /// </summary>
-        ///
         private CSVHeaders _analystHeaders;
 
         /// <summary>
-        /// The training data used to send to KMeans.
+        ///     The training data used to send to KMeans.
         /// </summary>
-        ///
         private BasicMLDataSet _data;
 
         /// <summary>
-        /// Analyze the data. This counts the records and prepares the data to be
-        /// processed.
+        ///     Analyze the data. This counts the records and prepares the data to be
+        ///     processed.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         /// <param name="inputFile">The input file to analyze.</param>
         /// <param name="headers">True, if the input file has headers.</param>
@@ -77,7 +73,7 @@ namespace Encog.App.Analyst.CSV
 
             Analyzed = true;
             _analyst = theAnalyst;
-            
+
             _data = new BasicMLDataSet();
             ResetStatus();
             int recordCount = 0;
@@ -92,12 +88,12 @@ namespace Encog.App.Analyst.CSV
             while (csv.Next() && !ShouldStop())
             {
                 UpdateStatus(true);
-     
+
                 double[] inputArray = AnalystNormalizeCSV.ExtractFields(
                     _analyst, _analystHeaders, csv, outputLength, true);
 
                 IMLData input = new BasicMLData(inputArray);
-                _data.Add(new BasicMLDataPair(input)); 
+                _data.Add(new BasicMLDataPair(input));
 
                 recordCount++;
             }
@@ -110,11 +106,10 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
-        ///<returns>The file to be written to.</returns>
+        /// <returns>The file to be written to.</returns>
         private new StreamWriter PrepareOutputFile(FileInfo outputFile)
         {
             try
@@ -152,9 +147,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Process the file and cluster.
+        ///     Process the file and cluster.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="clusters">The number of clusters.</param>
         /// <param name="theAnalyst">The analyst to use.</param>
@@ -177,7 +171,7 @@ namespace Encog.App.Analyst.CSV
                 foreach (IMLData item  in  cl.Data)
                 {
                     int clsIndex = item.Count;
-                    LoadedRow lr = new LoadedRow(Format, item, 1); 
+                    var lr = new LoadedRow(Format, item, 1);
                     lr.Data[clsIndex] = "" + clusterNum;
                     WriteRow(tw, lr);
                 }

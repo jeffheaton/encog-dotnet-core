@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV.Segregate;
@@ -33,34 +34,31 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This command is used to segregate one CSV file into several. This can be
-    /// useful for creating training and evaluation sets.
+    ///     This command is used to segregate one CSV file into several. This can be
+    ///     useful for creating training and evaluation sets.
     /// </summary>
-    ///
     public class CmdSegregate : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "SEGREGATE";
 
         /// <summary>
-        /// Construct the segregate command.
+        ///     Construct the segregate command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         public CmdSegregate(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Net;
@@ -32,27 +33,27 @@ using Encog.Util.Time;
 namespace Encog.App.Quant.Loader.Yahoo
 {
     /// <summary>
-    /// A loader, that will pull basic EOD data from YahooFinance.
+    ///     A loader, that will pull basic EOD data from YahooFinance.
     /// </summary>
     public class YahooDownload
     {
         /// <summary>
-        /// The DJIA index.
+        ///     The DJIA index.
         /// </summary>
         public const String IndexDjia = "^dji";
 
         /// <summary>
-        /// The SP500 index.
+        ///     The SP500 index.
         /// </summary>
         public const String IndexSp500 = "^gspc";
 
         /// <summary>
-        /// The NASDAQ index.
+        ///     The NASDAQ index.
         /// </summary>
         public const String IndexNasdaq = "^ixic";
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public YahooDownload()
         {
@@ -60,21 +61,21 @@ namespace Encog.App.Quant.Loader.Yahoo
         }
 
         /// <summary>
-        /// The percision.
+        ///     The percision.
         /// </summary>
         public int Precision { get; set; }
 
 
         /// <summary>
-        /// This method builds a URL to load data from Yahoo Finance for a neural
-        /// network to train with.
+        ///     This method builds a URL to load data from Yahoo Finance for a neural
+        ///     network to train with.
         /// </summary>
         /// <param name="ticker">The ticker symbol to access.</param>
         /// <param name="from">The beginning date.</param>
         /// <param name="to">The ending date.</param>
         /// <returns>The URL to read from</returns>
         private static Uri BuildURL(String ticker, DateTime from,
-                             DateTime to)
+                                    DateTime to)
         {
             // construct the URL
             var mstream = new MemoryStream();
@@ -98,7 +99,7 @@ namespace Encog.App.Quant.Loader.Yahoo
         }
 
         /// <summary>
-        /// Load financial data.
+        ///     Load financial data.
         /// </summary>
         /// <param name="ticker">The ticker symbol.</param>
         /// <param name="output">The output file.</param>
@@ -158,6 +159,6 @@ namespace Encog.App.Quant.Loader.Yahoo
             {
                 throw new QuantError(ex);
             }
-        }        
+        }
     }
 }

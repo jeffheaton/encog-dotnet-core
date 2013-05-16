@@ -20,30 +20,41 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Rules;
-using Encog.ML.Prg.Ext;
-using Encog.ML.Prg.ExpValue;
+
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Rules;
+using Encog.ML.Prg.ExpValue;
+using Encog.ML.Prg.Ext;
 
 namespace Encog.ML.Prg.Train.Rewrite
 {
     /// <summary>
-    /// Basic rewrite rules for boolean expressions.
+    ///     Basic rewrite rules for boolean expressions.
     /// </summary>
     public class RewriteBoolean : IRewriteRule
     {
         /// <summary>
-        /// True, if the value has been rewritten.
+        ///     True, if the value has been rewritten.
         /// </summary>
-        private bool rewritten;
+        private bool _rewritten;
+
+        /// <inheritdoc />
+        public bool Rewrite(IGenome g)
+        {
+            _rewritten = false;
+            var program = (EncogProgram) g;
+            ProgramNode node = program.RootNode;
+            ProgramNode rewrittenRoot = InternalRewrite(node);
+            if (rewrittenRoot != null)
+            {
+                program.RootNode = rewrittenRoot;
+            }
+            return _rewritten;
+        }
 
         /// <summary>
-        /// Returns true, if the specified constant value is a true const. Returns
-        /// false in any other case. 
+        ///     Returns true, if the specified constant value is a true const. Returns
+        ///     false in any other case.
         /// </summary>
         /// <param name="node">The node to check.</param>
         /// <returns>True if the value is a true const.</returns>
@@ -64,8 +75,8 @@ namespace Encog.ML.Prg.Train.Rewrite
         }
 
         /// <summary>
-        /// Returns true, if the specified constant value is a false const. Returns
-        /// false in any other case.
+        ///     Returns true, if the specified constant value is a false const. Returns
+        ///     false in any other case.
         /// </summary>
         /// <param name="node">The node to check.</param>
         /// <returns>True if the value is a false const.</returns>
@@ -85,22 +96,8 @@ namespace Encog.ML.Prg.Train.Rewrite
             return false;
         }
 
-        /// <inheritdoc/>
-        public bool Rewrite(IGenome g)
-        {
-            this.rewritten = false;
-            EncogProgram program = (EncogProgram)g;
-            ProgramNode node = program.RootNode;
-            ProgramNode rewrittenRoot = InternalRewrite(node);
-            if (rewrittenRoot != null)
-            {
-                program.RootNode = rewrittenRoot;
-            }
-            return this.rewritten;
-        }
-
         /// <summary>
-        /// Attempt to rewrite the specified node.
+        ///     Attempt to rewrite the specified node.
         /// </summary>
         /// <param name="parent">The node to attempt to rewrite.</param>
         /// <returns>The rewritten node, or the original node, if no change was made.</returns>
@@ -113,21 +110,21 @@ namespace Encog.ML.Prg.Train.Rewrite
             // try children
             for (int i = 0; i < rewrittenParent.ChildNodes.Count; i++)
             {
-                ProgramNode childNode = (ProgramNode)rewrittenParent.ChildNodes[i];
+                var childNode = (ProgramNode) rewrittenParent.ChildNodes[i];
                 ProgramNode rewriteChild = InternalRewrite(childNode);
                 if (childNode != rewriteChild)
                 {
                     rewrittenParent.ChildNodes.RemoveAt(i);
                     rewrittenParent.ChildNodes.Insert(i, rewriteChild);
-                    this.rewritten = true;
+                    _rewritten = true;
                 }
             }
 
             return rewrittenParent;
         }
-        
+
         /// <summary>
-        /// Try to rewrite true and true, false and false.
+        ///     Try to rewrite true and true, false and false.
         /// </summary>
         /// <param name="parent">The node to attempt to rewrite.</param>
         /// <returns>The rewritten node, or the original node if not rewritten.</returns>
@@ -139,16 +136,16 @@ namespace Encog.ML.Prg.Train.Rewrite
                 ProgramNode child2 = parent.GetChildNode(1);
 
                 if (IsTrue(child1)
-                        && child2.Template != StandardExtensions.EXTENSION_CONST_SUPPORT)
+                    && child2.Template != StandardExtensions.EXTENSION_CONST_SUPPORT)
                 {
-                    this.rewritten = true;
+                    _rewritten = true;
                     return child2;
                 }
 
                 if (IsTrue(child2)
-                        && child1.Template != StandardExtensions.EXTENSION_CONST_SUPPORT)
+                    && child1.Template != StandardExtensions.EXTENSION_CONST_SUPPORT)
                 {
-                    this.rewritten = true;
+                    _rewritten = true;
                     return child1;
                 }
             }

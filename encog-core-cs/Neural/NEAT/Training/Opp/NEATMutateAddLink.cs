@@ -20,10 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Encog.MathUtil.Randomize;
 using Encog.ML.EA.Genome;
 
@@ -56,14 +53,14 @@ namespace Encog.Neural.NEAT.Training.Opp
         public override void PerformOperation(EncogRandom rnd, IGenome[] parents, int parentIndex,
                 IGenome[] offspring, int offspringIndex)
         {
-            int countTrysToAddLink = this.Owner.MaxTries;
+            int countTrysToAddLink = Owner.MaxTries;
 
-            NEATGenome target = this.ObtainGenome(parents, parentIndex, offspring,
+            NEATGenome target = ObtainGenome(parents, parentIndex, offspring,
                     offspringIndex);
 
             // the link will be between these two neurons
-            long neuron1ID = -1;
-            long neuron2ID = -1;
+            long neuron1Id = -1;
+            long neuron2Id = -1;
 
             // try to add a link
             while ((countTrysToAddLink--) > 0)
@@ -88,21 +85,21 @@ namespace Encog.Neural.NEAT.Training.Opp
                     if (((NEATPopulation)Owner.Population).ActivationCycles != 1
                             || neuron1.NeuronType != NEATNeuronType.Output)
                     {
-                        neuron1ID = neuron1.Id;
-                        neuron2ID = neuron2.Id;
+                        neuron1Id = neuron1.Id;
+                        neuron2Id = neuron2.Id;
                         break;
                     }
                 }
             }
 
             // did we fail to find a link
-            if ((neuron1ID < 0) || (neuron2ID < 0))
+            if ((neuron1Id < 0) || (neuron2Id < 0))
             {
                 return;
             }
 
             double r = ((NEATPopulation)target.Population).WeightRange;
-            CreateLink(target, neuron1ID, neuron2ID,
+            CreateLink(target, neuron1Id, neuron2Id,
                     RangeRandomizer.Randomize(rnd, -r, r));
             target.SortGenes();
         }

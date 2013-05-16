@@ -5,7 +5,7 @@
 // Copyright 2008-2013 Heaton Research, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use  file except in compliance with the License.
 // You may obtain a copy of the License at
 //
 //  http://www.apache.org/licenses/LICENSE-2.0
@@ -21,9 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Population;
 using Encog.ML;
 using Encog.Util.Identity;
@@ -42,7 +39,7 @@ using Encog.MathUtil.Randomize;
 namespace Encog.Neural.NEAT
 {
     /// <summary>
-    /// A population for a NEAT or HyperNEAT system. This population holds the
+    /// A population for a NEAT or HyperNEAT system.  population holds the
     /// genomes, substrate and other values for a NEAT or HyperNEAT network.
     /// 
     /// NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm for the
@@ -60,38 +57,39 @@ namespace Encog.Neural.NEAT
     /// Regularities
     /// 
     /// Automatic feature selection in neuroevolution
+    /// </summary>
     [Serializable]
     public class NEATPopulation : BasicPopulation, IMLError, IMLRegression
     {
         /// <summary>
         /// The default survival rate.
         /// </summary>
-        public const double DEFAULT_SURVIVAL_RATE = 0.2;
+        public const double DefaultSurvivalRate = 0.2;
 
         /// <summary>
         /// The activation function to use.
         /// </summary>
-        public const String PROPERTY_NEAT_ACTIVATION = "neatAct";
+        public const String PropertyNEATActivation = "neatAct";
 
         /// <summary>
         /// Property tag for the population size.
         /// </summary>
-        public const String PROPERTY_POPULATION_SIZE = "populationSize";
+        public const String PropertyPopulationSize = "populationSize";
 
         /// <summary>
         /// Property tag for the survival rate.
         /// </summary>
-        public const String PROPERTY_SURVIVAL_RATE = "survivalRate";
+        public const String PropertySurvivalRate = "survivalRate";
 
         /// <summary>
         /// Default number of activation cycles.
         /// </summary>
-        public const int DEFAULT_CYCLES = 4;
+        public const int DefaultCycles = 4;
 
         /// <summary>
         /// Property to hold the number of cycles.
         /// </summary>
-        public const String PROPERTY_CYCLES = "cycles";
+        public const String PropertyCycles = "cycles";
 
         /// <summary>
         /// Change the weight, do not allow the weight to go out of the weight range.
@@ -106,34 +104,31 @@ namespace Encog.Neural.NEAT
             {
                 return -weightRange;
             }
-            else if (w > weightRange)
+            if (w > weightRange)
             {
                 return weightRange;
             }
-            else
-            {
-                return w;
-            }
+            return w;
         }
 
         /// <summary>
-        /// The number of activation cycles that the networks produced by this
+        /// The number of activation cycles that the networks produced by 
         /// population will use.
         /// </summary>
-        private int activationCycles = NEATPopulation.DEFAULT_CYCLES;
+        private int _activationCycles = NEATPopulation.DefaultCycles;
 
         /// <summary>
         /// Generate gene id's.
         /// </summary>
-        private IGenerateID geneIDGenerate = new BasicGenerateID();
+        private readonly IGenerateID _geneIdGenerate = new BasicGenerateID();
 
         /// <summary>
         /// Generate innovation id's.
         /// </summary>
-        private IGenerateID innovationIDGenerate = new BasicGenerateID();
+        private readonly IGenerateID _innovationIdGenerate = new BasicGenerateID();
 
         /// <summary>
-        /// A list of innovations, or null if this feature is not being used.
+        /// A list of innovations, or null if  feature is not being used.
         /// </summary>
         public NEATInnovationList Innovations { get; set; }
 
@@ -144,26 +139,26 @@ namespace Encog.Neural.NEAT
 
         /// <summary>
         /// The best genome that we've currently decoded into the bestNetwork
-        /// property. If this value changes to point to a new genome reference then
+        /// property. If  value changes to point to a new genome reference then
         /// the phenome will need to be recalculated.
         /// </summary>
-        private IGenome cachedBestGenome;
+        private IGenome _cachedBestGenome;
 
         /// <summary>
-        /// The best network. If the population is used as an MLMethod, then this
+        /// The best network. If the population is used as an MLMethod, then 
         /// network will represent.
         /// </summary>
-        private NEATNetwork bestNetwork;
+        private NEATNetwork _bestNetwork;
 
         /// <summary>
         /// The number of input units. All members of the population must agree with
-        /// this number.
+        ///  number.
         /// </summary>
         public int InputCount { get; set; }
 
         /// <summary>
         /// The number of output units. All members of the population must agree with
-        /// this number.
+        ///  number.
         /// </summary>
         public int OutputCount { get; set; }
 
@@ -173,14 +168,14 @@ namespace Encog.Neural.NEAT
         public double SurvivalRate { get; set; }
 
         /// <summary>
-        /// The substrate, if this is a hyperneat network.
+        /// The substrate, if  is a hyperneat network.
         /// </summary>
         public Substrate CurrentSubstrate { get; set; }
 
         /// <summary>
         /// The activation functions that we can choose from.
         /// </summary>
-        private ChooseObject<IActivationFunction> activationFunctions = new ChooseObject<IActivationFunction>();
+        private readonly ChooseObject<IActivationFunction> _activationFunctions = new ChooseObject<IActivationFunction>();
 
         /// <summary>
         /// The CODEC used to decode the NEAT genomes into networks. Different
@@ -204,7 +199,7 @@ namespace Encog.Neural.NEAT
         /// </summary>
         public NEATPopulation()
         {
-            SurvivalRate = NEATPopulation.DEFAULT_SURVIVAL_RATE;
+            SurvivalRate = DefaultSurvivalRate;
             WeightRange = 5;
             InitialConnectionDensity = 0.1;
             RandomNumberFactory = EncogFramework.Instance
@@ -212,7 +207,7 @@ namespace Encog.Neural.NEAT
         }
 
         /// <summary>
-        /// Construct a starting NEAT population. This does not generate the initial
+        /// Construct a starting NEAT population.  does not generate the initial
         /// random population of genomes.
         /// </summary>
         /// <param name="inputCount">The input neuron count.</param>
@@ -223,7 +218,7 @@ namespace Encog.Neural.NEAT
             : base(populationSize, null)
         {
 
-            SurvivalRate = NEATPopulation.DEFAULT_SURVIVAL_RATE;
+            SurvivalRate = DefaultSurvivalRate;
             WeightRange = 5;
             InitialConnectionDensity = 0.1;
             RandomNumberFactory = EncogFramework.Instance
@@ -243,7 +238,7 @@ namespace Encog.Neural.NEAT
         }
 
         /// <summary>
-        /// Construct a starting HyperNEAT population. This does not generate the
+        /// Construct a starting HyperNEAT population.  does not generate the
         /// initial random population of genomes.
         /// </summary>
         /// <param name="theSubstrate">The substrate ID.</param>
@@ -251,7 +246,7 @@ namespace Encog.Neural.NEAT
         public NEATPopulation(Substrate theSubstrate, int populationSize)
             : base(populationSize, new FactorHyperNEATGenome())
         {
-            SurvivalRate = NEATPopulation.DEFAULT_SURVIVAL_RATE;
+            SurvivalRate = DefaultSurvivalRate;
             WeightRange = 5;
             InitialConnectionDensity = 0.1;
             RandomNumberFactory = EncogFramework.Instance
@@ -260,39 +255,39 @@ namespace Encog.Neural.NEAT
             CurrentSubstrate = theSubstrate;
             InputCount = 6;
             OutputCount = 2;
-            HyperNEATGenome.BuildCPPNActivationFunctions(this.activationFunctions);
+            HyperNEATGenome.BuildCPPNActivationFunctions(_activationFunctions);
         }
 
         /// <summary>
         /// A newly generated gene id.
         /// </summary>
         /// <returns>A newly generated gene id.</returns>
-        public long AssignGeneID()
+        public long AssignGeneId()
         {
-            return this.geneIDGenerate.Generate();
+            return _geneIdGenerate.Generate();
         }
 
         /// <summary>
         /// Assign an innovation id.
         /// </summary>
         /// <returns>A newly generated innovation id.</returns>
-        public long AssignInnovationID()
+        public long AssignInnovationId()
         {
-            return this.innovationIDGenerate.Generate();
+            return _innovationIdGenerate.Generate();
         }
 
         /// <inheritdoc/>
         public double CalculateError(IMLDataSet data)
         {
             UpdateBestNetwork();
-            return this.bestNetwork.CalculateError(data);
+            return _bestNetwork.CalculateError(data);
         }
 
         /// <inheritdoc/>
         public IMLData Compute(IMLData input)
         {
             UpdateBestNetwork();
-            return this.bestNetwork.Compute(input);
+            return _bestNetwork.Compute(input);
         }
 
         /// <summary>
@@ -302,11 +297,11 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.activationCycles;
+                return _activationCycles;
             }
             set
             {
-                this.activationCycles = value;
+                _activationCycles = value;
             }
         }
 
@@ -317,7 +312,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.activationFunctions;
+                return _activationFunctions;
             }
         }
 
@@ -325,11 +320,11 @@ namespace Encog.Neural.NEAT
         /// <summary>
         /// Generate a gene id.
         /// </summary>
-        public IGenerateID GeneIDGenerate
+        public IGenerateID GeneIdGenerate
         {
             get
             {
-                return this.geneIDGenerate;
+                return _geneIdGenerate;
             }
         }
 
@@ -354,12 +349,12 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.innovationIDGenerate;
+                return _innovationIdGenerate;
             }
         }
 
         /// <summary>
-        /// Returns true if this is a hyperneat population.
+        /// Returns true if  is a hyperneat population.
         /// </summary>
         public bool IsHyperNEAT
         {
@@ -390,7 +385,7 @@ namespace Encog.Neural.NEAT
             Species.Clear();
 
             // reset counters
-            GeneIDGenerate.CurrentID = 1;
+            GeneIdGenerate.CurrentID = 1;
             InnovationIDGenerate.CurrentID = 1;
 
             EncogRandom rnd = RandomNumberFactory.Factor();
@@ -402,7 +397,7 @@ namespace Encog.Neural.NEAT
             // create the initial population
             for (int i = 0; i < PopulationSize; i++)
             {
-                NEATGenome genome = GenomeFactory.Factor(rnd, this,
+                NEATGenome genome = GenomeFactory.Factor(rnd, this ,
                         InputCount, OutputCount,
                         InitialConnectionDensity);
                 defaultSpecies.Add(genome);
@@ -411,20 +406,20 @@ namespace Encog.Neural.NEAT
             Species.Add(defaultSpecies);
 
             // create initial innovations
-            Innovations = new NEATInnovationList(this);
+            Innovations = new NEATInnovationList();
         }
 
         /// <summary>
-        /// Specify to use a single activation function. This is typically the case
+        /// Specify to use a single activation function.  is typically the case
         /// for NEAT, but not for HyperNEAT.
         /// </summary>
         public IActivationFunction NEATActivationFunction
         {
             set
             {
-                this.activationFunctions.Clear();
-                this.activationFunctions.Add(1.0, value);
-                this.activationFunctions.FinalizeStructure();
+                _activationFunctions.Clear();
+                _activationFunctions.Add(1.0, value);
+                _activationFunctions.FinalizeStructure();
             }
         }
 
@@ -434,10 +429,10 @@ namespace Encog.Neural.NEAT
         /// </summary>
         private void UpdateBestNetwork()
         {
-            if (BestGenome != this.cachedBestGenome)
+            if (BestGenome != _cachedBestGenome)
             {
-                this.cachedBestGenome = BestGenome;
-                this.bestNetwork = (NEATNetwork)CODEC.Decode(BestGenome);
+                _cachedBestGenome = BestGenome;
+                _bestNetwork = (NEATNetwork)CODEC.Decode(BestGenome);
             }
         }
     }

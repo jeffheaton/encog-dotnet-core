@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,27 +31,23 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.Util
 {
     /// <summary>
-    /// Utility class to help deal with CSV headers.
+    ///     Utility class to help deal with CSV headers.
     /// </summary>
-    ///
     public class CSVHeaders
     {
         /// <summary>
-        /// The column mapping, maps column name to column index.
+        ///     The column mapping, maps column name to column index.
         /// </summary>
-        ///
         private readonly IDictionary<String, Int32> _columnMapping;
 
         /// <summary>
-        /// The header list.
+        ///     The header list.
         /// </summary>
-        ///
         private readonly IList<String> _headerList;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="filename">The filename.</param>
         /// <param name="headers">False if headers are not extended.</param>
         /// <param name="format">The CSV format.</param>
@@ -93,9 +90,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
-        ///
         /// <param name="inputHeadings">The input headings.</param>
         public CSVHeaders(IEnumerable<string> inputHeadings)
         {
@@ -108,7 +104,7 @@ namespace Encog.App.Analyst.Util
             }
             Init();
         }
-        
+
         /// <value>The headers.</value>
         public IList<String> Headers
         {
@@ -116,9 +112,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Parse a timeslice from a header such as (t-1).
+        ///     Parse a timeslice from a header such as (t-1).
         /// </summary>
-        ///
         /// <param name="name">The column name.</param>
         /// <returns>The timeslice.</returns>
         public static int ParseTimeSlice(String name)
@@ -146,9 +141,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Tag a column with part # and timeslice.
+        ///     Tag a column with part # and timeslice.
         /// </summary>
-        ///
         /// <param name="name">The name of the column.</param>
         /// <param name="part">The part #.</param>
         /// <param name="timeSlice">The timeslice.</param>
@@ -193,9 +187,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Find the specified column.
+        ///     Find the specified column.
         /// </summary>
-        ///
         /// <param name="name">The column name.</param>
         /// <returns>The index of the column.</returns>
         public int Find(String name)
@@ -211,9 +204,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Get the base header, strip any (...).
+        ///     Get the base header, strip any (...).
         /// </summary>
-        ///
         /// <param name="index">The index of the header.</param>
         /// <returns>The base header.</returns>
         public String GetBaseHeader(int index)
@@ -230,9 +222,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Get the specified header.
+        ///     Get the specified header.
         /// </summary>
-        ///
         /// <param name="index">The index of the header to get.</param>
         /// <returns>The header value.</returns>
         public String GetHeader(int index)
@@ -242,9 +233,8 @@ namespace Encog.App.Analyst.Util
 
 
         /// <summary>
-        /// Get the timeslice for the specified index.
+        ///     Get the timeslice for the specified index.
         /// </summary>
-        ///
         /// <param name="currentIndex">The index to get the time slice for.</param>
         /// <returns>The timeslice.</returns>
         public int GetSlice(int currentIndex)
@@ -287,9 +277,8 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Setup the column mapping and validate.
+        ///     Setup the column mapping and validate.
         /// </summary>
-        ///
         private void Init()
         {
             int index = 0;
@@ -310,17 +299,18 @@ namespace Encog.App.Analyst.Util
         }
 
         /// <summary>
-        /// Validate that two columns do not have the same name.  This is an error.
+        ///     Validate that two columns do not have the same name.  This is an error.
         /// </summary>
-        ///
         private void ValidateSameName()
         {
             for (int i = 0; i < _headerList.Count; i++)
             {
-                var i1 = i;
+                int i1 = i;
                 int i2 = i;
                 if (_headerList.Count > i2)
-                    if (_headerList.Where((t, j) => i1 != j).Any(t => _headerList[i2].Equals(t, StringComparison.InvariantCultureIgnoreCase)))
+                    if (
+                        _headerList.Where((t, j) => i1 != j)
+                                   .Any(t => _headerList[i2].Equals(t, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         throw new AnalystError("Multiple fields named: "
                                                + _headerList[i]);

@@ -20,21 +20,19 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Exceptions;
 
 namespace Encog.ML.Prg.ExpValue
 {
     /// <summary>
-    /// A division by zero.
+    ///     A division by zero.
     /// </summary>
     public class DivisionByZeroError : EARuntimeError
     {
         /// <summary>
-        /// Construct a message exception.
+        ///     Construct a message exception.
         /// </summary>
         /// <param name="str">The message.</param>
         public DivisionByZeroError(String str)
@@ -43,7 +41,7 @@ namespace Encog.ML.Prg.ExpValue
         }
 
         /// <summary>
-        /// Pass on an exception.
+        ///     Pass on an exception.
         /// </summary>
         /// <param name="e">The other exception.</param>
         public DivisionByZeroError(Exception e)
@@ -52,7 +50,7 @@ namespace Encog.ML.Prg.ExpValue
         }
 
         /// <summary>
-        /// Pass on an exception.
+        ///     Pass on an exception.
         /// </summary>
         /// <param name="msg">The message.</param>
         /// <param name="e">The exception.</param>
@@ -62,11 +60,9 @@ namespace Encog.ML.Prg.ExpValue
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public DivisionByZeroError() : base("")
         {
         }
- 
     }
 }

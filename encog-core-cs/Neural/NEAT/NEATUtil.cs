@@ -20,10 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Encog.ML.EA.Train;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.NEAT.Training.Species;
@@ -65,7 +62,7 @@ namespace Encog.Neural.NEAT
             ICalculateScore calculateScore, int inputCount,
             int outputCount, int populationSize)
         {
-            NEATPopulation pop = new NEATPopulation(inputCount, outputCount,
+            var pop = new NEATPopulation(inputCount, outputCount,
                     populationSize);
             pop.Reset();
             return ConstructNEATTrainer(pop, calculateScore);
@@ -80,11 +77,10 @@ namespace Encog.Neural.NEAT
         public static TrainEA ConstructNEATTrainer(NEATPopulation population,
                 ICalculateScore calculateScore)
         {
-            TrainEA result = new TrainEA(population, calculateScore);
-            result.Speciation = new OriginalNEATSpeciation();
+            var result = new TrainEA(population, calculateScore) {Speciation = new OriginalNEATSpeciation()};
 
             result.Selection = new TruncationSelection(result, 0.3);
-            CompoundOperator weightMutation = new CompoundOperator();
+            var weightMutation = new CompoundOperator();
             weightMutation.Components.Add(
                     0.1125,
                     new NEATMutateWeights(new SelectFixed(1),

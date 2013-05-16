@@ -20,43 +20,42 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 namespace Encog.App.Analyst.Script.Prop
 {
     /// <summary>
-    /// The property types supported for Encog Analyst.
+    ///     The property types supported for Encog Analyst.
     /// </summary>
-    ///
     public enum PropertyType
     {
         /// <summary>
-        /// A boolean property.
+        ///     A boolean property.
         /// </summary>
-        ///
         TypeBoolean,
+
         /// <summary>
-        /// A string property.
+        ///     A string property.
         /// </summary>
-        ///
         TypeString,
+
         /// <summary>
-        /// An integer property.
+        ///     An integer property.
         /// </summary>
-        ///
         TypeInteger,
+
         /// <summary>
-        /// A double property.
+        ///     A double property.
         /// </summary>
-        ///
         TypeDouble,
+
         /// <summary>
-        /// A list.
+        ///     A list.
         /// </summary>
-        ///
         TypeListString,
+
         /// <summary>
-        /// A format.
+        ///     A format.
         /// </summary>
-        ///
         TypeFormat
     }
 }

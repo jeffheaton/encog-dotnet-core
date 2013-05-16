@@ -20,59 +20,52 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.App.Analyst.Script;
 using Encog.App.Analyst.Script.Prop;
-using Encog.Util.CSV;
 
 namespace Encog.App.Analyst.Analyze
 {
     /// <summary>
-    /// This class represents a field that the Encog Analyst is in the process of
-    /// analyzing. This class is used to track statistical information on the field
-    /// that will help the Encog analyst determine what type of field this is, and
-    /// how to normalize it.
+    ///     This class represents a field that the Encog Analyst is in the process of
+    ///     analyzing. This class is used to track statistical information on the field
+    ///     that will help the Encog analyst determine what type of field this is, and
+    ///     how to normalize it.
     /// </summary>
-    ///
     public class AnalyzedField : DataField
     {
         /// <summary>
-        /// A mapping between the class names that the class items.
+        ///     A mapping between the class names that the class items.
         /// </summary>
-        ///
         private readonly IDictionary<String, AnalystClassItem> _classMap;
 
         /// <summary>
-        /// The analyst script that the results are saved to.
+        ///     The analyst script that the results are saved to.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// The total for standard deviation calculation.
+        ///     The total for standard deviation calculation.
         /// </summary>
-        ///
         private double _devTotal;
 
         /// <summary>
-        /// The number of instances of this field.
+        ///     The number of instances of this field.
         /// </summary>
-        ///
         private int _instances;
 
         /// <summary>
-        /// Tge sum of all values of this field.
+        ///     Tge sum of all values of this field.
         /// </summary>
-        ///
         private double _total;
 
         /// <summary>
-        /// Construct an analyzed field.
+        ///     Construct an analyzed field.
         /// </summary>
-        ///
         /// <param name="theScript">The script being analyzed.</param>
         /// <param name="name">The name of the field.</param>
         public AnalyzedField(AnalystScript theScript, String name) : base(name)
@@ -83,13 +76,13 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Get the class members.
+        ///     Get the class members.
         /// </summary>
         public IList<AnalystClassItem> AnalyzedClassMembers
         {
             get
             {
-                var sorted = _classMap.Keys.ToList();
+                List<string> sorted = _classMap.Keys.ToList();
 
                 sorted.Sort();
 
@@ -98,9 +91,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Perform a pass one analysis of this field.
+        ///     Perform a pass one analysis of this field.
         /// </summary>
-        ///
         /// <param name="str">The current value.</param>
         public void Analyze1(String v)
         {
@@ -119,7 +111,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 try
                 {
-                    double d = this._script.DetermineFormat().Parse(str);
+                    double d = _script.DetermineFormat().Parse(str);
                     Max = Math.Max(d, Max);
                     Min = Math.Min(d, Min);
                     _total += d;
@@ -188,9 +180,8 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Perform a pass two analysis of this field.
+        ///     Perform a pass two analysis of this field.
         /// </summary>
-        ///
         /// <param name="str">The current value.</param>
         public void Analyze2(String str)
         {
@@ -203,16 +194,15 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-                    double d = this._script.DetermineFormat().Parse(str) - Mean;
-                    _devTotal += d * d;
+                    double d = _script.DetermineFormat().Parse(str) - Mean;
+                    _devTotal += d*d;
                 }
             }
         }
 
         /// <summary>
-        /// Complete pass 1.
+        ///     Complete pass 1.
         /// </summary>
-        ///
         public void CompletePass1()
         {
             _devTotal = 0;
@@ -228,33 +218,31 @@ namespace Encog.App.Analyst.Analyze
         }
 
         /// <summary>
-        /// Complete pass 2.
+        ///     Complete pass 2.
         /// </summary>
-        ///
         public void CompletePass2()
         {
             StandardDeviation = Math.Sqrt(_devTotal/_instances);
         }
 
         /// <summary>
-        /// Finalize the field, and create a DataField.
+        ///     Finalize the field, and create a DataField.
         /// </summary>
-        ///
         /// <returns>The new DataField.</returns>
         public DataField FinalizeField()
         {
             var result = new DataField(Name)
-                             {
-                                 Name = Name,
-                                 Min = Min,
-                                 Max = Max,
-                                 Mean = Mean,
-                                 StandardDeviation = StandardDeviation,
-                                 Integer = Integer,
-                                 Real = Real,
-                                 Class = Class,
-                                 Complete = Complete
-                             };
+                {
+                    Name = Name,
+                    Min = Min,
+                    Max = Max,
+                    Mean = Mean,
+                    StandardDeviation = StandardDeviation,
+                    Integer = Integer,
+                    Real = Real,
+                    Class = Class,
+                    Complete = Complete
+                };
 
             // if max and min are the same, we are dealing with a zero-sized range,
             // which will cause other issues.  This is caused by ever number in the
@@ -282,7 +270,7 @@ namespace Encog.App.Analyst.Analyze
         }
 
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

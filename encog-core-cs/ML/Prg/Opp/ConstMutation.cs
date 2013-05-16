@@ -20,58 +20,78 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML.EA.Opp.Selection;
-using Encog.ML.EA.Train;
-using Encog.MathUtil.Randomize;
-using Encog.ML.Prg.Ext;
-using Encog.ML.Prg.ExpValue;
-using Encog.ML.Tree;
+
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Opp;
+using Encog.ML.EA.Train;
+using Encog.ML.Prg.ExpValue;
+using Encog.ML.Prg.Ext;
+using Encog.ML.Tree;
+using Encog.MathUtil.Randomize;
 
 namespace Encog.ML.Prg.Opp
 {
     /// <summary>
-    /// Mutate the constant nodes of an Encog program. This mutation only changes
-    /// values and does not alter the structure.
+    ///     Mutate the constant nodes of an Encog program. This mutation only changes
+    ///     values and does not alter the structure.
     /// </summary>
     public class ConstMutation : IEvolutionaryOperator
     {
         /// <summary>
-        /// The frequency that constant nodes are mutated with.
+        ///     The frequency that constant nodes are mutated with.
         /// </summary>
-        private double frequency;
+        private readonly double _frequency;
 
         /// <summary>
-        /// The sigma value used to generate gaussian random numbers.
+        ///     The sigma value used to generate gaussian random numbers.
         /// </summary>
-        private double sigma;
+        private readonly double _sigma;
 
         /// <summary>
-        /// Construct a const mutator.
+        ///     Construct a const mutator.
         /// </summary>
         /// <param name="theContext">The program context.</param>
         /// <param name="theFrequency">The frequency of mutation.</param>
         /// <param name="theSigma">The sigma to use for mutation.</param>
         public ConstMutation(EncogProgramContext theContext,
-                double theFrequency, double theSigma)
+                             double theFrequency, double theSigma)
         {
-            this.frequency = theFrequency;
-            this.sigma = theSigma;
+            _frequency = theFrequency;
+            _sigma = theSigma;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public void Init(IEvolutionaryAlgorithm theOwner)
         {
+        }
 
+        /// <inheritdoc />
+        public int OffspringProduced
+        {
+            get { return 1; }
+        }
+
+        /// <inheritdoc />
+        public int ParentsNeeded
+        {
+            get { return 1; }
+        }
+
+        /// <inheritdoc />
+        public void PerformOperation(EncogRandom rnd, IGenome[] parents,
+                                     int parentIndex, IGenome[] offspring,
+                                     int offspringIndex)
+        {
+            var program = (EncogProgram) parents[0];
+            EncogProgramContext context = program.Context;
+            EncogProgram result = context.CloneProgram(program);
+            MutateNode(rnd, result.RootNode);
+            offspring[0] = result;
         }
 
         /// <summary>
-        /// Called for each node in the progrmam. If this is a const node, then
-        /// mutate it according to the frequency and sigma specified.
+        ///     Called for each node in the progrmam. If this is a const node, then
+        ///     mutate it according to the frequency and sigma specified.
         /// </summary>
         /// <param name="rnd">Random number generator.</param>
         /// <param name="node">The node to mutate.</param>
@@ -79,53 +99,23 @@ namespace Encog.ML.Prg.Opp
         {
             if (node.Template == StandardExtensions.EXTENSION_CONST_SUPPORT)
             {
-                if (rnd.NextDouble() < this.frequency)
+                if (rnd.NextDouble() < _frequency)
                 {
                     ExpressionValue v = node.Data[0];
                     if (v.IsFloat)
                     {
-                        double adj = rnd.NextGaussian() * this.sigma;
+                        double adj = rnd.NextGaussian()*_sigma;
                         node.Data[0] = new ExpressionValue(v.ToFloatValue()
-                                + adj);
+                                                           + adj);
                     }
                 }
             }
 
             foreach (ITreeNode n in node.ChildNodes)
             {
-                ProgramNode childNode = (ProgramNode)n;
+                var childNode = (ProgramNode) n;
                 MutateNode(rnd, childNode);
             }
-        }
-
-        /// <inheritdoc/>
-        public int OffspringProduced
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        /// <inheritdoc/>
-        public int ParentsNeeded
-        {
-            get
-            {
-                return 1;
-            }
-        }
-
-        /// <inheritdoc/>
-        public void PerformOperation(EncogRandom rnd, IGenome[] parents,
-                int parentIndex, IGenome[] offspring,
-                int offspringIndex)
-        {
-            EncogProgram program = (EncogProgram)parents[0];
-            EncogProgramContext context = program.Context;
-            EncogProgram result = context.CloneProgram(program);
-            MutateNode(rnd, result.RootNode);
-            offspring[0] = result;
         }
     }
 }

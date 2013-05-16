@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Text;
 using Encog.App.Analyst.Util;
@@ -28,33 +29,28 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.Script.Prop
 {
     /// <summary>
-    /// A property entry for the Encog Analyst. Properties have a name and section.
+    ///     A property entry for the Encog Analyst. Properties have a name and section.
     /// </summary>
-    ///
     public class PropertyEntry : IComparable<PropertyEntry>
     {
         /// <summary>
-        /// The type of property.
+        ///     The type of property.
         /// </summary>
-        ///
         private readonly PropertyType _entryType;
 
         /// <summary>
-        /// The name of the property.
+        ///     The name of the property.
         /// </summary>
-        ///
         private readonly String _name;
 
         /// <summary>
-        /// The section of the property.
+        ///     The section of the property.
         /// </summary>
-        ///
         private readonly String _section;
 
         /// <summary>
-        /// Construct a property entry.
+        ///     Construct a property entry.
         /// </summary>
-        ///
         /// <param name="theEntryType">The entry type.</param>
         /// <param name="theName">The name of the property.</param>
         /// <param name="theSection">The section of the property.</param>
@@ -97,9 +93,7 @@ namespace Encog.App.Analyst.Script.Prop
         #region IComparable<PropertyEntry> Members
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public int CompareTo(PropertyEntry o)
         {
             return String.CompareOrdinal(_name, o._name);
@@ -108,9 +102,8 @@ namespace Encog.App.Analyst.Script.Prop
         #endregion
 
         /// <summary>
-        /// Put a property in dot form, which is "section.subsection.name".
+        ///     Put a property in dot form, which is "section.subsection.name".
         /// </summary>
-        ///
         /// <param name="section">The section.</param>
         /// <param name="subSection">The subsection.</param>
         /// <param name="name">The name.</param>
@@ -129,9 +122,7 @@ namespace Encog.App.Analyst.Script.Prop
 
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");
@@ -145,9 +136,8 @@ namespace Encog.App.Analyst.Script.Prop
         }
 
         /// <summary>
-        /// Validate the specified property.
+        ///     Validate the specified property.
         /// </summary>
-        ///
         /// <param name="theSection">The section.</param>
         /// <param name="subSection">The sub section.</param>
         /// <param name="theName">The name of the property.</param>
@@ -187,7 +177,7 @@ namespace Encog.App.Analyst.Script.Prop
                             var result = new StringBuilder();
                             result.Append("Invalid file format for ");
                             result.Append(DotForm(_section, subSection,
-                                                    _name));
+                                                  _name));
                             result.Append(", value is ");
                             result.Append(v);
                             result.Append(".");
@@ -205,7 +195,7 @@ namespace Encog.App.Analyst.Script.Prop
                         throw new AnalystError("Unsupported property type.");
                 }
             }
-            catch (FormatException )
+            catch (FormatException)
             {
                 var result = new StringBuilder();
                 result.Append("Illegal value for ");

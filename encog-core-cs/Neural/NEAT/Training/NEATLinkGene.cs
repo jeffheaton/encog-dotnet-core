@@ -21,8 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Encog.Neural.NEAT.Training
@@ -53,12 +51,12 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// The from neuron id.
         /// </summary>
-        public long FromNeuronID { get; set; }
+        public long FromNeuronId { get; set; }
 
         /// <summary>
         /// The to neuron id.
         /// </summary>
-        public long ToNeuronID { get; set; }
+        public long ToNeuronId { get; set; }
 
         /// <summary>
         /// The weight of this link.
@@ -81,23 +79,27 @@ namespace Encog.Neural.NEAT.Training
         /// <summary>
         /// Construct a NEAT link gene.
         /// </summary>
-        /// <param name="fromNeuronID">The source neuron.</param>
-        /// <param name="toNeuronID">The target neuron.</param>
+        /// <param name="fromNeuronId">The source neuron.</param>
+        /// <param name="toNeuronId">The target neuron.</param>
         /// <param name="enabled">Is this link enabled.</param>
-        /// <param name="innovationID">The innovation id.</param>
+        /// <param name="innovationId">The innovation id.</param>
         /// <param name="weight">The weight.</param>
-        public NEATLinkGene(long fromNeuronID, long toNeuronID,
-                bool enabled, long innovationID,
+        public NEATLinkGene(long fromNeuronId, long toNeuronId,
+                bool enabled, long innovationId,
                 double weight)
             : this()
         {
-            FromNeuronID = fromNeuronID;
-            ToNeuronID = toNeuronID;
+            FromNeuronId = fromNeuronId;
+            ToNeuronId = toNeuronId;
             Enabled = enabled;
-            InnovationId = innovationID;
+            InnovationId = innovationId;
             Weight = weight;
         }
 
+        /// <summary>
+        /// Construct from another gene.
+        /// </summary>
+        /// <param name="other">The other gene.</param>
         public NEATLinkGene(NEATLinkGene other)
         {
             Copy(other);
@@ -111,24 +113,24 @@ namespace Encog.Neural.NEAT.Training
         {
             NEATLinkGene other = gene;
             Enabled = other.Enabled;
-            FromNeuronID = other.FromNeuronID;
-            ToNeuronID = other.ToNeuronID;
+            FromNeuronId = other.FromNeuronId;
+            ToNeuronId = other.ToNeuronId;
             InnovationId = other.InnovationId;
-            this.Weight = other.Weight;
+            Weight = other.Weight;
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[NEATLinkGene:innov=");
             result.Append(InnovationId);
             result.Append(",enabled=");
             result.Append(Enabled);
             result.Append(",from=");
-            result.Append(this.FromNeuronID);
+            result.Append(FromNeuronId);
             result.Append(",to=");
-            result.Append(this.ToNeuronID);
+            result.Append(ToNeuronId);
             result.Append("]");
             return result.ToString();
         }

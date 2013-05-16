@@ -20,80 +20,144 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Encog.ML.EA.Train;
-using Encog.ML.EA.Sort;
-using Encog.ML.EA.Population;
 using Encog.ML.EA.Genome;
+using Encog.ML.EA.Population;
+using Encog.ML.EA.Sort;
+using Encog.ML.EA.Train;
 using Encog.ML.Genetic;
 
 namespace Encog.ML.EA.Species
 {
     /// <summary>
-    /// Speciate based on threshold. Any genomes with a compatibility score below a
-    /// level will be in the same species.
+    ///     Speciate based on threshold. Any genomes with a compatibility score below a
+    ///     level will be in the same species.
     /// </summary>
     [Serializable]
     public abstract class ThresholdSpeciation : ISpeciation
     {
         /// <summary>
-        /// The training being used.
+        ///     The minimum compatibility that two genes must have to be in the same
+        ///     species.
         /// </summary>
-        private IEvolutionaryAlgorithm owner;
+        private double _compatibilityThreshold = 1.0;
 
         /// <summary>
-        /// The minimum compatibility that two genes must have to be in the same
-        /// species.
+        ///     The maximum number of species. This is just a target. If the number of
+        ///     species goes over this number then the compatibilityThreshold is
+        ///     increased to decrease the number of species.
         /// </summary>
-        private double compatibilityThreshold = 1.0;
+        private int _maxNumberOfSpecies = 40;
 
         /// <summary>
-        /// The maximum number of generations allows with no improvement. After this
-        /// the genomes in this species are not allowed to reproduce or continue.
-        /// This does not apply to top species.
+        ///     The maximum number of generations allows with no improvement. After this
+        ///     the genomes in this species are not allowed to reproduce or continue.
+        ///     This does not apply to top species.
         /// </summary>
-        private int numGensAllowedNoImprovement = 15;
+        private int _numGensAllowedNoImprovement = 15;
 
         /// <summary>
-        /// The maximum number of species. This is just a target. If the number of
-        /// species goes over this number then the compatibilityThreshold is
-        /// increased to decrease the number of species.
+        ///     The training being used.
         /// </summary>
-        private int maxNumberOfSpecies = 40;
+        private IEvolutionaryAlgorithm _owner;
 
         /// <summary>
-        /// The method used to sort the genomes in the species. More desirable
-        /// genomes should come first for later selection.
+        ///     The population.
         /// </summary>
-        private SortGenomesForSpecies sortGenomes;
+        private IPopulation _population;
 
         /// <summary>
-        /// The population.
+        ///     The method used to sort the genomes in the species. More desirable
+        ///     genomes should come first for later selection.
         /// </summary>
-        private IPopulation population;
+        private SortGenomesForSpecies _sortGenomes;
 
         /// <summary>
-        /// Add a genome.
+        ///     The minimum compatibility that two genes must have to be in the same
+        ///     species.
+        /// </summary>
+        public double CompatibilityThreshold
+        {
+            get { return _compatibilityThreshold; }
+            set { _compatibilityThreshold = value; }
+        }
+
+        /// <summary>
+        ///     The maximum number of species. This is just a target. If the number of
+        ///     species goes over this number then the compatibilityThreshold is
+        ///     increased to decrease the number of species.
+        /// </summary>
+        public int MaxNumberOfSpecies
+        {
+            get { return _maxNumberOfSpecies; }
+            set { _maxNumberOfSpecies = value; }
+        }
+
+        /// <summary>
+        ///     The maximum number of generations allows with no improvement. After this
+        ///     the genomes in this species are not allowed to reproduce or continue.
+        ///     This does not apply to top species.
+        /// </summary>
+        public int NumGensAllowedNoImprovement
+        {
+            get { return _numGensAllowedNoImprovement; }
+            set { _numGensAllowedNoImprovement = value; }
+        }
+
+        /// <summary>
+        ///     The owner.
+        /// </summary>
+        public IEvolutionaryAlgorithm Owner
+        {
+            get { return _owner; }
+        }
+
+        /// <summary>
+        ///     The method used to sort the genomes in the species. More desirable
+        ///     genomes should come first for later selection.
+        /// </summary>
+        public SortGenomesForSpecies SortGenomes
+        {
+            get { return _sortGenomes; }
+            set { _sortGenomes = value; }
+        }
+
+        /// <inheritdoc />
+        public void Init(IEvolutionaryAlgorithm theOwner)
+        {
+            _owner = theOwner;
+            _population = theOwner.Population;
+            _sortGenomes = new SortGenomesForSpecies(_owner);
+        }
+
+        /// <inheritdoc />
+        public void PerformSpeciation(IList<IGenome> genomeList)
+        {
+            IList<IGenome> newGenomeList = ResetSpecies(genomeList);
+            SpeciateAndCalculateSpawnLevels(newGenomeList);
+        }
+
+        /// <summary>
+        ///     Add a genome.
         /// </summary>
         /// <param name="species">The species to add to.</param>
         /// <param name="genome">The genome to add.</param>
         public void AddSpeciesMember(ISpecies species, IGenome genome)
         {
-
-            if (this.owner.ValidationMode)
+            if (_owner.ValidationMode)
             {
                 if (species.Members.Contains(genome))
                 {
                     throw new GeneticError("Species already contains genome: "
-                            + genome.ToString());
+                                           + genome);
                 }
             }
 
-            if (this.owner.SelectionComparer.Compare(genome,
-                    species.Leader) < 0)
+            if (_owner.SelectionComparer.Compare(genome,
+                                                species.Leader) < 0)
             {
                 species.BestScore = genome.AdjustedScore;
                 species.GensNoImprovement = 0;
@@ -104,54 +168,53 @@ namespace Encog.ML.EA.Species
         }
 
         /// <summary>
-        /// Adjust the species compatibility threshold. This prevents us from having
-        /// too many species. Dynamically increase or decrease the
-        /// compatibilityThreshold.
+        ///     Adjust the species compatibility threshold. This prevents us from having
+        ///     too many species. Dynamically increase or decrease the
+        ///     compatibilityThreshold.
         /// </summary>
         private void AdjustCompatibilityThreshold()
         {
-
             // has this been disabled (unlimited species)
-            if (this.maxNumberOfSpecies < 1)
+            if (_maxNumberOfSpecies < 1)
             {
                 return;
             }
 
-            double thresholdIncrement = 0.01;
+            const double thresholdIncrement = 0.01;
 
-            if (this.population.Species.Count > this.maxNumberOfSpecies)
+            if (_population.Species.Count > _maxNumberOfSpecies)
             {
-                this.compatibilityThreshold += thresholdIncrement;
+                _compatibilityThreshold += thresholdIncrement;
             }
 
-            else if (this.population.Species.Count < 2)
+            else if (_population.Species.Count < 2)
             {
-                this.compatibilityThreshold -= thresholdIncrement;
+                _compatibilityThreshold -= thresholdIncrement;
             }
         }
 
         /// <summary>
-        /// Divide up the potential offspring by the most fit species. To do this we
-        /// look at the total species score, vs each individual species percent
-        /// contribution to that score.
+        ///     Divide up the potential offspring by the most fit species. To do this we
+        ///     look at the total species score, vs each individual species percent
+        ///     contribution to that score.
         /// </summary>
         /// <param name="speciesCollection">The current species list.</param>
         /// <param name="totalSpeciesScore">The total score over all species.</param>
-        private void DivideByFittestSpecies(IList<ISpecies> speciesCollection,
-                double totalSpeciesScore)
+        private void DivideByFittestSpecies(IEnumerable<ISpecies> speciesCollection,
+                                            double totalSpeciesScore)
         {
             ISpecies bestSpecies = FindBestSpecies();
 
             // loop over all species and calculate its share
-            Object[] speciesArray = speciesCollection.ToArray();
-            foreach (Object element in speciesArray)
+            ISpecies[] speciesArray = speciesCollection.ToArray();
+            foreach (ISpecies element in speciesArray)
             {
-                ISpecies species = (ISpecies)element;
+                var species = element;
                 // calculate the species share based on the percent of the total
                 // species score
-                int share = (int)Math
-                        .Round((species.OffspringShare / totalSpeciesScore)
-                                * this.owner.Population.PopulationSize);
+                var share = (int) Math
+                                      .Round((species.OffspringShare/totalSpeciesScore)
+                                             *_owner.Population.PopulationSize);
 
                 // do not give the best species a zero-share
                 if ((species == bestSpecies) && (share == 0))
@@ -164,10 +227,10 @@ namespace Encog.ML.EA.Species
                 {
                     RemoveSpecies(species);
                 }
-                // if the species has not improved over the specified number of
-                // generations, then remove it.
-                else if ((species.GensNoImprovement > this.numGensAllowedNoImprovement)
-                        && (species != bestSpecies))
+                    // if the species has not improved over the specified number of
+                    // generations, then remove it.
+                else if ((species.GensNoImprovement > _numGensAllowedNoImprovement)
+                         && (species != bestSpecies))
                 {
                     RemoveSpecies(species);
                 }
@@ -175,159 +238,73 @@ namespace Encog.ML.EA.Species
                 {
                     // otherwise assign a share and sort the members.
                     species.OffspringCount = share;
-                    species.Members.Sort(sortGenomes);
+                    species.Members.Sort(_sortGenomes);
                 }
             }
         }
 
         /// <summary>
-        /// Find the best species.
+        ///     Find the best species.
         /// </summary>
         /// <returns>The best species.</returns>
         public ISpecies FindBestSpecies()
         {
-            if (this.owner.BestGenome != null)
+            if (_owner.BestGenome != null)
             {
-                return this.owner.BestGenome.Species;
+                return _owner.BestGenome.Species;
             }
             return null;
         }
 
         /// <summary>
-        /// Attempt to remove a removable species. If the species is the best
-        /// species, then do not remove it. If the species is the last species, don't
-        /// remove it.
+        ///     Attempt to remove a removable species. If the species is the best
+        ///     species, then do not remove it. If the species is the last species, don't
+        ///     remove it.
         /// </summary>
         /// <param name="species">The species to attempt to remove.</param>
         public void RemoveSpecies(ISpecies species)
         {
             if (species != FindBestSpecies())
             {
-                if (population.Species.Count > 1)
+                if (_population.Species.Count > 1)
                 {
-                    this.population.Species.Remove(species);
+                    _population.Species.Remove(species);
                 }
             }
         }
 
         /// <summary>
-        /// If no species has a good score then divide the potential offspring amount
-        /// all species evenly.
+        ///     If no species has a good score then divide the potential offspring amount
+        ///     all species evenly.
         /// </summary>
         /// <param name="speciesCollection">The current set of species.</param>
         private void DivideEven(IList<ISpecies> speciesCollection)
         {
-            double ratio = 1.0 / speciesCollection.Count;
+            double ratio = 1.0/speciesCollection.Count;
             foreach (ISpecies species in speciesCollection)
             {
-                int share = (int)Math.Round(ratio
-                        * this.owner.Population.PopulationSize);
+                var share = (int) Math.Round(ratio
+                                             *_owner.Population.PopulationSize);
                 species.OffspringCount = share;
             }
         }
 
         /// <summary>
-        /// The minimum compatibility that two genes must have to be in the same
-        /// species.
-        /// </summary>
-        public double CompatibilityThreshold
-        {
-            get
-            {
-                return this.compatibilityThreshold;
-            }
-            set
-            {
-                this.compatibilityThreshold = value;
-            }
-        }
-
-        /// <summary>
-        /// The maximum number of species. This is just a target. If the number of
-        /// species goes over this number then the compatibilityThreshold is
-        /// increased to decrease the number of species.
-        /// </summary>
-        public int MaxNumberOfSpecies
-        {
-            get
-            {
-                return this.maxNumberOfSpecies;
-            }
-            set
-            {
-                this.maxNumberOfSpecies = value;
-            }
-        }
-
-        /// <summary>
-        /// The maximum number of generations allows with no improvement. After this
-        /// the genomes in this species are not allowed to reproduce or continue.
-        /// This does not apply to top species.
-        /// </summary>
-        public int NumGensAllowedNoImprovement
-        {
-            get
-            {
-                return this.numGensAllowedNoImprovement;
-            }
-            set
-            {
-                this.numGensAllowedNoImprovement = value;
-            }
-        }
-
-        /// <summary>
-        /// The owner.
-        /// </summary>
-        public IEvolutionaryAlgorithm Owner
-        {
-            get
-            {
-                return this.owner;
-            }
-        }
-
-        /// <summary>
-        /// The method used to sort the genomes in the species. More desirable
-        /// genomes should come first for later selection.
-        /// </summary>
-        public SortGenomesForSpecies SortGenomes
-        {
-            get
-            {
-                return this.sortGenomes;
-            }
-            set
-            {
-                this.sortGenomes = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Init(IEvolutionaryAlgorithm theOwner)
-        {
-            this.owner = theOwner;
-            this.population = theOwner.Population;
-            this.sortGenomes = new SortGenomesForSpecies(this.owner);
-        }
-
-        /// <summary>
-        /// Level off all of the species shares so that they add up to the desired
-        /// population size. If they do not add up to the desired species size, this
-        /// was a result of rounding the floating point share amounts to integers.
+        ///     Level off all of the species shares so that they add up to the desired
+        ///     population size. If they do not add up to the desired species size, this
+        ///     was a result of rounding the floating point share amounts to integers.
         /// </summary>
         private void LevelOff()
         {
-            int total = 0;
-            List<ISpecies> list = this.population.Species;
+            List<ISpecies> list = _population.Species;
 
             if (list.Count == 0)
             {
                 throw new EncogError(
-                        "Can't speciate, next generation contains no species.");
+                    "Can't speciate, next generation contains no species.");
             }
 
-            list.Sort(new SpeciesComparer(this.owner));
+            list.Sort(new SpeciesComparer(_owner));
 
             // best species gets at least one offspring
             if (list[0].OffspringCount == 0)
@@ -336,13 +313,10 @@ namespace Encog.ML.EA.Species
             }
 
             // total up offspring
-            foreach (ISpecies species in list)
-            {
-                total += species.OffspringCount;
-            }
+            int total = list.Sum(species => species.OffspringCount);
 
             // how does the total offspring count match the target
-            int diff = this.population.PopulationSize - total;
+            int diff = _population.PopulationSize - total;
 
             if (diff < 0)
             {
@@ -352,7 +326,7 @@ namespace Encog.ML.EA.Species
                 {
                     ISpecies species = list[index];
                     int t = Math.Min(species.OffspringCount,
-                            Math.Abs(diff));
+                                     Math.Abs(diff));
                     species.OffspringCount = (species.OffspringCount - t);
                     if (species.OffspringCount == 0)
                     {
@@ -366,36 +340,25 @@ namespace Encog.ML.EA.Species
             {
                 // need more offspring
                 list[0].OffspringCount = (
-                        list[0].OffspringCount + diff);
+                                             list[0].OffspringCount + diff);
             }
         }
 
-        /// <inheritdoc/>
-        public void PerformSpeciation(IList<IGenome> genomeList)
-        {
-            IList<IGenome> newGenomeList = ResetSpecies(genomeList);
-            SpeciateAndCalculateSpawnLevels(newGenomeList);
-        }
-
         /// <summary>
-        /// Reset for an iteration.
+        ///     Reset for an iteration.
         /// </summary>
         /// <param name="inputGenomes">The genomes to speciate.</param>
         /// <returns></returns>
         private IList<IGenome> ResetSpecies(IList<IGenome> inputGenomes)
         {
-            IList<IGenome> result = new List<IGenome>();
-            Object[] speciesArray = this.population.Species.ToArray();
+            ISpecies[] speciesArray = _population.Species.ToArray();
 
             // Add the genomes
-            foreach (IGenome genome in inputGenomes)
-            {
-                result.Add(genome);
-            }
+            IList<IGenome> result = inputGenomes.ToList();
 
-            foreach (Object element in speciesArray)
+            foreach (ISpecies element in speciesArray)
             {
-                BasicSpecies s = (BasicSpecies)element;
+                var s = (BasicSpecies) element;
                 s.Purge();
 
                 // did the leader die? If so, disband the species. (but don't kill
@@ -404,7 +367,7 @@ namespace Encog.ML.EA.Species
                 {
                     RemoveSpecies(s);
                 }
-                else if (s.GensNoImprovement > this.numGensAllowedNoImprovement)
+                else if (s.GensNoImprovement > _numGensAllowedNoImprovement)
                 {
                     RemoveSpecies(s);
                 }
@@ -414,7 +377,7 @@ namespace Encog.ML.EA.Species
                 result.Remove(s.Leader);
             }
 
-            if (this.population.Species.Count == 0)
+            if (_population.Species.Count == 0)
             {
                 throw new EncogError("Can't speciate, the population is empty.");
             }
@@ -423,7 +386,7 @@ namespace Encog.ML.EA.Species
         }
 
         /// <summary>
-        /// Determine the species.
+        ///     Determine the species.
         /// </summary>
         /// <param name="genomes">The genomes to speciate.</param>
         private void SpeciateAndCalculateSpawnLevels(IList<IGenome> genomes)
@@ -435,7 +398,7 @@ namespace Encog.ML.EA.Species
                 throw new EncogError("Can't speciate, the population is empty.");
             }
 
-            IList<ISpecies> speciesCollection = this.population.Species;
+            IList<ISpecies> speciesCollection = _population.Species;
 
             if (speciesCollection.Count == 0)
             {
@@ -452,7 +415,7 @@ namespace Encog.ML.EA.Species
                 IGenome genome = g;
 
                 if (!Double.IsNaN(genome.AdjustedScore)
-                        && !double.IsInfinity(genome.AdjustedScore))
+                    && !double.IsInfinity(genome.AdjustedScore))
                 {
                     maxScore = Math.Max(genome.AdjustedScore, maxScore);
                 }
@@ -460,9 +423,9 @@ namespace Encog.ML.EA.Species
                 foreach (ISpecies s in speciesCollection)
                 {
                     double compatibility = GetCompatibilityScore(genome,
-                            s.Leader);
+                                                                 s.Leader);
 
-                    if (compatibility <= this.compatibilityThreshold)
+                    if (compatibility <= _compatibilityThreshold)
                     {
                         currentSpecies = s;
                         AddSpeciesMember(s, genome);
@@ -475,18 +438,13 @@ namespace Encog.ML.EA.Species
                 // new species
                 if (currentSpecies == null)
                 {
-                    currentSpecies = new BasicSpecies(this.population, genome);
-                    this.population.Species.Add(currentSpecies);
+                    currentSpecies = new BasicSpecies(_population, genome);
+                    _population.Species.Add(currentSpecies);
                 }
             }
 
             //
-            double totalSpeciesScore = 0;
-            foreach (ISpecies species in speciesCollection)
-            {
-                totalSpeciesScore += species.CalculateShare(this.owner
-                        .ScoreFunction.ShouldMinimize, maxScore);
-            }
+            double totalSpeciesScore = speciesCollection.Sum(species => species.CalculateShare(_owner.ScoreFunction.ShouldMinimize, maxScore));
 
             if (speciesCollection.Count == 0)
             {
@@ -508,12 +466,11 @@ namespace Encog.ML.EA.Species
             }
 
             LevelOff();
-
         }
 
         /// <summary>
-        /// Determine how compatible two genomes are. More compatible genomes will be
-        /// placed into the same species. The lower the number, the more compatible.
+        ///     Determine how compatible two genomes are. More compatible genomes will be
+        ///     placed into the same species. The lower the number, the more compatible.
         /// </summary>
         /// <param name="genome1">The first genome.</param>
         /// <param name="genome2">The second genome.</param>

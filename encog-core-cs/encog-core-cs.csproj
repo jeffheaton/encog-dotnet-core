@@ -397,7 +397,6 @@
     <Compile Include="ML\EA\Rules\IConstraintRule.cs" />
     <Compile Include="ML\EA\Rules\IRewriteRule.cs" />
     <Compile Include="ML\EA\Rules\IRuleHolder.cs" />
-    <Compile Include="ML\EA\Rules\RuleHolder.cs" />
     <Compile Include="ML\EA\Score\Adjust\ComplexityAdjustedScore.cs" />
     <Compile Include="ML\EA\Score\IAdjustScore.cs" />
     <Compile Include="ML\EA\Score\Multi\ParallelScore.cs" />

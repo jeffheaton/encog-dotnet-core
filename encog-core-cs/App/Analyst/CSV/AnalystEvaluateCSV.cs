@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
@@ -37,46 +38,39 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV
 {
     /// <summary>
-    /// Used by the analyst to evaluate a CSV file.
+    ///     Used by the analyst to evaluate a CSV file.
     /// </summary>
-    ///
     public class AnalystEvaluateCSV : BasicFile
     {
         /// <summary>
-        /// The analyst to use.
+        ///     The analyst to use.
         /// </summary>
-        ///
         private EncogAnalyst _analyst;
 
         /// <summary>
-        /// The headers.
+        ///     The headers.
         /// </summary>
-        ///
         private CSVHeaders _analystHeaders;
 
         /// <summary>
-        /// The number of columns in the file.
+        ///     The number of columns in the file.
         /// </summary>
-        ///
         private int _fileColumns;
 
         /// <summary>
-        /// The number of output columns.
+        ///     The number of output columns.
         /// </summary>
-        ///
         private int _outputColumns;
 
         /// <summary>
-        /// Used to handle time series.
+        ///     Used to handle time series.
         /// </summary>
-        ///
         private TimeSeriesUtil _series;
 
         /// <summary>
-        /// Analyze the data. This counts the records and prepares the data to be
-        /// processed.
+        ///     Analyze the data. This counts the records and prepares the data to be
+        ///     processed.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         /// <param name="inputFile">The input file.</param>
         /// <param name="headers">True if headers are present.</param>
@@ -97,15 +91,14 @@ namespace Encog.App.Analyst.CSV
 
             _analystHeaders = new CSVHeaders(InputHeadings);
             _series = new TimeSeriesUtil(_analyst, false,
-                                        _analystHeaders.Headers);
+                                         _analystHeaders.Headers);
         }
 
         /// <summary>
-        /// Prepare the output file, write headers if needed.
+        ///     Prepare the output file, write headers if needed.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
-        ///<returns>The file to write to.</returns>
+        /// <returns>The file to write to.</returns>
         private new StreamWriter PrepareOutputFile(FileInfo outputFile)
         {
             try
@@ -155,9 +148,8 @@ namespace Encog.App.Analyst.CSV
         }
 
         /// <summary>
-        /// Process the file.
+        ///     Process the file.
         /// </summary>
-        ///
         /// <param name="outputFile">The output file.</param>
         /// <param name="method">THe method to use.</param>
         public void Process(FileInfo outputFile, IMLMethod method)
@@ -170,7 +162,7 @@ namespace Encog.App.Analyst.CSV
             foreach (AnalystField field in _analyst.Script.Normalize.NormalizedFields)
             {
                 field.Init();
-            } 
+            }
 
             int outputLength = _analyst.DetermineTotalInputFieldCount();
 
@@ -198,9 +190,9 @@ namespace Encog.App.Analyst.CSV
                         && !(method is IMLRegression))
                     {
                         // classification only?
-						var tmp = new BasicMLData(1);
+                        var tmp = new BasicMLData(1);
                         tmp[0] = ((IMLClassification) method).Classify(input);
-						output = tmp;
+                        output = tmp;
                     }
                     else
                     {

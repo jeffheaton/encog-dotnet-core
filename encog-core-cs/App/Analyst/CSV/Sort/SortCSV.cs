@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,25 +31,22 @@ using Encog.Util.CSV;
 namespace Encog.App.Analyst.CSV.Sort
 {
     /// <summary>
-    /// Used to sort a CSV file by one, or more, fields.
+    ///     Used to sort a CSV file by one, or more, fields.
     /// </summary>
-    ///
     public class SortCSV : BasicFile
     {
         /// <summary>
-        /// The loaded rows.
+        ///     The loaded rows.
         /// </summary>
-        ///
         private readonly List<LoadedRow> _data;
 
         /// <summary>
-        /// The sort order.
+        ///     The sort order.
         /// </summary>
-        ///
         private readonly List<SortedField> _sortOrder;
 
         /// <summary>
-        /// Construct the object.
+        ///     Construct the object.
         /// </summary>
         public SortCSV()
         {
@@ -65,9 +63,8 @@ namespace Encog.App.Analyst.CSV.Sort
 
 
         /// <summary>
-        /// Process, and sort the files.
+        ///     Process, and sort the files.
         /// </summary>
-        ///
         /// <param name="inputFile">The input file.</param>
         /// <param name="outputFile">The output file.</param>
         /// <param name="headers">True, if headers are to be used.</param>
@@ -85,9 +82,8 @@ namespace Encog.App.Analyst.CSV.Sort
         }
 
         /// <summary>
-        /// Read the input file.
+        ///     Read the input file.
         /// </summary>
-        ///
         private void ReadInputFile()
         {
             ResetStatus();
@@ -116,9 +112,8 @@ namespace Encog.App.Analyst.CSV.Sort
         }
 
         /// <summary>
-        /// Sort the loaded data.
+        ///     Sort the loaded data.
         /// </summary>
-        ///
         private void SortData()
         {
             IComparer<LoadedRow> comp = new RowComparator(this);
@@ -126,9 +121,8 @@ namespace Encog.App.Analyst.CSV.Sort
         }
 
         /// <summary>
-        /// Write the sorted output file.
+        ///     Write the sorted output file.
         /// </summary>
-        ///
         /// <param name="outputFile">The name of the output file.</param>
         private void WriteOutputFile(FileInfo outputFile)
         {
@@ -154,7 +148,7 @@ namespace Encog.App.Analyst.CSV.Sort
                             Format.Parse(str);
                             nonNumeric[i] = false;
                         }
-                        catch (Exception )
+                        catch (Exception)
                         {
                             nonNumeric[i] = true;
                         }

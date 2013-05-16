@@ -20,28 +20,26 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 namespace Encog.App.Analyst
 {
     /// <summary>
-    /// What is the goal of the Encog Analyst?
+    ///     What is the goal of the Encog Analyst?
     /// </summary>
-    ///
     public enum AnalystGoal
     {
         /// <summary>
-        /// Goal of regression.
+        ///     Goal of regression.
         /// </summary>
-        ///
         Regression,
 
         /// <summary>
-        /// Goal of classification.
+        ///     Goal of classification.
         /// </summary>
-        ///
         Classification,
 
         /// <summary>
-        /// Unknown, usually an error.
+        ///     Unknown, usually an error.
         /// </summary>
         Unknown
     }

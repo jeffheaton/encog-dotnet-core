@@ -20,20 +20,18 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.EA.Exceptions
 {
     /// <summary>
-    /// An error has occurred while running a phenotype (or genome).
+    ///     An error has occurred while running a phenotype (or genome).
     /// </summary>
-    public class EARuntimeError: EAError
+    public class EARuntimeError : EAError
     {
         /// <summary>
-        /// Construct an error.
+        ///     Construct an error.
         /// </summary>
         /// <param name="msg">The error.</param>
         public EARuntimeError(string msg)
@@ -42,7 +40,7 @@ namespace Encog.ML.EA.Exceptions
         }
 
         /// <summary>
-        /// Construct the error.
+        ///     Construct the error.
         /// </summary>
         /// <param name="msg">The message.</param>
         /// <param name="t">The error.</param>
@@ -52,7 +50,7 @@ namespace Encog.ML.EA.Exceptions
         }
 
         /// <summary>
-        /// Construct the error.
+        ///     Construct the error.
         /// </summary>
         /// <param name="t">An error</param>
         public EARuntimeError(Exception t)

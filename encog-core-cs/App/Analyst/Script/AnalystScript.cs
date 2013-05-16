@@ -20,90 +20,80 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Encog.App.Analyst.Script.ML;
 using Encog.App.Analyst.Script.Normalize;
+using Encog.App.Analyst.Script.Process;
 using Encog.App.Analyst.Script.Prop;
 using Encog.App.Analyst.Script.Segregate;
 using Encog.App.Analyst.Script.Task;
 using Encog.Util.CSV;
 using Encog.Util.File;
-using Encog.App.Analyst.Script.Process;
-using Encog.App.Analyst.Script.ML;
 
 namespace Encog.App.Analyst.Script
 {
     /// <summary>
-    /// Holds a script for the Encog Analyst.
+    ///     Holds a script for the Encog Analyst.
     /// </summary>
-    ///
     public class AnalystScript
     {
         /// <summary>
-        /// The default MAX size for a class.
+        ///     The default MAX size for a class.
         /// </summary>
-        ///
         public const int DefaultMaxClass = 50;
 
         /// <summary>
-        /// Tracks which files were generated.
+        ///     Tracks which files were generated.
         /// </summary>
-        ///
         private readonly IList<String> _generated;
 
         /// <summary>
-        /// Information about how to normalize.
+        ///     Information about how to normalize.
         /// </summary>
-        ///
         private readonly AnalystNormalize _normalize;
 
         /// <summary>
-        /// The properties.
-        /// </summary>
-        ///
-        private readonly ScriptProperties _properties;
-
-        /// <summary>
-        /// Information about how to segregate.
-        /// </summary>
-        ///
-        private readonly AnalystSegregate _segregate;
-
-        /// <summary>
-        /// The tasks.
-        /// </summary>
-        ///
-        private readonly IDictionary<String, AnalystTask> _tasks;
-
-        /// <summary>
-        /// The base path.
-        /// </summary>
-        ///
-        private String _basePath;
-
-        /// <summary>
-        /// The data fields, these are the raw data from the CSV file.
-        /// </summary>
-        ///
-        private DataField[] _fields;
-
-        /// <summary>
-        /// Information about the process command.
-        /// </summary>
-        private readonly AnalystProcess _process = new AnalystProcess();
-
-
-        /// <summary>
-        /// The opcodes.
+        ///     The opcodes.
         /// </summary>
         private readonly IList<ScriptOpcode> _opcodes = new List<ScriptOpcode>();
 
         /// <summary>
-        /// Construct an analyst script.
+        ///     Information about the process command.
         /// </summary>
-        ///
+        private readonly AnalystProcess _process = new AnalystProcess();
+
+        /// <summary>
+        ///     The properties.
+        /// </summary>
+        private readonly ScriptProperties _properties;
+
+        /// <summary>
+        ///     Information about how to segregate.
+        /// </summary>
+        private readonly AnalystSegregate _segregate;
+
+        /// <summary>
+        ///     The tasks.
+        /// </summary>
+        private readonly IDictionary<String, AnalystTask> _tasks;
+
+        /// <summary>
+        ///     The base path.
+        /// </summary>
+        private String _basePath;
+
+        /// <summary>
+        ///     The data fields, these are the raw data from the CSV file.
+        /// </summary>
+        private DataField[] _fields;
+
+        /// <summary>
+        ///     Construct an analyst script.
+        /// </summary>
         public AnalystScript()
         {
             _normalize = new AnalystNormalize(this);
@@ -112,7 +102,7 @@ namespace Encog.App.Analyst.Script
             _tasks = new Dictionary<String, AnalystTask>();
             _properties = new ScriptProperties();
             _properties.SetProperty(ScriptProperties.SetupConfigCSVFormat,
-                                   AnalystFileFormat.DecpntComma);
+                                    AnalystFileFormat.DecpntComma);
             _properties.SetProperty(
                 ScriptProperties.SetupConfigMaxClassCount,
                 DefaultMaxClass);
@@ -122,7 +112,7 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Set the base path.
+        ///     Set the base path.
         /// </summary>
         public String BasePath
         {
@@ -173,27 +163,40 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Add a task.
+        ///     Preprocess information.
         /// </summary>
+        public AnalystProcess Process
+        {
+            get { return _process; }
+        }
 
+        /// <summary>
+        ///     Opcode information.
+        /// </summary>
+        public IList<ScriptOpcode> Opcodes
+        {
+            get { return _opcodes; }
+        }
+
+        /// <summary>
+        ///     Add a task.
+        /// </summary>
         public void AddTask(AnalystTask task)
         {
             _tasks[task.Name] = task;
         }
 
         /// <summary>
-        /// Clear all tasks.
+        ///     Clear all tasks.
         /// </summary>
-        ///
         public void ClearTasks()
         {
             _tasks.Clear();
         }
 
         /// <summary>
-        /// Determine the output format.
+        ///     Determine the output format.
         /// </summary>
-        ///
         /// <returns>The output format.</returns>
         public CSVFormat DetermineFormat()
         {
@@ -202,9 +205,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Determine if input headers are expected.
+        ///     Determine if input headers are expected.
         /// </summary>
-        ///
         /// <param name="filename">The filename.</param>
         /// <returns>True if headers are expected.</returns>
         public bool ExpectInputHeaders(String filename)
@@ -218,20 +220,20 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Find the specified data field.  Use name to find, and ignore case.
+        ///     Find the specified data field.  Use name to find, and ignore case.
         /// </summary>
-        ///
         /// <param name="name">The name to search for.</param>
         /// <returns>The specified data field.</returns>
         public DataField FindDataField(String name)
         {
-            return _fields.FirstOrDefault(dataField => dataField.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return
+                _fields.FirstOrDefault(
+                    dataField => dataField.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
-        /// Find the specified data field and return its index.
+        ///     Find the specified data field and return its index.
         /// </summary>
-        ///
         /// <param name="df">The data field to search for.</param>
         /// <returns>The index of the specified data field, or -1 if not found.</returns>
         public int FindDataFieldIndex(DataField df)
@@ -247,23 +249,24 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Find the specified normalized field.  Search without case.
+        ///     Find the specified normalized field.  Search without case.
         /// </summary>
-        ///
         /// <param name="name">The name of the field we are searching for.</param>
         /// <param name="slice">The timeslice.</param>
         /// <returns>The analyst field that was found.</returns>
         public AnalystField FindNormalizedField(String name,
                                                 int slice)
         {
-            return Normalize.NormalizedFields.FirstOrDefault(field => field.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && (field.TimeSlice == slice));
+            return
+                Normalize.NormalizedFields.FirstOrDefault(
+                    field =>
+                    field.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && (field.TimeSlice == slice));
         }
 
 
         /// <summary>
-        /// Get the specified task.
+        ///     Get the specified task.
         /// </summary>
-        ///
         /// <param name="name">The name of the testk.</param>
         /// <returns>The analyst task.</returns>
         public AnalystTask GetTask(String name)
@@ -277,18 +280,16 @@ namespace Encog.App.Analyst.Script
 
 
         /// <summary>
-        /// Init this script.
+        ///     Init this script.
         /// </summary>
-        ///
         public void Init()
         {
             _normalize.Init(this);
         }
 
         /// <summary>
-        /// Determine if the specified file was generated.
+        ///     Determine if the specified file was generated.
         /// </summary>
-        ///
         /// <param name="filename">The filename to check.</param>
         /// <returns>True, if the specified file was generated.</returns>
         public bool IsGenerated(String filename)
@@ -297,9 +298,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Load the script.
+        ///     Load the script.
         /// </summary>
-        ///
         /// <param name="stream">The stream to load from.</param>
         public void Load(Stream stream)
         {
@@ -308,9 +308,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Mark the sepcified filename as generated.
+        ///     Mark the sepcified filename as generated.
         /// </summary>
-        ///
         /// <param name="filename">The filename.</param>
         public void MarkGenerated(String filename)
         {
@@ -319,9 +318,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Resolve the specified filename.
+        ///     Resolve the specified filename.
         /// </summary>
-        ///
         /// <param name="sourceID">The filename to resolve.</param>
         /// <returns>The file path.</returns>
         public FileInfo ResolveFilename(String sourceID)
@@ -336,9 +334,8 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Save to the specified output stream.
+        ///     Save to the specified output stream.
         /// </summary>
-        ///
         /// <param name="stream">The output stream.</param>
         public void Save(Stream stream)
         {
@@ -347,36 +344,13 @@ namespace Encog.App.Analyst.Script
         }
 
         /// <summary>
-        /// Find the specified analyst field, by name.
+        ///     Find the specified analyst field, by name.
         /// </summary>
         /// <param name="name">The name of the analyst field.</param>
         /// <returns>The analyst field.</returns>
         public AnalystField FindAnalystField(string name)
         {
             return _normalize.NormalizedFields.FirstOrDefault(f => string.Compare(name, f.Name, true) == 0);
-        }
-
-
-        /// <summary>
-        /// Preprocess information.
-        /// </summary>
-        public AnalystProcess Process
-        {
-            get
-            {
-                return _process;
-            }
-        }
-
-        /// <summary>
-        /// Opcode information.
-        /// </summary>
-        public IList<ScriptOpcode> Opcodes
-        {
-            get
-            {
-                return _opcodes;
-            }
         }
     }
 }

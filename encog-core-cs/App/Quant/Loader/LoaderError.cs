@@ -20,31 +20,28 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 
 namespace Encog.App.Quant.Loader
 {
     /// <summary>
-    /// Used to represent any error that occurs in the loader part of Encog.
+    ///     Used to represent any error that occurs in the loader part of Encog.
     /// </summary>
-    ///
     [Serializable]
     public class LoaderError : QuantError
     {
-
         /// <summary>
-        /// Construct a message exception.
+        ///     Construct a message exception.
         /// </summary>
-        ///
         /// <param name="msg">The exception message.</param>
         public LoaderError(String msg) : base(msg)
         {
         }
 
         /// <summary>
-        /// Construct an exception that holds another exception.
+        ///     Construct an exception that holds another exception.
         /// </summary>
-        ///
         /// <param name="t">The other exception.</param>
         public LoaderError(Exception t) : base(t)
         {

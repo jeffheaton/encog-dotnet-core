@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,22 +28,19 @@ using System.Linq;
 namespace Encog.App.Analyst.Script
 {
     /// <summary>
-    /// Holds stats on a data field for the Encog Analyst. This data is used to
-    /// normalize the field.
+    ///     Holds stats on a data field for the Encog Analyst. This data is used to
+    ///     normalize the field.
     /// </summary>
-    ///
     public class DataField
     {
         /// <summary>
-        /// The class members.
+        ///     The class members.
         /// </summary>
-        ///
         private readonly IList<AnalystClassItem> _classMembers;
 
         /// <summary>
-        /// Construct the data field.
+        ///     Construct the data field.
         /// </summary>
-        ///
         /// <param name="theName">The name of this field.</param>
         public DataField(String theName)
         {
@@ -81,17 +79,13 @@ namespace Encog.App.Analyst.Script
 
 
         /// <summary>
-        /// Determine the minimum class count. This is the count of the
-        /// classification field that is the smallest.
+        ///     Determine the minimum class count. This is the count of the
+        ///     classification field that is the smallest.
         /// </summary>
-        ///
         /// <value>The minimum class count.</value>
         public int MinClassCount
         {
-            get
-            {
-                return _classMembers.Aggregate(Int32.MaxValue, (current, cls) => Math.Min(current, cls.Count));
-            }
+            get { return _classMembers.Aggregate(Int32.MaxValue, (current, cls) => Math.Min(current, cls.Count)); }
         }
 
 

@@ -21,9 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Species;
 using Encog.ML.EA.Genome;
 
@@ -94,12 +91,12 @@ namespace Encog.Neural.NEAT.Training.Species
             double numMatched = 0;
             double weightDifference = 0;
 
-            NEATGenome genome1 = (NEATGenome)gen1;
-            NEATGenome genome2 = (NEATGenome)gen2;
+            var genome1 = (NEATGenome)gen1;
+            var genome2 = (NEATGenome)gen2;
 
             int genome1Size = genome1.LinksChromosome.Count;
             int genome2Size = genome2.LinksChromosome.Count;
-            int n = 1;// Math.max(genome1Size, genome2Size);
+            const int n = 1; // Math.max(genome1Size, genome2Size);
 
             int g1 = 0;
             int g2 = 0;
@@ -152,9 +149,9 @@ namespace Encog.Neural.NEAT.Training.Species
 
             }
 
-            double score = ((this.ConstExcess * numExcess) / n)
-                    + ((this.ConstDisjoint * numDisjoint) / n)
-                    + (this.ConstMatched * (weightDifference / numMatched));
+            double score = ((ConstExcess * numExcess) / n)
+                    + ((ConstDisjoint * numDisjoint) / n)
+                    + (ConstMatched * (weightDifference / numMatched));
 
             return score;
         }

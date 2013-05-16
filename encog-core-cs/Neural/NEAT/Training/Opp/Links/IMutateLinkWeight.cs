@@ -20,10 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
 

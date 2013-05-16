@@ -22,8 +22,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML;
 using Encog.Engine.Network.Activation;
 using Encog.ML.Data;
@@ -33,43 +31,76 @@ using Encog.Util;
 
 namespace Encog.Neural.NEAT
 {
+    /// <summary>
+    /// NEAT networks relieve the programmer of the need to define the hidden layer
+    /// structure of the neural network.
+    /// 
+    /// The output from the neural network can be calculated normally or using a
+    /// snapshot. The snapshot mode is slower, but it can be more accurate. The
+    /// snapshot handles recurrent layers better, as it takes the time to loop
+    /// through the network multiple times to "flush out" the recurrent links.
+    /// 
+    /// NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm for the
+    /// generation of evolving artificial neural networks. It was developed by Ken
+    /// Stanley while at The University of Texas at Austin.
+    /// 
+    /// http://www.cs.ucf.edu/~kstanley/
+    /// 
+    /// The following Journal articles were used to implement NEAT/HyperNEAT in
+    /// Encog. Provided in BibTeX form.
+    /// 
+    /// Article{stanley:ec02,title={Evolving Neural Networks Through Augmenting
+    /// Topologies}, author={Kenneth O. Stanley and Risto Miikkulainen}, volume={10},
+    /// journal={Evolutionary Computation}, number={2}, pages={99-127}, url=
+    /// "http://nn.cs.utexas.edu/?stanley:ec02" , year={2002}}
+    /// 
+    /// MISC{Gauci_abstractgenerating, author = {Jason Gauci and Kenneth Stanley},
+    /// title = {ABSTRACT Generating Large-Scale Neural Networks Through Discovering
+    /// Geometric Regularities}, year = {}}
+    /// 
+    /// INPROCEEDINGS{Whiteson05automaticfeature, author = {Shimon Whiteson and
+    /// Kenneth O. Stanley and Risto Miikkulainen}, title = {Automatic feature
+    /// selection in neuroevolution}, booktitle = {In Genetic and Evolutionary
+    /// Computation Conference}, year = {2005}, pages = {1225--1232}, publisher =
+    /// {ACM Press} }
+    /// </summary>
     [Serializable]
     public class NEATNetwork : IMLRegression, IMLError
     {
         /// <summary>
         /// The neuron links.
         /// </summary>
-        private NEATLink[] links;
+        private readonly NEATLink[] _links;
 
         /// <summary>
         /// The activation functions.
         /// </summary>
-        private IActivationFunction[] activationFunctions;
+        private readonly IActivationFunction[] _activationFunctions;
 
         /// <summary>
         /// The pre-activation values, used to feed the neurons.
         /// </summary>
-        private double[] preActivation;
+        private readonly double[] _preActivation;
 
         /// <summary>
         /// The post-activation values, used as the output from the neurons.
         /// </summary>
-        private double[] postActivation;
+        private readonly double[] _postActivation;
 
         /// <summary>
         /// The index to the starting location of the output neurons.
         /// </summary>
-        private int outputIndex;
+        private readonly int _outputIndex;
 
         /// <summary>
         /// The input count.
         /// </summary>
-        private int inputCount;
+        private readonly int _inputCount;
 
         /// <summary>
         /// The output count.
         /// </summary>
-        private int outputCount;
+        private readonly int _outputCount;
 
         /// <summary>
         /// The number of activation cycles to use.
@@ -101,27 +132,27 @@ namespace Encog.Neural.NEAT
                 IActivationFunction[] theActivationFunctions)
         {
 
-            ActivationCycles = NEATPopulation.DEFAULT_CYCLES;
+            ActivationCycles = NEATPopulation.DefaultCycles;
             HasRelaxed = false;
 
-            this.links = new NEATLink[connectionArray.Count];
+            _links = new NEATLink[connectionArray.Count];
             for (int i = 0; i < connectionArray.Count; i++)
             {
-                this.links[i] = connectionArray[i];
+                _links[i] = connectionArray[i];
             }
 
-            this.activationFunctions = theActivationFunctions;
-            int neuronCount = this.activationFunctions.Length;
+            _activationFunctions = theActivationFunctions;
+            int neuronCount = _activationFunctions.Length;
 
-            this.preActivation = new double[neuronCount];
-            this.postActivation = new double[neuronCount];
+            _preActivation = new double[neuronCount];
+            _postActivation = new double[neuronCount];
 
-            this.inputCount = inputNeuronCount;
-            this.outputIndex = inputNeuronCount + 1;
-            this.outputCount = outputNeuronCount;
+            _inputCount = inputNeuronCount;
+            _outputIndex = inputNeuronCount + 1;
+            _outputCount = outputNeuronCount;
 
             // bias
-            this.postActivation[0] = 1.0;
+            _postActivation[0] = 1.0;
         }
 
         /// <summary>
@@ -141,29 +172,29 @@ namespace Encog.Neural.NEAT
         /// <returns>The output from this synapse.</returns>
         public IMLData Compute(IMLData input)
         {
-            double[] result = new double[this.outputCount];
+            var result = new double[_outputCount];
 
             // clear from previous
-            EngineArray.Fill(this.preActivation, 0.0);
-            EngineArray.Fill(this.postActivation, 0.0);
-            this.postActivation[0] = 1.0;
+            EngineArray.Fill(_preActivation, 0.0);
+            EngineArray.Fill(_postActivation, 0.0);
+            _postActivation[0] = 1.0;
 
             // copy input
-            for (int i = 0; i < this.inputCount; i++)
+            for (int i = 0; i < _inputCount; i++)
             {
-                this.postActivation[i+1] = input[i];
+                _postActivation[i + 1] = input[i];
             }
-            
+
             // iterate through the network activationCycles times
-            for (int i = 0; i < this.ActivationCycles; ++i)
+            for (int i = 0; i < ActivationCycles; ++i)
             {
                 InternalCompute();
             }
 
             // copy output
-            for (int i = 0; i < this.outputCount; i++)
+            for (int i = 0; i < _outputCount; i++)
             {
-                result[i] = this.postActivation[this.outputIndex+i];
+                result[i] = _postActivation[_outputIndex + i];
             }
 
             return new BasicMLData(result);
@@ -176,7 +207,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.activationFunctions;
+                return _activationFunctions;
             }
         }
 
@@ -185,7 +216,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.inputCount;
+                return _inputCount;
             }
         }
 
@@ -194,7 +225,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.links;
+                return _links;
             }
         }
 
@@ -203,7 +234,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.outputCount;
+                return _outputCount;
             }
         }
 
@@ -214,7 +245,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.outputIndex;
+                return _outputIndex;
             }
         }
 
@@ -225,7 +256,7 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.postActivation;
+                return _postActivation;
             }
         }
 
@@ -236,27 +267,26 @@ namespace Encog.Neural.NEAT
         {
             get
             {
-                return this.preActivation;
+                return _preActivation;
             }
         }
-  
+
         /// <summary>
         /// Perform one activation cycle.
         /// </summary>
         private void InternalCompute()
         {
-            for (int j = 0; j < this.links.Length; j++)
+            foreach (NEATLink t in _links)
             {
-                this.preActivation[this.links[j].ToNeuron] += this.postActivation[this.links[j]
-                        .FromNeuron] * this.links[j].Weight;
+                _preActivation[t.ToNeuron] += _postActivation[t.FromNeuron] * t.Weight;
             }
 
-            for (int j = this.outputIndex; j < this.preActivation.Length; j++)
+            for (int j = _outputIndex; j < _preActivation.Length; j++)
             {
-                this.postActivation[j] = this.preActivation[j];
-                this.activationFunctions[j].ActivationFunction(this.postActivation,
+                _postActivation[j] = _preActivation[j];
+                _activationFunctions[j].ActivationFunction(_postActivation,
                         j, 1);
-                this.preActivation[j] = 0.0F;
+                _preActivation[j] = 0.0F;
             }
         }
     }

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,37 +35,33 @@ using Encog.Util.Simple;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This command is used to generate the binary EGB file from a CSV file. The
-    /// resulting file can be used for training.
+    ///     This command is used to generate the binary EGB file from a CSV file. The
+    ///     resulting file can be used for training.
     /// </summary>
-    ///
     public class CmdGenerate : Cmd
     {
         /// <summary>
-        /// The name of this command.
+        ///     The name of this command.
         /// </summary>
-        ///
         public const String CommandName = "GENERATE";
 
         /// <summary>
-        /// Construct this generate command.
+        ///     Construct this generate command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst to use.</param>
         public CmdGenerate(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
         /// <summary>
-        /// Determine the ideal fields.
+        ///     Determine the ideal fields.
         /// </summary>
-        ///
         /// <param name="headerList">The headers.</param>
         /// <returns>The indexes of the ideal fields.</returns>
         private int[] DetermineIdealFields(CSVHeaders headerList)
@@ -87,7 +84,7 @@ namespace Encog.App.Analyst.Commands
                 String baseName = headerList.GetBaseHeader(currentIndex);
                 int slice = headerList.GetSlice(currentIndex);
                 AnalystField field = Analyst.Script
-                    .FindNormalizedField(baseName, slice);
+                                            .FindNormalizedField(baseName, slice);
 
                 if (field != null && field.Output)
                 {
@@ -106,9 +103,8 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// Determine the input fields.
+        ///     Determine the input fields.
         /// </summary>
-        ///
         /// <param name="headerList">The headers.</param>
         /// <returns>The indexes of the input fields.</returns>
         private int[] DetermineInputFields(CSVHeaders headerList)
@@ -120,7 +116,7 @@ namespace Encog.App.Analyst.Commands
                 String baseName = headerList.GetBaseHeader(currentIndex);
                 int slice = headerList.GetSlice(currentIndex);
                 AnalystField field = Analyst.Script
-                    .FindNormalizedField(baseName, slice);
+                                            .FindNormalizedField(baseName, slice);
 
                 if (field != null && field.Input)
                 {
@@ -139,9 +135,7 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        ///
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.CSV;
@@ -32,35 +33,32 @@ using Encog.Util.Logging;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// This class is used to evaluate a machine learning method. Evaluation data is
-    /// provided and the ideal and actual responses from the machine learning method
-    /// are written to a file.
+    ///     This class is used to evaluate a machine learning method. Evaluation data is
+    ///     provided and the ideal and actual responses from the machine learning method
+    ///     are written to a file.
     /// </summary>
-    ///
     public class CmdEvaluateRaw : Cmd
     {
         /// <summary>
-        /// The name of the command.
+        ///     The name of the command.
         /// </summary>
-        ///
         public const String CommandName = "EVALUATE-RAW";
 
         /// <summary>
-        /// Construct an evaluate raw command.
+        ///     Construct an evaluate raw command.
         /// </summary>
-        ///
         /// <param name="analyst">The analyst object to use.</param>
         public CmdEvaluateRaw(EncogAnalyst analyst) : base(analyst)
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override String Name
         {
             get { return CommandName; }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed bool ExecuteCommand(String args)
         {
             // get filenames
@@ -75,7 +73,7 @@ namespace Encog.App.Analyst.Commands
             EncogLogging.Log(EncogLogging.LevelDebug, "Beginning evaluate raw");
             EncogLogging.Log(EncogLogging.LevelDebug, "evaluate file:" + evalID);
             EncogLogging.Log(EncogLogging.LevelDebug, "resource file:"
-                                                       + resourceID);
+                                                      + resourceID);
 
             FileInfo evalFile = Script.ResolveFilename(evalID);
             FileInfo resourceFile = Script.ResolveFilename(resourceID);
@@ -83,13 +81,14 @@ namespace Encog.App.Analyst.Commands
             FileInfo outputFile = Analyst.Script.ResolveFilename(
                 outputID);
 
-            IMLMethod m = (IMLMethod) EncogDirectoryPersistence.LoadObject(resourceFile);
-		
-		    if( !(m is IMLRegression) ) {
-			    throw new AnalystError("The evaluate raw command can only be used with regression.");
-		    }
+            var m = (IMLMethod) EncogDirectoryPersistence.LoadObject(resourceFile);
 
-		    IMLRegression method = (IMLRegression)m;
+            if (!(m is IMLRegression))
+            {
+                throw new AnalystError("The evaluate raw command can only be used with regression.");
+            }
+
+            var method = (IMLRegression) m;
 
             bool headers = Script.ExpectInputHeaders(evalID);
 

@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using Encog.App.Analyst.CSV.Basic;
@@ -27,15 +28,13 @@ using Encog.App.Analyst.CSV.Basic;
 namespace Encog.App.Quant.Indicators
 {
     /// <summary>
-    /// An indicator, used by Encog.
+    ///     An indicator, used by Encog.
     /// </summary>
-    ///
     public abstract class Indicator : BaseCachedColumn
     {
         /// <summary>
-        /// Construct the indicator.
+        ///     Construct the indicator.
         /// </summary>
-        ///
         /// <param name="name">The indicator name.</param>
         /// <param name="input">Is this indicator used to predict?</param>
         /// <param name="output">Is this indicator what we are trying to predict.</param>
@@ -46,25 +45,19 @@ namespace Encog.App.Quant.Indicators
 
 
         /// <value>the beginningIndex to set</value>
-        public int BeginningIndex { 
-            get; 
-            set; }
+        public int BeginningIndex { get; set; }
 
 
         /// <value>the endingIndex to set.</value>
-        public int EndingIndex { 
-            get; 
-            set; }
+        public int EndingIndex { get; set; }
 
 
         /// <value>The number of periods this indicator is for.</value>
-        public abstract int Periods { 
-            get; }
+        public abstract int Periods { get; }
 
         /// <summary>
-        /// Calculate this indicator.
+        ///     Calculate this indicator.
         /// </summary>
-        ///
         /// <param name="data">The data available to this indicator.</param>
         /// <param name="length">The length of data to use.</param>
         public abstract void Calculate(IDictionary<String, BaseCachedColumn> data,
@@ -72,9 +65,8 @@ namespace Encog.App.Quant.Indicators
 
 
         /// <summary>
-        /// Require a specific type of underlying data.
+        ///     Require a specific type of underlying data.
         /// </summary>
-        ///
         /// <param name="theData">The data available.</param>
         /// <param name="item">The type of data we are looking for.</param>
         public void Require(IDictionary<String, BaseCachedColumn> theData,

@@ -20,35 +20,89 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Encog.ML;
-using Encog.Neural.Networks;
-using Encog.App.Generate.Generators;
-using Encog.App.Generate.Program;
+using System.IO;
 using Encog.App.Analyst;
 using Encog.App.Analyst.Script.Prop;
-using System.IO;
-using Encog.Persist;
-using Encog.App.Generate.Generators.Java;
+using Encog.App.Generate.Generators;
 using Encog.App.Generate.Generators.CS;
+using Encog.App.Generate.Generators.JS;
+using Encog.App.Generate.Generators.Java;
 using Encog.App.Generate.Generators.MQL4;
 using Encog.App.Generate.Generators.NinjaScript;
-using Encog.App.Generate.Generators.JS;
+using Encog.App.Generate.Program;
+using Encog.ML;
+using Encog.Neural.Networks;
+using Encog.Persist;
 
 namespace Encog.App.Generate
 {
     /// <summary>
-    /// Perform Encog code generation. Encog is capable of generating code from
-    /// several different objects. This code generation will be to the specified
-    /// target language.
+    ///     Perform Encog code generation. Encog is capable of generating code from
+    ///     several different objects. This code generation will be to the specified
+    ///     target language.
     /// </summary>
     public class EncogCodeGeneration
     {
+        /**
+         * The language specific code generator.
+         */
+        private readonly ILanguageSpecificGenerator generator;
+
+        /**
+         * The program that we are generating.
+         */
+        private readonly EncogGenProgram program = new EncogGenProgram();
+
         /// <summary>
-        /// Is the specified method supported for code generation?
+        ///     The target language for the code generation.
+        /// </summary>
+        private readonly TargetLanguage targetLanguage;
+
+        /**
+         * Construct the generation object.
+         * 
+         * @param theTargetLanguage
+         *            The target language.
+         */
+
+        public EncogCodeGeneration(TargetLanguage theTargetLanguage)
+        {
+            targetLanguage = theTargetLanguage;
+
+            switch (theTargetLanguage)
+            {
+                case TargetLanguage.NoGeneration:
+                    throw new AnalystCodeGenerationError(
+                        "No target language has been specified for code generation.");
+                case TargetLanguage.Java:
+                    generator = new GenerateEncogJava();
+                    break;
+                case TargetLanguage.CSharp:
+                    generator = new GenerateCS();
+                    break;
+                case TargetLanguage.MQL4:
+                    generator = new GenerateMQL4();
+                    break;
+                case TargetLanguage.NinjaScript:
+                    generator = new GenerateNinjaScript();
+                    break;
+                case TargetLanguage.JavaScript:
+                    generator = new GenerateEncogJavaScript();
+                    break;
+            }
+        }
+
+        public bool EmbedData { get; set; }
+
+        public TargetLanguage TargetLanguage
+        {
+            get { return targetLanguage; }
+        }
+
+        /// <summary>
+        ///     Is the specified method supported for code generation?
         /// </summary>
         /// <param name="method">The specified method.</param>
         /// <returns>True, if the specified method is supported.</returns>
@@ -65,7 +119,7 @@ namespace Encog.App.Generate
         }
 
         /// <summary>
-        /// Get the extension fot the specified language.
+        ///     Get the extension fot the specified language.
         /// </summary>
         /// <param name="lang">The specified language.</param>
         /// <returns></returns>
@@ -97,82 +151,29 @@ namespace Encog.App.Generate
             }
         }
 
-        /// <summary>
-        /// The target language for the code generation.
-        /// </summary>
-        private TargetLanguage targetLanguage;
-
-        /**
-         * True if the data should be embedded.
-         */
-        public bool EmbedData { get; set; }
-
-        /**
-         * The language specific code generator.
-         */
-        private ILanguageSpecificGenerator generator;
-
-        /**
-         * The program that we are generating.
-         */
-        private EncogGenProgram program = new EncogGenProgram();
-
-        /**
-         * Construct the generation object.
-         * 
-         * @param theTargetLanguage
-         *            The target language.
-         */
-        public EncogCodeGeneration(TargetLanguage theTargetLanguage)
-        {
-            this.targetLanguage = theTargetLanguage;
-
-            switch (theTargetLanguage)
-            {
-                case TargetLanguage.NoGeneration:
-                    throw new AnalystCodeGenerationError(
-                            "No target language has been specified for code generation.");
-                case TargetLanguage.Java:
-                    this.generator = new GenerateEncogJava();
-                    break;
-                case TargetLanguage.CSharp:
-                    this.generator = new GenerateCS();
-                    break;
-                case TargetLanguage.MQL4:
-                    this.generator = new GenerateMQL4();
-                    break;
-                case TargetLanguage.NinjaScript:
-                    this.generator = new GenerateNinjaScript();
-                    break;
-                case TargetLanguage.JavaScript:
-                    this.generator = new GenerateEncogJavaScript();
-                    break;
-
-            }
-        }
-
         /**
          * Generate the code from Encog Analyst.
          * 
          * @param analyst
          *            The Encog Analyst object to use for code generation.
          */
+
         public void Generate(EncogAnalyst analyst)
         {
-
-            if (this.targetLanguage == TargetLanguage.MQL4
-                    || this.targetLanguage == TargetLanguage.NinjaScript)
+            if (targetLanguage == TargetLanguage.MQL4
+                || targetLanguage == TargetLanguage.NinjaScript)
             {
                 if (!EmbedData)
                 {
                     throw new AnalystCodeGenerationError(
-                            "MQL4 and Ninjascript must be embedded.");
+                        "MQL4 and Ninjascript must be embedded.");
                 }
             }
 
-            if (this.generator is IProgramGenerator)
+            if (generator is IProgramGenerator)
             {
-                String methodID = analyst.Script.Properties.GetPropertyString(ScriptProperties.MlConfigMachineLearningFile);
+                String methodID =
+                    analyst.Script.Properties.GetPropertyString(ScriptProperties.MlConfigMachineLearningFile);
 
                 String trainingID = analyst.Script.Properties.GetPropertyString(ScriptProperties.MlConfigTrainingFile);
 
@@ -183,7 +184,7 @@ namespace Encog.App.Generate
             }
             else
             {
-                ((ITemplateGenerator)this.generator).Generate(analyst);
+                ((ITemplateGenerator) generator).Generate(analyst);
             }
         }
 
@@ -195,27 +196,28 @@ namespace Encog.App.Generate
          * @param data
          *            The data to use perform generation.
          */
+
         public void Generate(FileInfo method, FileInfo data)
         {
             EncogProgramNode createNetworkFunction = null;
-            this.program.AddComment("Code generated by Encog v"
-                    + EncogFramework.Instance.Properties[EncogFramework.EncogVersion]);
-            this.program.AddComment("Generation Date: " + new DateTime().ToString());
-            this.program.AddComment("Generated code may be used freely");
-            this.program.AddComment("http://www.heatonresearch.com/encog");
-            EncogProgramNode mainClass = this.program.CreateClass("EncogExample");
+            program.AddComment("Code generated by Encog v"
+                               + EncogFramework.Instance.Properties[EncogFramework.EncogVersion]);
+            program.AddComment("Generation Date: " + new DateTime().ToString());
+            program.AddComment("Generated code may be used freely");
+            program.AddComment("http://www.heatonresearch.com/encog");
+            EncogProgramNode mainClass = program.CreateClass("EncogExample");
 
-            if (this.targetLanguage == TargetLanguage.MQL4
-                    || this.targetLanguage == TargetLanguage.NinjaScript)
+            if (targetLanguage == TargetLanguage.MQL4
+                || targetLanguage == TargetLanguage.NinjaScript)
             {
                 throw new AnalystCodeGenerationError(
-                        "MQL4 and Ninjascript can only be generated from Encog Analyst");
+                    "MQL4 and Ninjascript can only be generated from Encog Analyst");
             }
 
             if (data != null)
             {
                 mainClass.EmbedTraining(data);
-                if (!(this.generator is GenerateEncogJavaScript))
+                if (!(generator is GenerateEncogJavaScript))
                 {
                     mainClass.GenerateLoadTraining(data);
                 }
@@ -231,21 +233,21 @@ namespace Encog.App.Generate
             if (createNetworkFunction != null)
             {
                 mainFunction.CreateFunctionCall(createNetworkFunction, "MLMethod",
-                        "method");
+                                                "method");
             }
 
             if (data != null)
             {
-                if (!(this.generator is GenerateEncogJavaScript))
+                if (!(generator is GenerateEncogJavaScript))
                 {
                     mainFunction.CreateFunctionCall("createTraining", "MLDataSet",
-                            "training");
+                                                    "training");
                 }
             }
             mainFunction
-                    .AddComment("Network and/or data is now loaded, you can add code to train, evaluate, etc.");
+                .AddComment("Network and/or data is now loaded, you can add code to train, evaluate, etc.");
 
-            ((IProgramGenerator)this.generator).Generate(this.program, EmbedData);
+            ((IProgramGenerator) generator).Generate(program, EmbedData);
         }
 
         /**
@@ -257,15 +259,15 @@ namespace Encog.App.Generate
          *            The filename of the method.
          * @return The newly created node.
          */
-        private EncogProgramNode GenerateForMethod(
-                EncogProgramNode mainClass, FileInfo method)
-        {
 
+        private EncogProgramNode GenerateForMethod(
+            EncogProgramNode mainClass, FileInfo method)
+        {
             if (EmbedData)
             {
-                IMLEncodable encodable = (IMLEncodable)EncogDirectoryPersistence
-                        .LoadObject(method);
-                double[] weights = new double[encodable.EncodedArrayLength()];
+                var encodable = (IMLEncodable) EncogDirectoryPersistence
+                                                   .LoadObject(method);
+                var weights = new double[encodable.EncodedArrayLength()];
                 encodable.EncodeToArray(weights);
                 mainClass.CreateArray("WEIGHTS", weights);
             }
@@ -276,22 +278,16 @@ namespace Encog.App.Generate
         /**
          * @return the targetLanguage
          */
-        public TargetLanguage TargetLanguage
-        {
-            get
-            {
-                return this.targetLanguage;
-            }
-        }
 
         /**
          * Save the contents to a string.
          * 
          * @return The contents.
          */
+
         public String Save()
         {
-            return this.generator.Contents;
+            return generator.Contents;
         }
 
         /**
@@ -299,10 +295,10 @@ namespace Encog.App.Generate
          * 
          * @param file
          */
+
         public void Save(FileInfo file)
         {
-            this.generator.WriteContents(file);
+            generator.WriteContents(file);
         }
-
     }
 }

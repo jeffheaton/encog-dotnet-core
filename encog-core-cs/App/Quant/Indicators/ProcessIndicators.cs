@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using System.Text;
@@ -29,9 +30,8 @@ using Encog.Util.CSV;
 namespace Encog.App.Quant.Indicators
 {
     /// <summary>
-    /// Process indicators and generate output.
+    ///     Process indicators and generate output.
     /// </summary>
-    ///
     public class ProcessIndicators : BasicCachedFile
     {
         /// <value>Get the beginning index.</value>
@@ -78,9 +78,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Allocate storage.
+        ///     Allocate storage.
         /// </summary>
-        ///
         private void AllocateStorage()
         {
             foreach (BaseCachedColumn column  in  Columns)
@@ -90,9 +89,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Calculate the indicators.
+        ///     Calculate the indicators.
         /// </summary>
-        ///
         private void CalculateIndicators()
         {
             foreach (BaseCachedColumn column  in  Columns)
@@ -110,9 +108,8 @@ namespace Encog.App.Quant.Indicators
 
 
         /// <summary>
-        /// Process and write the specified output file.
+        ///     Process and write the specified output file.
         /// </summary>
-        ///
         /// <param name="output">The output file.</param>
         public void Process(FileInfo output)
         {
@@ -125,9 +122,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Read the CSV file.
+        ///     Read the CSV file.
         /// </summary>
-        ///
         private void ReadFile()
         {
             ReadCSV csv = null;
@@ -170,9 +166,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Rename a column.
+        ///     Rename a column.
         /// </summary>
-        ///
         /// <param name="index">The column index.</param>
         /// <param name="newName">The new name.</param>
         public void RenameColumn(int index, String newName)
@@ -183,9 +178,8 @@ namespace Encog.App.Quant.Indicators
         }
 
         /// <summary>
-        /// Write the CSV.
+        ///     Write the CSV.
         /// </summary>
-        ///
         /// <param name="filename">The target filename.</param>
         private void WriteCSV(FileInfo filename)
         {

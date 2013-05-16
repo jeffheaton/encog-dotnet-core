@@ -20,47 +20,45 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.ML.EA.Genome;
 
 namespace Encog.ML.Prg.Train
 {
     /// <summary>
-    /// A GenomeFactory that creates EncogProgram genomes.
+    ///     A GenomeFactory that creates EncogProgram genomes.
     /// </summary>
     [Serializable]
     public class PrgGenomeFactory : IGenomeFactory
     {
         /// <summary>
-        /// The context.
+        ///     The context.
         /// </summary>
-        private EncogProgramContext context;
+        private readonly EncogProgramContext _context;
 
         /// <summary>
-        /// Construct a factory.
+        ///     Construct a factory.
         /// </summary>
         /// <param name="theContext">The context to use.</param>
         public PrgGenomeFactory(EncogProgramContext theContext)
         {
-            this.context = theContext;
+            _context = theContext;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IGenome Factor()
         {
-            EncogProgram result = new EncogProgram(this.context,
-                    new EncogProgramVariables());
+            var result = new EncogProgram(_context,
+                                          new EncogProgramVariables());
             return result;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IGenome Factor(IGenome other)
         {
-            EncogProgram result = new EncogProgram(this.context,
-                    new EncogProgramVariables());
+            var result = new EncogProgram(_context,
+                                          new EncogProgramVariables());
             result.Copy(other);
             return result;
         }

@@ -20,41 +20,42 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.Prg.ExpValue
 {
     /// <summary>
-    /// The type of value.
+    ///     The type of value.
     /// </summary>
     public enum EPLValueType
     {
         /// <summary>
-        /// Floating point.
+        ///     Floating point.
         /// </summary>
-        floatingType,
+        FloatingType,
+
         /// <summary>
-        /// String
+        ///     String
         /// </summary>
-        stringType,
+        StringType,
+
         /// <summary>
-        /// boolean
+        ///     boolean
         /// </summary>
-        booleanType,
+        BooleanType,
+
         /// <summary>
-        /// Integer.
+        ///     Integer.
         /// </summary>
-        intType,
+        IntType,
+
         /// <summary>
-        /// Enumeration
+        ///     Enumeration
         /// </summary>
-        enumType,
+        EnumType,
+
         /// <summary>
-        /// Unknown.
+        ///     Unknown.
         /// </summary>
-        unknown
+        Unknown
     }
 }

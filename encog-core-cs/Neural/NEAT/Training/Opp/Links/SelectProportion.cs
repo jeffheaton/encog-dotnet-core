@@ -20,9 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Encog.ML.EA.Train;
 using Encog.MathUtil.Randomize;
@@ -49,12 +48,12 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <summary>
         /// The portion of the links to mutate. 0.0 for none, 1.0 for all.
         /// </summary>
-        private double proportion;
+        private readonly double _proportion;
 
         /// <summary>
         /// The trainer.
         /// </summary>
-        private IEvolutionaryAlgorithm trainer;
+        private IEvolutionaryAlgorithm _trainer;
 
         /// <summary>
         /// Select based on proportion. 
@@ -62,13 +61,13 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         /// <param name="theProportion">The proportion to select from.</param>
         public SelectProportion(double theProportion)
         {
-            this.proportion = theProportion;
+            _proportion = theProportion;
         }
 
         /// <inheritdoc/>
         public void Init(IEvolutionaryAlgorithm theTrainer)
         {
-            this.trainer = theTrainer;
+            _trainer = theTrainer;
         }
 
         /// <inheritdoc/>
@@ -78,9 +77,9 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
 
             bool mutated = false;
 
-            foreach (NEATLinkGene linkGene in genome.LinksChromosome)
+            foreach (var linkGene in genome.LinksChromosome)
             {
-                if (rnd.NextDouble() < this.proportion)
+                if (rnd.NextDouble() < _proportion)
                 {
                     mutated = true;
                     result.Add(linkGene);
@@ -102,18 +101,18 @@ namespace Encog.Neural.NEAT.Training.Opp.Links
         {
             get
             {
-                return trainer;
+                return _trainer;
             }
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("[");
-            result.Append(this.GetType().Name);
+            result.Append(GetType().Name);
             result.Append(":proportion=");
-            result.Append(this.proportion);
+            result.Append(_proportion);
             result.Append("]");
             return result.ToString();
         }

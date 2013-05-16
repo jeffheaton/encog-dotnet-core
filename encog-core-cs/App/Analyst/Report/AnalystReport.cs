@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.IO;
 using Encog.App.Analyst.Script;
@@ -32,43 +33,38 @@ using Encog.Util.File;
 namespace Encog.App.Analyst.Report
 {
     /// <summary>
-    /// Produce a simple report on the makeup of the script and data to be analyued.
+    ///     Produce a simple report on the makeup of the script and data to be analyued.
     /// </summary>
-    ///
     public class AnalystReport
     {
         /// <summary>
-        /// Used as a col-span.
+        ///     Used as a col-span.
         /// </summary>
-        ///
         public const int FiveSpan = 5;
 
         /// <summary>
-        /// Used as a col-span.
+        ///     Used as a col-span.
         /// </summary>
-        ///
         public const int EightSpan = 5;
 
         /// <summary>
-        /// The analyst to use.
+        ///     The analyst to use.
         /// </summary>
-        ///
         private readonly EncogAnalyst _analyst;
 
         /// <summary>
-        /// The missing count.
+        ///     The missing count.
         /// </summary>
         private int _missingCount;
 
         /// <summary>
-        /// The row count.
+        ///     The row count.
         /// </summary>
         private int _rowCount;
 
         /// <summary>
-        /// Construct the report.
+        ///     Construct the report.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst to use.</param>
         public AnalystReport(EncogAnalyst theAnalyst)
         {
@@ -76,7 +72,7 @@ namespace Encog.App.Analyst.Report
         }
 
         /// <summary>
-        /// Analyze the file.
+        ///     Analyze the file.
         /// </summary>
         private void AnalyzeFile()
         {
@@ -108,9 +104,8 @@ namespace Encog.App.Analyst.Report
 
 
         /// <summary>
-        /// Produce the report.
+        ///     Produce the report.
         /// </summary>
-        ///
         /// <returns>The report.</returns>
         public String ProduceReport()
         {
@@ -213,12 +208,12 @@ namespace Encog.App.Analyst.Report
             report.EndRow();
 
             String t = _analyst.Script.Properties
-                .GetPropertyString(ScriptProperties.MlConfigType);
+                               .GetPropertyString(ScriptProperties.MlConfigType);
             String a = _analyst.Script.Properties
-                .GetPropertyString(ScriptProperties.MlConfigArchitecture);
+                               .GetPropertyString(ScriptProperties.MlConfigArchitecture);
             String rf = _analyst.Script.Properties
-                .GetPropertyString(
-                    ScriptProperties.MlConfigMachineLearningFile);
+                                .GetPropertyString(
+                                    ScriptProperties.MlConfigMachineLearningFile);
 
             report.TablePair("Type", t);
             report.TablePair("Architecture", a);
@@ -235,7 +230,7 @@ namespace Encog.App.Analyst.Report
             foreach (String key  in  _analyst.Script.Properties.Filenames)
             {
                 String v = _analyst.Script.Properties
-                    .GetFilename(key);
+                                   .GetFilename(key);
                 report.BeginRow();
                 report.Cell(key);
                 report.Cell(v);
@@ -250,9 +245,8 @@ namespace Encog.App.Analyst.Report
         }
 
         /// <summary>
-        /// Produce a report for a filename.
+        ///     Produce a report for a filename.
         /// </summary>
-        ///
         /// <param name="filename">The filename.</param>
         public void ProduceReport(FileInfo filename)
         {

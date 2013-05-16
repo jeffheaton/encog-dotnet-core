@@ -21,9 +21,6 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Encog.MathUtil.Randomize;
 using Encog.ML.EA.Genome;
 using Encog.Engine.Network.Activation;
@@ -56,11 +53,11 @@ namespace Encog.Neural.NEAT.Training.Opp
                 int parentIndex, IGenome[] offspring,
                 int offspringIndex)
         {
-            NEATGenome target = ObtainGenome(parents, parentIndex, offspring,
+            var target = ObtainGenome(parents, parentIndex, offspring,
                     offspringIndex);
-            int countTrysToFindOldLink = Owner.MaxTries;
+            var countTrysToFindOldLink = Owner.MaxTries;
 
-            NEATPopulation pop = ((NEATPopulation)target.Population);
+            var pop = ((NEATPopulation)target.Population);
 
             // the link to split
             NEATLinkGene splitLink = null;
@@ -87,7 +84,7 @@ namespace Encog.Neural.NEAT.Training.Opp
                 NEATLinkGene link = target.LinksChromosome[i];
 
                 // get the from neuron
-                long fromNeuron = link.FromNeuronID;
+                long fromNeuron = link.FromNeuronId;
 
                 if ((link.Enabled)
                         && (target.NeuronsChromosome
@@ -106,8 +103,8 @@ namespace Encog.Neural.NEAT.Training.Opp
 
             splitLink.Enabled = false;
 
-            long from = splitLink.FromNeuronID;
-            long to = splitLink.ToNeuronID;
+            long from = splitLink.FromNeuronId;
+            long to = splitLink.ToNeuronId;
 
             NEATInnovation innovation = ((NEATPopulation)Owner.Population).Innovations
                     .FindInnovationSplit(from, to);
@@ -117,12 +114,12 @@ namespace Encog.Neural.NEAT.Training.Opp
 
             target.NeuronsChromosome.Add(
                     new NEATNeuronGene(NEATNeuronType.Hidden, af, innovation
-                            .NeuronID, innovation.InnovationID));
+                            .NeuronId, innovation.InnovationId));
 
             // add the other two sides of the link
-            CreateLink(target, from, innovation.NeuronID,
+            CreateLink(target, from, innovation.NeuronId,
                     splitLink.Weight);
-            CreateLink(target, innovation.NeuronID, to, pop.WeightRange);
+            CreateLink(target, innovation.NeuronId, to, pop.WeightRange);
 
             target.SortGenes();
         }

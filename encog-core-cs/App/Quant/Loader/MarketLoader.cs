@@ -20,12 +20,12 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 namespace Encog.App.Quant.Loader
 {
     /// <summary>
-    /// Common interface for market loaders.
+    ///     Common interface for market loaders.
     /// </summary>
-    ///
     public interface MarketLoader : QuantTask
     {
     }

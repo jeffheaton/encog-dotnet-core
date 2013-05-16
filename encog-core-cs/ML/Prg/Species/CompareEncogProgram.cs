@@ -20,24 +20,22 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Encog.ML.Prg.Species
 {
     /// <summary>
-    /// Compare two Encog programs for speciation. Count the nodes that are the
-    /// different, the higher the compare value, the more different two genomes are.
-    /// Only the opcodes are compared, the actual values are not. This causes the
-    /// comparison to be more about structure than actual values. Two genomes with
-    /// the same structure, and different values, can be identical.
+    ///     Compare two Encog programs for speciation. Count the nodes that are the
+    ///     different, the higher the compare value, the more different two genomes are.
+    ///     Only the opcodes are compared, the actual values are not. This causes the
+    ///     comparison to be more about structure than actual values. Two genomes with
+    ///     the same structure, and different values, can be identical.
     /// </summary>
     public class CompareEncogProgram
     {
         /// <summary>
-        /// Compare program 1 and 2 node for node. Lower values mean more similar genomes.
+        ///     Compare program 1 and 2 node for node. Lower values mean more similar genomes.
         /// </summary>
         /// <param name="prg1">The first program.</param>
         /// <param name="prg2">The second program.</param>
@@ -48,14 +46,14 @@ namespace Encog.ML.Prg.Species
         }
 
         /// <summary>
-        /// Compare two nodes. 
+        ///     Compare two nodes.
         /// </summary>
         /// <param name="result">The result of previous comparisons.</param>
         /// <param name="node1">The first node to compare.</param>
         /// <param name="node2">The second node to compare.</param>
         /// <returns>The result.</returns>
         private double CompareNode(double result, ProgramNode node1,
-                ProgramNode node2)
+                                   ProgramNode node2)
         {
             double newResult = result;
 

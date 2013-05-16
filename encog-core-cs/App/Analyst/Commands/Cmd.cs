@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Text;
 using Encog.App.Analyst.Script;
@@ -28,34 +29,29 @@ using Encog.App.Analyst.Script.Prop;
 namespace Encog.App.Analyst.Commands
 {
     /// <summary>
-    /// Base class for Encog Analyst commands. This class defines the properties sent
-    /// to a command.
+    ///     Base class for Encog Analyst commands. This class defines the properties sent
+    ///     to a command.
     /// </summary>
-    ///
     public abstract class Cmd
     {
         /// <summary>
-        /// The analyst object that this command belongs to.
+        ///     The analyst object that this command belongs to.
         /// </summary>
-        ///
         private readonly EncogAnalyst _analyst;
 
         /// <summary>
-        /// The properties to use with this command.
+        ///     The properties to use with this command.
         /// </summary>
-        ///
         private readonly ScriptProperties _properties;
 
         /// <summary>
-        /// The script object that this command belongs to.
+        ///     The script object that this command belongs to.
         /// </summary>
-        ///
         private readonly AnalystScript _script;
 
         /// <summary>
-        /// Construct this command.
+        ///     Construct this command.
         /// </summary>
-        ///
         /// <param name="theAnalyst">The analyst that this command belongs to.</param>
         protected Cmd(EncogAnalyst theAnalyst)
         {
@@ -90,15 +86,14 @@ namespace Encog.App.Analyst.Commands
         }
 
         /// <summary>
-        /// Execute this command.
+        ///     Execute this command.
         /// </summary>
-        ///
         /// <param name="args">The arguments for this command.</param>
         /// <returns>True if processing should stop after this command.</returns>
         public abstract bool ExecuteCommand(String args);
 
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override sealed String ToString()
         {
             var result = new StringBuilder("[");

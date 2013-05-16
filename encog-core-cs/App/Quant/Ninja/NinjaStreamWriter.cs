@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,43 +32,43 @@ using Encog.Util.Time;
 namespace Encog.App.Quant.Ninja
 {
     /// <summary>
-    /// Can be used from within NinjaTrader to export data.  This class is usually placed 
-    /// inside of a NinjaTrader indicator to export NinjaTrader indicators and data.
+    ///     Can be used from within NinjaTrader to export data.  This class is usually placed
+    ///     inside of a NinjaTrader indicator to export NinjaTrader indicators and data.
     /// </summary>
     public class NinjaStreamWriter
     {
         /// <summary>
-        /// The columns to use.
+        ///     The columns to use.
         /// </summary>
         private readonly IList<String> columns = new List<String>();
 
         /// <summary>
-        /// True, if columns were defined.
+        ///     True, if columns were defined.
         /// </summary>
         private bool columnsDefined;
 
         /// <summary>
-        /// The format of the CSV file.
+        ///     The format of the CSV file.
         /// </summary>
         private CSVFormat format;
 
         /// <summary>
-        /// True, if headers are present.
+        ///     True, if headers are present.
         /// </summary>
         private bool headers;
 
         /// <summary>
-        /// The output line, as it is built.
+        ///     The output line, as it is built.
         /// </summary>
         private StringBuilder line;
 
         /// <summary>
-        /// The output file.
+        ///     The output file.
         /// </summary>
         private TextWriter tw;
 
         /// <summary>
-        /// Construct the object, and set the defaults.
+        ///     Construct the object, and set the defaults.
         /// </summary>
         public NinjaStreamWriter()
         {
@@ -76,12 +77,12 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// The percision to use.
+        ///     The percision to use.
         /// </summary>
         public int Percision { get; set; }
 
         /// <summary>
-        /// Open the file for output.
+        ///     Open the file for output.
         /// </summary>
         /// <param name="filename">The filename.</param>
         /// <param name="headers">True, if headers are present.</param>
@@ -94,7 +95,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// Write the headers.
+        ///     Write the headers.
         /// </summary>
         private void WriteHeaders()
         {
@@ -120,7 +121,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// Close the file.
+        ///     Close the file.
         /// </summary>
         public void Close()
         {
@@ -130,7 +131,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// Begin a bar, for the specified date/time.
+        ///     Begin a bar, for the specified date/time.
         /// </summary>
         /// <param name="dt">The date/time where the bar begins.</param>
         public void BeginBar(DateTime dt)
@@ -152,7 +153,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// End the current bar.
+        ///     End the current bar.
         /// </summary>
         public void EndBar()
         {
@@ -177,7 +178,7 @@ namespace Encog.App.Quant.Ninja
         }
 
         /// <summary>
-        /// Store a column.
+        ///     Store a column.
         /// </summary>
         /// <param name="name">The name of the column.</param>
         /// <param name="d">The value to store.</param>

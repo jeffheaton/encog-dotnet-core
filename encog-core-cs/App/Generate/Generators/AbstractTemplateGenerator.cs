@@ -20,63 +20,121 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using Encog.App.Analyst;
-using Encog.Neural.Flat;
 using Encog.Engine.Network.Activation;
+using Encog.Neural.Flat;
 using Encog.Util;
 using Encog.Util.CSV;
-using System.IO;
 using Encog.Util.File;
 
 namespace Encog.App.Generate.Generators
 {
     /// <summary>
-    /// Provides a basic implementation of a template generator.
+    ///     Provides a basic implementation of a template generator.
     /// </summary>
     public abstract class AbstractTemplateGenerator : ITemplateGenerator
     {
-
         /// <summary>
-        /// The contents of the generated file.
+        ///     The contents of the generated file.
         /// </summary>
-        private StringBuilder contents = new StringBuilder();
+        private readonly StringBuilder contents = new StringBuilder();
 
         /// <summary>
-        /// The Encog analyst that is being used.
+        ///     The Encog analyst that is being used.
         /// </summary>
         private EncogAnalyst analyst;
 
         /// <summary>
-        /// The current indention level.
+        ///     The current indention level.
         /// </summary>
         public int IndentLevel { get; set; }
 
         /// <summary>
-        /// Add a line, with proper indention. 
+        ///     The Encog analyst that we are using.
+        /// </summary>
+        public EncogAnalyst Analyst
+        {
+            get { return analyst; }
+        }
+
+        /// <summary>
+        ///     A platform specific array set to null.
+        /// </summary>
+        public abstract String NullArray { get; }
+
+        /// <summary>
+        ///     Get a resource path to the template that we are using.
+        /// </summary>
+        public abstract String TemplatePath { get; }
+
+        /// <summary>
+        ///     Generate based on the provided Encog Analyst.
+        /// </summary>
+        /// <param name="theAnalyst">The Encog analyst to base this on.</param>
+        public void Generate(EncogAnalyst theAnalyst)
+        {
+            string fileContent = ResourceLoader.LoadString(TemplatePath);
+            using (var reader = new StringReader(fileContent))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.StartsWith("~~"))
+                    {
+                        ProcessToken(line.Substring(2).Trim());
+                    }
+                    else
+                    {
+                        contents.Append(line);
+                        contents.Append("\n");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     The generated contents.
+        /// </summary>
+        public String Contents
+        {
+            get { return contents.ToString(); }
+        }
+
+        /// <summary>
+        ///     Write the contents to the specified file.
+        /// </summary>
+        /// <param name="targetFile">The target file.</param>
+        public void WriteContents(FileInfo targetFile)
+        {
+            File.WriteAllText(targetFile.ToString(), contents.ToString());
+        }
+
+        /// <summary>
+        ///     Add a line, with proper indention.
         /// </summary>
         /// <param name="line">The line to add.</param>
         public void AddLine(String line)
         {
             for (int i = 0; i < IndentLevel; i++)
             {
-                this.contents.Append("\t");
+                contents.Append("\t");
             }
-            this.contents.Append(line);
-            this.contents.Append("\n");
+            contents.Append(line);
+            contents.Append("\n");
         }
 
         /// <summary>
-        /// Add a name value definition, as a double array.
+        ///     Add a name value definition, as a double array.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="data">THe data.</param>
         public void AddNameValue(String name, double[] data)
         {
-            StringBuilder value = new StringBuilder();
+            var value = new StringBuilder();
             if (data == null)
             {
                 value.Append(name);
@@ -86,12 +144,12 @@ namespace Encog.App.Generate.Generators
             else
             {
                 ToBrokenList(value, data);
-                AddNameValue(name, "{" + value.ToString() + "}");
+                AddNameValue(name, "{" + value + "}");
             }
         }
 
         /// <summary>
-        /// Add a name-value as an int.
+        ///     Add a name-value as an int.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">THe value.</param>
@@ -99,15 +157,15 @@ namespace Encog.App.Generate.Generators
         {
             AddNameValue(name, "" + value);
         }
-        
+
         /// <summary>
-        /// Add a name-value array where the value is an int array.
+        ///     Add a name-value array where the value is an int array.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="data">The value.</param>
         public void AddNameValue(String name, int[] data)
         {
-            StringBuilder value = new StringBuilder();
+            var value = new StringBuilder();
             if (data == null)
             {
                 value.Append(name);
@@ -117,18 +175,18 @@ namespace Encog.App.Generate.Generators
             else
             {
                 ToBrokenList(value, data);
-                AddNameValue(name, "{" + value.ToString() + "}");
+                AddNameValue(name, "{" + value + "}");
             }
         }
-        
+
         /// <summary>
-        /// Add a name-value where a string is the value.
+        ///     Add a name-value where a string is the value.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
         public void AddNameValue(String name, String value)
         {
-            StringBuilder line = new StringBuilder();
+            var line = new StringBuilder();
             line.Append(name);
             line.Append(" = ");
 
@@ -146,13 +204,13 @@ namespace Encog.App.Generate.Generators
         }
 
         /// <summary>
-        /// Create an array of activations based on a flat network.
+        ///     Create an array of activations based on a flat network.
         /// </summary>
         /// <param name="flat">The flat network.</param>
         /// <returns></returns>
         public int[] CreateActivations(FlatNetwork flat)
         {
-            int[] result = new int[flat.ActivationFunctions.Length];
+            var result = new int[flat.ActivationFunctions.Length];
             for (int i = 0; i < flat.ActivationFunctions.Length; i++)
             {
                 IActivationFunction af = flat.ActivationFunctions[i];
@@ -183,78 +241,19 @@ namespace Encog.App.Generate.Generators
         }
 
         /// <summary>
-        /// Create an array of doubles to hold the specified flat network.
+        ///     Create an array of doubles to hold the specified flat network.
         /// </summary>
         /// <param name="flat">The flat network to use as a model.</param>
         /// <returns>The new array.</returns>
         public double[] CreateParams(FlatNetwork flat)
         {
-            double[] result = new double[flat.ActivationFunctions.Length];
+            var result = new double[flat.ActivationFunctions.Length];
             EngineArray.Fill(result, 1);
             return result;
         }
 
         /// <summary>
-        /// Generate based on the provided Encog Analyst.
-        /// </summary>
-        /// <param name="theAnalyst">The Encog analyst to base this on.</param>
-        public void Generate(EncogAnalyst theAnalyst)
-        {
-            string fileContent = ResourceLoader.LoadString(TemplatePath);
-            using (var reader = new StringReader(fileContent))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.StartsWith("~~"))
-                    {
-                        ProcessToken(line.Substring(2).Trim());
-                    }
-                    else
-                    {
-                        this.contents.Append(line);
-                        this.contents.Append("\n");
-                    }
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// The Encog analyst that we are using.
-        /// </summary>
-        public EncogAnalyst Analyst
-        {
-            get
-            {
-                return this.analyst;
-            }
-        }
-
-        /// <summary>
-        /// The generated contents.
-        /// </summary>
-        public String Contents
-        {
-            get
-            {
-                return this.contents.ToString();
-            }
-        }
-
-
-        /// <summary>
-        /// A platform specific array set to null.
-        /// </summary>
-        public abstract String NullArray { get; }
-
-        /// <summary>
-        /// Get a resource path to the template that we are using.
-        /// </summary>
-        public abstract String TemplatePath { get; }
-
-        /// <summary>
-        /// Indent to the right one.
+        ///     Indent to the right one.
         /// </summary>
         public void IndentIn()
         {
@@ -262,7 +261,7 @@ namespace Encog.App.Generate.Generators
         }
 
         /// <summary>
-        /// Indent to the left one.
+        ///     Indent to the left one.
         /// </summary>
         public void IndentOut()
         {
@@ -270,14 +269,14 @@ namespace Encog.App.Generate.Generators
         }
 
         /// <summary>
-        /// Process the specified token.
+        ///     Process the specified token.
         /// </summary>
         /// <param name="command">The token to process.</param>
         public abstract void ProcessToken(String command);
 
         /// <summary>
-        /// Create an array list broken into 10 columns. This prevents a very large
-        /// array from creating a very long single line.
+        ///     Create an array list broken into 10 columns. This prevents a very large
+        ///     array from creating a very long single line.
         /// </summary>
         /// <param name="result">The string builder to add to.</param>
         /// <param name="data">The data to convert.</param>
@@ -299,14 +298,13 @@ namespace Encog.App.Generate.Generators
                     lineCount = 0;
                 }
                 result.Append(CSVFormat.EgFormat.Format(data[i],
-                        EncogFramework.DefaultPrecision));
+                                                        EncogFramework.DefaultPrecision));
             }
-
         }
 
         /// <summary>
-        /// Create an array list broken into 10 columns. This prevents a very large
-        /// array from creating a very long single line.
+        ///     Create an array list broken into 10 columns. This prevents a very large
+        ///     array from creating a very long single line.
         /// </summary>
         /// <param name="result">The string builder to add to.</param>
         /// <param name="data">The data to convert.</param>
@@ -329,15 +327,6 @@ namespace Encog.App.Generate.Generators
                 }
                 result.Append("" + data[i]);
             }
-        }
-
-        /// <summary>
-        /// Write the contents to the specified file.
-        /// </summary>
-        /// <param name="targetFile">The target file.</param>
-        public void WriteContents(FileInfo targetFile)
-        {
-            System.IO.File.WriteAllText(targetFile.ToString(), contents.ToString());
         }
     }
 }
