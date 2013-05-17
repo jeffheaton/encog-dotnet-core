@@ -406,7 +406,7 @@ namespace Encog.Neural.NEAT
             Species.Add(defaultSpecies);
 
             // create initial innovations
-            Innovations = new NEATInnovationList();
+            Innovations = new NEATInnovationList(this);
         }
 
         /// <summary>
