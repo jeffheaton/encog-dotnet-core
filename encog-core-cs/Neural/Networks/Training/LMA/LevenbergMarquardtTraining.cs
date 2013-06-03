@@ -25,7 +25,6 @@ using Encog.MathUtil.Matrices.Decomposition;
 using Encog.MathUtil.Matrices.Hessian;
 using Encog.ML;
 using Encog.ML.Data;
-using Encog.ML.Data.Basic;
 using Encog.ML.Train;
 using Encog.Neural.Networks.Structure;
 using Encog.Neural.Networks.Training.Propagation;
@@ -126,6 +125,11 @@ namespace Encog.Neural.Networks.Training.Lma
         private double[] _weights;
 
         /// <summary>
+        /// Is the init complete?
+        /// </summary>
+        private bool _initComplete;
+
+        /// <summary>
         /// Construct the LMA object. Use the chain rule for Hessian calc.
         /// </summary>
         /// <param name="network">The network to train. Must have a single output neuron.</param>
@@ -150,20 +154,14 @@ namespace Encog.Neural.Networks.Training.Lma
 
             Training = training;
             _indexableTraining = Training;
-            this._network = network;
-            _trainingLength = (int) _indexableTraining.Count;
-            _weightCount = this._network.Structure.CalculateSize();
+            _network = network;
+            _trainingLength = _indexableTraining.Count;
+            _weightCount = _network.Structure.CalculateSize();
             _lambda = 0.1;
             _deltas = new double[_weightCount];
             _diagonal = new double[_weightCount];
 
-            var input = new BasicMLData(
-                _indexableTraining.InputSize);
-            var ideal = new BasicMLData(
-                _indexableTraining.IdealSize);
-
             _hessian = h;
-            _hessian.Init(network, training);
         }
 
         /// <inheritdoc/>
@@ -188,8 +186,6 @@ namespace Encog.Neural.Networks.Training.Lma
             get { return _hessian; }
         }
 
-        #region IMultiThreadable Members
-
         /// <summary>
         /// The thread count, specify 0 for Encog to automatically select (default).  
         /// If the underlying Hessian calculator does not support multithreading, an error 
@@ -199,28 +195,27 @@ namespace Encog.Neural.Networks.Training.Lma
         {
             get
             {
-                if (_hessian is IMultiThreadable)
+                var hessian = _hessian as IMultiThreadable;
+                if (hessian != null)
                 {
-                    return ((IMultiThreadable) _hessian).ThreadCount;
+                    return hessian.ThreadCount;
                 }
-                throw new TrainingError("The Hessian object in use(" + _hessian.GetType().Name +
-                                        ") does not support multi-threaded mode.");
+                return 1;
             }
             set
             {
-                if (_hessian is IMultiThreadable)
+                var hessian = _hessian as IMultiThreadable;
+                if (hessian != null)
                 {
-                    ((IMultiThreadable) _hessian).ThreadCount = value;
+                    hessian.ThreadCount = value;
                 }
-                else
+                else if (value != 1 && value != 0)
                 {
-                    throw new TrainingError("The Hessian object in use(" + _hessian.GetType().Name +
-                                            ") does not support multi-threaded mode.");
+                    throw new TrainingError("The Hessian object in use(" 
+                        + _hessian.GetType().Name + ") does not support multi-threaded mode.");
                 }
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Save the diagonal of the Hessian.  Will be used to apply the lambda.
@@ -242,11 +237,10 @@ namespace Encog.Neural.Networks.Training.Lma
         {
             var result = new ErrorCalculation();
 
-			IMLDataPair pair;
             for (int i = 0; i < _trainingLength; i++)
             {
-                pair = _indexableTraining[i];
-                IMLData actual = _network.Compute(pair.Input);
+                var pair = _indexableTraining[i];
+                var actual = _network.Compute(pair.Input);
                 result.UpdateError(actual, pair.Ideal, pair.Significance);
             }
 
@@ -270,7 +264,12 @@ namespace Encog.Neural.Networks.Training.Lma
         /// </summary>
         public override void Iteration()
         {
-            LUDecomposition decomposition;
+            if (!_initComplete)
+            {
+                _hessian.Init(_network, Training);
+                _initComplete = true;
+            }
+
             PreIteration();
 
             _hessian.Clear();
@@ -286,7 +285,7 @@ namespace Encog.Neural.Networks.Training.Lma
             while (!done)
             {
                 ApplyLambda();
-                decomposition = new LUDecomposition(_hessian.HessianMatrix);
+                var decomposition = new LUDecomposition(_hessian.HessianMatrix);
 
                 if (decomposition.IsNonsingular)
                 {
@@ -297,17 +296,17 @@ namespace Encog.Neural.Networks.Training.Lma
 
                     if (currentError < startingError)
                     {
-                        _lambda /= LevenbergMarquardtTraining.ScaleLambda;
+                        _lambda /= ScaleLambda;
                         done = true;
                     }
                 }
 
                 if (!done)
                 {
-                    _lambda *= LevenbergMarquardtTraining.ScaleLambda;
-                    if (_lambda > LevenbergMarquardtTraining.LambdaMax)
+                    _lambda *= ScaleLambda;
+                    if (_lambda > LambdaMax)
                     {
-                        _lambda = LevenbergMarquardtTraining.LambdaMax;
+                        _lambda = LambdaMax;
                         done = true;
                     }
                 }

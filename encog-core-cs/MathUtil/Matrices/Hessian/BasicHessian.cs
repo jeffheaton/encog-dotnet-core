@@ -33,11 +33,6 @@ namespace Encog.MathUtil.Matrices.Hessian
     public abstract class BasicHessian : IComputeHessian
     {
         /// <summary>
-        /// The derivatives.
-        /// </summary>
-        protected double[] derivative;
-
-        /// <summary>
         /// The flat network.
         /// </summary>
         protected FlatNetwork flat;
@@ -85,7 +80,6 @@ namespace Encog.MathUtil.Matrices.Hessian
             gradients = new double[weightCount];
             hessianMatrix = new Matrix(weightCount, weightCount);
             hessian = hessianMatrix.Data;
-            derivative = new double[weightCount];
         }
 
         /// <inheritdoc/>
@@ -137,7 +131,7 @@ namespace Encog.MathUtil.Matrices.Hessian
             {
                 for (int j = 0; j < weightCount; j++)
                 {
-                    hessian[i][j] += 2*d[i]*d[j];
+                    hessian[i][j] += d[i]*d[j];
                 }
             }
         }

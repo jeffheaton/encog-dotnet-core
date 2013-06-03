@@ -640,5 +640,29 @@ namespace Encog.Util
             Array.Copy(source, sourcePos, target, targetPos, length);
 
         }
+
+        public static void Fill(double[][] sigma, int value)
+        {
+            for (int i = 0; i < sigma.Length; i++)
+            {
+                for (int j = 0; j < sigma[i].Length; j++)
+                {
+                    sigma[i][j] = value;
+                }
+            }
+        }
+
+        public static void ArrayAdd(double[][] target, double[][] h)
+        {
+            for (int row = 0; row < target.Length; row++)
+            {
+                for (int col = 0; col < target[row].Length; col++)
+                {
+                    target[row][col] += h[row][col];
+                }
+            }
+		
+	}
     }
+
 }

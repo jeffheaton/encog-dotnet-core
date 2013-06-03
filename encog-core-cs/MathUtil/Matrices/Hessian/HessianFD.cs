@@ -73,6 +73,11 @@ namespace Encog.MathUtil.Matrices.Hessian
         private int _pointsPerSide = 5;
 
         /// <summary>
+        /// The weight count.
+        /// </summary>
+        private int _weightCount;
+
+        /// <summary>
         /// The number of points per side.
         /// </summary>
         public int PointsPerSide
@@ -85,14 +90,14 @@ namespace Encog.MathUtil.Matrices.Hessian
         public new void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
             base.Init(theNetwork, theTraining);
-            int weightCount = theNetwork.Structure.Flat.Weights.Length;
+            _weightCount = theNetwork.Structure.Flat.Weights.Length;
 
             _center = _pointsPerSide + 1;
             _pointCount = (_pointsPerSide*2) + 1;
             _dCoeff = CreateCoefficients();
-            _dStep = new double[weightCount];
+            _dStep = new double[theTraining.Count];
 
-            for (int i = 0; i < weightCount; i++)
+            for (int i = 0; i < _weightCount; i++)
             {
                 _dStep[i] = InitialStep;
             }
@@ -115,9 +120,9 @@ namespace Encog.MathUtil.Matrices.Hessian
         /// <param name="outputNeuron">The output neuron to compute.</param>
         private void InternalCompute(int outputNeuron)
         {
-            int row = 0;
+            var row = 0;
             var error = new ErrorCalculation();
-            EngineArray.Fill(derivative, 0);
+            var derivative = new double[_weightCount];
 
             // Loop over every training element
             foreach (var pair in training)

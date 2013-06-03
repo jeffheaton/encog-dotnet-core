@@ -23,6 +23,7 @@
 using Encog.ML.Data;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
+using Encog.Util;
 using Encog.Util.Concurrency;
 using System.Threading.Tasks;
 
@@ -125,7 +126,8 @@ namespace Encog.MathUtil.Matrices.Hessian
                     {
                         gradients[i] += worker.Gradients[i];
                     }
-                    UpdateHessian(worker.Derivative);
+
+                    EngineArray.ArrayAdd(Hessian, worker.Hessian);
                 }
             }
 
