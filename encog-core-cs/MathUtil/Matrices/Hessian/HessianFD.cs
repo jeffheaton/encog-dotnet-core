@@ -87,7 +87,7 @@ namespace Encog.MathUtil.Matrices.Hessian
         }
 
         /// <inheritdoc/>
-        public new void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
+        public override void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
             base.Init(theNetwork, theTraining);
             _weightCount = theNetwork.Structure.Flat.Weights.Length;
@@ -127,6 +127,7 @@ namespace Encog.MathUtil.Matrices.Hessian
             // Loop over every training element
             foreach (var pair in training)
             {
+                EngineArray.Fill(derivative, 0);
                 var networkOutput = network.Compute(pair.Input);
 
                 double e = pair.Ideal[outputNeuron] - networkOutput[outputNeuron];
@@ -172,9 +173,10 @@ namespace Encog.MathUtil.Matrices.Hessian
                 }
 
                 row++;
+                UpdateHessian(derivative);
             }
 
-            UpdateHessian(derivative);
+            
 
             sse += error.CalculateSSE();
         }
