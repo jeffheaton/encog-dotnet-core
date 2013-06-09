@@ -442,7 +442,7 @@ namespace Encog.ML.Data.Temporal
         private double GetDataRaw(TemporalDataDescription desc,
                                   int index)
         {
-            TemporalPoint point = _points[index - 1];
+            TemporalPoint point = _points[index];
             return point[desc.Index];
         }
 
