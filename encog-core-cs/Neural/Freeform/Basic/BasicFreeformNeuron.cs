@@ -29,6 +29,7 @@ namespace Encog.Neural.Freeform.Basic
     /// <summary>
     /// This class provides a basic implementation of a freeform neuron.
     /// </summary>
+    [Serializable]
     public class BasicFreeformNeuron : IFreeformNeuron
     {
         /// <summary>

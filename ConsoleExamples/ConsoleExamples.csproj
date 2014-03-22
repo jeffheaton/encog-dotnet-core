@@ -72,6 +72,11 @@
     <Compile Include="Examples\Forest\GenerateData.cs" />
     <Compile Include="Examples\Forest\TrainNetwork.cs" />
     <Compile Include="Examples\ForexExample\ForexMarketTrain.cs" />
+    <Compile Include="Examples\Freeform\ConvertToFreeform.cs" />
+    <Compile Include="Examples\Freeform\ElmanFreeform.cs" />
+    <Compile Include="Examples\Freeform\FreeformOnlineXOR.cs" />
+    <Compile Include="Examples\Freeform\FreeformXOR.cs" />
+    <Compile Include="Examples\Freeform\SkipNeuralNetwork.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
     <Compile Include="Examples\GeneticTSP\TSPScore.cs" />
     <Compile Include="Examples\Hopfield\Associate\HopfieldAssociate.cs" />

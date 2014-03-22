@@ -22,6 +22,7 @@
 using System;
 using Encog.ML.Data;
 using Encog.ML.Data.Basic;
+using Encog.Neural.Freeform;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Layers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -137,6 +138,12 @@ namespace Encog.Util
                 }
             }
             return result;
+        }
+
+        public static FreeformNetwork CreateTrainedFreeformXOR()
+        {
+			BasicNetwork network = CreateTrainedXOR();
+			return new FreeformNetwork(network);
         }
     }
 }

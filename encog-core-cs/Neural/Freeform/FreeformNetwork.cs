@@ -44,6 +44,7 @@ namespace Encog.Neural.Freeform
     ///     Freeform networks allow just about any neuron to be connected to another
     ///     neuron. You can have neuron layers if you want, but they are not required.
     /// </summary>
+    [Serializable]
     public class FreeformNetwork : BasicML, IMLContext,
         IMLRegression, IMLEncodable, IMLResettable, IMLClassification, IMLError
     {

@@ -83,7 +83,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         ///
         /// <param name="network">The network that is to be trained.</param>
         /// <param name="training">The training data to be used for backpropagation.</param>
-        public Backpropagation(BasicNetwork network, IMLDataSet training) : this(network, training, 0, 0)
+        public Backpropagation(IContainsFlat network, IMLDataSet training) : this(network, training, 0, 0)
         {
             AddStrategy(new SmartLearningRate());
             AddStrategy(new SmartMomentum());
@@ -94,7 +94,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Back
         /// <param name="training">The training set</param>
         /// <param name="learnRate"></param>
         /// <param name="momentum"></param>
-        public Backpropagation(BasicNetwork network,
+        public Backpropagation(IContainsFlat network,
                                IMLDataSet training, double learnRate,
                                double momentum) : base(network, training)
         {

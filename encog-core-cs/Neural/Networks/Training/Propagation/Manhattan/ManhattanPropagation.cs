@@ -68,7 +68,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Manhattan
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
         /// <param name="learnRate">The learning rate.</param>
-        public ManhattanPropagation(BasicNetwork network,
+        public ManhattanPropagation(IContainsFlat network,
                                     IMLDataSet training, double learnRate) : base(network, training)
         {
             _learningRate = learnRate;

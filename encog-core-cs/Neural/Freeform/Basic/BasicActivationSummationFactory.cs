@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using Encog.Neural.Freeform.Factory;
 using Encog.Engine.Network.Activation;
 namespace Encog.Neural.Freeform.Basic
@@ -27,6 +29,7 @@ namespace Encog.Neural.Freeform.Basic
     /// <summary>
     /// A factory to create BasicFactivationSUmmation objects.
     /// </summary>
+    [Serializable]
     public class BasicActivationSummationFactory : IInputSummationFactory
     {
         /// <inheritdoc/>

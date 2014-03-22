@@ -108,7 +108,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         ///
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data to use.</param>
-        public ResilientPropagation(BasicNetwork network,
+        public ResilientPropagation(IContainsFlat network,
                                     IMLDataSet training)
             : this(network, training, RPROPConst.DefaultInitialUpdate, RPROPConst.DefaultMaxStep)
         {

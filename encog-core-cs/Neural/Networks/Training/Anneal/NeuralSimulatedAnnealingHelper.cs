@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using System;
+using Encog.ML;
 using Encog.ML.Anneal;
 
 namespace Encog.Neural.Networks.Training.Anneal
@@ -79,7 +80,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <returns>The error returned by the owner.</returns>
         public override sealed double PerformCalculateScore()
         {
-            return _owner.CalculateScore.CalculateScore(((BasicNetwork) _owner.Method));
+            return _owner.CalculateScore.CalculateScore(_owner.Method);
         }
 
 

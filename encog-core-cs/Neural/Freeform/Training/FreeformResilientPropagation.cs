@@ -31,6 +31,7 @@ namespace Encog.Neural.Freeform.Training
     /// <summary>
     ///     Train freeform network with RPROP.
     /// </summary>
+    [Serializable]
     public class FreeformResilientPropagation: FreeformPropagationTraining
     {
         /// <summary>

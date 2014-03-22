@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Encog.Engine.Network.Activation;
@@ -30,6 +32,7 @@ namespace Encog.Neural.Freeform.Basic
     /// Provides a basic implementation of an input summation. The inputs are summed
     /// and applied to the activation function.
     /// </summary>
+    [Serializable]
     public class BasicActivationSummation : IInputSummation
     {
         /// <summary>

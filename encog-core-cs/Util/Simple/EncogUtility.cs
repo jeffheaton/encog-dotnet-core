@@ -32,6 +32,7 @@ using Encog.ML.Data.Buffer;
 using Encog.ML.Data.Buffer.CODEC;
 using Encog.ML.Data.Market;
 using Encog.ML.Data.Specific;
+using Encog.ML.SVM;
 using Encog.ML.Train;
 using Encog.Neural.Networks;
 using Encog.Neural.Networks.Training.Propagation;
@@ -39,6 +40,9 @@ using Encog.Neural.Networks.Training.Propagation.Resilient;
 using Encog.Neural.Pattern;
 using Encog.Util.CSV;
 using Encog.App.Analyst.CSV.Basic;
+using Encog.ML.SVM.Training;
+using Encog.Neural.Freeform;
+using Encog.Neural.Freeform.Training;
 
 namespace Encog.Util.Simple
 {
@@ -349,15 +353,26 @@ namespace Encog.Util.Simple
         /// <summary>
         /// Train the network, to a specific error, send the output to the console.
         /// </summary>
-        /// <param name="network">The network to train.</param>
+        /// <param name="method">The model to train.</param>
         /// <param name="trainingSet">The training set to use.</param>
         /// <param name="error">The error level to train to.</param>
-        public static void TrainToError(BasicNetwork network,
+        public static void TrainToError(IMLMethod method,
                                         IMLDataSet trainingSet, double error)
         {
-            Propagation train = new ResilientPropagation(network,
-                                                         trainingSet) {ThreadCount = 0};
-            TrainToError(train, trainingSet, error);
+            IMLTrain train;
+
+            if (method is SupportVectorMachine)
+            {
+                train = new SVMTrain((SupportVectorMachine)method, trainingSet);
+            } if (method is FreeformNetwork)
+            {
+                train = new FreeformResilientPropagation((FreeformNetwork)method, trainingSet);
+            }
+            else
+            {
+                train = new ResilientPropagation((IContainsFlat)method, trainingSet);
+            }
+            TrainToError(train, error);
         }
 
         /// <summary>

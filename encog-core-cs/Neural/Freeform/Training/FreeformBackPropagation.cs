@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using Encog.ML.Data;
 using Encog.Neural.Networks.Training.Propagation;
 
@@ -28,6 +30,7 @@ namespace Encog.Neural.Freeform.Training
     /// <summary>
     /// Perform backpropagation for a freeform neural network.
     /// </summary>
+    [Serializable]
     public class FreeformBackPropagation : FreeformPropagationTraining
     {
         /// <summary>

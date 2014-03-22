@@ -68,7 +68,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// The neural network that is to be trained.
         /// </summary>
         ///
-        private readonly BasicNetwork _network;
+        private readonly IMLEncodable _network;
 
         /// <summary>
         /// Construct a simulated annleaing trainer for a feedforward neural network.
@@ -79,7 +79,7 @@ namespace Encog.Neural.Networks.Training.Anneal
         /// <param name="startTemp">The starting temperature.</param>
         /// <param name="stopTemp">The ending temperature.</param>
         /// <param name="cycles">The number of cycles in a training iteration.</param>
-        public NeuralSimulatedAnnealing(BasicNetwork network,
+        public NeuralSimulatedAnnealing(IMLEncodable network,
                                         ICalculateScore calculateScore, double startTemp,
                                         double stopTemp, int cycles) : base(TrainingImplementationType.Iterative)
         {

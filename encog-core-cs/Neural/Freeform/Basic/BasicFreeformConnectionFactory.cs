@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using Encog.Neural.Freeform.Factory;
 
 namespace Encog.Neural.Freeform.Basic
@@ -27,6 +29,7 @@ namespace Encog.Neural.Freeform.Basic
     /// <summary>
     /// A factory that creates basic freeform connection objects.
     /// </summary>
+    [Serializable]
     public class BasicFreeformConnectionFactory : IFreeformConnectionFactory
     {
         /// <inheritdoc/>

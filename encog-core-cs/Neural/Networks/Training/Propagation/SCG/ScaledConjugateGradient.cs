@@ -138,7 +138,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
         ///
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data.</param>
-        public ScaledConjugateGradient(BasicNetwork network,
+        public ScaledConjugateGradient(IContainsFlat network,
                                        IMLDataSet training) : base(network, training)
         {
             _success = true;

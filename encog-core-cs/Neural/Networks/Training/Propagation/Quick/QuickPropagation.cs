@@ -83,7 +83,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         /// </summary>
         /// <param name="network">The network to train.</param>
         /// <param name="training">The training data.</param>
-        public QuickPropagation(BasicNetwork network, IMLDataSet training) : this(network, training, 2.0)
+        public QuickPropagation(IContainsFlat network, IMLDataSet training) : this(network, training, 2.0)
         {
         }
 
@@ -97,7 +97,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Quick
         ///            a learning rate to start with.  If it fails to converge, 
         ///            then drop it.  Just like backprop, except QPROP can 
         ///            take higher learning rates.</param>
-        public QuickPropagation(BasicNetwork network,
+        public QuickPropagation(IContainsFlat network,
                                 IMLDataSet training, double learnRate) : base(network, training)
         {
             ValidateNetwork.ValidateMethodToData(network, training);

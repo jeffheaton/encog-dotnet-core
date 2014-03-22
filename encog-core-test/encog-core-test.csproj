@@ -132,6 +132,7 @@
     <Compile Include="Persist\TestPersistSOM.cs" />
     <Compile Include="Persist\TestPersistSVM.cs" />
     <Compile Include="Persist\TestPersistTrainingContinuation.cs" />
+    <Compile Include="Persist\TestPersistFreeform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationBiPolar.cs" />
     <Compile Include="Util\NetworkUtil.cs" />

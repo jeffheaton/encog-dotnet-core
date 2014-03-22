@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Encog.Engine.Network.Activation;
@@ -33,6 +35,7 @@ namespace Encog.Neural.Freeform.Training
     /// <summary>
     /// Provides basic propagation functions to other trainers.
     /// </summary>
+    [Serializable]
     public abstract class FreeformPropagationTraining : BasicTraining
     {
         /// <summary>

@@ -27,6 +27,7 @@ namespace Encog.Neural.Freeform
     /// <summary>
     /// Freeform neural network error.
     /// </summary>
+    [Serializable]
     public class FreeformNetworkError: NeuralNetworkError
     {
          /// <summary>

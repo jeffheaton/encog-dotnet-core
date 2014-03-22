@@ -28,6 +28,7 @@ namespace Encog.Neural.Freeform.Basic
     /// <summary>
     /// A basic freeform connection.
     /// </summary>
+    [Serializable]
     public class BasicFreeformConnection: IFreeformConnection
     {
         /// <summary>

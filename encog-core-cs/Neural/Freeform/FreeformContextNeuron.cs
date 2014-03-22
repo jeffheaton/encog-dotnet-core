@@ -30,6 +30,7 @@ namespace Encog.Neural.Freeform
     /// <summary>
     /// Defines a freeform context neuron.
     /// </summary>
+    [Serializable]
     public class FreeformContextNeuron : BasicFreeformNeuron
     {
         /// <summary>

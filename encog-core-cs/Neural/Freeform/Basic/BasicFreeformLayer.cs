@@ -20,6 +20,8 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,6 +30,7 @@ namespace Encog.Neural.Freeform.Basic
     /// <summary>
     /// Implements a basic freeform layer.
     /// </summary>
+    [Serializable]
     public class BasicFreeformLayer : IFreeformLayer
     {
         /// <summary>
@@ -36,9 +39,9 @@ namespace Encog.Neural.Freeform.Basic
         private readonly IList<IFreeformNeuron> _neurons = new List<IFreeformNeuron>();
 
         /// <inheritdoc/>
-        public void Add(IFreeformNeuron basicFreeformNeuron)
+        public void Add(IFreeformNeuron neuron)
         {
-            _neurons.Add(basicFreeformNeuron);
+            _neurons.Add(neuron);
         }
 
         /// <inheritdoc/>
@@ -79,9 +82,7 @@ namespace Encog.Neural.Freeform.Basic
         public bool HasBias
         {
             get
-            {
-                return _neurons.Any(neuron => HasBias);
-            }
+            { return Neurons.Any(n => n.IsBias); }
         }
     }
 }
