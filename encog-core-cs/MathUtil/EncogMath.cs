@@ -93,5 +93,18 @@ namespace Encog.MathUtil
 
             return result;
         }
+
+        internal static int Sign(double p)
+        {
+            if (Math.Abs(p) < EncogFramework.DefaultDoubleEqual)
+            {
+                return 0;
+            }
+            if (p > 0)
+            {
+                return 1;
+            }
+            return -1;
+        }
     }
 }
