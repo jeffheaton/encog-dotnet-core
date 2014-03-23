@@ -20,60 +20,47 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
+using System.Threading.Tasks;
 using Encog.ML.Data;
 using Encog.Neural.Flat;
 using Encog.Neural.Networks;
 using Encog.Util;
 using Encog.Util.Concurrency;
-using System.Threading.Tasks;
 
 namespace Encog.MathUtil.Matrices.Hessian
 {
     /// <summary>
-    /// Calculate the Hessian matrix using the chain rule method. 
+    ///     Calculate the Hessian matrix using the chain rule method.
     /// </summary>
     public class HessianCR : BasicHessian, IMultiThreadable
     {
         /// <summary>
-        /// The number of threads to use.
-        /// </summary>
-        private int _numThreads;
-
-        /// <summary>
-        /// The workers.
+        ///     The workers.
         /// </summary>
         private ChainRuleWorker[] _workers;
 
-        #region IMultiThreadable Members
-
         /// <summary>
-        /// Set the number of threads. Specify zero to tell Encog to automatically
-        /// determine the best number of threads for the processor. If OpenCL is used
-        /// as the target device, then this value is not used.
+        ///     The number of threads to use.
         /// </summary>
-        public int ThreadCount
-        {
-            get { return _numThreads; }
-            set { _numThreads = value; }
-        }
+        public int ThreadCount { get; set; }
 
-        #endregion
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
             base.Init(theNetwork, theTraining);
             int weightCount = theNetwork.Structure.Flat.Weights.Length;
 
-            training = theTraining;
-            network = theNetwork;
+            _training = theTraining;
+            _network = theNetwork;
 
-            hessianMatrix = new Matrix(weightCount, weightCount);
-            hessian = hessianMatrix.Data;
+            _hessianMatrix = new Matrix(weightCount, weightCount);
+            _hessian = _hessianMatrix.Data;
 
             // create worker(s)
             var determine = new DetermineWorkload(
-                _numThreads, (int) training.Count);
+                ThreadCount, _training.Count);
 
             _workers = new ChainRuleWorker[determine.ThreadCount];
 
@@ -82,40 +69,34 @@ namespace Encog.MathUtil.Matrices.Hessian
             // handle CPU
             foreach (IntRange r in determine.CalculateWorkers())
             {
-                _workers[index++] = new ChainRuleWorker((FlatNetwork) flat.Clone(),
-                                                       training.OpenAdditional(), r.Low,
-                                                       r.High);
+                _workers[index++] = new ChainRuleWorker((FlatNetwork) _flat.Clone(),
+                    _training.OpenAdditional(), r.Low,
+                    r.High);
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override void Compute()
         {
             Clear();
             double e = 0;
-            int weightCount = network.Flat.Weights.Length;
+            int weightCount = _network.Flat.Weights.Length;
 
-            for (int outputNeuron = 0; outputNeuron < network.OutputCount; outputNeuron++)
+            for (int outputNeuron = 0; outputNeuron < _network.OutputCount; outputNeuron++)
             {
                 // handle context
-                if (flat.HasContext)
+                if (_flat.HasContext)
                 {
                     _workers[0].Network.ClearContext();
                 }
 
-                if (_workers.Length > 1)
+                int neuron = outputNeuron;
+                Parallel.ForEach(_workers, worker =>
                 {
-                    Parallel.ForEach(_workers, worker => 
-                    {
-                        worker.Run();
-                        worker.OutputNeuron = outputNeuron;
-                    });                   
-                }
-                else
-                {
-                    _workers[0].OutputNeuron = outputNeuron;
-                    _workers[0].Run();
-                }
+                    worker.OutputNeuron = neuron;
+                    worker.Run();
+                });
+
 
                 // aggregate workers
 
@@ -124,14 +105,13 @@ namespace Encog.MathUtil.Matrices.Hessian
                     e += worker.Error;
                     for (int i = 0; i < weightCount; i++)
                     {
-                        gradients[i] += worker.Gradients[i];
+                        _gradients[i] += worker.Gradients[i];
                     }
-
                     EngineArray.ArrayAdd(Hessian, worker.Hessian);
                 }
             }
 
-            sse = e/2;
+            _sse = e/2;
         }
     }
 }

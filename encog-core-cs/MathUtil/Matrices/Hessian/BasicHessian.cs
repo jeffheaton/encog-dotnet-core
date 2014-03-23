@@ -33,105 +33,114 @@ namespace Encog.MathUtil.Matrices.Hessian
     public abstract class BasicHessian : IComputeHessian
     {
         /// <summary>
-        /// The flat network.
+        /// The training data that provides the ideal values.
         /// </summary>
-        protected FlatNetwork flat;
-
-        /// <summary>
-        /// The gradients of the Hessian.
-        /// </summary>
-        protected double[] gradients;
-
-        /// <summary>
-        /// The Hessian 2d array.
-        /// </summary>
-        protected double[][] hessian;
-
-        /// <summary>
-        /// The Hessian matrix.
-        /// </summary>
-        protected Matrix hessianMatrix;
+        protected IMLDataSet _training;
 
         /// <summary>
         /// The neural network that we would like to train.
         /// </summary>
-        protected BasicNetwork network;
+        protected BasicNetwork _network;
 
 
         /// <summary>
         /// The sum of square error.
         /// </summary>
-        protected double sse;
+        protected double _sse;
 
         /// <summary>
-        /// The training data that provides the ideal values.
+        /// The gradients of the Hessian.
         /// </summary>
-        protected IMLDataSet training;
+        protected double[] _gradients;
 
-        #region IComputeHessian Members
+        /// <summary>
+        /// The Hessian matrix.
+        /// </summary>
+        protected Matrix _hessianMatrix;
+
+        /// <summary>
+        /// The Hessian 2d array.
+        /// </summary>
+        protected double[][] _hessian;
+
+        /// <summary>
+        /// The flat network.
+        /// </summary>
+        protected FlatNetwork _flat;
 
         /// <inheritdoc/>
         public virtual void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
+
             int weightCount = theNetwork.Structure.Flat.Weights.Length;
-            flat = theNetwork.Flat;
-            training = theTraining;
-            network = theNetwork;
-            gradients = new double[weightCount];
-            hessianMatrix = new Matrix(weightCount, weightCount);
-            hessian = hessianMatrix.Data;
+            _flat = theNetwork.Flat;
+            _training = theTraining;
+            _network = theNetwork;
+            _gradients = new double[weightCount];
+            _hessianMatrix = new Matrix(weightCount, weightCount);
+            _hessian = _hessianMatrix.Data;
         }
+
+        /// <inheritdoc/>
+        public abstract void Compute();
 
         /// <inheritdoc/>
         public double[] Gradients
         {
-            get { return gradients; }
+            get
+            {
+                return _gradients;
+            }
         }
 
         /// <inheritdoc/>
         public Matrix HessianMatrix
         {
-            get { return hessianMatrix; }
+            get
+            {
+                return _hessianMatrix;
+            }
         }
 
         /// <inheritdoc/>
         public double[][] Hessian
         {
-            get { return hessian; }
+            get
+            {
+                return _hessian;
+            }
         }
 
         /// <inheritdoc/>
         public void Clear()
         {
-            EngineArray.Fill(gradients, 0);
-            hessianMatrix.Clear();
+            EngineArray.Fill(_gradients, 0);
+            _hessianMatrix.Clear();
         }
 
         /// <inheritdoc/>
         public double SSE
         {
-            get { return sse; }
+            get
+            {
+                return _sse;
+            }
         }
 
-
-        /// <inheritdoc/>
-        public abstract void Compute();
-
-        #endregion
-
         /// <summary>
-        /// Update the Hessian, sum's with what is in the Hessian already.  Call clear to clear out old Hessian.
+        /// Update the Hessian, sum's with what is in the Hessian already.  
+        /// Call clear to clear out old Hessian.
         /// </summary>
-        /// <param name="d">The first derivatives to update with.</param>
+        /// <param name="d">The values to sum into the current Hessian</param>
         public void UpdateHessian(double[] d)
         {
             // update the hessian
-            int weightCount = network.Flat.Weights.Length;
+            int weightCount = _network.Flat.Weights.Length;
             for (int i = 0; i < weightCount; i++)
             {
                 for (int j = 0; j < weightCount; j++)
                 {
-                    hessian[i][j] += d[i]*d[j];
+                    _hessian[i][j] += d[i] * d[j];
                 }
             }
         }

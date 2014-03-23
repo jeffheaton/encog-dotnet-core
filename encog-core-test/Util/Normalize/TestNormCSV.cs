@@ -48,7 +48,6 @@ namespace Encog.Util.Normalize
 
             var norm = new DataNormalization();
             norm.Report = new NullStatusReportable();
-            norm.Storage = new NormalizationStorageCSV(FILENAME.ToString());
             norm.AddInputField(a = new InputFieldArray2D(false, ARRAY_2D, 0));
             norm.AddInputField(b = new InputFieldArray2D(false, ARRAY_2D, 1));
             norm.AddInputField(c = new InputFieldArray2D(false, ARRAY_2D, 2));

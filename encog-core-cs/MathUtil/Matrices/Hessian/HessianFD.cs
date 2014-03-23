@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+
 using System;
 using System.Linq;
 using Encog.MathUtil.Error;
@@ -30,72 +31,70 @@ using Encog.Util;
 namespace Encog.MathUtil.Matrices.Hessian
 {
     /// <summary>
-    /// Calculate the Hessian matrix using the finite difference method. This is a
-    /// very simple method of calculating the Hessian. The algorithm does not vary
-    /// greatly by number layers. This makes it very useful as a tool to check the
-    /// accuracy of other methods of determining the Hessian.
-    /// 
-    /// For more information on the Finite Difference Method see the following article.
-    /// 
-    /// http://en.wikipedia.org/wiki/Finite_difference_method
+    ///     Calculate the Hessian matrix using the finite difference method. This is a
+    ///     very simple method of calculating the Hessian. The algorithm does not vary
+    ///     greatly by number layers. This makes it very useful as a tool to check the
+    ///     accuracy of other methods of determining the Hessian.
+    ///     For more information on the Finite Difference Method see the following article.
+    ///     http://en.wikipedia.org/wiki/Finite_difference_method
     /// </summary>
     public class HessianFD : BasicHessian
     {
         /// <summary>
-        /// The initial step size for dStep.
+        ///     The initial step size for dStep.
         /// </summary>
         public const double InitialStep = 0.001;
 
 
         /// <summary>
-        /// The center of the point array.
+        ///     The center of the point array.
         /// </summary>
         private int _center;
 
         /// <summary>
-        /// The derivative coefficient, used for the finite difference method.
+        ///     The derivative coefficient, used for the finite difference method.
         /// </summary>
         private double[] _dCoeff;
 
         /// <summary>
-        /// The derivative step size, used for the finite difference method.
+        ///     The derivative step size, used for the finite difference method.
         /// </summary>
         private double[] _dStep;
 
         /// <summary>
-        /// The number of points actually used, which is (pointsPerSide*2)+1. 
+        ///     The number of points actually used, which is (pointsPerSide*2)+1.
         /// </summary>
         private int _pointCount;
 
         /// <summary>
-        /// The number of points requested per side.  This determines the accuracy of the calculation.
-        /// </summary>
-        private int _pointsPerSide = 5;
-
-        /// <summary>
-        /// The weight count.
+        ///     The weight count.
         /// </summary>
         private int _weightCount;
 
+
         /// <summary>
-        /// The number of points per side.
+        ///     Construct the HessianFD.
         /// </summary>
-        public int PointsPerSide
+        public HessianFD()
         {
-            get { return _pointsPerSide; }
-            set { _pointsPerSide = value; }
+            PointsPerSide = 5;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        ///     The number of points requested per side.  This determines the accuracy of the calculation.
+        /// </summary>
+        private int PointsPerSide { get; set; }
+
+        /// <inheritdoc />
         public override void Init(BasicNetwork theNetwork, IMLDataSet theTraining)
         {
             base.Init(theNetwork, theTraining);
             _weightCount = theNetwork.Structure.Flat.Weights.Length;
 
-            _center = _pointsPerSide + 1;
-            _pointCount = (_pointsPerSide*2) + 1;
+            _center = PointsPerSide + 1;
+            _pointCount = (PointsPerSide*2) + 1;
             _dCoeff = CreateCoefficients();
-            _dStep = new double[theTraining.Count];
+            _dStep = new double[_weightCount];
 
             for (int i = 0; i < _weightCount; i++)
             {
@@ -103,41 +102,38 @@ namespace Encog.MathUtil.Matrices.Hessian
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override void Compute()
         {
-            sse = 0;
+            _sse = 0;
 
-            for (int i = 0; i < network.OutputCount; i++)
+            for (int i = 0; i < _network.OutputCount; i++)
             {
                 InternalCompute(i);
             }
         }
 
-        /// <summary>
-        /// Called internally to compute each output neuron.
-        /// </summary>
-        /// <param name="outputNeuron">The output neuron to compute.</param>
+        /// <inheritdoc />
         private void InternalCompute(int outputNeuron)
         {
-            var row = 0;
+            int row = 0;
             var error = new ErrorCalculation();
+
             var derivative = new double[_weightCount];
 
             // Loop over every training element
-            foreach (var pair in training)
+            foreach (IMLDataPair pair in _training)
             {
                 EngineArray.Fill(derivative, 0);
-                var networkOutput = network.Compute(pair.Input);
-
+                IMLData networkOutput = _network.Compute(pair.Input);
                 double e = pair.Ideal[outputNeuron] - networkOutput[outputNeuron];
                 error.UpdateError(networkOutput[outputNeuron], pair.Ideal[outputNeuron]);
 
                 int currentWeight = 0;
 
                 // loop over the output weights
-                int outputFeedCount = network.GetLayerTotalNeuronCount(network.LayerCount - 2);
-                for (int i = 0; i < network.OutputCount; i++)
+                int outputFeedCount = _network.GetLayerTotalNeuronCount(_network.LayerCount - 2);
+                for (int i = 0; i < _network.OutputCount; i++)
                 {
                     for (int j = 0; j < outputFeedCount; j++)
                     {
@@ -146,29 +142,29 @@ namespace Encog.MathUtil.Matrices.Hessian
                         if (i == outputNeuron)
                         {
                             jc = ComputeDerivative(pair.Input, outputNeuron,
-                                                   currentWeight, _dStep,
-                                                   networkOutput[outputNeuron], row);
+                                currentWeight, _dStep,
+                                networkOutput[outputNeuron], row);
                         }
                         else
                         {
                             jc = 0;
                         }
 
-                        gradients[currentWeight] += jc*e;
-                        derivative[currentWeight] += jc;
+                        _gradients[currentWeight] += jc*e;
+                        derivative[currentWeight] = jc;
                         currentWeight++;
                     }
                 }
 
                 // Loop over every weight in the neural network
-                while (currentWeight < network.Flat.Weights.Length)
+                while (currentWeight < _network.Flat.Weights.Length)
                 {
                     double jc = ComputeDerivative(
                         pair.Input, outputNeuron, currentWeight,
                         _dStep,
                         networkOutput[outputNeuron], row);
-                    derivative[currentWeight] += jc;
-                    gradients[currentWeight] += jc*e;
+                    derivative[currentWeight] = jc;
+                    _gradients[currentWeight] += jc*e;
                     currentWeight++;
                 }
 
@@ -176,26 +172,24 @@ namespace Encog.MathUtil.Matrices.Hessian
                 UpdateHessian(derivative);
             }
 
-            
 
-            sse += error.CalculateSSE();
+            _sse += error.CalculateSSE();
         }
 
         /// <summary>
-        /// Computes the derivative of the output of the neural network with respect to a weight. 
+        ///     Computes the derivative of the output of the neural network with respect to a weight.
         /// </summary>
         /// <param name="inputData">The input data to the neural network.</param>
-        /// <param name="outputNeuron">The output neuron to calculate for.</param>
-        /// <param name="weight">The weight.</param>
-        /// <param name="stepSize">The step size.</param>
-        /// <param name="networkOutput">The output from the neural network.</param>
-        /// <param name="row">The training row currently being processed.</param>
+        /// <param name="outputNeuron">The weight.</param>
+        /// <param name="weight">The step size.</param>
+        /// <param name="stepSize">The output from the neural network.</param>
+        /// <param name="networkOutput">The training row currently being processed.</param>
+        /// <param name="row"></param>
         /// <returns>The derivative output.</returns>
         private double ComputeDerivative(IMLData inputData, int outputNeuron, int weight, double[] stepSize,
-                                         double networkOutput, int row)
+            double networkOutput, int row)
         {
-            double temp = network.Flat.Weights[weight];
-
+            double temp = _network.Flat.Weights[weight];
             var points = new double[_dCoeff.Length];
 
             stepSize[row] = Math.Max(InitialStep*Math.Abs(temp), InitialStep);
@@ -210,9 +204,9 @@ namespace Encog.MathUtil.Matrices.Hessian
                 double newWeight = temp + ((i - _center))
                                    *stepSize[row];
 
-                network.Flat.Weights[weight] = newWeight;
+                _network.Flat.Weights[weight] = newWeight;
 
-                IMLData output = network.Compute(inputData);
+                IMLData output = _network.Compute(inputData);
                 points[i] = output[outputNeuron];
             }
 
@@ -220,16 +214,14 @@ namespace Encog.MathUtil.Matrices.Hessian
 
             result /= Math.Pow(stepSize[row], 1);
 
-            network.Flat.Weights[weight] = temp;
+            _network.Flat.Weights[weight] = temp;
 
             return result;
         }
 
         /// <summary>
-        /// Compute finite difference coefficients according to the method provided here:
-        /// 
-        /// http://en.wikipedia.org/wiki/Finite_difference_coefficients
-        ///
+        ///     Compute finite difference coefficients according to the method provided here:
+        ///     http://en.wikipedia.org/wiki/Finite_difference_coefficients
         /// </summary>
         /// <returns>An array of the coefficients for FD.</returns>
         public double[] CreateCoefficients()
@@ -257,7 +249,8 @@ namespace Encog.MathUtil.Matrices.Hessian
 
             for (int k = 0; k < _pointCount; k++)
             {
-                result[k] = (Math.Round(invMatrix.Data[1][k]*f))/f;
+                result[k] = (Math
+                    .Round(invMatrix.Data[1][k]*f))/f;
             }
 
 
