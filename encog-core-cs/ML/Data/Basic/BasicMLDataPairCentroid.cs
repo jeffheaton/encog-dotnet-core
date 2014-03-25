@@ -36,19 +36,26 @@ namespace Encog.ML.Data.Basic
         private readonly BasicMLData _value;
 
         /// <summary>
+        /// How many items have been added to the centroid.
+        /// </summary>
+        private int _size;
+
+        /// <summary>
         /// Construct the centroid. 
         /// </summary>
         /// <param name="o"> The pair to base the centroid on.</param>
         public BasicMLDataPairCentroid(BasicMLDataPair o)
         {
             _value = (BasicMLData)o.Input.Clone();
+            _size = 1;
         }
 
         /// <inheritdoc/>
         public void Remove(IMLDataPair d)
         {
             for (int i = 0; i < _value.Count; i++)
-                _value[i] = ((_value[i] * _value.Count - d.Input[i]) / (_value.Count - 1));
+                _value[i] = ((_value[i] * _size - d.Input[i]) / (_size - 1));
+            _size--;
         }
 
         /// <inheritdoc/>
@@ -68,7 +75,8 @@ namespace Encog.ML.Data.Basic
         {
             for (int i = 0; i < _value.Count; i++)
                 _value[i] =
-                    ((_value[i] * _value.Count) + d.Input[i]) / (_value.Count + 1);
+                    ((_value[i] * _size) + d.Input[i]) / (_size + 1);
+            _size++;
         }
 
     }

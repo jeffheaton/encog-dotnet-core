@@ -33,7 +33,12 @@ namespace Encog.ML.Data.Basic
         /// <summary>
         /// The value this centroid is based on.
         /// </summary>
-        private BasicMLData value;
+        private readonly BasicMLData _value;
+
+        /// <summary>
+        /// How many items have been added to the centroid.
+        /// </summary>
+        private int _size;
 
         /// <summary>
         /// Construct the centroid. 
@@ -41,28 +46,31 @@ namespace Encog.ML.Data.Basic
         /// <param name="o">The object to base the centroid on.</param>
         public BasicMLDataCentroid(IMLData o)
         {
-            this.value = (BasicMLData)o.Clone();
+            this._value = (BasicMLData)o.Clone();
+            _size = 1;
         }
 
         /// <inheritdoc/>
         public void Add(IMLData d)
         {
-            for (int i = 0; i < value.Count; i++)
-                value.Data[i] = ((value.Data[i] * value.Count + d[i]) / (value.Count + 1));
+            for (int i = 0; i < _value.Count; i++)
+                _value.Data[i] = ((_value.Data[i] * _size + d[i]) / (_size + 1));
+            _size++;
         }
 
         /// <inheritdoc/>
         public void Remove(IMLData d)
         {
-            for (int i = 0; i < value.Count; i++)
-                value[i] =
-                    ((value[i] * value.Count - d[i]) / (value.Count - 1));
+            for (int i = 0; i < _value.Count; i++)
+                _value[i] =
+                    ((_value[i] * _size - d[i]) / (_size - 1));
+            _size--;
         }
 
         /// <inheritdoc/>
         public double Distance(IMLData d)
         {
-            IMLData diff = value.Minus(d);
+            IMLData diff = _value.Minus(d);
             double sum = 0.0;
 
             for (int i = 0; i < diff.Count; i++)
