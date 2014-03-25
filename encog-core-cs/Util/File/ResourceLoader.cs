@@ -48,14 +48,14 @@ namespace Encog.Util.File
         {
             Stream result = null;
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
             foreach (Assembly a in assemblies)
             {
+                if (a.IsDynamic) // this is the fix (https://github.com/encog/encog-dotnet-core/issues/51)
+                    continue;
                 result = a.GetManifestResourceStream(resource);
                 if (result != null)
                     break;
             }
-
             return result;
         }
 
