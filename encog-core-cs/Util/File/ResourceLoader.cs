@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Encog.Util.Logging;
 
 namespace Encog.Util.File
 {
@@ -52,10 +53,25 @@ namespace Encog.Util.File
             {
                 if (a.IsDynamic) // this is the fix (https://github.com/encog/encog-dotnet-core/issues/51)
                     continue;
-                result = a.GetManifestResourceStream(resource);
-                if (result != null)
-                    break;
+                try
+                {
+                    result = a.GetManifestResourceStream(resource);
+                    if (result != null)
+                        break;
+                }
+                catch(Exception ex)
+                {
+                    // Mostly, ignore the error in case one assembly could not be accessed.
+                    // This is probably not necessary given the Dynamic check above.
+                    EncogLogging.Log(ex);
+                }
             }
+
+            if (result == null)
+            {
+                throw new EncogError("Cannot create stream");
+            }
+
             return result;
         }
 
