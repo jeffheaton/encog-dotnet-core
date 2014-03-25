@@ -243,19 +243,18 @@ namespace Encog.ML.Data.Basic
         {
             get
             {
-				int sequenceIndex = 0;
-				int recordIndex = x;
-				while(_sequences[sequenceIndex].Count < recordIndex)
-				{
-					recordIndex -= _sequences[sequenceIndex].Count;
-					sequenceIndex++;
-					if(sequenceIndex > _sequences.Count)
-					{
-						throw new MLDataError("Record out of range: " + x);
-					}
-				}
-
-				return _sequences[sequenceIndex][recordIndex];
+                int sequenceIndex = 0;
+                int recordIndex = x;
+                while(_sequences[sequenceIndex].Count <= recordIndex)
+                {
+                    recordIndex -= _sequences[sequenceIndex].Count;
+                    sequenceIndex++;
+                    if(sequenceIndex > _sequences.Count)
+                    {
+                        throw new MLDataError("Record out of range: " + x);
+                    }
+                }
+                return _sequences[sequenceIndex][recordIndex];
             }
         }
 
