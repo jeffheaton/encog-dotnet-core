@@ -41,7 +41,7 @@ namespace Encog.Neural.Networks.Training.Propagation
     /// inside of the PropagationMethod interface implementors.
     /// </summary>
     ///
-    public abstract class Propagation : BasicTraining, ITrain, IMultiThreadable
+    public abstract class Propagation : BasicTraining, ITrain, IMultiThreadable, IBatchSize
     {
                 /// <summary>
         /// The network in indexable form.
@@ -71,12 +71,6 @@ namespace Encog.Neural.Networks.Training.Propagation
         /// </summary>
         ///
         private readonly IMLDataSet _training;
-
-        /// <summary>
-        /// The current error is the average error over all of the threads.
-        /// </summary>
-        ///
-        protected internal double CurrentError;
 
         /// <summary>
         /// The gradients.
@@ -193,15 +187,13 @@ namespace Encog.Neural.Networks.Training.Propagation
 
                 RollIteration();
 
-                CalculateGradients();
-
-                if (_flat.Limited)
+                if (BatchSize == 0)
                 {
-                    LearnLimited();
+                    ProcessPureBatch();
                 }
                 else
                 {
-                    Learn();
+                    ProcessBatches();
                 }
 
 
@@ -249,15 +241,7 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <inheritdoc/>
-        public double Error
-        {
-            get { return CurrentError; }
-            set { CurrentError = value; }
-        }
-
-
-        /// <inheritdoc/>
-        public int IterationNumber
+        public override int IterationNumber
         {
             get { return _iteration; }
             set { _iteration = value; }
@@ -308,7 +292,7 @@ namespace Encog.Neural.Networks.Training.Propagation
             Parallel.ForEach(_workers, worker => worker.Run());
             
 
-            CurrentError = _totalError / _workers.Length;
+            Error = _totalError / _workers.Length;
         }
 
         /// <summary>
@@ -463,5 +447,76 @@ namespace Encog.Neural.Networks.Training.Propagation
 
 
         #endregion
+
+        /// <summary>
+        /// Process as pure batch (size 0). Batch size equal to training set size.
+        /// </summary>
+        private void ProcessPureBatch()
+        {
+            CalculateGradients();
+
+            if (_flat.Limited)
+            {
+                LearnLimited();
+            }
+            else
+            {
+                Learn();
+            }
+        }
+
+        private void ProcessBatches()
+        {
+            if (_workers == null)
+            {
+                Init();
+            }
+
+            if (_flat.HasContext)
+            {
+                _workers[0].Network.ClearContext();
+            }
+
+            _workers[0].CalculateError.Reset();
+
+            int lastLearn = 0;
+
+            for (int i = 0; i < Training.Count; i++)
+            {
+                _workers[0].Run(i);
+
+                lastLearn++;
+
+                if (lastLearn++ >= BatchSize)
+                {
+                    if (_flat.Limited)
+                    {
+                        LearnLimited();
+                    }
+                    else
+                    {
+                        Learn();
+                        lastLearn = 0;
+                    }
+                }
+            }
+
+            // handle any remaining learning
+            if (lastLearn > 0)
+            {
+                Learn();
+            }
+
+            this.Error = _workers[0].CalculateError.Calculate();
+
+        }
+
+
+        /// <summary>
+        /// The batch size. Specify 1 for pure online training. Specify 0 for pure
+	    /// batch training (complete training set in one batch). Otherwise specify
+	    /// the batch size for batch training.
+        /// </summary>
+        public int BatchSize { get; set; }
     }
 }

@@ -374,7 +374,7 @@ namespace Encog.Neural.Networks.Training.Propagation.SCG
 
                 // Go back to w(k) since w(k) + alpha*p(k) is not better.
                 EngineArray.ArrayCopy(_oldWeights, _weights);
-                CurrentError = _oldError;
+                Error = _oldError;
                 _lambda2 = _lambda;
                 _success = false;
             }

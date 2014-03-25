@@ -71,6 +71,7 @@ namespace Encog.Util.Normalize.Target
 
         #region INormalizationStorage Members
 
+
         /// <summary>
         /// Close the CSV file.
         /// </summary>

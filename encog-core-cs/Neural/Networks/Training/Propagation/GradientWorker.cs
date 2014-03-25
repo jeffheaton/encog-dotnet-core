@@ -250,6 +250,19 @@ namespace Encog.Neural.Networks.Training.Propagation
         }
 
         /// <summary>
+        /// The error calculation to use.
+        /// </summary>
+        public ErrorCalculation CalculateError { get { return _errorCalculation; }}
+
+        public void Run(int index) 
+        {
+		    IMLDataPair pair = _training[index];
+		    Process(pair);
+		    _owner.Report(_gradients, 0, null);
+		    EngineArray.Fill(_gradients, 0);
+	    }
+
+        /// <summary>
         /// Process one level.
         /// </summary>
         ///

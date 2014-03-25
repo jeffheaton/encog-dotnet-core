@@ -381,7 +381,7 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
                 delta = Math.Max(delta, RPROPConst.DeltaMin);
                 UpdateValues[index] = delta;
 
-                if (CurrentError > _lastError)
+                if (Error > _lastError)
                 {
                     weightChange = -_lastWeightChanged[index];
                 }
@@ -445,5 +445,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         {
         }
 
+        public override void PostIteration()
+        {
+            _lastError = Error;
+        }
     }
 }

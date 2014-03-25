@@ -633,6 +633,7 @@
     <Compile Include="Neural\Networks\Structure\NeuralStructure.cs" />
     <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealing.cs" />
     <Compile Include="Neural\Networks\Training\Anneal\NeuralSimulatedAnnealingHelper.cs" />
+    <Compile Include="Neural\Networks\Training\IBatchSize.cs" />
     <Compile Include="Neural\Networks\Training\ICalculateScore.cs" />
     <Compile Include="Neural\Networks\Training\Cross\CrossTraining.cs" />
     <Compile Include="Neural\Networks\Training\Cross\CrossValidationKFold.cs" />

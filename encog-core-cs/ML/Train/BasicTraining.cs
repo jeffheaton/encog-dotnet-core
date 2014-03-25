@@ -181,7 +181,7 @@ namespace Encog.ML.Train
         /// Call the strategies after an iteration.
         /// </summary>
         ///
-        public void PostIteration()
+        public virtual void PostIteration()
         {
             foreach (IStrategy strategy  in  _strategies)
             {
@@ -193,7 +193,7 @@ namespace Encog.ML.Train
         /// Call the strategies before an iteration.
         /// </summary>
         ///
-        public void PreIteration()
+        public virtual void PreIteration()
         {
             _iteration++;
 
