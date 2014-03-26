@@ -442,7 +442,10 @@ namespace Encog.ML.Data.Temporal
         private double GetDataRaw(TemporalDataDescription desc,
                                   int index)
         {
-            TemporalPoint point = _points[index];
+            // Note: The reason that we subtract 1 from the index is because we are always one ahead.
+            // This allows the DELTA change formatter to work.  DELTA change requires two timeslices,
+            // so we have to be one ahead.  RAW only requires one, so we shift backwards.
+            TemporalPoint point = _points[index-1];
             return point[desc.Index];
         }
 

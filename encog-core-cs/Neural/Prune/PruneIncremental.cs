@@ -324,18 +324,21 @@ namespace Encog.Neural.Prune
         /// <returns>The network based on current hidden layer counts.</returns>
         private BasicNetwork GenerateNetwork()
         {
-            _pattern.Clear();
-
-
-            foreach (int element  in  _hiddenCounts)
+            lock(this)
             {
-                if (element > 0)
-                {
-                    _pattern.AddHiddenLayer(element);
-                }
-            }
+                _pattern.Clear();
 
-            return (BasicNetwork) _pattern.Generate();
+
+                foreach (int element  in  _hiddenCounts)
+                {
+                    if (element > 0)
+                    {
+                        _pattern.AddHiddenLayer(element);
+                    }
+                }
+
+                return (BasicNetwork) _pattern.Generate();
+            }
         }
 
 
@@ -348,26 +351,29 @@ namespace Encog.Neural.Prune
         /// <returns>False if no more increases can be done, true otherwise.</returns>
         private bool IncreaseHiddenCounts()
         {
-            int i = 0;
-            do
+            lock(this)
             {
-                HiddenLayerParams param = _hidden[i];
-                _hiddenCounts[i]++;
-
-                // is this hidden layer still within the range?
-                if (_hiddenCounts[i] <= param.Max)
+                int i = 0;
+                do
                 {
-                    return true;
-                }
+                    HiddenLayerParams param = _hidden[i];
+                    _hiddenCounts[i]++;
 
-                // increase the next layer if we've maxed out this one
-                _hiddenCounts[i] = param.Min;
-                i++;
-            } while (i < _hiddenCounts.Length);
+                    // is this hidden layer still within the range?
+                    if (_hiddenCounts[i] <= param.Max)
+                    {
+                        return true;
+                    }
 
-            // can't increase anymore, we're done!
+                    // increase the next layer if we've maxed out this one
+                    _hiddenCounts[i] = param.Min;
+                    i++;
+                } while (i < _hiddenCounts.Length);
 
-            return false;
+                // can't increase anymore, we're done!
+
+                return false;
+            }
         }
 
         /// <summary>
