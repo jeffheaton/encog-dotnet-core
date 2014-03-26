@@ -37,9 +37,10 @@ namespace Encog.Util.Normalize
                                                      };
 
         public static TempDir TEMP_DIR = new TempDir();
-        public static FileInfo FILENAME = TEMP_DIR.CreateFile("norm.csv");
+        public static FileInfo FILENAME1 = TEMP_DIR.CreateFile("norm1.csv");
+        public static FileInfo FILENAME2 = TEMP_DIR.CreateFile("norm2.csv");
 
-        private void Generate()
+        private void Generate(string filename)
         {
             IInputField a;
             IInputField b;
@@ -59,11 +60,11 @@ namespace Encog.Util.Normalize
             norm.AddOutputField(new OutputFieldDirect(c));
             norm.AddOutputField(new OutputFieldDirect(d));
             norm.AddOutputField(new OutputFieldDirect(e));
-            norm.Storage = new NormalizationStorageCSV(FILENAME.ToString());
+            norm.Storage = new NormalizationStorageCSV(filename.ToString());
             norm.Process();
         }
 
-        public DataNormalization Create(double[][] outputArray)
+        public DataNormalization Create(string filename, double[][] outputArray)
         {
             IInputField a;
             IInputField b;
@@ -73,12 +74,12 @@ namespace Encog.Util.Normalize
 
             var norm = new DataNormalization();
             norm.Report = new NullStatusReportable();
-            norm.Storage = new NormalizationStorageCSV(FILENAME.ToString());
-            norm.AddInputField(a = new InputFieldCSV(false, FILENAME.ToString(), 0));
-            norm.AddInputField(b = new InputFieldCSV(false, FILENAME.ToString(), 1));
-            norm.AddInputField(c = new InputFieldCSV(false, FILENAME.ToString(), 2));
-            norm.AddInputField(d = new InputFieldCSV(false, FILENAME.ToString(), 3));
-            norm.AddInputField(e = new InputFieldCSV(false, FILENAME.ToString(), 4));
+            norm.Storage = new NormalizationStorageCSV(filename.ToString());
+            norm.AddInputField(a = new InputFieldCSV(false, filename.ToString(), 0));
+            norm.AddInputField(b = new InputFieldCSV(false, filename.ToString(), 1));
+            norm.AddInputField(c = new InputFieldCSV(false, filename.ToString(), 2));
+            norm.AddInputField(d = new InputFieldCSV(false, filename.ToString(), 3));
+            norm.AddInputField(e = new InputFieldCSV(false, filename.ToString(), 4));
             norm.AddOutputField(new OutputFieldRangeMapped(a, 0.1, 0.9));
             norm.AddOutputField(new OutputFieldRangeMapped(b, 0.1, 0.9));
             norm.AddOutputField(new OutputFieldRangeMapped(c, 0.1, 0.9));
@@ -92,8 +93,8 @@ namespace Encog.Util.Normalize
         public void TestGenerateAndLoad()
         {
             var outputArray = EngineArray.AllocateDouble2D(2, 5);
-            Generate();
-            DataNormalization norm = Create(outputArray);
+            Generate(FILENAME1.ToString());
+            DataNormalization norm = Create(FILENAME1.ToString(),outputArray);
             norm.Process();
             Check(norm);
         }
@@ -102,8 +103,8 @@ namespace Encog.Util.Normalize
         public void TestGenerateAndLoadSerial()
         {
             double[][] outputArray = EngineArray.AllocateDouble2D(2, 5);
-            Generate();
-            DataNormalization norm = Create(outputArray);
+            Generate(FILENAME2.ToString());
+            DataNormalization norm = Create(FILENAME2.ToString(),outputArray);
             norm = (DataNormalization) SerializeRoundTrip.RoundTrip(norm);
             norm.Process();
             Check(norm);

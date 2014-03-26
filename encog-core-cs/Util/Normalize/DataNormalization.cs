@@ -816,6 +816,12 @@ namespace Encog.Util.Normalize
                 FirstPass();
             }
             SecondPass();
+
+            // clean up
+            foreach (var csv in _readCSV)
+            {
+                csv.Close();
+            }
         }
         /// <summary>
         /// Call this method to begin the normalization process.  Any status 
