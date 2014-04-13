@@ -172,6 +172,7 @@ namespace Encog.App.Analyst.Analyze
 
             // pass two, standard deviation
             csv = new ReadCSV(_filename, _headers, csvFormat);
+           
             while (csv.Next())
             {
                 for (int i = 0; i < csv.ColumnCount; i++)

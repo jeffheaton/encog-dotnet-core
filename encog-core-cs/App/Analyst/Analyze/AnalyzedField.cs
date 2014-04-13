@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using Encog.App.Analyst.Script;
 using Encog.App.Analyst.Script.Prop;
+using Encog.Util.CSV;
 
 namespace Encog.App.Analyst.Analyze
 {
@@ -63,6 +64,12 @@ namespace Encog.App.Analyst.Analyze
         private double _total;
 
         /// <summary>
+        /// The numeric format to use.
+        /// </summary>
+        private CSVFormat _fmt;
+
+
+        /// <summary>
         ///     Construct an analyzed field.
         /// </summary>
         /// <param name="theScript">The script being analyzed.</param>
@@ -72,6 +79,7 @@ namespace Encog.App.Analyst.Analyze
             _classMap = new Dictionary<String, AnalystClassItem>();
             _instances = 0;
             _script = theScript;
+            _fmt = _script.DetermineFormat();
         }
 
         /// <summary>
@@ -110,7 +118,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 try
                 {
-                    double d = _script.DetermineFormat().Parse(str);
+                    double d = _fmt.Parse(str);
                     Max = Math.Max(d, Max);
                     Min = Math.Min(d, Min);
                     _total += d;
@@ -193,7 +201,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 if (!str.Equals("") && !str.Equals("?"))
                 {
-                    double d = _script.DetermineFormat().Parse(str) - Mean;
+                    double d = _fmt.Parse(str) - Mean;
                     _devTotal += d*d;
                 }
             }
