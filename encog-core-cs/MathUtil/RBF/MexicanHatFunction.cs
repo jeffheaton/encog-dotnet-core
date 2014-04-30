@@ -89,14 +89,14 @@ namespace Encog.MathUtil.RBF
         public override double Calculate(double[] x)
         {
             double[] center = Centers;
+            double width = Width;
 
             // calculate the "norm", but don't take square root
             // don't square because we are just going to square it
             double norm = 0;
             for (int i = 0; i < center.Length; i++)
             {
-				var inner = x[i] - center[i];
-                norm += inner * inner;
+                norm += Math.Pow(x[i] - center[i], 2) / (2.0 * width * width);
             }
 
             // calculate the value
