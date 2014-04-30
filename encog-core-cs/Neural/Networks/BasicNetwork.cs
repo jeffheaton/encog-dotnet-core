@@ -341,26 +341,61 @@ namespace Encog.Neural.Networks
 
         #endregion
 
-        #region MLResettable Members
-
         /// <summary>
-        /// Reset the weight matrix and the bias values. This will use a
+        /// Determines the randomizer used for resets. This will normally return a
         /// Nguyen-Widrow randomizer with a range between -1 and 1. If the network
         /// does not have an input, output or hidden layers, then Nguyen-Widrow
         /// cannot be used and a simple range randomize between -1 and 1 will be
-        /// used.
+        /// used. Range randomizer is also used if the activation function is not
+        /// TANH, Sigmoid, or the Elliott equivalents. 
         /// </summary>
-        ///
+        private IRandomizer Randomizer
+        {
+            get
+            {
+                var useNwr = true;
+
+                for (var i = 0; i < LayerCount; i++)
+                {
+                    var af = GetActivation(i);
+                    if (af.GetType() != typeof(ActivationSigmoid)
+                        && af.GetType() != typeof(ActivationTANH)
+                        && af.GetType() != typeof(ActivationElliott)
+                        && af.GetType() != typeof(ActivationElliottSymmetric))
+                    {
+                        useNwr = false;
+                    }
+                }
+
+                if (LayerCount < 3)
+                {
+                    useNwr = false;
+                }
+
+                if (useNwr)
+                {
+                    return new NguyenWidrowRandomizer();
+                }
+                else
+                {
+                    return new RangeRandomizer(-1, 1);
+                }
+            }
+        }
+
+        #region MLResettable Members
+
+        /// <summary>
+        /// Determines the randomizer used for resets. This will normally return a
+        /// Nguyen-Widrow randomizer with a range between -1 and 1. If the network
+        /// does not have an input, output or hidden layers, then Nguyen-Widrow
+        /// cannot be used and a simple range randomize between -1 and 1 will be
+        /// used. Range randomizer is also used if the activation function is not
+        /// TANH, Sigmoid, or the Elliott equivalents. 
+        /// </summary>
         public void Reset()
         {
-            if (LayerCount < 3)
-            {
-                (new RangeRandomizer(-1, 1)).Randomize(this);
-            }
-            else
-            {
-                (new NguyenWidrowRandomizer()).Randomize(this);
-            }
+            Randomizer.Randomize(this);
         }
 
         /// <summary>
