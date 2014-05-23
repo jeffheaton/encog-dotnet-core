@@ -22,7 +22,6 @@
 //
 using System;
 using System.Collections;
-using System.Drawing;
 using System.Runtime.CompilerServices;
 
 namespace Encog.App.Quant.Loader.OpenQuant.Data
@@ -102,7 +101,7 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
         private Func<int, int, int> Add = (x, y) => x + y;
 
         [Serializable]
-        public class Bar : ICloneable
+        public class Bar : ICloneable, IDataObject
         {
             /// <summary>
             ///     Initializes a new instance of the <see cref="Bar" /> class.
@@ -131,7 +130,7 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
                 Volume = volume;
                 OpenInt = openInt;
                 ProviderId = 0;
-                color = Color.Empty;
+                color = 0;
                 IsComplete = false;
                 DateKind = beginTime.Kind;
                 DateTimeKind kind = beginTime.Kind;
@@ -157,7 +156,7 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
                 Low = low;
                 Close = close;
                 ProviderId = 0;
-                color = Color.Empty;
+                color = 0;
                 IsComplete = false;
             }
 
@@ -181,10 +180,10 @@ namespace Encog.App.Quant.Loader.OpenQuant.Data
             // Fields
             protected BarType barType { get; set; }
             protected DateTime beginTime { get; set; } //Begin time for this bar
-            protected Color color { get; set; } //Color the bar should be drawed
+            protected int color { get; set; } //Color the bar should be drawed
             protected bool IsComplete { get; set; } // is the bar complete.
             protected long OpenInt { get; set; } // open interests on othis bar.
-            protected byte ProviderId { get; set; } // provider for this bar (a byte , e.g Simulated executions 1.
+            public byte ProviderId { get; set; } // provider for this bar (a byte , e.g Simulated executions 1.
             protected long Size { get; set; } // the size : Lenght in seconds of this bar.
             protected long Volume { get; set; } // the volume of this bar.
             protected DateTimeKind DateKind { get; set; } //Bar kind.

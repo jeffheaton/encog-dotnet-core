@@ -22,23 +22,24 @@
 //
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace Encog.App.Quant.Loader.OpenQuant
 {
     // Fields
     [Serializable]
-    public class DataArray : IEnumerable
+    public class DataArray : IEnumerable<Data.Data.IDataObject>
     {
         protected double fDivisor;
-        protected ArrayList fList;
+        protected List<Data.Data.IDataObject> fList;
         protected int fStopRecurant;
 
         // Methods
         [MethodImpl(MethodImplOptions.NoInlining)]
         public DataArray()
         {
-            fList = new ArrayList();
+            fList = new List<Data.Data.IDataObject>();
         }
 
         /// <summary>
@@ -64,9 +65,21 @@ namespace Encog.App.Quant.Loader.OpenQuant
         ///     An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
         /// </returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Data.Data.IDataObject> GetEnumerator()
         {
             return fList.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
