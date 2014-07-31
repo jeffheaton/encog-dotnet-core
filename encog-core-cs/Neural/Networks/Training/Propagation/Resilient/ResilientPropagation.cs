@@ -448,6 +448,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public override void PostIteration()
         {
             _lastError = Error;
+			
+			// call the base method to apply strategies
+			base.PostIteration();
         }
     }
 }
