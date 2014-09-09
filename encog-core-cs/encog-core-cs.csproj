@@ -278,6 +278,14 @@
     <Compile Include="MathUtil\Randomize\Factory\IRandomFactory.cs" />
     <Compile Include="MathUtil\Randomize\FanInRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\GaussianRandomizer.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\AbstractBoxMuller.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\AbstractGenerateRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\BasicGenerateRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\IGenerateRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\LinearCongruentialRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\MersenneTwisterGenerateRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\MultiplyWithCarryGenerateRandom.cs" />
+    <Compile Include="MathUtil\Randomize\Generate\SecureGenerateRandom.cs" />
     <Compile Include="MathUtil\Randomize\NguyenWidrowRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\IRandomizer.cs" />
     <Compile Include="MathUtil\Randomize\RandomChoice.cs" />
