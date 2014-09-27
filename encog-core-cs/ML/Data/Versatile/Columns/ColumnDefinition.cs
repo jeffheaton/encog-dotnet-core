@@ -18,7 +18,7 @@ namespace Encog.ML.Data.Versatile.Columns
         /// <summary>
         ///     The normalization helper.
         /// </summary>
-        private NormalizationHelper _owner;
+        public NormalizationHelper Owner { get; set; }
 
         /// <summary>
         ///     The column definition.
@@ -134,7 +134,7 @@ namespace Encog.ML.Data.Versatile.Columns
         /// <param name="value">The value to analyze.</param>
         private void AnalyzeContinuous(String value)
         {
-            double d = _owner.Format.Parse(value);
+            double d = Owner.Format.Parse(value);
             if (Count < 0)
             {
                 Low = d;
