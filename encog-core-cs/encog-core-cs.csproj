@@ -384,6 +384,11 @@
     <Compile Include="ML\Data\Temporal\TemporalError.cs" />
     <Compile Include="ML\Data\Temporal\TemporalMLDataSet.cs" />
     <Compile Include="ML\Data\Temporal\TemporalPoint.cs" />
+    <Compile Include="ML\Data\Versatile\Columns\ColumnDefinition.cs" />
+    <Compile Include="ML\Data\Versatile\Columns\ColumnType.cs" />
+    <Compile Include="ML\Data\Versatile\Division\DataDivision.cs" />
+    <Compile Include="ML\Data\Versatile\MatrixMLDataSet.cs" />
+    <Compile Include="ML\Data\Versatile\NormalizationHelper.cs" />
     <Compile Include="ML\EA\Codec\GenomeAsPhenomeCODEC.cs" />
     <Compile Include="ML\EA\Codec\IGeneticCODEC.cs" />
     <Compile Include="ML\EA\Exceptions\EACompileError.cs" />
