@@ -1,4 +1,4 @@
-﻿//
+//
 // Encog(tm) Core v3.3 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
@@ -20,7 +20,6 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
-
 namespace Encog.MathUtil.Randomize.Generate
 {
     /// <summary>

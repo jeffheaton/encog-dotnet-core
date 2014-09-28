@@ -1,4 +1,4 @@
-﻿//
+//
 // Encog(tm) Core v3.3 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
