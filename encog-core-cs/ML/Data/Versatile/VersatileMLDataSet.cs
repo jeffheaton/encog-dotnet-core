@@ -31,7 +31,7 @@ namespace Encog.ML.Data.Versatile
         ///     Construct the data source.
         /// </summary>
         /// <param name="theSource">The data source.</param>
-        public VersatileMLDataSet(IVersatileDataSource theSource)
+        public VersatileMLDataSet(IVersatileDataSource theSource) : this()
         {
             _source = theSource;
         }
@@ -40,6 +40,14 @@ namespace Encog.ML.Data.Versatile
         ///     The normalization helper.
         /// </summary>
         public NormalizationHelper NormHelper { get; set; }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public VersatileMLDataSet()
+        {
+            NormHelper = new NormalizationHelper();
+        }
 
         /// <summary>
         ///     Find the index of a column.

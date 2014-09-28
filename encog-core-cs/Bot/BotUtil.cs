@@ -295,5 +295,11 @@ namespace Encog.Bot
             var sr = new StreamReader(resp.GetResponseStream());
             return sr.ReadToEnd().Trim();
         }
+
+        public static void DownloadPage(Uri uri, string file)
+        {
+            var Client = new WebClient();
+            Client.DownloadFile(uri, file);
+        }
     }
 }

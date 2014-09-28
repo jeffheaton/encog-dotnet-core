@@ -6,7 +6,7 @@ namespace Encog.ML.Data.Versatile.Missing
     /// <summary>
     /// Handle missing data by using the mean value of that column.
     /// </summary>
-    public class MeanMissingHandler
+    public class MeanMissingHandler: IMissingHandler
     {
         /// <inheritdoc/>
         public void Init(NormalizationHelper normalizationHelper)

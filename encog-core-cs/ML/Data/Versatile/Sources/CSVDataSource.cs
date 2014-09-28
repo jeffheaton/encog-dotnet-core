@@ -89,12 +89,16 @@ namespace Encog.ML.Data.Versatile.Sources
         /// <inheritdoc />
         public void Rewind()
         {
+            if (_reader != null)
+            {
+                _reader.Close();
+            }
             _reader = new ReadCSV(_file, _headers, _format);
             if (_headerIndex.Count == 0)
             {
                 for (int i = 0; i < _reader.ColumnNames.Count; i++)
                 {
-                    _headerIndex[_reader.ColumnNames[i]] = i;
+                    _headerIndex[_reader.ColumnNames[i].ToLower()] = i;
                 }
             }
         }
@@ -108,6 +112,12 @@ namespace Encog.ML.Data.Versatile.Sources
                 return -1;
             }
             return _headerIndex[name2];
+        }
+
+        public void Close()
+        {
+            _reader.Close();
+            _reader = null;
         }
     }
 }

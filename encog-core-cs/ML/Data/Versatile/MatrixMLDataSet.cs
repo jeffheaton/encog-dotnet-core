@@ -368,7 +368,7 @@ namespace Encog.ML.Data.Versatile
             public bool MoveNext()
             {
                 _current++;
-                if (_current >= _owner.Data.Length)
+                if (_current >= _owner.Count)
                     return false;
                 return true;
             }

@@ -24,5 +24,10 @@ namespace Encog.ML.Data.Versatile.Sources
         /// <param name="name">The column name.</param>
         /// <returns>The column index, or -1 if not found.</returns>
         int ColumnIndex(string name);
+
+        /// <summary>
+        /// Close the source.
+        /// </summary>
+        void Close();
     }
 }
