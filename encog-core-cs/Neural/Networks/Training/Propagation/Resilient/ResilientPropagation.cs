@@ -1,5 +1,5 @@
 //
-// Encog(tm) Core v3.2 - .Net Version
+// Encog(tm) Core v3.3 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
 // Copyright 2008-2014 Heaton Research, Inc.
@@ -448,6 +448,9 @@ namespace Encog.Neural.Networks.Training.Propagation.Resilient
         public override void PostIteration()
         {
             _lastError = Error;
+			
+			// call the base method to apply strategies
+			base.PostIteration();
         }
     }
 }

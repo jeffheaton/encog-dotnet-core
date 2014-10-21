@@ -1,5 +1,5 @@
 //
-// Encog(tm) Core v3.2 - .Net Version
+// Encog(tm) Core v3.3 - .Net Version
 // http://www.heatonresearch.com/encog/
 //
 // Copyright 2008-2014 Heaton Research, Inc.
@@ -294,6 +294,12 @@ namespace Encog.Bot
 
             var sr = new StreamReader(resp.GetResponseStream());
             return sr.ReadToEnd().Trim();
+        }
+
+        public static void DownloadPage(Uri uri, string file)
+        {
+            var Client = new WebClient();
+            Client.DownloadFile(uri, file);
         }
     }
 }

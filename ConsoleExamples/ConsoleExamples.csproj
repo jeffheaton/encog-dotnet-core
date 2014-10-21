@@ -79,6 +79,9 @@
     <Compile Include="Examples\Freeform\SkipNeuralNetwork.cs" />
     <Compile Include="Examples\GeneticTSP\GeneticSolveTSP.cs" />
     <Compile Include="Examples\GeneticTSP\TSPScore.cs" />
+    <Compile Include="Examples\Guide\Classification\IrisClassification.cs" />
+    <Compile Include="Examples\Guide\Regression\AutoMPGRegression.cs" />
+    <Compile Include="Examples\Guide\Timeseries\SunSpotTimeseries.cs" />
     <Compile Include="Examples\Hopfield\Associate\HopfieldAssociate.cs" />
     <Compile Include="Examples\Hopfield\Simple\HopfieldSimple.cs" />
     <Compile Include="Examples\Image\ImageNeuralNetwork.cs" />
@@ -173,9 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DB!EURUSD.Bar.Time.600.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,5 +1,5 @@
 //
-// Encog(tm) Core v3.2 - .Net Version
+// Encog(tm) Core v3.3 - .Net Version (unit test)
 // http://www.heatonresearch.com/encog/
 //
 // Copyright 2008-2014 Heaton Research, Inc.
