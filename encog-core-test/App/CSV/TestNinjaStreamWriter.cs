@@ -35,6 +35,7 @@ namespace Encog.App.CSV
         public static readonly TempDir TempDir = new TempDir();
         public readonly FileInfo OutputName = TempDir.CreateFile("test2.csv");
 
+        [TestCategory("Integration")]
         [TestMethod]
         public void TestWrite()
         {

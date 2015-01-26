@@ -55,6 +55,7 @@ namespace Encog.App.CSV
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestFilterCSVHeaders()
         {
             GenerateTestFileHeadings(true);
@@ -84,6 +85,7 @@ namespace Encog.App.CSV
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestFilterCSVNoHeaders()
         {
             GenerateTestFileHeadings(false);

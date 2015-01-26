@@ -23,6 +23,7 @@
 using System;
 using System.Text;
 using Encog.Util.KMeans;
+using Encog.ML.Data.Sparse;
 
 namespace Encog.ML.Data.Basic
 {
@@ -174,10 +175,6 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public ICentroid<IMLDataPair> CreateCentroid()
         {
-            if (!(Input is BasicMLData))
-            {
-                throw new EncogError("The input data type of " + Input.GetType().Name + " must be BasicMLData.");
-            }
             return new BasicMLDataPairCentroid(this);
         }
     }

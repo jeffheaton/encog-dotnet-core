@@ -85,6 +85,7 @@
     <Compile Include="ML\Data\Market\CSVLoaderTest.cs" />
     <Compile Include="ML\Data\Market\TestMarketData.cs" />
     <Compile Include="ML\Data\Market\TestYahooLoader.cs" />
+    <Compile Include="ML\Data\Sparse\SparseMLDataTests.cs" />
     <Compile Include="ML\Data\Specific\TestCSVNeuralData.cs" />
     <Compile Include="ML\Data\Specific\TestSQLDataSet.cs" />
     <Compile Include="ML\Data\Dynamic\TestDynamic.cs" />

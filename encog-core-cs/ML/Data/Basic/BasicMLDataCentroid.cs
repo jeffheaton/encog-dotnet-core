@@ -33,7 +33,7 @@ namespace Encog.ML.Data.Basic
         /// <summary>
         /// The value this centroid is based on.
         /// </summary>
-        private readonly BasicMLData _value;
+        private readonly IMLDataModifiable _value;
 
         /// <summary>
         /// How many items have been added to the centroid.
@@ -46,7 +46,7 @@ namespace Encog.ML.Data.Basic
         /// <param name="o">The object to base the centroid on.</param>
         public BasicMLDataCentroid(IMLData o)
         {
-            this._value = (BasicMLData)o.Clone();
+            this._value = (IMLDataModifiable)o.Clone();
             _size = 1;
         }
 
@@ -54,7 +54,7 @@ namespace Encog.ML.Data.Basic
         public void Add(IMLData d)
         {
             for (int i = 0; i < _value.Count; i++)
-                _value.Data[i] = ((_value.Data[i] * _size + d[i]) / (_size + 1));
+                _value[i] = ((_value[i] * _size + d[i]) / (_size + 1));
             _size++;
         }
 
@@ -70,13 +70,28 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public double Distance(IMLData d)
         {
-            IMLData diff = _value.Minus(d);
+            IMLData diff = Minus(_value, d);
             double sum = 0.0;
 
             for (int i = 0; i < diff.Count; i++)
                 sum += diff[i] * diff[i];
 
             return Math.Sqrt(sum);
+        }
+
+        private static IMLData Minus(IMLDataModifiable a, IMLData b)
+        {
+            if (a.Count != b.Count)
+            {
+                throw new EncogError("Counts must match.");
+            }
+
+            var result = (IMLDataModifiable)Activator.CreateInstance(a.GetType(), a.Count);
+
+            for (int i = 0; i < a.Count; i++)
+                result[i] = a[i] - b[i];
+
+            return result;
         }
     }
 }

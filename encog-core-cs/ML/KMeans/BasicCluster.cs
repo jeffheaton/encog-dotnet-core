@@ -42,7 +42,7 @@ namespace Encog.ML.KMeans
         /// Construct a cluster from another. 
         /// </summary>
         /// <param name="cluster">The other cluster.</param>
-        public BasicCluster(Cluster<BasicMLDataPair> cluster)
+        public BasicCluster(Cluster<IMLDataPair> cluster)
         {
             Centroid = (BasicMLDataPairCentroid) cluster.Centroid();
             foreach (IMLDataPair pair in cluster.Contents)

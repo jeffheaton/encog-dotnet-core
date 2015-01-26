@@ -38,6 +38,7 @@ namespace Encog.App.Analyst
         public TempDir TEMP_DIR = new TempDir();
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestRegression()
         {
             FileInfo rawFile = TEMP_DIR.CreateFile("simple.csv");

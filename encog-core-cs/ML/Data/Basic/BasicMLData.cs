@@ -32,7 +32,7 @@ namespace Encog.ML.Data.Basic
     /// data in an array.  
     /// </summary>
     [Serializable]
-	public class BasicMLData: IMLDataModifiable
+    public class BasicMLData : IMLDataModifiable, IHasArithimeticOperations
     {
         protected double[] _data;
 
@@ -42,12 +42,12 @@ namespace Encog.ML.Data.Basic
         /// <param name="d">The data to construct this object with.</param>
         public BasicMLData(double[] d, bool copy = true)
         {
-			if(copy)
-			{
-				_data = new double[d.Length];
-				EngineArray.ArrayCopy(d, _data);
-			}
-			else _data = d;
+            if (copy)
+            {
+                _data = new double[d.Length];
+                EngineArray.ArrayCopy(d, _data);
+            }
+            else _data = d;
         }
 
 
@@ -178,9 +178,15 @@ namespace Encog.ML.Data.Basic
             return result;
         }
 
-		public void CopyTo(double[] target, int targetIndex, int count)
-		{
-			EngineArray.ArrayCopy(_data, 0, target, targetIndex, count);
-		}
-	}
+        /// <summary>
+        /// Copies the source data to the target array at the specified index.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="targetIndex"></param>
+        /// <param name="count">The maximum number of items to copy.</param>
+        public void CopyTo(double[] target, int targetIndex, int count)
+        {
+            EngineArray.ArrayCopy(_data, 0, target, targetIndex, count);
+        }
+    }
 }

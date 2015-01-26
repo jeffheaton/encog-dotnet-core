@@ -53,6 +53,7 @@ namespace Encog.App.CSV
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestConvert()
         {
             GenerateTestFileHeadings(true);

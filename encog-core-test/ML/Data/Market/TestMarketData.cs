@@ -32,6 +32,7 @@ namespace Encog.ML.Data.Market
     public class TestMarketData
     {
         [TestMethod]
+        [TestCategory("Integration")]
         public void MarketData()
         {
             IMarketLoader loader = new YahooFinanceLoader();

@@ -47,12 +47,20 @@ namespace Encog.ML.Data
 		void CopyTo(double[] target, int targetIndex, int count);
     }
 
-	public interface IMLDataModifiable: IMLData
+    /// <summary>
+    /// Used when it is possible to change the value of the underlying IMLData.
+    /// </summary>
+    public interface IMLDataModifiable : IMLData
 	{
 		/// <summary>
 		/// Set the specified index.
 		/// </summary>
 		/// <param name="x">The index to access.</param>
 		new double this[int x] { get; set; }
+
+        /// <summary>
+        /// Constructs an array of the data which is used to construct the object.
+        /// </summary>
+        double[] Data { get; }
 	}
 }
