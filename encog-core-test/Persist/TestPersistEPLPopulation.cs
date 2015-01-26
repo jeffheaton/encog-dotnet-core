@@ -61,6 +61,7 @@ namespace Encog.Persist
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestPersistEG()
         {
             PrgPopulation pop = Create();
@@ -70,6 +71,7 @@ namespace Encog.Persist
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void testPersistSerial()
         {
             PrgPopulation pop = Create();

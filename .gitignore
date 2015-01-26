@@ -13,6 +13,7 @@ encog-core-cs/bin/
 encog-core-cs/obj/
 encog-core-test/bin/
 encog-core-test/obj/
+_NCrunch_encog-core-cs/
 
 encog-core-cs.5.1.ReSharper.user
 EncogCmd/VSdoc/EncogCmd.hhc
@@ -39,4 +40,3 @@ encog-core-cs.sln.vsdoc
 EncogCmd/EncogCmd.csproj.vs10x
 encog-core-cs/encog-core-cs.vsdoc
 encog-core-cs.5.1.ReSharper.user.orig
-_NCrunch_encog-core-cs/StoredText/f643ea7f5d934291af40cc940cd7d68a
