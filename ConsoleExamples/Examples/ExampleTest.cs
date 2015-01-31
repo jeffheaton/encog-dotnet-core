@@ -22,6 +22,15 @@
 //
 using System;
 using ConsoleExamples.Examples;
+using Encog.Util.Simple;
+using Encog.Neural.Pattern;
+using Encog.Util.CSV;
+using Encog.Engine.Network.Activation;
+using Encog.Persist;
+using Encog.Neural.Prune;
+using System.IO;
+using Encog.App.Analyst;
+using Encog.App.Analyst.Wizard;
 
 namespace Encog.Examples
 {
@@ -48,7 +57,6 @@ namespace Encog.Examples
         /// <param name="app">Holds arguments and other info.</param>
         public void Execute(IExampleInterface app)
         {
-            Console.WriteLine(@"Hello world.");
         }
 
         #endregion
