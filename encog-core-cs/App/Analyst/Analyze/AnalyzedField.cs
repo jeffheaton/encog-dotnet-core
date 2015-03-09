@@ -140,7 +140,7 @@ namespace Encog.App.Analyst.Analyze
             {
                 try
                 {
-                    Int64 i = Int64.Parse(str);
+                    int i = Int32.Parse(str);
                     Max = Math.Max(i, Max);
                     Min = Math.Min(i, Min);
                     if (!accountedFor)
