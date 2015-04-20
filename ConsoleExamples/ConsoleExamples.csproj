@@ -66,6 +66,7 @@
     <Compile Include="Examples\Benchmark\WeightInitialization.cs" />
     <Compile Include="Examples\Analyzer\CreateEval.cs" />
     <Compile Include="Examples\EPL\SimpleEPL.cs" />
+    <Compile Include="Examples\ExampleTest.cs" />
     <Compile Include="Examples\Forest\Evaluate.cs" />
     <Compile Include="Examples\Forest\ForestConfig.cs" />
     <Compile Include="Examples\Forest\ForestCover.cs" />

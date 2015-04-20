@@ -697,7 +697,7 @@ namespace Encog.App.Analyst.Wizard
 
             // swap back in
             oldList.Clear();
-            foreach (AnalystField item in oldList)
+            foreach (AnalystField item in newList)
             {
                 oldList.Add(item);
             }
