@@ -26,7 +26,7 @@ using System.Text;
 namespace Encog.ML.Data.Temporal
 {
     /// <summary>
-    /// A point in tme for a temporal data set.
+    /// A point in time for a temporal data set.
     /// </summary>
     public class TemporalPoint : IComparable<TemporalPoint>
     {
