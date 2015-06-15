@@ -69,7 +69,7 @@ namespace Encog.ML.Data.Temporal
         /// <summary>
         /// The temporal points at which we have data.
         /// </summary>
-        private readonly List<TemporalPoint> _points = new List<TemporalPoint>();
+        private readonly List<TemporalPoint> _points;
 
         /// <summary>
         /// How big would we like the input size to be.
@@ -122,8 +122,10 @@ namespace Encog.ML.Data.Temporal
         /// </summary>
         /// <param name="inputWindowSize">What is the input window size.</param>
         /// <param name="predictWindowSize">What is the prediction window size.</param>
+        /// <param name="dataSetSize">Size of the dataset (if known ahead)</param>
         public TemporalMLDataSet(int inputWindowSize,
-                                     int predictWindowSize)
+                                     int predictWindowSize,
+            int dataSetSize=0)
         {
             _inputWindowSize = inputWindowSize;
             _predictWindowSize = predictWindowSize;
@@ -132,6 +134,7 @@ namespace Encog.ML.Data.Temporal
             _desiredSetSize = int.MaxValue;
             _startingPoint = DateTime.MinValue;
             _sequenceGrandularity = TimeUnit.Days;
+            _points = new List<TemporalPoint>(Math.Max(0, dataSetSize));
         }
 
 
