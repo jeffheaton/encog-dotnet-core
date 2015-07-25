@@ -131,31 +131,21 @@ namespace Encog.MathUtil
                 result[i] = new double[n - 1];
             }
 
+            //seed for the first two categories
             result[0][0] = -1;
             result[1][0] = 1.0;
 
             for (int k = 2; k < n; k++)
             {
-                // scale the matrix so far
-                double r = k;
-                double f = Math.Sqrt(r*r - 1.0)/r;
+                double f = Math.Sqrt(k * k - 1.0) / k;
+                var s = -1.0 / k;
                 for (int i = 0; i < k; i++)
                 {
+                    result[i][k - 1] = s;
                     for (int j = 0; j < k - 1; j++)
                     {
                         result[i][j] *= f;
                     }
-                }
-
-                r = -1.0/r;
-                for (int i = 0; i < k; i++)
-                {
-                    result[i][k - 1] = r;
-                }
-
-                for (int i = 0; i < k - 1; i++)
-                {
-                    result[k][i] = 0.0;
                 }
                 result[k][k - 1] = 1.0;
             }
