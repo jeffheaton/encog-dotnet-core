@@ -36,6 +36,7 @@ namespace Encog.ML.Data.Versatile
     ///     This class is used to perform normalizations for methods trained with the
     ///     versatile dataset.
     /// </summary>
+    [Serializable]
     public class NormalizationHelper
     {
         /// <summary>
