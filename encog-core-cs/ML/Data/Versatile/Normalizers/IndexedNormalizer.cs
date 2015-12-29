@@ -30,6 +30,7 @@ namespace Encog.ML.Data.Versatile.Normalizers
     ///     of the class in the list. For example, "one", "two", "three" normalizes to
     ///     0,1,2.
     /// </summary>
+    [Serializable]
     public class IndexedNormalizer : INormalizer
     {
         /// <inheritdoc />

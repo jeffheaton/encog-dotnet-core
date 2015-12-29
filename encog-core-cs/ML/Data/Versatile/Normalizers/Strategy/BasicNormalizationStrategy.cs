@@ -32,6 +32,7 @@ namespace Encog.ML.Data.Versatile.Normalizers.Strategy
     ///     normalizer works mainly by using maps to define which normalizer to use for what
     ///     data type.
     /// </summary>
+    [Serializable]
     public class BasicNormalizationStrategy : INormalizationStrategy
     {
         /// <summary>
