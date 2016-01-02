@@ -65,7 +65,7 @@ namespace Encog.Neural.NEAT
     /// {ACM Press} }
     /// </summary>
     [Serializable]
-    public class NEATNetwork : IMLRegression, IMLError
+    public class NEATNetwork : IMLRegression, IMLClassification, IMLError
     {
         /// <summary>
         /// The neuron links.
@@ -288,6 +288,13 @@ namespace Encog.Neural.NEAT
                         j, 1);
                 _preActivation[j] = 0.0F;
             }
+        }
+
+        /// <inheritdoc/>
+        public int Classify(IMLData input)
+        {
+            IMLData output = Compute(input);
+            return EngineArray.MaxIndex(output);
         }
     }
 }
