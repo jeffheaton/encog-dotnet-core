@@ -2,13 +2,10 @@ Encog 3.2
 
 The following links will be helpful getting started with Encog.
 
-Getting Started:
-
-http://www.heatonresearch.com/wiki/Getting_Started
-
-http://www.heatonresearch.com/support
+[Getting Started](https://s3.amazonaws.com/heatonresearch-books/free/encog-3_3-quickstart.pdf)
+[Report a bug / Suggest a feature](https://github.com/encog/encog-dotnet-core/issues)
 
 Important Links:
 
-http://www.heatonresearch.com/encog
-http://www.heatonresearch.com/wiki
+[Heaton Research - Encog](http://www.heatonresearch.com/encog)
+[Development Guide](https://s3.amazonaws.com/heatonresearch-books/free/encog-3_3-devguide.pdf)
