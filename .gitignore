@@ -39,3 +39,7 @@ encog-core-cs.sln.vsdoc
 EncogCmd/EncogCmd.csproj.vs10x
 encog-core-cs/encog-core-cs.vsdoc
 encog-core-cs.5.1.ReSharper.user.orig
+encog-extensions-test/bin
+encog-extensions-test/obj
+EncogExtensions/bin
+EncogExtensions/obj

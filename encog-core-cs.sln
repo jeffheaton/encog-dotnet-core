@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-core-cs", "encog-core-cs\encog-core-cs.csproj", "{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleExamples", "ConsoleExamples\ConsoleExamples.csproj", "{A65A5878-6336-4ACF-9C40-540F8FAF2CC7}"
@@ -14,10 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-extensions", "EncogExtensions\encog-extensions.csproj", "{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "encog-extensions-test", "encog-extensions-test\encog-extensions-test.csproj", "{01E14205-D596-4580-ACD1-C23716D63516}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = encog-core-cs.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -57,8 +60,35 @@ Global
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Debug|x86.Build.0 = Debug|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C10EB93-D43A-4CE8-B42E-D4EAAACD2E67}.Release|x86.Build.0 = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Debug|x86.Build.0 = Debug|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|x86.ActiveCfg = Release|Any CPU
+		{01E14205-D596-4580-ACD1-C23716D63516}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = encog-core-cs.vsmdi
 	EndGlobalSection
 EndGlobal
