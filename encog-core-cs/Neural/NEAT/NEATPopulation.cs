@@ -184,6 +184,18 @@ namespace Encog.Neural.NEAT
         public IGeneticCODEC CODEC { get; set; }
 
         /// <summary>
+        /// The actual best network.
+        /// </summary>
+        public NEATNetwork BestNetwork
+        {
+            get
+            {
+                UpdateBestNetwork();
+                return _bestNetwork;
+            }
+        }
+
+        /// <summary>
         /// The initial connection density for the initial random population of
         /// genomes.
         /// </summary>
@@ -397,7 +409,7 @@ namespace Encog.Neural.NEAT
             // create the initial population
             for (int i = 0; i < PopulationSize; i++)
             {
-                NEATGenome genome = GenomeFactory.Factor(rnd, this ,
+                NEATGenome genome = GenomeFactory.Factor(rnd, this,
                         InputCount, OutputCount,
                         InitialConnectionDensity);
                 defaultSpecies.Add(genome);
