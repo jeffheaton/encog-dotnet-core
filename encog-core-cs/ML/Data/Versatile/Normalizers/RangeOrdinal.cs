@@ -30,6 +30,7 @@ namespace Encog.ML.Data.Versatile.Normalizers
     ///     has order. For example "first grade", "second grade", ... "freshman", ...,
     ///     "senior". These values are mapped to an increasing index.
     /// </summary>
+    [Serializable]
     public class RangeOrdinal : INormalizer
     {
         /// <summary>

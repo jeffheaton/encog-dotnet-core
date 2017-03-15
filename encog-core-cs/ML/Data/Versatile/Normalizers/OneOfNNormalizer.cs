@@ -29,6 +29,7 @@ namespace Encog.ML.Data.Versatile.Normalizers
     ///     Normalize to one-of-n for nominal values. For example, "one", "two", "three"
     ///     becomes 1,0,0 and 0,1,0 and 0,0,1 etc. Assuming 0 and 1 were the min/max.
     /// </summary>
+    [Serializable]
     public class OneOfNNormalizer : INormalizer
     {
         /// <summary>
