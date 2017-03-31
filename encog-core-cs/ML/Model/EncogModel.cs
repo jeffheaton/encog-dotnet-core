@@ -313,28 +313,7 @@ namespace Encog.ML.Model
             return bestMethod;
         }
 
-        /// <summary>
-        ///     Select the method to use.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        /// <param name="methodType">The type of method.</param>
-        /// <param name="methodArgs">The method arguments.</param>
-        /// <param name="trainingType">The training type.</param>
-        /// <param name="trainingArgs">The training arguments.</param>
-        public void SelectMethod(VersatileMLDataSet dataset, String methodType,
-            String methodArgs, String trainingType, String trainingArgs)
-        {
-            if (!_methodConfigurations.ContainsKey(methodType))
-            {
-                throw new EncogError("Don't know how to autoconfig method: "
-                                     + methodType);
-            }
-            _methodType = methodType;
-            _methodArgs = methodArgs;
-            dataset.NormHelper.NormStrategy =
-                _methodConfigurations[methodType]
-                    .SuggestNormalizationStrategy(dataset, methodArgs);
-        }
+       
 
         /// <summary>
         ///     Create the selected method.
@@ -372,6 +351,32 @@ namespace Encog.ML.Model
             _methodArgs = _config.SuggestModelArchitecture(dataset);
             dataset.NormHelper.NormStrategy =
                 _config.SuggestNormalizationStrategy(dataset, _methodArgs);
+        }
+
+        /// <summary>
+        ///     Select the method to use.
+        /// </summary>
+        /// <param name="dataset">The dataset.</param>
+        /// <param name="methodType">The type of method.</param>
+        /// <param name="methodArgs">The method arguments.</param>
+        /// <param name="trainingType">The training type.</param>
+        /// <param name="trainingArgs">The training arguments.</param>
+        public void SelectMethod(VersatileMLDataSet dataset, String methodType,
+            String methodArgs, String trainingType, String trainingArgs)
+        {
+            if (!_methodConfigurations.ContainsKey(methodType))
+            {
+                throw new EncogError("Don't know how to autoconfig method: "
+                                     + methodType);
+            }
+
+
+            _config = _methodConfigurations[methodType];
+            _methodType = methodType;
+            _methodArgs = methodArgs;
+            dataset.NormHelper.NormStrategy =
+                _methodConfigurations[methodType]
+                    .SuggestNormalizationStrategy(dataset, methodArgs);
         }
 
         /// <summary>
