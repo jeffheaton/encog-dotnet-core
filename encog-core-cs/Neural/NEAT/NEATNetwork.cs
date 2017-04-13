@@ -200,6 +200,36 @@ namespace Encog.Neural.NEAT
             return new BasicMLData(result);
         }
 
+        public IMLData ComputeThreadSafe(IMLData input)
+        {
+            var result = new double[_outputCount];
+
+            // clear from previous
+            var _preActivation = new double[_activationFunctions.Length];
+            var _postActivation = new double[_activationFunctions.Length];
+            _postActivation[0] = 1.0;
+
+            // copy input
+            for (int i = 0; i < _inputCount; i++)
+            {
+                _postActivation[i + 1] = input[i];
+            }
+
+            // iterate through the network activationCycles times
+            for (int i = 0; i < ActivationCycles; ++i)
+            {
+                _postActivation = InternalCompute(_preActivation, _postActivation);
+            }
+
+            // copy output
+            for (int i = 0; i < _outputCount; i++)
+            {
+                result[i] = _postActivation[_outputIndex + i];
+            }
+
+            return new BasicMLData(result);
+        }
+
         /// <summary>
         /// The activation functions.
         /// </summary>
@@ -288,6 +318,24 @@ namespace Encog.Neural.NEAT
                         j, 1);
                 _preActivation[j] = 0.0F;
             }
+        }
+
+        private double[] InternalCompute(double[] _preActivation, double[] _postActivation)
+        {
+            foreach (NEATLink t in _links)
+            {
+                _preActivation[t.ToNeuron] += _postActivation[t.FromNeuron] * t.Weight;
+            }
+
+            for (int j = _outputIndex; j < _preActivation.Length; j++)
+            {
+                _postActivation[j] = _preActivation[j];
+                _activationFunctions[j].ActivationFunction(_postActivation,
+                        j, 1);
+                _preActivation[j] = 0.0F;
+            }
+
+            return _postActivation;
         }
 
         /// <inheritdoc/>
