@@ -66,7 +66,7 @@ namespace Encog.Util.Concurrency
             _workloadSize = workloadSize;
             if (threads == 0)
             {
-                var num = (int) (Math.Log(((int) Process.GetCurrentProcess().ProcessorAffinity + 1), 2));
+                var num = Environment.ProcessorCount;
 
                 // if there is more than one processor, use processor count +1
                 if (num != 1)
