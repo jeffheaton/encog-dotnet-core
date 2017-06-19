@@ -116,7 +116,7 @@ namespace Encog.Util.Banchmark
         /// <returns>The total time, which is the final Encog benchmark score.</returns>
         public String Process()
         {
-            _report.Report(Steps, 0, "Beginning benchmark");
+            _report.Report(Steps, 0, "Beginning benchmark", 0.0, 0.0);
 
             EvalCpu();
             EvalMemory();
@@ -132,7 +132,7 @@ namespace Encog.Util.Banchmark
             result.Append(", Disk:");
             result.Append(Format.FormatInteger(_binaryScore));
             _report.Report(Steps, Steps, result
-                                            .ToString());
+                                            .ToString(), 0.0, 0.0);
 
             return result.ToString();
         }
@@ -145,24 +145,24 @@ namespace Encog.Util.Banchmark
         {
             int small = Evaluate.EvaluateTrain(2, 4, 0, 1);
             _report.Report(Steps, Step1,
-                          "Evaluate CPU, tiny= " + Format.FormatInteger(small/100));
+                          "Evaluate CPU, tiny= " + Format.FormatInteger(small/100), 0.0, 0.0);
 
             int medium = Evaluate.EvaluateTrain(10, 20, 0, 1);
             _report.Report(Steps, Step1,
-                          "Evaluate CPU, small= " + Format.FormatInteger(medium/30));
+                          "Evaluate CPU, small= " + Format.FormatInteger(medium/30), 0.0, 0.0);
 
             int large = Evaluate.EvaluateTrain(100, 200, 40, 5);
             _report.Report(Steps, Step1,
-                          "Evaluate CPU, large= " + Format.FormatInteger(large));
+                          "Evaluate CPU, large= " + Format.FormatInteger(large), 0.0, 0.0);
 
             int huge = Evaluate.EvaluateTrain(200, 300, 200, 50);
             _report.Report(Steps, Step1,
-                          "Evaluate CPU, huge= " + Format.FormatInteger(huge));
+                          "Evaluate CPU, huge= " + Format.FormatInteger(huge), 0.0, 0.0);
 
             int result = (small/100) + (medium/30) + large + huge;
 
             _report.Report(Steps, Step1,
-                          "CPU result: " + result);
+                          "CPU result: " + result, 0.0, 0.0);
             _cpuScore = result;
         }
 
@@ -196,7 +196,7 @@ namespace Encog.Util.Banchmark
 			iterations /= 100000;
 
             _report.Report(Steps, Step2,
-                          "Memory dataset, result: " + Format.FormatInteger(iterations));
+                          "Memory dataset, result: " + Format.FormatInteger(iterations), 0.0, 0.0);
 
             _memoryScore = iterations;
         }
@@ -247,7 +247,7 @@ namespace Encog.Util.Banchmark
 
             _report.Report(Steps, Step3,
                           "Disk(binary) dataset, result: "
-                          + Format.FormatInteger(iterations));
+                          + Format.FormatInteger(iterations), 0.0, 0.0);
 
             if (file.Exists)
             {

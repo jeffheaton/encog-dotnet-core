@@ -211,7 +211,7 @@ namespace Encog.ML.Model
                     line.Append(", Validation Error: ");
                     line.Append(Format.FormatDouble(earlyStop.ValidationError,
                         8));
-                    Report.Report(k, foldNum, line.ToString());
+                    Report.Report(k, foldNum, line.ToString(), train.Error, earlyStop.ValidationError);
                 }
                 fold.Score = earlyStop.ValidationError;
                 fold.Method = method;
@@ -223,7 +223,7 @@ namespace Encog.ML.Model
                     fold.Validation);
                 Report.Report(k, k,
                     "Trained, Training Error: " + train.Error
-                    + ", Validatoin Error: " + validationError);
+                    + ", Validatoin Error: " + validationError, train.Error, validationError);
                 fold.Score = validationError;
                 fold.Method = method;
             }
@@ -292,7 +292,7 @@ namespace Encog.ML.Model
             foreach (DataFold fold in cross.Folds)
             {
                 foldNumber++;
-                Report.Report(k, foldNumber, "Fold #" + foldNumber);
+                Report.Report(k, foldNumber, "Fold #" + foldNumber, 0.0, 0.0);
                 FitFold(k, foldNumber, fold);
             }
 
@@ -309,7 +309,7 @@ namespace Encog.ML.Model
                 }
             }
             sum = sum/cross.Folds.Count;
-            Report.Report(k, k, "Cross-validated score:" + sum);
+            Report.Report(k, k, "Cross-validated score:" + sum, sum, sum);
             return bestMethod;
         }
 

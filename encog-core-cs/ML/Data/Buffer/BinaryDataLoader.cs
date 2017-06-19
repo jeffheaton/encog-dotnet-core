@@ -69,7 +69,7 @@ namespace Encog.ML.Data.Buffer
         public void External2Binary(String binaryFile)
         {
             Status.Report(0, 0, "Importing to binary file: "
-                                + binaryFile);
+                                + binaryFile, 0.0, 0.0);
 
             var egb = new EncogEGBFile(binaryFile);
 
@@ -94,7 +94,7 @@ namespace Encog.ML.Data.Buffer
                 if (lastUpdate >= 10000)
                 {
                     lastUpdate = 0;
-                    Status.Report(0, currentRecord, "Importing...");
+                    Status.Report(0, currentRecord, "Importing...", 0.0, 0.0);
                 }
                 egb.Write(significance);
             }
@@ -102,7 +102,7 @@ namespace Encog.ML.Data.Buffer
             egb.Close();
             _codec.Close();
             Status.Report(0, 0, "Done importing to binary file: "
-                                + binaryFile);
+                                + binaryFile, 0.0, 0.0);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Encog.ML.Data.Buffer
         /// <param name="binaryFile">THe binary file to use.</param>
         public void Binary2External(String binaryFile)
         {
-            Status.Report(0, 0, "Exporting binary file: " + binaryFile);
+            Status.Report(0, 0, "Exporting binary file: " + binaryFile, 0.0, 0.0);
 
             var egb = new EncogEGBFile(binaryFile);
             egb.Open();
@@ -151,14 +151,14 @@ namespace Encog.ML.Data.Buffer
                 {
                     lastUpdate = 0;
                     Status.Report(egb.NumberOfRecords, currentRecord,
-                                  "Exporting...");
+                                  "Exporting...", 0.0, 0.0);
                 }
             }
 
             egb.Close();
             _codec.Close();
             Status.Report(0, 0, "Done exporting binary file: "
-                                + binaryFile);
+                                + binaryFile, 0.0, 0.0);
         }
     }
 }
