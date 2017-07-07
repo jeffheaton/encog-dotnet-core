@@ -282,7 +282,7 @@ namespace Encog.ML.Model
         /// <param name="k">The number of folds.</param>
         /// <param name="shuffle">True if we should shuffle.</param>
         /// <returns>The trained method.</returns>
-        public IMLMethod Crossvalidate(int k, bool shuffle)
+        public IMLMethod Crossvalidate(int k, ref double crossValidatedScore, bool shuffle)
         {
             var cross = new KFoldCrossvalidation(
                 TrainingDataset, k);
@@ -310,6 +310,7 @@ namespace Encog.ML.Model
             }
             sum = sum/cross.Folds.Count;
             Report.Report(k, k, "Cross-validated score:" + sum, sum, sum);
+            crossValidatedScore = sum;
             return bestMethod;
         }
 
