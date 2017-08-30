@@ -3,8 +3,12 @@ using Encog.MathUtil;
 
 namespace Encog.Engine.Network.Activation
 {
+    /// <summary>
+    /// Smooth ReLU.
+    /// https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
+    /// </summary>
     [Serializable]
-    public class ActivationRectifier : IActivationFunction
+    public class ActivationSmoothReLU : IActivationFunction
     {
         /// <summary>
         /// The parameters.
@@ -14,7 +18,7 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// Construct a basic Rectifier, slope of 1.
         /// </summary>
-        public ActivationRectifier()
+        public ActivationSmoothReLU()
         {
             _paras = new double[0];
         }
@@ -34,7 +38,7 @@ namespace Encog.Engine.Network.Activation
         /// <returns>The cloned object.</returns>
         public object Clone()
         {
-            return new ActivationRectifier();
+            return new ActivationSmoothReLU();
         }
 
         /// <inheritdoc />

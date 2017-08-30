@@ -69,7 +69,7 @@ namespace Encog.ML.Data.Buffer
         /// </summary>
         public IMLDataSet External2Memory()
         {
-            Status.Report(0, 0, "Importing to memory", 0.0, 0.0);
+            Status.Report(0, 0, "Importing to memory");
 
             if (Result == null)
             {
@@ -103,12 +103,12 @@ namespace Encog.ML.Data.Buffer
                 if (lastUpdate >= 10000)
                 {
                     lastUpdate = 0;
-                    Status.Report(0, currentRecord, "Importing...", 0.0, 0.0);
+                    Status.Report(0, currentRecord, "Importing...");
                 }
             }
 
             _codec.Close();
-            Status.Report(0, 0, "Done importing to memory",0.0, 0.0);
+            Status.Report(0, 0, "Done importing to memory");
             return Result;
         }
     }

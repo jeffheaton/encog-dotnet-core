@@ -552,7 +552,7 @@ namespace Encog.Util.Normalize
 
             if (_report != null)
             {
-                _report.Report(0, 0, "Analyzing file", 0.0, 0.0);
+                _report.Report(0, 0, "Analyzing file");
             }
             _lastReport = 0;
             int index = 0;
@@ -591,7 +591,7 @@ namespace Encog.Util.Normalize
 
             if (_report != null)
             {
-                _report.Report(0, 0, "Analyzing file", 0.0, 0.0);
+                _report.Report(0, 0, "Analyzing file");
             }
             _lastReport = 0;
             int index = 0;
@@ -850,7 +850,7 @@ namespace Encog.Util.Normalize
             _lastReport++;
             if (_lastReport >= 10000)
             {
-                _report.Report(total, current, message, 0.0, 0.0);
+                _report.Report(total, current, message);
                 _lastReport = 0;
             }
         }

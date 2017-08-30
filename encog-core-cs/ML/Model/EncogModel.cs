@@ -92,6 +92,11 @@ namespace Encog.ML.Model
         private string _trainingType;
 
         /// <summary>
+        /// The cross validated score.
+        /// </summary>
+        public double CrossValidatedScore { get; set; }
+
+        /// <summary>
         ///     Default constructor.
         /// </summary>
         public EncogModel()
@@ -211,7 +216,7 @@ namespace Encog.ML.Model
                     line.Append(", Validation Error: ");
                     line.Append(Format.FormatDouble(earlyStop.ValidationError,
                         8));
-                    Report.Report(k, foldNum, line.ToString(), train.Error, earlyStop.ValidationError);
+                    Report.Report(k, foldNum, line.ToString());
                 }
                 fold.Score = earlyStop.ValidationError;
                 fold.Method = method;
@@ -223,7 +228,7 @@ namespace Encog.ML.Model
                     fold.Validation);
                 Report.Report(k, k,
                     "Trained, Training Error: " + train.Error
-                    + ", Validatoin Error: " + validationError, train.Error, validationError);
+                    + ", Validatoin Error: " + validationError);
                 fold.Score = validationError;
                 fold.Method = method;
             }
@@ -282,7 +287,7 @@ namespace Encog.ML.Model
         /// <param name="k">The number of folds.</param>
         /// <param name="shuffle">True if we should shuffle.</param>
         /// <returns>The trained method.</returns>
-        public IMLMethod Crossvalidate(int k, ref double crossValidatedScore, bool shuffle)
+        public IMLMethod Crossvalidate(int k, bool shuffle)
         {
             var cross = new KFoldCrossvalidation(
                 TrainingDataset, k);
@@ -292,7 +297,7 @@ namespace Encog.ML.Model
             foreach (DataFold fold in cross.Folds)
             {
                 foldNumber++;
-                Report.Report(k, foldNumber, "Fold #" + foldNumber, 0.0, 0.0);
+                Report.Report(k, foldNumber, "Fold #" + foldNumber);
                 FitFold(k, foldNumber, fold);
             }
 
@@ -309,8 +314,8 @@ namespace Encog.ML.Model
                 }
             }
             sum = sum/cross.Folds.Count;
-            Report.Report(k, k, "Cross-validated score:" + sum, sum, sum);
-            crossValidatedScore = sum;
+            Report.Report(k, k, "Cross-validated score:" + sum);
+            CrossValidatedScore = sum;
             return bestMethod;
         }
 
