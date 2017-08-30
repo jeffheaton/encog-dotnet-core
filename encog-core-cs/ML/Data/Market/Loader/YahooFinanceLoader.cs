@@ -37,6 +37,12 @@ namespace Encog.ML.Data.Market.Loader
     {
         #region IMarketLoader Members
 
+        public YahooFinanceLoader()
+        {
+            throw new LoaderError("Yahoo has dropped support for this feature.");
+        }
+
+
         /// <summary>
         /// Load the specified financial data. 
         /// </summary>

@@ -60,7 +60,9 @@ namespace Encog.App.CSV
         [TestMethod]
         public void TestYahooDownloadCSV()
         {
-            var yahoo = new YahooDownload();
+            // Yahoo does not support this anymore
+
+/*            var yahoo = new YahooDownload();
             yahoo.Precision = 2;
             yahoo.LoadAllData("yhoo", OutputName.ToString(), CSVFormat.English,
                               new DateTime(2000, 01, 01),
@@ -80,7 +82,7 @@ namespace Encog.App.CSV
             Assert.AreEqual(
                 "20000105,0,430.5,431.12,402,410.5,83194800,102.62",
                 tr.ReadLine());
-            tr.Close();
+            tr.Close();*/
         }
     }
 }
