@@ -50,6 +50,11 @@ namespace Encog.Util
         private static readonly IDictionary<String, String> ClassMap = new Dictionary<String, String>();
 
         /// <summary>
+        /// A map between short class names and the corresponding type.
+        /// </summary>
+        private static readonly IDictionary<String, Type> TypeMap = new Dictionary<String, Type>();
+
+        /// <summary>
         /// Private constructor.
         /// </summary>
         private ReflectionUtil()
@@ -182,12 +187,22 @@ namespace Encog.Util
         /// <returns>The created class.</returns>
         public static Object LoadObject(String name)
         {
+            Type type;
+            if (TypeMap.TryGetValue(name, out type))
+                return Activator.CreateInstance(type);
+
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             Object result = null;
 
             foreach (Assembly a in assemblies)
             {
-                result = a.CreateInstance(name);
+                type = a.GetType(name);
+                if (type != null)
+                {
+                    TypeMap[name] = type;
+                    result = Activator.CreateInstance(type);
+                }
+
                 if (result != null)
                     break;
             }
