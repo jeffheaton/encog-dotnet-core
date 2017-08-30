@@ -48,7 +48,7 @@ namespace Encog.App.Analyst.Util
         /// <summary>
         /// </summary>
         public void Report(int total, int current,
-                           String message)
+                           String message, double _, double __)
         {
             foreach (IAnalystListener listener  in  _analyst.Listeners)
             {

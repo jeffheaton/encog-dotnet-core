@@ -383,7 +383,7 @@ namespace Encog.App.Analyst.CSV.Basic
         public void ReportDone(bool isAnalyzing)
         {
             _report.Report(_recordCount, _recordCount,
-                           isAnalyzing ? "Done analyzing" : "Done processing");
+                           isAnalyzing ? "Done analyzing" : "Done processing", 0.0, 0.0);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Encog.App.Analyst.CSV.Basic
         /// <param name="task">The message.</param>
         public void ReportDone(String task)
         {
-            _report.Report(_recordCount, _recordCount, task);
+            _report.Report(_recordCount, _recordCount, task, 0.0, 0.0);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Encog.App.Analyst.CSV.Basic
 
             if (shouldDisplay)
             {
-                _report.Report(_recordCount, _currentRecord, task);
+                _report.Report(_recordCount, _currentRecord, task, 0.0, 0.0);
             }
         }
 

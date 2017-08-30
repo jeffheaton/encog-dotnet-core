@@ -211,7 +211,7 @@ namespace Encog.ML.Model
                     line.Append(", Validation Error: ");
                     line.Append(Format.FormatDouble(earlyStop.ValidationError,
                         8));
-                    Report.Report(k, foldNum, line.ToString());
+                    Report.Report(k, foldNum, line.ToString(), train.Error, earlyStop.ValidationError);
                 }
                 fold.Score = earlyStop.ValidationError;
                 fold.Method = method;
@@ -223,7 +223,7 @@ namespace Encog.ML.Model
                     fold.Validation);
                 Report.Report(k, k,
                     "Trained, Training Error: " + train.Error
-                    + ", Validatoin Error: " + validationError);
+                    + ", Validatoin Error: " + validationError, train.Error, validationError);
                 fold.Score = validationError;
                 fold.Method = method;
             }
@@ -282,7 +282,7 @@ namespace Encog.ML.Model
         /// <param name="k">The number of folds.</param>
         /// <param name="shuffle">True if we should shuffle.</param>
         /// <returns>The trained method.</returns>
-        public IMLMethod Crossvalidate(int k, bool shuffle)
+        public IMLMethod Crossvalidate(int k, ref double crossValidatedScore, bool shuffle)
         {
             var cross = new KFoldCrossvalidation(
                 TrainingDataset, k);
@@ -292,7 +292,7 @@ namespace Encog.ML.Model
             foreach (DataFold fold in cross.Folds)
             {
                 foldNumber++;
-                Report.Report(k, foldNumber, "Fold #" + foldNumber);
+                Report.Report(k, foldNumber, "Fold #" + foldNumber, 0.0, 0.0);
                 FitFold(k, foldNumber, fold);
             }
 
@@ -309,32 +309,12 @@ namespace Encog.ML.Model
                 }
             }
             sum = sum/cross.Folds.Count;
-            Report.Report(k, k, "Cross-validated score:" + sum);
+            Report.Report(k, k, "Cross-validated score:" + sum, sum, sum);
+            crossValidatedScore = sum;
             return bestMethod;
         }
 
-        /// <summary>
-        ///     Select the method to use.
-        /// </summary>
-        /// <param name="dataset">The dataset.</param>
-        /// <param name="methodType">The type of method.</param>
-        /// <param name="methodArgs">The method arguments.</param>
-        /// <param name="trainingType">The training type.</param>
-        /// <param name="trainingArgs">The training arguments.</param>
-        public void SelectMethod(VersatileMLDataSet dataset, String methodType,
-            String methodArgs, String trainingType, String trainingArgs)
-        {
-            if (!_methodConfigurations.ContainsKey(methodType))
-            {
-                throw new EncogError("Don't know how to autoconfig method: "
-                                     + methodType);
-            }
-            _methodType = methodType;
-            _methodArgs = methodArgs;
-            dataset.NormHelper.NormStrategy =
-                _methodConfigurations[methodType]
-                    .SuggestNormalizationStrategy(dataset, methodArgs);
-        }
+       
 
         /// <summary>
         ///     Create the selected method.
@@ -372,6 +352,32 @@ namespace Encog.ML.Model
             _methodArgs = _config.SuggestModelArchitecture(dataset);
             dataset.NormHelper.NormStrategy =
                 _config.SuggestNormalizationStrategy(dataset, _methodArgs);
+        }
+
+        /// <summary>
+        ///     Select the method to use.
+        /// </summary>
+        /// <param name="dataset">The dataset.</param>
+        /// <param name="methodType">The type of method.</param>
+        /// <param name="methodArgs">The method arguments.</param>
+        /// <param name="trainingType">The training type.</param>
+        /// <param name="trainingArgs">The training arguments.</param>
+        public void SelectMethod(VersatileMLDataSet dataset, String methodType,
+            String methodArgs, String trainingType, String trainingArgs)
+        {
+            if (!_methodConfigurations.ContainsKey(methodType))
+            {
+                throw new EncogError("Don't know how to autoconfig method: "
+                                     + methodType);
+            }
+
+
+            _config = _methodConfigurations[methodType];
+            _methodType = methodType;
+            _methodArgs = methodArgs;
+            dataset.NormHelper.NormStrategy =
+                _methodConfigurations[methodType]
+                    .SuggestNormalizationStrategy(dataset, methodArgs);
         }
 
         /// <summary>

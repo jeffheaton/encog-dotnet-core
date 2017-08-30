@@ -38,7 +38,7 @@ namespace Encog
         /// <param name="current">Current item.</param>
         /// <param name="message">Current message.</param>
         public void Report(int total, int current,
-                           String message)
+                           String message, double _, double __)
         {
             if (total == 0)
             {

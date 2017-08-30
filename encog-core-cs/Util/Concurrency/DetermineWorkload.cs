@@ -68,6 +68,7 @@ namespace Encog.Util.Concurrency
             {
                 var num = (int) (Math.Log(((double) Process.GetCurrentProcess().ProcessorAffinity + 1), 2.0));
 
+
                 // if there is more than one processor, use processor count +1
                 if (num != 1)
                 {

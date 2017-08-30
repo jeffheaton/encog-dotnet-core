@@ -37,6 +37,6 @@ namespace Encog
         /// <param name="total">The total amount of units to process.</param>
         /// <param name="current">The current unit being processed.</param>
         /// <param name="message">The message to currently display.</param>
-        void Report(int total, int current, String message);
+        void Report(int total, int current, String message, double trainingError, double validationError);
     }
 }

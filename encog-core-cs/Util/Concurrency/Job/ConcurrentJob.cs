@@ -113,7 +113,7 @@ namespace Encog.Util.Concurrency.Job
         /// <param name="status">The current status for this job.</param>
         public void ReportStatus(JobUnitContext context, String status)
         {
-            _report.Report(_totalTasks, context.TaskNumber, status);
+            _report.Report(_totalTasks, context.TaskNumber, status, 0.0, 0.0);
         }
 
         /// <summary>

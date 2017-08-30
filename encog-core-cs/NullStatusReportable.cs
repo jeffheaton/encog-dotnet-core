@@ -38,7 +38,7 @@ namespace Encog
         /// <param name="current">Not used.</param>
         /// <param name="message">Not used.</param>
         public void Report(int total, int current,
-                           String message)
+                           String message, double _, double __)
         {
         }
 
