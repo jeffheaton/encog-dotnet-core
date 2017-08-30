@@ -22,7 +22,6 @@
 //
 using System;
 using System.IO;
-using System.Web;
 using Encog.MathUtil;
 
 namespace Encog.Util.HTTP
