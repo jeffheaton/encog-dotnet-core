@@ -34,7 +34,9 @@ namespace Encog.ML.Data.Market
         [TestMethod]
         public void MarketData()
         {
-            IMarketLoader loader = new YahooFinanceLoader();
+            // Yahoo does not support this anymore.
+
+            /*IMarketLoader loader = new YahooFinanceLoader();
             var tickerAAPL = new TickerSymbol("AAPL", null);
             var tickerMSFT = new TickerSymbol("MSFT", null);
             var marketData = new MarketMLDataSet(loader, 5, 1);
@@ -135,7 +137,7 @@ namespace Encog.ML.Data.Market
             Assert.AreEqual(0.014, Math.Round(pair.Input[16]*1000.0)/1000.0);
             Assert.AreEqual(0.0090, Math.Round(pair.Input[17]*1000.0)/1000.0);
             Assert.AreEqual(-0.1, Math.Round(pair.Input[18]*10.0)/10.0);
-            Assert.AreEqual(0.066, Math.Round(pair.Input[19]*1000.0)/1000.0);
+            Assert.AreEqual(0.066, Math.Round(pair.Input[19]*1000.0)/1000.0);*/
         }
     }
 }

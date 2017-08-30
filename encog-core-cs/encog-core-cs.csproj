@@ -232,6 +232,7 @@
     <Compile Include="Engine\Network\Activation\ActivationLinear.cs" />
     <Compile Include="Engine\Network\Activation\ActivationLOG.cs" />
     <Compile Include="Engine\Network\Activation\ActivationRamp.cs" />
+    <Compile Include="Engine\Network\Activation\ActivationRectifier.cs" />
     <Compile Include="Engine\Network\Activation\ActivationSigmoid.cs" />
     <Compile Include="Engine\Network\Activation\ActivationSIN.cs" />
     <Compile Include="Engine\Network\Activation\ActivationSoftMax.cs" />

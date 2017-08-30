@@ -33,9 +33,9 @@ namespace Encog.Bot.Browse
         public void TestBrowser()
         {
             var b = new Browser();
-            b.Navigate(new Uri("http://www.httprecipes.com"));
+            b.Navigate(new Uri("http://www.google.com"));
             WebPage page = b.CurrentPage;
-            Assert.IsTrue(page.Title.GetTextOnly().IndexOf("HTTP") != -1);
+            Assert.IsTrue(page.Title.GetTextOnly().IndexOf("Google") != -1);
         }
     }
 }

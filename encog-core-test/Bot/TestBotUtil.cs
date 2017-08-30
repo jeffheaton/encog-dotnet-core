@@ -32,12 +32,12 @@ namespace Encog.Bot
         public void TestLoadPage()
         {
             // test good web site
-            string str = BotUtil.LoadPage(new Uri("http://www.httprecipes.com/"));
-            Assert.IsTrue(str.IndexOf("Recipes") != -1);
+            string str = BotUtil.LoadPage(new Uri("http://www.google.com/"));
+            Assert.IsTrue(str.IndexOf("Google") != -1);
             // test bad website
             try
             {
-                BotUtil.LoadPage(new Uri("http://www.httprecipes.com/sdhfuishdfui"));
+                BotUtil.LoadPage(new Uri("http://www.google.com/sdhfuishdfui"));
                 Assert.IsFalse(true);
             }
             catch (Exception)
