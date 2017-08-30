@@ -30,6 +30,7 @@ namespace Encog.ML.Data.Versatile.Columns
     /// <summary>
     ///     Defines a column definition.
     /// </summary>
+    [Serializable]
     public class ColumnDefinition
     {
         /// <summary>

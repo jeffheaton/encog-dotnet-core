@@ -28,6 +28,7 @@ namespace Encog.ML.Data.Versatile.Normalizers
     /// <summary>
     ///     A a range normalizer forces a value to fall in a specific range.
     /// </summary>
+    [Serializable]
     public class RangeNormalizer : INormalizer
     {
         /// <summary>

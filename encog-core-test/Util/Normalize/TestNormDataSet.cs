@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using Encog.ML.Data.Basic;
+using Encog.ML.Data.Versatile.Normalizers.Strategy;
 using Encog.Util.Normalize.Input;
 using Encog.Util.Normalize.Output;
 using Encog.Util.Normalize.Target;
@@ -80,6 +81,13 @@ namespace Encog.Util.Normalize
             norm = (DataNormalization) SerializeRoundTrip.RoundTrip(norm);
             norm.Process();
             Check(norm);
+        }
+
+        [TestMethod]
+        public void TestBasicNormalizationStrategy()
+        {
+            var strategy = new BasicNormalizationStrategy(1,2,3,4);
+            strategy = (BasicNormalizationStrategy) SerializeRoundTrip.RoundTrip(strategy);
         }
     }
 }

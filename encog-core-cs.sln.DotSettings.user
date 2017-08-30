@@ -1,5 +1,8 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:Boolean x:Key="/Default/Environment/SearchAndNavigation/MergeOccurences/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=F4E88CE0BB834FD484A1D16779F4AC1D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=F4E88CE0BB834FD484A1D16779F4AC1D/Name/@EntryValue">TestNOrmalizationHelperSerialization</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=F4E88CE0BB834FD484A1D16779F4AC1D/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;Elements&gt;&lt;UnitTestElement Provider="MSTest" Id="MsTest:Encog.Util.Normalize.TestNomalizationHelperSerialization" type="MsTestTestClassElement" TypeName="Encog.Util.Normalize.TestNomalizationHelperSerialization" Project="7E02C68C-3412-4C39-BF1E-ECA40CEBA6B8" /&gt;&lt;/Elements&gt;&lt;/Session&gt;</s:String>
 	
 	
 	

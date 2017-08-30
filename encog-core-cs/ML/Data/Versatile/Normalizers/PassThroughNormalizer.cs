@@ -28,6 +28,7 @@ namespace Encog.ML.Data.Versatile.Normalizers
     /// <summary>
     ///     A normalizer that simply passes the value through unnormalized.
     /// </summary>
+    [Serializable]
     public class PassThroughNormalizer : INormalizer
     {
         /// <inheritdoc />
