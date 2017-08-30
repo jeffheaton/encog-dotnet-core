@@ -27,6 +27,8 @@ using Encog.ML.Train;
 using Encog.ML.Train.Strategy;
 using Encog.Neural.Networks.Training;
 using Encog.Neural.Networks.Training.Propagation;
+using Encog.ML.Train.Strategy.End;
+using System.Linq;
 
 namespace Encog.ML.EA.Train
 {
@@ -36,6 +38,12 @@ namespace Encog.ML.EA.Train
     public class TrainEA : BasicEA, IMLTrain
     {
         /// <summary>
+        /// The training strategies to use.
+        /// </summary>
+        ///
+        private readonly IList<IStrategy> _strategies;
+
+        /// <summary>
         ///     Create a trainer for a score function.
         /// </summary>
         /// <param name="thePopulation">The population.</param>
@@ -43,6 +51,7 @@ namespace Encog.ML.EA.Train
         public TrainEA(IPopulation thePopulation, ICalculateScore theScoreFunction)
             : base(thePopulation, theScoreFunction)
         {
+            _strategies = new List<IStrategy>();
         }
 
         /// <summary>
@@ -67,14 +76,24 @@ namespace Encog.ML.EA.Train
             }
         }
 
-
         /// <summary>
-        ///     True if training can progress no further.
+        /// Call the strategies after an iteration.
         /// </summary>
-        public bool TrainingDone
+        /// 
+        public override void PostIteration()
         {
-            get { return false; }
+            foreach (IStrategy strategy in _strategies)
+            {
+                strategy.PostIteration();
+            }
         }
+
+        /// <value>True if training can progress no further.</value>
+        public virtual bool TrainingDone
+        {
+            get { return _strategies.OfType<IEndTrainingStrategy>().Any(end => end.ShouldStop()); }
+        }
+
 
         /// <inheritdoc />
         public TrainingImplementationType ImplementationType
@@ -97,6 +116,8 @@ namespace Encog.ML.EA.Train
             }
         }
 
+        
+
         /// <inheritdoc />
         public TrainingContinuation Pause()
         {
@@ -114,8 +135,10 @@ namespace Encog.ML.EA.Train
         /// <param name="strategy">Not used.</param>
         public void AddStrategy(IStrategy strategy)
         {
-            throw new TrainingError(
-                "Strategies are not supported by this training method.");
+            strategy.Init(this);
+            _strategies.Add(strategy);
+            //throw new TrainingError(
+            //    "Strategies are not supported by this training method.");
         }
 
         /// <inheritdoc />
@@ -152,7 +175,7 @@ namespace Encog.ML.EA.Train
         /// </summary>
         public IList<IStrategy> Strategies
         {
-            get { return new List<IStrategy>(); }
+            get { return _strategies; }
         }
     }
 }

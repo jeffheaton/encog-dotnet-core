@@ -376,6 +376,16 @@ namespace Encog.ML.EA.Train
 
             // purge invalid genomes
             Population.PurgeInvalidGenomes();
+
+            PostIteration();
+        }
+
+        /// <summary>
+        /// post iteration added to support strategies.
+        /// </summary>
+        public virtual void PostIteration()
+        {
+
         }
 
         /// <summary>

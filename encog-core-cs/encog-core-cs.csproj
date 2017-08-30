@@ -576,6 +576,7 @@
     <Compile Include="ML\Prg\VariableMapping.cs" />
     <Compile Include="ML\TrainingImplementationType.cs" />
     <Compile Include="ML\Train\Strategy\EarlyStoppingStrategy.cs" />
+    <Compile Include="ML\Train\Strategy\End\EndTimeSpanStrategy.cs" />
     <Compile Include="ML\Train\Strategy\End\SimpleEarlyStoppingStrategy.cs" />
     <Compile Include="ML\Tree\Basic\BasicTreeNode.cs" />
     <Compile Include="ML\Tree\ITreeNode.cs" />
