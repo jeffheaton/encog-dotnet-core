@@ -698,6 +698,10 @@
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\RPROPConst.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\Resilient\RPROPType.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\SCG\ScaledConjugateGradient.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\BatchDataSet.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\MomentumUpdate.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\NesterovUpdate.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\RMSPropUpdate.cs" />
     <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
     <Compile Include="Neural\Networks\Training\PSO\NeuralPSO.cs" />
     <Compile Include="Neural\Networks\Training\PSO\NeuralPSOWorker.cs" />
