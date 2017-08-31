@@ -253,5 +253,20 @@ namespace Encog.Neural.Networks.Training.Propagation.SGD
             result.BatchSize = BatchSize;
             return result;
         }
+
+        /// <summary>
+        /// Advance to the next batch.  Should be called at the end of each training iteration.
+        /// </summary>
+        public void Advance()
+        {
+            if (RandomBatches)
+            {
+                GeneraterandomSample();
+            }
+            else
+            {
+                _currentIndex = (_currentIndex + BatchSize) % _dataset.Count;
+            }
+        }
     }
 }
