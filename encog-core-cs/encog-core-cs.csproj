@@ -599,8 +599,10 @@
     <Compile Include="Neural\Data\Basic\BasicNeuralDataPair.cs" />
     <Compile Include="Neural\Data\Basic\BasicNeuralDataSet.cs" />
     <Compile Include="Neural\Error\ATanErrorFunction.cs" />
+    <Compile Include="Neural\Error\CrossEntropyErrorFunction.cs" />
     <Compile Include="Neural\Error\IErrorFunction.cs" />
     <Compile Include="Neural\Error\LinearErrorFunction.cs" />
+    <Compile Include="Neural\Error\OutputErrorFunction.cs" />
     <Compile Include="Neural\Flat\FlatLayer.cs" />
     <Compile Include="Neural\Flat\FlatNetwork.cs" />
     <Compile Include="Neural\Flat\FlatNetworkRBF.cs" />
@@ -699,6 +701,10 @@
     <Compile Include="Neural\Networks\Training\Propagation\TrainingContinuation.cs" />
     <Compile Include="Neural\Networks\Training\PSO\NeuralPSO.cs" />
     <Compile Include="Neural\Networks\Training\PSO\NeuralPSOWorker.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\AdaGradUpdate.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\StochasticGradientDescent.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\AdamUpdate.cs" />
+    <Compile Include="Neural\Networks\Training\Propagation\SGD\Update\IUpdateRule.cs" />
     <Compile Include="Neural\Networks\Training\Simple\TrainAdaline.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartLearningRate.cs" />
     <Compile Include="Neural\Networks\Training\Strategy\SmartMomentum.cs" />

@@ -234,19 +234,33 @@ namespace Encog.Neural.Networks.Training.Propagation
             _network.Compute(pair.Input, _actual);
 
             _errorCalculation.UpdateError(_actual, pair.Ideal, pair.Significance);
-            _ef.CalculateError(pair.Ideal,_actual,_layerDelta);
 
-            for (int i = 0; i < _actual.Length; i++)
+            // Calculate error for the output layer.
+            _ef.CalculateError(
+                    _network.ActivationFunctions[0], _layerSums, _layerOutput,
+                    pair.Ideal, _actual, _layerDelta, _flatSpot[0],
+                    pair.Significance);
+
+            // Apply regularization, if requested.
+            if (_owner.L1 > EncogFramework.DefaultDoubleEqual
+                    || _owner.L1 > EncogFramework.DefaultDoubleEqual)
             {
-                _layerDelta[i] = (_network.ActivationFunctions[0]
-                    .DerivativeFunction(_layerSums[i],_layerOutput[i])+_flatSpot[0])
-                    *_layerDelta[i] * pair.Significance;
+                double[] lp = new double[2];
+                CalculateRegularizationPenalty(lp);
+                for (int i = 0; i < _actual.Length; i++)
+                {
+                    double p = (lp[0] * _owner.L1) + (lp[1] * _owner.L2);
+                    _layerDelta[i] += p;
+                }
             }
 
-            for (int i = _network.BeginTraining; i < _network.EndTraining; i++)
+            // Propagate backwards (chain rule from calculus).
+            for (int i = _network.BeginTraining; i < _network
+                    .EndTraining; i++)
             {
                 ProcessLevel(i);
             }
+            
         }
 
         /// <summary>
@@ -297,6 +311,30 @@ namespace Encog.Neural.Networks.Training.Propagation
                 _layerDelta[yi] = sum
                                  *(activation.DerivativeFunction(_layerSums[yi],_layerOutput[yi])+currentFlatSpot);
                 yi++;
+            }
+        }
+
+        public void CalculateRegularizationPenalty(double[] l)
+        {
+            for (int i = 0; i < _network.LayerCounts.Length - 1; i++)
+            {
+                LayerRegularizationPenalty(i, l);
+            }
+        }
+
+        public void LayerRegularizationPenalty(int fromLayer, double[] l)
+        {
+            int fromCount = _network.GetLayerTotalNeuronCount(fromLayer);
+            int toCount = _network.GetLayerNeuronCount(fromLayer + 1);
+
+            for (int fromNeuron = 0; fromNeuron < fromCount; fromNeuron++)
+            {
+                for (int toNeuron = 0; toNeuron < toCount; toNeuron++)
+                {
+                    double w = _network.GetWeight(fromLayer, fromNeuron, toNeuron);
+                    l[0] += Math.Abs(w);
+                    l[1] += w * w;
+                }
             }
         }
     }

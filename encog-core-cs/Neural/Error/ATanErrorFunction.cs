@@ -22,6 +22,7 @@
 //
 using System;
 using Encog.ML.Data;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Error
 {
@@ -32,18 +33,16 @@ namespace Encog.Neural.Error
     /// </summary>
     public class ATanErrorFunction : IErrorFunction
     {
-        #region IErrorFunction Members
-
-        /// <inheritdoc/>
-        public void CalculateError(IMLData ideal, double[] actual,
-                                   double[] error)
+        public void CalculateError(IActivationFunction af, double[] b, double[] a,
+            IMLData ideal, double[] actual, double[] error, double derivShift,
+            double significance)
         {
+
             for (int i = 0; i < actual.Length; i++)
             {
-                error[i] = Math.Atan(ideal[i] - actual[i]);
+                double deriv = af.DerivativeFunction(b[i], a[i]);
+                error[i] = (Math.Atan(ideal[i] - actual[i]) * significance) * deriv;
             }
         }
-
-        #endregion
     }
 }

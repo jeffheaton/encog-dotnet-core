@@ -821,5 +821,78 @@ namespace Encog.Neural.Flat
             get { return _layerSums; }
             set { _layerSums = value; }
         }
+
+        /// <summary>
+        /// Get the weight between the two layers. 
+        /// </summary>
+        /// <param name="fromLayer">The from layer.</param>
+        /// <param name="fromNeuron">The from neuron.</param>
+        /// <param name="toNeuron">The to neuron.</param>
+        /// <returns>The weight value.</returns>
+        public double GetWeight(int fromLayer,
+                int fromNeuron,
+                int toNeuron)
+        {
+            ValidateNeuron(fromLayer, fromNeuron);
+            ValidateNeuron(fromLayer + 1, toNeuron);
+            int fromLayerNumber = _layerContextCount.Length - fromLayer - 1;
+            int toLayerNumber = fromLayerNumber - 1;
+
+            if (toLayerNumber < 0)
+            {
+                throw new NeuralNetworkError(
+                        "The specified layer is not connected to another layer: "
+                                + fromLayer);
+            }
+
+            int weightBaseIndex
+                = _weightIndex[toLayerNumber];
+            int count
+                = _layerCounts[fromLayerNumber];
+            int weightIndex = weightBaseIndex + fromNeuron
+                    + (toNeuron * count);
+
+            return _weights[weightIndex];
+        }
+        
+        /// <summary>
+        /// Validate the the specified targetLayer and neuron are valid. 
+        /// </summary>
+        /// <param name="targetLayer">The target layer.</param>
+        /// <param name="neuron">The target neuron.</param>
+        public void ValidateNeuron(int targetLayer, int neuron)
+        {
+            if ((targetLayer < 0) || (targetLayer >= _layerCounts.Length))
+            {
+                throw new NeuralNetworkError("Invalid layer count: " + targetLayer);
+            }
+
+            if ((neuron < 0) || (neuron >= GetLayerTotalNeuronCount(targetLayer)))
+            {
+                throw new NeuralNetworkError("Invalid neuron number: " + neuron);
+            }
+        }
+        
+        /// <summary>
+        /// Get the total (including bias and context) neuron cont for a layer. 
+        /// </summary>
+        /// <param name="l">The layer.</param>
+        /// <returns>The count.</returns>
+        public int GetLayerTotalNeuronCount(int l)
+        {
+            int layerNumber = _layerCounts.Length - l - 1;
+            return _layerCounts[layerNumber];
+        }
+        
+        /// <summary>
+        /// Get the neuron count. 
+        /// </summary>
+        /// <param name="l">The layer.</param>
+        /// <returns>The neuron count.</returns>
+        public int GetLayerNeuronCount(int l)
+        {
+            int layerNumber = _layerCounts.Length - l - 1;
+            return _layerFeedCounts[layerNumber];
+        }
     }
 }

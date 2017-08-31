@@ -20,6 +20,7 @@
 // and trademarks visit:
 // http://www.heatonresearch.com/copyright
 //
+using Encog.Engine.Network.Activation;
 using Encog.ML.Data;
 namespace Encog.Neural.Error
 {
@@ -32,9 +33,16 @@ namespace Encog.Neural.Error
         /// <summary>
         /// Calculate the error.
         /// </summary>
+        /// <param name="af">The activation function used at the output layer.</param>
+        /// <param name="b">The number to calculate the derivative of, the number "before" the activation function was applied.</param>
+        /// <param name="a">The number "after" an activation function has been applied.</param>
         /// <param name="ideal">The ideal values.</param>
         /// <param name="actual">The actual values.</param>
-        /// <param name="error">The rror output.</param>
-        void CalculateError(IMLData ideal, double[] actual, double[] error);
+        /// <param name="error">The resulting error values.</param>
+        /// <param name="derivShift">The amount to shift af derivativeFunction by</param>
+        /// <param name="significance"> Weighting to apply to ideal[i] - actual[i]</param>
+        void CalculateError(IActivationFunction af, double[] b, double[] a,
+                IMLData ideal, double[] actual, double[] error, double derivShift,
+                double significance);
     }
 }

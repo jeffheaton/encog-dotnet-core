@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encog.ML.Data;
+using Encog.Engine.Network.Activation;
 
 namespace Encog.Neural.Error
 {
@@ -35,13 +36,16 @@ namespace Encog.Neural.Error
     public class LinearErrorFunction : IErrorFunction
     {
         /// <inheritdoc/>
-        public void CalculateError(IMLData ideal, double[] actual, double[] error)
+        public void CalculateError(IActivationFunction af, double[] b, double[] a,
+            IMLData ideal, double[] actual, double[] error, double derivShift,
+            double significance)
         {
+
             for (int i = 0; i < actual.Length; i++)
             {
-                error[i] = ideal[i] - actual[i];
+                double deriv = af.DerivativeFunction(b[i], a[i]);// + derivShift;
+                error[i] = ((ideal[i] - actual[i]) * significance) * deriv;
             }
-
         }
     }
 }

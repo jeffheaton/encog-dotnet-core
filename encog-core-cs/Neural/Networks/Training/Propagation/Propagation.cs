@@ -518,5 +518,15 @@ namespace Encog.Neural.Networks.Training.Propagation
 	    /// the batch size for batch training.
         /// </summary>
         public int BatchSize { get; set; }
+
+        /// <summary>
+        /// L1 regularization.
+        /// </summary>
+        public double L1 { get; set; }
+
+        /// <summary>
+        /// L2 regularization.
+        /// </summary>
+        public double L2 { get; set; }
     }
 }
