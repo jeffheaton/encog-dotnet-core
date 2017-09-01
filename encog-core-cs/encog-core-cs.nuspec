@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>encog-dotnet-core</id>
+    <version>3.4.0</version>
+    <authors>Jeff Heaton</authors>
+    <owners>Heaton Research, Inc.</owners>
+    <licenseUrl>http://www.heatonresearch.com/copyright</licenseUrl>
+    <projectUrl>http://www.heatonresearch.com/encog</projectUrl>
+    <iconUrl>http://www.heatonresearch.com/images/encog/logo/encog32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Encog Machine Learning Frameworks</description>
+    <summary>Encog is an advanced machine learning framework that supports a variety of advanced algorithms, as well as support classes to normalize and process data. Machine learning algorithms such as Support Vector Machines, Artificial Neural Networks, Genetic Programming, Bayesian Networks, Hidden Markov Models and Genetic Algorithms are supported. Most Encog training algoritms are multi-threaded and scale well to multicore hardware. Encog can also make use of a GPU to further speed processing time. A GUI based workbench is also provided to help model and train machine learning algorithms. Encog has been in active development since 2008.</summary>
+    <tags>encog neural ai machine learnings</tags>
+  </metadata>
+</package>

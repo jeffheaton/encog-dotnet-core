@@ -28,11 +28,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Encog")]
-[assembly: AssemblyDescription("Encog Artificial Intelligence Framework v3.3")]
+[assembly: AssemblyDescription("Encog Artificial Intelligence Framework v3.4.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Heaton Research, Inc.")]
 [assembly: AssemblyProduct("Encog")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
