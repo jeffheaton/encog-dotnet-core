@@ -33,10 +33,18 @@ namespace Encog.Util.Normalize.Input
     public interface IInputField
     {
         /// <summary>
-        /// The current value of the input field.  This is only valid, 
-        /// while the normalization is being performed.
+        /// The current value of the input field as a double.  This is only valid, 
+        /// while the normalization is being performed.  This value will be NAN
+        /// if it was missing, or could not be read.
         /// </summary>
         double CurrentValue { get; set; }
+
+        /// <summary>
+        /// The current value of the input field as it was read, usually double or string.  
+        /// This is only valid, while the normalization is being performed.  This value
+        /// will be null if it was missing.
+        /// </summary>
+        object CurrentValueRaw { get; set; }
 
         /// <summary>
         /// The maximum value for all of the input data, this is calculated

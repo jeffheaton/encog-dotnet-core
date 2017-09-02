@@ -387,13 +387,19 @@ namespace Encog.Util.Normalize
 
         private void DetermineInputFieldValue(IInputField field, int index, bool headers)
         {
-            double result;
-
             if (field is InputFieldCSV)
             {
                 var fieldCSV = (InputFieldCSV)field;
                 ReadCSV csv = _csvMap[field];
-                result = csv.GetDouble(fieldCSV.ColumnName);
+                field.CurrentValueRaw = csv.Get(fieldCSV.ColumnName);
+                try
+                {
+                    field.CurrentValue = CSVFormatUsed.Parse((string)field.CurrentValueRaw);
+                }
+                catch(FormatException)
+                {
+                    field.CurrentValue = double.NaN;
+                }
 
             }
             else if (field is InputFieldMLDataSet)
@@ -405,21 +411,21 @@ namespace Encog.Util.Normalize
                 int offset = mlField.Offset;
                 if (offset < pair.Input.Count)
                 {
-                    result = pair.Input[offset];
+                    field.CurrentValue = pair.Input[offset];
+                    field.CurrentValueRaw = pair.Input[offset];
                 }
                 else
                 {
                     offset -= pair.Input.Count;
-                    result = pair.Ideal[offset];
+                    field.CurrentValue = pair.Ideal[offset];
+                    field.CurrentValueRaw = pair.Ideal[offset];
                 }
             }
             else
             {
-                result = field.GetValue(index);
+                field.CurrentValueRaw = field.GetValue(index);
+                field.CurrentValue = (double)field.CurrentValueRaw;
             }
-
-            field.CurrentValue = result;
-            return;
         }
         /// <summary>
         /// Called internally to obtain the current value for an input field.

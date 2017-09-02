@@ -94,6 +94,7 @@
     <Compile Include="Examples\Indicator\Avg\IndicatorExample.cs" />
     <Compile Include="Examples\Indicator\ImportData\MyInd.cs" />
     <Compile Include="Examples\Indicator\ImportData\ImportIndicatorData.cs" />
+    <Compile Include="Examples\Iris\IrisPredict.cs" />
     <Compile Include="Examples\JordanNetwork\JordanExample.cs" />
     <Compile Include="Examples\LiveSimul\LiveSimul.cs" />
     <Compile Include="Examples\Lunar\LanderSimulator.cs" />

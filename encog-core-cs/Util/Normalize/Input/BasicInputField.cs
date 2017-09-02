@@ -60,11 +60,11 @@ namespace Encog.Util.Normalize.Input
         }
 
 
-        /// <summary>
-        /// The current value of the input field.  This is only valid, 
-        /// while the normalization is being performed.
-        /// </summary>
+        /// </inheritdoc>
         public double CurrentValue { get; set; }
+
+        /// </inheritdoc>
+        public object CurrentValueRaw { get; set; }
 
         /// <summary>
         /// The maximum value for all of the input data, this is calculated
