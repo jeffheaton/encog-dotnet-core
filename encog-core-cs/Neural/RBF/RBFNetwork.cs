@@ -275,7 +275,7 @@ namespace Encog.Neural.RBF
 
                 for (int z = 0; z < centers[0].Length; z++)
                 {
-                    if ((centers[i][z] == 1.0d) || (centers[i][z] == 0.0d))
+                    if ((centers[i][z] == maxPosition) || (centers[i][z] == minPosition))
                     {
                         contains = true;
                     }
