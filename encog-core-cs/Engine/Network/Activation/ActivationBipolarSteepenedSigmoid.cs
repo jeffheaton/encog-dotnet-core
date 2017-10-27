@@ -45,26 +45,25 @@ namespace Encog.Engine.Network.Activation
         /// </summary>
         private double[] _params;
 
+        public ActivationBipolarSteepenedSigmoid()
+        {
+            _params = new double[0];
+        }
+
         /// <inheritdoc/>
         public void ActivationFunction(double[] d, int start, int size)
         {
             for (int i = start; i < start + size; i++)
             {
-                if (d[i] < -1.0)
-                {
-                    d[i] = -1.0;
-                }
-                if (d[i] > 1.0)
-                {
-                    d[i] = 1.0;
-                }
+                d[i] = (2.0 / (1.0 + Math.Exp(-4.9 * d[i]))) - 1.0;
             }
         }
 
         /// <inheritdoc/>
         public double DerivativeFunction(double b, double a)
         {
-            return 1;
+            double s = Math.Exp(-4.9 * a);
+            return 2 * Math.Pow(s * 4.9 / (1 + s), 2);
         }
 
         /// <inheritdoc/>

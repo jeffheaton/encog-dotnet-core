@@ -160,22 +160,22 @@ namespace Encog.Engine.Network.Activation
         public virtual void ActivationFunction(double[] x, int start,
                                                int size)
         {
-            double slope = (_paras[ParamRampHighThreshold] - _paras[ParamRampLowThreshold])
-                           /(_paras[ParamRampHigh] - _paras[ParamRampLow]);
+            double a = (High - Low) / (ThresholdHigh - ThresholdLow);
+            double b = (ThresholdHigh * Low - ThresholdLow * High) / (ThresholdHigh - ThresholdLow);
 
             for (int i = start; i < start + size; i++)
             {
-                if (x[i] < _paras[ParamRampLowThreshold])
+                if (x[i] < ThresholdLow)
                 {
-                    x[i] = _paras[ParamRampLow];
+                    x[i] = Low;
                 }
-                else if (x[i] > _paras[ParamRampHighThreshold])
+                else if (x[i] > ThresholdHigh)
                 {
-                    x[i] = _paras[ParamRampHigh];
+                    x[i] = High;
                 }
                 else
                 {
-                    x[i] = (slope*x[i]);
+                    x[i] = a * x[i] + b;
                 }
             }
         }
@@ -183,7 +183,10 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public virtual double DerivativeFunction(double b, double a)
         {
-            return 1.0d;
+            if (b < ThresholdLow || ThresholdHigh < b)
+                return 0;
+            else
+                return (High - Low) / (ThresholdHigh - ThresholdLow);
         }
 
         /// <inheritdoc />

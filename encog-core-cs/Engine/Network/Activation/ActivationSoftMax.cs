@@ -55,7 +55,7 @@ namespace Encog.Engine.Network.Activation
             return new ActivationSoftMax();
         }
 
-        /// <returns>Return false, softmax has no derivative.</returns>
+        /// <returns>Return true.</returns>
         public virtual bool HasDerivative
         {
             get

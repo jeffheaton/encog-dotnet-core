@@ -84,7 +84,7 @@ namespace Encog.Engine.Network.Activation
         {
             get
             {
-                String[] result = {"slope"};
+                String[] result = {};
                 return result;
             }
         }

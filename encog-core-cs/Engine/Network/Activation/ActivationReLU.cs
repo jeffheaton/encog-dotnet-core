@@ -6,9 +6,8 @@ using System.Text;
 namespace Encog.Engine.Network.Activation
 {
     /// <summary>
-    /// ReLU activation function. This function has a high and low threshold. If
-    /// the high threshold is exceeded a fixed value is returned.Likewise, if the
-    /// low value is exceeded another fixed value is returned.
+    /// ReLU activation function. This function has a low threshold. If
+    /// the low value is exceeded a fixed value is returned.
     /// </summary>
     [Serializable]
     public class ActivationReLU: IActivationFunction
@@ -22,7 +21,7 @@ namespace Encog.Engine.Network.Activation
         /// <summary>
         /// The ramp low parameter.
         /// </summary>
-        public const int PARAM_RELU_LOW = 0;
+        public const int PARAM_RELU_LOW = 1;
 
         /// <summary>
         /// The parameters.
@@ -41,7 +40,7 @@ namespace Encog.Engine.Network.Activation
         }
         
         /// <summary>
-        /// Construct a ramp activation function. 
+        /// Construct a Rectifier activation function. 
         /// </summary>
         /// <param name="thresholdLow">The low threshold value.</param>
         /// <param name="low">The low value, replaced if the low threshold is exceeded.</param>
@@ -86,7 +85,11 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public double DerivativeFunction(double b, double a)
         {
-            return 1 / (1 + Math.Pow(Math.E, -a));
+            if(b <= _params[ActivationReLU.PARAM_RELU_LOW_THRESHOLD])
+		    {
+			    return 0;
+		    }
+		    return 1.0;
         }
 
         /// <inheritdoc />

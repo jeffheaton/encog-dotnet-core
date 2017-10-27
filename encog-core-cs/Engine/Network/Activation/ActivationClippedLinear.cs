@@ -48,20 +48,30 @@ namespace Encog.Engine.Network.Activation
         {
             for (int i = start; i < start + size; i++)
             {
-                d[i] = (2.0 / (1.0 + Math.Exp(-4.9 * d[i]))) - 1.0;
+                if (d[i] > 1)
+                {
+                    d[i] = 1;
+                }
+                else if(d[i] < -1)
+                {
+                    d[i] = -1;
+                }
             }
         }
 
         /// <inheritdoc/>
         public double DerivativeFunction(double b, double a)
         {
-            return 1;
+            if (b < -1 || 1 < b)
+                return 0;
+            else
+                return 1;
         }
 
         /// <inheritdoc/>
         public Object Clone()
         {
-            return new ActivationBipolarSteepenedSigmoid();
+            return new ActivationClippedLinear();
         }
 
         /// <inheritdoc />

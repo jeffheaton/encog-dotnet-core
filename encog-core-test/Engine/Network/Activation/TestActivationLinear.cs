@@ -33,20 +33,25 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationLinear();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationLinear) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationLinear));
 
             double[] input = {1, 2, 3};
 
-            activation.ActivationFunction(input, 0, 1);
+            activation.ActivationFunction(input, 0, 3);
 
-            Assert.AreEqual(1.0, input[0], 0.1);
-            Assert.AreEqual(2.0, input[1], 0.1);
-            Assert.AreEqual(3.0, input[2], 0.1);
+            Assert.AreEqual(1.0, input[0], 0.0);
+            Assert.AreEqual(2.0, input[1], 0.0);
+            Assert.AreEqual(3.0, input[2], 0.0);
 
 
             // test derivative, should not throw an error
-            input[0] = activation.DerivativeFunction(input[0],input[0]);
+            input[0] = activation.DerivativeFunction(input[0], input[0]);
+            input[1] = activation.DerivativeFunction(input[1], input[1]);
+            input[2] = activation.DerivativeFunction(input[2], input[2]);
+            Assert.AreEqual(1.0, input[0], 0.0);
+            Assert.AreEqual(1.0, input[1], 0.0);
+            Assert.AreEqual(1.0, input[2], 0.0);
         }
     }
 }

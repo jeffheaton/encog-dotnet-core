@@ -33,8 +33,8 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationGaussian();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationGaussian) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationGaussian));
 
             double[] input = {0.0};
 

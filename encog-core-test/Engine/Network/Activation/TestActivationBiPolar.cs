@@ -28,15 +28,15 @@ namespace Encog.Engine.Network.Activation
     public class TestActivationBiPolar
     {
         [TestMethod]
-        public void TestActivation()
+        public void TestBiPolar()
         {
             var activation = new ActivationBiPolar();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationBiPolar)activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationBiPolar));
 
-            double[] input = { 0.5, -0.5 };
+            double[] input = { 0.1, -0.1 };
 
             activation.ActivationFunction(input, 0, input.Length);
 

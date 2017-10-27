@@ -15,18 +15,17 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationReLU();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationReLU)activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationReLU));
 
-            double[] input = { 0.0 };
+            double[] input = { -2, -1, 0, 1, 2 };
 
-            activation.ActivationFunction(input, 0, 1);
+            activation.ActivationFunction(input, 0, 5);
 
-            Assert.AreEqual(0.0, input[0], EncogFramework.DefaultDoubleEqual);
+            CollectionAssert.AreEqual(new double[] { 0, 0, 0, 1, 2 }, input);
 
-            // test derivative, wiki says this is logistic function (test may be wrong - jeroldhaas)
-            input[0] = activation.DerivativeFunction(input[0], input[0]);
-            Assert.AreEqual(0.5, input[0], EncogFramework.DefaultDoubleEqual);
+            input[2] = activation.DerivativeFunction(0, input[2]);
+            Assert.AreEqual(0.0, input[2], EncogFramework.DefaultDoubleEqual);
         }
     }
 }
