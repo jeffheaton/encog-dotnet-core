@@ -405,14 +405,37 @@ namespace Encog.Util.CSV
                 {
                     return false;
                 }
-
+                
                 if (_data == null)
                 {
                     InitData(line);
                 }
 
                 IList<String> tok = parseLine.Parse(line);
-
+                //if we dont know the prediction value for first row, this considers that whole data is in n-1 columns.
+                if (tok.Count > _data.Length)
+                {
+                    //In this case first line was having less number of columns than current line.
+                    //Sample data
+                    //0,0,
+                    //0,1,1
+                    //1,0,1
+                    //1,1,0
+                    InitData(line);
+                }
+                else if (tok.Count < _data.Length)
+                {
+                    //In this case, previous line was havign more columns than current line, So reset the array so that it does not carry the old values into missing column.
+                    //Sample data
+                    //0,0,0
+                    //0,1,
+                    //1,0,1
+                    //1,1,0
+                    for (int j = 0; j < _data.Length; j++)
+                    {
+                        _data[j] = null;
+                    }
+                }
                 int i = 0;
                 foreach (String str in tok)
                 {
