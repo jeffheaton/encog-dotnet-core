@@ -36,6 +36,7 @@ namespace Encog.Engine.Network.Activation
     /// the University of Texas at Austin.
     /// http://www.cs.ucf.edu/~kstanley/
     /// </summary>
+    [Serializable]
     public class ActivationClippedLinear : IActivationFunction
     {
         /// <summary>
