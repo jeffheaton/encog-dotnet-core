@@ -54,6 +54,7 @@ namespace Encog.App.CSV
             file.Close();
         }
 
+        [TestCategory("Integration")]
         [TestMethod]
         public void TestBalanceCSVHeaders()
         {
@@ -79,6 +80,7 @@ namespace Encog.App.CSV
             OutputName.Delete();
         }
 
+        [TestCategory("Integration")]
         [TestMethod]
         public void TestBalanceCSVNoHeaders()
         {

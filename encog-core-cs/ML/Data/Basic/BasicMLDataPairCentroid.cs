@@ -33,7 +33,7 @@ namespace Encog.ML.Data.Basic
         /// <summary>
         /// The value the centroid is based on.
         /// </summary>
-        private readonly BasicMLData _value;
+        private readonly IMLDataModifiable _value;
 
         /// <summary>
         /// How many items have been added to the centroid.
@@ -44,9 +44,15 @@ namespace Encog.ML.Data.Basic
         /// Construct the centroid. 
         /// </summary>
         /// <param name="o"> The pair to base the centroid on.</param>
-        public BasicMLDataPairCentroid(BasicMLDataPair o)
+        public BasicMLDataPairCentroid(IMLDataPair o)
         {
-            _value = (BasicMLData)o.Input.Clone();
+            if(!(o.Input is IHasArithimeticOperations))
+            {
+                throw new ArgumentException(string.Format("It is not possible to base a data pair centroid on data structures which don't have arithmetic operations. The failed type is {0}",
+                    o.Input.GetType().FullName));
+            }
+
+            _value = (IMLDataModifiable)o.Input.Clone();
             _size = 1;
         }
 
@@ -61,7 +67,7 @@ namespace Encog.ML.Data.Basic
         /// <inheritdoc/>
         public double Distance(IMLDataPair d)
         {
-            IMLData diff = _value.Minus(d.Input);
+            IMLData diff = ((IHasArithimeticOperations)_value).Minus(d.Input);
             double sum = 0.0;
 
             for (int i = 0; i < diff.Count; i++)
@@ -78,6 +84,5 @@ namespace Encog.ML.Data.Basic
                     ((_value[i] * _size) + d.Input[i]) / (_size + 1);
             _size++;
         }
-
     }
 }

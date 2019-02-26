@@ -29,6 +29,7 @@ namespace Encog.App.Analyst
     public class TestEncogAnalyst
     {
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisClassificationFF()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
@@ -52,6 +53,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestEuroIrisClassificationFF()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris-euro.csv");
@@ -76,6 +78,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisRegressionFF()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
@@ -99,6 +102,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisClassificationSVM()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
@@ -122,6 +126,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisClassificationPNN()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
@@ -145,6 +150,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisClassificationBayes()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");
@@ -168,6 +174,7 @@ namespace Encog.App.Analyst
         }
 
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestIrisSOM()
         {
             var test = new AnalystTestingUtility("Encog.Resources.iris.csv");

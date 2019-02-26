@@ -30,6 +30,7 @@ namespace Encog.ML.Data.Specific
     public class TestSQLDataSet
     {
         [TestMethod]
+        [TestCategory("Integration")]
         public void SQLDataSet()
         {
             int bits = IntPtr.Size*8;

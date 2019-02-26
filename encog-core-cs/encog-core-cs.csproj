@@ -335,6 +335,7 @@
     <Compile Include="ML\Data\Basic\BasicMLDataPairCentroid.cs" />
     <Compile Include="ML\Data\Basic\BasicMLDataSet.cs" />
     <Compile Include="ML\Data\Basic\BasicMLSequenceSet.cs" />
+    <Compile Include="ML\Data\IHasArithimeticOperations.cs" />
     <Compile Include="ML\Data\Buffer\BinaryDataLoader.cs" />
     <Compile Include="ML\Data\Buffer\BufferedDataError.cs" />
     <Compile Include="ML\Data\Buffer\BufferedMLDataSet.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
     <Compile Include="ML\Data\MLDataError.cs" />
+    <Compile Include="ML\Data\Sparse\SparseMLData.cs" />
     <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
     <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
     <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />

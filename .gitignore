@@ -14,6 +14,7 @@ encog-core-cs/bin/
 encog-core-cs/obj/
 encog-core-test/bin/
 encog-core-test/obj/
+_NCrunch_encog-core-cs/
 
 encog-core-cs.5.1.ReSharper.user
 EncogCmd/VSdoc/EncogCmd.hhc

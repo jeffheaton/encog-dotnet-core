@@ -46,7 +46,7 @@ namespace Encog.ML.Kmeans
         /// <summary>
         /// The kmeans utility.
         /// </summary>
-        private readonly KMeansUtil<BasicMLDataPair> _kmeans;
+        private readonly KMeansUtil<IMLDataPair> _kmeans;
 
         /// <summary>
         /// The clusters
@@ -60,13 +60,13 @@ namespace Encog.ML.Kmeans
         /// <param name="theSet">The dataset to cluster.</param>
         public KMeansClustering(int theK, IMLDataSet theSet)
         {
-            IList<BasicMLDataPair> list = new List<BasicMLDataPair>();
+            var list = new List<IMLDataPair>();
             foreach (IMLDataPair pair in theSet)
             {
-                list.Add((BasicMLDataPair) pair);
+                list.Add(pair);
             }
             _k = theK;
-            _kmeans = new KMeansUtil<BasicMLDataPair>(_k, list as IList);
+            _kmeans = new KMeansUtil<IMLDataPair>(_k, list as IList);
         }
 
         #region IMLClustering Members
@@ -95,7 +95,6 @@ namespace Encog.ML.Kmeans
                 Iteration();
             }
         }
-
 
         /// <summary>
         /// The clusters.
