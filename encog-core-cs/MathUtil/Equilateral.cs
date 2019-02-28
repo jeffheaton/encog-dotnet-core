@@ -123,7 +123,7 @@ namespace Encog.MathUtil
         /// <param name="low"> The low end of the range of values to generate.</param>
         /// <returns>One row for each set, the columns are the activations for that set.</returns>
         private static double[][] Equilat(int n,
-                                   double high, double low)
+                                   double high = 1, double low = -1)
         {
             var result = new double[n][]; // n - 1
             for (int i = 0; i < n; i++)
@@ -131,36 +131,29 @@ namespace Encog.MathUtil
                 result[i] = new double[n - 1];
             }
 
+            //seed for the first two categories
             result[0][0] = -1;
             result[1][0] = 1.0;
 
             for (int k = 2; k < n; k++)
             {
-                // scale the matrix so far
-                double r = k;
-                double f = Math.Sqrt(r*r - 1.0)/r;
+                double f = Math.Sqrt(k * k - 1.0) / k;
+                var s = -1.0 / k;
                 for (int i = 0; i < k; i++)
                 {
+                    result[i][k - 1] = s;
                     for (int j = 0; j < k - 1; j++)
                     {
                         result[i][j] *= f;
                     }
                 }
-
-                r = -1.0/r;
-                for (int i = 0; i < k; i++)
-                {
-                    result[i][k - 1] = r;
-                }
-
-                for (int i = 0; i < k - 1; i++)
-                {
-                    result[k][i] = 0.0;
-                }
                 result[k][k - 1] = 1.0;
             }
 
-            // scale it
+            // scale it if it's not [-1, 1]
+            if (low == -1 && high == 1)
+                return result;
+
             for (int row = 0; row < result.GetLength(0); row++)
             {
                 for (int col = 0; col < result[0].GetLength(0); col++)
