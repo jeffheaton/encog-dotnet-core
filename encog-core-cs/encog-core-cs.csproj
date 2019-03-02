@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AC6FADF9-0904-4EBD-B22C-1C787C7E7A95}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -351,8 +351,6 @@
     <Compile Include="ML\Data\Dynamic\Providers\FuncMLDataProvider.cs" />
     <Compile Include="ML\Data\Folded\FoldedDataSet.cs" />
     <Compile Include="ML\Data\Folded\FoldedEnumerator.cs" />
-    <Compile Include="ML\Data\Image\ImageMLData.cs" />
-    <Compile Include="ML\Data\Image\ImageMLDataSet.cs" />
     <Compile Include="ML\Data\IMLComplexData.cs" />
     <Compile Include="ML\Data\IMLData.cs" />
     <Compile Include="ML\Data\IMLDataError.cs" />
@@ -360,13 +358,6 @@
     <Compile Include="ML\Data\IMLDataSet.cs" />
     <Compile Include="ML\Data\IMLSequenceSet.cs" />
     <Compile Include="ML\Data\Market\Loader\CSVFinal.cs" />
-    <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ML\Data\Market\Loader\CSVFormLoader.Designer.cs">
-      <DependentUpon>CSVFormLoader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ML\Data\Market\Loader\CSVLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\IMarketLoader.cs" />
     <Compile Include="ML\Data\Market\Loader\LoadedMarketData.cs" />
     <Compile Include="ML\Data\Market\Loader\LoaderError.cs" />
@@ -378,9 +369,6 @@
     <Compile Include="ML\Data\Market\MarketPoint.cs" />
     <Compile Include="ML\Data\Market\TickerSymbol.cs" />
     <Compile Include="ML\Data\MLDataError.cs" />
-    <Compile Include="ML\Data\Specific\BiPolarMLData.cs" />
-    <Compile Include="ML\Data\Specific\CSVMLDataSet.cs" />
-    <Compile Include="ML\Data\Specific\SQLMLDataSet.cs" />
     <Compile Include="ML\Data\Dynamic\IDynamicMLDataProvider.cs" />
     <Compile Include="ML\Data\Dynamic\Providers\SlidingWindowMLDataProvider.cs" />
     <Compile Include="ML\Data\Dynamic\DynamicMLDataSet.cs" />
@@ -942,6 +930,21 @@
     <Compile Include="Util\Time\TimeUnit.cs" />
     <Compile Include="Util\Validate\ValidateNetwork.cs" />
     <Compile Include="Util\YahooSearch.cs" />
+    <Compile Include="ML\Data\Image\ImageMlData.cs" />
+    <Compile Include="ML\Data\Image\ImageMlDataSet.cs" />
+    <Compile Include="ML\Data\Market\Loader\csvformloader.designer.cs">
+      <DependentUpon>CSVFormLoader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ML\Data\Market\Loader\csvloader.cs" />
+    <Compile Include="ML\Data\Specific\BiPolarMlData.cs" />
+    <Compile Include="ML\Data\Specific\CsvMlDataSet.cs" />
+    <Compile Include="ML\Data\Specific\SqlMlDataSet.cs" />
+    <EmbeddedResource Include="ML\Data\Market\Loader\csvformloader.resx">
+      <DependentUpon>CSVFormLoader.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="ML\Data\Market\Loader\CSVFormLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="encog-core-cs.resx">
@@ -951,9 +954,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ML\Data\Market\Loader\CSVFormLoader.resx">
-      <DependentUpon>CSVFormLoader.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\classes.txt" />
     <EmbeddedResource Include="Util\Simple\TrainingDialog.resx">
       <DependentUpon>TrainingDialog.cs</DependentUpon>
