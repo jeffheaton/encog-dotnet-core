@@ -65,6 +65,11 @@ namespace Encog.Util.CSV
                 char ch = line[i];
                 if ((ch == Format.Separator) && !quoted)
                 {
+                    //If value is empty string, that means value is missing, in Encog terms unkown or missing value is represnted with "?"
+                    if (item.Length == 0)
+                    {
+                        item.Append("?");
+                    }
                     String s = item.ToString();
                     if (!hadQuotes)
                     {
@@ -72,6 +77,8 @@ namespace Encog.Util.CSV
                     }
                     result.Add(s);
                     item.Length = 0;
+                    //We just process "a seperator" that means we are expecting value after the sperator, if it does not present then "?" is going to be the default value. which means missing value in Encog terms.
+                    item.Append("?");
                     quoted = false;
                     hadQuotes = false;
                 }
@@ -86,6 +93,11 @@ namespace Encog.Util.CSV
                 }
                 else
                 {
+                    //We found as valid value so remove the missing value character.
+                    if (item.ToString() == "?")
+                    {
+                        item.Length--;
+                    }
                     item.Append(ch);
                 }
             }
