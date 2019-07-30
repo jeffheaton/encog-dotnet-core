@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Encog.Engine.Network.Activation
 {
@@ -33,18 +34,24 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationSIN();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationSIN) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationSIN));
 
-            double[] input = {0.0};
+            double[] input = { 0.0, Math.PI / 4, Math.PI / 2 };
 
-            activation.ActivationFunction(input, 0, 1);
+            activation.ActivationFunction(input, 0, 3); //it's actually Sin(2x)
 
-            Assert.AreEqual(0.0, input[0], 0.1);
+            Assert.AreEqual(0.0, input[0], 0.01);
+            Assert.AreEqual(1.0, input[1], 0.01);
+            Assert.AreEqual(0.0, input[2], 0.01);
 
-            // test derivative, should throw an error
-            input[0] = activation.DerivativeFunction(input[0],input[0]);
-            Assert.AreEqual(1.0, input[0], 0.1);
+            // test derivative
+            input[0] = activation.DerivativeFunction(0, input[0]);
+            input[1] = activation.DerivativeFunction(Math.PI / 4, input[1]);
+            input[2] = activation.DerivativeFunction(Math.PI / 2, input[2]);
+            Assert.AreEqual(1.0, input[0], 0.01);
+            Assert.AreEqual(0.0, input[1], 0.01);
+            Assert.AreEqual(-1.0, input[2], 0.01);
         }
     }
 }

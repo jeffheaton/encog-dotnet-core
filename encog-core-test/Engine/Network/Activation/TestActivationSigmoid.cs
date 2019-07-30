@@ -33,8 +33,8 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationSigmoid();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationSigmoid) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationSigmoid));
 
             double[] input = {0.0};
 
@@ -42,8 +42,7 @@ namespace Encog.Engine.Network.Activation
 
             Assert.AreEqual(0.5, input[0], 0.1);
 
-            // test derivative, should throw an error
-            input[0] = activation.DerivativeFunction(input[0],input[0]);
+            input[0] = activation.DerivativeFunction(0, input[0]);
             Assert.AreEqual(0.25, input[0], 0.1);
         }
     }

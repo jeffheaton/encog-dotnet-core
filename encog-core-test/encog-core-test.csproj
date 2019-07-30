@@ -67,6 +67,7 @@
     <Compile Include="Engine\Network\Activation\TestActivationGaussian.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationLinear.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationLOG.cs" />
+    <Compile Include="Engine\Network\Activation\TestActivationRamp.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationReLU.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationSmoothReLU.cs" />
     <Compile Include="Engine\Network\Activation\TestActivationSigmoid.cs" />

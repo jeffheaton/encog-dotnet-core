@@ -53,7 +53,7 @@ namespace Encog.Engine.Network.Activation
         /// <inheritdoc />
         public double DerivativeFunction(double b, double a)
         {
-            return 1 / (1 + Math.Pow(Math.E, -a));
+            return 1 / (1 + Math.Pow(Math.E, -b));
         }
 
         /// <inheritdoc />

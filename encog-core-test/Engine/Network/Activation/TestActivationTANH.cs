@@ -33,17 +33,14 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationTANH();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationTANH) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationTANH));
 
             double[] input = {0.0};
 
             activation.ActivationFunction(input, 0, 1);
-
             Assert.AreEqual(0.0, input[0], 0.1);
 
-
-            // test derivative, should throw an error
             input[0] = activation.DerivativeFunction(input[0],input[0]);
             Assert.AreEqual(1.0, input[0], 0.1);
         }

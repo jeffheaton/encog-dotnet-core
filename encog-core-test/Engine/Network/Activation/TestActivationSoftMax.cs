@@ -28,23 +28,27 @@ namespace Encog.Engine.Network.Activation
     public class TestActivationSoftMax
     {
         [TestMethod]
-        public void TestSIN()
+        public void TestSoftMax()
         {
-            var activation = new ActivationSIN();
+            var activation = new ActivationSoftMax();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationSIN) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationSoftMax));
 
-            double[] input = {0.0};
+            double[] input = {1, 2, 3};
 
-            activation.ActivationFunction(input, 0, 1);
+            activation.ActivationFunction(input, 0, 3);
+            
+            Assert.AreEqual(0.09, input[0], 0.01);
+            Assert.AreEqual(0.24, input[1], 0.01);
+            Assert.AreEqual(0.67, input[2], 0.01);
 
-            Assert.AreEqual(0.0, input[0], 0.1);
+            double sum = input[0] + input[1] + input[2];
+            Assert.AreEqual(1, sum, EncogFramework.DefaultDoubleEqual);
 
-            // test derivative, should throw an error
             input[0] = activation.DerivativeFunction(input[0],input[0]);
-            Assert.AreEqual(1.0, input[0], 0.1);
+            Assert.AreEqual(1.0, input[0], EncogFramework.DefaultDoubleEqual);
         }
     }
 }

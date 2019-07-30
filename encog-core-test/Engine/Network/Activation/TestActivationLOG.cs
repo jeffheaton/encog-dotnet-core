@@ -21,6 +21,7 @@
 // http://www.heatonresearch.com/copyright
 //
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Encog.Engine.Network.Activation
 {
@@ -33,18 +34,20 @@ namespace Encog.Engine.Network.Activation
             var activation = new ActivationLOG();
             Assert.IsTrue(activation.HasDerivative);
 
-            var clone = (ActivationLOG) activation.Clone();
-            Assert.IsNotNull(clone);
+            var clone = activation.Clone();
+            Assert.IsInstanceOfType(clone, typeof(ActivationLOG));
 
-            double[] input = {0.0};
+            double[] input = { 0.0, Math.E - 1, Math.E * Math.E - 1 };
 
-            activation.ActivationFunction(input, 0, 1);
+            activation.ActivationFunction(input, 0, 3);
 
-            Assert.AreEqual(0.0, input[0], 0.1);
+            Assert.AreEqual(0.0, input[0], 0.01);
+            Assert.AreEqual(1.0, input[1], 0.01);
+            Assert.AreEqual(2.0, input[2], 0.01);
 
             // test derivative
-            input[0] = activation.DerivativeFunction(input[0],input[0]);
-            Assert.AreEqual(1.0, input[0], 0.1);
+            input[0] = activation.DerivativeFunction(0, input[0]);
+            Assert.AreEqual(1.0, input[0], 0.01);
         }
     }
 }
